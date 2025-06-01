@@ -407,7 +407,6 @@ function pmd_ci_dogfood() {
         -DskipTests \
         -Dmaven.javadoc.skip=true \
         -Dmaven.source.skip=true \
-        -Dcheckstyle.skip=true
     ./mvnw versions:set -DnewVersion="${PMD_CI_MAVEN_PROJECT_VERSION}" -DgenerateBackupPoms=false
     git checkout -- pom.xml
 }

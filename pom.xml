@@ -100,8 +100,6 @@
 
         <javacc.version>5.0</javacc.version>
         <surefire.version>3.5.3</surefire.version>
-        <checkstyle.version>10.23.1</checkstyle.version>
-        <checkstyle.plugin.version>3.6.0</checkstyle.plugin.version>
         <pmd.plugin.version>3.26.0</pmd.plugin.version>
         <ant.version>1.10.15</ant.version>
         <javadoc.plugin.version>3.11.2</javadoc.plugin.version>
@@ -211,36 +209,6 @@
                     <version>3.4.1</version>
                 </plugin>
 
-                <!-- adds kotlin source directories for checkstyle header checks -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.6.0</version>
-                    <executions>
-                        <execution>
-                            <id>add-kotlin-source-dir</id>
-                            <goals>
-                                <goal>add-source</goal>
-                            </goals>
-                            <configuration>
-                                <sources>
-                                    <source>${project.basedir}/src/main/kotlin</source>
-                                </sources>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>add-kotlin-test-source-dir</id>
-                            <goals>
-                                <goal>add-test-source</goal>
-                            </goals>
-                            <configuration>
-                                <sources>
-                                    <source>${project.basedir}/src/test/kotlin</source>
-                                </sources>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
                 <!-- Kotlin compiler for test-compile -->
                 <!-- The kotlin plugin has to run before the maven-compiler-plugin -->
                 <plugin>
@@ -483,40 +451,6 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${checkstyle.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>checkstyle-check</id>
-                            <phase>verify</phase>
-                            <goals>
-<!--                                <goal>check</goal>-->
-                            </goals>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.puppycrawl.tools</groupId>
-                            <artifactId>checkstyle</artifactId>
-                            <version>${checkstyle.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>net.sourceforge.pmd</groupId>
-                            <artifactId>pmd-build-tools-config</artifactId>
-                            <version>${pmd.build-tools.version}</version>
-                        </dependency>
-                    </dependencies>
-                    <configuration>
-                        <configLocation>/net/sourceforge/pmd/pmd-checkstyle-config.xml</configLocation>
-                        <suppressionsLocation>/net/sourceforge/pmd/pmd-checkstyle-suppressions.xml</suppressionsLocation>
-                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                        <excludeGeneratedSources>true</excludeGeneratedSources>
-                        <includes>**/*.java,**/*.kt</includes>
-                        <resourceIncludes>**/*.properties,**/*.less</resourceIncludes>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1289,7 +1223,6 @@
             <properties>
                 <maven.javadoc.skip>true</maven.javadoc.skip>
                 <maven.source.skip>true</maven.source.skip>
-                <checkstyle.skip>true</checkstyle.skip>
                 <pmd.skip>true</pmd.skip>
                 <cpd.skip>true</cpd.skip>
                 <cyclonedx.skip>true</cyclonedx.skip>
