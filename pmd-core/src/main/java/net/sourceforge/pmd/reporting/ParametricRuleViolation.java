@@ -12,7 +12,8 @@ import net.sourceforge.pmd.lang.rule.Rule;
 import net.sourceforge.pmd.util.AssertionUtil;
 
 /**
- * @apiNote This is internal API. Clients should exclusively use {@link RuleViolation}.
+ * @apiNote This is internal API. Clients should exclusively use
+ *          {@link RuleViolation}.
  */
 class ParametricRuleViolation implements RuleViolation {
     protected final Rule rule;

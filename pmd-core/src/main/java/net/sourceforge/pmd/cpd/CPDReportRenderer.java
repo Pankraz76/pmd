@@ -21,17 +21,19 @@ public interface CPDReportRenderer {
     /**
      * Write out the contents of the report to the given writer.
      *
-     * @param report The report to write
-     * @param writer A writer for the report file
+     * @param report
+     *            The report to write
+     * @param writer
+     *            A writer for the report file
      *
-     * @throws IOException If the writer throws
+     * @throws IOException
+     *             If the writer throws
      */
     void render(CPDReport report, Writer writer) throws IOException;
 
-
     /**
-     * Call the other render method on a StringWriter. IO exceptions
-     * are rethrown as runtime exceptions.
+     * Call the other render method on a StringWriter. IO exceptions are rethrown as
+     * runtime exceptions.
      */
     default String renderToString(CPDReport report) {
         StringWriter sw = new StringWriter();

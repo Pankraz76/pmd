@@ -160,7 +160,8 @@ class PmdAnalysisTest {
 
         try (PmdAnalysis pmd = PmdAnalysis.create(config)) {
             pmd.addRuleSet(ruleset);
-            pmd.files().addFile(new SimpleTestTextFile("test content foo", FileId.fromPathLikeString("foo.txt"), language.getDefaultVersion()));
+            pmd.files().addFile(new SimpleTestTextFile("test content foo", FileId.fromPathLikeString("foo.txt"),
+                    language.getDefaultVersion()));
             Report report = pmd.performAnalysisAndCollectReport();
             for (Report.ProcessingError error : report.getProcessingErrors()) {
                 System.out.println("error = " + error.getMsg() + ": " + error.getDetail());

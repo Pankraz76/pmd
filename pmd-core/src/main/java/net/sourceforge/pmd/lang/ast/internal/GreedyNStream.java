@@ -75,7 +75,7 @@ abstract class GreedyNStream<T extends Node> extends IteratorBasedNStream<T> {
     public Spliterator<T> spliterator() {
         Spliterator<T> spliter = toList().spliterator();
         return Spliterators.spliterator(iterator(), spliter.estimateSize(),
-                                        spliter.characteristics() | Spliterator.NONNULL);
+                spliter.characteristics() | Spliterator.NONNULL);
     }
 
     @Override

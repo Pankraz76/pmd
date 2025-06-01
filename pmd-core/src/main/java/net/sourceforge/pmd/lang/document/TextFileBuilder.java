@@ -14,8 +14,7 @@ import net.sourceforge.pmd.lang.LanguageVersion;
 import net.sourceforge.pmd.util.AssertionUtil;
 
 /**
- * A builder for a new text file.
- * See static methods on {@link TextFile}.
+ * A builder for a new text file. See static methods on {@link TextFile}.
  */
 @SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
 public abstract class TextFileBuilder {
@@ -28,8 +27,8 @@ public abstract class TextFileBuilder {
     }
 
     /**
-     * Specify that the built file is read only. Some text files are
-     * always read-only.
+     * Specify that the built file is read only. Some text files are always
+     * read-only.
      *
      * @return This builder
      */
@@ -42,7 +41,6 @@ public abstract class TextFileBuilder {
         parentFsId = fileId;
         return this;
     }
-
 
     /**
      * Creates and returns the new text file.
@@ -112,7 +110,6 @@ public abstract class TextFileBuilder {
             this.fileId = FileId.asChildOf(this.fileId, fileId);
             return super.setParentFsPath(fileId);
         }
-
 
         @Override
         public TextFile build() {

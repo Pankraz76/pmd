@@ -25,7 +25,8 @@ public final class ModelicaSourceFileScope extends AbstractModelicaScope {
     }
 
     /**
-     * Resolve <code>name</code> as if not accounting for <code>fileFQCN</code> (as if it would be empty).
+     * Resolve <code>name</code> as if not accounting for <code>fileFQCN</code> (as
+     * if it would be empty).
      */
     void lookupLocally(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
         if (name.isEmpty()) {
@@ -37,17 +38,19 @@ public final class ModelicaSourceFileScope extends AbstractModelicaScope {
         String firstName = name.getHead();
         CompositeName furtherNames = name.getTail();
 
-        for (ModelicaDeclaration decl: getDirectlyDeclared(firstName)) {
+        for (ModelicaDeclaration decl : getDirectlyDeclared(firstName)) {
             ResolutionContext tmpContext = result.getState().createContext();
             ((ModelicaClassDeclaration) decl).lookupInInstanceScope(result, furtherNames);
-            // According to "5.2 Enclosing classes" from MLS 3.4, the order of definitions inside the unnamed
+            // According to "5.2 Enclosing classes" from MLS 3.4, the order of definitions
+            // inside the unnamed
             // enclosing class is unspecified, so handle name hiding with care.
             result.accumulate(tmpContext.get(ResolvableEntity.class));
         }
     }
 
     /**
-     * Resolve <code>name</code> accounting for <code>fileFQCN</code>. To be called from {@link RootScope}.
+     * Resolve <code>name</code> accounting for <code>fileFQCN</code>. To be called
+     * from {@link RootScope}.
      */
     void lookupGlobally(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
         result.watchdogTick();

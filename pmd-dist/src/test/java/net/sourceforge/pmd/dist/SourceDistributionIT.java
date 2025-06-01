@@ -35,7 +35,8 @@ class SourceDistributionIT {
     void mavenWrapperShouldBeExecutable() throws Exception {
         try (ZipFile zip = ZipFile.builder().setFile(getSourceDistribution()).get()) {
             ZipArchiveEntry mavenWrapper = zip.getEntry(BASE_PATH + "/mvnw");
-            assertEquals(ZipFileExtractor.OWNER_EXECUTABLE, mavenWrapper.getUnixMode() & ZipFileExtractor.OWNER_EXECUTABLE);
+            assertEquals(ZipFileExtractor.OWNER_EXECUTABLE,
+                    mavenWrapper.getUnixMode() & ZipFileExtractor.OWNER_EXECUTABLE);
         }
     }
 

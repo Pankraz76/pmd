@@ -20,10 +20,10 @@ public interface ScalaNode<T extends Tree> extends GenericNode<ScalaNode<?>> {
      * Returns true if the node is implicit. If this node has no non-implicit
      * descendant, then its text bounds identify an empty region of the source
      * document. In that case, the {@linkplain #getEndColumn() end column} is
-     * smaller than the {@linkplain #getBeginColumn() begin column}. That's
-     * because the end column index is inclusive.
+     * smaller than the {@linkplain #getBeginColumn() begin column}. That's because
+     * the end column index is inclusive.
      */
     // TODO this would be useful on the node interface for 7.0.0.
-    //  we could filter them out from violations transparently
+    // we could filter them out from violations transparently
     boolean isImplicit();
 }

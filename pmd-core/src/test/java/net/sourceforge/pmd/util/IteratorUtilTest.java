@@ -4,7 +4,6 @@
 
 package net.sourceforge.pmd.util;
 
-
 import static java.util.Collections.emptyIterator;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -56,7 +55,6 @@ class IteratorUtilTest {
         assertFalse(match);
     }
 
-
     @Test
     void testAllMatchPos() {
         Iterator<String> iter = iterOf("ap", "bcd", "cd");
@@ -83,7 +81,6 @@ class IteratorUtilTest {
 
         assertTrue(match);
     }
-
 
     @Test
     void testNoneMatchPos() {
@@ -119,10 +116,8 @@ class IteratorUtilTest {
 
         Iterator<String> mapped = IteratorUtil.flatMap(iter, fun);
 
-
         assertThat(() -> mapped, contains("a", "b", "c", "d", "e", "f"));
     }
-
 
     @Test
     void testFlatmapEmpty() {
@@ -130,7 +125,6 @@ class IteratorUtilTest {
         Function<String, Iterator<String>> fun = s -> s.chars().mapToObj(i -> (char) i).map(String::valueOf).iterator();
 
         Iterator<String> mapped = IteratorUtil.flatMap(iter, fun);
-
 
         assertExhausted(mapped);
     }
@@ -164,12 +158,11 @@ class IteratorUtilTest {
         assertThrows(AssertionError.class, () -> mapped.hasNext());
     }
 
-
     @Test
     void testFlatmapWithSelf() {
         Iterator<String> iter = iterOf("ab", "e", null, "f");
         Function<String, Iterator<String>> fun = s -> s == null ? null // test null safety
-                                                                : iterOf(s + "1", s + "2");
+                : iterOf(s + "1", s + "2");
 
         Iterator<String> mapped = IteratorUtil.flatMapWithSelf(iter, fun);
 
@@ -183,7 +176,6 @@ class IteratorUtilTest {
 
         Iterator<Integer> mapped = IteratorUtil.mapNotNull(iter, fun);
 
-
         assertThat(() -> mapped, contains(2, 4, 2));
     }
 
@@ -193,7 +185,6 @@ class IteratorUtilTest {
         Function<String, Integer> fun = s -> s.length() < 2 ? null : s.length();
 
         Iterator<Integer> mapped = IteratorUtil.mapNotNull(iter, fun);
-
 
         assertExhausted(mapped);
     }
@@ -205,7 +196,6 @@ class IteratorUtilTest {
 
         Iterator<String> mapped = IteratorUtil.flatMap(iter, fun);
 
-
         assertExhausted(mapped);
     }
 
@@ -215,11 +205,9 @@ class IteratorUtilTest {
 
         Iterator<String> mapped = IteratorUtil.filterNotNull(iter);
 
-
         assertThat(() -> mapped, contains("ab", "e", "", "fe"));
         assertExhausted(iter);
     }
-
 
     @Test
     void testDistinct() {
@@ -227,11 +215,9 @@ class IteratorUtilTest {
 
         Iterator<String> mapped = IteratorUtil.distinct(iter);
 
-
         assertThat(() -> mapped, contains("ab", null, "e", "fe", "c"));
         assertExhausted(iter);
     }
-
 
     @Test
     void testTakeWhile() {
@@ -357,7 +343,6 @@ class IteratorUtilTest {
     void testGet0() {
         Iterator<String> iter = iterOf("a", "b", "c");
 
-
         String elt = IteratorUtil.getNth(iter, 0);
 
         assertEquals("a", elt);
@@ -380,7 +365,6 @@ class IteratorUtilTest {
 
         assertNull(elt);
     }
-
 
     @Test
     void testLast() {
@@ -450,7 +434,6 @@ class IteratorUtilTest {
         assertThat(mapped, contains("c", "b", "a"));
         assertThat(mapped, contains("c", "b", "a"));
     }
-
 
     @Test
     void testDropLast() {

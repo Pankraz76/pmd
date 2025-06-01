@@ -15,18 +15,18 @@ import net.sourceforge.pmd.lang.ast.Node;
  */
 public interface TreeRenderer {
 
-
     /**
-     * Appends the subtree rooted at the given node on the provided
-     * output writer. The implementation is free to filter out some
-     * nodes from the subtree.
+     * Appends the subtree rooted at the given node on the provided output writer.
+     * The implementation is free to filter out some nodes from the subtree.
      *
-     * @param node Node to render
-     * @param out  Object onto which the output is appended
+     * @param node
+     *            Node to render
+     * @param out
+     *            Object onto which the output is appended
      *
-     * @throws IOException If an IO error occurs while appending to the output
+     * @throws IOException
+     *             If an IO error occurs while appending to the output
      */
     void renderSubtree(Node node, Appendable out) throws IOException;
-
 
 }

@@ -65,8 +65,8 @@ public class QueueableWithoutFinalizerRule extends AbstractApexRule {
     }
 
     /**
-     * Determines if the method is the `execute(QueueableContext context)`
-     * method. Parameter count is checked to account for method overloading.
+     * Determines if the method is the `execute(QueueableContext context)` method.
+     * Parameter count is checked to account for method overloading.
      */
     private boolean isTheExecuteMethodOfTheQueueableInterface(ASTMethod theMethod) {
         if (!EXECUTE.equalsIgnoreCase(theMethod.getCanonicalName())) {

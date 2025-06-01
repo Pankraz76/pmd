@@ -46,14 +46,15 @@ public class RuleReference implements Rule {
     /**
      * Create a new reference to the given rule.
      *
-     * @param theRule the referenced rule
-     * @param theRuleSetReference the rule set, where the rule is defined
+     * @param theRule
+     *            the referenced rule
+     * @param theRuleSetReference
+     *            the rule set, where the rule is defined
      */
     public RuleReference(Rule theRule, RuleSetReference theRuleSetReference) {
         rule = theRule;
         ruleSetReference = theRuleSetReference;
     }
-
 
     /** copy constructor */
     private RuleReference(RuleReference ref) {
@@ -84,7 +85,8 @@ public class RuleReference implements Rule {
     public void setMinimumLanguageVersion(LanguageVersion minimumLanguageVersion) {
         // Only override if different than current value, or if already
         // overridden.
-        if (!Objects.equals(minimumLanguageVersion, rule.getMinimumLanguageVersion()) || this.minimumLanguageVersion != null) {
+        if (!Objects.equals(minimumLanguageVersion, rule.getMinimumLanguageVersion())
+                || this.minimumLanguageVersion != null) {
             rule.setMinimumLanguageVersion(minimumLanguageVersion); // might throw
             this.minimumLanguageVersion = minimumLanguageVersion;
         }
@@ -98,7 +100,8 @@ public class RuleReference implements Rule {
     public void setMaximumLanguageVersion(LanguageVersion maximumLanguageVersion) {
         // Only override if different than current value, or if already
         // overridden.
-        if (!Objects.equals(maximumLanguageVersion, rule.getMaximumLanguageVersion()) || this.maximumLanguageVersion != null) {
+        if (!Objects.equals(maximumLanguageVersion, rule.getMaximumLanguageVersion())
+                || this.maximumLanguageVersion != null) {
             rule.setMaximumLanguageVersion(maximumLanguageVersion); // might throw
             this.maximumLanguageVersion = maximumLanguageVersion;
         }
@@ -179,7 +182,8 @@ public class RuleReference implements Rule {
 
     @Override
     public void addExample(String example) {
-        // TODO Intuitively, if some examples are overridden (even with empty value), then
+        // TODO Intuitively, if some examples are overridden (even with empty value),
+        // then
         // I think we should discard the previous ones. If the rule needs new examples,
         // then the previous ones are not relevant.
 
@@ -233,7 +237,6 @@ public class RuleReference implements Rule {
         }
     }
 
-
     @Override
     public List<PropertyDescriptor<?>> getOverriddenPropertyDescriptors() {
         return new ArrayList<>(getOverriddenPropertiesByPropertyDescriptor().keySet());
@@ -250,7 +253,6 @@ public class RuleReference implements Rule {
         }
         propertyDescriptors.add(propertyDescriptor);
     }
-
 
     @Override
     public Map<PropertyDescriptor<?>, Object> getOverriddenPropertiesByPropertyDescriptor() {
@@ -269,16 +271,13 @@ public class RuleReference implements Rule {
         }
     }
 
-
     public RuleSetReference getRuleSetReference() {
         return ruleSetReference;
     }
 
-
     private static boolean isSame(String s1, String s2) {
         return StringUtil.isSame(s1, s2, true, false, true);
     }
-
 
     private static boolean contains(Collection<String> collection, String s1) {
         for (String s2 : collection) {
@@ -308,14 +307,15 @@ public class RuleReference implements Rule {
     /**
      * Checks whether this rule reference explicitly overrides any of the possible
      * attributes of the referenced rule.
-     * @return <code>true</code> if there is at least one attribute overridden. <code>false</code> if
-     *     the referenced rule is referenced without any change.
+     * 
+     * @return <code>true</code> if there is at least one attribute overridden.
+     *         <code>false</code> if the referenced rule is referenced without any
+     *         change.
      */
     public boolean hasOverriddenAttributes() {
         return deprecated != null || description != null || examples != null || externalInfoUrl != null
-                || maximumLanguageVersion != null || minimumLanguageVersion != null
-                || message != null || name != null || priority != null
-                || propertyDescriptors != null || propertyValues != null;
+                || maximumLanguageVersion != null || minimumLanguageVersion != null || message != null || name != null
+                || priority != null || propertyDescriptors != null || propertyValues != null;
     }
 
     @Override

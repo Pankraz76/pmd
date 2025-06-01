@@ -38,7 +38,8 @@ public final class EcmascriptParser implements net.sourceforge.pmd.lang.ast.Pars
         this.properties = properties;
     }
 
-    private AstRoot parseEcmascript(final FileId fileId, final String sourceCode, final LanguageVersion version, final List<ParseProblem> parseProblems) throws ParseException {
+    private AstRoot parseEcmascript(final FileId fileId, final String sourceCode, final LanguageVersion version,
+            final List<ParseProblem> parseProblems) throws ParseException {
         final CompilerEnvirons compilerEnvirons = new CompilerEnvirons();
         compilerEnvirons.setRecordingComments(true);
         compilerEnvirons.setRecordingLocalJsDocComments(true);
@@ -60,9 +61,12 @@ public final class EcmascriptParser implements net.sourceforge.pmd.lang.ast.Pars
 
     private static int determineRhinoLanguageVersion(LanguageVersion version) {
         switch (version.getVersion()) {
-        case "3": return Context.VERSION_1_5;
-        case "5": return Context.VERSION_1_8;
-        default: return Context.VERSION_ES6;
+        case "3":
+            return Context.VERSION_1_5;
+        case "5":
+            return Context.VERSION_1_8;
+        default:
+            return Context.VERSION_ES6;
         }
     }
 
@@ -72,7 +76,8 @@ public final class EcmascriptParser implements net.sourceforge.pmd.lang.ast.Pars
         final List<ParseProblem> parseProblems = new ArrayList<>();
         final AstRoot astRoot = parseEcmascript(task.getFileId(), task.getSourceText(), version, parseProblems);
 
-        List<ParseProblem> errors = parseProblems.stream().filter(p -> p.getType() == ParseProblem.Type.Error).collect(Collectors.toList());
+        List<ParseProblem> errors = parseProblems.stream().filter(p -> p.getType() == ParseProblem.Type.Error)
+                .collect(Collectors.toList());
         if (!errors.isEmpty()) {
             String errorMessage = errors.stream().map(p -> {
                 TextPos2d textPos2d = task.getTextDocument().lineColumnAtOffset(p.getFileOffset());
@@ -80,8 +85,10 @@ public final class EcmascriptParser implements net.sourceforge.pmd.lang.ast.Pars
                 return caret.startPosToStringWithFile() + ": " + p.getMessage();
             }).collect(Collectors.joining(System.lineSeparator()));
 
-            // TODO throw new ParseException(errors.size() + " problems found:" + System.lineSeparator() + errorMessage);
-            // can't throw ParseException as that would fail many analysis. The parser replaced the errors with
+            // TODO throw new ParseException(errors.size() + " problems found:" +
+            // System.lineSeparator() + errorMessage);
+            // can't throw ParseException as that would fail many analysis. The parser
+            // replaced the errors with
             // EmptyStatement.
             LOGGER.warn("{} javascript problems found:{}{}", errors.size(), System.lineSeparator(), errorMessage);
         }

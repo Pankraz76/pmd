@@ -41,9 +41,6 @@ class CPDFilelistTest {
 
         assertEquals(2, paths.size());
         List<String> simpleNames = CollectionUtil.map(paths, FileId::getFileName);
-        assertEquals(
-            listOf("anotherfile.dummy", "somefile.dummy"),
-            simpleNames
-        );
+        assertEquals(listOf("anotherfile.dummy", "somefile.dummy"), simpleNames);
     }
 }

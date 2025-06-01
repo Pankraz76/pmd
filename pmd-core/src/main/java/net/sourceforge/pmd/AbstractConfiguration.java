@@ -49,7 +49,6 @@ public abstract class AbstractConfiguration {
     private boolean failOnViolation = true;
     private boolean failOnError = true;
 
-
     protected AbstractConfiguration(LanguageRegistry languageRegistry, PmdReporter messageReporter) {
         this.langRegistry = Objects.requireNonNull(languageRegistry);
         this.languageVersionDiscoverer = new LanguageVersionDiscoverer(languageRegistry);
@@ -76,10 +75,11 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Returns a mutable bundle of language properties that are associated
-     * to the given language (always the same for a given language).
+     * Returns a mutable bundle of language properties that are associated to the
+     * given language (always the same for a given language).
      *
-     * @param language A language, which must be registered
+     * @param language
+     *            A language, which must be registered
      */
     public @NonNull LanguagePropertyBundle getLanguageProperties(Language language) {
         checkLanguageIsRegistered(language);
@@ -89,7 +89,7 @@ public abstract class AbstractConfiguration {
     void checkLanguageIsRegistered(Language language) {
         if (!langRegistry.getLanguages().contains(language)) {
             throw new IllegalArgumentException(
-                "Language '" + language.getId() + "' is not registered in " + getLanguageRegistry());
+                    "Language '" + language.getId() + "' is not registered in " + getLanguageRegistry());
         }
         checkLanguageIsAcceptable(language);
     }
@@ -99,18 +99,17 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Returns the message reporter that is to be used while running
-     * the analysis.
+     * Returns the message reporter that is to be used while running the analysis.
      */
     public @NonNull PmdReporter getReporter() {
         return reporter;
     }
 
     /**
-     * Sets the message reporter that is to be used while running
-     * the analysis.
+     * Sets the message reporter that is to be used while running the analysis.
      *
-     * @param reporter A non-null message reporter
+     * @param reporter
+     *            A non-null message reporter
      */
     public void setReporter(@NonNull PmdReporter reporter) {
         AssertionUtil.requireParamNotNull("reporter", reporter);
@@ -118,8 +117,8 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Get the LanguageVersionDiscoverer, used to determine the LanguageVersion
-     * of a source file.
+     * Get the LanguageVersionDiscoverer, used to determine the LanguageVersion of a
+     * source file.
      *
      * @return The LanguageVersionDiscoverer.
      */
@@ -128,8 +127,8 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Get the LanguageVersion specified by the force-language parameter. This overrides detection based on file
-     * extensions
+     * Get the LanguageVersion specified by the force-language parameter. This
+     * overrides detection based on file extensions
      *
      * @return The LanguageVersion.
      */
@@ -147,10 +146,11 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Set the LanguageVersion specified by the force-language parameter. This overrides detection based on file
-     * extensions
+     * Set the LanguageVersion specified by the force-language parameter. This
+     * overrides detection based on file extensions
      *
-     * @param forceLanguageVersion the language version
+     * @param forceLanguageVersion
+     *            the language version
      */
     public void setForceLanguageVersion(@Nullable LanguageVersion forceLanguageVersion) {
         if (forceLanguageVersion != null) {
@@ -161,13 +161,15 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Make it so that the only extensions that are considered are those
-     * of the given language. This is different from {@link #setForceLanguageVersion(LanguageVersion)}
-     * because that one will assign the given language version to all files
-     * irrespective of extension. This method, on the other hand, will
-     * ignore files that do not match the given language.
+     * Make it so that the only extensions that are considered are those of the
+     * given language. This is different from
+     * {@link #setForceLanguageVersion(LanguageVersion)} because that one will
+     * assign the given language version to all files irrespective of extension.
+     * This method, on the other hand, will ignore files that do not match the given
+     * language.
      *
-     * @param lang A language
+     * @param lang
+     *            A language
      */
     public void setOnlyRecognizeLanguage(Language lang) {
         AssertionUtil.requireParamNotNull("language", lang);
@@ -178,7 +180,8 @@ public abstract class AbstractConfiguration {
     /**
      * Set the given LanguageVersion as the current default for its Language.
      *
-     * @param languageVersion the LanguageVersion
+     * @param languageVersion
+     *            the LanguageVersion
      */
     public void setDefaultLanguageVersion(LanguageVersion languageVersion) {
         Objects.requireNonNull(languageVersion);
@@ -189,8 +192,7 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Set the given LanguageVersions as the current default for their
-     * Languages.
+     * Set the given LanguageVersions as the current default for their Languages.
      *
      * @param languageVersions
      *            The LanguageVersions.
@@ -204,15 +206,16 @@ public abstract class AbstractConfiguration {
     /**
      * Check that it is correct to use the given language with this configuration.
      *
-     * @throws UnsupportedOperationException if the language isn't supported.
+     * @throws UnsupportedOperationException
+     *             if the language isn't supported.
      */
     protected void checkLanguageIsAcceptable(Language lang) throws UnsupportedOperationException {
         // do nothing
     }
 
     /**
-     * Get the LanguageVersion of the source file with given name. This depends
-     * on the fileName extension, and the java version.
+     * Get the LanguageVersion of the source file with given name. This depends on
+     * the fileName extension, and the java version.
      * <p>
      * For compatibility with older code that does not always pass in a correct
      * filename, unrecognized files are assumed to be java files.
@@ -236,24 +239,27 @@ public abstract class AbstractConfiguration {
         return languageVersionDiscoverer.getDefaultLanguageVersionForFile(fileName);
     }
 
-
     /**
-     * Set the path used to shorten paths output in the report.
-     * The path does not need to exist. If it exists, it must point
-     * to a directory and not a file. See {@link #getRelativizeRoots()}
-     * for the interpretation.
+     * Set the path used to shorten paths output in the report. The path does not
+     * need to exist. If it exists, it must point to a directory and not a file. See
+     * {@link #getRelativizeRoots()} for the interpretation.
      *
-     * <p>If several paths are added, the shortest paths possible are
-     * built.
+     * <p>
+     * If several paths are added, the shortest paths possible are built.
      *
-     * @param path A path
+     * @param path
+     *            A path
      *
-     * @throws IllegalArgumentException If the path points to a file, and not a directory
-     * @throws NullPointerException     If the path is null
+     * @throws IllegalArgumentException
+     *             If the path points to a file, and not a directory
+     * @throws NullPointerException
+     *             If the path is null
      */
     public void addRelativizeRoot(Path path) {
-        // Note: the given path is not further modified or resolved. E.g. there is no special handling for symlinks.
-        // The goal is, that if the user inputs a path, PMD should output in terms of that path, not its resolution.
+        // Note: the given path is not further modified or resolved. E.g. there is no
+        // special handling for symlinks.
+        // The goal is, that if the user inputs a path, PMD should output in terms of
+        // that path, not its resolution.
         this.relativizeRoots.add(Objects.requireNonNull(path));
 
         if (Files.isRegularFile(path)) {
@@ -262,13 +268,16 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Add several paths to shorten paths that are output in the report.
-     * See {@link #addRelativizeRoot(Path)}.
+     * Add several paths to shorten paths that are output in the report. See
+     * {@link #addRelativizeRoot(Path)}.
      *
-     * @param paths A list of non-null paths
+     * @param paths
+     *            A list of non-null paths
      *
-     * @throws IllegalArgumentException If any path points to a file, and not a directory
-     * @throws NullPointerException     If the list, or any path in the list is null
+     * @throws IllegalArgumentException
+     *             If any path points to a file, and not a directory
+     * @throws NullPointerException
+     *             If the list, or any path in the list is null
      */
     public void addRelativizeRoots(List<Path> paths) {
         for (Path path : paths) {
@@ -280,8 +289,9 @@ public abstract class AbstractConfiguration {
      * Returns the paths used to shorten paths output in the report.
      * <ul>
      * <li>If the list is empty, then paths are not touched
-     * <li>If the list is non-empty, then source file paths are relativized with all the items in the list.
-     * The shortest of these relative paths is taken as the display name of the file.
+     * <li>If the list is non-empty, then source file paths are relativized with all
+     * the items in the list. The shortest of these relative paths is taken as the
+     * display name of the file.
      * </ul>
      */
     public List<Path> getRelativizeRoots() {
@@ -300,15 +310,15 @@ public abstract class AbstractConfiguration {
     /**
      * Set the input URI to process for source code objects.
      *
-     * @param inputUri a single URI
+     * @param inputUri
+     *            a single URI
      */
     public void setInputUri(URI inputUri) {
         this.inputUri = inputUri;
     }
 
     /**
-     * Returns the list of input paths to explore. This is an
-     * unmodifiable list.
+     * Returns the list of input paths to explore. This is an unmodifiable list.
      */
     public @NonNull List<Path> getInputPathList() {
         return Collections.unmodifiableList(inputPaths);
@@ -317,7 +327,8 @@ public abstract class AbstractConfiguration {
     /**
      * Set the input paths to the given list of paths.
      *
-     * @throws NullPointerException If the parameter is null or contains a null value
+     * @throws NullPointerException
+     *             If the parameter is null or contains a null value
      */
     public void setInputPathList(final List<Path> inputPaths) {
         AssertionUtil.requireContainsNoNullValue("input paths", inputPaths);
@@ -327,7 +338,8 @@ public abstract class AbstractConfiguration {
     /**
      * Add an input path. It is not split on commas.
      *
-     * @throws NullPointerException If the parameter is null
+     * @throws NullPointerException
+     *             If the parameter is null
      */
     public void addInputPath(@NonNull Path inputPath) {
         Objects.requireNonNull(inputPath);
@@ -345,20 +357,22 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * The input file path points to a single file, which contains a
-     * comma-separated list of source file names to process.
+     * The input file path points to a single file, which contains a comma-separated
+     * list of source file names to process.
      *
-     * @param inputFilePath path to the file
+     * @param inputFilePath
+     *            path to the file
      */
     public void setInputFilePath(Path inputFilePath) {
         this.inputFilePath = inputFilePath;
     }
 
     /**
-     * The input file path points to a single file, which contains a
-     * comma-separated list of source file names to ignore.
+     * The input file path points to a single file, which contains a comma-separated
+     * list of source file names to ignore.
      *
-     * @param ignoreFilePath  path to the file
+     * @param ignoreFilePath
+     *            path to the file
      */
     public void setIgnoreFilePath(Path ignoreFilePath) {
         this.ignoreFilePath = ignoreFilePath;
@@ -384,7 +398,8 @@ public abstract class AbstractConfiguration {
      * Whether PMD should exit with status 4 (the default behavior, true) if
      * violations are found or just with 0 (to not break the build, e.g.).
      *
-     * <p>Note: If additionally recoverable errors occurred, the exit status is 5. See
+     * <p>
+     * Note: If additionally recoverable errors occurred, the exit status is 5. See
      * {@link #isFailOnError()}.
      *
      * @return failOnViolation
@@ -397,13 +412,15 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Sets whether PMD should exit with status 4 (the default behavior, true)
-     * if violations are found or just with 0 (to not break the build, e.g.).
+     * Sets whether PMD should exit with status 4 (the default behavior, true) if
+     * violations are found or just with 0 (to not break the build, e.g.).
      *
-     * <p>Note: If additionally recoverable errors occurred, the exit status is 5. See
+     * <p>
+     * Note: If additionally recoverable errors occurred, the exit status is 5. See
      * {@link #isFailOnError()}.
      *
-     * @param failOnViolation whether to exit with 4 and fail the build if violations are found.
+     * @param failOnViolation
+     *            whether to exit with 4 and fail the build if violations are found.
      *
      * @see #isFailOnError()
      * @since 6.0.0
@@ -416,7 +433,8 @@ public abstract class AbstractConfiguration {
      * Whether PMD should exit with status 5 (the default behavior, true) if
      * recoverable errors occurred or just with 0 (to not break the build, e.g.).
      *
-     * <p>Note: If only violations are found, the exit status is 4. See
+     * <p>
+     * Note: If only violations are found, the exit status is 4. See
      * {@link #isFailOnViolation()}.
      *
      * @return failOnError
@@ -429,13 +447,16 @@ public abstract class AbstractConfiguration {
     }
 
     /**
-     * Sets whether PMD should exit with status 5 (the default behavior, true)
-     * if recoverable errors occurred or just with 0 (to not break the build, e.g.).
+     * Sets whether PMD should exit with status 5 (the default behavior, true) if
+     * recoverable errors occurred or just with 0 (to not break the build, e.g.).
      *
-     * <p>Note: If only violations are found, the exit status is 4. See
+     * <p>
+     * Note: If only violations are found, the exit status is 4. See
      * {@link #isFailOnViolation()}.
      *
-     * @param failOnError whether to exit with 5 and fail the build if recoverable errors occurred.
+     * @param failOnError
+     *            whether to exit with 5 and fail the build if recoverable errors
+     *            occurred.
      *
      * @see #isFailOnViolation()
      * @since 7.3.0

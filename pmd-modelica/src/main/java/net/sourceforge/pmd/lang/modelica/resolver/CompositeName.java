@@ -5,9 +5,11 @@
 package net.sourceforge.pmd.lang.modelica.resolver;
 
 /**
- * An immutable composite name representation for use in "pattern matching style".
+ * An immutable composite name representation for use in "pattern matching
+ * style".
  *
- * Supports lightweight splitting into first element and "tail" (everything else).
+ * Supports lightweight splitting into first element and "tail" (everything
+ * else).
  */
 public final class CompositeName {
     private static final CompositeName NIL = new CompositeName(null, null);
@@ -67,7 +69,8 @@ public final class CompositeName {
     }
 
     /**
-     * Tries to match the <code>prefix</code> argument with the first elements of this name
+     * Tries to match the <code>prefix</code> argument with the first elements of
+     * this name
      *
      * @return the remaining elements on success or null on failure
      */

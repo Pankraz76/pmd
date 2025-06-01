@@ -70,7 +70,8 @@ public final class Helper {
 
         final List<ASTDmlUpsertStatement> dmlUpsertStatement = node.descendants(ASTDmlUpsertStatement.class).toList();
         final List<ASTDmlUpdateStatement> dmlUpdateStatement = node.descendants(ASTDmlUpdateStatement.class).toList();
-        final List<ASTDmlUndeleteStatement> dmlUndeleteStatement = node.descendants(ASTDmlUndeleteStatement.class).toList();
+        final List<ASTDmlUndeleteStatement> dmlUndeleteStatement = node.descendants(ASTDmlUndeleteStatement.class)
+                .toList();
         final List<ASTDmlMergeStatement> dmlMergeStatement = node.descendants(ASTDmlMergeStatement.class).toList();
         final List<ASTDmlInsertStatement> dmlInsertStatement = node.descendants(ASTDmlInsertStatement.class).toList();
         final List<ASTDmlDeleteStatement> dmlDeleteStatement = node.descendants(ASTDmlDeleteStatement.class).toList();
@@ -97,8 +98,7 @@ public final class Helper {
         if (Helper.isMethodName(methodNode, methodName)) {
             final ASTReferenceExpression reference = methodNode.firstChild(ASTReferenceExpression.class);
             if (reference != null) {
-                final ASTMethodCallExpression nestedMethod = reference
-                        .firstChild(ASTMethodCallExpression.class);
+                final ASTMethodCallExpression nestedMethod = reference.firstChild(ASTMethodCallExpression.class);
                 if (nestedMethod != null) {
                     String[] newMethodNames = Arrays.copyOf(methodNames, methodNames.length - 1);
                     return isMethodCallChain(nestedMethod, newMethodNames);
@@ -133,8 +133,7 @@ public final class Helper {
     }
 
     public static String getFQVariableName(final ASTField variable) {
-        StringBuilder sb = new StringBuilder()
-                .append(variable.getDefiningType()).append(":")
+        StringBuilder sb = new StringBuilder().append(variable.getDefiningType()).append(":")
                 .append(variable.getName());
         return sb.toString();
     }
@@ -146,22 +145,19 @@ public final class Helper {
     }
 
     public static String getFQVariableName(final ASTFieldDeclaration variable) {
-        StringBuilder sb = new StringBuilder()
-                .append(variable.getDefiningType()).append(":")
+        StringBuilder sb = new StringBuilder().append(variable.getDefiningType()).append(":")
                 .append(variable.getImage());
         return sb.toString();
     }
 
     public static String getFQVariableName(final ASTNewKeyValueObjectExpression variable) {
-        StringBuilder sb = new StringBuilder()
-                .append(variable.getDefiningType()).append(":")
+        StringBuilder sb = new StringBuilder().append(variable.getDefiningType()).append(":")
                 .append(variable.getType());
         return sb.toString();
     }
 
     public static String getFQVariableName(final ASTNewObjectExpression variable) {
-        StringBuilder sb = new StringBuilder()
-                .append(variable.getDefiningType()).append(":")
+        StringBuilder sb = new StringBuilder().append(variable.getDefiningType()).append(":")
                 .append(variable.getType());
         return sb.toString();
     }

@@ -15,11 +15,9 @@ import net.sourceforge.pmd.test.AbstractLanguageVersionTest;
 class LanguageVersionTest extends AbstractLanguageVersionTest {
 
     static Collection<TestDescriptor> data() {
-        return Arrays.asList(
-            TestDescriptor.defaultVersionIs(XmlLanguageModule.getInstance(), "1.1"),
-            TestDescriptor.defaultVersionIs(XslDialectModule.getInstance(), "3.0"),
-            TestDescriptor.defaultVersionIs(WsdlDialectModule.getInstance(), "2.0"),
-            TestDescriptor.defaultVersionIs(PomDialectModule.getInstance(), "4.0.0")
-        );
+        return Arrays.asList(TestDescriptor.defaultVersionIs(XmlLanguageModule.getInstance(), "1.1"),
+                TestDescriptor.defaultVersionIs(XslDialectModule.getInstance(), "3.0"),
+                TestDescriptor.defaultVersionIs(WsdlDialectModule.getInstance(), "2.0"),
+                TestDescriptor.defaultVersionIs(PomDialectModule.getInstance(), "4.0.0"));
     }
 }

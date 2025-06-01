@@ -27,16 +27,15 @@ import net.sourceforge.pmd.lang.java.types.JMethodSig;
  */
 class TypeAnnotReflectionOnMethodsTest {
 
-
     @ParameterizedTest
     @EnumSource
     void testTypeAnnotOnParameter(SymImplementation impl) {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
-            abstract void aOnIntParam(@A int i);
-
-            abstract void aOnStringParam(@A String i);
+         * abstract void aOnIntParam(@A int i);
+         * 
+         * abstract void aOnStringParam(@A String i);
          */
 
         {
@@ -51,15 +50,14 @@ class TypeAnnotReflectionOnMethodsTest {
         }
     }
 
-
     @ParameterizedTest
     @EnumSource
     void testTypeAnnotOnReturn(SymImplementation impl) {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
-            abstract @A @B String abOnReturn(@A String i);
-            abstract List<@A String> abOnReturnInArg();
+         * abstract @A @B String abOnReturn(@A String i); abstract List<@A String>
+         * abOnReturnInArg();
          */
 
         {
@@ -69,8 +67,7 @@ class TypeAnnotReflectionOnMethodsTest {
         }
         {
             JMethodSig t = getMethodType(sym, "abOnReturnInArg");
-            assertHasTypeAnnots(((JClassType) t.getReturnType()).getTypeArgs().get(0),
-                                ANNOT_A);
+            assertHasTypeAnnots(((JClassType) t.getReturnType()).getTypeArgs().get(0), ANNOT_A);
         }
     }
 
@@ -80,7 +77,7 @@ class TypeAnnotReflectionOnMethodsTest {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
-            abstract void aOnThrows() throws @A RuntimeException;
+         * abstract void aOnThrows() throws @A RuntimeException;
          */
 
         {
@@ -96,11 +93,11 @@ class TypeAnnotReflectionOnMethodsTest {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
-
-    abstract <@A @B T, E extends T> void abOnTypeParm();
-    abstract <@A @B T, E extends T> T abOnTypeParm2(T t);
-
-
+         * 
+         * abstract <@A @B T, E extends T> void abOnTypeParm(); abstract <@A @B T, E
+         * extends T> T abOnTypeParm2(T t);
+         * 
+         * 
          */
 
         {
@@ -125,8 +122,8 @@ class TypeAnnotReflectionOnMethodsTest {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
-            abstract <@A T, E extends @B T> E bOnTypeParmBound(T t);
-            abstract <@A T, E extends @B Cloneable & @A Serializable> E bOnTypeParmBoundIntersection(T t);
+         * abstract <@A T, E extends @B T> E bOnTypeParmBound(T t); abstract <@A T, E
+         * extends @B Cloneable & @A Serializable> E bOnTypeParmBoundIntersection(T t);
          */
 
         {
@@ -161,7 +158,7 @@ class TypeAnnotReflectionOnMethodsTest {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
-            abstract void abOnReceiver(@A @B ClassWithTypeAnnotationsOnMethods this);
+         * abstract void abOnReceiver(@A @B ClassWithTypeAnnotationsOnMethods this);
          */
 
         {
@@ -170,6 +167,5 @@ class TypeAnnotReflectionOnMethodsTest {
             assertHasTypeAnnots(t.getAnnotatedReceiverType(), ANNOTS_A_B);
         }
     }
-
 
 }

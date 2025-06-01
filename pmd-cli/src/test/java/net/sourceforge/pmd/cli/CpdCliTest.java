@@ -40,10 +40,8 @@ class CpdCliTest extends BaseCliTest {
 
     private static final String CPD_REPORT_HEADER_PATTERN = "<\\?xml version=\"1.0\" encoding=\"UTF-8\"\\?>\n"
             + "<pmd-cpd xmlns=\"https://pmd-code.org/schema/cpd-report\"\n"
-            + "         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-            + "         pmdVersion=\".+?\"\n"
-            + "         timestamp=\".+?\"\n"
-            + "         version=\"1.0.0\"\n"
+            + "         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" + "         pmdVersion=\".+?\"\n"
+            + "         timestamp=\".+?\"\n" + "         version=\"1.0.0\"\n"
             + "         xsi:schemaLocation=\"https://pmd-code.org/schema/cpd-report https://pmd.github.io/schema/cpd-report_1_0_0.xsd\">\n";
 
     private static final Map<String, Integer> NUMBER_OF_TOKENS;
@@ -76,19 +74,14 @@ class CpdCliTest extends BaseCliTest {
     void testEmptyResultRendering() throws Exception {
         final String expectedFilesXml = getExpectedFileEntriesXml(NUMBER_OF_TOKENS.keySet());
         runCliSuccessfully("--minimum-tokens", "340", "--language", "java", "--dir", SRC_DIR, "--format", "xml")
-                .verify(result -> result.checkStdOut(containsPattern(CPD_REPORT_HEADER_PATTERN
-                        + "\\Q" // quote start
-                        + expectedFilesXml
-                        + "</pmd-cpd>\n"
-                        + "\\E" // quote end
+                .verify(result -> result.checkStdOut(containsPattern(CPD_REPORT_HEADER_PATTERN + "\\Q" // quote start
+                        + expectedFilesXml + "</pmd-cpd>\n" + "\\E" // quote end
                 )));
     }
 
     private String getExpectedFileEntryXml(final String filename) {
         final int numberOfTokens = NUMBER_OF_TOKENS.get(filename);
-        return String.format("   <file path=\"%s\"\n         totalNumberOfTokens=\"%d\"/>\n",
-                filename,
-                numberOfTokens);
+        return String.format("   <file path=\"%s\"\n         totalNumberOfTokens=\"%d\"/>\n", filename, numberOfTokens);
     }
 
     private String getExpectedFileEntriesXml(final Collection<String> filenames) {
@@ -107,8 +100,10 @@ class CpdCliTest extends BaseCliTest {
 
     @Test
     void debugLoggingShouldMentionLanguage() throws Exception {
-        final CliExecutionResult result = runCli(VIOLATIONS_FOUND, "--minimum-tokens", "34", "--dir", SRC_DIR, "--debug");
-        result.checkStdErr(containsString("Created new FileCollector with LanguageVersionDiscoverer(LanguageRegistry(java))"));
+        final CliExecutionResult result = runCli(VIOLATIONS_FOUND, "--minimum-tokens", "34", "--dir", SRC_DIR,
+                "--debug");
+        result.checkStdErr(
+                containsString("Created new FileCollector with LanguageVersionDiscoverer(LanguageRegistry(java))"));
     }
 
     @Test
@@ -131,31 +126,34 @@ class CpdCliTest extends BaseCliTest {
 
     @Test
     void testWrongCliOptionsDoPrintUsage() throws Exception {
-        final CliExecutionResult result = runCli(CliExitCode.USAGE_ERROR, "--invalid", "--minimum-tokens", "340", "-d", SRC_DIR);
+        final CliExecutionResult result = runCli(CliExitCode.USAGE_ERROR, "--invalid", "--minimum-tokens", "340", "-d",
+                SRC_DIR);
         result.checkStdErr(containsString("Unknown option: '--invalid'"));
         result.checkStdErr(containsString("Usage: pmd cpd"));
     }
 
     @Test
     void testWrongCliOptionResultsInErrorLoggingAfterDir() throws Exception {
-        // --ignore-identifiers doesn't take an argument anymore - it is interpreted as a file for inputPaths
-        final CliExecutionResult result = runCli(RECOVERED_ERRORS_OR_VIOLATIONS, "--minimum-tokens", "34", "--dir", SRC_DIR, "--ignore-identifiers", "false");
+        // --ignore-identifiers doesn't take an argument anymore - it is interpreted as
+        // a file for inputPaths
+        final CliExecutionResult result = runCli(RECOVERED_ERRORS_OR_VIOLATIONS, "--minimum-tokens", "34", "--dir",
+                SRC_DIR, "--ignore-identifiers", "false");
         result.checkStdErr(containsString("No such file false"));
     }
 
     @Test
     void testWrongCliOptionResultsInErrorLoggingBeforeDir() throws Exception {
-        // --ignore-identifiers doesn't take an argument anymore - it is interpreted as a file for inputPaths
-        final CliExecutionResult result = runCli(RECOVERED_ERRORS_OR_VIOLATIONS, "--minimum-tokens", "34", "--ignore-identifiers", "false", "--dir", SRC_DIR);
+        // --ignore-identifiers doesn't take an argument anymore - it is interpreted as
+        // a file for inputPaths
+        final CliExecutionResult result = runCli(RECOVERED_ERRORS_OR_VIOLATIONS, "--minimum-tokens", "34",
+                "--ignore-identifiers", "false", "--dir", SRC_DIR);
         result.checkStdErr(containsString("No such file false"));
     }
 
     @Test
     void testFindJavaDuplication() throws Exception {
-        runCli(VIOLATIONS_FOUND, "--minimum-tokens", "7", "--dir", SRC_DIR)
-            .verify(result -> result.checkStdOut(containsString(
-                "Found a 14 line (86 tokens) duplication in the following files:"
-            )));
+        runCli(VIOLATIONS_FOUND, "--minimum-tokens", "7", "--dir", SRC_DIR).verify(result -> result
+                .checkStdOut(containsString("Found a 14 line (86 tokens) duplication in the following files:")));
     }
 
     /**
@@ -164,41 +162,32 @@ class CpdCliTest extends BaseCliTest {
     @Test
     void testIgnoreIdentifiers() throws Exception {
         runCli(VIOLATIONS_FOUND, "--minimum-tokens", "34", "--dir", SRC_DIR, "--ignore-identifiers", "--debug")
-            .verify(result -> result.checkStdOut(containsString(
-                    "Found a 14 line (89 tokens) duplication"
-        )));
+                .verify(result -> result.checkStdOut(containsString("Found a 14 line (89 tokens) duplication")));
     }
 
     @Test
     void testNoFailOnViolation() throws Exception {
         runCli(CliExitCode.OK, "--minimum-tokens", "7", "--dir", SRC_DIR, "--no-fail-on-violation")
-            .verify(result -> result.checkStdOut(containsString(
-                "Found a 14 line (86 tokens) duplication in the following files:"
-            )));
+                .verify(result -> result.checkStdOut(
+                        containsString("Found a 14 line (86 tokens) duplication in the following files:")));
     }
 
     @Test
     void testExcludeFiles() throws Exception {
-        runCliSuccessfully("--minimum-tokens", "7", "--dir", SRC_DIR,
-                           "--exclude", SRC_DIR + "/dup2.java",
-                           SRC_DIR + "/dup1.java")
-            .verify(result -> result.checkStdOut(emptyString()));
+        runCliSuccessfully("--minimum-tokens", "7", "--dir", SRC_DIR, "--exclude", SRC_DIR + "/dup2.java",
+                SRC_DIR + "/dup1.java").verify(result -> result.checkStdOut(emptyString()));
     }
 
     @Test
     void testNoDuplicatesResultRendering() throws Exception {
-        String expectedReportPattern = CPD_REPORT_HEADER_PATTERN
-            + "\\Q" // quote start
-            + "   <file path=\"" + SRC_PATH.resolve("dup1.java") + "\"\n"
-            + "         totalNumberOfTokens=\"89\"/>\n"
-            + "   <file path=\"" + SRC_PATH.resolve("dup2.java") + "\"\n"
-            + "         totalNumberOfTokens=\"89\"/>\n"
-            + "   <file path=\"" + SRC_PATH.resolve("fileWith_ISO8859_1_Encoding.java") + "\"\n"
-            + "         totalNumberOfTokens=\"5\"/>\n"
-            + "   <file path=\"" + SRC_PATH.resolve("fileWith_UTF_8_BOM_Encoding.java") + "\"\n"
-            + "         totalNumberOfTokens=\"5\"/>\n"
-            + "</pmd-cpd>\n"
-            + "\\E"; // quote end
+        String expectedReportPattern = CPD_REPORT_HEADER_PATTERN + "\\Q" // quote start
+                + "   <file path=\"" + SRC_PATH.resolve("dup1.java") + "\"\n"
+                + "         totalNumberOfTokens=\"89\"/>\n" + "   <file path=\"" + SRC_PATH.resolve("dup2.java")
+                + "\"\n" + "         totalNumberOfTokens=\"89\"/>\n" + "   <file path=\""
+                + SRC_PATH.resolve("fileWith_ISO8859_1_Encoding.java") + "\"\n"
+                + "         totalNumberOfTokens=\"5\"/>\n" + "   <file path=\""
+                + SRC_PATH.resolve("fileWith_UTF_8_BOM_Encoding.java") + "\"\n"
+                + "         totalNumberOfTokens=\"5\"/>\n" + "</pmd-cpd>\n" + "\\E"; // quote end
 
         runCliSuccessfully("--minimum-tokens", "340", "--language", "java", "--dir", SRC_DIR, "--format", "xml")
                 .verify(result -> result.checkStdOut(containsPattern(expectedReportPattern)));
@@ -214,16 +203,13 @@ class CpdCliTest extends BaseCliTest {
             // set the default encoding under Windows
             System.setProperty("file.encoding", "Cp1252");
 
-            runCli(VIOLATIONS_FOUND, "--minimum-tokens", "34",
-                   "-d", BASE_RES_PATH + "encodingTest/",
-                   "--ignore-identifiers", "--format", "xml",
-                   // request UTF-8 for CPD
-                   "--encoding", "UTF-8",
-                   "--debug")
-                .verify(r -> {
-                    r.checkStdOut(startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
-                    r.checkStdOut(containsPattern("System\\.out\\.println\\([ij] \\+ \"ä\"\\);"));
-                });
+            runCli(VIOLATIONS_FOUND, "--minimum-tokens", "34", "-d", BASE_RES_PATH + "encodingTest/",
+                    "--ignore-identifiers", "--format", "xml",
+                    // request UTF-8 for CPD
+                    "--encoding", "UTF-8", "--debug").verify(r -> {
+                        r.checkStdOut(startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
+                        r.checkStdOut(containsPattern("System\\.out\\.println\\([ij] \\+ \"ä\"\\);"));
+                    });
         });
     }
 
@@ -232,20 +218,19 @@ class CpdCliTest extends BaseCliTest {
      */
     @Test
     void testSkipLexicalErrors() throws Exception {
-        runCli(VIOLATIONS_FOUND,
-               "--minimum-tokens", "10",
-               "-d", BASE_RES_PATH + "badandgood/",
-               "--format", "text",
-               "--skip-lexical-errors")
-            .verify(r -> {
-                r.checkStdErr(containsPattern("Skipping file: Lexical error in file .*?BadFile\\.java"));
-                r.checkStdErr(containsString("--skip-lexical-errors is deprecated. Use --no-fail-on-error instead."));
-                r.checkStdOut(containsString("Found a 5 line (13 tokens) duplication"));
-            });
+        runCli(VIOLATIONS_FOUND, "--minimum-tokens", "10", "-d", BASE_RES_PATH + "badandgood/", "--format", "text",
+                "--skip-lexical-errors").verify(r -> {
+                    r.checkStdErr(containsPattern("Skipping file: Lexical error in file .*?BadFile\\.java"));
+                    r.checkStdErr(
+                            containsString("--skip-lexical-errors is deprecated. Use --no-fail-on-error instead."));
+                    r.checkStdOut(containsString("Found a 5 line (13 tokens) duplication"));
+                });
     }
 
     /**
-     * @see <a href="https://github.com/pmd/pmd/issues/5091">[core] PMD CPD v7.3.0 gives deprecation warning for skipLexicalErrors even when not used #5091</a>
+     * @see <a href="https://github.com/pmd/pmd/issues/5091">[core] PMD CPD v7.3.0
+     *      gives deprecation warning for skipLexicalErrors even when not used
+     *      #5091</a>
      * @throws Exception
      */
     @Test
@@ -259,11 +244,8 @@ class CpdCliTest extends BaseCliTest {
 
     @Test
     void testExitCodeWithLexicalErrors() throws Exception {
-        runCli(RECOVERED_ERRORS_OR_VIOLATIONS,
-                "--minimum-tokens", "10",
-                "-d", Paths.get(BASE_RES_PATH, "badandgood", "BadFile.java").toString(),
-                "--format", "text")
-                .verify(r -> {
+        runCli(RECOVERED_ERRORS_OR_VIOLATIONS, "--minimum-tokens", "10", "-d",
+                Paths.get(BASE_RES_PATH, "badandgood", "BadFile.java").toString(), "--format", "text").verify(r -> {
                     r.checkStdErr(containsPattern("Skipping file: Lexical error in file '.*?BadFile\\.java'"));
                     r.checkStdOut(emptyString());
                 });
@@ -271,12 +253,8 @@ class CpdCliTest extends BaseCliTest {
 
     @Test
     void testExitCodeWithLexicalErrorsNoFail() throws Exception {
-        runCli(OK,
-                "--minimum-tokens", "10",
-                "-d", Paths.get(BASE_RES_PATH, "badandgood", "BadFile.java").toString(),
-                "--format", "text",
-                "--no-fail-on-error")
-                .verify(r -> {
+        runCli(OK, "--minimum-tokens", "10", "-d", Paths.get(BASE_RES_PATH, "badandgood", "BadFile.java").toString(),
+                "--format", "text", "--no-fail-on-error").verify(r -> {
                     r.checkStdErr(containsPattern("Skipping file: Lexical error in file '.*?BadFile\\.java'"));
                     r.checkStdOut(emptyString());
                 });
@@ -284,12 +262,8 @@ class CpdCliTest extends BaseCliTest {
 
     @Test
     void testExitCodeWithLexicalErrorsAndSkipLexical() throws Exception {
-        runCli(OK,
-                "--minimum-tokens", "10",
-                "-d", Paths.get(BASE_RES_PATH, "badandgood", "BadFile.java").toString(),
-                "--format", "text",
-                "--skip-lexical-errors")
-                .verify(r -> {
+        runCli(OK, "--minimum-tokens", "10", "-d", Paths.get(BASE_RES_PATH, "badandgood", "BadFile.java").toString(),
+                "--format", "text", "--skip-lexical-errors").verify(r -> {
                     r.checkStdErr(containsPattern("Skipping file: Lexical error in file .*?BadFile\\.java"));
                     r.checkStdOut(emptyString());
                 });
@@ -297,24 +271,22 @@ class CpdCliTest extends BaseCliTest {
 
     @Test
     void jsShouldFindDuplicatesWithDifferentFileExtensions() throws Exception {
-        runCli(VIOLATIONS_FOUND, "--minimum-tokens", "5", "--language", "typescript",
-               "-d", BASE_RES_PATH + "tsFiles/File1.ts", BASE_RES_PATH + "tsFiles/File2.ts")
-            .checkStdOut(containsString("Found a 9 line (32 tokens) duplication in the following files"));
+        runCli(VIOLATIONS_FOUND, "--minimum-tokens", "5", "--language", "typescript", "-d",
+                BASE_RES_PATH + "tsFiles/File1.ts", BASE_RES_PATH + "tsFiles/File2.ts")
+                .checkStdOut(containsString("Found a 9 line (32 tokens) duplication in the following files"));
     }
 
     @Test
     void jsShouldFindNoDuplicatesWithDifferentFileExtensions() throws Exception {
-        runCli(OK, "--minimum-tokens", "5", "--language", "ecmascript",
-               "-d", BASE_RES_PATH + "tsFiles/")
-            .checkStdOut(emptyString());
+        runCli(OK, "--minimum-tokens", "5", "--language", "ecmascript", "-d", BASE_RES_PATH + "tsFiles/")
+                .checkStdOut(emptyString());
     }
 
     @Test
     void renderEmptyReportXml() throws Exception {
-        runCli(OK, "--minimum-tokens", "5", "--language", "ecmascript",
-               "-f", "xml",
-               "-d", BASE_RES_PATH + "tsFiles/")
-            .checkStdOut(containsPattern(CPD_REPORT_HEADER_PATTERN.substring(0, CPD_REPORT_HEADER_PATTERN.length() - 2) + "/>"));
+        runCli(OK, "--minimum-tokens", "5", "--language", "ecmascript", "-f", "xml", "-d", BASE_RES_PATH + "tsFiles/")
+                .checkStdOut(containsPattern(
+                        CPD_REPORT_HEADER_PATTERN.substring(0, CPD_REPORT_HEADER_PATTERN.length() - 2) + "/>"));
     }
 
     @Test
@@ -324,9 +296,7 @@ class CpdCliTest extends BaseCliTest {
         fileListContent.append(SRC_PATH.resolve("dup1.java")).append(System.lineSeparator());
         fileListContent.append(SRC_PATH.resolve("dup2.java")).append(System.lineSeparator());
         Files.write(fileList, fileListContent.toString().getBytes(StandardCharsets.UTF_8));
-        runCli(VIOLATIONS_FOUND, "--minimum-tokens", "5", "--file-list", fileList.toString())
-            .verify(result -> result.checkStdOut(containsString(
-                    "Found a 14 line (86 tokens) duplication in the following files:"
-            )));
+        runCli(VIOLATIONS_FOUND, "--minimum-tokens", "5", "--file-list", fileList.toString()).verify(result -> result
+                .checkStdOut(containsString("Found a 14 line (86 tokens) duplication in the following files:")));
     }
 }

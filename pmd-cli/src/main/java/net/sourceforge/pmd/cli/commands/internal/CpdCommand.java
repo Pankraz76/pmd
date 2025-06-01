@@ -26,12 +26,13 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 
-@Command(name = "cpd", showDefaultValues = true,
-    description = "Copy/Paste Detector - find duplicate code")
+@Command(name = "cpd", showDefaultValues = true, description = "Copy/Paste Detector - find duplicate code")
 public class CpdCommand extends AbstractAnalysisPmdSubcommand<CPDConfiguration> {
 
-    @Option(names = { "--language", "-l" }, description = "The source code language.%nValid values: ${COMPLETION-CANDIDATES}",
-            defaultValue = CPDConfiguration.DEFAULT_LANGUAGE, converter = CpdLanguageTypeSupport.class, completionCandidates = CpdLanguageTypeSupport.class)
+    @Option(names = { "--language", "-l" },
+            description = "The source code language.%nValid values: ${COMPLETION-CANDIDATES}",
+            defaultValue = CPDConfiguration.DEFAULT_LANGUAGE, converter = CpdLanguageTypeSupport.class,
+            completionCandidates = CpdLanguageTypeSupport.class)
     private Language language;
 
     @Option(names = "--minimum-tokens",
@@ -42,10 +43,10 @@ public class CpdCommand extends AbstractAnalysisPmdSubcommand<CPDConfiguration> 
             description = "Ignore multiple copies of files of the same name and length in comparison.")
     private boolean skipDuplicates;
 
-    @Option(names = { "--format", "-f" },
-            description = "Report format.%nValid values: ${COMPLETION-CANDIDATES}%n"
-                        + "Alternatively, you can provide the fully qualified name of a custom CpdRenderer in the classpath.",
-            defaultValue = CPDConfiguration.DEFAULT_RENDERER, completionCandidates = CpdSupportedReportFormatsCandidates.class)
+    @Option(names = { "--format", "-f" }, description = "Report format.%nValid values: ${COMPLETION-CANDIDATES}%n"
+            + "Alternatively, you can provide the fully qualified name of a custom CpdRenderer in the classpath.",
+            defaultValue = CPDConfiguration.DEFAULT_RENDERER,
+            completionCandidates = CpdSupportedReportFormatsCandidates.class)
     private String rendererName;
 
     @Option(names = "--ignore-literals",
@@ -62,7 +63,8 @@ public class CpdCommand extends AbstractAnalysisPmdSubcommand<CPDConfiguration> 
     @Option(names = "--ignore-usings", description = "Ignore using directives in C#")
     private boolean ignoreUsings;
 
-    @Option(names = "--ignore-literal-sequences", description = "Ignore sequences of literals such as list initializers.")
+    @Option(names = "--ignore-literal-sequences",
+            description = "Ignore sequences of literals such as list initializers.")
     private boolean ignoreLiteralSequences;
 
     @Option(names = "--ignore-sequences", description = "Ignore sequences of identifiers and literals")
@@ -91,13 +93,13 @@ public class CpdCommand extends AbstractAnalysisPmdSubcommand<CPDConfiguration> 
     @Option(names = "--non-recursive", description = "Don't scan subdirectiories.")
     private boolean nonRecursive;
 
-
     /**
      * Converts these parameters into a configuration.
      *
      * @return A new CPDConfiguration corresponding to these parameters
      *
-     * @throws ParameterException if the parameters are inconsistent or incomplete
+     * @throws ParameterException
+     *             if the parameters are inconsistent or incomplete
      */
     @Override
     protected CPDConfiguration toConfiguration() {

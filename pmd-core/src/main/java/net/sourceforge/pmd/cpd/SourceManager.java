@@ -38,7 +38,6 @@ class SourceManager implements AutoCloseable {
         files.forEach(f -> fileByPathId.put(f.getFileId(), f));
     }
 
-
     List<TextFile> getTextFiles() {
         return textFiles;
     }
@@ -65,7 +64,6 @@ class SourceManager implements AutoCloseable {
     public int size() {
         return files.size();
     }
-
 
     @Override
     public void close() throws IOException {

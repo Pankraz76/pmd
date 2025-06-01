@@ -26,9 +26,10 @@ public class CodeClimateRenderer extends AbstractIncrementingRenderer {
     public static final String NAME = "codeclimate";
     public static final String BODY_PLACEHOLDER = "REPLACE_THIS_WITH_MARKDOWN";
     public static final int REMEDIATION_POINTS_DEFAULT = 50000;
-    public static final String[] CODECLIMATE_DEFAULT_CATEGORIES = new String[] {"Style"};
+    public static final String[] CODECLIMATE_DEFAULT_CATEGORIES = new String[] { "Style" };
 
-    // Note: required by https://github.com/codeclimate/platform/blob/master/spec/analyzers/SPEC.md
+    // Note: required by
+    // https://github.com/codeclimate/platform/blob/master/spec/analyzers/SPEC.md
     protected static final String NULL_CHARACTER = "\u0000";
     protected static final List<String> INTERNAL_DEV_PROPERTIES = Arrays.asList("version", "xpath");
     private static final String PMD_PROPERTIES_URL = getPmdPropertiesURL();
@@ -41,7 +42,8 @@ public class CodeClimateRenderer extends AbstractIncrementingRenderer {
     private static String getPmdPropertiesURL() {
         final String BASE_URL = "https://docs.pmd-code.org/";
         final String PAGE = "/pmd_userdocs_configuring_rules.html#rule-properties";
-        final String VERSION_PART = PMDVersion.isUnknown() || PMDVersion.isSnapshot() ? "latest" : "pmd-doc-" + PMDVersion.VERSION;
+        final String VERSION_PART = PMDVersion.isUnknown() || PMDVersion.isSnapshot() ? "latest"
+                : "pmd-doc-" + PMDVersion.VERSION;
         return BASE_URL + VERSION_PART + PAGE;
     }
 
@@ -59,10 +61,11 @@ public class CodeClimateRenderer extends AbstractIncrementingRenderer {
     }
 
     /**
-     * Generate a CodeClimateIssue suitable for processing into JSON from the
-     * given RuleViolation.
+     * Generate a CodeClimateIssue suitable for processing into JSON from the given
+     * RuleViolation.
      *
-     * @param rv RuleViolation to convert.
+     * @param rv
+     *            RuleViolation to convert.
      *
      * @return The generated issue.
      */
@@ -117,22 +120,12 @@ public class CodeClimateRenderer extends AbstractIncrementingRenderer {
 
     private <T> String getBody() {
         StringBuilder result = new StringBuilder();
-        result.append("## ")
-                .append(rule.getName())
-                .append("\\n\\n")
-                .append("Since: PMD ")
-                .append(rule.getSince())
-                .append("\\n\\n")
-                .append("Priority: ")
-                .append(rule.getPriority())
-                .append("\\n\\n")
+        result.append("## ").append(rule.getName()).append("\\n\\n").append("Since: PMD ").append(rule.getSince())
+                .append("\\n\\n").append("Priority: ").append(rule.getPriority()).append("\\n\\n")
                 .append("[Categories](https://github.com/codeclimate/platform/blob/master/spec/analyzers/SPEC.md#categories): ")
-                .append(Arrays.toString(getCategories()).replaceAll("[\\[\\]]", ""))
-                .append("\\n\\n")
+                .append(Arrays.toString(getCategories()).replaceAll("[\\[\\]]", "")).append("\\n\\n")
                 .append("[Remediation Points](https://github.com/codeclimate/platform/blob/master/spec/analyzers/SPEC.md#remediation-points): ")
-                .append(getRemediationPoints())
-                .append("\\n\\n")
-                .append(cleaned(rule.getDescription()));
+                .append(getRemediationPoints()).append("\\n\\n").append(cleaned(rule.getDescription()));
 
         if (!rule.getExamples().isEmpty()) {
             result.append("\\n\\n### Example:\\n\\n");
@@ -161,7 +154,8 @@ public class CodeClimateRenderer extends AbstractIncrementingRenderer {
                 String propertyValue = typed.serializer().toString(value);
                 propertyValue = propertyValue.replaceAll("\\R", "\\\\n");
 
-                result.append(propertyName).append(" | ").append(propertyValue).append(" | ").append(property.description()).append("\\n");
+                result.append(propertyName).append(" | ").append(propertyValue).append(" | ")
+                        .append(property.description()).append("\\n");
             }
         }
         return cleaned(result.toString());

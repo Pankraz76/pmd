@@ -25,7 +25,8 @@ import net.sourceforge.pmd.reporting.RuleContext;
 
 public class UnavailableFunctionRule extends AbstractSwiftRule {
 
-    private static final Pattern AVAILABLE_UNAVAILABLE = Pattern.compile("^\\s*@available\\s*\\(\\s*\\*\\s*,\\s*unavailable\\s*\\)\\s*$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern AVAILABLE_UNAVAILABLE = Pattern
+            .compile("^\\s*@available\\s*\\(\\s*\\*\\s*,\\s*unavailable\\s*\\)\\s*$", Pattern.CASE_INSENSITIVE);
     private static final String FATAL_ERROR = "fatalError";
 
     @Override
@@ -81,11 +82,10 @@ public class UnavailableFunctionRule extends AbstractSwiftRule {
 
             private boolean hasUnavailableModifier(final List<SwAttribute> attributes) {
                 return attributes.stream().anyMatch(attr -> {
-                        Chars text = attr.getTextDocument().sliceTranslatedText(attr.getTextRegion());
-                        Matcher matcher = AVAILABLE_UNAVAILABLE.matcher(text);
-                        return matcher.matches();
-                    }
-                );
+                    Chars text = attr.getTextDocument().sliceTranslatedText(attr.getTextRegion());
+                    Matcher matcher = AVAILABLE_UNAVAILABLE.matcher(text);
+                    return matcher.matches();
+                });
             }
         };
     }

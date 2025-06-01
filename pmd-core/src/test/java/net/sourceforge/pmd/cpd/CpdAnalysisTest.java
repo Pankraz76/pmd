@@ -61,8 +61,8 @@ class CpdAnalysisTest {
     }
 
     /**
-     * As java doesn't support symlinks in zip files, maven does not, too. So,
-     * we are creating the symlinks manually here before the test.
+     * As java doesn't support symlinks in zip files, maven does not, too. So, we
+     * are creating the symlinks manually here before the test.
      *
      * @throws Exception
      *             any error
@@ -80,8 +80,7 @@ class CpdAnalysisTest {
     }
 
     /**
-     * A broken symlink (which is basically a not existing file), should be
-     * skipped.
+     * A broken symlink (which is basically a not existing file), should be skipped.
      *
      * @throws Exception
      *             any error
@@ -102,8 +101,8 @@ class CpdAnalysisTest {
     }
 
     /**
-     * A file should be added only once - even if it was found twice, because of
-     * a sym link.
+     * A file should be added only once - even if it was found twice, because of a
+     * sym link.
      *
      * @throws Exception
      *             any error
@@ -143,8 +142,8 @@ class CpdAnalysisTest {
     }
 
     /**
-     * Add a file with a relative path - should still be added and not be
-     * detected as a sym link.
+     * Add a file with a relative path - should still be added and not be detected
+     * as a sym link.
      *
      * @throws Exception
      *             any error
@@ -162,8 +161,9 @@ class CpdAnalysisTest {
     }
 
     /**
-     * The order of the duplicates is dependent on the order the files are added to CPD.
-     * See also https://github.com/pmd/pmd/issues/1196
+     * The order of the duplicates is dependent on the order the files are added to
+     * CPD. See also https://github.com/pmd/pmd/issues/1196
+     * 
      * @throws Exception
      */
     @Test
@@ -178,7 +178,8 @@ class CpdAnalysisTest {
                 List<Match> matches = report.getMatches();
                 assertFalse(matches.isEmpty());
                 for (Match match : matches) {
-                    // the file added first was dup2, but we sort now the files alphabetically, so dup1 is the first.
+                    // the file added first was dup2, but we sort now the files alphabetically, so
+                    // dup1 is the first.
                     assertEquals("dup1.txt", match.getFirstMark().getFileId().getFileName());
                     assertEquals("dup2.txt", match.getSecondMark().getFileId().getFileName());
                 }
@@ -207,13 +208,16 @@ class CpdAnalysisTest {
 
         config.setSkipLexicalErrors(false);
         try (CpdAnalysis cpd = CpdAnalysis.create(config)) {
-            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo.dummy"), DummyLanguageModule.CPD_THROW_LEX_EXCEPTION));
-            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo2.dummy"), DummyLanguageModule.CPD_THROW_MALFORMED_SOURCE_EXCEPTION));
+            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo.dummy"),
+                    DummyLanguageModule.CPD_THROW_LEX_EXCEPTION));
+            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo2.dummy"),
+                    DummyLanguageModule.CPD_THROW_MALFORMED_SOURCE_EXCEPTION));
             cpd.performAnalysis();
         }
         verify(reporter).errorEx(eq("Error while tokenizing"), any(LexException.class));
         verify(reporter).errorEx(eq("Error while tokenizing"), any(MalformedSourceException.class));
-        verify(reporter).error(eq("Errors were detected while lexing source, exiting because --skip-lexical-errors is unset."));
+        verify(reporter)
+                .error(eq("Errors were detected while lexing source, exiting because --skip-lexical-errors is unset."));
         verifyNoMoreInteractions(reporter);
     }
 
@@ -224,8 +228,10 @@ class CpdAnalysisTest {
         config.setReporter(reporter);
 
         try (CpdAnalysis cpd = CpdAnalysis.create(config)) {
-            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo.dummy"), DummyLanguageModule.CPD_THROW_LEX_EXCEPTION));
-            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo2.dummy"), DummyLanguageModule.CPD_THROW_MALFORMED_SOURCE_EXCEPTION));
+            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo.dummy"),
+                    DummyLanguageModule.CPD_THROW_LEX_EXCEPTION));
+            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo2.dummy"),
+                    DummyLanguageModule.CPD_THROW_MALFORMED_SOURCE_EXCEPTION));
             cpd.performAnalysis(report::set);
         }
 
@@ -252,8 +258,10 @@ class CpdAnalysisTest {
         config.setReporter(reporter);
 
         try (CpdAnalysis cpd = CpdAnalysis.create(config)) {
-            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo.dummy"), DummyLanguageModule.CPD_THROW_LEX_EXCEPTION));
-            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo2.dummy"), DummyLanguageModule.CPD_THROW_MALFORMED_SOURCE_EXCEPTION));
+            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo.dummy"),
+                    DummyLanguageModule.CPD_THROW_LEX_EXCEPTION));
+            assertTrue(cpd.files().addSourceFile(FileId.fromPathLikeString("foo2.dummy"),
+                    DummyLanguageModule.CPD_THROW_MALFORMED_SOURCE_EXCEPTION));
             cpd.performAnalysis();
         }
         verify(reporter).errorEx(eq("Skipping file"), any(LexException.class));

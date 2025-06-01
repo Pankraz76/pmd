@@ -10,10 +10,12 @@ import net.sourceforge.pmd.util.AssertionUtil;
 
 /**
  * Wraps a piece of text, and converts absolute offsets to line/column
- * coordinates, and back. This is used by the {@link TextDocument} implementation.
+ * coordinates, and back. This is used by the {@link TextDocument}
+ * implementation.
  *
- * <p>This used to be public. We don't need it anymore, {@link TextDocument}
- * is a higher level abstraction.
+ * <p>
+ * This used to be public. We don't need it anymore, {@link TextDocument} is a
+ * higher level abstraction.
  */
 final class SourceCodePositioner {
 
@@ -60,11 +62,13 @@ final class SourceCodePositioner {
     /**
      * Returns the line number of the character at the given offset.
      *
-     * @param offset Offset in the document (zero-based)
+     * @param offset
+     *            Offset in the document (zero-based)
      *
      * @return Line number (1-based), or -1
      *
-     * @throws IndexOutOfBoundsException If the offset is invalid in this document
+     * @throws IndexOutOfBoundsException
+     *             If the offset is invalid in this document
      */
     public int lineNumberFromOffset(final int offset) {
         AssertionUtil.requireIndexNonNegative("offset", offset);
@@ -81,17 +85,19 @@ final class SourceCodePositioner {
     }
 
     /**
-     * Returns the column number of the character at the given offset.
-     * The offset is not relative to the line (the line number is just
-     * a hint). If the column number does not exist (on the given line),
-     * returns -1.
+     * Returns the column number of the character at the given offset. The offset is
+     * not relative to the line (the line number is just a hint). If the column
+     * number does not exist (on the given line), returns -1.
      *
-     * @param lineNumber   Line number (1-based)
-     * @param globalOffset Global offset in the document (zero-based)
+     * @param lineNumber
+     *            Line number (1-based)
+     * @param globalOffset
+     *            Global offset in the document (zero-based)
      *
      * @return Column number (1-based), or -1
      *
-     * @throws IndexOutOfBoundsException If the line number does not exist
+     * @throws IndexOutOfBoundsException
+     *             If the line number does not exist
      */
     public int columnFromOffset(final int lineNumber, final int globalOffset) {
         AssertionUtil.requireInPositiveRange("Line number", lineNumber, lineOffsets.length);
@@ -99,7 +105,8 @@ final class SourceCodePositioner {
         int lineIndex = lineNumber - 1;
 
         if (globalOffset > lineOffsets[lineNumber]) {
-            // throw new IllegalArgumentException("Column " + (col + 1) + " does not exist on line " + lineNumber);
+            // throw new IllegalArgumentException("Column " + (col + 1) + " does not exist
+            // on line " + lineNumber);
             return -1;
         }
 
@@ -107,12 +114,13 @@ final class SourceCodePositioner {
     }
 
     /**
-     * Finds the offset of a position given (line,column) coordinates.
-     * Returns -1 if the parameters don't identify a caret position in
-     * the wrapped text.
+     * Finds the offset of a position given (line,column) coordinates. Returns -1 if
+     * the parameters don't identify a caret position in the wrapped text.
      *
-     * @param line   Line number (1-based)
-     * @param column Column number (1-based)
+     * @param line
+     *            Line number (1-based)
+     * @param column
+     *            Column number (1-based)
      *
      * @return Text offset (zero-based), or -1
      */
@@ -131,21 +139,23 @@ final class SourceCodePositioner {
     }
 
     /**
-     * Returns the offset of the end of the given line. This is the caret
-     * position that follows the last character on the line (which includes
-     * the line terminator if any). This is the caret position at the
-     * start of the next line, except if the line is the last in the document.
+     * Returns the offset of the end of the given line. This is the caret position
+     * that follows the last character on the line (which includes the line
+     * terminator if any). This is the caret position at the start of the next line,
+     * except if the line is the last in the document.
      *
-     * @param line Line number (1-based)
+     * @param line
+     *            Line number (1-based)
      *
      * @return Text offset
      *
-     * @throws IndexOutOfBoundsException If the line is invalid
+     * @throws IndexOutOfBoundsException
+     *             If the line is invalid
      */
     public int offsetOfEndOfLine(final int line) {
         if (!isValidLine(line)) {
             throw new IndexOutOfBoundsException(
-                line + " is not a valid line number, expected at most " + lineOffsets.length);
+                    line + " is not a valid line number, expected at most " + lineOffsets.length);
         }
 
         return lineOffsets[line];
@@ -156,8 +166,7 @@ final class SourceCodePositioner {
     }
 
     /**
-     * Returns the number of lines, which is also the ordinal of the
-     * last line.
+     * Returns the number of lines, which is also the ordinal of the last line.
      */
     public int getLastLine() {
         return lineOffsets.length - 1;
@@ -183,13 +192,14 @@ final class SourceCodePositioner {
     }
 
     /**
-     * Builds a new positioner for the given char sequence.
-     * The char sequence should have its newline delimiters normalized
-     * to {@link TextFileContent#NORMALIZED_LINE_TERM}.
-     * The char sequence should not change state (eg a {@link StringBuilder})
-     * after construction, otherwise this positioner becomes unreliable.
+     * Builds a new positioner for the given char sequence. The char sequence should
+     * have its newline delimiters normalized to
+     * {@link TextFileContent#NORMALIZED_LINE_TERM}. The char sequence should not
+     * change state (eg a {@link StringBuilder}) after construction, otherwise this
+     * positioner becomes unreliable.
      *
-     * @param charSeq Text to wrap
+     * @param charSeq
+     *            Text to wrap
      */
     public static SourceCodePositioner create(CharSequence charSeq) {
         final int len = charSeq.length();
@@ -210,7 +220,8 @@ final class SourceCodePositioner {
     static final class Builder {
 
         private int[] buf;
-        private int count = 1; // note the first element of the buffer is always 0 (the offset of the first line)
+        private int count = 1; // note the first element of the buffer is always 0 (the offset of the first
+                               // line)
         private int lastLineOffset = 0;
 
         Builder(int bufSize) {
@@ -224,9 +235,10 @@ final class SourceCodePositioner {
         /**
          * Record a line ending. The parameter must be monotonically increasing.
          *
-         * @param offset The index of the character right after the line
-         *               terminator in the source text. Eg for {@code \r\n}
-         *               or {@code \n}, it's the index of the {@code \n}, plus 1.
+         * @param offset
+         *            The index of the character right after the line terminator in the
+         *            source text. Eg for {@code \r\n} or {@code \n}, it's the index of
+         *            the {@code \n}, plus 1.
          */
         public void addLineEndAtOffset(int offset) {
             addLineImpl(offset, false);
@@ -235,8 +247,7 @@ final class SourceCodePositioner {
         private void addLineImpl(int offset, boolean isEof) {
             if (offset < 0 || offset < lastLineOffset || offset == lastLineOffset && !isEof) {
                 throw new IllegalArgumentException(
-                    "Invalid offset " + offset + " (last offset " + lastLineOffset + ")"
-                );
+                        "Invalid offset " + offset + " (last offset " + lastLineOffset + ")");
             }
             lastLineOffset = offset;
             if (count >= buf.length) {

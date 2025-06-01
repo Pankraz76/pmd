@@ -17,8 +17,8 @@ import net.sourceforge.pmd.util.log.PmdReporter;
 import net.sourceforge.pmd.util.log.internal.SimpleMessageReporter;
 
 /**
- * Interacts with slf4j-simple to reconfigure logging levels based on
- * the debug flag.
+ * Interacts with slf4j-simple to reconfigure logging levels based on the debug
+ * flag.
  *
  * @author Clément Fournier
  */
@@ -33,12 +33,14 @@ public final class PmdRootLogger {
         // utility class
     }
 
-    public static <C extends AbstractConfiguration, R> R executeInLoggingContext(C conf, boolean isDebug, Function<C, R> runnable) {
+    public static <C extends AbstractConfiguration, R> R executeInLoggingContext(C conf, boolean isDebug,
+            Function<C, R> runnable) {
         Level curLogLevel = Slf4jSimpleConfiguration.getDefaultLogLevel();
         boolean resetLogLevel = false;
         try {
             // only reconfigure logging, if debug flag was used on command line
-            // otherwise just use whatever is in conf/simplelogger.properties which happens automatically
+            // otherwise just use whatever is in conf/simplelogger.properties which happens
+            // automatically
             if (isDebug) {
                 Slf4jSimpleConfiguration.reconfigureDefaultLogLevel(Level.TRACE);
                 // need to reload the logger with the new configuration
@@ -63,8 +65,10 @@ public final class PmdRootLogger {
     }
 
     private static @NonNull PmdReporter setupMessageReporter() {
-        // Note: This implementation uses slf4j as the backend. If PMD is integrated into an application
-        // a slf4j implementation binding must be provided to see any loggings (even errors).
+        // Note: This implementation uses slf4j as the backend. If PMD is integrated
+        // into an application
+        // a slf4j implementation binding must be provided to see any loggings (even
+        // errors).
         // In pmd-cli, we use slf4j-simple.
 
         // create a top-level reporter

@@ -12,12 +12,11 @@ import net.sourceforge.pmd.properties.internal.PropertyParsingUtil;
 import net.sourceforge.pmd.util.CollectionUtil;
 
 /**
- * Decorates an XmlMapper with some {@link PropertyConstraint}s.
- * Those are checked when the value is parsed. This is used to
- * report errors on the most specific failing element.
+ * Decorates an XmlMapper with some {@link PropertyConstraint}s. Those are
+ * checked when the value is parsed. This is used to report errors on the most
+ * specific failing element.
  */
 class ConstraintDecorator<T> extends PropertySerializer<T> {
-
 
     private final PropertySerializer<T> propertySerializer;
     private final List<PropertyConstraint<? super T>> constraints;
@@ -52,9 +51,7 @@ class ConstraintDecorator<T> extends PropertySerializer<T> {
 
     @Override
     public String toString() {
-        return "ConstraintDecorator{"
-            + "propertySerializer=" + propertySerializer
-            + ", constraints=" + constraints
-            + '}';
+        return "ConstraintDecorator{" + "propertySerializer=" + propertySerializer + ", constraints=" + constraints
+                + '}';
     }
 }

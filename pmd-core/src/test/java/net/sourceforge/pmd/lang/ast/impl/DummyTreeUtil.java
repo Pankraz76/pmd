@@ -14,17 +14,14 @@ import net.sourceforge.pmd.lang.ast.Node;
 import net.sourceforge.pmd.lang.ast.NodeStream;
 import net.sourceforge.pmd.util.CollectionUtil;
 
-
 /**
  * @author Clément Fournier
  */
 public final class DummyTreeUtil {
 
-
     private DummyTreeUtil() {
 
     }
-
 
     public static DummyRootNode root(DummyNode... children) {
         return nodeImpl(new DummyRootNode(), children);
@@ -45,7 +42,6 @@ public final class DummyTreeUtil {
         return node;
     }
 
-
     public static DummyNode followPath(DummyNode root, String path) {
         List<Integer> pathIndices = CollectionUtil.map(path.split(""), Integer::valueOf);
 
@@ -57,10 +53,9 @@ public final class DummyTreeUtil {
         return (DummyNode) current;
     }
 
-
     /**
-     * Must wrap the actual {@link #node(DummyNode...)} usages to assign each node the
-     * image of its path from the root (in indices). E.g.
+     * Must wrap the actual {@link #node(DummyNode...)} usages to assign each node
+     * the image of its path from the root (in indices). E.g.
      *
      * <pre>
      * node(         ""
@@ -79,7 +74,6 @@ public final class DummyTreeUtil {
         assignPathImage(dummyNode, "");
         return dummyNode;
     }
-
 
     private static void assignPathImage(DummyNode node, String curPath) {
         node.setImage(curPath);

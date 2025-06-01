@@ -3,6 +3,7 @@
  */
 
 /**
- *  Contains Julia tokenizer and language classes.
+ * Contains Julia tokenizer and language classes.
  */
+
 package net.sourceforge.pmd.lang.julia.cpd;

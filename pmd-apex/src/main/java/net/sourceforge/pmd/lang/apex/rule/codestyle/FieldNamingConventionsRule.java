@@ -21,8 +21,8 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 public class FieldNamingConventionsRule extends AbstractNamingConventionsRule {
     private static final Map<String, String> DESCRIPTOR_TO_DISPLAY_NAME = new HashMap<>();
 
-    private static final PropertyDescriptor<Pattern> ENUM_CONSTANT_REGEX = prop("enumConstantPattern", "enum constant field",
-            DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(ALL_CAPS).build();
+    private static final PropertyDescriptor<Pattern> ENUM_CONSTANT_REGEX = prop("enumConstantPattern",
+            "enum constant field", DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(ALL_CAPS).build();
 
     private static final PropertyDescriptor<Pattern> CONSTANT_REGEX = prop("constantPattern", "constant field",
             DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(ALL_CAPS).build();
@@ -43,7 +43,6 @@ public class FieldNamingConventionsRule extends AbstractNamingConventionsRule {
         definePropertyDescriptor(STATIC_REGEX);
         definePropertyDescriptor(INSTANCE_REGEX);
     }
-
 
     @Override
     protected @NonNull RuleTargetSelector buildTargetSelector() {
@@ -78,7 +77,8 @@ public class FieldNamingConventionsRule extends AbstractNamingConventionsRule {
     }
 
     private ASTFieldDeclaration getFieldDeclaration(ASTField field) {
-        return field.getParent().descendants(ASTFieldDeclaration.class).first(fieldDeclaration -> fieldDeclaration.getName().equals(field.getName()));
+        return field.getParent().descendants(ASTFieldDeclaration.class)
+                .first(fieldDeclaration -> fieldDeclaration.getName().equals(field.getName()));
     }
 
     @Override

@@ -20,12 +20,12 @@ public final class VFTestUtils {
     }
 
     /**
-     * Salesforce metadata is stored in two different formats, the newer sfdx form and the older mdapi format. Used to
-     * locate metadata on the file system during unit tests.
+     * Salesforce metadata is stored in two different formats, the newer sfdx form
+     * and the older mdapi format. Used to locate metadata on the file system during
+     * unit tests.
      */
     public enum MetadataFormat {
-        SFDX("sfdx"),
-        MDAPI("mdapi");
+        SFDX("sfdx"), MDAPI("mdapi");
 
         public final String directoryName;
 
@@ -35,13 +35,11 @@ public final class VFTestUtils {
     }
 
     /**
-     * Represents the metadata types that are referenced from unit tests. Used to locate metadata on the file system
-     * during unit tests.
+     * Represents the metadata types that are referenced from unit tests. Used to
+     * locate metadata on the file system during unit tests.
      */
     public enum MetadataType {
-        Apex("classes"),
-        Objects("objects"),
-        Vf("pages");
+        Apex("classes"), Objects("objects"), Vf("pages");
 
         public final String directoryName;
 
@@ -51,14 +49,15 @@ public final class VFTestUtils {
     }
 
     public static LanguageProcessorRegistry fakeLpRegistry() {
-        LanguageRegistry registry = new LanguageRegistry(setOf(ApexLanguageModule.getInstance(), VfLanguageModule.getInstance()));
+        LanguageRegistry registry = new LanguageRegistry(
+                setOf(ApexLanguageModule.getInstance(), VfLanguageModule.getInstance()));
         return LanguageProcessorRegistry.create(registry, Collections.emptyMap(), PmdReporter.quiet());
     }
 
     /**
-     * @return the path of the directory that matches the given parameters. The directory path is constructed using the
-     * following convention:
-     * src/test/resources/_decomposed_test_package_name_/_test_class_name_minus_Test_/metadata/_metadata_format_/_metadata_type_
+     * @return the path of the directory that matches the given parameters. The
+     *         directory path is constructed using the following convention:
+     *         src/test/resources/_decomposed_test_package_name_/_test_class_name_minus_Test_/metadata/_metadata_format_/_metadata_type_
      */
     public static Path getMetadataPath(Object testClazz, MetadataFormat metadataFormat, MetadataType metadataType) {
         Path path = Paths.get("src", "test", "resources");

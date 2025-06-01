@@ -15,10 +15,10 @@ import net.sourceforge.pmd.lang.ast.impl.DummyTreeUtil;
 
 class RuleContextTest {
 
-
     @Test
     void testMessage() throws Exception {
-        Report report = getReport(new FooRule(), (r, ctx) -> ctx.addViolationWithMessage(DummyTreeUtil.tree(DummyTreeUtil::root), "message with \"'{'\""));
+        Report report = getReport(new FooRule(), (r, ctx) -> ctx
+                .addViolationWithMessage(DummyTreeUtil.tree(DummyTreeUtil::root), "message with \"'{'\""));
 
         assertEquals("message with \"{\"", report.getViolations().get(0).getDescription());
     }

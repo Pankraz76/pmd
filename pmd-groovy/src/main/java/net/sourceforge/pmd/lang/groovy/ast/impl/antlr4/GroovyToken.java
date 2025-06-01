@@ -16,8 +16,8 @@ import groovyjarjarantlr4.v4.runtime.Token;
 /**
  * A Groovy specific token representation.
  * 
- * This is simply a copy of {@link AntlrToken} but
- * referencing the jarjared version of antlr4 used by the groovy lexer.
+ * This is simply a copy of {@link AntlrToken} but referencing the jarjared
+ * version of antlr4 used by the groovy lexer.
  */
 public class GroovyToken implements GenericToken<GroovyToken> {
 
@@ -26,13 +26,15 @@ public class GroovyToken implements GenericToken<GroovyToken> {
     private final TextDocument textDoc;
     GroovyToken next;
 
-
     /**
      * Constructor
      *
-     * @param token           The antlr token implementation
-     * @param previousComment The previous comment
-     * @param textDoc         The text document
+     * @param token
+     *            The antlr token implementation
+     * @param previousComment
+     *            The previous comment
+     * @param textDoc
+     *            The text document
      */
     public GroovyToken(final Token token, final GroovyToken previousComment, TextDocument textDoc) {
         this.token = token;

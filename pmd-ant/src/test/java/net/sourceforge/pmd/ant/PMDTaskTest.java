@@ -59,13 +59,11 @@ class PMDTaskTest extends AbstractAntTest {
     void testInvalidLanguageVersion() {
         try {
             executeTarget("testInvalidLanguageVersion");
-            assertEquals(
-                    "The following language is not supported:<sourceLanguage name=\"java\" version=\"42\" />.",
+            assertEquals("The following language is not supported:<sourceLanguage name=\"java\" version=\"42\" />.",
                     log.toString());
             fail("This should throw an exception");
         } catch (BuildException ex) {
-            assertEquals(
-                    "The following language is not supported:<sourceLanguage name=\"java\" version=\"42\" />.",
+            assertEquals("The following language is not supported:<sourceLanguage name=\"java\" version=\"42\" />.",
                     ex.getMessage());
         }
     }
@@ -78,7 +76,8 @@ class PMDTaskTest extends AbstractAntTest {
             String actual = IOUtil.readToString(in, StandardCharsets.UTF_8);
             // remove any trailing newline
             actual = actual.replaceAll("\n|\r", "");
-            assertThat(actual, containsString("src" + File.separator + "sample.dummy:1:\tSampleXPathRule:\tTest Rule 2"));
+            assertThat(actual,
+                    containsString("src" + File.separator + "sample.dummy:1:\tSampleXPathRule:\tTest Rule 2"));
         }
     }
 
@@ -87,7 +86,7 @@ class PMDTaskTest extends AbstractAntTest {
         executeTarget("testXmlFormatter");
 
         try (InputStream in = Files.newInputStream(Paths.get("target/pmd-ant-xml.xml"));
-             InputStream expectedStream = PMDTaskTest.class.getResourceAsStream("xml/expected-pmd-ant-xml.xml")) {
+                InputStream expectedStream = PMDTaskTest.class.getResourceAsStream("xml/expected-pmd-ant-xml.xml")) {
             String actual = readAndNormalize(in);
             String expected = readAndNormalize(expectedStream);
 

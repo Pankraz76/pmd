@@ -5,7 +5,8 @@
 package net.sourceforge.pmd.lang.modelica.resolver;
 
 /**
- * Some Modelica <i>type</i> (either class or built-in type) that some component may have.
+ * Some Modelica <i>type</i> (either class or built-in type) that some component
+ * may have.
  */
 public interface ModelicaType extends ResolvableEntity {
     /**
@@ -14,7 +15,8 @@ public interface ModelicaType extends ResolvableEntity {
     String getSimpleTypeName();
 
     /**
-     * Returns the fully-qualified name, when appropriate, or simple name for primitive types.
+     * Returns the fully-qualified name, when appropriate, or simple name for
+     * primitive types.
      */
     String getFullTypeName();
 }

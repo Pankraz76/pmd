@@ -78,9 +78,8 @@ class DOMLineNumbers {
         }
 
         // autoclosing element, eg <a />
-        boolean isAutoClose = !n.hasChildNodes()
-                && n.getNodeType() == Node.ELEMENT_NODE
-                // nextIndex is up to the closing > at this point
+        boolean isAutoClose = !n.hasChildNodes() && n.getNodeType() == Node.ELEMENT_NODE
+        // nextIndex is up to the closing > at this point
                 && xmlString.startsWith("/>", nextIndex - 2);
 
         if (n.getNodeType() == Node.ELEMENT_NODE && !isAutoClose) {

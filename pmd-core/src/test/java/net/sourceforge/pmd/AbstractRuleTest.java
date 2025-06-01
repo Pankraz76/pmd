@@ -33,17 +33,17 @@ import net.sourceforge.pmd.reporting.InternalApiBridge;
 import net.sourceforge.pmd.reporting.RuleContext;
 import net.sourceforge.pmd.reporting.RuleViolation;
 
-
 class AbstractRuleTest {
 
     private static class MyRule extends AbstractRule {
-        private static final PropertyDescriptor<String> FOO_PROPERTY = PropertyFactory.stringProperty("foo").desc("foo property").defaultValue("x").build();
-        private static final PropertyDescriptor<String> FOO_DEFAULT_PROPERTY = PropertyFactory.stringProperty("fooDefault")
-                .defaultValue("bar")
-                .desc("Property without value uses default value")
+        private static final PropertyDescriptor<String> FOO_PROPERTY = PropertyFactory.stringProperty("foo")
+                .desc("foo property").defaultValue("x").build();
+        private static final PropertyDescriptor<String> FOO_DEFAULT_PROPERTY = PropertyFactory
+                .stringProperty("fooDefault").defaultValue("bar").desc("Property without value uses default value")
                 .build();
 
-        private static final PropertyDescriptor<String> XPATH_PROPERTY = PropertyFactory.stringProperty("xpath").desc("xpath property").defaultValue("").build();
+        private static final PropertyDescriptor<String> XPATH_PROPERTY = PropertyFactory.stringProperty("xpath")
+                .desc("xpath property").defaultValue("").build();
 
         MyRule() {
             definePropertyDescriptor(FOO_PROPERTY);
@@ -61,7 +61,8 @@ class AbstractRuleTest {
     }
 
     private static class MyOtherRule extends AbstractRule {
-        private static final PropertyDescriptor<String> FOO_PROPERTY = PropertyFactory.stringProperty("foo").desc("foo property").defaultValue("x").build();
+        private static final PropertyDescriptor<String> FOO_PROPERTY = PropertyFactory.stringProperty("foo")
+                .desc("foo property").defaultValue("x").build();
 
         MyOtherRule() {
             definePropertyDescriptor(FOO_PROPERTY);
@@ -115,19 +116,20 @@ class AbstractRuleTest {
                 ctx.addViolation(target);
             }
         };
-        r.definePropertyDescriptor(PropertyFactory.intProperty("testInt").desc("description").require(inRange(0, 100)).defaultValue(10).build());
+        r.definePropertyDescriptor(PropertyFactory.intProperty("testInt").desc("description").require(inRange(0, 100))
+                .defaultValue(10).build());
         r.setMessage("Message ${packageName} ${className} ${methodName} ${variableName} ${testInt} ${noSuchProperty}");
 
         DummyRootNode s = helper.parse("abc()", FileId.UNKNOWN);
 
         RuleViolation rv = getReportForRuleApply(r, s).getViolations().get(0);
-        assertEquals("Message foo ${className} ${methodName} ${variableName} 10 ${noSuchProperty}", rv.getDescription());
+        assertEquals("Message foo ${className} ${methodName} ${variableName} 10 ${noSuchProperty}",
+                rv.getDescription());
     }
 
     @Test
     void testRuleSuppress() {
-        DummyRootNode n = helper.parse("abc()", FileId.UNKNOWN)
-                                .withNoPmdComments(Collections.singletonMap(1, "ohio"));
+        DummyRootNode n = helper.parse("abc()", FileId.UNKNOWN).withNoPmdComments(Collections.singletonMap(1, "ohio"));
 
         FileAnalysisListener listener = mock(FileAnalysisListener.class);
         RuleContext ctx = InternalApiBridge.createRuleContext(listener, new MyRule());
@@ -217,10 +219,8 @@ class AbstractRuleTest {
         class MockRuleWithPatternProperty extends net.sourceforge.pmd.lang.rule.MockRule {
             MockRuleWithPatternProperty(String defaultValue) {
                 super();
-                definePropertyDescriptor(PropertyFactory.regexProperty("myRegexProperty")
-                        .desc("description")
-                        .defaultValue(defaultValue)
-                        .build());
+                definePropertyDescriptor(PropertyFactory.regexProperty("myRegexProperty").desc("description")
+                        .defaultValue(defaultValue).build());
             }
         }
 
@@ -228,18 +228,22 @@ class AbstractRuleTest {
         assertNotEquals(new MockRuleWithPatternProperty("abc"), new MockRuleWithPatternProperty("def"));
 
         MockRuleWithPatternProperty rule1 = new MockRuleWithPatternProperty("abc");
-        PropertyDescriptor<Pattern> myRegexProperty1 = (PropertyDescriptor<Pattern>) rule1.getPropertyDescriptor("myRegexProperty");
+        PropertyDescriptor<Pattern> myRegexProperty1 = (PropertyDescriptor<Pattern>) rule1
+                .getPropertyDescriptor("myRegexProperty");
         rule1.setProperty(myRegexProperty1, Pattern.compile("ghi"));
         MockRuleWithPatternProperty rule2 = new MockRuleWithPatternProperty("abc");
-        PropertyDescriptor<Pattern> myRegexProperty2 = (PropertyDescriptor<Pattern>) rule1.getPropertyDescriptor("myRegexProperty");
+        PropertyDescriptor<Pattern> myRegexProperty2 = (PropertyDescriptor<Pattern>) rule1
+                .getPropertyDescriptor("myRegexProperty");
         rule2.setProperty(myRegexProperty2, Pattern.compile("ghi"));
         assertEquals(rule1, rule2);
 
         rule2.setProperty(myRegexProperty2, Pattern.compile("jkl"));
         assertNotEquals(rule1, rule2);
 
-        // the two rules have the same value, one using default, the other using an explicit value.
-        // they use effectively the same value, although the default values of the properties are different.
+        // the two rules have the same value, one using default, the other using an
+        // explicit value.
+        // they use effectively the same value, although the default values of the
+        // properties are different.
         assertEquals(new MockRuleWithPatternProperty("jkl"), rule2);
     }
 

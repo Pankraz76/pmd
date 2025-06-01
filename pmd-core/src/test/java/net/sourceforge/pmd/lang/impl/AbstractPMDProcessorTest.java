@@ -77,11 +77,8 @@ abstract class AbstractPMDProcessorTest {
         pmd.files().addFile(TextFile.forCharSeq("DEF", FileId.fromPathLikeString("file2-foo.dummy"), lv));
 
         reportListener = new SimpleReportListener();
-        GlobalAnalysisListener listener = GlobalAnalysisListener.tee(listOf(
-                new Report.GlobalReportBuilderListener(),
-                reportListener
-        ));
-
+        GlobalAnalysisListener listener = GlobalAnalysisListener
+                .tee(listOf(new Report.GlobalReportBuilderListener(), reportListener));
 
         pmd.addListener(listener);
         return pmd;

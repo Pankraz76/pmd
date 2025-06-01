@@ -30,13 +30,14 @@ import net.sourceforge.pmd.lang.ast.impl.javacc.JavaccToken;
  * @version $Id: NodeUtils.java 687386 2008-08-20 16:57:07Z nbubna $
  */
 final class NodeUtils {
-    private NodeUtils() { }
+    private NodeUtils() {
+    }
 
     /**
      * Collect all the &lt;SPECIAL_TOKEN&gt;s that are carried along with a token.
-     * Special tokens do not participate in parsing but can still trigger
-     * certain lexical actions. In some cases you may want to retrieve these
-     * special tokens, this is simply a way to extract them.
+     * Special tokens do not participate in parsing but can still trigger certain
+     * lexical actions. In some cases you may want to retrieve these special tokens,
+     * this is simply a way to extract them.
      *
      * @param t
      *            the Token

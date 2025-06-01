@@ -15,21 +15,24 @@ import net.sourceforge.pmd.util.StringUtil;
 
 /**
  * Simple tokenization into words and separators. Can ignore end-of-line
- * comments and recognize double/single quoted string literals. It is
- * not a goal to be very customizable, or have very high quality.
- * Higher-quality lexers should be implemented with a lexer generator.
+ * comments and recognize double/single quoted string literals. It is not a goal
+ * to be very customizable, or have very high quality. Higher-quality lexers
+ * should be implemented with a lexer generator.
  *
- * <p>In PMD 7, this replaces AbstractTokenizer, which provided nearly
- * no more functionality.</p>
- * <p>Note: This class has been called AnyTokenizer in PMD 6.</p>
+ * <p>
+ * In PMD 7, this replaces AbstractTokenizer, which provided nearly no more
+ * functionality.
+ * </p>
+ * <p>
+ * Note: This class has been called AnyTokenizer in PMD 6.
+ * </p>
  */
 public class AnyCpdLexer implements CpdLexer {
 
     private static final Pattern DEFAULT_PATTERN = makePattern("");
 
     private static Pattern makePattern(String singleLineCommentStart) {
-        return Pattern.compile(
-            "\\w++" // either a word
+        return Pattern.compile("\\w++" // either a word
                 + eolCommentFragment(singleLineCommentStart) // a comment
                 + "|[^\"'\\s]" // a single separator char
                 + "|\"(?:[^\"\\\\]++|\\\\.)*+\"" // a double-quoted string

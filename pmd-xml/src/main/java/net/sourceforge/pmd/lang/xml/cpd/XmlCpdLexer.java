@@ -11,7 +11,10 @@ import net.sourceforge.pmd.cpd.impl.AntlrCpdLexer;
 import net.sourceforge.pmd.lang.xml.ast.XMLLexer;
 
 /**
- * <p>Note: This class has been called XmlTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called XmlTokenizer in PMD 6
+ * </p>
+ * .
  */
 public class XmlCpdLexer extends AntlrCpdLexer {
 

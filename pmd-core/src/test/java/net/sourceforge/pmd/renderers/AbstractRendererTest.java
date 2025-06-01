@@ -83,8 +83,7 @@ abstract class AbstractRendererTest {
 
     @Test
     void testNullPassedIn() throws Exception {
-        assertThrows(NullPointerException.class, () ->
-            getRenderer().renderFileReport(null));
+        assertThrows(NullPointerException.class, () -> getRenderer().renderFileReport(null));
     }
 
     protected Consumer<FileAnalysisListener> reportOneViolation() {
@@ -115,7 +114,8 @@ abstract class AbstractRendererTest {
     }
 
     /**
-     * Creates a new rule instance with name "Boo" and priority {@link RulePriority#HIGH}.
+     * Creates a new rule instance with name "Boo" and priority
+     * {@link RulePriority#HIGH}.
      */
     protected Rule createBooRule() {
         Rule booRule = new FooRule();
@@ -126,7 +126,8 @@ abstract class AbstractRendererTest {
     }
 
     /**
-     * Creates a new rule instance with name "Foo" and priority {@link RulePriority#LOW}.
+     * Creates a new rule instance with name "Foo" and priority
+     * {@link RulePriority#LOW}.
      */
     protected Rule createFooRule() {
         Rule fooRule = new FooRule();
@@ -168,7 +169,8 @@ abstract class AbstractRendererTest {
 
     @Test
     void testRendererEmpty() throws Exception {
-        String actual = render(it -> {});
+        String actual = render(it -> {
+        });
         assertEquals(filter(getExpectedEmpty()), filter(actual));
     }
 
@@ -180,14 +182,16 @@ abstract class AbstractRendererTest {
 
     @Test
     void testError() throws Exception {
-        Report.ProcessingError err = new Report.ProcessingError(new RuntimeException("Error"), FileId.fromPathLikeString("file"));
+        Report.ProcessingError err = new Report.ProcessingError(new RuntimeException("Error"),
+                FileId.fromPathLikeString("file"));
         String actual = render(it -> it.onError(err));
         assertEquals(filter(getExpectedError(err)), filter(actual));
     }
 
     @Test
     void testErrorWithoutMessage() throws Exception {
-        Report.ProcessingError err = new Report.ProcessingError(new NullPointerException(), FileId.fromPathLikeString("file"));
+        Report.ProcessingError err = new Report.ProcessingError(new NullPointerException(),
+                FileId.fromPathLikeString("file"));
         String actual = render(it -> it.onError(err));
         assertEquals(filter(getExpectedErrorWithoutMessage(err)), filter(actual));
     }
@@ -203,12 +207,13 @@ abstract class AbstractRendererTest {
         assertEquals(filter(getExpectedError(err)), filter(actual));
     }
 
-    protected String renderReport(Renderer renderer, Consumer<? super FileAnalysisListener> listenerEffects) throws IOException {
+    protected String renderReport(Renderer renderer, Consumer<? super FileAnalysisListener> listenerEffects)
+            throws IOException {
         return renderReport(renderer, listenerEffects, Charset.defaultCharset());
     }
 
     protected String renderReport(Renderer renderer, Consumer<? super FileAnalysisListener> listenerEffects,
-                                  Charset expectedEncoding) throws IOException {
+            Charset expectedEncoding) throws IOException {
         return renderGlobal(renderer, globalListener -> {
 
             LanguageVersion version = DummyLanguageModule.getInstance().getDefaultVersion();
@@ -221,12 +226,13 @@ abstract class AbstractRendererTest {
         }, expectedEncoding);
     }
 
-    private String renderGlobal(Renderer renderer, Consumer<? super GlobalAnalysisListener> listenerEffects) throws IOException {
+    private String renderGlobal(Renderer renderer, Consumer<? super GlobalAnalysisListener> listenerEffects)
+            throws IOException {
         return renderGlobal(renderer, listenerEffects, Charset.defaultCharset());
     }
 
     private String renderGlobal(Renderer renderer, Consumer<? super GlobalAnalysisListener> listenerEffects,
-                                Charset expectedEncoding) throws IOException {
+            Charset expectedEncoding) throws IOException {
         File file = tempDir.resolve("report.out").toFile();
         renderer.setReportFile(file.getAbsolutePath());
 

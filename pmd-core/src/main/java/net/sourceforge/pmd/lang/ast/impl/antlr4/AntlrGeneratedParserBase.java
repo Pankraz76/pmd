@@ -15,31 +15,36 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import net.sourceforge.pmd.lang.ast.Node;
 
 /**
- * This is the base class for antlr generated parsers. The implementation
- * of PMD's {@link net.sourceforge.pmd.lang.ast.Parser} interface is {@link AntlrBaseParser}.
+ * This is the base class for antlr generated parsers. The implementation of
+ * PMD's {@link net.sourceforge.pmd.lang.ast.Parser} interface is
+ * {@link AntlrBaseParser}.
  *
- * <p>This class must implement the two abstract methods to create terminals
- * and error nodes that implement {@code <N>}. The inner nodes implement PMD
- * interfaces, and manipulation methods that the {@link Parser} superclass
- * uses are redirected to the underlying antlr {@link ParserRuleContext} (the
+ * <p>
+ * This class must implement the two abstract methods to create terminals and
+ * error nodes that implement {@code <N>}. The inner nodes implement PMD
+ * interfaces, and manipulation methods that the {@link Parser} superclass uses
+ * are redirected to the underlying antlr {@link ParserRuleContext} (the
  * protected overloads here).
  *
- * <p>This is not enough in general to make the generated parser compilable,
- * so an ant script does some cleanup at the end.
+ * <p>
+ * This is not enough in general to make the generated parser compilable, so an
+ * ant script does some cleanup at the end.
  *
- * <p>Additionally this must have a {@link AntlrNameDictionary} static final field,
+ * <p>
+ * Additionally this must have a {@link AntlrNameDictionary} static final field,
  * which stores the XPath names of the generated nodes (and terminals).
  *
- * <p>Additional members can be added to a parser with {@code @parser::members { ... }}
- * in the g4 file. That's how the implementations for {@link #createPmdTerminal(ParserRuleContext, Token)}
- * and {@link #createPmdError(ParserRuleContext, Token)} can be added.
+ * <p>
+ * Additional members can be added to a parser with {@code @parser::members {
+ * ... }} in the g4 file. That's how the implementations for
+ * {@link #createPmdTerminal(ParserRuleContext, Token)} and
+ * {@link #createPmdError(ParserRuleContext, Token)} can be added.
  */
 public abstract class AntlrGeneratedParserBase<N extends AntlrNode<N>> extends Parser {
 
     public AntlrGeneratedParserBase(TokenStream input) {
         super(input);
     }
-
 
     @Override
     public TerminalNode createTerminalNode(ParserRuleContext parent, Token t) {
@@ -56,7 +61,6 @@ public abstract class AntlrGeneratedParserBase<N extends AntlrNode<N>> extends P
     protected abstract BaseAntlrTerminalNode<N> createPmdTerminal(ParserRuleContext parent, Token t);
 
     protected abstract BaseAntlrErrorNode<N> createPmdError(ParserRuleContext parent, Token t);
-
 
     protected Node asPmdNode(RuleContext ctx) {
         return ((BaseAntlrNode.AntlrToPmdParseTreeAdapter<?>) ctx).getPmdNode();

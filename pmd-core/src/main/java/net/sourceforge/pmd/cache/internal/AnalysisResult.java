@@ -10,8 +10,8 @@ import java.util.List;
 import net.sourceforge.pmd.reporting.RuleViolation;
 
 /**
- * The result of a single file analysis.
- * Includes a checksum of the file and the complete list of violations detected.
+ * The result of a single file analysis. Includes a checksum of the file and the
+ * complete list of violations detected.
  */
 public class AnalysisResult {
 

@@ -14,9 +14,8 @@ import net.sourceforge.pmd.lang.document.FileLocation;
 import net.sourceforge.pmd.lang.document.TextRange2d;
 
 /**
- * A range of tokens in a source file, identified by a start and end
- * token (both included in the range). The start and end token may be
- * the same token.
+ * A range of tokens in a source file, identified by a start and end token (both
+ * included in the range). The start and end token may be the same token.
  */
 public final class Mark implements Comparable<Mark> {
 
@@ -27,11 +26,13 @@ public final class Mark implements Comparable<Mark> {
         this.token = token;
     }
 
-    @NonNull TokenEntry getToken() {
+    @NonNull
+    TokenEntry getToken() {
         return this.token;
     }
 
-    @NonNull TokenEntry getEndToken() {
+    @NonNull
+    TokenEntry getEndToken() {
         return endToken == null ? token : endToken;
     }
 
@@ -40,10 +41,8 @@ public final class Mark implements Comparable<Mark> {
      */
     public FileLocation getLocation() {
         TokenEntry endToken = getEndToken();
-        return FileLocation.range(
-            getFileId(),
-            TextRange2d.range2d(token.getBeginLine(), token.getBeginColumn(),
-                                endToken.getEndLine(), endToken.getEndColumn()));
+        return FileLocation.range(getFileId(), TextRange2d.range2d(token.getBeginLine(), token.getBeginColumn(),
+                endToken.getEndLine(), endToken.getEndColumn()));
     }
 
     FileId getFileId() {
@@ -59,11 +58,9 @@ public final class Mark implements Comparable<Mark> {
     }
 
     void setEndToken(@NonNull TokenEntry endToken) {
-        assert endToken.getFileId().equals(token.getFileId())
-            : "Tokens are not from the same file";
+        assert endToken.getFileId().equals(token.getFileId()) : "Tokens are not from the same file";
         this.endToken = endToken;
     }
-
 
     @Override
     public int hashCode() {
@@ -85,8 +82,7 @@ public final class Mark implements Comparable<Mark> {
             return false;
         }
         Mark other = (Mark) obj;
-        return Objects.equals(token, other.token)
-            && Objects.equals(endToken, other.endToken);
+        return Objects.equals(token, other.token) && Objects.equals(endToken, other.endToken);
     }
 
     @Override

@@ -17,7 +17,10 @@ import net.sourceforge.pmd.lang.python.ast.PythonTokenKinds;
 /**
  * The Python tokenizer.
  *
- * <p>Note: This class has been called PythonTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called PythonTokenizer in PMD 6
+ * </p>
+ * .
  */
 public class PythonCpdLexer extends JavaccCpdLexer {
 

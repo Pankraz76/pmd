@@ -19,33 +19,20 @@ public class PLSQLLanguageModule extends SimpleLanguageModuleBase {
     static final String NAME = "PLSQL";
 
     public PLSQLLanguageModule() {
-        super(
-            LanguageMetadata.withId(ID)
-                            .name(NAME)
-                            .extensions(
-                                "sql",
-                                "trg",  // Triggers
-                                "prc", "fnc", // Standalone Procedures and Functions
-                                "pld", // Oracle*Forms
-                                "pls", "plh", "plb", // Packages
-                                "pck", "pks", "pkh", "pkb", // Packages
-                                "typ", "tyb", // Object Types
-                                "tps", "tpb" // Object Types
-                            )
-                            .addVersion("11g")
-                            .addVersion("12c_Release_1", "12.1")
-                            .addVersion("12c_Release_2", "12.2")
-                            .addVersion("18c")
-                            .addVersion("19c")
-                            .addDefaultVersion("21c"),
-            new PLSQLHandler()
-        );
+        super(LanguageMetadata.withId(ID).name(NAME).extensions("sql", "trg", // Triggers
+                "prc", "fnc", // Standalone Procedures and Functions
+                "pld", // Oracle*Forms
+                "pls", "plh", "plb", // Packages
+                "pck", "pks", "pkh", "pkb", // Packages
+                "typ", "tyb", // Object Types
+                "tps", "tpb" // Object Types
+        ).addVersion("11g").addVersion("12c_Release_1", "12.1").addVersion("12c_Release_2", "12.2").addVersion("18c")
+                .addVersion("19c").addDefaultVersion("21c"), new PLSQLHandler());
     }
 
     public static PLSQLLanguageModule getInstance() {
         return (PLSQLLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
-
 
     @Override
     public LanguagePropertyBundle newPropertyBundle() {

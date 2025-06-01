@@ -10,17 +10,19 @@ import java.util.Objects;
 import net.sourceforge.pmd.lang.rule.Rule;
 
 /**
- * Represents a version of a {@link Language}. Language instances provide
- * a list of supported versions ({@link Language#getVersions()}). Individual
- * versions can be retrieved from their version number ({@link Language#getVersion(String)}).
+ * Represents a version of a {@link Language}. Language instances provide a list
+ * of supported versions ({@link Language#getVersions()}). Individual versions
+ * can be retrieved from their version number
+ * ({@link Language#getVersion(String)}).
  *
- * <p>Versions are used to limit some rules to operate on only a version range.
- * For instance, a rule that suggests eliding local variable types in Java
- * (replacing them with {@code var}) makes no sense if the codebase is not
- * using Java 10 or later. This is determined by {@link Rule#getMinimumLanguageVersion()}
- * and {@link Rule#getMaximumLanguageVersion()}. These should be set in the
- * ruleset XML (they're attributes of the {@code <rule>} element), and not
- * overridden.
+ * <p>
+ * Versions are used to limit some rules to operate on only a version range. For
+ * instance, a rule that suggests eliding local variable types in Java
+ * (replacing them with {@code var}) makes no sense if the codebase is not using
+ * Java 10 or later. This is determined by
+ * {@link Rule#getMinimumLanguageVersion()} and
+ * {@link Rule#getMaximumLanguageVersion()}. These should be set in the ruleset
+ * XML (they're attributes of the {@code <rule>} element), and not overridden.
  */
 public final class LanguageVersion implements Comparable<LanguageVersion> {
 
@@ -45,7 +47,8 @@ public final class LanguageVersion implements Comparable<LanguageVersion> {
 
     /**
      * Returns the version string. This is usually a version number, e.g.
-     * {@code "1.7"} or {@code "11"}. This is used by {@link Language#getVersion(String)}.
+     * {@code "1.7"} or {@code "11"}. This is used by
+     * {@link Language#getVersion(String)}.
      */
     public String getVersion() {
         return version;
@@ -76,8 +79,8 @@ public final class LanguageVersion implements Comparable<LanguageVersion> {
     }
 
     /**
-     * Get the terse name of this LanguageVersion. This is Language id
-     * appended with the LanguageVersion version if not an empty String.
+     * Get the terse name of this LanguageVersion. This is Language id appended with
+     * the LanguageVersion version if not an empty String.
      *
      * @return The terse name of this LanguageVersion.
      */
@@ -86,19 +89,21 @@ public final class LanguageVersion implements Comparable<LanguageVersion> {
     }
 
     /**
-     * Compare this version to another version of the same language identified
-     * by the given version string.
+     * Compare this version to another version of the same language identified by
+     * the given version string.
      *
-     * @param versionString The version with which to compare
+     * @param versionString
+     *            The version with which to compare
      *
-     * @throws IllegalArgumentException If the argument is not a valid version
-     *                                  string for the parent language
+     * @throws IllegalArgumentException
+     *             If the argument is not a valid version string for the parent
+     *             language
      */
     public int compareToVersion(String versionString) {
         LanguageVersion otherVersion = language.getVersion(versionString);
         if (otherVersion == null) {
             throw new IllegalArgumentException(
-                "No such version '" + versionString + "' for language " + language.getName());
+                    "No such version '" + versionString + "' for language " + language.getName());
         }
         return this.compareTo(otherVersion);
     }
@@ -111,7 +116,6 @@ public final class LanguageVersion implements Comparable<LanguageVersion> {
         }
         return Integer.compare(this.index, o.index);
     }
-
 
     @Override
     public boolean equals(Object o) {

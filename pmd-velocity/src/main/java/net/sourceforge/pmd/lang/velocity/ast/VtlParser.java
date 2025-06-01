@@ -47,5 +47,4 @@ public class VtlParser extends JjtreeParserAdapter<ASTTemplate> {
         return new VtlParserImpl(cs).Template().makeTaskInfo(task);
     }
 
-
 }

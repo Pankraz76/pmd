@@ -39,7 +39,6 @@ final class MonoThreadProcessor extends AbstractPMDProcessor {
             this.ruleSets = task.getRulesets();
         }
 
-
         @Override
         protected RuleSets getRulesets() {
             return ruleSets;

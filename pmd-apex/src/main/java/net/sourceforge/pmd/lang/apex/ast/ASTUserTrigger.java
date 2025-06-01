@@ -25,9 +25,6 @@ public final class ASTUserTrigger extends BaseApexClass<TriggerDeclaration> {
     }
 
     public List<TriggerUsage> getUsages() {
-        return node.getCases().stream()
-                .map(TriggerUsage::of)
-                .sorted()
-                .collect(Collectors.toList());
+        return node.getCases().stream().map(TriggerUsage::of).sorted().collect(Collectors.toList());
     }
 }

@@ -15,10 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Represents all data types that can be referenced from a Visualforce page. This enum consolidates the data types
- * available to CustomFields and Apex. It uses the naming convention of CustomFields.
+ * Represents all data types that can be referenced from a Visualforce page.
+ * This enum consolidates the data types available to CustomFields and Apex. It
+ * uses the naming convention of CustomFields.
  *
- * See https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_field_types.htm#meta_type_fieldtype
+ * See
+ * https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_field_types.htm#meta_type_fieldtype
  */
 public enum DataType {
     AutoNumber(false),
@@ -50,13 +52,13 @@ public enum DataType {
     Time(false, "Time"),
     Url(false),
     /**
-     * Indicates that Metatada was found, but its type was not mappable. This could because it is a type which isn't
-     * mapped, or it was an edge case where the type was ambiguously defined in the Metadata.
+     * Indicates that Metatada was found, but its type was not mappable. This could
+     * because it is a type which isn't mapped, or it was an edge case where the
+     * type was ambiguously defined in the Metadata.
      */
     Unknown(true);
 
     private static final Logger LOG = LoggerFactory.getLogger(DataType.class);
-
 
     /**
      * True if this field is an XSS risk
@@ -64,19 +66,21 @@ public enum DataType {
     public final boolean requiresEscaping;
 
     /**
-     * The set of primitive type names that map to this type. Multiple types can map to a single instance of this enum.
-     * Note: these strings are not case-normalized.
+     * The set of primitive type names that map to this type. Multiple types can map
+     * to a single instance of this enum. Note: these strings are not
+     * case-normalized.
      */
     private final Set<String> basicTypeNames;
 
     /**
-     * A map of the lower-case-normalized enum name to its instance. The case metadata is not guaranteed to have the correct
-     * case.
+     * A map of the lower-case-normalized enum name to its instance. The case
+     * metadata is not guaranteed to have the correct case.
      */
     private static final Map<String, DataType> CASE_NORMALIZED_MAP = new HashMap<>();
 
     /**
-     * A map of the lower-case-normalized primitive type names to DataType. Multiple types may map to one DataType.
+     * A map of the lower-case-normalized primitive type names to DataType. Multiple
+     * types may map to one DataType.
      */
     private static final Map<String, DataType> BASIC_TYPE_MAP = new HashMap<>();
 
@@ -90,7 +94,8 @@ public enum DataType {
     }
 
     /**
-     * Map to correct instance, returns {@code Unknown} if the value can't be mapped.
+     * Map to correct instance, returns {@code Unknown} if the value can't be
+     * mapped.
      */
     public static DataType fromString(String value) {
         value = value != null ? value : "";
@@ -105,7 +110,8 @@ public enum DataType {
     }
 
     /**
-     * Map to correct instance, returns {@code Unknown} if the value can't be mapped.
+     * Map to correct instance, returns {@code Unknown} if the value can't be
+     * mapped.
      */
     public static DataType fromTypeName(String value) {
         value = value != null ? value : "";

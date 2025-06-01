@@ -24,9 +24,9 @@ class ApexClassPropertyTypesVisitorTest {
     @Test
     @SuppressWarnings("PMD.CloseResource")
     void testApexClassIsProperlyParsed() {
-        Path apexPath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Apex)
-                                   .resolve("ApexController.cls")
-                                   .toAbsolutePath();
+        Path apexPath = VFTestUtils
+                .getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Apex)
+                .resolve("ApexController.cls").toAbsolutePath();
 
         ApexClassPropertyTypesVisitor visitor = new ApexClassPropertyTypesVisitor();
         try (LanguageProcessorRegistry lpReg = VFTestUtils.fakeLpRegistry()) {
@@ -45,9 +45,13 @@ class ApexClassPropertyTypesVisitorTest {
         assertTrue("ID".equalsIgnoreCase(variableNameToVariableType.get("ApexController.AccountIdProp")));
         assertTrue("ID".equalsIgnoreCase(variableNameToVariableType.get("ApexController.AccountId")));
         assertTrue("String".equalsIgnoreCase(variableNameToVariableType.get("ApexController.AccountName")));
-        assertTrue("InnerController".equalsIgnoreCase(variableNameToVariableType.get("ApexController.InnerController")));
-        assertTrue("ID".equalsIgnoreCase(variableNameToVariableType.get("ApexController.InnerController.InnerAccountIdProp")));
-        assertTrue("ID".equalsIgnoreCase(variableNameToVariableType.get("ApexController.InnerController.InnerAccountId")));
-        assertTrue("String".equalsIgnoreCase(variableNameToVariableType.get("ApexController.InnerController.InnerAccountName")));
+        assertTrue(
+                "InnerController".equalsIgnoreCase(variableNameToVariableType.get("ApexController.InnerController")));
+        assertTrue("ID"
+                .equalsIgnoreCase(variableNameToVariableType.get("ApexController.InnerController.InnerAccountIdProp")));
+        assertTrue(
+                "ID".equalsIgnoreCase(variableNameToVariableType.get("ApexController.InnerController.InnerAccountId")));
+        assertTrue("String"
+                .equalsIgnoreCase(variableNameToVariableType.get("ApexController.InnerController.InnerAccountName")));
     }
 }

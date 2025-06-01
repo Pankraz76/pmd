@@ -29,7 +29,6 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 import net.sourceforge.pmd.lang.rule.internal.CommonPropertyDescriptors;
 import net.sourceforge.pmd.properties.PropertyDescriptor;
 
-
 /**
  * Abstract class for rules counting the length of some node.
  *
@@ -41,12 +40,9 @@ abstract class AbstractCounterCheckRule<T extends PLSQLNode> extends AbstractPLS
 
     private final Class<T> nodeType;
 
-    private final PropertyDescriptor<Integer> reportLevel =
-        CommonPropertyDescriptors.reportLevelProperty()
-                                 .desc("Threshold above which a node is reported")
-                                 .require(positive())
-                                 .defaultValue(defaultReportLevel()).build();
-
+    private final PropertyDescriptor<Integer> reportLevel = CommonPropertyDescriptors.reportLevelProperty()
+            .desc("Threshold above which a node is reported").require(positive()).defaultValue(defaultReportLevel())
+            .build();
 
     AbstractCounterCheckRule(Class<T> nodeType) {
         this.nodeType = nodeType;
@@ -81,9 +77,7 @@ abstract class AbstractCounterCheckRule<T extends PLSQLNode> extends AbstractPLS
         return classes;
     }
 
-
     protected abstract int defaultReportLevel();
-
 
     /** Return true if the node should be ignored. */
     protected boolean isIgnored(T node) {
@@ -91,9 +85,8 @@ abstract class AbstractCounterCheckRule<T extends PLSQLNode> extends AbstractPLS
     }
 
     protected Object[] getViolationParameters(T node, int metric) {
-        return new Object[] {metric};
+        return new Object[] { metric };
     }
-
 
     protected abstract int getMetric(T node);
 
@@ -119,12 +112,10 @@ abstract class AbstractCounterCheckRule<T extends PLSQLNode> extends AbstractPLS
             super(nodeType);
         }
 
-
         @Override
         protected int getMetric(T node) {
             return node.getEndLine() - node.getBeginLine();
         }
     }
-
 
 }

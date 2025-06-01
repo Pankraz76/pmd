@@ -20,17 +20,17 @@ import org.slf4j.event.Level;
 import net.sourceforge.pmd.internal.Slf4jSimpleConfiguration;
 
 public final class Slf4jSimpleConfigurationForAnt {
-    private Slf4jSimpleConfigurationForAnt() { }
+    private Slf4jSimpleConfigurationForAnt() {
+    }
 
     private static final Level DEFAULT_LEVEL = Level.INFO;
 
     // Maps from ant's Project.MSG_* to org.slf4j.event.Level
-    private static final Level[] LOG_LEVELS = {
-        Level.ERROR,   // Project.MSG_ERR=0
-        Level.WARN,    // Project.MSG_WARN=1
-        Level.INFO,    // Project.MSG_INFO=2
-        Level.DEBUG,   // Project.MSG_VERBOSE=3
-        Level.TRACE,   // Project.MSG_DEBUG=4
+    private static final Level[] LOG_LEVELS = { Level.ERROR, // Project.MSG_ERR=0
+        Level.WARN, // Project.MSG_WARN=1
+        Level.INFO, // Project.MSG_INFO=2
+        Level.DEBUG, // Project.MSG_VERBOSE=3
+        Level.TRACE, // Project.MSG_DEBUG=4
     };
 
     @SuppressWarnings("PMD.CloseResource")
@@ -44,13 +44,15 @@ public final class Slf4jSimpleConfigurationForAnt {
         try {
             System.setErr(new SimpleLoggerToAntBridge(antProject, original));
 
-            // configuring the format so that the log level appears at the beginning of the printed line
+            // configuring the format so that the log level appears at the beginning of the
+            // printed line
             System.setProperty("org.slf4j.simpleLogger.showDateTime", "false");
             System.setProperty("org.slf4j.simpleLogger.showThreadName", "false");
             System.setProperty("org.slf4j.simpleLogger.showThreadId", "false");
             System.setProperty("org.slf4j.simpleLogger.levelInBrackets", "false");
 
-            // using cacheOutputStream so that we can restore System.err after SimpleLogger has been initialized
+            // using cacheOutputStream so that we can restore System.err after SimpleLogger
+            // has been initialized
             System.setProperty("org.slf4j.simpleLogger.cacheOutputStream", "true");
             System.setProperty("org.slf4j.simpleLogger.logFile", "System.err");
 
@@ -142,8 +144,8 @@ public final class Slf4jSimpleConfigurationForAnt {
             }
         }
 
-        project.log("Could not determine ant log level, no supported build listeners found. "
-                + "Log level is set to " + DEFAULT_LEVEL, Project.MSG_WARN);
+        project.log("Could not determine ant log level, no supported build listeners found. " + "Log level is set to "
+                + DEFAULT_LEVEL, Project.MSG_WARN);
 
         return DEFAULT_LEVEL;
     }
@@ -163,14 +165,14 @@ public final class Slf4jSimpleConfigurationForAnt {
             isLevelAtMostMethod.setAccessible(true);
 
             Object[] logLevels = gradleLogLevel.getEnumConstants();
-            // the log levels in gradle are declared in the order DEBUG, INFO, LIFECYCLE, WARN, QUIET, ERROR
-            Level[] mapping = new Level[] {
-                Level.TRACE,   // DEBUG
-                Level.DEBUG,   // INFO
-                Level.INFO,     // LIFECYCLE
-                Level.WARN,  // WARN
-                Level.ERROR,   // QUIET
-                Level.ERROR,   // ERROR
+            // the log levels in gradle are declared in the order DEBUG, INFO, LIFECYCLE,
+            // WARN, QUIET, ERROR
+            Level[] mapping = new Level[] { Level.TRACE, // DEBUG
+                Level.DEBUG, // INFO
+                Level.INFO, // LIFECYCLE
+                Level.WARN, // WARN
+                Level.ERROR, // QUIET
+                Level.ERROR, // ERROR
             };
 
             for (int i = 0; i < Math.min(logLevels.length, mapping.length); i++) {

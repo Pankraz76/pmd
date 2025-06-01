@@ -37,7 +37,8 @@ class XmlDbTreeDumpTest extends BaseTreeDumpTest {
     }
 
     /**
-     * @see <a href="https://github.com/pmd/pmd/issues/4441">[plsql] Parsing exception with XMLTYPE and XMLQUERY function in SELECT</a>
+     * @see <a href="https://github.com/pmd/pmd/issues/4441">[plsql] Parsing
+     *      exception with XMLTYPE and XMLQUERY function in SELECT</a>
      */
     @Test
     void xmlQuery() {

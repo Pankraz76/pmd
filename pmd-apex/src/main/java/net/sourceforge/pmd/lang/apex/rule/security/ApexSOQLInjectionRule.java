@@ -34,19 +34,17 @@ import net.sourceforge.pmd.lang.apex.rule.internal.Helper;
 import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 
 /**
- * Detects if variables in Database.query(variable) or Database.countQuery is escaped with
- * String.escapeSingleQuotes
+ * Detects if variables in Database.query(variable) or Database.countQuery is
+ * escaped with String.escapeSingleQuotes
  *
  * @author sergey.gorbaty
  *
  */
 public class ApexSOQLInjectionRule extends AbstractApexRule {
-    private static final Set<String> SAFE_VARIABLE_TYPES = 
-        Collections.unmodifiableSet(Stream.of(
-            "double", "long", "decimal", "boolean", "id", "integer",
-            "sobjecttype", "schema.sobjecttype", "sobjectfield", "schema.sobjectfield"
-        ).collect(Collectors.toSet()));
-    
+    private static final Set<String> SAFE_VARIABLE_TYPES = Collections
+            .unmodifiableSet(Stream.of("double", "long", "decimal", "boolean", "id", "integer", "sobjecttype",
+                    "schema.sobjecttype", "sobjectfield", "schema.sobjectfield").collect(Collectors.toSet()));
+
     private static final String JOIN = "join";
     private static final String ESCAPE_SINGLE_QUOTES = "escapeSingleQuotes";
     private static final String STRING = "String";

@@ -41,15 +41,9 @@ public class ApexSharingViolationsRule extends AbstractApexRule {
 
     @Override
     protected @NonNull RuleTargetSelector buildTargetSelector() {
-        return RuleTargetSelector.forTypes(
-                ASTDmlDeleteStatement.class,
-                ASTDmlInsertStatement.class,
-                ASTDmlMergeStatement.class,
-                ASTDmlUndeleteStatement.class,
-                ASTDmlUpdateStatement.class,
-                ASTDmlUpsertStatement.class,
-                ASTMethodCallExpression.class,
-                ASTSoqlExpression.class,
+        return RuleTargetSelector.forTypes(ASTDmlDeleteStatement.class, ASTDmlInsertStatement.class,
+                ASTDmlMergeStatement.class, ASTDmlUndeleteStatement.class, ASTDmlUpdateStatement.class,
+                ASTDmlUpsertStatement.class, ASTMethodCallExpression.class, ASTSoqlExpression.class,
                 ASTSoslExpression.class);
     }
 
@@ -117,18 +111,22 @@ public class ApexSharingViolationsRule extends AbstractApexRule {
     }
 
     private void checkForViolation(ApexNode<?> node, Object data) {
-        // The closest ASTUserClass class in the tree hierarchy is the node that requires the sharing declaration
+        // The closest ASTUserClass class in the tree hierarchy is the node that
+        // requires the sharing declaration
         ASTUserClass sharingDeclarationClass = node.ancestors(ASTUserClass.class).first();
 
         // This is null in the case of triggers
         if (sharingDeclarationClass != null) {
-            // Apex allows a single level of class nesting. Check to see if sharingDeclarationClass has an outer class
+            // Apex allows a single level of class nesting. Check to see if
+            // sharingDeclarationClass has an outer class
             ASTUserClass outerClass = sharingDeclarationClass.ancestors(ASTUserClass.class).first();
             // The test annotation needs to be on the outermost class
             ASTUserClass testAnnotationClass = Optional.ofNullable(outerClass).orElse(sharingDeclarationClass);
 
-            if (!Helper.isTestMethodOrClass(testAnnotationClass) && !Helper.isSystemLevelClass(sharingDeclarationClass) && !isSharingPresent(sharingDeclarationClass)) {
-                // The violation is reported on the class, not the node that performs data access
+            if (!Helper.isTestMethodOrClass(testAnnotationClass) && !Helper.isSystemLevelClass(sharingDeclarationClass)
+                    && !isSharingPresent(sharingDeclarationClass)) {
+                // The violation is reported on the class, not the node that performs data
+                // access
                 reportViolation(sharingDeclarationClass, data);
             }
         }

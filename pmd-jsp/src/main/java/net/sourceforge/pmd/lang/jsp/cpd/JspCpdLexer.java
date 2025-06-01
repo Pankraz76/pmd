@@ -13,7 +13,10 @@ import net.sourceforge.pmd.lang.jsp.ast.InternalApiBridge;
 import net.sourceforge.pmd.lang.jsp.ast.JspTokenKinds;
 
 /**
- * <p>Note: This class has been called JSPTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called JSPTokenizer in PMD 6
+ * </p>
+ * .
  */
 public class JspCpdLexer extends JavaccCpdLexer {
 

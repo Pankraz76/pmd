@@ -29,12 +29,10 @@ public class PropertyNamingConventionsRule extends AbstractNamingConventionsRule
         definePropertyDescriptor(INSTANCE_REGEX);
     }
 
-
     @Override
     protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTField.class);
     }
-
 
     @Override
     public Object visit(ASTField node, Object data) {

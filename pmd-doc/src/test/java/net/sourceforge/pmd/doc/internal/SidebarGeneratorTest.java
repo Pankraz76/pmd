@@ -42,8 +42,10 @@ class SidebarGeneratorTest {
     @Test
     void testSidebar() throws IOException {
         Map<Language, List<RuleSet>> rulesets = new TreeMap<>();
-        RuleSet ruleSet1 = RuleSet.create("test", "test", "bestpractices.xml", Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
-        RuleSet ruleSet2 = RuleSet.create("test2", "test", "codestyle.xml", Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+        RuleSet ruleSet1 = RuleSet.create("test", "test", "bestpractices.xml", Collections.emptyList(),
+                Collections.emptyList(), Collections.emptyList());
+        RuleSet ruleSet2 = RuleSet.create("test2", "test", "codestyle.xml", Collections.emptyList(),
+                Collections.emptyList(), Collections.emptyList());
         rulesets.put(LanguageRegistry.PMD.getLanguageById("java"), Arrays.asList(ruleSet1, ruleSet2));
         rulesets.put(LanguageRegistry.PMD.getLanguageById("ecmascript"), Arrays.asList(ruleSet1));
         rulesets.put(LanguageRegistry.PMD.getLanguageById("scala"), Collections.emptyList());
@@ -56,10 +58,11 @@ class SidebarGeneratorTest {
         if (SystemUtils.IS_OS_WINDOWS) {
             dumperOptions.setLineBreak(LineBreak.WIN);
         }
-        String yaml = new Yaml(new SafeConstructor(new LoaderOptions()), new Representer(dumperOptions), dumperOptions).dump(result);
+        String yaml = new Yaml(new SafeConstructor(new LoaderOptions()), new Representer(dumperOptions), dumperOptions)
+                .dump(result);
 
-        String expected = MockedFileWriter.normalizeLineSeparators(
-                IOUtil.readToString(SidebarGeneratorTest.class.getResourceAsStream("sidebar.yml"), StandardCharsets.UTF_8));
+        String expected = MockedFileWriter.normalizeLineSeparators(IOUtil
+                .readToString(SidebarGeneratorTest.class.getResourceAsStream("sidebar.yml"), StandardCharsets.UTF_8));
         assertEquals(expected, yaml);
     }
 }

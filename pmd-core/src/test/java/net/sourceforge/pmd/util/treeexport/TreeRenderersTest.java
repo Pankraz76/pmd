@@ -35,14 +35,11 @@ class TreeRenderersTest {
     @Test
     void testXmlPropertiesAvailable() {
 
-
         PropertySource properties = TreeRenderers.XML.newPropertyBundle();
 
         assertThat(properties.getPropertyDescriptors(),
-                          containsInAnyOrder(TreeRenderers.XML_LINE_SEPARATOR,
-                                                                             TreeRenderers.XML_RENDER_COMMON_ATTRIBUTES,
-                                                                             TreeRenderers.XML_RENDER_PROLOG,
-                                                                             TreeRenderers.XML_USE_SINGLE_QUOTES));
+                containsInAnyOrder(TreeRenderers.XML_LINE_SEPARATOR, TreeRenderers.XML_RENDER_COMMON_ATTRIBUTES,
+                        TreeRenderers.XML_RENDER_PROLOG, TreeRenderers.XML_USE_SINGLE_QUOTES));
 
     }
 
@@ -60,13 +57,10 @@ class TreeRenderersTest {
         StringBuilder out = new StringBuilder();
 
         renderer.renderSubtree(dummyTree1(helper), out);
-        assertEquals("<dummyNode foo=\"bar\" ohio=\"4\">\n"
-                                + "    <dummyNode o=\"ha\" />\n"
-                                + "    <dummyNode />\n"
-                                + "</dummyNode>\n", out.toString());
+        assertEquals("<dummyNode foo=\"bar\" ohio=\"4\">\n" + "    <dummyNode o=\"ha\" />\n" + "    <dummyNode />\n"
+                + "</dummyNode>\n", out.toString());
 
     }
-
 
     static DummyNode dummyTree1(DummyParsingHelper helper) {
         DummyNode dummy = helper.parse("(parent(child1)(child2))").getChild(0);
@@ -81,6 +75,5 @@ class TreeRenderersTest {
         dummy.getChild(1).clearXPathAttributes();
         return dummy;
     }
-
 
 }

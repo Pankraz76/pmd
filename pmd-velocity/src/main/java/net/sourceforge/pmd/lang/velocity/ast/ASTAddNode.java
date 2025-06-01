@@ -23,7 +23,8 @@ package net.sourceforge.pmd.lang.velocity.ast;
 /**
  * Handles number addition of nodes.
  *
- * <p>Please look at the Parser.jjt file which is what controls the generation of
+ * <p>
+ * Please look at the Parser.jjt file which is what controls the generation of
  * this class.
  *
  * @author <a href="mailto:wglass@forio.com">Will Glass-Husain</a>
@@ -36,7 +37,6 @@ public final class ASTAddNode extends ASTMathNode {
     ASTAddNode(int id) {
         super(id);
     }
-
 
     @Override
     protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {

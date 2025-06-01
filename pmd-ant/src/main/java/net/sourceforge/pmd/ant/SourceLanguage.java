@@ -7,11 +7,12 @@ package net.sourceforge.pmd.ant;
 import net.sourceforge.pmd.lang.Language;
 
 /**
- * Part of PMD Ant task configuration. Setters of this class are interpreted by Ant as properties
- * settable in the XML. This is therefore published API.
+ * Part of PMD Ant task configuration. Setters of this class are interpreted by
+ * Ant as properties settable in the XML. This is therefore published API.
  *
- * <p>This class is used to configure the language and version to use.
- * It might look like this:
+ * <p>
+ * This class is used to configure the language and version to use. It might
+ * look like this:
  *
  * <pre>{@code
  * <pmd>

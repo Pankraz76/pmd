@@ -4,7 +4,6 @@
 
 package net.sourceforge.pmd.lang.rule.xpath.internal;
 
-
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
@@ -101,14 +100,12 @@ abstract class BaseNodeInfo extends AbstractNodeWrapper implements SiblingCounti
         return nodeTest == null || (nodeTest instanceof AnyNodeTest) ? iter : new AxisFilter(iter, nodeTest);
     }
 
-
     static AxisIterator iterateList(List<? extends NodeInfo> nodes) {
         return iterateList(nodes, true);
     }
 
     static <N extends NodeInfo> AxisIterator iterateList(List<N> nodes, boolean forwards) {
-        return forwards ? new NodeListIterator(Collections.unmodifiableList(nodes))
-                        : new RevListAxisIterator<>(nodes);
+        return forwards ? new NodeListIterator(Collections.unmodifiableList(nodes)) : new RevListAxisIterator<>(nodes);
     }
 
     private static class RevListAxisIterator<N extends NodeInfo> implements AxisIterator {

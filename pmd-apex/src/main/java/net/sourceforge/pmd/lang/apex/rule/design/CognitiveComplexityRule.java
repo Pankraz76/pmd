@@ -20,29 +20,21 @@ import net.sourceforge.pmd.properties.PropertyFactory;
 
 public class CognitiveComplexityRule extends AbstractApexRule {
 
-    private static final PropertyDescriptor<Integer> CLASS_LEVEL_DESCRIPTOR
-            = PropertyFactory.intProperty("classReportLevel")
-            .desc("Total class cognitive complexity reporting threshold")
-            .require(positive())
-            .defaultValue(50)
-            .build();
+    private static final PropertyDescriptor<Integer> CLASS_LEVEL_DESCRIPTOR = PropertyFactory
+            .intProperty("classReportLevel").desc("Total class cognitive complexity reporting threshold")
+            .require(positive()).defaultValue(50).build();
 
-    private static final PropertyDescriptor<Integer> METHOD_LEVEL_DESCRIPTOR
-            = PropertyFactory.intProperty("methodReportLevel")
-            .desc("Cognitive complexity reporting threshold")
-            .require(positive())
-            .defaultValue(15)
-            .build();
+    private static final PropertyDescriptor<Integer> METHOD_LEVEL_DESCRIPTOR = PropertyFactory
+            .intProperty("methodReportLevel").desc("Cognitive complexity reporting threshold").require(positive())
+            .defaultValue(15).build();
 
     private Deque<String> classNames = new ArrayDeque<>();
     private boolean inTrigger;
-
 
     public CognitiveComplexityRule() {
         definePropertyDescriptor(CLASS_LEVEL_DESCRIPTOR);
         definePropertyDescriptor(METHOD_LEVEL_DESCRIPTOR);
     }
-
 
     @Override
     public Object visit(ASTUserTrigger node, Object data) {
@@ -51,7 +43,6 @@ public class CognitiveComplexityRule extends AbstractApexRule {
         inTrigger = false;
         return data;
     }
-
 
     @Override
     public Object visit(ASTUserClass node, Object data) {
@@ -65,22 +56,17 @@ public class CognitiveComplexityRule extends AbstractApexRule {
 
             Integer classLevelThreshold = getProperty(CLASS_LEVEL_DESCRIPTOR);
             if (classCognitive >= classLevelThreshold) {
-                int classHighest = (int) MetricsUtil.computeStatistics(ApexMetrics.COGNITIVE_COMPLEXITY, node.getMethods()).getMax();
+                int classHighest = (int) MetricsUtil
+                        .computeStatistics(ApexMetrics.COGNITIVE_COMPLEXITY, node.getMethods()).getMax();
 
-                String[] messageParams = {
-                    "class",
-                    node.getSimpleName(),
-                    " total",
-                    classCognitive + " (highest " + classHighest + ")",
-                    String.valueOf(classLevelThreshold),
-                };
+                String[] messageParams = { "class", node.getSimpleName(), " total",
+                    classCognitive + " (highest " + classHighest + ")", String.valueOf(classLevelThreshold), };
 
                 asCtx(data).addViolation(node, (Object[]) messageParams);
             }
         }
         return data;
     }
-
 
     @Override
     public final Object visit(ASTMethod node, Object data) {
@@ -90,13 +76,9 @@ public class CognitiveComplexityRule extends AbstractApexRule {
             Integer methodLevelThreshold = getProperty(METHOD_LEVEL_DESCRIPTOR);
             if (cognitive >= methodLevelThreshold) {
                 String opType = inTrigger ? "trigger"
-                        : node.getImage().equals(classNames.peek()) ? "constructor"
-                        : "method";
+                        : node.getImage().equals(classNames.peek()) ? "constructor" : "method";
 
-                asCtx(data).addViolation(node, opType,
-                        node.getQualifiedName().getOperation(),
-                        "",
-                        "" + cognitive,
+                asCtx(data).addViolation(node, opType, node.getQualifiedName().getOperation(), "", "" + cognitive,
                         String.valueOf(methodLevelThreshold));
             }
         }

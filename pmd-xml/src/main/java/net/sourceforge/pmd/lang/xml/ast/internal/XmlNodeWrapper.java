@@ -4,7 +4,6 @@
 
 package net.sourceforge.pmd.lang.xml.ast.internal;
 
-
 import static java.util.Collections.emptyIterator;
 
 import java.util.AbstractList;
@@ -27,9 +26,9 @@ import net.sourceforge.pmd.util.DataMap;
 import net.sourceforge.pmd.util.DataMap.DataKey;
 import net.sourceforge.pmd.util.IteratorUtil;
 
-
 /**
- * Proxy wrapping an XML DOM node ({@link org.w3c.dom.Node}) to implement PMD interfaces.
+ * Proxy wrapping an XML DOM node ({@link org.w3c.dom.Node}) to implement PMD
+ * interfaces.
  *
  * @author Clément Fournier
  * @since 6.1.0
@@ -43,7 +42,6 @@ class XmlNodeWrapper implements XmlNode {
     int startOffset;
     int endOffset;
     TextDocument textDoc;
-
 
     XmlNodeWrapper(XmlParserImpl parser, org.w3c.dom.Node domNode) {
         super();
@@ -68,7 +66,6 @@ class XmlNodeWrapper implements XmlNode {
         return parent != null ? parser.wrapDomNode(parent) : null;
     }
 
-
     @Override
     public int getIndexInParent() {
         org.w3c.dom.Node parent = node.getParentNode();
@@ -84,12 +81,10 @@ class XmlNodeWrapper implements XmlNode {
         throw new IllegalStateException("This node is not a child of its parent: " + node);
     }
 
-
     @Override
     public XmlNode getChild(int index) {
         return parser.wrapDomNode(node.getChildNodes().item(index));
     }
-
 
     @Override
     public int getNumChildren() {
@@ -117,18 +112,15 @@ class XmlNodeWrapper implements XmlNode {
         return dataMap;
     }
 
-
     @Override
     public String getXPathNodeName() {
         return node.getNodeName().replace("#", "");
     }
 
-
     @Override
     public String toString() {
         return node.getNodeName().replace("#", "");
     }
-
 
     @Override
     public Iterator<Attribute> getXPathAttributesIterator() {
@@ -142,10 +134,8 @@ class XmlNodeWrapper implements XmlNode {
         if (node.getAttributes() == null) {
             return emptyIterator();
         } else {
-            return IteratorUtil.map(
-                asList(node.getAttributes()).iterator(),
-                n -> new Attribute(this, n.getNodeName(), n.getNodeValue())
-            );
+            return IteratorUtil.map(asList(node.getAttributes()).iterator(),
+                    n -> new Attribute(this, n.getNodeName(), n.getNodeValue()));
         }
     }
 
@@ -155,7 +145,6 @@ class XmlNodeWrapper implements XmlNode {
             public Node get(int index) {
                 return nodeList.item(index);
             }
-
 
             @Override
             public int size() {

@@ -89,7 +89,7 @@ class GlobalAnalysisListenerTest {
         AnalysisCache mockCache = spy(NoopAnalysisCache.class);
         InternalApiBridgeForTestsOnly.setAnalysisCache(config, mockCache);
 
-        BrokenRule rule = new BrokenRule();  // the broken rule throws
+        BrokenRule rule = new BrokenRule(); // the broken rule throws
         runPmd(config, GlobalAnalysisListener.noop(), rule);
 
         // cache methods are called regardless
@@ -105,7 +105,7 @@ class GlobalAnalysisListenerTest {
         AnalysisCache mockCache = spy(NoopAnalysisCache.class);
         InternalApiBridgeForTestsOnly.setAnalysisCache(config, mockCache);
 
-        BrokenRule rule = new BrokenRule();  // the broken rule throws
+        BrokenRule rule = new BrokenRule(); // the broken rule throws
         // now the exception should be propagated
         GlobalAnalysisListener listener = GlobalAnalysisListener.exceptionThrower();
         FileAnalysisException exception = assertThrows(FileAnalysisException.class, () -> {
@@ -139,7 +139,6 @@ class GlobalAnalysisListenerTest {
             pmd.performAnalysis();
         }
     }
-
 
     public static class MyFooRule extends FooRule {
 

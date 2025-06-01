@@ -67,8 +67,8 @@ class JspPageStyleTest extends AbstractJspNodesTst {
         List<ASTJspScriptlet> scriptlets = jsp.getNodes(ASTJspScriptlet.class, JSP_SCRIPTLET);
         assertEquals(1, scriptlets.size(), "One scriptlet expected!");
         ASTJspScriptlet scriptlet = scriptlets.iterator().next();
-        assertEquals("someString = someString + \"suffix\";",
-                scriptlet.getContent(), "Correct scriptlet content expected!");
+        assertEquals("someString = someString + \"suffix\";", scriptlet.getContent(),
+                "Correct scriptlet content expected!");
     }
 
     /**
@@ -87,7 +87,8 @@ class JspPageStyleTest extends AbstractJspNodesTst {
      */
     @Test
     void testExpressionInAttribute() {
-        List<ASTJspExpressionInAttribute> expressions = jsp.getNodes(ASTJspExpressionInAttribute.class, JSP_EXPRESSION_IN_ATTRIBUTE);
+        List<ASTJspExpressionInAttribute> expressions = jsp.getNodes(ASTJspExpressionInAttribute.class,
+                JSP_EXPRESSION_IN_ATTRIBUTE);
         assertEquals(1, expressions.size(), "One expression expected!");
         ASTJspExpressionInAttribute expression = expressions.iterator().next();
         assertEquals("style.getClass()", expression.getContent(), "Correct expression content expected!");

@@ -29,11 +29,8 @@ class NioTextFile extends BaseCloseable implements TextFile {
     private final FileId fileId;
     private boolean readOnly;
 
-    NioTextFile(Path path,
-                @Nullable FileId parentFsPath,
-                Charset charset,
-                LanguageVersion languageVersion,
-                boolean readOnly) {
+    NioTextFile(Path path, @Nullable FileId parentFsPath, Charset charset, LanguageVersion languageVersion,
+            boolean readOnly) {
         AssertionUtil.requireParamNotNull("path", path);
         AssertionUtil.requireParamNotNull("charset", charset);
         AssertionUtil.requireParamNotNull("language version", languageVersion);
@@ -88,7 +85,6 @@ class NioTextFile extends BaseCloseable implements TextFile {
 
         return TextFileContent.fromInputStream(Files.newInputStream(path), charset);
     }
-
 
     @Override
     protected void doClose() throws IOException {

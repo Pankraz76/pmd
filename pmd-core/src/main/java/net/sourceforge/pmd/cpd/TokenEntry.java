@@ -50,11 +50,9 @@ public class TokenEntry implements Comparable<TokenEntry> {
         return coord >= 1;
     }
 
-
     FileId getFileId() {
         return fileId;
     }
-
 
     /** The line number where this token starts. */
     public int getBeginLine() {

@@ -21,24 +21,17 @@ public class TooManyFieldsRule extends AbstractApexRule {
 
     private static final int DEFAULT_MAXFIELDS = 15;
 
-    private static final PropertyDescriptor<Integer> MAX_FIELDS_DESCRIPTOR
-            = PropertyFactory.intProperty("maxfields")
-                             .desc("Max allowable fields")
-                             .defaultValue(DEFAULT_MAXFIELDS)
-                             .require(positive())
-                             .build();
-
+    private static final PropertyDescriptor<Integer> MAX_FIELDS_DESCRIPTOR = PropertyFactory.intProperty("maxfields")
+            .desc("Max allowable fields").defaultValue(DEFAULT_MAXFIELDS).require(positive()).build();
 
     public TooManyFieldsRule() {
         definePropertyDescriptor(MAX_FIELDS_DESCRIPTOR);
     }
 
-
     @Override
     protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
-
 
     @Override
     public Object visit(ASTUserClass node, Object data) {

@@ -12,6 +12,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.file.Files;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,11 +42,8 @@ public class XSLTRenderer extends XMLRenderer {
 
     public static final String NAME = "xslt";
 
-    public static final PropertyDescriptor<String> XSLT_FILENAME = PropertyFactory
-            .stringProperty("xsltFilename")
-            .desc("The XSLT file name.")
-            .defaultValue("")
-            .build();
+    public static final PropertyDescriptor<String> XSLT_FILENAME = PropertyFactory.stringProperty("xsltFilename")
+            .desc("The XSLT file name.").defaultValue("").build();
 
     private Transformer transformer;
     private String xsltFilename = "/pmd-nicerhtml.xsl";

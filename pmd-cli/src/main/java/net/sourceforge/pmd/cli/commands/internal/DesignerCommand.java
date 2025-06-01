@@ -13,13 +13,12 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.IVersionProvider;
 import picocli.CommandLine.Option;
 
-@Command(name = "designer", showDefaultValues = true,
-    versionProvider = DesignerVersionProvider.class,
-    description = "The PMD visual rule designer")
+@Command(name = "designer", showDefaultValues = true, versionProvider = DesignerVersionProvider.class,
+        description = "The PMD visual rule designer")
 public class DesignerCommand extends AbstractPmdSubcommand {
 
     @SuppressWarnings("unused")
-    @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version information and exit.")
+    @Option(names = { "-V", "--version" }, versionHelp = true, description = "Print version information and exit.")
     private boolean versionRequested;
 
     @Override
@@ -37,5 +36,5 @@ class DesignerVersionProvider implements IVersionProvider {
     public String[] getVersion() throws Exception {
         return new String[] { "PMD Rule Designer " + DesignerVersion.getCurrentVersion() };
     }
-    
+
 }

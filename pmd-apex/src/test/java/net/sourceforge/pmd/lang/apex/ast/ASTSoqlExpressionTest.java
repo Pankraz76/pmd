@@ -28,9 +28,11 @@ class ASTSoqlExpressionTest extends ApexParserTestBase {
 
     @Test
     void testQuery3() {
-        ApexNode<?> root = parse("class Foo { void test1() { String name = [SELECT Name FROM Account WHERE Id = :accId and Name = :myName]; } }");
+        ApexNode<?> root = parse(
+                "class Foo { void test1() { String name = [SELECT Name FROM Account WHERE Id = :accId and Name = :myName]; } }");
         ASTSoqlExpression soqlExpression = root.descendants(ASTSoqlExpression.class).firstOrThrow();
         assertEquals("SELECT Name FROM Account WHERE Id = :accId and Name = :myName", soqlExpression.getQuery());
-        assertEquals("SELECT Name FROM Account WHERE Id = :tmpVar1 AND Name = :tmpVar2", soqlExpression.getCanonicalQuery());
+        assertEquals("SELECT Name FROM Account WHERE Id = :tmpVar1 AND Name = :tmpVar2",
+                soqlExpression.getCanonicalQuery());
     }
 }

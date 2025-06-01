@@ -23,8 +23,7 @@ import net.sourceforge.pmd.util.log.internal.SimpleMessageReporter;
 class RuleSetResolverTest {
 
     private static final List<String> EXCLUDED_RULESETS = listOf(
-            IOUtil.normalizePath("pmd-test/src/main/resources/rulesets/dummy/basic.xml")
-    );
+            IOUtil.normalizePath("pmd-test/src/main/resources/rulesets/dummy/basic.xml"));
 
     @Test
     void resolveAllRulesets() {
@@ -38,13 +37,15 @@ class RuleSetResolverTest {
         for (String filename : additionalRulesets) {
             PMDConfiguration config = new PMDConfiguration();
             config.setReporter(new SimpleMessageReporter(LoggerFactory.getLogger(RuleSetResolverTest.class)));
-            RuleSetLoader.fromPmdConfig(config).warnDeprecated(false).loadFromResource(filename); // will throw if invalid
+            RuleSetLoader.fromPmdConfig(config).warnDeprecated(false).loadFromResource(filename); // will throw if
+                                                                                                  // invalid
         }
     }
 
     @Test
     void testAdditionalRulesetPattern() {
-        String filePath = IOUtil.normalizePath("/home/foo/pmd/pmd-java/src/main/resources/rulesets/java/quickstart.xml");
+        String filePath = IOUtil
+                .normalizePath("/home/foo/pmd/pmd-java/src/main/resources/rulesets/java/quickstart.xml");
         assertTrue(GenerateRuleDocsCmd.ADDITIONAL_RULESET_PATTERN.matcher(filePath).matches());
     }
 

@@ -31,29 +31,32 @@ import net.sourceforge.pmd.reporting.ViolationSuppressor;
 /**
  * Helper methods to suppress violations based on annotations.
  *
- * An annotation suppresses a rule if the annotation is a {@link SuppressWarnings},
- * and if the set of suppressed warnings ({@link SuppressWarnings#value()})
- * contains at least one of those:
+ * An annotation suppresses a rule if the annotation is a
+ * {@link SuppressWarnings}, and if the set of suppressed warnings
+ * ({@link SuppressWarnings#value()}) contains at least one of those:
  * <ul>
  * <li>"PMD" (suppresses all rules);
  * <li>"PMD.rulename", where rulename is the name of the given rule;
  * <li>"all" (conventional value to suppress all warnings).
  * </ul>
  *
- * <p>Additionally, the following values suppress a specific set of rules:
+ * <p>
+ * Additionally, the following values suppress a specific set of rules:
  * <ul>
- * <li>{@code "unused"}: suppresses rules like UnusedLocalVariable or UnusedPrivateField;
- * <li>{@code "serial"}: suppresses BeanMembersShouldSerialize, NonSerializableClass and MissingSerialVersionUID;
+ * <li>{@code "unused"}: suppresses rules like UnusedLocalVariable or
+ * UnusedPrivateField;
+ * <li>{@code "serial"}: suppresses BeanMembersShouldSerialize,
+ * NonSerializableClass and MissingSerialVersionUID;
  * <li>TODO "fallthrough" #1899
  * </ul>
  */
 final class AnnotationSuppressionUtil {
 
-    private static final Set<String> UNUSED_RULES
-        = new HashSet<>(Arrays.asList("UnusedPrivateField", "UnusedLocalVariable", "UnusedPrivateMethod",
-                                      "UnusedFormalParameter", "UnusedAssignment", "SingularField"));
-    private static final Set<String> SERIAL_RULES =
-        new HashSet<>(Arrays.asList("BeanMembersShouldSerialize", "NonSerializableClass", "MissingSerialVersionUID"));
+    private static final Set<String> UNUSED_RULES = new HashSet<>(
+            Arrays.asList("UnusedPrivateField", "UnusedLocalVariable", "UnusedPrivateMethod", "UnusedFormalParameter",
+                    "UnusedAssignment", "SingularField"));
+    private static final Set<String> SERIAL_RULES = new HashSet<>(
+            Arrays.asList("BeanMembersShouldSerialize", "NonSerializableClass", "MissingSerialVersionUID"));
 
     static final ViolationSuppressor JAVA_ANNOT_SUPPRESSOR = new ViolationSuppressor() {
         @Override
@@ -94,10 +97,8 @@ final class AnnotationSuppressionUtil {
         return result;
     }
 
-
     /**
-     * Returns true if the node has an annotation that suppresses the
-     * given rule.
+     * Returns true if the node has an annotation that suppresses the given rule.
      */
     private static boolean suppresses(final Node node, Rule rule) {
         Annotatable suppressor = getSuppressor(node);
@@ -117,7 +118,6 @@ final class AnnotationSuppressionUtil {
         return node.getDeclaredAnnotations().any(it -> annotationSuppresses(it, rule));
     }
 
-
     // @formatter:on
     private static boolean annotationSuppresses(ASTAnnotation annotation, Rule rule) {
         if (TypeTestUtil.isA(SuppressWarnings.class, annotation)) {
@@ -125,14 +125,14 @@ final class AnnotationSuppressionUtil {
                 Object constVal = value.getConstValue();
                 if (constVal instanceof String) {
                     String stringVal = (String) constVal;
-                    if ("PMD".equals(stringVal)
-                        || ("PMD." + rule.getName()).equals(stringVal) // NOPMD uselessparentheses false positive
-                        // Check for standard annotations values
-                        || "all".equals(stringVal)
-                        || "serial".equals(stringVal) && SERIAL_RULES.contains(rule.getName())
-                        || "unused".equals(stringVal) && UNUSED_RULES.contains(rule.getName())
-                        || "fallthrough".equals(stringVal) && rule instanceof ImplicitSwitchFallThroughRule
-                    ) {
+                    if ("PMD".equals(stringVal) || ("PMD." + rule.getName()).equals(stringVal) // NOPMD
+                                                                                               // uselessparentheses
+                                                                                               // false positive
+                    // Check for standard annotations values
+                            || "all".equals(stringVal)
+                            || "serial".equals(stringVal) && SERIAL_RULES.contains(rule.getName())
+                            || "unused".equals(stringVal) && UNUSED_RULES.contains(rule.getName())
+                            || "fallthrough".equals(stringVal) && rule instanceof ImplicitSwitchFallThroughRule) {
                         return true;
                     }
                 }

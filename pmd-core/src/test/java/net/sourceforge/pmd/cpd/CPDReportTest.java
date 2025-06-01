@@ -32,15 +32,12 @@ class CPDReportTest {
         assertEquals(3, original.getMatches().size());
 
         CPDReport filtered = original.filterMatches(
-            // only keep file1.java
-            match -> CollectionUtil.any(match, mark -> mark.getLocation().getFileId().equals(file1))
-        );
+                // only keep file1.java
+                match -> CollectionUtil.any(match, mark -> mark.getLocation().getFileId().equals(file1)));
 
         assertEquals(2, filtered.getMatches().size());
         for (Match match : filtered.getMatches()) {
-            boolean containsFile1 =
-                match.getMarkSet().stream().map(Mark::getFileId)
-                     .anyMatch(file1::equals);
+            boolean containsFile1 = match.getMarkSet().stream().map(Mark::getFileId).anyMatch(file1::equals);
             assertTrue(containsFile1);
         }
 
@@ -49,8 +46,7 @@ class CPDReportTest {
     }
 
     private Match createMatch(CpdReportBuilder builder, FileId file1, FileId file2, int line) {
-        return new Match(5,
-                         builder.tokens.addToken("firstToken", file1, line, 1, line, 1),
-                         builder.tokens.addToken("secondToken", file2, line, 2, line, 2));
+        return new Match(5, builder.tokens.addToken("firstToken", file1, line, 1, line, 1),
+                builder.tokens.addToken("secondToken", file2, line, 2, line, 2));
     }
 }

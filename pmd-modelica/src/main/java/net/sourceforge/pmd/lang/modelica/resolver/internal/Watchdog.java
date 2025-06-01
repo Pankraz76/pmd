@@ -5,7 +5,8 @@
 package net.sourceforge.pmd.lang.modelica.resolver.internal;
 
 /**
- * A watchdog counter initialized with some value. Throws an exception after the specified {@link #decrement} calls.
+ * A watchdog counter initialized with some value. Throws an exception after the
+ * specified {@link #decrement} calls.
  *
  * Is used to break possible resolution loops.
  */

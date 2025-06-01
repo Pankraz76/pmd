@@ -4,7 +4,6 @@
 
 package net.sourceforge.pmd.lang.java.ast;
 
-
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -22,7 +21,8 @@ import net.sourceforge.pmd.util.AssertionUtil;
 /**
  * Computes constant expression values.
  */
-// strictfp because constant expressions are FP-strict (not sure if this is really important)
+// strictfp because constant expressions are FP-strict (not sure if this is
+// really important)
 final strictfp class ConstantFolder extends JavaVisitorBase<Void, @NonNull ConstResult> {
 
     static final ConstantFolder INSTANCE = new ConstantFolder();
@@ -99,7 +99,8 @@ final strictfp class ConstantFolder extends JavaVisitorBase<Void, @NonNull Const
         }
 
         if (symbol instanceof JFieldSymbol) {
-            @Nullable Object cv = ((JFieldSymbol) symbol).getConstValue();
+            @Nullable
+            Object cv = ((JFieldSymbol) symbol).getConstValue();
             if (cv != null) {
                 return ConstResult.ctConst(cv);
             }
@@ -113,7 +114,7 @@ final strictfp class ConstantFolder extends JavaVisitorBase<Void, @NonNull Const
                 ConstResult initRes = initializer.getConstFoldingResult();
                 if (initRes.hasValue()) {
                     boolean isCompileTimeConstant = symbol instanceof JFieldSymbol
-                        && ((JFieldSymbol) symbol).isStatic();
+                            && ((JFieldSymbol) symbol).isStatic();
                     return new ConstResult(isCompileTimeConstant, initRes.getValue());
                 }
                 return initRes;
@@ -156,9 +157,8 @@ final strictfp class ConstantFolder extends JavaVisitorBase<Void, @NonNull Const
         if (condition.hasValue()) {
             ConstResult thenValue = node.getThenBranch().getConstFoldingResult();
             ConstResult elseValue = node.getElseBranch().getConstFoldingResult();
-            boolean ctConst = condition.isCompileTimeConstant()
-                && thenValue.isCompileTimeConstant()
-                && elseValue.isCompileTimeConstant();
+            boolean ctConst = condition.isCompileTimeConstant() && thenValue.isCompileTimeConstant()
+                    && elseValue.isCompileTimeConstant();
             if (!thenValue.hasValue() || !elseValue.hasValue()) {
                 return ConstResult.NO_CONST_VALUE; // not a constexpr
             }
@@ -544,7 +544,6 @@ final strictfp class ConstantFolder extends JavaVisitorBase<Void, @NonNull Const
         return o instanceof Number || o instanceof Character;
     }
 
-
     private static @Nullable Number unaryPromotion(Object t) {
         if (t instanceof Character) {
             return (int) (Character) t;
@@ -559,9 +558,9 @@ final strictfp class ConstantFolder extends JavaVisitorBase<Void, @NonNull Const
     }
 
     /**
-     * This returns a pair in which both numbers have the dynamic type.
-     * Both right and left need to be {@link #isConvertibleToNumber(Object)},
-     * otherwise fails with ClassCastException.
+     * This returns a pair in which both numbers have the dynamic type. Both right
+     * and left need to be {@link #isConvertibleToNumber(Object)}, otherwise fails
+     * with ClassCastException.
      */
     private static Pair<Object, Object> binaryNumericPromotion(Object left, Object right) {
         left = projectCharOntoInt(left);

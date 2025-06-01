@@ -30,21 +30,15 @@ final class CpdTestUtils {
         return makeReport(matches, Collections.emptyMap(), Collections.emptyList());
     }
 
-    static CPDReport makeReport(List<Match> matches, Map<FileId, Integer> numTokensPerFile, List<Report.ProcessingError> processingErrors) {
+    static CPDReport makeReport(List<Match> matches, Map<FileId, Integer> numTokensPerFile,
+            List<Report.ProcessingError> processingErrors) {
         Set<TextFile> textFiles = new HashSet<>();
         for (Match match : matches) {
-            match.iterator().forEachRemaining(
-                mark -> textFiles.add(
-                    TextFile.forCharSeq(DUMMY_FILE_CONTENT,
-                                        mark.getLocation().getFileId(),
-                                        DummyLanguageModule.getInstance().getDefaultVersion())));
+            match.iterator().forEachRemaining(mark -> textFiles.add(TextFile.forCharSeq(DUMMY_FILE_CONTENT,
+                    mark.getLocation().getFileId(), DummyLanguageModule.getInstance().getDefaultVersion())));
         }
-        return new CPDReport(
-            new SourceManager(new ArrayList<>(textFiles)),
-            matches,
-            numTokensPerFile,
-            processingErrors
-        );
+        return new CPDReport(new SourceManager(new ArrayList<>(textFiles)), matches, numTokensPerFile,
+                processingErrors);
     }
 
     static class CpdReportBuilder {
@@ -71,13 +65,10 @@ final class CpdTestUtils {
 
         CPDReport build() {
             Set<TextFile> textFiles = new HashSet<>();
-            fileContents.forEach((fname, contents) -> textFiles.add(TextFile.forCharSeq(contents, fname, DummyLanguageModule.getInstance().getDefaultVersion())));
-            return new CPDReport(
-                new SourceManager(new ArrayList<>(textFiles)),
-                matches,
-                numTokensPerFile,
-                Collections.emptyList()
-            );
+            fileContents.forEach((fname, contents) -> textFiles
+                    .add(TextFile.forCharSeq(contents, fname, DummyLanguageModule.getInstance().getDefaultVersion())));
+            return new CPDReport(new SourceManager(new ArrayList<>(textFiles)), matches, numTokensPerFile,
+                    Collections.emptyList());
 
         }
 
@@ -95,10 +86,9 @@ final class CpdTestUtils {
         Mark createMark(String image, FileId fileId, int beginLine, int lineCount, int beginColumn, int endColumn) {
             fileContents.putIfAbsent(fileId, DUMMY_FILE_CONTENT);
             final TokenEntry beginToken = tokens.addToken(image, fileId, beginLine, beginColumn, beginLine,
-                                                          beginColumn + image.length());
-            final TokenEntry endToken = tokens.addToken(image, fileId,
-                                                        beginLine + lineCount - 1, beginColumn,
-                                                        beginLine + lineCount - 1, endColumn);
+                    beginColumn + image.length());
+            final TokenEntry endToken = tokens.addToken(image, fileId, beginLine + lineCount - 1, beginColumn,
+                    beginLine + lineCount - 1, endColumn);
             final Mark result = new Mark(beginToken);
 
             result.setEndToken(endToken);

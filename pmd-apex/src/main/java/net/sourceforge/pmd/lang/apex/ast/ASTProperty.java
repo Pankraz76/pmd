@@ -17,7 +17,6 @@ public final class ASTProperty extends AbstractApexNode.Single<PropertyDeclarati
         super(property);
     }
 
-
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
@@ -26,8 +25,8 @@ public final class ASTProperty extends AbstractApexNode.Single<PropertyDeclarati
     /**
      * Returns the property value's type name.
      *
-     * This includes any type arguments.
-     * If the type is a primitive, its case will be normalized.
+     * This includes any type arguments. If the type is a primitive, its case will
+     * be normalized.
      */
     public String getType() {
         return caseNormalizedTypeIfPrimitive(node.getType().asCodeString());
@@ -38,8 +37,9 @@ public final class ASTProperty extends AbstractApexNode.Single<PropertyDeclarati
     }
 
     /**
-     * Returns the internal accessor (getter/setter) name of an {@link ASTProperty}. The accessor name is the
-     * constant {@link #ACCESSOR_PREFIX} prepended to the name of the property.
+     * Returns the internal accessor (getter/setter) name of an {@link ASTProperty}.
+     * The accessor name is the constant {@link #ACCESSOR_PREFIX} prepended to the
+     * name of the property.
      */
     public static String formatAccessorName(ASTProperty property) {
         return ACCESSOR_PREFIX + property.node.getId().getString();

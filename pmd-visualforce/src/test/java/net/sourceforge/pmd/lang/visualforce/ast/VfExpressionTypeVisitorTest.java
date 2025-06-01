@@ -50,7 +50,8 @@ class VfExpressionTypeVisitorTest {
     }
 
     /**
-     * Strings that use dot notation(Account.CreatedDate) result in ASTIdentifier nodes
+     * Strings that use dot notation(Account.CreatedDate) result in ASTIdentifier
+     * nodes
      */
     @Test
     void testXpathQueryForCustomFieldIdentifiers() {
@@ -71,8 +72,9 @@ class VfExpressionTypeVisitorTest {
     }
 
     /**
-     * Strings that use array notation, Account['CreatedDate') don't have a DataType added. This type of notation
-     * creates ambiguous situations with Apex methods that return Maps. This may be addressed in a future release.
+     * Strings that use array notation, Account['CreatedDate') don't have a DataType
+     * added. This type of notation creates ambiguous situations with Apex methods
+     * that return Maps. This may be addressed in a future release.
      */
     @Test
     void testXpathQueryForCustomFieldLiteralsHaveNullDataType() {
@@ -80,10 +82,9 @@ class VfExpressionTypeVisitorTest {
 
         for (Map.Entry<String, DataType> entry : EXPECTED_CUSTOM_FIELD_DATA_TYPES.entrySet()) {
             List<ASTLiteral> nodes = rootNode.descendants(ASTLiteral.class)
-                                             // Literals are surrounded by apostrophes
-                                             .filterMatching(ASTLiteral::getImage, "'" + entry.getKey() + "'")
-                                             .filterMatching(ASTLiteral::getDataType, null)
-                                             .toList();
+                    // Literals are surrounded by apostrophes
+                    .filterMatching(ASTLiteral::getImage, "'" + entry.getKey() + "'")
+                    .filterMatching(ASTLiteral::getDataType, null).toList();
 
             // Each string appears twice, it is set on a "value" attribute and inline
             assertEquals(2, nodes.size(), entry.getKey());
@@ -103,10 +104,9 @@ class VfExpressionTypeVisitorTest {
     void testDataTypeForCustomFieldsNotFound() {
         Node rootNode = compile("StandardAccount.page");
 
-        checkNodes(rootNode.descendants(ASTIdentifier.class)
-                           .filterMatching(ASTIdentifier::getImage, "NotFoundField__c"));
-        checkNodes(rootNode.descendants(ASTLiteral.class)
-                           .filterMatching(ASTLiteral::getImage, "'NotFoundField__c'"));
+        checkNodes(
+                rootNode.descendants(ASTIdentifier.class).filterMatching(ASTIdentifier::getImage, "NotFoundField__c"));
+        checkNodes(rootNode.descendants(ASTLiteral.class).filterMatching(ASTLiteral::getImage, "'NotFoundField__c'"));
     }
 
     private void checkNodes(NodeStream<? extends VfTypedNode> nodeStream) {
@@ -140,10 +140,8 @@ class VfExpressionTypeVisitorTest {
     }
 
     private List<ASTIdentifier> getIdentifiers(Node rootNode, Entry<String, DataType> entry) {
-        return rootNode.descendants(ASTIdentifier.class)
-                       .filterMatching(ASTIdentifier::getImage, entry.getKey())
-                       .filterMatching(ASTIdentifier::getDataType, entry.getValue())
-                       .toList();
+        return rootNode.descendants(ASTIdentifier.class).filterMatching(ASTIdentifier::getImage, entry.getKey())
+                .filterMatching(ASTIdentifier::getDataType, entry.getValue()).toList();
     }
 
     /**
@@ -154,8 +152,7 @@ class VfExpressionTypeVisitorTest {
         Node rootNode = compile("ApexController.page");
 
         // Each string appears twice, it is set on a "value" attribute and inline
-        checkNodes(rootNode.descendants(ASTIdentifier.class)
-                           .filterMatching(ASTIdentifier::getImage, "NotFoundProp"));
+        checkNodes(rootNode.descendants(ASTIdentifier.class).filterMatching(ASTIdentifier::getImage, "NotFoundProp"));
     }
 
     private Node compile(String pageName) {
@@ -163,8 +160,8 @@ class VfExpressionTypeVisitorTest {
     }
 
     private Node compile(String pageName, boolean renderAST) {
-        Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
-                .resolve(pageName);
+        Path vfPagePath = VFTestUtils
+                .getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf).resolve(pageName);
         return compile(vfPagePath, renderAST);
     }
 

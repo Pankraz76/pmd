@@ -33,7 +33,6 @@ class LatticeRelationTest {
 
         LatticeRelation<Set<Integer>, String, Set<String>> lattice = setLattice(PredicateUtil.always());
 
-
         lattice.put(setOf(1, 2, 3), "123");
         lattice.put(setOf(4), "4");
         lattice.put(setOf(4, 3), "43");
@@ -73,7 +72,6 @@ class LatticeRelationTest {
         assertEquals(emptySet(), lattice.get(emptySet()));
     }
 
-
     @Test
     void testTopoFilter() {
 
@@ -83,7 +81,6 @@ class LatticeRelationTest {
         // are still connected to successors (size < 2)
 
         LatticeRelation<Set<Integer>, String, Set<String>> lattice = setLattice(it -> it.size() != 2);
-
 
         lattice.put(setOf(1, 2, 3), "123");
         lattice.put(setOf(4), "4");
@@ -108,17 +105,11 @@ class LatticeRelationTest {
         assertEquals(setOf("4", "43", "435", "436"), lattice.get(setOf(4)));
     }
 
-
     @Test
     void testInitialSetFilter() {
 
-        LatticeRelation<Set<Integer>, String, Set<String>> lattice =
-            new LatticeRelation<>(
-                setTopoOrder(),
-                setOf(setOf(1, 2), setOf(1, 2, 3), setOf(2, 3), emptySet()),
-                Objects::toString,
-                Collectors.toSet()
-            );
+        LatticeRelation<Set<Integer>, String, Set<String>> lattice = new LatticeRelation<>(setTopoOrder(),
+                setOf(setOf(1, 2), setOf(1, 2, 3), setOf(2, 3), emptySet()), Objects::toString, Collectors.toSet());
 
         lattice.put(setOf(1, 2, 3), "123");
         lattice.put(setOf(1, 2), "12");
@@ -140,7 +131,6 @@ class LatticeRelationTest {
         assertEquals(setOf("123", "234", "234*"), lattice.get(setOf(2, 3))); // value "43" has been pruned
     }
 
-
     @Test
     void testDiamond() {
 
@@ -150,11 +140,11 @@ class LatticeRelationTest {
 
         // We have
 
-        //    {1,2}
-        //    /   \
-        //  {1}   {2}
-        //    \   /
-        //     { }
+        // {1,2}
+        // / \
+        // {1} {2}
+        // \ /
+        // { }
 
         // Goal is to assert, that when we ask first for the value of { },
         // the value of every node is correctly computed, even if they're
@@ -165,7 +155,6 @@ class LatticeRelationTest {
         assertEquals(setOf("12"), lattice.get(setOf(2)));
         assertEquals(setOf("12"), lattice.get(setOf(1, 2)));
     }
-
 
     @Test
     void testFilterOnChainSetup() {
@@ -206,8 +195,7 @@ class LatticeRelationTest {
     @Test
     void testTransitiveSucc() {
 
-        LatticeRelation<String, String, Set<String>> lattice =
-            stringLattice(s -> s.equals("c") || s.equals("bc"));
+        LatticeRelation<String, String, Set<String>> lattice = stringLattice(s -> s.equals("c") || s.equals("bc"));
 
         lattice.put("abc", "val");
         lattice.put("bc", "v2");
@@ -233,8 +221,7 @@ class LatticeRelationTest {
     @Test
     void testTransitiveSuccWithHoleInTheMiddle() {
 
-        LatticeRelation<String, String, Set<String>> lattice =
-            stringLattice(setOf("abc", "bbc", "c")::contains);
+        LatticeRelation<String, String, Set<String>> lattice = stringLattice(setOf("abc", "bbc", "c")::contains);
 
         lattice.put("abc", "v1");
         lattice.put("bbc", "v2");
@@ -263,32 +250,28 @@ class LatticeRelationTest {
         assertEquals(setOf("v1", "v2"), lattice.get("c"));
     }
 
-
     @Test
     void testToString() {
         LatticeRelation<Set<Integer>, String, Set<String>> lattice = setLattice(set -> set.size() < 2);
 
         lattice.put(setOf(1, 2), "12");
 
-        //    {1,2}
-        //    /   \
-        //  {1}   {2}
-        //    \   /
-        //     { }
+        // {1,2}
+        // / \
+        // {1} {2}
+        // \ /
+        // { }
 
         // all {1}, {2}, and { } are query nodes, not {1,2}
 
-        assertEquals("strict digraph {\n"
-                         + "n0 [ shape=box, color=black, label=\"[1, 2]\" ];\n"
-                         + "n1 [ shape=box, color=green, label=\"[1]\" ];\n"
-                         + "n2 [ shape=box, color=green, label=\"[2]\" ];\n"
-                         + "n3 [ shape=box, color=green, label=\"[]\" ];\n"
-                         + "n0 -> n1;\n" // {1}   -> { }
-                         + "n0 -> n2;\n" // {2}   -> { }
-                         + "n0 -> n3;\n" // {1,2} -> { }
-                         + "n1 -> n3;\n" // {1,2} -> {1}
-                         + "n2 -> n3;\n" // {1,2} -> {2}
-                         + "}", lattice.toString());
+        assertEquals("strict digraph {\n" + "n0 [ shape=box, color=black, label=\"[1, 2]\" ];\n"
+                + "n1 [ shape=box, color=green, label=\"[1]\" ];\n" + "n2 [ shape=box, color=green, label=\"[2]\" ];\n"
+                + "n3 [ shape=box, color=green, label=\"[]\" ];\n" + "n0 -> n1;\n" // {1} -> { }
+                + "n0 -> n2;\n" // {2} -> { }
+                + "n0 -> n3;\n" // {1,2} -> { }
+                + "n1 -> n3;\n" // {1,2} -> {1}
+                + "n2 -> n3;\n" // {1,2} -> {2}
+                + "}", lattice.toString());
     }
 
     @Test
@@ -300,8 +283,8 @@ class LatticeRelationTest {
             return singletonList(cycle.get((i + 1) % cycle.size()));
         };
 
-        LatticeRelation<String, String, Set<String>> lattice =
-            new LatticeRelation<>(cyclicOrder, PredicateUtil.always(), Objects::toString, Collectors.toSet());
+        LatticeRelation<String, String, Set<String>> lattice = new LatticeRelation<>(cyclicOrder,
+                PredicateUtil.always(), Objects::toString, Collectors.toSet());
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
             lattice.put("a", "1");
@@ -315,15 +298,15 @@ class LatticeRelationTest {
         return new LatticeRelation<>(stringTopoOrder(), filter, Objects::toString, Collectors.toSet());
     }
 
-
     @NonNull
     private LatticeRelation<Set<Integer>, String, Set<String>> setLattice(Predicate<Set<Integer>> filter) {
         return new LatticeRelation<>(setTopoOrder(), filter, Objects::toString, Collectors.toSet());
     }
 
     /**
-     * Direct successors of a set are all the sets that have exactly
-     * one less element. For example:
+     * Direct successors of a set are all the sets that have exactly one less
+     * element. For example:
+     * 
      * <pre>{@code
      *
      * {1, 2, 3} <: {1, 2}, {1, 3}, {2, 3}
@@ -349,17 +332,15 @@ class LatticeRelationTest {
     }
 
     /**
-     * Generates a linear topo order according to suffix order. This
-     * can never form diamonds, as any string has at most one successor.
-     * Eg
+     * Generates a linear topo order according to suffix order. This can never form
+     * diamonds, as any string has at most one successor. Eg
+     * 
      * <pre>{@code
      * "abc" <: "bc" <: "c" <: ""
      * }</pre>
      */
     private static TopoOrder<String> stringTopoOrder() {
-        return str -> str.isEmpty() ? emptyList()
-                                    : singletonList(str.substring(1));
+        return str -> str.isEmpty() ? emptyList() : singletonList(str.substring(1));
     }
-
 
 }

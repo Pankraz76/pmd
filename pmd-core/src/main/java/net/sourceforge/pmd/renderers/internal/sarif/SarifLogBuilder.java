@@ -59,32 +59,18 @@ public class SarifLogBuilder {
     }
 
     public SarifLogBuilder addRunTimeError(Report.ProcessingError error) {
-        ArtifactLocation artifactLocation = ArtifactLocation.builder()
-                .uri(error.getFileId().getUriString())
-                .build();
+        ArtifactLocation artifactLocation = ArtifactLocation.builder().uri(error.getFileId().getUriString()).build();
 
-        PhysicalLocation physicalLocation = PhysicalLocation.builder()
-                .artifactLocation(artifactLocation)
-                .build();
+        PhysicalLocation physicalLocation = PhysicalLocation.builder().artifactLocation(artifactLocation).build();
 
-        Location location = Location
-                .builder()
-                .physicalLocation(physicalLocation)
-                .build();
+        Location location = Location.builder().physicalLocation(physicalLocation).build();
 
-        Message message = Message.builder()
-                .text(error.getMsg())
-                .build();
+        Message message = Message.builder().text(error.getMsg()).build();
 
-        Exception exception = Exception.builder()
-                .message(error.getDetail())
-                .build();
+        Exception exception = Exception.builder().message(error.getDetail()).build();
 
         ToolExecutionNotification toolExecutionNotification = ToolExecutionNotification.builder()
-                .locations(Collections.singletonList(location))
-                .message(message)
-                .exception(exception)
-                .build();
+                .locations(Collections.singletonList(location)).message(message).exception(exception).build();
 
         toolExecutionNotifications.add(toolExecutionNotification);
 
@@ -92,16 +78,12 @@ public class SarifLogBuilder {
     }
 
     public SarifLogBuilder addConfigurationError(Report.ConfigurationError error) {
-        AssociatedRule associatedRule = AssociatedRule.builder()
-                .id(error.rule().getName())
-                .build();
+        AssociatedRule associatedRule = AssociatedRule.builder().id(error.rule().getName()).build();
 
         Message message = Message.builder().text(error.issue()).build();
 
         ToolConfigurationNotification toolConfigurationNotification = ToolConfigurationNotification.builder()
-                .associatedRule(associatedRule)
-                .message(message)
-                .build();
+                .associatedRule(associatedRule).message(message).build();
 
         toolConfigurationNotifications.add(toolConfigurationNotification);
 
@@ -111,15 +93,10 @@ public class SarifLogBuilder {
     public SarifLog build() {
         final Component driver = getDriverComponent().toBuilder().rules(rules).build();
         final Tool tool = Tool.builder().driver(driver).build();
-        final Invocation invocation = Invocation.builder()
-                .toolExecutionNotifications(toolExecutionNotifications)
+        final Invocation invocation = Invocation.builder().toolExecutionNotifications(toolExecutionNotifications)
                 .toolConfigurationNotifications(toolConfigurationNotifications)
-                .executionSuccessful(isExecutionSuccessful())
-                .build();
-        final Run run = Run.builder()
-                .tool(tool)
-                .results(results)
-                .invocations(Collections.singletonList(invocation))
+                .executionSuccessful(isExecutionSuccessful()).build();
+        final Run run = Run.builder().tool(tool).results(results).invocations(Collections.singletonList(invocation))
                 .build();
 
         List<Run> runs = Collections.singletonList(run);
@@ -131,16 +108,12 @@ public class SarifLogBuilder {
         return toolExecutionNotifications.isEmpty() && toolConfigurationNotifications.isEmpty();
     }
 
-    private Result resultFrom(ReportingDescriptor rule, Integer ruleIndex, Location location, RulePriority rulePriority) {
-        final Result result = Result.builder()
-                .ruleId(rule.getId())
-                .ruleIndex(ruleIndex)
-                .level(pmdPriorityToSarifSeverityLevel(rulePriority))
-                .build();
+    private Result resultFrom(ReportingDescriptor rule, Integer ruleIndex, Location location,
+            RulePriority rulePriority) {
+        final Result result = Result.builder().ruleId(rule.getId()).ruleIndex(ruleIndex)
+                .level(pmdPriorityToSarifSeverityLevel(rulePriority)).build();
 
-        final Message message = Message.builder()
-                .text(rule.getShortDescription().getText())
-                .build();
+        final Message message = Message.builder().text(rule.getShortDescription().getText()).build();
 
         result.setMessage(message);
         result.setLocations(Collections.singletonList(location));
@@ -149,66 +122,47 @@ public class SarifLogBuilder {
     }
 
     private Location getRuleViolationLocation(RuleViolation rv) {
-        ArtifactLocation artifactLocation = ArtifactLocation.builder()
-                .uri(rv.getFileId().getUriString())
+        ArtifactLocation artifactLocation = ArtifactLocation.builder().uri(rv.getFileId().getUriString()).build();
+
+        Region region = Region.builder().startLine(rv.getBeginLine()).endLine(rv.getEndLine())
+                .startColumn(rv.getBeginColumn()).endColumn(rv.getEndColumn()).build();
+
+        PhysicalLocation physicalLocation = PhysicalLocation.builder().artifactLocation(artifactLocation).region(region)
                 .build();
 
-        Region region = Region.builder()
-            .startLine(rv.getBeginLine())
-            .endLine(rv.getEndLine())
-            .startColumn(rv.getBeginColumn())
-            .endColumn(rv.getEndColumn())
-            .build();
-
-        PhysicalLocation physicalLocation = PhysicalLocation.builder()
-                .artifactLocation(artifactLocation)
-                .region(region)
-                .build();
-
-        return Location.builder()
-            .physicalLocation(physicalLocation)
-            .build();
+        return Location.builder().physicalLocation(physicalLocation).build();
     }
 
     private ReportingDescriptor getReportingDescriptor(RuleViolation rv) {
-        return ReportingDescriptor.builder()
-            .id(rv.getRule().getName())
-            .shortDescription(new MultiformatMessage(rv.getDescription()))
-            .fullDescription(new MultiformatMessage(rv.getRule().getDescription()))
-            .helpUri(rv.getRule().getExternalInfoUrl())
-            .help(new MultiformatMessage(rv.getRule().getDescription()))
-            .properties(getRuleProperties(rv))
-            .defaultConfiguration(getDefaultConfigForRuleViolation(rv))
-            .build();
+        return ReportingDescriptor.builder().id(rv.getRule().getName())
+                .shortDescription(new MultiformatMessage(rv.getDescription()))
+                .fullDescription(new MultiformatMessage(rv.getRule().getDescription()))
+                .helpUri(rv.getRule().getExternalInfoUrl()).help(new MultiformatMessage(rv.getRule().getDescription()))
+                .properties(getRuleProperties(rv)).defaultConfiguration(getDefaultConfigForRuleViolation(rv)).build();
     }
 
     private ReportingConfiguration getDefaultConfigForRuleViolation(RuleViolation rv) {
         return ReportingConfiguration.builder()
                 // get pmd level from rv and translate it to sarif level (for the config)
-                .level(pmdPriorityToSarifSeverityLevel(rv.getRule().getPriority()))
-                .build();
+                .level(pmdPriorityToSarifSeverityLevel(rv.getRule().getPriority())).build();
     }
 
     private PropertyBag getRuleProperties(RuleViolation rv) {
-        return PropertyBag.builder()
-                .ruleset(rv.getRule().getRuleSetName())
+        return PropertyBag.builder().ruleset(rv.getRule().getRuleSetName())
                 .priority(rv.getRule().getPriority().getPriority())
-                .tags(new HashSet<>(Arrays.asList(rv.getRule().getRuleSetName())))
-                .build();
+                .tags(new HashSet<>(Arrays.asList(rv.getRule().getRuleSetName()))).build();
     }
 
     private Component getDriverComponent() {
-        return Component.builder()
-                .name("PMD")
-                .version(PMDVersion.VERSION)
-                .informationUri("https://docs.pmd-code.org/latest/")
-                .build();
+        return Component.builder().name("PMD").version(PMDVersion.VERSION)
+                .informationUri("https://docs.pmd-code.org/latest/").build();
     }
-
 
     /**
      * Converts PMD's rule priority into the corresponding Sarif severity level.
-     * @param rulePriority of a rule violation.
+     * 
+     * @param rulePriority
+     *            of a rule violation.
      * @return sarif's severity level.
      * @see net.sourceforge.pmd.lang.rule.RulePriority
      */

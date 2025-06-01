@@ -5,8 +5,8 @@
 package net.sourceforge.pmd.lang.document;
 
 /**
- * Thrown when an attempt to write through a {@link TextFile}
- * fails because the file is read-only.
+ * Thrown when an attempt to write through a {@link TextFile} fails because the
+ * file is read-only.
  */
 public class ReadOnlyFileException extends UnsupportedOperationException {
 

@@ -27,9 +27,11 @@ import java.util.Set;
 /**
  * This class is responsible for handling the pluggable directives in VTL.
  *
- * <p>For example : #foreach()
+ * <p>
+ * For example : #foreach()
  *
- * <p>Please look at the Parser.jjt file which is what controls the generation of
+ * <p>
+ * Please look at the Parser.jjt file which is what controls the generation of
  * this class.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
@@ -67,7 +69,6 @@ public final class ASTDirective extends AbstractVtlNode {
 
     private String directiveName = "";
 
-
     ASTDirective(int id) {
         super(id);
     }
@@ -78,9 +79,8 @@ public final class ASTDirective extends AbstractVtlNode {
     }
 
     /**
-     * Sets the directive name. Used by the parser. This keeps us from having to
-     * dig it out of the token stream and gives the parse the change to
-     * override.
+     * Sets the directive name. Used by the parser. This keeps us from having to dig
+     * it out of the token stream and gives the parse the change to override.
      */
     void setDirectiveName(final String str) {
         directiveName = str;
@@ -103,8 +103,7 @@ public final class ASTDirective extends AbstractVtlNode {
     // block macro call of type: #@foobar($arg1 $arg2) astBody #end
     boolean isBlock() {
         assert directiveName != null; // directive name must be set before
-        return directiveName.startsWith("@")
-                || BLOCK_DIRECTIVES.contains(directiveName);
+        return directiveName.startsWith("@") || BLOCK_DIRECTIVES.contains(directiveName);
     }
 
     boolean isLine() {

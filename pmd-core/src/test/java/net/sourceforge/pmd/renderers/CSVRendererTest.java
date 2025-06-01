@@ -16,8 +16,8 @@ class CSVRendererTest extends AbstractRendererTest {
 
     @Override
     String getExpected() {
-        return getHeader()
-                + "\"1\",\"\",\"" + getSourceCodeFilename() + "\",\"5\",\"1\",\"blah\",\"RuleSet\",\"Foo\"" + EOL;
+        return getHeader() + "\"1\",\"\",\"" + getSourceCodeFilename() + "\",\"5\",\"1\",\"blah\",\"RuleSet\",\"Foo\""
+                + EOL;
     }
 
     @Override
@@ -27,9 +27,8 @@ class CSVRendererTest extends AbstractRendererTest {
 
     @Override
     String getExpectedMultiple() {
-        return getHeader()
-                + "\"1\",\"\",\"" + getSourceCodeFilename() + "\",\"5\",\"1\",\"blah\",\"RuleSet\",\"Foo\"" + EOL
-                + "\"2\",\"\",\"" + getSourceCodeFilename() + "\",\"1\",\"1\",\"blah\",\"RuleSet\",\"Boo\"" + EOL;
+        return getHeader() + "\"1\",\"\",\"" + getSourceCodeFilename() + "\",\"5\",\"1\",\"blah\",\"RuleSet\",\"Foo\""
+                + EOL + "\"2\",\"\",\"" + getSourceCodeFilename() + "\",\"1\",\"1\",\"blah\",\"RuleSet\",\"Boo\"" + EOL;
     }
 
     @Override

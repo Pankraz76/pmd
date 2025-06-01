@@ -8,4 +8,5 @@
  * @see net.sourceforge.pmd.cpd.CpdAnalysis
  * @see net.sourceforge.pmd.cpd.CpdLexer
  */
+
 package net.sourceforge.pmd.cpd;

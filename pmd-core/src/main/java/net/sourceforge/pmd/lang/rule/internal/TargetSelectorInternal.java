@@ -22,9 +22,7 @@ public abstract class TargetSelectorInternal {
 
     protected abstract void prepare(ApplicatorBuilder builder);
 
-
     protected abstract Iterator<? extends Node> getVisitedNodes(TreeIndex index);
-
 
     protected static final class ApplicatorBuilder {
 

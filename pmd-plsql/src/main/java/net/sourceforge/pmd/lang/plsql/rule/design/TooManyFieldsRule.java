@@ -27,12 +27,8 @@ public class TooManyFieldsRule extends AbstractPLSQLRule {
     private Map<String, Integer> stats;
     private Map<String, PLSQLNode> nodes;
 
-    private static final PropertyDescriptor<Integer> MAX_FIELDS_DESCRIPTOR
-            = PropertyFactory.intProperty("maxfields")
-                             .desc("Max allowable fields")
-                             .defaultValue(DEFAULT_MAXFIELDS)
-                             .require(positive())
-                             .build();
+    private static final PropertyDescriptor<Integer> MAX_FIELDS_DESCRIPTOR = PropertyFactory.intProperty("maxfields")
+            .desc("Max allowable fields").defaultValue(DEFAULT_MAXFIELDS).require(positive()).build();
 
     public TooManyFieldsRule() {
         definePropertyDescriptor(MAX_FIELDS_DESCRIPTOR);

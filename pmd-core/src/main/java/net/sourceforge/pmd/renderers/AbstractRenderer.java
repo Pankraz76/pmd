@@ -71,14 +71,15 @@ public abstract class AbstractRenderer extends AbstractPropertySource implements
     }
 
     /**
-     * Determines the filename that should be used in the report for the
-     * given ID. This uses the {@link FileNameRenderer} of this renderer.
-     * In the PMD CLI, the file name renderer respects the {@link PMDConfiguration#getRelativizeRoots()}
+     * Determines the filename that should be used in the report for the given ID.
+     * This uses the {@link FileNameRenderer} of this renderer. In the PMD CLI, the
+     * file name renderer respects the {@link PMDConfiguration#getRelativizeRoots()}
      * relativize roots to output relative paths.
      *
-     * <p>A renderer does not have to use this method to output paths.
-     * Some report formats require a specific format for paths, eg URIs.
-     * They can implement this ad-hoc.
+     * <p>
+     * A renderer does not have to use this method to output paths. Some report
+     * formats require a specific format for paths, eg URIs. They can implement this
+     * ad-hoc.
      */
     protected final String determineFileName(FileId fileId) {
         return fileNameRenderer.getDisplayName(fileId);
@@ -95,10 +96,12 @@ public abstract class AbstractRenderer extends AbstractPropertySource implements
     }
 
     @Override
-    // TODO: consider to rename the flush method - this is actually closing the writer
+    // TODO: consider to rename the flush method - this is actually closing the
+    // writer
     public void flush() {
         if (writer == null) {
-            // might happen, if no writer is set. E.g. in maven-pmd-plugin's PmdCollectingRenderer
+            // might happen, if no writer is set. E.g. in maven-pmd-plugin's
+            // PmdCollectingRenderer
             return;
         }
 
@@ -112,8 +115,9 @@ public abstract class AbstractRenderer extends AbstractPropertySource implements
     /**
      * {@inheritDoc}
      *
-     * <p>This default implementation always uses the system default charset for the writer.
-     * Overwrite in specific renderers to support other charsets.
+     * <p>
+     * This default implementation always uses the system default charset for the
+     * writer. Overwrite in specific renderers to support other charsets.
      */
     @Override
     public void setReportFile(String reportFilename) {

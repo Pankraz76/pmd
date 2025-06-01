@@ -12,8 +12,8 @@ import net.sourceforge.pmd.lang.ast.FileAnalysisException;
 import net.sourceforge.pmd.lang.document.FileLocation;
 
 /**
- * A {@link FileAnalysisException} thrown when the source format is invalid,
- * for example if some unicode escapes cannot be translated.
+ * A {@link FileAnalysisException} thrown when the source format is invalid, for
+ * example if some unicode escapes cannot be translated.
  */
 public class MalformedSourceException extends FileAnalysisException {
 

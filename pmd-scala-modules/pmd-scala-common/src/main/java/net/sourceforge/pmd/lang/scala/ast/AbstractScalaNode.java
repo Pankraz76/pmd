@@ -18,12 +18,14 @@ import scala.meta.inputs.Position;
  * A Wrapper for translating the Scala Tree Nodes to PMD-compatible Java-base
  * Nodes.
  *
- * @param <T> the type of the Scala tree node
+ * @param <T>
+ *            the type of the Scala tree node
  */
-abstract class AbstractScalaNode<T extends Tree> extends AbstractNode<AbstractScalaNode<?>, ScalaNode<?>> implements ScalaNode<T> {
+abstract class AbstractScalaNode<T extends Tree> extends AbstractNode<AbstractScalaNode<?>, ScalaNode<?>>
+        implements ScalaNode<T> {
 
-    private static final Comparator<Position> POS_CMP =
-        Comparator.comparingInt(Position::start).thenComparing(Position::end);
+    private static final Comparator<Position> POS_CMP = Comparator.comparingInt(Position::start)
+            .thenComparing(Position::end);
 
     protected final T node;
     private final Position pos;

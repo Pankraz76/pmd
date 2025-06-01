@@ -16,7 +16,10 @@ import net.sourceforge.pmd.lang.kotlin.ast.KotlinLexer;
 /**
  * The Kotlin Tokenizer
  *
- * <p>Note: This class has been called KotlinTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called KotlinTokenizer in PMD 6
+ * </p>
+ * .
  */
 public class KotlinCpdLexer extends AntlrCpdLexer {
 
@@ -34,8 +37,8 @@ public class KotlinCpdLexer extends AntlrCpdLexer {
      * The {@link KotlinTokenFilter} extends the {@link AntlrTokenFilter} to discard
      * Kotlin-specific tokens.
      * <p>
-     * By default, it discards package and import statements, and
-     * enables annotation-based CPD suppression.
+     * By default, it discards package and import statements, and enables
+     * annotation-based CPD suppression.
      * </p>
      */
     private static class KotlinTokenFilter extends AntlrTokenFilter {

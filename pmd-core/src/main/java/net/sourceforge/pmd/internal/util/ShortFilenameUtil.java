@@ -16,9 +16,10 @@ public final class ShortFilenameUtil {
 
     /**
      * Determines the filename that should be used in the report depending on the
-     * option "shortnames". If the option is enabled, then the filename in the report
-     * is without the directory prefix of the directories, that have been analyzed.
-     * If the option "shortnames" is not enabled, then the inputFileName is returned as-is.
+     * option "shortnames". If the option is enabled, then the filename in the
+     * report is without the directory prefix of the directories, that have been
+     * analyzed. If the option "shortnames" is not enabled, then the inputFileName
+     * is returned as-is.
      *
      * @param inputPathPrefixes
      * @param inputFileName

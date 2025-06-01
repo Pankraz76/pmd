@@ -17,14 +17,10 @@ import net.sourceforge.pmd.properties.PropertyFactory;
 public class LineLengthRule extends AbstractPLSQLRule {
 
     private static final PropertyDescriptor<Integer> MAX_LINE_LENGTH = PropertyFactory.intProperty("maxLineLength")
-            .desc("The maximum allowed line length")
-            .defaultValue(80)
-            .require(NumericConstraints.inRange(10, 200))
+            .desc("The maximum allowed line length").defaultValue(80).require(NumericConstraints.inRange(10, 200))
             .build();
     private static final PropertyDescriptor<Boolean> EACH_LINE = PropertyFactory.booleanProperty("eachLine")
-            .desc("Whether to report each line that is longer only the first line")
-            .defaultValue(false)
-            .build();
+            .desc("Whether to report each line that is longer only the first line").defaultValue(false).build();
 
     public LineLengthRule() {
         definePropertyDescriptor(MAX_LINE_LENGTH);

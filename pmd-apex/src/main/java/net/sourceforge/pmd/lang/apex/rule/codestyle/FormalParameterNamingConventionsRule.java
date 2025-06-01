@@ -17,11 +17,11 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 public class FormalParameterNamingConventionsRule extends AbstractNamingConventionsRule {
     private static final Map<String, String> DESCRIPTOR_TO_DISPLAY_NAME = new HashMap<>();
 
-    private static final PropertyDescriptor<Pattern> FINAL_METHOD_PARAMETER_REGEX = prop("finalMethodParameterPattern", "final method parameter",
-            DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(CAMEL_CASE).build();
+    private static final PropertyDescriptor<Pattern> FINAL_METHOD_PARAMETER_REGEX = prop("finalMethodParameterPattern",
+            "final method parameter", DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(CAMEL_CASE).build();
 
-    private static final PropertyDescriptor<Pattern> METHOD_PARAMETER_REGEX = prop("methodParameterPattern", "method parameter",
-            DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(CAMEL_CASE).build();
+    private static final PropertyDescriptor<Pattern> METHOD_PARAMETER_REGEX = prop("methodParameterPattern",
+            "method parameter", DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(CAMEL_CASE).build();
 
     public FormalParameterNamingConventionsRule() {
         definePropertyDescriptor(FINAL_METHOD_PARAMETER_REGEX);
@@ -35,7 +35,8 @@ public class FormalParameterNamingConventionsRule extends AbstractNamingConventi
 
     @Override
     public Object visit(ASTParameter node, Object data) {
-        // classes that extend Exception will contains methods that have parameters with null names
+        // classes that extend Exception will contains methods that have parameters with
+        // null names
         if (node.getImage() == null) {
             return data;
         }

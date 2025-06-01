@@ -22,7 +22,6 @@ public class Match implements Comparable<Match>, Iterable<Mark> {
 
     public static final Comparator<Match> LINES_COMPARATOR = (ma, mb) -> mb.getLineCount() - ma.getLineCount();
 
-
     Match(int tokenCount, Mark first, Mark second) {
         markSet.add(first);
         markSet.add(second);
@@ -48,7 +47,6 @@ public class Match implements Comparable<Match>, Iterable<Mark> {
     public int getTokenCount() {
         return this.tokenCount;
     }
-
 
     public Set<Mark> getMarkSet() {
         return Collections.unmodifiableSet(markSet);

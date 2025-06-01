@@ -20,21 +20,21 @@ import net.sourceforge.pmd.reporting.RuleContext;
 import net.sourceforge.pmd.reporting.RuleViolation;
 
 class HtmlJavaRuleTest {
-    // from https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
-    private static final String LIGHTNING_WEB_COMPONENT = "<!-- helloExpressions.html -->\n"
-            + "<template>\n"
+    // from
+    // https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
+    private static final String LIGHTNING_WEB_COMPONENT = "<!-- helloExpressions.html -->\n" + "<template>\n"
             + "    <p>Hello, { greeting}!</p>\n"
             + "    <lightning-input label=\"Name\" value={ greeting} onchange=\"{ handleChange }\"></lightning-input>\n"
             + "    <div class=\"slds-m-around_medium\">\n"
             + "        <lightning-input name='firstName' label=\"First Name\" onchange={ handleChange }></lightning-input>\n"
             + "        <lightning-input name='lastName' label=\"Last Name\" onchange={handleChange}></lightning-input>\n"
-            + "        <p class=\"slds-m-top_medium\">Uppercased Full Name: {uppercasedFullName}</p>\n"
-            + "    </div>\n"
+            + "        <p class=\"slds-m-top_medium\">Uppercased Full Name: {uppercasedFullName}</p>\n" + "    </div>\n"
             + "</template>";
 
     @Test
     void findAllAttributesWithInvalidExpression() {
-        // "Don’t add spaces around the property, for example, { data } is not valid HTML."
+        // "Don’t add spaces around the property, for example, { data } is not valid
+        // HTML."
         Rule rule = new AbstractHtmlRule() {
             @Override
             public String getMessage() {

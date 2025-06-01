@@ -4,7 +4,6 @@
 
 package net.sourceforge.pmd.lang.plsql.symboltable;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,9 +23,8 @@ public class VariableNameDeclaration extends AbstractNameDeclaration {
         try {
             return node.getScope().getEnclosingScope(ClassScope.class);
         } catch (Exception e) {
-            LOG.trace("This Node does not have an enclosing Class: {}/{} => {}",
-                    node.getBeginLine(), node.getBeginColumn(),
-                    this.getImage());
+            LOG.trace("This Node does not have an enclosing Class: {}/{} => {}", node.getBeginLine(),
+                    node.getBeginColumn(), this.getImage());
             return null; // @TODO SRT a cop-out
         }
     }

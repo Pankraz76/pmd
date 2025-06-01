@@ -30,16 +30,13 @@ class LanguageVersionDiscovererTest extends AbstractJspNodesTst {
         testLanguageIsJsp("sample.tag");
     }
 
-
     private void testLanguageIsJsp(String first) {
-        assertEquals(jsp.getLanguage().getDefaultVersion(),
-                                getLanguageVersion(Paths.get(first)));
+        assertEquals(jsp.getLanguage().getDefaultVersion(), getLanguageVersion(Paths.get(first)));
     }
 
     @Test
     void testParseWrong() {
-        assertNotEquals(jsp.getLanguage().getDefaultVersion(),
-                                getLanguageVersion(Paths.get("sample.xxx")));
+        assertNotEquals(jsp.getLanguage().getDefaultVersion(), getLanguageVersion(Paths.get("sample.xxx")));
     }
 
     private LanguageVersion getLanguageVersion(Path jspFile) {

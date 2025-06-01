@@ -21,25 +21,23 @@ import net.sourceforge.pmd.reporting.RuleViolation;
 
 class HtmlXPathRuleTest {
 
-    // from https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
-    private static final String LIGHTNING_WEB_COMPONENT = "<!-- helloExpressions.html -->\n"
-            + "<template>\n"
+    // from
+    // https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
+    private static final String LIGHTNING_WEB_COMPONENT = "<!-- helloExpressions.html -->\n" + "<template>\n"
             + "    <p>Hello, { greeting}!</p>\n"
             + "    <lightning-input label=\"Name\" value={ greeting} onchange={handleChange}></lightning-input>\n"
             + "    <div class=\"slds-m-around_medium\">\n"
             + "        <lightning-input name='firstName' label=\"First Name\" onchange={ handleChange}></lightning-input>\n"
             + "        <lightning-input name='lastName' label=\"Last Name\" onchange={handleChange}></lightning-input>\n"
-            + "        <p class=\"slds-m-top_medium\">Uppercased Full Name: {uppercasedFullName}</p>\n"
-            + "    </div>\n"
-            + "    <template if:true={visible}>\n"
-            + "      <p>Test</p>\n"
-            + "    </template>\n"
-            + "</template>";
+            + "        <p class=\"slds-m-top_medium\">Uppercased Full Name: {uppercasedFullName}</p>\n" + "    </div>\n"
+            + "    <template if:true={visible}>\n" + "      <p>Test</p>\n" + "    </template>\n" + "</template>";
 
     @Test
     void selectTextNode() {
-        // from https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
-        // "Don’t add spaces around the property, for example, { data } is not valid HTML."
+        // from
+        // https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
+        // "Don’t add spaces around the property, for example, { data } is not valid
+        // HTML."
         String xpath = "//text()[contains(., '{ ')]";
 
         List<RuleViolation> violations = runXPath(LIGHTNING_WEB_COMPONENT, xpath);
@@ -70,8 +68,10 @@ class HtmlXPathRuleTest {
 
     @Test
     void selectAttributes() {
-        // from https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
-        // "Don’t add spaces around the property, for example, { data } is not valid HTML."
+        // from
+        // https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
+        // "Don’t add spaces around the property, for example, { data } is not valid
+        // HTML."
         String xpath = "//*[@value = '{']";
 
         List<RuleViolation> violations = runXPath(LIGHTNING_WEB_COMPONENT, xpath);
@@ -81,8 +81,10 @@ class HtmlXPathRuleTest {
 
     @Test
     void selectAttributesMultiple() {
-        // from https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
-        // "Don’t add spaces around the property, for example, { data } is not valid HTML."
+        // from
+        // https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
+        // "Don’t add spaces around the property, for example, { data } is not valid
+        // HTML."
         String xpath = "//*[@*[local-name() = ('value', 'onchange')] = '{']";
 
         List<RuleViolation> violations = runXPath(LIGHTNING_WEB_COMPONENT, xpath);

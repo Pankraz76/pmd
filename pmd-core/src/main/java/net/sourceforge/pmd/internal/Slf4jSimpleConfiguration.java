@@ -20,7 +20,8 @@ public final class Slf4jSimpleConfiguration {
     private static final String SIMPLE_LOGGER_CONFIGURATION = "org.slf4j.impl.SimpleLoggerConfiguration";
     private static final String PMD_ROOT_LOGGER = "net.sourceforge.pmd";
 
-    private Slf4jSimpleConfiguration() { }
+    private Slf4jSimpleConfiguration() {
+    }
 
     public static void reconfigureDefaultLogLevel(Level level) {
         if (!isSimpleLogger()) {
@@ -34,10 +35,13 @@ public final class Slf4jSimpleConfiguration {
 
         // Call SimpleLogger.init() by reflection.
         // Alternatively: move the CLI related classes into an own module, add
-        // slf4j-simple as a compile dependency and create a PmdSlf4jSimpleFriend class in
-        // the package org.slf4j.simple to gain access to this package-private init method.
+        // slf4j-simple as a compile dependency and create a PmdSlf4jSimpleFriend class
+        // in
+        // the package org.slf4j.simple to gain access to this package-private init
+        // method.
         //
-        // SimpleLogger.init() will reevaluate the configuration from the system properties or
+        // SimpleLogger.init() will reevaluate the configuration from the system
+        // properties or
         // simplelogger.properties file.
         ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
         ClassLoader classLoader = loggerFactory.getClass().getClassLoader();
@@ -60,9 +64,11 @@ public final class Slf4jSimpleConfiguration {
             stringToLevelMethod.setAccessible(true);
 
             // Change the logging level of loggers that were already created.
-            // For this we fetch the map of name to logger that is stored in the logger factory,
+            // For this we fetch the map of name to logger that is stored in the logger
+            // factory,
             // then set the log level field of each logger via reflection.
-            // The new log level is determined similar to the constructor of SimpleLogger, that
+            // The new log level is determined similar to the constructor of SimpleLogger,
+            // that
             // means, configuration params are being considered.
             Class<?> loggerFactoryClass = classLoader.loadClass(SIMPLE_LOGGER_FACTORY_CLASS);
             Field loggerMapField = loggerFactoryClass.getDeclaredField("loggerMap");
@@ -73,7 +79,7 @@ public final class Slf4jSimpleConfiguration {
             Map<String, Logger> loggerMap = (Map<String, Logger>) loggerMapField.get(loggerFactory);
             for (Logger logger : loggerMap.values()) {
                 if (logger.getName().startsWith(PMD_ROOT_LOGGER)
-                    && simpleLoggerClass.isAssignableFrom(logger.getClass())) {
+                        && simpleLoggerClass.isAssignableFrom(logger.getClass())) {
                     String newConfiguredLevel = (String) levelStringMethod.invoke(logger);
                     int newLogLevel = newDefaultLogLevel;
                     if (newConfiguredLevel != null) {
@@ -131,7 +137,8 @@ public final class Slf4jSimpleConfiguration {
     public static boolean isSimpleLogger() {
         try {
             ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-            Class<?> loggerFactoryClass = loggerFactory.getClass().getClassLoader().loadClass(SIMPLE_LOGGER_FACTORY_CLASS);
+            Class<?> loggerFactoryClass = loggerFactory.getClass().getClassLoader()
+                    .loadClass(SIMPLE_LOGGER_FACTORY_CLASS);
             return loggerFactoryClass.isAssignableFrom(loggerFactory.getClass());
         } catch (ClassNotFoundException e) {
             // not slf4j simple logger

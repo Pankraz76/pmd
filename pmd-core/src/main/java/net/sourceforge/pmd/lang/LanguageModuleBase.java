@@ -43,19 +43,22 @@ public abstract class LanguageModuleBase implements Language {
     private final Set<String> dependencies;
     private final @Nullable String baseLanguageId;
 
-
     /**
-     * Construct a module instance using the given metadata. The metadata must
-     * be properly constructed.
+     * Construct a module instance using the given metadata. The metadata must be
+     * properly constructed.
      *
-     * @throws IllegalStateException If the metadata is invalid (eg missing extensions or name or no versions)
+     * @throws IllegalStateException
+     *             If the metadata is invalid (eg missing extensions or name or no
+     *             versions)
      */
     protected LanguageModuleBase(LanguageMetadata metadata) {
         this(metadata, null);
     }
 
     /**
-     * @experimental Since 7.13.0. See <a href="https://github.com/pmd/pmd/pull/5438">[core] Support language dialects #5438</a>.
+     * @experimental Since 7.13.0. See
+     *               <a href="https://github.com/pmd/pmd/pull/5438">[core] Support
+     *               language dialects #5438</a>.
      */
     @Experimental
     protected LanguageModuleBase(DialectLanguageMetadata metadata) {
@@ -98,8 +101,8 @@ public abstract class LanguageModuleBase implements Language {
 
             if (versionId.isDefault) {
                 if (defaultVersion != null) {
-                    throw new IllegalStateException(
-                        "Default version already set to " + defaultVersion + ", cannot set it to " + languageVersion);
+                    throw new IllegalStateException("Default version already set to " + defaultVersion
+                            + ", cannot set it to " + languageVersion);
                 }
                 defaultVersion = languageVersion;
             }
@@ -197,10 +200,11 @@ public abstract class LanguageModuleBase implements Language {
     }
 
     /**
-     * Metadata about a language, basically a builder pattern for the
-     * language instance.
+     * Metadata about a language, basically a builder pattern for the language
+     * instance.
      *
-     * <p>Some of the metadata are mandatory:
+     * <p>
+     * Some of the metadata are mandatory:
      * <ul>
      * <li>The id ({@link #withId(String)})
      * <li>The display name ({@link #name(String)})
@@ -227,8 +231,8 @@ public abstract class LanguageModuleBase implements Language {
 
         void validate() {
             AssertionUtil.validateState(name != null, "Language " + id + " should have a name");
-            AssertionUtil.validateState(
-                extensions != null, "Language " + id + " has not registered any file extensions");
+            AssertionUtil.validateState(extensions != null,
+                    "Language " + id + " has not registered any file extensions");
         }
 
         String getShortName() {
@@ -238,27 +242,33 @@ public abstract class LanguageModuleBase implements Language {
         /**
          * Factory method to create an ID.
          *
-         * @param id The language id. Must be usable as a Java package name segment,
-         *           ie be lowercase, alphanumeric, starting with a letter.
+         * @param id
+         *            The language id. Must be usable as a Java package name segment, ie
+         *            be lowercase, alphanumeric, starting with a letter.
          *
          * @return A builder for language metadata
          *
-         * @throws IllegalArgumentException If the parameter is not a valid ID
-         * @throws NullPointerException     If the parameter is null
+         * @throws IllegalArgumentException
+         *             If the parameter is not a valid ID
+         * @throws NullPointerException
+         *             If the parameter is null
          */
         public static LanguageMetadata withId(@NonNull String id) {
             return new LanguageMetadata(id);
         }
 
         /**
-         * Record the {@linkplain Language#getName() display name} of
-         * the language. This also serves as the {@linkplain Language#getShortName() short name}
-         * if {@link #shortName(String)} is not called.
+         * Record the {@linkplain Language#getName() display name} of the language. This
+         * also serves as the {@linkplain Language#getShortName() short name} if
+         * {@link #shortName(String)} is not called.
          *
-         * @param name Display name of the language
+         * @param name
+         *            Display name of the language
          *
-         * @throws NullPointerException     If the parameter is null
-         * @throws IllegalArgumentException If the parameter is not a valid language name
+         * @throws NullPointerException
+         *             If the parameter is null
+         * @throws IllegalArgumentException
+         *             If the parameter is not a valid language name
          */
         public LanguageMetadata name(@NonNull String name) {
             AssertionUtil.requireParamNotNull("name", name);
@@ -272,10 +282,13 @@ public abstract class LanguageModuleBase implements Language {
         /**
          * Record the {@linkplain Language#getShortName() short name} of the language.
          *
-         * @param shortName Short name of the language
+         * @param shortName
+         *            Short name of the language
          *
-         * @throws NullPointerException     If the parameter is null
-         * @throws IllegalArgumentException If the parameter is not a valid language name
+         * @throws NullPointerException
+         *             If the parameter is null
+         * @throws IllegalArgumentException
+         *             If the parameter is not a valid language name
          */
 
         public LanguageMetadata shortName(@NonNull String shortName) {
@@ -288,14 +301,16 @@ public abstract class LanguageModuleBase implements Language {
         }
 
         /**
-         * Record the {@linkplain Language#getExtensions() extensions}
-         * assigned to the language. Extensions should not start with a period
-         * {@code .}.
+         * Record the {@linkplain Language#getExtensions() extensions} assigned to the
+         * language. Extensions should not start with a period {@code .}.
          *
-         * @param extensionWithoutPeriod First extensions
-         * @param others                 Other extensions (optional)
+         * @param extensionWithoutPeriod
+         *            First extensions
+         * @param others
+         *            Other extensions (optional)
          *
-         * @throws NullPointerException If any extension is null
+         * @throws NullPointerException
+         *             If any extension is null
          */
         public LanguageMetadata extensions(String extensionWithoutPeriod, String... others) {
             this.extensions = new ArrayList<>(setOf(extensionWithoutPeriod, others));
@@ -304,14 +319,17 @@ public abstract class LanguageModuleBase implements Language {
         }
 
         /**
-         * Record the {@linkplain Language#getExtensions() extensions}
-         * assigned to the language. Extensions should not start with a period
-         * {@code .}. At least one extension must be provided.
+         * Record the {@linkplain Language#getExtensions() extensions} assigned to the
+         * language. Extensions should not start with a period {@code .}. At least one
+         * extension must be provided.
          *
-         * @param extensions the extensions
+         * @param extensions
+         *            the extensions
          *
-         * @throws NullPointerException     If any extension is null
-         * @throws IllegalArgumentException If no extensions are provided
+         * @throws NullPointerException
+         *             If any extension is null
+         * @throws IllegalArgumentException
+         *             If no extensions are provided
          */
         public LanguageMetadata extensions(Collection<String> extensions) {
             this.extensions = new ArrayList<>(new HashSet<>(extensions));
@@ -325,11 +343,16 @@ public abstract class LanguageModuleBase implements Language {
         /**
          * Add a new version by its name.
          *
-         * @param name    Version name. Must contain no spaces.
-         * @param aliases Additional names that are mapped to this version. Must contain no spaces.
+         * @param name
+         *            Version name. Must contain no spaces.
+         * @param aliases
+         *            Additional names that are mapped to this version. Must contain no
+         *            spaces.
          *
-         * @throws NullPointerException     If any parameter is null
-         * @throws IllegalArgumentException If the name or aliases are empty or contain spaces
+         * @throws NullPointerException
+         *             If any parameter is null
+         * @throws IllegalArgumentException
+         *             If the name or aliases are empty or contain spaces
          */
 
         public LanguageMetadata addVersion(String name, String... aliases) {
@@ -340,32 +363,37 @@ public abstract class LanguageModuleBase implements Language {
         /**
          * Add a new version by its name and make it the default version.
          *
-         * @param name    Version name. Must contain no spaces.
-         * @param aliases Additional names that are mapped to this version. Must contain no spaces.
+         * @param name
+         *            Version name. Must contain no spaces.
+         * @param aliases
+         *            Additional names that are mapped to this version. Must contain no
+         *            spaces.
          *
-         * @throws NullPointerException     If any parameter is null
-         * @throws IllegalArgumentException If the name or aliases are empty or contain spaces
+         * @throws NullPointerException
+         *             If any parameter is null
+         * @throws IllegalArgumentException
+         *             If the name or aliases are empty or contain spaces
          */
         public LanguageMetadata addDefaultVersion(String name, String... aliases) {
             versionMetadata.add(new LangVersionMetadata(name, Arrays.asList(aliases), true));
             return this;
         }
 
-
         /**
-         * Add all the versions of the given language, including the
-         * default version.
+         * Add all the versions of the given language, including the default version.
          *
-         * @param language Other language
+         * @param language
+         *            Other language
          *
-         * @throws NullPointerException     If any parameter is null
-         * @throws IllegalArgumentException If the name or aliases are empty or contain spaces
+         * @throws NullPointerException
+         *             If any parameter is null
+         * @throws IllegalArgumentException
+         *             If the name or aliases are empty or contain spaces
          */
         public LanguageMetadata addAllVersionsOf(Language language) {
             for (LanguageVersion version : language.getVersions()) {
-                versionMetadata.add(new LangVersionMetadata(version.getVersion(),
-                                                            version.getAliases(),
-                                                            version.equals(language.getDefaultVersion())));
+                versionMetadata.add(new LangVersionMetadata(version.getVersion(), version.getAliases(),
+                        version.equals(language.getDefaultVersion())));
             }
             return this;
         }
@@ -373,9 +401,12 @@ public abstract class LanguageModuleBase implements Language {
         /**
          * Defines the language as a dialect of another language.
          *
-         * @param baseLanguageId The id of the base language this is a dialect of.
+         * @param baseLanguageId
+         *            The id of the base language this is a dialect of.
          * @return A new dialect language metadata model.
-         * @experimental Since 7.13.0. See <a href="https://github.com/pmd/pmd/pull/5438">[core] Support language dialects #5438</a>.
+         * @experimental Since 7.13.0. See
+         *               <a href="https://github.com/pmd/pmd/pull/5438">[core] Support
+         *               language dialects #5438</a>.
          */
         @Experimental
         public DialectLanguageMetadata asDialectOf(String baseLanguageId) {
@@ -387,20 +418,23 @@ public abstract class LanguageModuleBase implements Language {
         private static void checkValidLangId(String id) {
             if (!VALID_LANG_ID.matcher(id).matches()) {
                 throw new IllegalArgumentException(
-                    "ID '" + id + "' is not a valid language ID (should match " + VALID_LANG_ID + ").");
+                        "ID '" + id + "' is not a valid language ID (should match " + VALID_LANG_ID + ").");
             }
         }
 
         /**
-         * Record that this language depends on another language, identified
-         * by its id. This means any {@link LanguageProcessorRegistry} that
-         * contains a processor for this language is asserted upon construction
-         * to also contain a processor for the language depended on.
+         * Record that this language depends on another language, identified by its id.
+         * This means any {@link LanguageProcessorRegistry} that contains a processor
+         * for this language is asserted upon construction to also contain a processor
+         * for the language depended on.
          *
-         * @param id ID of the language to depend on.
+         * @param id
+         *            ID of the language to depend on.
          *
-         * @throws NullPointerException     If any parameter is null
-         * @throws IllegalArgumentException If the name is not a valid language Id
+         * @throws NullPointerException
+         *             If any parameter is null
+         * @throws IllegalArgumentException
+         *             If the name is not a valid language Id
          */
 
         public LanguageMetadata dependsOnLanguage(String id) {
@@ -442,7 +476,10 @@ public abstract class LanguageModuleBase implements Language {
 
     /**
      * Expresses the language as a dialect of another language.
-     * @experimental Since 7.13.0. See <a href="https://github.com/pmd/pmd/pull/5438">[core] Support language dialects #5438</a>.
+     * 
+     * @experimental Since 7.13.0. See
+     *               <a href="https://github.com/pmd/pmd/pull/5438">[core] Support
+     *               language dialects #5438</a>.
      */
     @Experimental
     public static final class DialectLanguageMetadata {

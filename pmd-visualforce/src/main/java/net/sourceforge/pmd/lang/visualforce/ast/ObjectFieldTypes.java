@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,7 +35,8 @@ import org.xml.sax.SAXException;
 import net.sourceforge.pmd.lang.visualforce.DataType;
 
 /**
- * Responsible for storing a mapping of Fields that can be referenced from Visualforce to the type of the field.
+ * Responsible for storing a mapping of Fields that can be referenced from
+ * Visualforce to the type of the field.
  */
 class ObjectFieldTypes extends SalesforceFieldTypes {
     private static final Logger LOG = LoggerFactory.getLogger(ObjectFieldTypes.class);
@@ -59,8 +61,8 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
     }
 
     /**
-     * Keep track of which ".object" files have already been processed. All fields are processed at once. If an object
-     * file has been processed
+     * Keep track of which ".object" files have already been processed. All fields
+     * are processed at once. If an object file has been processed
      */
     private final Set<String> objectFileProcessed;
 
@@ -104,7 +106,8 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
     }
 
     /**
-     * Looks in {@code objectsDirectories} for a custom field identified by {@code expression}.
+     * Looks in {@code objectsDirectories} for a custom field identified by
+     * {@code expression}.
      */
     @Override
     protected void findDataType(String expression, List<Path> objectsDirectories) {
@@ -118,9 +121,12 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
 
             addStandardFields(objectName);
 
-            // Attempt to find a metadata file that contains the custom field. The information will be located in a
-            // file located at <objectDirectory>/<objectName>.object or in an file located at
-            // <objectDirectory>/<objectName>/fields/<fieldName>.field-meta.xml. The list of object directories
+            // Attempt to find a metadata file that contains the custom field. The
+            // information will be located in a
+            // file located at <objectDirectory>/<objectName>.object or in an file located
+            // at
+            // <objectDirectory>/<objectName>/fields/<fieldName>.field-meta.xml. The list of
+            // object directories
             // defaults to the [<vfFileName>/../objects] but can be overridden by the user.
             for (Path objectsDirectory : objectsDirectories) {
                 Path sfdxCustomFieldPath = getSfdxCustomFieldPath(objectsDirectory, objectName, fieldName);
@@ -142,14 +148,16 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
                 }
             }
         } else {
-            // TODO: Support cross object relationships, these are expressions that contain "__r"
+            // TODO: Support cross object relationships, these are expressions that contain
+            // "__r"
             LOG.debug("Expression does not have two parts: {}", expression);
         }
     }
 
     /**
-     * Sfdx projects decompose custom fields into individual files. This method will return the individual file that
-     * corresponds to &lt;objectName&gt;.&lt;fieldName&gt; if it exists.
+     * Sfdx projects decompose custom fields into individual files. This method will
+     * return the individual file that corresponds to
+     * &lt;objectName&gt;.&lt;fieldName&gt; if it exists.
      *
      * @return path to the metadata file for the Custom Field or null if not found
      */
@@ -178,14 +186,14 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
             String key = customObjectName + "." + fullNameNode.getNodeValue();
             putDataType(key, dataType);
         } catch (IOException | SAXException | XPathExpressionException e) {
-            throw new ContextedRuntimeException(e)
-                    .addContextValue("customObjectName", customObjectName)
+            throw new ContextedRuntimeException(e).addContextValue("customObjectName", customObjectName)
                     .addContextValue("sfdxCustomFieldPath", sfdxCustomFieldPath);
         }
     }
 
     /**
-     * Parse the custom object path and determine the type of all of its custom fields.
+     * Parse the custom object path and determine the type of all of its custom
+     * fields.
      */
     private void parseMdapiCustomObject(Path mdapiObjectFile) {
         String fileName = mdapiObjectFile.getFileName().toString();
@@ -194,18 +202,21 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
         if (!objectFileProcessed.contains(customObjectName)) {
             try {
                 Document document = documentBuilder.parse(mdapiObjectFile.toFile());
-                NodeList fieldsNodes = (NodeList) customObjectFieldsExpression.evaluate(document, XPathConstants.NODESET);
+                NodeList fieldsNodes = (NodeList) customObjectFieldsExpression.evaluate(document,
+                        XPathConstants.NODESET);
                 for (int i = 0; i < fieldsNodes.getLength(); i++) {
                     Node fieldsNode = fieldsNodes.item(i);
                     Node fullNameNode = (Node) customFieldFullNameExpression.evaluate(fieldsNode, XPathConstants.NODE);
                     if (fullNameNode == null) {
-                        throw new RuntimeException("fullName evaluate failed for " + customObjectName + " " + fieldsNode.getTextContent());
+                        throw new RuntimeException(
+                                "fullName evaluate failed for " + customObjectName + " " + fieldsNode.getTextContent());
                     }
                     String name = fullNameNode.getNodeValue();
                     if (endsWithIgnoreCase(name, CUSTOM_OBJECT_SUFFIX)) {
                         Node typeNode = (Node) customFieldTypeExpression.evaluate(fieldsNode, XPathConstants.NODE);
                         if (typeNode == null) {
-                            throw new RuntimeException("type evaluate failed for object=" + customObjectName + ", field=" + name + " " + fieldsNode.getTextContent());
+                            throw new RuntimeException("type evaluate failed for object=" + customObjectName
+                                    + ", field=" + name + " " + fieldsNode.getTextContent());
                         }
                         String type = typeNode.getNodeValue();
                         DataType dataType = DataType.fromString(type);
@@ -214,8 +225,7 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
                     }
                 }
             } catch (IOException | SAXException | XPathExpressionException e) {
-                throw new ContextedRuntimeException(e)
-                        .addContextValue("customObjectName", customObjectName)
+                throw new ContextedRuntimeException(e).addContextValue("customObjectName", customObjectName)
                         .addContextValue("mdapiObjectFile", mdapiObjectFile);
             }
             objectFileProcessed.add(customObjectName);
@@ -223,8 +233,8 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
     }
 
     /**
-     * Add the set of standard fields which aren't present in the metadata file, but may be refernced from the
-     * visualforce page.
+     * Add the set of standard fields which aren't present in the metadata file, but
+     * may be refernced from the visualforce page.
      */
     private void addStandardFields(String customObjectName) {
         for (Map.Entry<String, DataType> entry : STANDARD_FIELD_TYPES.entrySet()) {
@@ -244,12 +254,8 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
         DataType previousType = super.putDataType(name, dataType);
         if (previousType != null && !previousType.equals(dataType)) {
             // It should not be possible to have conflicting types for CustomFields
-            throw new RuntimeException("Conflicting types for "
-                    + name
-                    + ". CurrentType="
-                    + dataType
-                    + ", PreviousType="
-                    + previousType);
+            throw new RuntimeException(
+                    "Conflicting types for " + name + ". CurrentType=" + dataType + ", PreviousType=" + previousType);
         }
         return previousType;
     }

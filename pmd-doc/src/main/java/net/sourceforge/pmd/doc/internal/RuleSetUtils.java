@@ -22,8 +22,9 @@ public final class RuleSetUtils {
     }
 
     /**
-     * Gets the sanitized base name of the ruleset.
-     * For some reason, the filename might contain some newlines, which are removed.
+     * Gets the sanitized base name of the ruleset. For some reason, the filename
+     * might contain some newlines, which are removed.
+     * 
      * @param ruleset
      * @return
      */
@@ -36,8 +37,8 @@ public final class RuleSetUtils {
     }
 
     /**
-     * A ruleset is considered deprecated, if it only contains rule references
-     * and all rule references are deprecated.
+     * A ruleset is considered deprecated, if it only contains rule references and
+     * all rule references are deprecated.
      *
      * @param ruleset
      * @return
@@ -75,9 +76,9 @@ public final class RuleSetUtils {
     }
 
     /**
-     * Recursively resolves rule references until the last reference.
-     * The last reference is returned.
-     * If the given rule not a reference, the rule is returned.
+     * Recursively resolves rule references until the last reference. The last
+     * reference is returned. If the given rule not a reference, the rule is
+     * returned.
      *
      * @param rule
      * @return

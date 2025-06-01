@@ -10,9 +10,9 @@ import net.sourceforge.pmd.lang.rule.internal.RuleSetReferenceId;
 
 /**
  * An exception that is thrown when something wrong occurs while
- * {@linkplain RuleSetLoader loading rulesets}. This may be because the
- * XML is not well-formed, does not respect the ruleset schema, is
- * not a valid ruleset or is otherwise unparsable.
+ * {@linkplain RuleSetLoader loading rulesets}. This may be because the XML is
+ * not well-formed, does not respect the ruleset schema, is not a valid ruleset
+ * or is otherwise unparsable.
  */
 public class RuleSetLoadException extends RuntimeException {
 

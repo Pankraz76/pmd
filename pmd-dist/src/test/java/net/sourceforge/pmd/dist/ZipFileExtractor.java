@@ -35,9 +35,13 @@ public class ZipFileExtractor {
 
     /**
      * Extracts the given zip file into the tempDir.
-     * @param zipPath the zip file to extract
-     * @param tempDir the target directory
-     * @throws Exception if any error happens during extraction
+     * 
+     * @param zipPath
+     *            the zip file to extract
+     * @param tempDir
+     *            the target directory
+     * @throws Exception
+     *             if any error happens during extraction
      */
     public static void extractZipFile(Path zipPath, Path tempDir) throws Exception {
         try (ZipFile zip = ZipFile.builder().setFile(zipPath.toFile()).get()) {
@@ -49,7 +53,7 @@ public class ZipFileExtractor {
                     assertTrue(file.mkdirs());
                 } else {
                     try (InputStream data = zip.getInputStream(entry);
-                         OutputStream fileOut = Files.newOutputStream(file.toPath());) {
+                            OutputStream fileOut = Files.newOutputStream(file.toPath());) {
                         IOUtil.copy(data, fileOut);
                     }
                     if ((entry.getUnixMode() & OWNER_EXECUTABLE) == OWNER_EXECUTABLE) {
@@ -62,9 +66,12 @@ public class ZipFileExtractor {
 
     /**
      * Compiles a list of all the files/directories contained in the given zip file.
-     * @param zipPath the zip file to look into
+     * 
+     * @param zipPath
+     *            the zip file to look into
      * @return list of all entries
-     * @throws Exception if any error happens during read of the zip file
+     * @throws Exception
+     *             if any error happens during read of the zip file
      */
     public static List<String> readZipFile(Path zipPath) throws Exception {
         List<String> result = new ArrayList<>();

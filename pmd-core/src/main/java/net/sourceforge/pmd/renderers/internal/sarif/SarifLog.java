@@ -26,13 +26,13 @@ public class SarifLog {
      */
     private List<Run> runs;
 
-
     /**
      * A location within a programming artifact.
      */
     public static class Location {
         /**
-         * Value that distinguishes this location from all other locations within a single result object.
+         * Value that distinguishes this location from all other locations within a
+         * single result object.
          */
         private Integer id;
         /**
@@ -46,7 +46,6 @@ public class SarifLog {
             this.physicalLocation = physicalLocation;
         }
 
-
         @java.lang.SuppressWarnings("all")
         public static class LocationBuilder {
             @java.lang.SuppressWarnings("all")
@@ -59,7 +58,9 @@ public class SarifLog {
             }
 
             /**
-             * Value that distinguishes this location from all other locations within a single result object.
+             * Value that distinguishes this location from all other locations within a
+             * single result object.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -70,6 +71,7 @@ public class SarifLog {
 
             /**
              * Identifies the artifact and region.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -86,7 +88,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.Location.LocationBuilder(id=" + this.id + ", physicalLocation=" + this.physicalLocation + ")";
+                return "SarifLog.Location.LocationBuilder(id=" + this.id + ", physicalLocation=" + this.physicalLocation
+                        + ")";
             }
         }
 
@@ -96,7 +99,8 @@ public class SarifLog {
         }
 
         /**
-         * Value that distinguishes this location from all other locations within a single result object.
+         * Value that distinguishes this location from all other locations within a
+         * single result object.
          */
         @java.lang.SuppressWarnings("all")
         public Integer getId() {
@@ -112,7 +116,9 @@ public class SarifLog {
         }
 
         /**
-         * Value that distinguishes this location from all other locations within a single result object.
+         * Value that distinguishes this location from all other locations within a
+         * single result object.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -123,6 +129,7 @@ public class SarifLog {
 
         /**
          * Identifies the artifact and region.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -151,7 +158,8 @@ public class SarifLog {
             }
             final java.lang.Object this$physicalLocation = this.getPhysicalLocation();
             final java.lang.Object other$physicalLocation = other.getPhysicalLocation();
-            if (this$physicalLocation == null ? other$physicalLocation != null : !this$physicalLocation.equals(other$physicalLocation)) {
+            if (this$physicalLocation == null ? other$physicalLocation != null
+                    : !this$physicalLocation.equals(other$physicalLocation)) {
                 return false;
             }
             return true;
@@ -181,7 +189,6 @@ public class SarifLog {
         }
     }
 
-
     /**
      * Specifies the location of an artifact.
      */
@@ -191,12 +198,13 @@ public class SarifLog {
          */
         private String uri;
         /**
-         * A string which indirectly specifies the absolute URI with respect to which a relative URI in the "uri" property
-         * is interpreted.
+         * A string which indirectly specifies the absolute URI with respect to which a
+         * relative URI in the "uri" property is interpreted.
          */
         private String uriBaseId;
         /**
-         * The index within the run artifacts array of the artifact object associated with the artifact location.
+         * The index within the run artifacts array of the artifact object associated
+         * with the artifact location.
          */
         private Integer index;
 
@@ -206,7 +214,6 @@ public class SarifLog {
             this.uriBaseId = uriBaseId;
             this.index = index;
         }
-
 
         @java.lang.SuppressWarnings("all")
         public static class ArtifactLocationBuilder {
@@ -223,6 +230,7 @@ public class SarifLog {
 
             /**
              * A string containing a valid relative or absolute URI.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -232,8 +240,9 @@ public class SarifLog {
             }
 
             /**
-             * A string which indirectly specifies the absolute URI with respect to which a relative URI in the "uri" property
-             * is interpreted.
+             * A string which indirectly specifies the absolute URI with respect to which a
+             * relative URI in the "uri" property is interpreted.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -243,7 +252,9 @@ public class SarifLog {
             }
 
             /**
-             * The index within the run artifacts array of the artifact object associated with the artifact location.
+             * The index within the run artifacts array of the artifact object associated
+             * with the artifact location.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -260,7 +271,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.ArtifactLocation.ArtifactLocationBuilder(uri=" + this.uri + ", uriBaseId=" + this.uriBaseId + ", index=" + this.index + ")";
+                return "SarifLog.ArtifactLocation.ArtifactLocationBuilder(uri=" + this.uri + ", uriBaseId="
+                        + this.uriBaseId + ", index=" + this.index + ")";
             }
         }
 
@@ -278,8 +290,8 @@ public class SarifLog {
         }
 
         /**
-         * A string which indirectly specifies the absolute URI with respect to which a relative URI in the "uri" property
-         * is interpreted.
+         * A string which indirectly specifies the absolute URI with respect to which a
+         * relative URI in the "uri" property is interpreted.
          */
         @java.lang.SuppressWarnings("all")
         public String getUriBaseId() {
@@ -287,7 +299,8 @@ public class SarifLog {
         }
 
         /**
-         * The index within the run artifacts array of the artifact object associated with the artifact location.
+         * The index within the run artifacts array of the artifact object associated
+         * with the artifact location.
          */
         @java.lang.SuppressWarnings("all")
         public Integer getIndex() {
@@ -296,6 +309,7 @@ public class SarifLog {
 
         /**
          * A string containing a valid relative or absolute URI.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -305,8 +319,9 @@ public class SarifLog {
         }
 
         /**
-         * A string which indirectly specifies the absolute URI with respect to which a relative URI in the "uri" property
-         * is interpreted.
+         * A string which indirectly specifies the absolute URI with respect to which a
+         * relative URI in the "uri" property is interpreted.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -316,7 +331,9 @@ public class SarifLog {
         }
 
         /**
-         * The index within the run artifacts array of the artifact object associated with the artifact location.
+         * The index within the run artifacts array of the artifact object associated
+         * with the artifact location.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -378,14 +395,15 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.ArtifactLocation(uri=" + this.getUri() + ", uriBaseId=" + this.getUriBaseId() + ", index=" + this.getIndex() + ")";
+            return "SarifLog.ArtifactLocation(uri=" + this.getUri() + ", uriBaseId=" + this.getUriBaseId() + ", index="
+                    + this.getIndex() + ")";
         }
     }
 
-
     /**
-     * A physical location relevant to a result. Specifies a reference to a programming artifact together with a range
-     * of bytes or characters within that artifact.
+     * A physical location relevant to a result. Specifies a reference to a
+     * programming artifact together with a range of bytes or characters within that
+     * artifact.
      */
     public static class PhysicalLocation {
         /**
@@ -403,7 +421,6 @@ public class SarifLog {
             this.region = region;
         }
 
-
         @java.lang.SuppressWarnings("all")
         public static class PhysicalLocationBuilder {
             @java.lang.SuppressWarnings("all")
@@ -417,16 +434,19 @@ public class SarifLog {
 
             /**
              * The location of the artifact.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
-            public SarifLog.PhysicalLocation.PhysicalLocationBuilder artifactLocation(final ArtifactLocation artifactLocation) {
+            public SarifLog.PhysicalLocation.PhysicalLocationBuilder artifactLocation(
+                    final ArtifactLocation artifactLocation) {
                 this.artifactLocation = artifactLocation;
                 return this;
             }
 
             /**
              * Specifies a portion of the artifact.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -443,7 +463,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.PhysicalLocation.PhysicalLocationBuilder(artifactLocation=" + this.artifactLocation + ", region=" + this.region + ")";
+                return "SarifLog.PhysicalLocation.PhysicalLocationBuilder(artifactLocation=" + this.artifactLocation
+                        + ", region=" + this.region + ")";
             }
         }
 
@@ -470,6 +491,7 @@ public class SarifLog {
 
         /**
          * The location of the artifact.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -480,6 +502,7 @@ public class SarifLog {
 
         /**
          * Specifies a portion of the artifact.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -503,7 +526,8 @@ public class SarifLog {
             }
             final java.lang.Object this$artifactLocation = this.getArtifactLocation();
             final java.lang.Object other$artifactLocation = other.getArtifactLocation();
-            if (this$artifactLocation == null ? other$artifactLocation != null : !this$artifactLocation.equals(other$artifactLocation)) {
+            if (this$artifactLocation == null ? other$artifactLocation != null
+                    : !this$artifactLocation.equals(other$artifactLocation)) {
                 return false;
             }
             final java.lang.Object this$region = this.getRegion();
@@ -534,10 +558,10 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.PhysicalLocation(artifactLocation=" + this.getArtifactLocation() + ", region=" + this.getRegion() + ")";
+            return "SarifLog.PhysicalLocation(artifactLocation=" + this.getArtifactLocation() + ", region="
+                    + this.getRegion() + ")";
         }
     }
-
 
     /**
      * Key/value pairs that provide additional information about the object.
@@ -552,7 +576,8 @@ public class SarifLog {
          */
         private Integer priority;
         /**
-         * A set of distinct strings that provide additional information. This is SARIF 2.1.0 Schema.
+         * A set of distinct strings that provide additional information. This is SARIF
+         * 2.1.0 Schema.
          */
         private Set<String> tags;
 
@@ -562,7 +587,6 @@ public class SarifLog {
             this.priority = priority;
             this.tags = tags;
         }
-
 
         @java.lang.SuppressWarnings("all")
         public static class PropertyBagBuilder {
@@ -579,6 +603,7 @@ public class SarifLog {
 
             /**
              * The name of the rule set.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -589,6 +614,7 @@ public class SarifLog {
 
             /**
              * The pmd priority of the rule.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -598,7 +624,9 @@ public class SarifLog {
             }
 
             /**
-             * A set of distinct strings that provide additional information. This is SARIF 2.1.0 Schema.
+             * A set of distinct strings that provide additional information. This is SARIF
+             * 2.1.0 Schema.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -615,7 +643,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.PropertyBag.PropertyBagBuilder(ruleset=" + this.ruleset + ", priority=" + this.priority + ", tags=" + this.tags + ")";
+                return "SarifLog.PropertyBag.PropertyBagBuilder(ruleset=" + this.ruleset + ", priority=" + this.priority
+                        + ", tags=" + this.tags + ")";
             }
         }
 
@@ -641,7 +670,8 @@ public class SarifLog {
         }
 
         /**
-         * A set of distinct strings that provide additional information. This is SARIF 2.1.0 Schema.
+         * A set of distinct strings that provide additional information. This is SARIF
+         * 2.1.0 Schema.
          */
         @java.lang.SuppressWarnings("all")
         public Set<String> getTags() {
@@ -650,6 +680,7 @@ public class SarifLog {
 
         /**
          * The name of the rule set.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -660,6 +691,7 @@ public class SarifLog {
 
         /**
          * The pmd priority of the rule.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -669,7 +701,9 @@ public class SarifLog {
         }
 
         /**
-         * The set of distinct strings that provide additional information. This is SARIF 2.1.0 Schema.
+         * The set of distinct strings that provide additional information. This is
+         * SARIF 2.1.0 Schema.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -731,10 +765,10 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.PropertyBag(ruleset=" + this.getRuleset() + ", priority=" + this.getPriority() + ", tags=" + this.getTags() + ")";
+            return "SarifLog.PropertyBag(ruleset=" + this.getRuleset() + ", priority=" + this.getPriority() + ", tags="
+                    + this.getTags() + ")";
         }
     }
-
 
     /**
      * A region within an artifact where a result was detected.
@@ -765,7 +799,6 @@ public class SarifLog {
             this.endColumn = endColumn;
         }
 
-
         @java.lang.SuppressWarnings("all")
         public static class RegionBuilder {
             @java.lang.SuppressWarnings("all")
@@ -783,6 +816,7 @@ public class SarifLog {
 
             /**
              * The line number of the first character in the region.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -793,6 +827,7 @@ public class SarifLog {
 
             /**
              * The column number of the first character in the region.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -803,6 +838,7 @@ public class SarifLog {
 
             /**
              * The line number of the last character in the region.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -813,6 +849,7 @@ public class SarifLog {
 
             /**
              * The column number of the character following the end of the region.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -829,7 +866,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.Region.RegionBuilder(startLine=" + this.startLine + ", startColumn=" + this.startColumn + ", endLine=" + this.endLine + ", endColumn=" + this.endColumn + ")";
+                return "SarifLog.Region.RegionBuilder(startLine=" + this.startLine + ", startColumn=" + this.startColumn
+                        + ", endLine=" + this.endLine + ", endColumn=" + this.endColumn + ")";
             }
         }
 
@@ -872,6 +910,7 @@ public class SarifLog {
 
         /**
          * The line number of the first character in the region.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -882,6 +921,7 @@ public class SarifLog {
 
         /**
          * The column number of the first character in the region.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -892,6 +932,7 @@ public class SarifLog {
 
         /**
          * The line number of the last character in the region.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -902,6 +943,7 @@ public class SarifLog {
 
         /**
          * The column number of the character following the end of the region.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -970,10 +1012,10 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.Region(startLine=" + this.getStartLine() + ", startColumn=" + this.getStartColumn() + ", endLine=" + this.getEndLine() + ", endColumn=" + this.getEndColumn() + ")";
+            return "SarifLog.Region(startLine=" + this.getStartLine() + ", startColumn=" + this.getStartColumn()
+                    + ", endLine=" + this.getEndLine() + ", endColumn=" + this.getEndColumn() + ")";
         }
     }
-
 
     /**
      * A result produced by an analysis tool.
@@ -981,7 +1023,8 @@ public class SarifLog {
     public static class Result {
 
         /**
-         * The stable, unique identifier of the rule, if any, to which this result is relevant.
+         * The stable, unique identifier of the rule, if any, to which this result is
+         * relevant.
          */
         private String ruleId;
 
@@ -991,20 +1034,23 @@ public class SarifLog {
         private Integer ruleIndex;
 
         /**
-         * A message that describes the result. The first sentence of the message only will be displayed when visible
-         * space is limited.
+         * A message that describes the result. The first sentence of the message only
+         * will be displayed when visible space is limited.
          */
         private Message message;
 
         /**
-         * Specifies the severity level of the result. It is derived from PMD's defined rule priorities (1,2 = error, 3 = warning, 4,5 = note).
+         * Specifies the severity level of the result. It is derived from PMD's defined
+         * rule priorities (1,2 = error, 3 = warning, 4,5 = note).
+         * 
          * @see net.sourceforge.pmd.lang.rule.RulePriority
          */
         private String level;
 
         /**
-         * The set of locations where the result was detected. Specify only one location unless the problem indicated by
-         * the result can only be corrected by making a change at every specified location.
+         * The set of locations where the result was detected. Specify only one location
+         * unless the problem indicated by the result can only be corrected by making a
+         * change at every specified location.
          */
         private List<Location> locations;
 
@@ -1014,7 +1060,8 @@ public class SarifLog {
         private PropertyBag properties;
 
         @java.lang.SuppressWarnings("all")
-        Result(final String ruleId, final Integer ruleIndex, final Message message, final String level, final List<Location> locations, final PropertyBag properties) {
+        Result(final String ruleId, final Integer ruleIndex, final Message message, final String level,
+                final List<Location> locations, final PropertyBag properties) {
             this.ruleId = ruleId;
             this.ruleIndex = ruleIndex;
             this.message = message;
@@ -1022,7 +1069,6 @@ public class SarifLog {
             this.locations = locations;
             this.properties = properties;
         }
-
 
         @java.lang.SuppressWarnings("all")
         public static class ResultBuilder {
@@ -1044,7 +1090,9 @@ public class SarifLog {
             }
 
             /**
-             * The stable, unique identifier of the rule, if any, to which this result is relevant.
+             * The stable, unique identifier of the rule, if any, to which this result is
+             * relevant.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1055,6 +1103,7 @@ public class SarifLog {
 
             /**
              * The index link the rule, if any, to which this result is relevant.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1064,8 +1113,9 @@ public class SarifLog {
             }
 
             /**
-             * A message that describes the result. The first sentence of the message only will be displayed when visible
-             * space is limited.
+             * A message that describes the result. The first sentence of the message only
+             * will be displayed when visible space is limited.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1075,7 +1125,9 @@ public class SarifLog {
             }
 
             /**
-             * Specifies the severity level of the result. It is derived from PMD's defined rule priorities (1,2 = error, 3 = warning, 4,5 = note).
+             * Specifies the severity level of the result. It is derived from PMD's defined
+             * rule priorities (1,2 = error, 3 = warning, 4,5 = note).
+             * 
              * @return {@code this}.
              * @see net.sourceforge.pmd.lang.rule.RulePriority
              */
@@ -1086,8 +1138,10 @@ public class SarifLog {
             }
 
             /**
-             * The set of locations where the result was detected. Specify only one location unless the problem indicated by
-             * the result can only be corrected by making a change at every specified location.
+             * The set of locations where the result was detected. Specify only one location
+             * unless the problem indicated by the result can only be corrected by making a
+             * change at every specified location.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1098,6 +1152,7 @@ public class SarifLog {
 
             /**
              * Key/value pairs that provide additional information about the address.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1108,13 +1163,16 @@ public class SarifLog {
 
             @java.lang.SuppressWarnings("all")
             public SarifLog.Result build() {
-                return new SarifLog.Result(this.ruleId, this.ruleIndex, this.message, this.level, this.locations, this.properties);
+                return new SarifLog.Result(this.ruleId, this.ruleIndex, this.message, this.level, this.locations,
+                        this.properties);
             }
 
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.Result.ResultBuilder(ruleId=" + this.ruleId + ", ruleIndex=" + this.ruleIndex + ", message=" + this.message + ", level=" + this.level + ", locations=" + this.locations + ", properties=" + this.properties + ")";
+                return "SarifLog.Result.ResultBuilder(ruleId=" + this.ruleId + ", ruleIndex=" + this.ruleIndex
+                        + ", message=" + this.message + ", level=" + this.level + ", locations=" + this.locations
+                        + ", properties=" + this.properties + ")";
             }
         }
 
@@ -1124,7 +1182,8 @@ public class SarifLog {
         }
 
         /**
-         * The stable, unique identifier of the rule, if any, to which this result is relevant.
+         * The stable, unique identifier of the rule, if any, to which this result is
+         * relevant.
          */
         @java.lang.SuppressWarnings("all")
         public String getRuleId() {
@@ -1140,8 +1199,8 @@ public class SarifLog {
         }
 
         /**
-         * A message that describes the result. The first sentence of the message only will be displayed when visible
-         * space is limited.
+         * A message that describes the result. The first sentence of the message only
+         * will be displayed when visible space is limited.
          */
         @java.lang.SuppressWarnings("all")
         public Message getMessage() {
@@ -1149,7 +1208,9 @@ public class SarifLog {
         }
 
         /**
-         * Specifies the severity level of the result. It is derived from PMD's defined rule priorities (1,2 = error, 3 = warning, 4,5 = note).
+         * Specifies the severity level of the result. It is derived from PMD's defined
+         * rule priorities (1,2 = error, 3 = warning, 4,5 = note).
+         * 
          * @see net.sourceforge.pmd.lang.rule.RulePriority
          */
         @SuppressWarnings("all")
@@ -1158,8 +1219,9 @@ public class SarifLog {
         }
 
         /**
-         * The set of locations where the result was detected. Specify only one location unless the problem indicated by
-         * the result can only be corrected by making a change at every specified location.
+         * The set of locations where the result was detected. Specify only one location
+         * unless the problem indicated by the result can only be corrected by making a
+         * change at every specified location.
          */
         @java.lang.SuppressWarnings("all")
         public List<Location> getLocations() {
@@ -1175,7 +1237,9 @@ public class SarifLog {
         }
 
         /**
-         * The stable, unique identifier of the rule, if any, to which this result is relevant.
+         * The stable, unique identifier of the rule, if any, to which this result is
+         * relevant.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1186,6 +1250,7 @@ public class SarifLog {
 
         /**
          * The index link the rule, if any, to which this result is relevant.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1195,8 +1260,9 @@ public class SarifLog {
         }
 
         /**
-         * A message that describes the result. The first sentence of the message only will be displayed when visible
-         * space is limited.
+         * A message that describes the result. The first sentence of the message only
+         * will be displayed when visible space is limited.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1206,7 +1272,9 @@ public class SarifLog {
         }
 
         /**
-         * Specifies the severity level of the result. It is derived from PMD's defined rule priorities (1,2 = error, 3 = warning, 4,5 = note).
+         * Specifies the severity level of the result. It is derived from PMD's defined
+         * rule priorities (1,2 = error, 3 = warning, 4,5 = note).
+         * 
          * @return {@code this}.
          * @see net.sourceforge.pmd.lang.rule.RulePriority
          */
@@ -1217,8 +1285,10 @@ public class SarifLog {
         }
 
         /**
-         * The set of locations where the result was detected. Specify only one location unless the problem indicated by
-         * the result can only be corrected by making a change at every specified location.
+         * The set of locations where the result was detected. Specify only one location
+         * unless the problem indicated by the result can only be corrected by making a
+         * change at every specified location.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1229,6 +1299,7 @@ public class SarifLog {
 
         /**
          * Key/value pairs that provide additional information about the address.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1311,10 +1382,11 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.Result(ruleId=" + this.getRuleId() + ", ruleIndex=" + this.getRuleIndex() + ", message=" + this.getMessage() + ", level=" + this.getLevel() + ", locations=" + this.getLocations() + ", properties=" + this.getProperties() + ")";
+            return "SarifLog.Result(ruleId=" + this.getRuleId() + ", ruleIndex=" + this.getRuleIndex() + ", message="
+                    + this.getMessage() + ", level=" + this.getLevel() + ", locations=" + this.getLocations()
+                    + ", properties=" + this.getProperties() + ")";
         }
     }
-
 
     /**
      * Encapsulates a message intended to be read by the end user.
@@ -1340,7 +1412,6 @@ public class SarifLog {
             this.id = id;
         }
 
-
         @java.lang.SuppressWarnings("all")
         public static class MessageBuilder {
             @java.lang.SuppressWarnings("all")
@@ -1356,6 +1427,7 @@ public class SarifLog {
 
             /**
              * A plain text message string.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1366,6 +1438,7 @@ public class SarifLog {
 
             /**
              * A Markdown message string.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1376,6 +1449,7 @@ public class SarifLog {
 
             /**
              * The identifier for this message.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1392,7 +1466,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.Message.MessageBuilder(text=" + this.text + ", markdown=" + this.markdown + ", id=" + this.id + ")";
+                return "SarifLog.Message.MessageBuilder(text=" + this.text + ", markdown=" + this.markdown + ", id="
+                        + this.id + ")";
             }
         }
 
@@ -1427,6 +1502,7 @@ public class SarifLog {
 
         /**
          * A plain text message string.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1437,6 +1513,7 @@ public class SarifLog {
 
         /**
          * A Markdown message string.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1447,6 +1524,7 @@ public class SarifLog {
 
         /**
          * The identifier for this message.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1508,29 +1586,33 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.Message(text=" + this.getText() + ", markdown=" + this.getMarkdown() + ", id=" + this.getId() + ")";
+            return "SarifLog.Message(text=" + this.getText() + ", markdown=" + this.getMarkdown() + ", id="
+                    + this.getId() + ")";
         }
     }
 
-
     /**
-     * Describes a single run of an analysis tool, and contains the reported output of that run.
+     * Describes a single run of an analysis tool, and contains the reported output
+     * of that run.
      */
     public static class Run {
         /**
-         * Information about the tool or tool pipeline that generated the results in this run. A run can only contain
-         * results produced by a single tool or tool pipeline. A run can aggregate results from multiple log files, as long
-         * as context around the tool run (tool command-line arguments and the like) is identical for all aggregated files.
+         * Information about the tool or tool pipeline that generated the results in
+         * this run. A run can only contain results produced by a single tool or tool
+         * pipeline. A run can aggregate results from multiple log files, as long as
+         * context around the tool run (tool command-line arguments and the like) is
+         * identical for all aggregated files.
          */
         private Tool tool;
         /**
-         * The set of results contained in an SARIF log. The results array can be omitted when a run is solely exporting
-         * rules metadata. It must be present (but may be empty) if a log file represents an actual scan.
+         * The set of results contained in an SARIF log. The results array can be
+         * omitted when a run is solely exporting rules metadata. It must be present
+         * (but may be empty) if a log file represents an actual scan.
          */
         private List<Result> results;
         /**
-         * The set of invocations providing information about the tool execution such as configuration errors or runtime
-         * exceptions
+         * The set of invocations providing information about the tool execution such as
+         * configuration errors or runtime exceptions
          */
         private List<Invocation> invocations;
 
@@ -1540,7 +1622,6 @@ public class SarifLog {
             this.results = results;
             this.invocations = invocations;
         }
-
 
         @java.lang.SuppressWarnings("all")
         public static class RunBuilder {
@@ -1556,9 +1637,12 @@ public class SarifLog {
             }
 
             /**
-             * Information about the tool or tool pipeline that generated the results in this run. A run can only contain
-             * results produced by a single tool or tool pipeline. A run can aggregate results from multiple log files, as long
-             * as context around the tool run (tool command-line arguments and the like) is identical for all aggregated files.
+             * Information about the tool or tool pipeline that generated the results in
+             * this run. A run can only contain results produced by a single tool or tool
+             * pipeline. A run can aggregate results from multiple log files, as long as
+             * context around the tool run (tool command-line arguments and the like) is
+             * identical for all aggregated files.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1597,8 +1681,9 @@ public class SarifLog {
             }
 
             /**
-             * The set of invocations providing information about the tool execution such as configuration errors or runtime
-             * exceptions
+             * The set of invocations providing information about the tool execution such as
+             * configuration errors or runtime exceptions
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1626,7 +1711,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.Run.RunBuilder(tool=" + this.tool + ", results=" + this.results + ", invocations=" + this.invocations + ")";
+                return "SarifLog.Run.RunBuilder(tool=" + this.tool + ", results=" + this.results + ", invocations="
+                        + this.invocations + ")";
             }
         }
 
@@ -1636,9 +1722,11 @@ public class SarifLog {
         }
 
         /**
-         * Information about the tool or tool pipeline that generated the results in this run. A run can only contain
-         * results produced by a single tool or tool pipeline. A run can aggregate results from multiple log files, as long
-         * as context around the tool run (tool command-line arguments and the like) is identical for all aggregated files.
+         * Information about the tool or tool pipeline that generated the results in
+         * this run. A run can only contain results produced by a single tool or tool
+         * pipeline. A run can aggregate results from multiple log files, as long as
+         * context around the tool run (tool command-line arguments and the like) is
+         * identical for all aggregated files.
          */
         @java.lang.SuppressWarnings("all")
         public Tool getTool() {
@@ -1646,8 +1734,9 @@ public class SarifLog {
         }
 
         /**
-         * The set of results contained in an SARIF log. The results array can be omitted when a run is solely exporting
-         * rules metadata. It must be present (but may be empty) if a log file represents an actual scan.
+         * The set of results contained in an SARIF log. The results array can be
+         * omitted when a run is solely exporting rules metadata. It must be present
+         * (but may be empty) if a log file represents an actual scan.
          */
         @java.lang.SuppressWarnings("all")
         public List<Result> getResults() {
@@ -1655,8 +1744,8 @@ public class SarifLog {
         }
 
         /**
-         * The set of invocations providing information about the tool execution such as configuration errors or runtime
-         * exceptions
+         * The set of invocations providing information about the tool execution such as
+         * configuration errors or runtime exceptions
          */
         @java.lang.SuppressWarnings("all")
         public List<Invocation> getInvocations() {
@@ -1664,9 +1753,12 @@ public class SarifLog {
         }
 
         /**
-         * Information about the tool or tool pipeline that generated the results in this run. A run can only contain
-         * results produced by a single tool or tool pipeline. A run can aggregate results from multiple log files, as long
-         * as context around the tool run (tool command-line arguments and the like) is identical for all aggregated files.
+         * Information about the tool or tool pipeline that generated the results in
+         * this run. A run can only contain results produced by a single tool or tool
+         * pipeline. A run can aggregate results from multiple log files, as long as
+         * context around the tool run (tool command-line arguments and the like) is
+         * identical for all aggregated files.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1676,8 +1768,10 @@ public class SarifLog {
         }
 
         /**
-         * The set of results contained in an SARIF log. The results array can be omitted when a run is solely exporting
-         * rules metadata. It must be present (but may be empty) if a log file represents an actual scan.
+         * The set of results contained in an SARIF log. The results array can be
+         * omitted when a run is solely exporting rules metadata. It must be present
+         * (but may be empty) if a log file represents an actual scan.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1687,8 +1781,9 @@ public class SarifLog {
         }
 
         /**
-         * The set of invocations providing information about the tool execution such as configuration errors or runtime
-         * exceptions
+         * The set of invocations providing information about the tool execution such as
+         * configuration errors or runtime exceptions
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1750,10 +1845,10 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.Run(tool=" + this.getTool() + ", results=" + this.getResults() + ", invocations=" + this.getInvocations() + ")";
+            return "SarifLog.Run(tool=" + this.getTool() + ", results=" + this.getResults() + ", invocations="
+                    + this.getInvocations() + ")";
         }
     }
-
 
     /**
      * The analysis tool that was run.
@@ -1769,7 +1864,6 @@ public class SarifLog {
             this.driver = driver;
         }
 
-
         @java.lang.SuppressWarnings("all")
         public static class ToolBuilder {
             @java.lang.SuppressWarnings("all")
@@ -1781,6 +1875,7 @@ public class SarifLog {
 
             /**
              * The analysis tool that was run.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1816,6 +1911,7 @@ public class SarifLog {
 
         /**
          * The analysis tool that was run.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -1867,9 +1963,9 @@ public class SarifLog {
         }
     }
 
-
     /**
-     * A component, such as a plug-in or the driver, of the analysis tool that was run.
+     * A component, such as a plug-in or the driver, of the analysis tool that was
+     * run.
      */
     public static class Component {
         /**
@@ -1877,26 +1973,29 @@ public class SarifLog {
          */
         private String name;
         /**
-         * The tool component version, in whatever format the component natively provides.
+         * The tool component version, in whatever format the component natively
+         * provides.
          */
         private String version;
         /**
-         * The absolute URI at which information about this version of the tool component can be found.
+         * The absolute URI at which information about this version of the tool
+         * component can be found.
          */
         private String informationUri;
         /**
-         * An array of reportingDescriptor objects relevant to the analysis performed by the tool component.
+         * An array of reportingDescriptor objects relevant to the analysis performed by
+         * the tool component.
          */
         private List<ReportingDescriptor> rules;
 
         @java.lang.SuppressWarnings("all")
-        Component(final String name, final String version, final String informationUri, final List<ReportingDescriptor> rules) {
+        Component(final String name, final String version, final String informationUri,
+                final List<ReportingDescriptor> rules) {
             this.name = name;
             this.version = version;
             this.informationUri = informationUri;
             this.rules = rules;
         }
-
 
         @java.lang.SuppressWarnings("all")
         public static class ComponentBuilder {
@@ -1915,6 +2014,7 @@ public class SarifLog {
 
             /**
              * The name of the tool component.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1924,7 +2024,9 @@ public class SarifLog {
             }
 
             /**
-             * The tool component version, in whatever format the component natively provides.
+             * The tool component version, in whatever format the component natively
+             * provides.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1934,7 +2036,9 @@ public class SarifLog {
             }
 
             /**
-             * The absolute URI at which information about this version of the tool component can be found.
+             * The absolute URI at which information about this version of the tool
+             * component can be found.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1944,7 +2048,9 @@ public class SarifLog {
             }
 
             /**
-             * An array of reportingDescriptor objects relevant to the analysis performed by the tool component.
+             * An array of reportingDescriptor objects relevant to the analysis performed by
+             * the tool component.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -1961,7 +2067,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.Component.ComponentBuilder(name=" + this.name + ", version=" + this.version + ", informationUri=" + this.informationUri + ", rules=" + this.rules + ")";
+                return "SarifLog.Component.ComponentBuilder(name=" + this.name + ", version=" + this.version
+                        + ", informationUri=" + this.informationUri + ", rules=" + this.rules + ")";
             }
         }
 
@@ -1972,7 +2079,8 @@ public class SarifLog {
 
         @java.lang.SuppressWarnings("all")
         public SarifLog.Component.ComponentBuilder toBuilder() {
-            return new SarifLog.Component.ComponentBuilder().name(this.name).version(this.version).informationUri(this.informationUri).rules(this.rules);
+            return new SarifLog.Component.ComponentBuilder().name(this.name).version(this.version)
+                    .informationUri(this.informationUri).rules(this.rules);
         }
 
         /**
@@ -1984,7 +2092,8 @@ public class SarifLog {
         }
 
         /**
-         * The tool component version, in whatever format the component natively provides.
+         * The tool component version, in whatever format the component natively
+         * provides.
          */
         @java.lang.SuppressWarnings("all")
         public String getVersion() {
@@ -1992,7 +2101,8 @@ public class SarifLog {
         }
 
         /**
-         * The absolute URI at which information about this version of the tool component can be found.
+         * The absolute URI at which information about this version of the tool
+         * component can be found.
          */
         @java.lang.SuppressWarnings("all")
         public String getInformationUri() {
@@ -2000,7 +2110,8 @@ public class SarifLog {
         }
 
         /**
-         * An array of reportingDescriptor objects relevant to the analysis performed by the tool component.
+         * An array of reportingDescriptor objects relevant to the analysis performed by
+         * the tool component.
          */
         @java.lang.SuppressWarnings("all")
         public List<ReportingDescriptor> getRules() {
@@ -2009,6 +2120,7 @@ public class SarifLog {
 
         /**
          * The name of the tool component.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2018,7 +2130,9 @@ public class SarifLog {
         }
 
         /**
-         * The tool component version, in whatever format the component natively provides.
+         * The tool component version, in whatever format the component natively
+         * provides.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2028,7 +2142,9 @@ public class SarifLog {
         }
 
         /**
-         * The absolute URI at which information about this version of the tool component can be found.
+         * The absolute URI at which information about this version of the tool
+         * component can be found.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2038,7 +2154,9 @@ public class SarifLog {
         }
 
         /**
-         * An array of reportingDescriptor objects relevant to the analysis performed by the tool component.
+         * An array of reportingDescriptor objects relevant to the analysis performed by
+         * the tool component.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2072,7 +2190,8 @@ public class SarifLog {
             }
             final java.lang.Object this$informationUri = this.getInformationUri();
             final java.lang.Object other$informationUri = other.getInformationUri();
-            if (this$informationUri == null ? other$informationUri != null : !this$informationUri.equals(other$informationUri)) {
+            if (this$informationUri == null ? other$informationUri != null
+                    : !this$informationUri.equals(other$informationUri)) {
                 return false;
             }
             final java.lang.Object this$rules = this.getRules();
@@ -2107,14 +2226,14 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.Component(name=" + this.getName() + ", version=" + this.getVersion() + ", informationUri=" + this.getInformationUri() + ", rules=" + this.getRules() + ")";
+            return "SarifLog.Component(name=" + this.getName() + ", version=" + this.getVersion() + ", informationUri="
+                    + this.getInformationUri() + ", rules=" + this.getRules() + ")";
         }
     }
 
-
     /**
-     * Metadata that describes a specific report produced by the tool, as part of the analysis it provides or its runtime
-     * reporting.
+     * Metadata that describes a specific report produced by the tool, as part of
+     * the analysis it provides or its runtime reporting.
      */
     public static class ReportingDescriptor {
         /**
@@ -2126,19 +2245,21 @@ public class SarifLog {
          */
         private String name;
         /**
-         * A concise description of the report. Should be a single sentence that is understandable when visible space is
-         * limited to a single line of text.
+         * A concise description of the report. Should be a single sentence that is
+         * understandable when visible space is limited to a single line of text.
          */
         private MultiformatMessage shortDescription;
         /**
-         * A description of the report. Should, as far as possible, provide details sufficient to enable resolution of any
-         * problem indicated by the result.
+         * A description of the report. Should, as far as possible, provide details
+         * sufficient to enable resolution of any problem indicated by the result.
          */
         private MultiformatMessage fullDescription;
         /**
-         * A set of name/value pairs with arbitrary names. Each value is a multiformatMessageString object, which holds
-         * message strings in plain text and (optionally) Markdown format. The strings can include placeholders, which can
-         * be used to construct a message in combination with an arbitrary number of additional string arguments.
+         * A set of name/value pairs with arbitrary names. Each value is a
+         * multiformatMessageString object, which holds message strings in plain text
+         * and (optionally) Markdown format. The strings can include placeholders, which
+         * can be used to construct a message in combination with an arbitrary number of
+         * additional string arguments.
          */
         private MultiformatMessage messageStrings;
         /**
@@ -2146,7 +2267,8 @@ public class SarifLog {
          */
         private String helpUri;
         /**
-         * Provides the primary documentation for the report, useful when there is no online documentation.
+         * Provides the primary documentation for the report, useful when there is no
+         * online documentation.
          */
         private MultiformatMessage help;
         /**
@@ -2154,12 +2276,16 @@ public class SarifLog {
          */
         private PropertyBag properties;
         /**
-         * The default configuration of a rule, can contain a default level and other properties.
+         * The default configuration of a rule, can contain a default level and other
+         * properties.
          */
         private ReportingConfiguration defaultConfiguration;
 
         @java.lang.SuppressWarnings("all")
-        ReportingDescriptor(final String id, final String name, final MultiformatMessage shortDescription, final MultiformatMessage fullDescription, final MultiformatMessage messageStrings, final String helpUri, final MultiformatMessage help, final PropertyBag properties, final ReportingConfiguration defaultConfiguration) {
+        ReportingDescriptor(final String id, final String name, final MultiformatMessage shortDescription,
+                final MultiformatMessage fullDescription, final MultiformatMessage messageStrings, final String helpUri,
+                final MultiformatMessage help, final PropertyBag properties,
+                final ReportingConfiguration defaultConfiguration) {
             this.id = id;
             this.name = name;
             this.shortDescription = shortDescription;
@@ -2170,7 +2296,6 @@ public class SarifLog {
             this.properties = properties;
             this.defaultConfiguration = defaultConfiguration;
         }
-
 
         @java.lang.SuppressWarnings("all")
         public static class ReportingDescriptorBuilder {
@@ -2199,6 +2324,7 @@ public class SarifLog {
 
             /**
              * A stable, opaque identifier for the report.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -2209,6 +2335,7 @@ public class SarifLog {
 
             /**
              * A report identifier that is understandable to an end user.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -2218,41 +2345,50 @@ public class SarifLog {
             }
 
             /**
-             * A concise description of the report. Should be a single sentence that is understandable when visible space is
-             * limited to a single line of text.
+             * A concise description of the report. Should be a single sentence that is
+             * understandable when visible space is limited to a single line of text.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
-            public SarifLog.ReportingDescriptor.ReportingDescriptorBuilder shortDescription(final MultiformatMessage shortDescription) {
+            public SarifLog.ReportingDescriptor.ReportingDescriptorBuilder shortDescription(
+                    final MultiformatMessage shortDescription) {
                 this.shortDescription = shortDescription;
                 return this;
             }
 
             /**
-             * A description of the report. Should, as far as possible, provide details sufficient to enable resolution of any
-             * problem indicated by the result.
+             * A description of the report. Should, as far as possible, provide details
+             * sufficient to enable resolution of any problem indicated by the result.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
-            public SarifLog.ReportingDescriptor.ReportingDescriptorBuilder fullDescription(final MultiformatMessage fullDescription) {
+            public SarifLog.ReportingDescriptor.ReportingDescriptorBuilder fullDescription(
+                    final MultiformatMessage fullDescription) {
                 this.fullDescription = fullDescription;
                 return this;
             }
 
             /**
-             * A set of name/value pairs with arbitrary names. Each value is a multiformatMessageString object, which holds
-             * message strings in plain text and (optionally) Markdown format. The strings can include placeholders, which can
-             * be used to construct a message in combination with an arbitrary number of additional string arguments.
+             * A set of name/value pairs with arbitrary names. Each value is a
+             * multiformatMessageString object, which holds message strings in plain text
+             * and (optionally) Markdown format. The strings can include placeholders, which
+             * can be used to construct a message in combination with an arbitrary number of
+             * additional string arguments.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
-            public SarifLog.ReportingDescriptor.ReportingDescriptorBuilder messageStrings(final MultiformatMessage messageStrings) {
+            public SarifLog.ReportingDescriptor.ReportingDescriptorBuilder messageStrings(
+                    final MultiformatMessage messageStrings) {
                 this.messageStrings = messageStrings;
                 return this;
             }
 
             /**
              * A URI where the primary documentation for the report can be found.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -2262,7 +2398,9 @@ public class SarifLog {
             }
 
             /**
-             * Provides the primary documentation for the report, useful when there is no online documentation.
+             * Provides the primary documentation for the report, useful when there is no
+             * online documentation.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -2273,6 +2411,7 @@ public class SarifLog {
 
             /**
              * Key/value pairs that provide additional information about the report.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -2282,23 +2421,31 @@ public class SarifLog {
             }
 
             /**
-             * The default configuration of a rule, can contain a default level and other properties.
+             * The default configuration of a rule, can contain a default level and other
+             * properties.
+             * 
              * @return {@code this}.
              */
-            public SarifLog.ReportingDescriptor.ReportingDescriptorBuilder defaultConfiguration(final ReportingConfiguration defaultConfiguration) {
+            public SarifLog.ReportingDescriptor.ReportingDescriptorBuilder defaultConfiguration(
+                    final ReportingConfiguration defaultConfiguration) {
                 this.defaultConfiguration = defaultConfiguration;
                 return this;
             }
 
             @java.lang.SuppressWarnings("all")
             public SarifLog.ReportingDescriptor build() {
-                return new SarifLog.ReportingDescriptor(this.id, this.name, this.shortDescription, this.fullDescription, this.messageStrings, this.helpUri, this.help, this.properties, this.defaultConfiguration);
+                return new SarifLog.ReportingDescriptor(this.id, this.name, this.shortDescription, this.fullDescription,
+                        this.messageStrings, this.helpUri, this.help, this.properties, this.defaultConfiguration);
             }
 
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.ReportingDescriptor.ReportingDescriptorBuilder(id=" + this.id + ", name=" + this.name + ", shortDescription=" + this.shortDescription + ", fullDescription=" + this.fullDescription + ", messageStrings=" + this.messageStrings + ", helpUri=" + this.helpUri + ", help=" + this.help + ", properties=" + this.properties + ", defaultConfiguration=" + this.defaultConfiguration + ")";
+                return "SarifLog.ReportingDescriptor.ReportingDescriptorBuilder(id=" + this.id + ", name=" + this.name
+                        + ", shortDescription=" + this.shortDescription + ", fullDescription=" + this.fullDescription
+                        + ", messageStrings=" + this.messageStrings + ", helpUri=" + this.helpUri + ", help="
+                        + this.help + ", properties=" + this.properties + ", defaultConfiguration="
+                        + this.defaultConfiguration + ")";
             }
         }
 
@@ -2324,8 +2471,8 @@ public class SarifLog {
         }
 
         /**
-         * A concise description of the report. Should be a single sentence that is understandable when visible space is
-         * limited to a single line of text.
+         * A concise description of the report. Should be a single sentence that is
+         * understandable when visible space is limited to a single line of text.
          */
         @java.lang.SuppressWarnings("all")
         public MultiformatMessage getShortDescription() {
@@ -2333,8 +2480,8 @@ public class SarifLog {
         }
 
         /**
-         * A description of the report. Should, as far as possible, provide details sufficient to enable resolution of any
-         * problem indicated by the result.
+         * A description of the report. Should, as far as possible, provide details
+         * sufficient to enable resolution of any problem indicated by the result.
          */
         @java.lang.SuppressWarnings("all")
         public MultiformatMessage getFullDescription() {
@@ -2342,9 +2489,11 @@ public class SarifLog {
         }
 
         /**
-         * A set of name/value pairs with arbitrary names. Each value is a multiformatMessageString object, which holds
-         * message strings in plain text and (optionally) Markdown format. The strings can include placeholders, which can
-         * be used to construct a message in combination with an arbitrary number of additional string arguments.
+         * A set of name/value pairs with arbitrary names. Each value is a
+         * multiformatMessageString object, which holds message strings in plain text
+         * and (optionally) Markdown format. The strings can include placeholders, which
+         * can be used to construct a message in combination with an arbitrary number of
+         * additional string arguments.
          */
         @java.lang.SuppressWarnings("all")
         public MultiformatMessage getMessageStrings() {
@@ -2360,7 +2509,8 @@ public class SarifLog {
         }
 
         /**
-         * Provides the primary documentation for the report, useful when there is no online documentation.
+         * Provides the primary documentation for the report, useful when there is no
+         * online documentation.
          */
         @java.lang.SuppressWarnings("all")
         public MultiformatMessage getHelp() {
@@ -2376,7 +2526,8 @@ public class SarifLog {
         }
 
         /**
-         * The default configuration of a rule, can contain a default level and other properties.
+         * The default configuration of a rule, can contain a default level and other
+         * properties.
          */
         @SuppressWarnings("all")
         public ReportingConfiguration getDefaultConfiguration() {
@@ -2385,6 +2536,7 @@ public class SarifLog {
 
         /**
          * A stable, opaque identifier for the report.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2395,6 +2547,7 @@ public class SarifLog {
 
         /**
          * A report identifier that is understandable to an end user.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2404,8 +2557,9 @@ public class SarifLog {
         }
 
         /**
-         * A concise description of the report. Should be a single sentence that is understandable when visible space is
-         * limited to a single line of text.
+         * A concise description of the report. Should be a single sentence that is
+         * understandable when visible space is limited to a single line of text.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2415,8 +2569,9 @@ public class SarifLog {
         }
 
         /**
-         * A description of the report. Should, as far as possible, provide details sufficient to enable resolution of any
-         * problem indicated by the result.
+         * A description of the report. Should, as far as possible, provide details
+         * sufficient to enable resolution of any problem indicated by the result.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2426,9 +2581,12 @@ public class SarifLog {
         }
 
         /**
-         * A set of name/value pairs with arbitrary names. Each value is a multiformatMessageString object, which holds
-         * message strings in plain text and (optionally) Markdown format. The strings can include placeholders, which can
-         * be used to construct a message in combination with an arbitrary number of additional string arguments.
+         * A set of name/value pairs with arbitrary names. Each value is a
+         * multiformatMessageString object, which holds message strings in plain text
+         * and (optionally) Markdown format. The strings can include placeholders, which
+         * can be used to construct a message in combination with an arbitrary number of
+         * additional string arguments.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2439,6 +2597,7 @@ public class SarifLog {
 
         /**
          * A URI where the primary documentation for the report can be found.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2448,7 +2607,9 @@ public class SarifLog {
         }
 
         /**
-         * Provides the primary documentation for the report, useful when there is no online documentation.
+         * Provides the primary documentation for the report, useful when there is no
+         * online documentation.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2459,6 +2620,7 @@ public class SarifLog {
 
         /**
          * Key/value pairs that provide additional information about the report.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2468,7 +2630,9 @@ public class SarifLog {
         }
 
         /**
-         * The default configuration of a rule, can contain a default level and other properties.
+         * The default configuration of a rule, can contain a default level and other
+         * properties.
+         * 
          * @return {@code this}.
          */
         @SuppressWarnings("all")
@@ -2502,17 +2666,20 @@ public class SarifLog {
             }
             final java.lang.Object this$shortDescription = this.getShortDescription();
             final java.lang.Object other$shortDescription = other.getShortDescription();
-            if (this$shortDescription == null ? other$shortDescription != null : !this$shortDescription.equals(other$shortDescription)) {
+            if (this$shortDescription == null ? other$shortDescription != null
+                    : !this$shortDescription.equals(other$shortDescription)) {
                 return false;
             }
             final java.lang.Object this$fullDescription = this.getFullDescription();
             final java.lang.Object other$fullDescription = other.getFullDescription();
-            if (this$fullDescription == null ? other$fullDescription != null : !this$fullDescription.equals(other$fullDescription)) {
+            if (this$fullDescription == null ? other$fullDescription != null
+                    : !this$fullDescription.equals(other$fullDescription)) {
                 return false;
             }
             final java.lang.Object this$messageStrings = this.getMessageStrings();
             final java.lang.Object other$messageStrings = other.getMessageStrings();
-            if (this$messageStrings == null ? other$messageStrings != null : !this$messageStrings.equals(other$messageStrings)) {
+            if (this$messageStrings == null ? other$messageStrings != null
+                    : !this$messageStrings.equals(other$messageStrings)) {
                 return false;
             }
             final java.lang.Object this$helpUri = this.getHelpUri();
@@ -2532,7 +2699,8 @@ public class SarifLog {
             }
             final Object this$defaultConfiguration = this.getDefaultConfiguration();
             final Object other$defaultConfiguration = other.getDefaultConfiguration();
-            if (this$defaultConfiguration == null ? other$defaultConfiguration != null : !this$defaultConfiguration.equals(other$defaultConfiguration)) {
+            if (this$defaultConfiguration == null ? other$defaultConfiguration != null
+                    : !this$defaultConfiguration.equals(other$defaultConfiguration)) {
                 return false;
             }
             return true;
@@ -2572,34 +2740,36 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.ReportingDescriptor(id=" + this.getId() + ", name=" + this.getName() + ", shortDescription=" + this.getShortDescription() + ", fullDescription=" + this.getFullDescription() + ", messageStrings=" + this.getMessageStrings() + ", helpUri=" + this.getHelpUri() + ", help=" + this.getHelp() + ", properties=" + this.getProperties() + ", defaultConfiguration=" + this.getDefaultConfiguration() + ")";
+            return "SarifLog.ReportingDescriptor(id=" + this.getId() + ", name=" + this.getName()
+                    + ", shortDescription=" + this.getShortDescription() + ", fullDescription="
+                    + this.getFullDescription() + ", messageStrings=" + this.getMessageStrings() + ", helpUri="
+                    + this.getHelpUri() + ", help=" + this.getHelp() + ", properties=" + this.getProperties()
+                    + ", defaultConfiguration=" + this.getDefaultConfiguration() + ")";
         }
     }
 
-
     /**
-     * Configure the Sarif reporting defined by a reportingDescriptor.
-     * Can be used as the defaultConfiguration of a reportingDescriptor.
-     * Can also be used in configurationOverride to override those defaults.
+     * Configure the Sarif reporting defined by a reportingDescriptor. Can be used
+     * as the defaultConfiguration of a reportingDescriptor. Can also be used in
+     * configurationOverride to override those defaults.
      */
     public static class ReportingConfiguration {
 
-
         /**
-         * Boolean, to dis- and enable the config based on matching a rule (through the Descriptor).
-         * Default: true.
+         * Boolean, to dis- and enable the config based on matching a rule (through the
+         * Descriptor). Default: true.
          */
         private Boolean enabled;
 
         /**
-         * Takes the levelProperty of the Descriptor (if present) or provides a default/override.
-         * Default: warning.
+         * Takes the levelProperty of the Descriptor (if present) or provides a
+         * default/override. Default: warning.
          */
         private String level;
 
         /**
-         * Takes the rank/priority of the Descriptor (if present) or provides a default/override value between 1.0 and 100.0.
-         * Default: -1.0.
+         * Takes the rank/priority of the Descriptor (if present) or provides a
+         * default/override value between 1.0 and 100.0. Default: -1.0.
          */
         private Double rank;
 
@@ -2609,13 +2779,13 @@ public class SarifLog {
         private PropertyBag parameters;
 
         @SuppressWarnings("all")
-        ReportingConfiguration(final Boolean enabled, final String level, final Double rank, final PropertyBag parameters) {
+        ReportingConfiguration(final Boolean enabled, final String level, final Double rank,
+                final PropertyBag parameters) {
             this.enabled = enabled;
             this.level = level;
             this.rank = rank;
             this.parameters = parameters;
         }
-
 
         @SuppressWarnings("all")
         public static class ReportingConfigurationBuilder {
@@ -2633,7 +2803,8 @@ public class SarifLog {
             }
 
             /**
-             * Boolean, to dis- and enable the config based on matching a rule (through the Descriptor).
+             * Boolean, to dis- and enable the config based on matching a rule (through the
+             * Descriptor).
              */
             @SuppressWarnings("all")
             public SarifLog.ReportingConfiguration.ReportingConfigurationBuilder enabled(final Boolean enabled) {
@@ -2642,7 +2813,8 @@ public class SarifLog {
             }
 
             /**
-             * Takes the levelProperty of the Descriptor (if present) or provides a default/override.
+             * Takes the levelProperty of the Descriptor (if present) or provides a
+             * default/override.
              */
             @SuppressWarnings("all")
             public SarifLog.ReportingConfiguration.ReportingConfigurationBuilder level(final String level) {
@@ -2651,7 +2823,8 @@ public class SarifLog {
             }
 
             /**
-             * Takes the rank/priority of the Descriptor (if present) or provides a default/override value between 1.0 and 100.0.
+             * Takes the rank/priority of the Descriptor (if present) or provides a
+             * default/override value between 1.0 and 100.0.
              */
             @SuppressWarnings("all")
             public SarifLog.ReportingConfiguration.ReportingConfigurationBuilder rank(final Double rank) {
@@ -2663,7 +2836,8 @@ public class SarifLog {
              * Define configuration information (propertyBag) specific to the Descriptor.
              */
             @SuppressWarnings("all")
-            public SarifLog.ReportingConfiguration.ReportingConfigurationBuilder parameters(final PropertyBag parameters) {
+            public SarifLog.ReportingConfiguration.ReportingConfigurationBuilder parameters(
+                    final PropertyBag parameters) {
                 this.parameters = parameters;
                 return this;
             }
@@ -2676,7 +2850,8 @@ public class SarifLog {
             @Override
             @SuppressWarnings("all")
             public String toString() {
-                return "SarifLog.ReportingConfiguration.ReportingConfigurationBuilder(enabled=" + this.enabled + ", level=" + this.level + ", rank=" + this.rank + ", parameters=" + this.parameters + ")";
+                return "SarifLog.ReportingConfiguration.ReportingConfigurationBuilder(enabled=" + this.enabled
+                        + ", level=" + this.level + ", rank=" + this.rank + ", parameters=" + this.parameters + ")";
             }
         }
 
@@ -2686,7 +2861,8 @@ public class SarifLog {
         }
 
         /**
-         * Boolean, to dis- and enable the config based on matching a rule (through the Descriptor).
+         * Boolean, to dis- and enable the config based on matching a rule (through the
+         * Descriptor).
          */
         @SuppressWarnings("all")
         public Boolean getEnabled() {
@@ -2694,7 +2870,8 @@ public class SarifLog {
         }
 
         /**
-         * Takes the levelProperty of the Descriptor (if present) or provides a default/override.
+         * Takes the levelProperty of the Descriptor (if present) or provides a
+         * default/override.
          */
         @SuppressWarnings("all")
         public String getLevel() {
@@ -2702,7 +2879,8 @@ public class SarifLog {
         }
 
         /**
-         * Takes the rank/priority of the Descriptor (if present) or provides a default/override value between 1.0 and 100.0.
+         * Takes the rank/priority of the Descriptor (if present) or provides a
+         * default/override value between 1.0 and 100.0.
          */
         @SuppressWarnings("all")
         public Double getRank() {
@@ -2718,7 +2896,9 @@ public class SarifLog {
         }
 
         /**
-         * Boolean, to dis- and enable the config based on matching a rule (through the Descriptor).
+         * Boolean, to dis- and enable the config based on matching a rule (through the
+         * Descriptor).
+         * 
          * @return {@code this}.
          */
         @SuppressWarnings("all")
@@ -2728,7 +2908,9 @@ public class SarifLog {
         }
 
         /**
-         * Takes the levelProperty of the Descriptor (if present) or provides a default/override.
+         * Takes the levelProperty of the Descriptor (if present) or provides a
+         * default/override.
+         * 
          * @return {@code this}.
          */
         @SuppressWarnings("all")
@@ -2738,7 +2920,9 @@ public class SarifLog {
         }
 
         /**
-         * Takes the rank/priority of the Descriptor (if present) or provides a default/override value between 1.0 and 100.0.
+         * Takes the rank/priority of the Descriptor (if present) or provides a
+         * default/override value between 1.0 and 100.0.
+         * 
          * @return {@code this}.
          */
         @SuppressWarnings("all")
@@ -2749,6 +2933,7 @@ public class SarifLog {
 
         /**
          * Define configuration information (propertyBag) specific to the Descriptor.
+         * 
          * @return {@code this}.
          */
         @SuppressWarnings("all")
@@ -2817,10 +3002,10 @@ public class SarifLog {
         @Override
         @SuppressWarnings("all")
         public String toString() {
-            return "SarifLog.ReportingConfiguration(enabled=" + this.getEnabled() + ", level=" + this.getLevel() + ", rank=" + this.getRank() + ", parameters=" + this.getParameters() + ")";
+            return "SarifLog.ReportingConfiguration(enabled=" + this.getEnabled() + ", level=" + this.getLevel()
+                    + ", rank=" + this.getRank() + ", parameters=" + this.getParameters() + ")";
         }
     }
-
 
     /**
      * A message string or message format string rendered in multiple formats.
@@ -2839,7 +3024,6 @@ public class SarifLog {
             this.text = text;
         }
 
-
         @java.lang.SuppressWarnings("all")
         public static class MultiformatMessageBuilder {
             @java.lang.SuppressWarnings("all")
@@ -2853,6 +3037,7 @@ public class SarifLog {
 
             /**
              * A plain text message string or format string.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -2863,6 +3048,7 @@ public class SarifLog {
 
             /**
              * A Markdown message string or format string.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -2879,7 +3065,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.MultiformatMessage.MultiformatMessageBuilder(text=" + this.text + ", markdown=" + this.markdown + ")";
+                return "SarifLog.MultiformatMessage.MultiformatMessageBuilder(text=" + this.text + ", markdown="
+                        + this.markdown + ")";
             }
         }
 
@@ -2906,6 +3093,7 @@ public class SarifLog {
 
         /**
          * A plain text message string or format string.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2916,6 +3104,7 @@ public class SarifLog {
 
         /**
          * A Markdown message string or format string.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -2984,7 +3173,6 @@ public class SarifLog {
         }
     }
 
-
     /**
      * An exception information object, for the tool runtime errors.
      */
@@ -2999,7 +3187,6 @@ public class SarifLog {
             this.message = message;
         }
 
-
         @java.lang.SuppressWarnings("all")
         public static class ExceptionBuilder {
             @java.lang.SuppressWarnings("all")
@@ -3011,6 +3198,7 @@ public class SarifLog {
 
             /**
              * A plain text message string or format string.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -3051,6 +3239,7 @@ public class SarifLog {
 
         /**
          * A plain text message string or format string.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3102,13 +3291,13 @@ public class SarifLog {
         }
     }
 
-
     /**
      * An associated rule to the toolConfigurationNotification.
      */
     public static class AssociatedRule {
         /**
-         * The stable, unique identifier of the rule, if any, to which this result is relevant.
+         * The stable, unique identifier of the rule, if any, to which this result is
+         * relevant.
          */
         private String id;
 
@@ -3116,7 +3305,6 @@ public class SarifLog {
         AssociatedRule(final String id) {
             this.id = id;
         }
-
 
         @java.lang.SuppressWarnings("all")
         public static class AssociatedRuleBuilder {
@@ -3128,7 +3316,9 @@ public class SarifLog {
             }
 
             /**
-             * The stable, unique identifier of the rule, if any, to which this result is relevant.
+             * The stable, unique identifier of the rule, if any, to which this result is
+             * relevant.
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -3160,7 +3350,8 @@ public class SarifLog {
         }
 
         /**
-         * The stable, unique identifier of the rule, if any, to which this result is relevant.
+         * The stable, unique identifier of the rule, if any, to which this result is
+         * relevant.
          */
         @java.lang.SuppressWarnings("all")
         public String getId() {
@@ -3168,7 +3359,9 @@ public class SarifLog {
         }
 
         /**
-         * The stable, unique identifier of the rule, if any, to which this result is relevant.
+         * The stable, unique identifier of the rule, if any, to which this result is
+         * relevant.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3220,7 +3413,6 @@ public class SarifLog {
         }
     }
 
-
     /**
      * An invocation property to specify tool configuration errors.
      */
@@ -3240,7 +3432,6 @@ public class SarifLog {
             this.message = message;
         }
 
-
         @java.lang.SuppressWarnings("all")
         public static class ToolConfigurationNotificationBuilder {
             @java.lang.SuppressWarnings("all")
@@ -3254,20 +3445,24 @@ public class SarifLog {
 
             /**
              * An associated rule
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
-            public SarifLog.ToolConfigurationNotification.ToolConfigurationNotificationBuilder associatedRule(final AssociatedRule associatedRule) {
+            public SarifLog.ToolConfigurationNotification.ToolConfigurationNotificationBuilder associatedRule(
+                    final AssociatedRule associatedRule) {
                 this.associatedRule = associatedRule;
                 return this;
             }
 
             /**
              * A message component to detail the configuration error
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
-            public SarifLog.ToolConfigurationNotification.ToolConfigurationNotificationBuilder message(final Message message) {
+            public SarifLog.ToolConfigurationNotification.ToolConfigurationNotificationBuilder message(
+                    final Message message) {
                 this.message = message;
                 return this;
             }
@@ -3280,7 +3475,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.ToolConfigurationNotification.ToolConfigurationNotificationBuilder(associatedRule=" + this.associatedRule + ", message=" + this.message + ")";
+                return "SarifLog.ToolConfigurationNotification.ToolConfigurationNotificationBuilder(associatedRule="
+                        + this.associatedRule + ", message=" + this.message + ")";
             }
         }
 
@@ -3291,7 +3487,8 @@ public class SarifLog {
 
         @java.lang.SuppressWarnings("all")
         public SarifLog.ToolConfigurationNotification.ToolConfigurationNotificationBuilder toBuilder() {
-            return new SarifLog.ToolConfigurationNotification.ToolConfigurationNotificationBuilder().associatedRule(this.associatedRule).message(this.message);
+            return new SarifLog.ToolConfigurationNotification.ToolConfigurationNotificationBuilder()
+                    .associatedRule(this.associatedRule).message(this.message);
         }
 
         /**
@@ -3312,6 +3509,7 @@ public class SarifLog {
 
         /**
          * An associated rule
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3322,6 +3520,7 @@ public class SarifLog {
 
         /**
          * A message component to detail the configuration error
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3345,7 +3544,8 @@ public class SarifLog {
             }
             final java.lang.Object this$associatedRule = this.getAssociatedRule();
             final java.lang.Object other$associatedRule = other.getAssociatedRule();
-            if (this$associatedRule == null ? other$associatedRule != null : !this$associatedRule.equals(other$associatedRule)) {
+            if (this$associatedRule == null ? other$associatedRule != null
+                    : !this$associatedRule.equals(other$associatedRule)) {
                 return false;
             }
             final java.lang.Object this$message = this.getMessage();
@@ -3376,10 +3576,10 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.ToolConfigurationNotification(associatedRule=" + this.getAssociatedRule() + ", message=" + this.getMessage() + ")";
+            return "SarifLog.ToolConfigurationNotification(associatedRule=" + this.getAssociatedRule() + ", message="
+                    + this.getMessage() + ")";
         }
     }
-
 
     /**
      * An invocation property to specify tool runtime errors.
@@ -3405,7 +3605,6 @@ public class SarifLog {
             this.exception = exception;
         }
 
-
         @java.lang.SuppressWarnings("all")
         public static class ToolExecutionNotificationBuilder {
             @java.lang.SuppressWarnings("all")
@@ -3421,16 +3620,19 @@ public class SarifLog {
 
             /**
              * A list of related locations to the error
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
-            public SarifLog.ToolExecutionNotification.ToolExecutionNotificationBuilder locations(final List<Location> locations) {
+            public SarifLog.ToolExecutionNotification.ToolExecutionNotificationBuilder locations(
+                    final List<Location> locations) {
                 this.locations = locations;
                 return this;
             }
 
             /**
              * A message component to detail the runtime error
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
@@ -3441,10 +3643,12 @@ public class SarifLog {
 
             /**
              * A exception component to detail the tool exception
+             * 
              * @return {@code this}.
              */
             @java.lang.SuppressWarnings("all")
-            public SarifLog.ToolExecutionNotification.ToolExecutionNotificationBuilder exception(final Exception exception) {
+            public SarifLog.ToolExecutionNotification.ToolExecutionNotificationBuilder exception(
+                    final Exception exception) {
                 this.exception = exception;
                 return this;
             }
@@ -3457,7 +3661,8 @@ public class SarifLog {
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.ToolExecutionNotification.ToolExecutionNotificationBuilder(locations=" + this.locations + ", message=" + this.message + ", exception=" + this.exception + ")";
+                return "SarifLog.ToolExecutionNotification.ToolExecutionNotificationBuilder(locations=" + this.locations
+                        + ", message=" + this.message + ", exception=" + this.exception + ")";
             }
         }
 
@@ -3468,7 +3673,8 @@ public class SarifLog {
 
         @java.lang.SuppressWarnings("all")
         public SarifLog.ToolExecutionNotification.ToolExecutionNotificationBuilder toBuilder() {
-            return new SarifLog.ToolExecutionNotification.ToolExecutionNotificationBuilder().locations(this.locations).message(this.message).exception(this.exception);
+            return new SarifLog.ToolExecutionNotification.ToolExecutionNotificationBuilder().locations(this.locations)
+                    .message(this.message).exception(this.exception);
         }
 
         /**
@@ -3497,6 +3703,7 @@ public class SarifLog {
 
         /**
          * A list of related locations to the error
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3507,6 +3714,7 @@ public class SarifLog {
 
         /**
          * A message component to detail the runtime error
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3517,6 +3725,7 @@ public class SarifLog {
 
         /**
          * A exception component to detail the tool exception
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3578,10 +3787,10 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.ToolExecutionNotification(locations=" + this.getLocations() + ", message=" + this.getMessage() + ", exception=" + this.getException() + ")";
+            return "SarifLog.ToolExecutionNotification(locations=" + this.getLocations() + ", message="
+                    + this.getMessage() + ", exception=" + this.getException() + ")";
         }
     }
-
 
     /**
      * An invocation component to specify tool invocation details/errors.
@@ -3601,12 +3810,13 @@ public class SarifLog {
         private List<ToolExecutionNotification> toolExecutionNotifications;
 
         @java.lang.SuppressWarnings("all")
-        Invocation(final Boolean executionSuccessful, final List<ToolConfigurationNotification> toolConfigurationNotifications, final List<ToolExecutionNotification> toolExecutionNotifications) {
+        Invocation(final Boolean executionSuccessful,
+                final List<ToolConfigurationNotification> toolConfigurationNotifications,
+                final List<ToolExecutionNotification> toolExecutionNotifications) {
             this.executionSuccessful = executionSuccessful;
             this.toolConfigurationNotifications = toolConfigurationNotifications;
             this.toolExecutionNotifications = toolExecutionNotifications;
         }
-
 
         @java.lang.SuppressWarnings("all")
         public static class InvocationBuilder {
@@ -3628,26 +3838,31 @@ public class SarifLog {
             }
 
             @java.lang.SuppressWarnings("all")
-            public SarifLog.Invocation.InvocationBuilder toolConfigurationNotifications(final List<ToolConfigurationNotification> toolConfigurationNotifications) {
+            public SarifLog.Invocation.InvocationBuilder toolConfigurationNotifications(
+                    final List<ToolConfigurationNotification> toolConfigurationNotifications) {
                 this.toolConfigurationNotifications = toolConfigurationNotifications;
                 return this;
             }
 
             @java.lang.SuppressWarnings("all")
-            public SarifLog.Invocation.InvocationBuilder toolExecutionNotifications(final List<ToolExecutionNotification> toolExecutionNotifications) {
+            public SarifLog.Invocation.InvocationBuilder toolExecutionNotifications(
+                    final List<ToolExecutionNotification> toolExecutionNotifications) {
                 this.toolExecutionNotifications = toolExecutionNotifications;
                 return this;
             }
 
             @java.lang.SuppressWarnings("all")
             public SarifLog.Invocation build() {
-                return new SarifLog.Invocation(this.executionSuccessful, this.toolConfigurationNotifications, this.toolExecutionNotifications);
+                return new SarifLog.Invocation(this.executionSuccessful, this.toolConfigurationNotifications,
+                        this.toolExecutionNotifications);
             }
 
             @java.lang.Override
             @java.lang.SuppressWarnings("all")
             public java.lang.String toString() {
-                return "SarifLog.Invocation.InvocationBuilder(executionSuccessful=" + this.executionSuccessful + ", toolConfigurationNotifications=" + this.toolConfigurationNotifications + ", toolExecutionNotifications=" + this.toolExecutionNotifications + ")";
+                return "SarifLog.Invocation.InvocationBuilder(executionSuccessful=" + this.executionSuccessful
+                        + ", toolConfigurationNotifications=" + this.toolConfigurationNotifications
+                        + ", toolExecutionNotifications=" + this.toolExecutionNotifications + ")";
             }
         }
 
@@ -3658,7 +3873,9 @@ public class SarifLog {
 
         @java.lang.SuppressWarnings("all")
         public SarifLog.Invocation.InvocationBuilder toBuilder() {
-            return new SarifLog.Invocation.InvocationBuilder().executionSuccessful(this.executionSuccessful).toolConfigurationNotifications(this.toolConfigurationNotifications).toolExecutionNotifications(this.toolExecutionNotifications);
+            return new SarifLog.Invocation.InvocationBuilder().executionSuccessful(this.executionSuccessful)
+                    .toolConfigurationNotifications(this.toolConfigurationNotifications)
+                    .toolExecutionNotifications(this.toolExecutionNotifications);
         }
 
         @java.lang.SuppressWarnings("all")
@@ -3683,13 +3900,15 @@ public class SarifLog {
         }
 
         @java.lang.SuppressWarnings("all")
-        public SarifLog.Invocation setToolConfigurationNotifications(final List<ToolConfigurationNotification> toolConfigurationNotifications) {
+        public SarifLog.Invocation setToolConfigurationNotifications(
+                final List<ToolConfigurationNotification> toolConfigurationNotifications) {
             this.toolConfigurationNotifications = toolConfigurationNotifications;
             return this;
         }
 
         @java.lang.SuppressWarnings("all")
-        public SarifLog.Invocation setToolExecutionNotifications(final List<ToolExecutionNotification> toolExecutionNotifications) {
+        public SarifLog.Invocation setToolExecutionNotifications(
+                final List<ToolExecutionNotification> toolExecutionNotifications) {
             this.toolExecutionNotifications = toolExecutionNotifications;
             return this;
         }
@@ -3709,17 +3928,20 @@ public class SarifLog {
             }
             final java.lang.Object this$executionSuccessful = this.getExecutionSuccessful();
             final java.lang.Object other$executionSuccessful = other.getExecutionSuccessful();
-            if (this$executionSuccessful == null ? other$executionSuccessful != null : !this$executionSuccessful.equals(other$executionSuccessful)) {
+            if (this$executionSuccessful == null ? other$executionSuccessful != null
+                    : !this$executionSuccessful.equals(other$executionSuccessful)) {
                 return false;
             }
             final java.lang.Object this$toolConfigurationNotifications = this.getToolConfigurationNotifications();
             final java.lang.Object other$toolConfigurationNotifications = other.getToolConfigurationNotifications();
-            if (this$toolConfigurationNotifications == null ? other$toolConfigurationNotifications != null : !this$toolConfigurationNotifications.equals(other$toolConfigurationNotifications)) {
+            if (this$toolConfigurationNotifications == null ? other$toolConfigurationNotifications != null
+                    : !this$toolConfigurationNotifications.equals(other$toolConfigurationNotifications)) {
                 return false;
             }
             final java.lang.Object this$toolExecutionNotifications = this.getToolExecutionNotifications();
             final java.lang.Object other$toolExecutionNotifications = other.getToolExecutionNotifications();
-            if (this$toolExecutionNotifications == null ? other$toolExecutionNotifications != null : !this$toolExecutionNotifications.equals(other$toolExecutionNotifications)) {
+            if (this$toolExecutionNotifications == null ? other$toolExecutionNotifications != null
+                    : !this$toolExecutionNotifications.equals(other$toolExecutionNotifications)) {
                 return false;
             }
             return true;
@@ -3738,16 +3960,20 @@ public class SarifLog {
             final java.lang.Object $executionSuccessful = this.getExecutionSuccessful();
             result = result * PRIME + ($executionSuccessful == null ? 43 : $executionSuccessful.hashCode());
             final java.lang.Object $toolConfigurationNotifications = this.getToolConfigurationNotifications();
-            result = result * PRIME + ($toolConfigurationNotifications == null ? 43 : $toolConfigurationNotifications.hashCode());
+            result = result * PRIME
+                    + ($toolConfigurationNotifications == null ? 43 : $toolConfigurationNotifications.hashCode());
             final java.lang.Object $toolExecutionNotifications = this.getToolExecutionNotifications();
-            result = result * PRIME + ($toolExecutionNotifications == null ? 43 : $toolExecutionNotifications.hashCode());
+            result = result * PRIME
+                    + ($toolExecutionNotifications == null ? 43 : $toolExecutionNotifications.hashCode());
             return result;
         }
 
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.Invocation(executionSuccessful=" + this.getExecutionSuccessful() + ", toolConfigurationNotifications=" + this.getToolConfigurationNotifications() + ", toolExecutionNotifications=" + this.getToolExecutionNotifications() + ")";
+            return "SarifLog.Invocation(executionSuccessful=" + this.getExecutionSuccessful()
+                    + ", toolConfigurationNotifications=" + this.getToolConfigurationNotifications()
+                    + ", toolExecutionNotifications=" + this.getToolExecutionNotifications() + ")";
         }
     }
 
@@ -3768,7 +3994,6 @@ public class SarifLog {
         this.runs = runs;
     }
 
-
     @java.lang.SuppressWarnings("all")
     public static class SarifLogBuilder {
         @java.lang.SuppressWarnings("all")
@@ -3788,6 +4013,7 @@ public class SarifLog {
 
         /**
          * The URI of the JSON schema corresponding to the version.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3799,6 +4025,7 @@ public class SarifLog {
 
         /**
          * The SARIF format version of this log file.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3810,6 +4037,7 @@ public class SarifLog {
 
         /**
          * The set of runs contained in this log file.
+         * 
          * @return {@code this}.
          */
         @java.lang.SuppressWarnings("all")
@@ -3834,7 +4062,8 @@ public class SarifLog {
         @java.lang.Override
         @java.lang.SuppressWarnings("all")
         public java.lang.String toString() {
-            return "SarifLog.SarifLogBuilder(schema$value=" + this.schemaValue + ", version$value=" + this.versionValue + ", runs=" + this.runs + ")";
+            return "SarifLog.SarifLogBuilder(schema$value=" + this.schemaValue + ", version$value=" + this.versionValue
+                    + ", runs=" + this.runs + ")";
         }
     }
 
@@ -3869,6 +4098,7 @@ public class SarifLog {
 
     /**
      * The URI of the JSON schema corresponding to the version.
+     * 
      * @return {@code this}.
      */
     @java.lang.SuppressWarnings("all")
@@ -3879,6 +4109,7 @@ public class SarifLog {
 
     /**
      * The SARIF format version of this log file.
+     * 
      * @return {@code this}.
      */
     @java.lang.SuppressWarnings("all")
@@ -3889,6 +4120,7 @@ public class SarifLog {
 
     /**
      * The set of runs contained in this log file.
+     * 
      * @return {@code this}.
      */
     @java.lang.SuppressWarnings("all")
@@ -3950,7 +4182,8 @@ public class SarifLog {
     @java.lang.Override
     @java.lang.SuppressWarnings("all")
     public java.lang.String toString() {
-        return "SarifLog(schema=" + this.getSchema() + ", version=" + this.getVersion() + ", runs=" + this.getRuns() + ")";
+        return "SarifLog(schema=" + this.getSchema() + ", version=" + this.getVersion() + ", runs=" + this.getRuns()
+                + ")";
     }
 }
 // CPD-ON

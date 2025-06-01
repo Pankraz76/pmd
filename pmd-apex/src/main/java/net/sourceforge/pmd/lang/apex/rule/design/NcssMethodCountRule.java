@@ -32,6 +32,6 @@ public class NcssMethodCountRule extends AbstractNcssCountRule<ASTMethod> {
 
     @Override
     protected Object[] getViolationParameters(ASTMethod node, int metric, int limit) {
-        return new Object[]{ node.getImage(), metric, limit };
+        return new Object[] { node.getImage(), metric, limit };
     }
 }

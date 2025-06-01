@@ -12,8 +12,7 @@ import net.sourceforge.pmd.test.AbstractLanguageVersionTest;
 class LanguageVersionTest extends AbstractLanguageVersionTest {
 
     static Collection<TestDescriptor> data() {
-        return Arrays.asList(
-                new TestDescriptor(EcmascriptLanguageModule.NAME, EcmascriptLanguageModule.ID, "9",
-                    getLanguage(EcmascriptLanguageModule.NAME).getDefaultVersion()));
+        return Arrays.asList(new TestDescriptor(EcmascriptLanguageModule.NAME, EcmascriptLanguageModule.ID, "9",
+                getLanguage(EcmascriptLanguageModule.NAME).getDefaultVersion()));
     }
 }

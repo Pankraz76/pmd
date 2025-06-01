@@ -65,8 +65,10 @@ public final class IOUtil {
     /**
      * Gets the current default charset.
      *
-     * <p>In contrast to {@link Charset#defaultCharset()}, the result is not cached,
-     * so that in unit tests, the charset can be changed.
+     * <p>
+     * In contrast to {@link Charset#defaultCharset()}, the result is not cached, so
+     * that in unit tests, the charset can be changed.
+     * 
      * @return
      */
     private static Charset getDefaultCharset() {
@@ -84,12 +86,14 @@ public final class IOUtil {
     }
 
     /**
-     * Creates a writer that writes to the given file or to stdout.
-     * The file is created if it does not exist.
+     * Creates a writer that writes to the given file or to stdout. The file is
+     * created if it does not exist.
      *
-     * <p>Warning: This writer always uses the system default charset.
+     * <p>
+     * Warning: This writer always uses the system default charset.
      *
-     * @param reportFile the file name (optional)
+     * @param reportFile
+     *            the file name (optional)
      *
      * @return the writer, never null
      */
@@ -98,15 +102,19 @@ public final class IOUtil {
     }
 
     /**
-     * Creates a writer that writes to the given file or to stdout.
-     * The file is created if it does not exist.
+     * Creates a writer that writes to the given file or to stdout. The file is
+     * created if it does not exist.
      *
-     * <p>Unlike {@link #createWriter(String)}, this method always uses
-     * the given charset. Even for writing to stdout. It never
-     * falls back to the default charset.</p>
+     * <p>
+     * Unlike {@link #createWriter(String)}, this method always uses the given
+     * charset. Even for writing to stdout. It never falls back to the default
+     * charset.
+     * </p>
      *
-     * @param charset the charset to be used (required)
-     * @param reportFile the file name (optional)
+     * @param charset
+     *            the charset to be used (required)
+     * @param reportFile
+     *            the file name (optional)
      * @return
      */
     public static Writer createWriter(Charset charset, String reportFile) {
@@ -122,12 +130,13 @@ public final class IOUtil {
                             // Nothing left to do
                         }
                     }
-                    
+
                     @Override
                     public void write(byte[] b, int off, int len) throws IOException {
                         /*
-                         * FilterOutputStream iterates over each byte, asking subclasses to provide more efficient implementations
-                         * It therefore negates any such optimizations that the underlying stream actually may implement.
+                         * FilterOutputStream iterates over each byte, asking subclasses to provide more
+                         * efficient implementations It therefore negates any such optimizations that
+                         * the underlying stream actually may implement.
                          */
                         out.write(b, off, len);
                     }
@@ -149,11 +158,12 @@ public final class IOUtil {
     }
 
     /**
-     * Close all closeable resources in order. If any exception occurs,
-     * it is saved and returned. If more than one exception occurs, the
-     * following are accumulated as suppressed exceptions in the first.
+     * Close all closeable resources in order. If any exception occurs, it is saved
+     * and returned. If more than one exception occurs, the following are
+     * accumulated as suppressed exceptions in the first.
      *
-     * @param closeables Resources to close
+     * @param closeables
+     *            Resources to close
      *
      * @return An exception, or null if no 'close' routine threw
      */
@@ -175,13 +185,13 @@ public final class IOUtil {
     }
 
     /**
-     * Ensure that the closeables are closed. In the end, throws the
-     * pending exception if not null, or the exception retuned by {@link #closeAll(Collection)}
-     * if not null. If both are non-null, adds one of them to the suppress
-     * list of the other, and throws that one.
+     * Ensure that the closeables are closed. In the end, throws the pending
+     * exception if not null, or the exception retuned by
+     * {@link #closeAll(Collection)} if not null. If both are non-null, adds one of
+     * them to the suppress list of the other, and throws that one.
      */
-    public static void ensureClosed(List<? extends AutoCloseable> toClose,
-                                    @Nullable Exception pendingException) throws Exception {
+    public static void ensureClosed(List<? extends AutoCloseable> toClose, @Nullable Exception pendingException)
+            throws Exception {
         Exception closeException = closeAll(toClose);
         if (closeException != null) {
             if (pendingException != null) {
@@ -193,7 +203,6 @@ public final class IOUtil {
             throw pendingException;
         }
     }
-
 
     // The following methods are taken from Apache Commons IO.
     // The dependency was removed from PMD 6 because it had a security issue,
@@ -244,7 +253,8 @@ public final class IOUtil {
     public static String normalizePath(String path) {
         Path path1 = Paths.get(path);
         String normalized = path1.normalize().toString();
-        if (normalized.contains("." + File.separator) || normalized.contains(".." + File.separator) || "".equals(normalized)) {
+        if (normalized.contains("." + File.separator) || normalized.contains(".." + File.separator)
+                || "".equals(normalized)) {
             return null;
         }
         return normalized;
@@ -326,8 +336,7 @@ public final class IOUtil {
 
             ReaderInputStream(Reader reader) {
                 this.reader = reader;
-                encoder = Charset.defaultCharset().newEncoder()
-                        .onMalformedInput(CodingErrorAction.REPLACE)
+                encoder = Charset.defaultCharset().newEncoder().onMalformedInput(CodingErrorAction.REPLACE)
                         .onUnmappableCharacter(CodingErrorAction.REPLACE);
                 charBuffer.clear();
                 byteBuffer.clear();
@@ -379,8 +388,7 @@ public final class IOUtil {
             WriterOutputStream(Writer writer, String encoding) throws UnsupportedCharsetException {
                 this.writer = writer;
                 Charset charset = Charset.forName(encoding);
-                decoder = charset.newDecoder()
-                        .onMalformedInput(CodingErrorAction.REPLACE)
+                decoder = charset.newDecoder().onMalformedInput(CodingErrorAction.REPLACE)
                         .onUnmappableCharacter(CodingErrorAction.REPLACE);
                 byteBuffer.clear();
                 charBuffer.clear();
@@ -421,10 +429,10 @@ public final class IOUtil {
 
     /**
      * <p>
-     * Input stream that skips an optional byte order mark at the beginning
-     * of the stream. Whether the stream had a byte order mark (encoded in either UTF-8,
-     * UTF-16LE or UTF-16BE) can be checked with {@link #hasBom()}. The corresponding
-     * charset can be retrieved with {@link #getBomCharsetName()}.
+     * Input stream that skips an optional byte order mark at the beginning of the
+     * stream. Whether the stream had a byte order mark (encoded in either UTF-8,
+     * UTF-16LE or UTF-16BE) can be checked with {@link #hasBom()}. The
+     * corresponding charset can be retrieved with {@link #getBomCharsetName()}.
      * </p>
      *
      * <p>

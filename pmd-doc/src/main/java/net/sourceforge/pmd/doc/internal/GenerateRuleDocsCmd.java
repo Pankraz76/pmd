@@ -37,7 +37,8 @@ public final class GenerateRuleDocsCmd {
         Path output = FileSystems.getDefault().getPath(args[0]).resolve("..").toAbsolutePath().normalize();
         System.out.println("Generating docs into " + output);
 
-        // important: use a RuleSetFactory that includes all rules, e.g. deprecated rule references
+        // important: use a RuleSetFactory that includes all rules, e.g. deprecated rule
+        // references
         List<RuleSet> registeredRuleSets = new RuleSetLoader().includeDeprecatedRuleReferences(true)
                 .getStandardRuleSets();
         List<String> additionalRulesets = findAdditionalRulesets(output);
@@ -49,7 +50,9 @@ public final class GenerateRuleDocsCmd {
     }
 
     static final Pattern ADDITIONAL_RULESET_PATTERN = Pattern.compile("^.+" + Pattern.quote(File.separator) + "pmd-\\w+"
-            + Pattern.quote(IOUtil.normalizePath(File.separator + Paths.get("src", "main", "resources", "rulesets").toString()) + File.separator)
+            + Pattern.quote(
+                    IOUtil.normalizePath(File.separator + Paths.get("src", "main", "resources", "rulesets").toString())
+                            + File.separator)
             + "\\w+" + Pattern.quote(File.separator) + "\\w+.xml$");
 
     public static List<String> findAdditionalRulesets(Path basePath) {

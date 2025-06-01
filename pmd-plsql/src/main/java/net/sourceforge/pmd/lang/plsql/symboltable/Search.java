@@ -20,10 +20,7 @@ public class Search {
     private Set<NameDeclaration> declarations = new HashSet<>();
 
     public Search(PLSQLNameOccurrence occ) {
-        LOG.trace(
-                "new search for {} {}",
-                occ.isMethodOrConstructorInvocation() ? "method" : "variable",
-                occ);
+        LOG.trace("new search for {} {}", occ.isMethodOrConstructorInvocation() ? "method" : "variable", occ);
         this.occ = occ;
     }
 

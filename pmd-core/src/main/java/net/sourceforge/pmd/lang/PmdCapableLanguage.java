@@ -14,13 +14,13 @@ import net.sourceforge.pmd.PmdAnalysis;
 public interface PmdCapableLanguage extends Language {
 
     /**
-     * Create a new {@link LanguageProcessor} for this language, given
-     * a property bundle with configuration. The bundle was created by
-     * this instance using {@link #newPropertyBundle()}. It can be assumed
-     * that the bundle will never be mutated anymore, and this method
-     * takes ownership of it.
+     * Create a new {@link LanguageProcessor} for this language, given a property
+     * bundle with configuration. The bundle was created by this instance using
+     * {@link #newPropertyBundle()}. It can be assumed that the bundle will never be
+     * mutated anymore, and this method takes ownership of it.
      *
-     * @param bundle A bundle of properties created by this instance.
+     * @param bundle
+     *            A bundle of properties created by this instance.
      *
      * @return A new language processor
      */

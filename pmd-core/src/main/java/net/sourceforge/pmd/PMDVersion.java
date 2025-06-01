@@ -62,8 +62,8 @@ public final class PMDVersion {
     }
 
     /**
-     * Retrieves the next major release to be expected.
-     * Useful when logging deprecation messages to indicate when support will be removed.
+     * Retrieves the next major release to be expected. Useful when logging
+     * deprecation messages to indicate when support will be removed.
      *
      * @return The next major release to be expected.
      */
@@ -78,6 +78,7 @@ public final class PMDVersion {
 
     /**
      * Checks if the current version is unknown.
+     * 
      * @return True if an unknown version, false otherwise
      */
     @SuppressWarnings("PMD.LiteralsFirstInComparisons")
@@ -87,6 +88,7 @@ public final class PMDVersion {
 
     /**
      * Checks if the current version is a snapshot.
+     * 
      * @return True if a snapshot release, false otherwise
      */
     public static boolean isSnapshot() {

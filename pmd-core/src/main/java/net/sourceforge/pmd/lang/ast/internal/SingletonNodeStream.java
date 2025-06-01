@@ -22,16 +22,16 @@ import net.sourceforge.pmd.util.AssertionUtil;
 import net.sourceforge.pmd.util.IteratorUtil;
 
 /**
- * Optimised node stream implementation for a single element. Streams
- * returned by eg {@link #descendants()} have optimised implementations
- * for several common operations which most of the time don't need to
- * iterate a stream directly. Their performance is equivalent to pre
- * 7.0.0 traversal operations defined on the {@link Node} interface.
- * When they don't have an optimised implementation, they fall back on
- * stream processing.
+ * Optimised node stream implementation for a single element. Streams returned
+ * by eg {@link #descendants()} have optimised implementations for several
+ * common operations which most of the time don't need to iterate a stream
+ * directly. Their performance is equivalent to pre 7.0.0 traversal operations
+ * defined on the {@link Node} interface. When they don't have an optimised
+ * implementation, they fall back on stream processing.
  *
- * <p>This ensures that short pipelines like {@code node.descendants().first()}
- * are as efficient as the pre 7.0.0 methods.
+ * <p>
+ * This ensures that short pipelines like {@code node.descendants().first()} are
+ * as efficient as the pre 7.0.0 methods.
  */
 final class SingletonNodeStream<T extends Node> extends IteratorBasedNStream<T> implements DescendantNodeStream<T> {
 
@@ -114,7 +114,6 @@ final class SingletonNodeStream<T extends Node> extends IteratorBasedNStream<T> 
         return this;
     }
 
-
     @Override
     public NodeStream<T> takeWhile(Predicate<? super T> predicate) {
         return filter(predicate);
@@ -147,7 +146,7 @@ final class SingletonNodeStream<T extends Node> extends IteratorBasedNStream<T> 
     }
 
     /*
-        tree navigation
+     * tree navigation
      */
 
     @Override

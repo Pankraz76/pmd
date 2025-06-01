@@ -16,8 +16,7 @@ import net.sourceforge.pmd.properties.PropertyFactory;
 public class AvoidTabCharacterRule extends AbstractPLSQLRule {
 
     private static final PropertyDescriptor<Boolean> EACH_LINE = PropertyFactory.booleanProperty("eachLine")
-            .desc("Whether to report each line with a tab character or only the first line")
-            .defaultValue(false)
+            .desc("Whether to report each line with a tab character or only the first line").defaultValue(false)
             .build();
 
     public AvoidTabCharacterRule() {
@@ -37,7 +36,7 @@ public class AvoidTabCharacterRule extends AbstractPLSQLRule {
         for (Chars line : node.getText().lines()) {
             if (line.indexOf('\t', 0) != -1) {
                 asCtx(data).addViolationWithPosition(node, lineNumber, lineNumber,
-                                        "Tab characters are not allowed. Use spaces for indentation");
+                        "Tab characters are not allowed. Use spaces for indentation");
 
                 if (!eachLine) {
                     break;

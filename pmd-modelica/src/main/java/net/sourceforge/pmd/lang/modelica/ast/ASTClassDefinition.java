@@ -31,7 +31,8 @@ public class ASTClassDefinition extends AbstractModelicaNode {
         return specifier;
     }
 
-    private void checkSpecialization(Class<? extends ModelicaNode> clauseClass, ModelicaClassSpecialization restriction) {
+    private void checkSpecialization(Class<? extends ModelicaNode> clauseClass,
+            ModelicaClassSpecialization restriction) {
         if (prefixes.firstChild(clauseClass) != null) {
             assert specialization == null;
             specialization = restriction;

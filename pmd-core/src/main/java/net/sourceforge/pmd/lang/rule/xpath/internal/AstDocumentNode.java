@@ -20,17 +20,14 @@ import net.sf.saxon.tree.iter.EmptyIterator;
 import net.sf.saxon.type.Type;
 
 /**
- *  See {@link AstTreeInfo#getRootNode()}.
+ * See {@link AstTreeInfo#getRootNode()}.
  */
 class AstDocumentNode extends BaseNodeInfo implements AstNodeOwner {
 
     private final AstElementNode rootElement;
     private final List<AstElementNode> children;
 
-    AstDocumentNode(AstTreeInfo document,
-                    MutableInt idGenerator,
-                    RootNode wrappedNode,
-                    Configuration configuration) {
+    AstDocumentNode(AstTreeInfo document, MutableInt idGenerator, RootNode wrappedNode, Configuration configuration) {
         super(Type.DOCUMENT, configuration.getNamePool(), "", null);
         this.rootElement = new AstElementNode(document, idGenerator, this, wrappedNode, configuration);
         this.children = Collections.singletonList(rootElement);

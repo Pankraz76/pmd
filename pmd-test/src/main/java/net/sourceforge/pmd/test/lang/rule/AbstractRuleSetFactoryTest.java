@@ -31,6 +31,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
+
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -72,10 +73,13 @@ public abstract class AbstractRuleSetFactoryTest {
     }
 
     /**
-     * Constructor used when a module that depends on another module wants to filter out the dependee's rulesets.
+     * Constructor used when a module that depends on another module wants to filter
+     * out the dependee's rulesets.
      *
-     * @param languagesToSkip {@link Language}s terse names that appear in the classpath via a dependency, but should be
-     * skipped because they aren't the primary language which the concrete instance of this class is testing.
+     * @param languagesToSkip
+     *            {@link Language}s terse names that appear in the classpath via a
+     *            dependency, but should be skipped because they aren't the primary
+     *            language which the concrete instance of this class is testing.
      */
     public AbstractRuleSetFactoryTest(String... languagesToSkip) {
         this.languagesToSkip.add("dummy");
@@ -86,7 +90,6 @@ public abstract class AbstractRuleSetFactoryTest {
     public AbstractRuleSetFactoryTest(Language... languagesToSkip) {
         this(Arrays.stream(languagesToSkip).map(Language::getId).toArray(String[]::new));
     }
-
 
     /**
      * Setups the XML parser with validation.
@@ -113,8 +116,8 @@ public abstract class AbstractRuleSetFactoryTest {
     }
 
     /**
-     * Checks all rulesets of all languages on the classpath and verifies that
-     * all required attributes for all rules are specified.
+     * Checks all rulesets of all languages on the classpath and verifies that all
+     * required attributes for all rules are specified.
      *
      * @throws Exception
      *             any error
@@ -147,71 +150,50 @@ public abstract class AbstractRuleSetFactoryTest {
                 // Is since missing ?
                 if (rule.getSince() == null) {
                     invalidSinceAttributes++;
-                    messages.append("Rule ")
-                            .append(fileName)
-                            .append("/")
-                            .append(rule.getName())
+                    messages.append("Rule ").append(fileName).append("/").append(rule.getName())
                             .append(" is missing 'since' attribute\n");
                 }
                 // Is URL valid ?
                 if (rule.getExternalInfoUrl() == null || "".equalsIgnoreCase(rule.getExternalInfoUrl())) {
                     invalidExternalInfoURL++;
-                    messages.append("Rule ")
-                            .append(fileName)
-                            .append("/")
-                            .append(rule.getName())
+                    messages.append("Rule ").append(fileName).append("/").append(rule.getName())
                             .append(" is missing 'externalInfoURL' attribute\n");
                 } else {
-                    String expectedExternalInfoURL = "https://docs.pmd-code.org/.+/pmd_rules_"
-                            + language.getId() + "_"
-                            + IOUtil.getFilenameBase(fileName)
-                            + ".html#"
-                            + rule.getName().toLowerCase(Locale.ROOT);
+                    String expectedExternalInfoURL = "https://docs.pmd-code.org/.+/pmd_rules_" + language.getId() + "_"
+                            + IOUtil.getFilenameBase(fileName) + ".html#" + rule.getName().toLowerCase(Locale.ROOT);
                     if (rule.getExternalInfoUrl() == null
                             || !rule.getExternalInfoUrl().matches(expectedExternalInfoURL)) {
                         invalidExternalInfoURL++;
-                        messages.append("Rule ")
-                                .append(fileName)
-                                .append("/")
-                                .append(rule.getName())
+                        messages.append("Rule ").append(fileName).append("/").append(rule.getName())
                                 .append(" seems to have an invalid 'externalInfoURL' value (")
-                                .append(rule.getExternalInfoUrl())
-                                .append("), it should be:")
-                                .append(expectedExternalInfoURL)
-                                .append('\n');
+                                .append(rule.getExternalInfoUrl()).append("), it should be:")
+                                .append(expectedExternalInfoURL).append('\n');
                     }
                 }
                 // Proper class name/packaging?
-                String expectedClassName = "net.sourceforge.pmd.lang." + language.getId() + ".rule." + group
-                        + "." + rule.getName() + "Rule";
+                String expectedClassName = "net.sourceforge.pmd.lang." + language.getId() + ".rule." + group + "."
+                        + rule.getName() + "Rule";
                 if (!rule.getRuleClass().equals(expectedClassName)
                         && !validXPathClassNames.contains(rule.getRuleClass())) {
                     invalidClassName++;
-                    messages.append("Rule ")
-                            .append(fileName)
-                            .append("/")
-                            .append(rule.getName())
-                            .append(" seems to have an invalid 'class' value (")
-                            .append(rule.getRuleClass())
-                            .append("), it should be:")
-                            .append(expectedClassName)
-                            .append('\n');
+                    messages.append("Rule ").append(fileName).append("/").append(rule.getName())
+                            .append(" seems to have an invalid 'class' value (").append(rule.getRuleClass())
+                            .append("), it should be:").append(expectedClassName).append('\n');
                 }
                 // Should not have violation suppress regex property
                 if (rule.getProperty(Rule.VIOLATION_SUPPRESS_REGEX_DESCRIPTOR).isPresent()) {
                     invalidRegexSuppress++;
-                    messages.append("Rule ")
-                            .append(fileName)
-                            .append("/")
-                            .append(rule.getName())
-                            .append(" should not have '")
-                            .append(Rule.VIOLATION_SUPPRESS_REGEX_DESCRIPTOR.name())
+                    messages.append("Rule ").append(fileName).append("/").append(rule.getName())
+                            .append(" should not have '").append(Rule.VIOLATION_SUPPRESS_REGEX_DESCRIPTOR.name())
                             .append("', this is intended for end user customization only.\n");
                 }
                 // Should not have violation suppress xpath property
                 if (rule.getProperty(Rule.VIOLATION_SUPPRESS_XPATH_DESCRIPTOR).isPresent()) {
                     invalidXPathSuppress++;
-                    messages.append("Rule ").append(fileName).append("/").append(rule.getName()).append(" should not have '").append(Rule.VIOLATION_SUPPRESS_XPATH_DESCRIPTOR.name()).append("', this is intended for end user customization only.").append(System.lineSeparator());
+                    messages.append("Rule ").append(fileName).append("/").append(rule.getName())
+                            .append(" should not have '").append(Rule.VIOLATION_SUPPRESS_XPATH_DESCRIPTOR.name())
+                            .append("', this is intended for end user customization only.")
+                            .append(System.lineSeparator());
                 }
             }
         }
@@ -254,9 +236,7 @@ public abstract class AbstractRuleSetFactoryTest {
             boolean valid = hasCorrectEncoding(fileName);
             allValid = allValid && valid;
             if (!valid) {
-                messages.append("RuleSet ")
-                        .append(fileName)
-                        .append(" is missing XML encoding or not using UTF8\n");
+                messages.append("RuleSet ").append(fileName).append(" is missing XML encoding or not using UTF8\n");
             }
         }
         assertTrue(allValid, "All XML must use correct XML encoding\n" + messages);
@@ -364,8 +344,7 @@ public abstract class AbstractRuleSetFactoryTest {
         RuleSet ruleSet = InternalApiBridge.withReporter(new RuleSetLoader(), new Reporter())
                 .loadFromResource(ruleSetFileName);
 
-        assertThat("There should be no warnings while loading the ruleset",
-                messages.toString(), emptyString());
+        assertThat("There should be no warnings while loading the ruleset", messages.toString(), emptyString());
 
         return ruleSet;
     }
@@ -409,17 +388,16 @@ public abstract class AbstractRuleSetFactoryTest {
         file = file.replaceAll("<\\?xml [ a-zA-Z0-9=\".-]*\\?>", "");
         file = file.replaceAll("xmlns=\"" + rulesetNamespace + "\"", "");
         file = file.replaceAll("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "");
-        file = file.replaceAll("xsi:schemaLocation=\"" + rulesetNamespace
-                + " https://pmd.sourceforge.io/ruleset_\\d_0_0.xsd\"", "");
+        file = file.replaceAll(
+                "xsi:schemaLocation=\"" + rulesetNamespace + " https://pmd.sourceforge.io/ruleset_\\d_0_0.xsd\"", "");
 
         if (RuleSetWriter.RULESET_2_0_0_NS_URI.equals(rulesetNamespace)) {
             file = "<?xml version=\"1.0\"?>" + System.lineSeparator()
-                + "<!DOCTYPE ruleset SYSTEM \"https://pmd.sourceforge.io/ruleset_2_0_0.dtd\">" + System.lineSeparator()
-                + file;
+                    + "<!DOCTYPE ruleset SYSTEM \"https://pmd.sourceforge.io/ruleset_2_0_0.dtd\">"
+                    + System.lineSeparator() + file;
         } else {
-            file = "<?xml version=\"1.0\"?>" + System.lineSeparator()
-                + "<!DOCTYPE ruleset>" + System.lineSeparator()
-                + file;
+            file = "<?xml version=\"1.0\"?>" + System.lineSeparator() + "<!DOCTYPE ruleset>" + System.lineSeparator()
+                    + file;
         }
 
         try (InputStream modifiedStream = new ByteArrayInputStream(file.getBytes())) {
@@ -534,7 +512,8 @@ public abstract class AbstractRuleSetFactoryTest {
                         message + ", RuleReference overridden description");
                 assertEquals(ruleReference1.getOverriddenMessage(), ruleReference2.getOverriddenMessage(),
                         message + ", RuleReference overridden message");
-                assertEquals(ruleReference1.getOverriddenExternalInfoUrl(), ruleReference2.getOverriddenExternalInfoUrl(),
+                assertEquals(ruleReference1.getOverriddenExternalInfoUrl(),
+                        ruleReference2.getOverriddenExternalInfoUrl(),
                         message + ", RuleReference overridden external info url");
                 assertEquals(ruleReference1.getOverriddenPriority(), ruleReference2.getOverriddenPriority(),
                         message + ", RuleReference overridden priority");
@@ -562,8 +541,8 @@ public abstract class AbstractRuleSetFactoryTest {
                     value1 = ((Pattern) value1).pattern();
                     value2 = ((Pattern) value2).pattern();
                 }
-                assertEquals(value1, value2, message + ", Rule " + rule1.getName() + " property "
-                    + propertyDescriptors1.get(j).name());
+                assertEquals(value1, value2,
+                        message + ", Rule " + rule1.getName() + " property " + propertyDescriptors1.get(j).name());
             }
             assertEquals(propertyDescriptors1.size(), propertyDescriptors2.size(),
                     message + ", Rule property descriptor count");

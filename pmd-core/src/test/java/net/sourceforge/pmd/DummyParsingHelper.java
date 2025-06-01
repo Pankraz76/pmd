@@ -44,10 +44,8 @@ public class DummyParsingHelper implements Extension, BeforeEachCallback, AfterE
 
     public DummyRootNode parse(String code, FileId filename) {
         LanguageVersion version = DummyLanguageModule.getInstance().getDefaultVersion();
-        ParserTask task = new ParserTask(
-            TextDocument.readOnlyString(code, filename, version),
-            SemanticErrorReporter.noop(),
-            LanguageProcessorRegistry.singleton(dummyProcessor));
+        ParserTask task = new ParserTask(TextDocument.readOnlyString(code, filename, version),
+                SemanticErrorReporter.noop(), LanguageProcessorRegistry.singleton(dummyProcessor));
         return (DummyRootNode) dummyProcessor.services().getParser().parse(task);
     }
 
@@ -58,11 +56,8 @@ public class DummyParsingHelper implements Extension, BeforeEachCallback, AfterE
 
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
-        LanguageProcessorRegistry registry = LanguageProcessorRegistry.create(
-            LanguageRegistry.PMD,
-            Collections.emptyMap(),
-            PmdReporter.quiet()
-        );
+        LanguageProcessorRegistry registry = LanguageProcessorRegistry.create(LanguageRegistry.PMD,
+                Collections.emptyMap(), PmdReporter.quiet());
         dummyProcessor = registry.getProcessor(DummyLanguageModule.getInstance());
     }
 }

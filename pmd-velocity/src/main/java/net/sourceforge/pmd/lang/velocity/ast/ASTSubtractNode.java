@@ -39,7 +39,6 @@ public final class ASTSubtractNode extends ASTMathNode {
         super(id);
     }
 
-
     @Override
     protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);

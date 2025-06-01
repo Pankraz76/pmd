@@ -14,7 +14,6 @@ import net.sourceforge.pmd.lang.ast.Node;
 /** Iterates over a node and its ancestors. */
 class AncestorOrSelfIterator implements Iterator<@NonNull Node> {
 
-
     private Node next;
 
     AncestorOrSelfIterator(@NonNull Node top) {
@@ -25,7 +24,6 @@ class AncestorOrSelfIterator implements Iterator<@NonNull Node> {
     public boolean hasNext() {
         return next != null;
     }
-
 
     @Override
     public Node next() {

@@ -18,7 +18,10 @@ import net.sourceforge.pmd.lang.lua.ast.LuaLexer;
 /**
  * The Lua Tokenizer
  *
- * <p>Note: This class has been called LuaTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called LuaTokenizer in PMD 6
+ * </p>
+ * .
  */
 public class LuaCpdLexer extends AntlrCpdLexer {
 
@@ -42,8 +45,8 @@ public class LuaCpdLexer extends AntlrCpdLexer {
      * The {@link LuaTokenFilter} extends the {@link AntlrTokenFilter} to discard
      * Lua-specific tokens.
      * <p>
-     * By default, it discards semicolons, require statements, and
-     * enables annotation-based CPD suppression.
+     * By default, it discards semicolons, require statements, and enables
+     * annotation-based CPD suppression.
      * </p>
      */
     private static class LuaTokenFilter extends AntlrTokenFilter {
@@ -53,7 +56,6 @@ public class LuaCpdLexer extends AntlrCpdLexer {
         private boolean discardingNL = false;
         private AntlrToken discardingLiteralsUntil = null;
         private boolean discardCurrent = false;
-
 
         LuaTokenFilter(final TokenManager<AntlrToken> tokenManager, boolean ignoreLiteralSequences) {
             super(tokenManager);
@@ -94,9 +96,8 @@ public class LuaCpdLexer extends AntlrCpdLexer {
                         discardingLiteralsUntil = null;
                         discardCurrent = true;
                     }
-                } else if (type == LuaLexer.OPEN_BRACE
-                    || type == LuaLexer.OPEN_BRACKET
-                    || type == LuaLexer.OPEN_PARENS) {
+                } else if (type == LuaLexer.OPEN_BRACE || type == LuaLexer.OPEN_BRACKET
+                        || type == LuaLexer.OPEN_PARENS) {
                     discardingLiteralsUntil = findEndOfSequenceOfLiterals(remainingTokens);
                 }
             }
@@ -126,7 +127,8 @@ public class LuaCpdLexer extends AntlrCpdLexer {
                     // this helps skip large multi-line data table sequences in Lua
                     break; // can be skipped; continue to the next token
                 case LuaLexer.ASSIGNMENT:
-                    // this helps skip large data table sequences in Lua: { ["bob"] = "uncle", ["alice"] = "enby" }
+                    // this helps skip large data table sequences in Lua: { ["bob"] = "uncle",
+                    // ["alice"] = "enby" }
                     break; // can be skipped; continue to the next token
                 case LuaLexer.OPEN_BRACE:
                     braceCount++;

@@ -20,7 +20,8 @@ public final class ReportTestUtil {
     }
 
     public static Report getReport(Rule rule, BiConsumer<Rule, RuleContext> sideEffects) {
-        return Report.buildReport(listener -> sideEffects.accept(rule, InternalApiBridge.createRuleContext(listener, rule)));
+        return Report
+                .buildReport(listener -> sideEffects.accept(rule, InternalApiBridge.createRuleContext(listener, rule)));
     }
 
     public static Report getReportForRuleApply(Rule rule, Node node) {
@@ -33,7 +34,8 @@ public final class ReportTestUtil {
     public static Report getReportForRuleSetApply(RuleSet ruleset, RootNode node) {
         return Report.buildReport(listener -> {
             RuleSets ruleSets = new RuleSets(ruleset);
-            LanguageProcessorRegistry registry = LanguageProcessorRegistry.singleton(node.getAstInfo().getLanguageProcessor());
+            LanguageProcessorRegistry registry = LanguageProcessorRegistry
+                    .singleton(node.getAstInfo().getLanguageProcessor());
             ruleSets.initializeRules(registry, new TestMessageReporter());
             ruleSets.apply(node, listener);
         });

@@ -25,8 +25,8 @@ class XmlCoordinatesTest extends BaseTreeDumpTest {
     }
 
     /**
-     * See bug #1054: XML Rules ever report a line -1 and not the line/column
-     * where the error occurs
+     * See bug #1054: XML Rules ever report a line -1 and not the line/column where
+     * the error occurs
      */
     @Test
     void testLineNumbers() {

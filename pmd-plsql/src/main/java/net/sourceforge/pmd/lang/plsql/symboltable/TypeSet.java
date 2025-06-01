@@ -79,7 +79,8 @@ public class TypeSet {
                         String importPkg = importStmt.substring(0, importStmt.indexOf('*') - 1);
                         return Class.forName(importPkg + '.' + name);
                     } catch (ClassNotFoundException ignored) {
-                        // Ignored, we'll throw a custom exception later, after all import possibilities have
+                        // Ignored, we'll throw a custom exception later, after all import possibilities
+                        // have
                         // been checked
                     }
                 }

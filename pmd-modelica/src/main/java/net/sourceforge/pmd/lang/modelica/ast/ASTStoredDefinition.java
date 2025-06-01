@@ -41,7 +41,6 @@ public class ASTStoredDefinition extends AbstractModelicaNode implements RootNod
         return this;
     }
 
-
     /**
      * Returns whether this source file contains Byte Order Mark.
      */
@@ -50,8 +49,7 @@ public class ASTStoredDefinition extends AbstractModelicaNode implements RootNod
     }
 
     public String getName() {
-        return children(ASTWithinClause.class).toStream()
-                .map(ASTWithinClause::getName)
+        return children(ASTWithinClause.class).toStream().map(ASTWithinClause::getName)
                 .collect(Collectors.joining(CompositeName.NAME_COMPONENT_SEPARATOR));
     }
 }

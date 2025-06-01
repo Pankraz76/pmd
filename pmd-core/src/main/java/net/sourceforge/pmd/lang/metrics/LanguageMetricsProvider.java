@@ -13,11 +13,10 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import net.sourceforge.pmd.lang.LanguageVersionHandler;
 import net.sourceforge.pmd.lang.ast.Node;
 
-
 /**
- * Language-specific provider for metrics. Knows about all the metrics
- * defined for a language. Can be used e.g. to build GUI applications
- * like the designer, in a language independent way. Accessible through
+ * Language-specific provider for metrics. Knows about all the metrics defined
+ * for a language. Can be used e.g. to build GUI applications like the designer,
+ * in a language independent way. Accessible through
  * {@link LanguageVersionHandler#getLanguageMetricsProvider()}.
  *
  *
@@ -28,7 +27,6 @@ public interface LanguageMetricsProvider {
 
     /** Returns the set of all metrics supported by the language. */
     Set<Metric<?, ?>> getMetrics();
-
 
     /** Fetch a metric using its name. */
     default @Nullable Metric<?, ?> getMetricWithName(String nameIgnoringCase) {
@@ -43,17 +41,20 @@ public interface LanguageMetricsProvider {
     }
 
     /**
-     * Computes all metrics available on the given node.
-     * The returned results may contain Double.NaN as a value.
+     * Computes all metrics available on the given node. The returned results may
+     * contain Double.NaN as a value.
      *
-     * @param node Node to inspect
+     * @param node
+     *            Node to inspect
      *
-     * @return A map of metric key to their result, possibly empty, but with no null value
+     * @return A map of metric key to their result, possibly empty, but with no null
+     *         value
      */
     default Map<Metric<?, ?>, Number> computeAllMetricsFor(Node node) {
         Map<Metric<?, ?>, Number> results = new HashMap<>();
         for (Metric<?, ?> metric : getMetrics()) {
-            @Nullable Number result = Metric.compute(metric, node, MetricOptions.emptyOptions());
+            @Nullable
+            Number result = Metric.compute(metric, node, MetricOptions.emptyOptions());
             if (result != null) {
                 results.put(metric, result);
             }

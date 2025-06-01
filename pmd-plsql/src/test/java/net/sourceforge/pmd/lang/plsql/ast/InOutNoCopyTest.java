@@ -23,7 +23,7 @@ class InOutNoCopyTest extends AbstractPLSQLParserTst {
         assertNotNull(input);
         List<ASTFormalParameter> params = input.descendants(ASTFormalParameter.class).toList();
         assertEquals(18, params.size());
-        //detailed check of first 6 test cases
+        // detailed check of first 6 test cases
         assertFalse(params.get(0).isIn());
         assertFalse(params.get(0).isOut());
         assertFalse(params.get(0).isNoCopy());
@@ -42,7 +42,7 @@ class InOutNoCopyTest extends AbstractPLSQLParserTst {
         assertFalse(params.get(5).isIn());
         assertTrue(params.get(5).isOut());
         assertTrue(params.get(5).isNoCopy());
-        //piecemeal test of other test cases
+        // piecemeal test of other test cases
         assertFalse(params.get(11).isIn());
         assertTrue(params.get(11).isOut());
         assertTrue(params.get(11).isNoCopy());

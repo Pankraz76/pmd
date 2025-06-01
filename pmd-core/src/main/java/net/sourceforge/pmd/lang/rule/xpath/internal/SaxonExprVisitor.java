@@ -78,7 +78,7 @@ abstract class SaxonExprVisitor {
         Expression operand1 = visit(e.getRhsExpression());
 
         return e instanceof AndExpression ? new AndExpression(operand0, operand1)
-                                          : new OrExpression(operand0, operand1);
+                : new OrExpression(operand0, operand1);
     }
 
     public Expression visit(Expression expr) {

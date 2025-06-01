@@ -45,7 +45,6 @@ public class ApexDesignerBindings extends DefaultDesignerBindings {
         return super.getIcon(node);
     }
 
-
     private static final class MainAttrVisitor extends ApexVisitorBase<Object, Object> {
 
         private static final MainAttrVisitor INSTANCE = new MainAttrVisitor();

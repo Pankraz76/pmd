@@ -25,9 +25,13 @@ import scala.meta.tokenizers.TokenizerOptions;
 import scala.meta.tokens.Token;
 
 /**
- * Scala Tokenizer class. Uses the Scala Meta Tokenizer, but adapts it for use with generic filtering
+ * Scala Tokenizer class. Uses the Scala Meta Tokenizer, but adapts it for use
+ * with generic filtering
  *
- * <p>Note: This class has been called ScalaTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called ScalaTokenizer in PMD 6
+ * </p>
+ * .
  */
 public class ScalaCpdLexer implements CpdLexer {
 
@@ -44,13 +48,13 @@ public class ScalaCpdLexer implements CpdLexer {
     @Override
     public void tokenize(TextDocument document, TokenFactory tokenEntries) {
 
-
         try {
             String fullCode = document.getText().toString();
 
             // create the input file for scala
             Input.VirtualFile vf = new Input.VirtualFile(document.getFileId().getOriginalPath(), fullCode);
-            ScalametaTokenizer tokenizer = new ScalametaTokenizer(vf, dialect, TokenizerOptions.implicitTokenizerOptions());
+            ScalametaTokenizer tokenizer = new ScalametaTokenizer(vf, dialect,
+                    TokenizerOptions.implicitTokenizerOptions());
 
             // tokenize with a filter
             scala.meta.tokens.Tokens tokens = tokenizer.tokenize();
@@ -63,16 +67,15 @@ public class ScalaCpdLexer implements CpdLexer {
                 if (StringUtils.isEmpty(token.getImage())) {
                     continue;
                 }
-                tokenEntries.recordToken(token.getImage(),
-                                         token.getReportLocation());
+                tokenEntries.recordToken(token.getImage(), token.getReportLocation());
             }
         } catch (Exception e) {
             if (e instanceof TokenizeException) { // NOPMD
                 // cannot catch it as it's a checked exception and Scala sneaky throws
                 TokenizeException tokE = (TokenizeException) e;
                 Position pos = tokE.pos();
-                throw tokenEntries.makeLexException(
-                    pos.startLine() + 1, pos.startColumn() + 1, "Scalameta threw", tokE);
+                throw tokenEntries.makeLexException(pos.startLine() + 1, pos.startColumn() + 1, "Scalameta threw",
+                        tokE);
             } else {
                 throw e;
             }
@@ -81,9 +84,8 @@ public class ScalaCpdLexer implements CpdLexer {
     }
 
     /**
-     * Implementation of the generic Token Manager, also skips un-helpful tokens and comments to only register important
-     * tokens
-     * and patterns.
+     * Implementation of the generic Token Manager, also skips un-helpful tokens and
+     * comments to only register important tokens and patterns.
      *
      * Keeps track of comments, for special comment processing
      */
@@ -91,8 +93,7 @@ public class ScalaCpdLexer implements CpdLexer {
 
         private final Iterator<Token> tokenIter;
         private final TextDocument textDocument;
-        private static final Class<?>[] SKIPPABLE_TOKENS = {
-            Token.Space.class, Token.Tab.class, Token.CR.class,
+        private static final Class<?>[] SKIPPABLE_TOKENS = { Token.Space.class, Token.Tab.class, Token.CR.class,
             Token.LF.class, Token.FF.class, Token.LFLF.class, Token.EOF.class, Token.Comment.class };
 
         private ScalaTokenAdapter previousComment = null;

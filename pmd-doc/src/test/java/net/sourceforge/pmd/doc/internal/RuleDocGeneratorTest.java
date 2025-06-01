@@ -38,14 +38,8 @@ class RuleDocGeneratorTest {
 
         root = Files.createTempDirectory(folder, null);
         Files.createDirectories(root.resolve("docs/_data/sidebars"));
-        List<String> mockedSidebar = Arrays.asList(
-                "entries:",
-                "- title: sidebar",
-                "  folders:",
-                "  - title: 1",
-                "  - title: 2",
-                "  - title: 3",
-                "  - title: Rules");
+        List<String> mockedSidebar = Arrays.asList("entries:", "- title: sidebar", "  folders:", "  - title: 1",
+                "  - title: 2", "  - title: 3", "  - title: Rules");
         Files.write(root.resolve("docs/_data/sidebars/pmd_sidebar.yml"), mockedSidebar);
     }
 
@@ -62,21 +56,22 @@ class RuleDocGeneratorTest {
         RuleSet ruleset = rsl.loadFromResource("rulesets/ruledoctest/sample.xml");
 
         generator.generate(Arrays.asList(ruleset),
-                Arrays.asList(
-                        "rulesets/ruledoctest/sample-deprecated.xml",
-                        "rulesets/ruledoctest/other-ruleset.xml"));
+                Arrays.asList("rulesets/ruledoctest/sample-deprecated.xml", "rulesets/ruledoctest/other-ruleset.xml"));
 
         assertEquals(3, writer.getData().size());
         FileEntry languageIndex = writer.getData().get(0);
-        assertTrue(IOUtil.normalizePath(languageIndex.getFilename()).endsWith(Paths.get("docs", "pages", "pmd", "rules", "java.md").toString()));
+        assertTrue(IOUtil.normalizePath(languageIndex.getFilename())
+                .endsWith(Paths.get("docs", "pages", "pmd", "rules", "java.md").toString()));
         assertEquals(loadResource("/expected/java.md"), languageIndex.getContent());
 
         FileEntry ruleSetIndex = writer.getData().get(1);
-        assertTrue(IOUtil.normalizePath(ruleSetIndex.getFilename()).endsWith(Paths.get("docs", "pages", "pmd", "rules", "java", "sample.md").toString()));
+        assertTrue(IOUtil.normalizePath(ruleSetIndex.getFilename())
+                .endsWith(Paths.get("docs", "pages", "pmd", "rules", "java", "sample.md").toString()));
         assertEquals(loadResource("/expected/sample.md"), ruleSetIndex.getContent());
 
         FileEntry sidebar = writer.getData().get(2);
-        assertTrue(IOUtil.normalizePath(sidebar.getFilename()).endsWith(Paths.get("docs", "_data", "sidebars", "pmd_sidebar.yml").toString()));
+        assertTrue(IOUtil.normalizePath(sidebar.getFilename())
+                .endsWith(Paths.get("docs", "_data", "sidebars", "pmd_sidebar.yml").toString()));
         assertEquals(loadResource("/expected/pmd_sidebar.yml"), sidebar.getContent());
     }
 }

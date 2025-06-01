@@ -26,7 +26,6 @@ public final class ASTInput extends AbstractPLSQLNode implements RootNode {
         return this;
     }
 
-
     @Override
     protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
@@ -38,8 +37,10 @@ public final class ASTInput extends AbstractPLSQLNode implements RootNode {
     /**
      * Let the user know that a range of lines were excluded from parsing.
      *
-     * @param first First line of the excluded line range (1-based).
-     * @param last Last line  of the excluded line range (1-based).
+     * @param first
+     *            First line of the excluded line range (1-based).
+     * @param last
+     *            Last line of the excluded line range (1-based).
      */
     void addExcludedLineRange(int first, int last) {
         excludedLinesCount += last - first + 1;

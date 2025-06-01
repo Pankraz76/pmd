@@ -14,8 +14,8 @@ import net.sourceforge.pmd.lang.TokenManager;
 import net.sourceforge.pmd.lang.ast.GenericToken;
 
 /**
- * A generic filter for PMD token managers that allows to use comments
- * to enable / disable analysis of parts of the stream
+ * A generic filter for PMD token managers that allows to use comments to enable
+ * / disable analysis of parts of the stream
  */
 public class BaseTokenFilter<T extends GenericToken<T>> implements TokenManager<T> {
 
@@ -27,7 +27,9 @@ public class BaseTokenFilter<T extends GenericToken<T>> implements TokenManager<
 
     /**
      * Creates a new BaseTokenFilter
-     * @param tokenManager The token manager from which to retrieve tokens to be filtered
+     * 
+     * @param tokenManager
+     *            The token manager from which to retrieve tokens to be filtered
      */
     public BaseTokenFilter(final TokenManager<T> tokenManager) {
         this.tokenManager = tokenManager;
@@ -83,10 +85,11 @@ public class BaseTokenFilter<T extends GenericToken<T>> implements TokenManager<
     }
 
     /**
-     * Extension point for subclasses to analyze all tokens (before filtering)
-     * and update internal status to decide on custom discard rules.
+     * Extension point for subclasses to analyze all tokens (before filtering) and
+     * update internal status to decide on custom discard rules.
      *
-     * @param currentToken The token to be analyzed
+     * @param currentToken
+     *            The token to be analyzed
      * @see #isLanguageSpecificDiscarding()
      */
     protected void analyzeToken(final T currentToken) {
@@ -94,11 +97,13 @@ public class BaseTokenFilter<T extends GenericToken<T>> implements TokenManager<
     }
 
     /**
-     * Extension point for subclasses to analyze all tokens (before filtering)
-     * and update internal status to decide on custom discard rules.
+     * Extension point for subclasses to analyze all tokens (before filtering) and
+     * update internal status to decide on custom discard rules.
      *
-     * @param currentToken The token to be analyzed
-     * @param remainingTokens All upcoming tokens
+     * @param currentToken
+     *            The token to be analyzed
+     * @param remainingTokens
+     *            All upcoming tokens
      * @see #isLanguageSpecificDiscarding()
      */
     protected void analyzeTokens(final T currentToken, final Iterable<T> remainingTokens) {
@@ -117,9 +122,11 @@ public class BaseTokenFilter<T extends GenericToken<T>> implements TokenManager<
     /**
      * Extension point for subclasses to indicate when to stop filtering tokens.
      *
-     * @param currentToken The token to be analyzed
+     * @param currentToken
+     *            The token to be analyzed
      *
-     * @return True if the token filter has finished consuming all tokens, false otherwise
+     * @return True if the token filter has finished consuming all tokens, false
+     *         otherwise
      */
     protected boolean shouldStopProcessing(T currentToken) {
         return currentToken.isEof();

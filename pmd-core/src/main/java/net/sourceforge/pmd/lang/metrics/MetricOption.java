@@ -5,11 +5,12 @@
 package net.sourceforge.pmd.lang.metrics;
 
 /**
- * Option to pass to a metric. Options modify the behaviour of a metric.
- * You must bundle them into a {@link MetricOptions} to pass them all to a metric.
+ * Option to pass to a metric. Options modify the behaviour of a metric. You
+ * must bundle them into a {@link MetricOptions} to pass them all to a metric.
  *
- * <p>Options must be suitable for use in sets (implement equals/hashcode,
- * or be singletons).
+ * <p>
+ * Options must be suitable for use in sets (implement equals/hashcode, or be
+ * singletons).
  *
  * @author Clément Fournier
  * @since 6.0.0

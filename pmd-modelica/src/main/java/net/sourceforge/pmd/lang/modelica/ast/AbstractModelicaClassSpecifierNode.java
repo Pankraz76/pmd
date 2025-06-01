@@ -8,7 +8,8 @@ import net.sourceforge.pmd.lang.modelica.resolver.InternalApiBridge;
 import net.sourceforge.pmd.lang.modelica.resolver.ModelicaClassType;
 
 /**
- * Common parent for class-specifier nodes, see {@link ModelicaClassSpecifierNode} for public API.
+ * Common parent for class-specifier nodes, see
+ * {@link ModelicaClassSpecifierNode} for public API.
  */
 abstract class AbstractModelicaClassSpecifierNode extends AbstractModelicaNode implements ModelicaClassSpecifierNode {
     AbstractModelicaClassSpecifierNode(int id) {
@@ -16,9 +17,11 @@ abstract class AbstractModelicaClassSpecifierNode extends AbstractModelicaNode i
     }
 
     /**
-     * Fills in the class definition with <code>extends</code> and <code>import</code> clauses contained in this AST node.
+     * Fills in the class definition with <code>extends</code> and
+     * <code>import</code> clauses contained in this AST node.
      *
-     * @param classTypeDeclaration a class declaration object corresponding to this AST node
+     * @param classTypeDeclaration
+     *            a class declaration object corresponding to this AST node
      */
     void populateExtendsAndImports(ModelicaClassType classTypeDeclaration) {
         // by default, do nothing
@@ -28,18 +31,12 @@ abstract class AbstractModelicaClassSpecifierNode extends AbstractModelicaNode i
         for (int i = 0; i < listNode.getNumChildren(); ++i) {
             AbstractModelicaNode child = (AbstractModelicaNode) listNode.getChild(i);
             if (child instanceof ASTExtendsClause) {
-                InternalApiBridge.addExtendToClass(
-                        classTypeDeclaration,
-                        listNode.getVisibility(),
-                        child.firstChild(ASTName.class).getCompositeName()
-                );
+                InternalApiBridge.addExtendToClass(classTypeDeclaration, listNode.getVisibility(),
+                        child.firstChild(ASTName.class).getCompositeName());
             }
             if (child instanceof ASTImportClause) {
-                InternalApiBridge.addImportToClass(
-                        classTypeDeclaration,
-                        listNode.getVisibility(),
-                        child.firstChild(ModelicaImportClause.class)
-                );
+                InternalApiBridge.addImportToClass(classTypeDeclaration, listNode.getVisibility(),
+                        child.firstChild(ModelicaImportClause.class));
             }
         }
     }

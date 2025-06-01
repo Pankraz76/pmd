@@ -28,13 +28,10 @@ final class JavaTokenDocumentBehavior extends JavaccTokenDocument.TokenDocumentB
         super(JavaTokenKinds.TOKEN_NAMES);
     }
 
-
-
     @Override
     public TextDocument translate(TextDocument text) throws MalformedSourceException {
         return new JavaEscapeTranslator(text).translateDocument();
     }
-
 
     @Override
     public JavaccToken createToken(JavaccTokenDocument self, int kind, CharStream jcs, @Nullable String image) {
@@ -42,14 +39,7 @@ final class JavaTokenDocumentBehavior extends JavaccTokenDocument.TokenDocumentB
         case RUNSIGNEDSHIFT:
         case RSIGNEDSHIFT:
         case GT:
-            return new GTToken(
-                GT,
-                kind,
-                ">",
-                jcs.getStartOffset(),
-                jcs.getEndOffset(),
-                jcs.getTokenDocument()
-            );
+            return new GTToken(GT, kind, ">", jcs.getStartOffset(), jcs.getEndOffset(), jcs.getTokenDocument());
         default:
             return super.createToken(self, kind, jcs, image);
         }

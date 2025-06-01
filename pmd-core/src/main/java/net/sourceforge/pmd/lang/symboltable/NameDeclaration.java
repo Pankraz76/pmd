@@ -18,8 +18,8 @@ public interface NameDeclaration {
     ScopedNode getNode();
 
     /**
-     * Gets the image of the node. This is usually the name of the declaration
-     * such as the variable name.
+     * Gets the image of the node. This is usually the name of the declaration such
+     * as the variable name.
      *
      * @return the image
      * @see #getName()

@@ -22,7 +22,8 @@ import net.sourceforge.pmd.reporting.RuleViolation;
 import net.sourceforge.pmd.util.StringUtil;
 
 /**
- * A {@link RuleViolation} implementation that is immutable, and therefore cache friendly.
+ * A {@link RuleViolation} implementation that is immutable, and therefore cache
+ * friendly.
  */
 final class CachedRuleViolation implements RuleViolation {
 
@@ -36,11 +37,9 @@ final class CachedRuleViolation implements RuleViolation {
 
     private final FileLocation location;
 
-    private CachedRuleViolation(final CachedRuleMapper mapper, final String description,
-                                final FileId fileFileId, final String ruleClassName, final String ruleName,
-                                final String ruleTargetLanguage, final int beginLine, final int beginColumn,
-                                final int endLine, final int endColumn,
-                                final Map<String, String> additionalInfo) {
+    private CachedRuleViolation(final CachedRuleMapper mapper, final String description, final FileId fileFileId,
+            final String ruleClassName, final String ruleName, final String ruleTargetLanguage, final int beginLine,
+            final int beginColumn, final int endLine, final int endColumn, final Map<String, String> additionalInfo) {
         this.mapper = mapper;
         this.description = description;
         this.location = FileLocation.range(fileFileId, TextRange2d.range2d(beginLine, beginColumn, endLine, endColumn));
@@ -49,7 +48,7 @@ final class CachedRuleViolation implements RuleViolation {
         this.ruleTargetLanguage = ruleTargetLanguage;
         this.additionalInfo = additionalInfo;
     }
-    
+
     @Override
     public Rule getRule() {
         // The mapper may be initialized after cache is loaded, so use it lazily
@@ -74,16 +73,19 @@ final class CachedRuleViolation implements RuleViolation {
     /**
      * Helper method to load a {@link CachedRuleViolation} from an input stream.
      *
-     * @param stream     The stream from which to load the violation.
-     * @param fileFileId The name of the file on which this rule was reported.
-     * @param mapper     The mapper to be used to obtain rule instances from the active rulesets.
+     * @param stream
+     *            The stream from which to load the violation.
+     * @param fileFileId
+     *            The name of the file on which this rule was reported.
+     * @param mapper
+     *            The mapper to be used to obtain rule instances from the active
+     *            rulesets.
      *
      * @return The loaded rule violation.
      */
     /* package */
-    static CachedRuleViolation loadFromStream(
-        DataInputStream stream,
-        FileId fileFileId, CachedRuleMapper mapper) throws IOException {
+    static CachedRuleViolation loadFromStream(DataInputStream stream, FileId fileFileId, CachedRuleMapper mapper)
+            throws IOException {
 
         String description = stream.readUTF();
         String ruleClassName = stream.readUTF();
@@ -95,7 +97,7 @@ final class CachedRuleViolation implements RuleViolation {
         int endColumn = stream.readInt();
         Map<String, String> additionalInfo = readAdditionalInfo(stream);
         return new CachedRuleViolation(mapper, description, fileFileId, ruleClassName, ruleName, ruleTargetLanguage,
-                                       beginLine, beginColumn, endLine, endColumn, additionalInfo);
+                beginLine, beginColumn, endLine, endColumn, additionalInfo);
     }
 
     private static @NonNull Map<String, String> readAdditionalInfo(DataInputStream stream) throws IOException {
@@ -114,14 +116,16 @@ final class CachedRuleViolation implements RuleViolation {
     }
 
     /**
-     * Helper method to store a {@link RuleViolation} in an output stream to be later
-     * retrieved as a {@link CachedRuleViolation}
+     * Helper method to store a {@link RuleViolation} in an output stream to be
+     * later retrieved as a {@link CachedRuleViolation}
      *
-     * @param stream    The stream on which to store the violation.
-     * @param violation The rule violation to cache.
+     * @param stream
+     *            The stream on which to store the violation.
+     * @param violation
+     *            The rule violation to cache.
      */
-    /* package */ static void storeToStream(final DataOutputStream stream,
-            final RuleViolation violation) throws IOException {
+    /* package */ static void storeToStream(final DataOutputStream stream, final RuleViolation violation)
+            throws IOException {
         stream.writeUTF(StringUtil.nullToEmpty(violation.getDescription()));
         stream.writeUTF(StringUtil.nullToEmpty(violation.getRule().getRuleClass()));
         stream.writeUTF(StringUtil.nullToEmpty(violation.getRule().getName()));

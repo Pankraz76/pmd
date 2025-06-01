@@ -42,7 +42,8 @@ class PmdConfigurationTest {
     @Test
     void testSuppressMarker() {
         PMDConfiguration configuration = new PMDConfiguration();
-        assertEquals(PMDConfiguration.DEFAULT_SUPPRESS_MARKER, configuration.getSuppressMarker(), "Default suppress marker");
+        assertEquals(PMDConfiguration.DEFAULT_SUPPRESS_MARKER, configuration.getSuppressMarker(),
+                "Default suppress marker");
         configuration.setSuppressMarker("CUSTOM_MARKER");
         assertEquals("CUSTOM_MARKER", configuration.getSuppressMarker(), "Changed suppress marker");
     }
@@ -103,16 +104,15 @@ class PmdConfigurationTest {
         for (int i = 0; i < urls.length; i++) {
             uris[i] = urls[i].toURI();
         }
-        URI[] expectedUris = new URI[] {
-            new URI(FILE_SCHEME, null, currentWorkingDirectory + "lib1.jar", null),
+        URI[] expectedUris = new URI[] { new URI(FILE_SCHEME, null, currentWorkingDirectory + "lib1.jar", null),
             new URI(FILE_SCHEME, null, currentWorkingDirectory + "other/directory/lib2.jar", null),
-            new URI(FILE_SCHEME, null, new File("/home/jondoe/libs/lib3.jar").getAbsoluteFile().toURI().getPath(), null),
+            new URI(FILE_SCHEME, null, new File("/home/jondoe/libs/lib3.jar").getAbsoluteFile().toURI().getPath(),
+                    null),
             new URI(FILE_SCHEME, null, currentWorkingDirectory + "classes", null),
             new URI(FILE_SCHEME, null, currentWorkingDirectory + "classes2", null),
             new URI(FILE_SCHEME, null, new File("/home/jondoe/classes").getAbsoluteFile().toURI().getPath(), null),
             new URI(FILE_SCHEME, null, currentWorkingDirectory, null),
-            new URI(FILE_SCHEME, null, currentWorkingDirectory + "relative source dir/bar", null),
-        };
+            new URI(FILE_SCHEME, null, currentWorkingDirectory + "relative source dir/bar", null), };
         assertArrayEquals(expectedUris, uris);
     }
 
@@ -142,7 +142,8 @@ class PmdConfigurationTest {
     @Test
     void testSourceEncoding() {
         PMDConfiguration configuration = new PMDConfiguration();
-        assertEquals(System.getProperty("file.encoding"), configuration.getSourceEncoding().name(), "Default source encoding");
+        assertEquals(System.getProperty("file.encoding"), configuration.getSourceEncoding().name(),
+                "Default source encoding");
         configuration.setSourceEncoding(StandardCharsets.UTF_16LE);
         assertEquals(StandardCharsets.UTF_16LE, configuration.getSourceEncoding(), "Changed source encoding");
     }
@@ -217,7 +218,6 @@ class PmdConfigurationTest {
                 "File cache location doesn't produce a file cache");
     }
 
-
     @Test
     void testIgnoreIncrementalAnalysis(@TempDir Path folder) throws IOException {
         final PMDConfiguration configuration = new PMDConfiguration();
@@ -228,10 +228,12 @@ class PmdConfigurationTest {
         final FileAnalysisCache analysisCache = new FileAnalysisCache(cacheFile);
         configuration.setAnalysisCache(analysisCache);
         assertNotNull(configuration.getAnalysisCache(), "Null cache location accepted");
-        assertFalse(configuration.getAnalysisCache() instanceof NoopAnalysisCache, "Non null cache location, cache should not be noop");
+        assertFalse(configuration.getAnalysisCache() instanceof NoopAnalysisCache,
+                "Non null cache location, cache should not be noop");
 
         configuration.setIgnoreIncrementalAnalysis(true);
-        assertTrue(configuration.getAnalysisCache() instanceof NoopAnalysisCache, "Ignoring incremental analysis should turn the cache into a noop");
+        assertTrue(configuration.getAnalysisCache() instanceof NoopAnalysisCache,
+                "Ignoring incremental analysis should turn the cache into a noop");
     }
 
     @Test
@@ -239,8 +241,8 @@ class PmdConfigurationTest {
         final PMDConfiguration configuration = new PMDConfiguration(LanguageRegistry.CPD);
 
         assertThrows(UnsupportedOperationException.class,
-            () -> configuration.setOnlyRecognizeLanguage(CpdOnlyDummyLanguage.getInstance()));
+                () -> configuration.setOnlyRecognizeLanguage(CpdOnlyDummyLanguage.getInstance()));
         assertThrows(UnsupportedOperationException.class,
-            () -> configuration.setDefaultLanguageVersion(CpdOnlyDummyLanguage.getInstance().getDefaultVersion()));
+                () -> configuration.setDefaultLanguageVersion(CpdOnlyDummyLanguage.getInstance().getDefaultVersion()));
     }
 }

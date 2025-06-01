@@ -110,7 +110,6 @@ class ReportTest {
         return new ParametricRuleViolation(rule, loc1, rule1, Collections.emptyMap());
     }
 
-
     private static FileLocation getNode(int line, int column, String filename) {
         return FileLocation.caret(FileId.fromPathLikeString(filename), line, column);
     }

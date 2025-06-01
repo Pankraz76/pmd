@@ -32,20 +32,14 @@ class MatchAlgorithmTest {
     private static final String LINE_8 = "}";
 
     private static String getSampleCode() {
-        return LINE_1 + "\n" + LINE_2 + "\n" + LINE_3 + "\n" + LINE_4 + "\n" + LINE_5 + "\n" + LINE_6
-                + "\n" + LINE_7 + "\n" + LINE_8;
+        return LINE_1 + "\n" + LINE_2 + "\n" + LINE_3 + "\n" + LINE_4 + "\n" + LINE_5 + "\n" + LINE_6 + "\n" + LINE_7
+                + "\n" + LINE_8;
     }
 
     private static String getMultipleRepetitionsCode() {
-        return "var x = [\n"
-                + "  1, 1, 1, 1, 1, 1, 1, 1,\n"
-                + "  0, 0, 0, 0, 0, 0, 0, 0,\n"
-                + "  2, 2, 2, 2, 2, 2, 2, 2,\n"
-                + "  0, 0, 0, 0, 0, 0, 0, 0,\n"
-                + "  3, 3, 3, 3, 3, 3, 3, 3,\n"
-                + "  0, 0, 0, 0, 0, 0, 0, 0,\n"
-                + "  4, 4, 4, 4, 4, 4, 4, 4\n"
-                + "];";
+        return "var x = [\n" + "  1, 1, 1, 1, 1, 1, 1, 1,\n" + "  0, 0, 0, 0, 0, 0, 0, 0,\n"
+                + "  2, 2, 2, 2, 2, 2, 2, 2,\n" + "  0, 0, 0, 0, 0, 0, 0, 0,\n" + "  3, 3, 3, 3, 3, 3, 3, 3,\n"
+                + "  0, 0, 0, 0, 0, 0, 0, 0,\n" + "  4, 4, 4, 4, 4, 4, 4, 4\n" + "];";
     }
 
     @Test

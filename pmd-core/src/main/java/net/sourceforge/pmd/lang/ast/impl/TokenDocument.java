@@ -9,10 +9,9 @@ import net.sourceforge.pmd.lang.document.Chars;
 import net.sourceforge.pmd.lang.document.TextDocument;
 
 /**
- * Token layer of a parsed file.
- * This object is used to store state global to all tokens of a single file,
- * e.g. the text document. Not all languages currently have an implementation
- * of a token document.
+ * Token layer of a parsed file. This object is used to store state global to
+ * all tokens of a single file, e.g. the text document. Not all languages
+ * currently have an implementation of a token document.
  *
  * @see net.sourceforge.pmd.lang.ast.impl.javacc.JavaccTokenDocument
  */
@@ -36,9 +35,9 @@ public abstract class TokenDocument<T extends GenericToken<T>> {
     /**
      * Returns the first token of the token chain.
      *
-     * @throws IllegalStateException If the document has not been parsed yet
+     * @throws IllegalStateException
+     *             If the document has not been parsed yet
      */
     public abstract T getFirstToken();
-
 
 }

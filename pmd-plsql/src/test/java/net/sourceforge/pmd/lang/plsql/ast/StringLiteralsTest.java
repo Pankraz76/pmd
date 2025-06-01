@@ -16,7 +16,6 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class StringLiteralsTest extends AbstractPLSQLParserTst {
 
-
     @Test
     void parseStringLiterals() throws Exception {
         ASTInput input = plsql.parseResource("StringLiterals.pls");

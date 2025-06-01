@@ -16,7 +16,9 @@ import net.sourceforge.pmd.util.StringUtil;
 /**
  * An error thrown during lexical analysis of a file.
  *
- * <p>Note: This exception has been called TokenMgrError in PMD 6.</p>
+ * <p>
+ * Note: This exception has been called TokenMgrError in PMD 6.
+ * </p>
  */
 public final class LexException extends FileAnalysisException {
 
@@ -26,11 +28,17 @@ public final class LexException extends FileAnalysisException {
     /**
      * Create a new exception.
      *
-     * @param line     Line number
-     * @param column   Column number
-     * @param filename Filename. If unknown, it can be completed with {@link #setFileId(FileId)}} later
-     * @param message  Message of the error
-     * @param cause    Cause of the error, if any
+     * @param line
+     *            Line number
+     * @param column
+     *            Column number
+     * @param filename
+     *            Filename. If unknown, it can be completed with
+     *            {@link #setFileId(FileId)}} later
+     * @param message
+     *            Message of the error
+     * @param cause
+     *            Cause of the error, if any
      */
     public LexException(int line, int column, @Nullable FileId filename, String message, @Nullable Throwable cause) {
         super(message, cause);
@@ -46,7 +54,8 @@ public final class LexException extends FileAnalysisException {
      *
      * @apiNote Internal API.
      */
-    LexException(boolean eofSeen, String lexStateName, int errorLine, int errorColumn, String errorAfter, char curChar) {
+    LexException(boolean eofSeen, String lexStateName, int errorLine, int errorColumn, String errorAfter,
+            char curChar) {
         super(makeReason(eofSeen, lexStateName, errorAfter, curChar));
         line = max(errorLine, 1);
         column = max(errorColumn, 1);
@@ -73,7 +82,8 @@ public final class LexException extends FileAnalysisException {
     /**
      * Replace the file name of this error.
      *
-     * @param fileId New filename
+     * @param fileId
+     *            New filename
      *
      * @return A new exception
      */

@@ -54,8 +54,8 @@ final class ApexViolationSuppressors {
     }
 
     /**
-     * Check for suppression on this node, on parents, and on contained types
-     * for ASTCompilationUnit
+     * Check for suppression on this node, on parents, and on contained types for
+     * ASTCompilationUnit
      */
     private static boolean isSuppressed(ApexNode<?> node, Rule rule) {
         boolean result = suppresses(node, rule);
@@ -72,13 +72,9 @@ final class ApexViolationSuppressors {
     }
 
     private static boolean canSuppressWarnings(ApexNode<?> node) {
-        return node instanceof ASTFieldDeclarationStatements
-            || node instanceof ASTVariableDeclarationStatements
-            || node instanceof ASTField
-            || node instanceof ASTMethod
-            || node instanceof ASTUserClassOrInterface
-            || node instanceof ASTUserEnum
-            || node instanceof ASTParameter;
+        return node instanceof ASTFieldDeclarationStatements || node instanceof ASTVariableDeclarationStatements
+                || node instanceof ASTField || node instanceof ASTMethod || node instanceof ASTUserClassOrInterface
+                || node instanceof ASTUserEnum || node instanceof ASTParameter;
     }
 
     private static boolean suppresses(final ApexNode<?> node, Rule rule) {
@@ -86,9 +82,7 @@ final class ApexViolationSuppressors {
     }
 
     private static boolean hasSuppressWarningsAnnotationFor(ApexNode<?> node, Rule rule) {
-        return node.children(ASTModifierNode.class)
-                   .children(ASTAnnotation.class)
-                   .any(a -> suppresses(a, rule));
+        return node.children(ASTModifierNode.class).children(ASTAnnotation.class).any(a -> suppresses(a, rule));
     }
 
     private static boolean suppresses(ASTAnnotation annot, Rule rule) {

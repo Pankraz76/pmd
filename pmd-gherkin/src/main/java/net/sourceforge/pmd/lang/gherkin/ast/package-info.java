@@ -3,6 +3,7 @@
  */
 
 /**
- *  Contains the Antlr grammar for Gherkin.
+ * Contains the Antlr grammar for Gherkin.
  */
+
 package net.sourceforge.pmd.lang.gherkin.ast;

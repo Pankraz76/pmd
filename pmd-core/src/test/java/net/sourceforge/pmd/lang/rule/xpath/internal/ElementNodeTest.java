@@ -2,7 +2,6 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
-
 package net.sourceforge.pmd.lang.rule.xpath.internal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,16 +21,12 @@ import net.sf.saxon.type.Type;
 
 class ElementNodeTest {
 
-
     @RegisterExtension
     private final DummyParsingHelper helper = new DummyParsingHelper();
 
     @Test
     void testCompareOrder() {
-        DummyRootNode root = helper.parse(
-            "(#foo)"
-                + "(#foo)"
-        );
+        DummyRootNode root = helper.parse("(#foo)" + "(#foo)");
 
         DummyNode c0 = root.getChild(0);
         DummyNode c1 = root.getChild(1);

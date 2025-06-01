@@ -15,7 +15,8 @@ import java.util.List;
  *
  * @author Brian Remedios
  * @param <T>
- * @deprecated This is internal API and an implementation detail for {@link CSVRenderer}.
+ * @deprecated This is internal API and an implementation detail for
+ *             {@link CSVRenderer}.
  */
 class CSVWriter<T> {
 

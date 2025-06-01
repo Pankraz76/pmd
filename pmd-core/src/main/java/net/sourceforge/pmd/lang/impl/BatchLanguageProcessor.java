@@ -18,8 +18,8 @@ import net.sourceforge.pmd.lang.document.TextFile;
 
 /**
  * A base class for language processors. It processes all files of the
- * corresponding language as a single batch. It can operate in parallel
- * or sequentially depending on the number of threads passed in the
+ * corresponding language as a single batch. It can operate in parallel or
+ * sequentially depending on the number of threads passed in the
  * {@link AnalysisTask}.
  *
  * @author Clément Fournier
@@ -34,8 +34,7 @@ public abstract class BatchLanguageProcessor<P extends LanguagePropertyBundle> i
     protected BatchLanguageProcessor(P bundle) {
         if (!(bundle.getLanguage() instanceof PmdCapableLanguage)) {
             throw new IllegalArgumentException(
-                "Cannot create a processor for a language which does not support PMD: " + bundle.getLanguage()
-            );
+                    "Cannot create a processor for a language which does not support PMD: " + bundle.getLanguage());
         }
         this.language = (PmdCapableLanguage) bundle.getLanguage();
         this.bundle = bundle;
@@ -58,7 +57,8 @@ public abstract class BatchLanguageProcessor<P extends LanguagePropertyBundle> i
 
     @Override
     public @NonNull AutoCloseable launchAnalysis(@NonNull AnalysisTask task) {
-        // The given analysis task has all files to analyse, not only the ones for this language.
+        // The given analysis task has all files to analyse, not only the ones for this
+        // language.
         List<TextFile> files = new ArrayList<>(task.getFiles());
         files.removeIf(it -> !it.getLanguageVersion().getLanguage().equals(getLanguage()));
         AnalysisTask newTask = InternalApiBridge.taskWithFiles(task, files);

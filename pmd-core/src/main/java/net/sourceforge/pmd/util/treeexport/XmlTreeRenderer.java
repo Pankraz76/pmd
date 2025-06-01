@@ -17,10 +17,10 @@ import net.sourceforge.pmd.lang.ast.Node;
 import net.sourceforge.pmd.lang.rule.xpath.Attribute;
 
 /**
- * Renders a tree to XML. The resulting document is as close as possible
- * to the representation PMD uses to run XPath queries on nodes. This
- * allows the same XPath queries to match, in theory (it would depend
- * on the XPath engine used I believe).
+ * Renders a tree to XML. The resulting document is as close as possible to the
+ * representation PMD uses to run XPath queries on nodes. This allows the same
+ * XPath queries to match, in theory (it would depend on the XPath engine used I
+ * believe).
  */
 public final class XmlTreeRenderer implements TreeRenderer {
 
@@ -29,25 +29,23 @@ public final class XmlTreeRenderer implements TreeRenderer {
     private static final String XML_CHAR = "[" + XML_START_CHAR + ".\\-0-9\\xB7\\x{0300}-\\x{036F}\\x{203F}-\\x{2040}]";
     private static final Pattern XML_NAME = Pattern.compile(XML_START_CHAR + XML_CHAR + "*");
 
-
     private final XmlRenderingConfig strategy;
     private final char attrDelim;
 
     /*
-        TODO it's unclear to me how the strong typing of XPath 2.0 would
-         impact XPath queries run on the output XML. PMD maps attributes
-         to typed values, the XML only has untyped strings.
-
-         OTOH users should expect differences, and it's even documented
-         on this class.
-
+     * TODO it's unclear to me how the strong typing of XPath 2.0 would impact XPath
+     * queries run on the output XML. PMD maps attributes to typed values, the XML
+     * only has untyped strings.
+     * 
+     * OTOH users should expect differences, and it's even documented on this class.
+     * 
      */
-
 
     /**
      * Creates a new XML renderer.
      *
-     * @param strategy Strategy to parameterize the output of this instance
+     * @param strategy
+     *            Strategy to parameterize the output of this instance
      */
     public XmlTreeRenderer(XmlRenderingConfig strategy) {
         this.strategy = strategy;
@@ -64,14 +62,18 @@ public final class XmlTreeRenderer implements TreeRenderer {
     /**
      * {@inheritDoc}
      *
-     * <p>Each node of the AST has a corresponding XML element, whose
-     * name and attributes are the one the node presents in XPath queries.
+     * <p>
+     * Each node of the AST has a corresponding XML element, whose name and
+     * attributes are the one the node presents in XPath queries.
      *
-     * @param node {@inheritDoc}
-     * @param out  {@inheritDoc}
+     * @param node
+     *            {@inheritDoc}
+     * @param out
+     *            {@inheritDoc}
      *
-     * @throws IllegalArgumentException If some node has attributes or
-     *                                  a name that is not a valid XML name
+     * @throws IllegalArgumentException
+     *             If some node has attributes or a name that is not a valid XML
+     *             name
      */
     @Override
     public void renderSubtree(Node node, Appendable out) throws IOException {
@@ -83,9 +85,8 @@ public final class XmlTreeRenderer implements TreeRenderer {
     }
 
     private void renderProlog(Appendable out) throws IOException {
-        out.append("<?xml version=").append(attrDelim).append("1.0").append(attrDelim)
-           .append(" encoding=").append(attrDelim).append("UTF-8").append(attrDelim)
-           .append(" ?>").append(strategy.lineSeparator);
+        out.append("<?xml version=").append(attrDelim).append("1.0").append(attrDelim).append(" encoding=")
+                .append(attrDelim).append("UTF-8").append(attrDelim).append(" ?>").append(strategy.lineSeparator);
     }
 
     private void renderSubtree(int depth, Node node, Appendable out) throws IOException {
@@ -93,7 +94,6 @@ public final class XmlTreeRenderer implements TreeRenderer {
         String eltName = node.getXPathNodeName();
 
         checkValidName(eltName);
-
 
         indent(depth, out).append('<').append(eltName);
 
@@ -107,7 +107,6 @@ public final class XmlTreeRenderer implements TreeRenderer {
             out.append(" />");
             return;
         }
-
 
         out.append(">");
 
@@ -124,12 +123,8 @@ public final class XmlTreeRenderer implements TreeRenderer {
     private void appendAttribute(Appendable out, String name, String value) throws IOException {
         checkValidName(name);
 
-        out.append(' ')
-           .append(name)
-           .append('=')
-           .append(attrDelim)
-           .append(escapeXmlAttribute(value, strategy.singleQuoteAttributes))
-            .append(attrDelim);
+        out.append(' ').append(name).append('=').append(attrDelim)
+                .append(escapeXmlAttribute(value, strategy.singleQuoteAttributes)).append(attrDelim);
     }
 
     private void checkValidName(String name) {
@@ -146,15 +141,14 @@ public final class XmlTreeRenderer implements TreeRenderer {
     }
 
     private static String escapeXmlText(String xml) {
-        return xml.replaceAll("<", "&lt;")
-                  .replaceAll("&", "&amp;");
+        return xml.replaceAll("<", "&lt;").replaceAll("&", "&amp;");
 
     }
 
     private static String escapeXmlAttribute(String xml, boolean isSingleQuoted) {
 
         return isSingleQuoted ? escapeXmlText(xml).replaceAll("'", "&apos;")
-                              : escapeXmlText(xml).replaceAll("\"", "&quot;");
+                : escapeXmlText(xml).replaceAll("\"", "&quot;");
     }
 
     private static boolean isValidXmlName(String xml) {
@@ -193,38 +187,43 @@ public final class XmlTreeRenderer implements TreeRenderer {
         }
 
         /**
-         * Handle an exception that occurred while fetching the value
-         * of an attribute. The default does nothing, it's meant to be
-         * overridden if you want to handle it.
+         * Handle an exception that occurred while fetching the value of an attribute.
+         * The default does nothing, it's meant to be overridden if you want to handle
+         * it.
          *
-         * @param attr Attribute for which the fetch failed
-         * @param e    Exception that occurred
+         * @param attr
+         *            Attribute for which the fetch failed
+         * @param e
+         *            Exception that occurred
          */
         protected void handleAttributeFetchException(Attribute attr, Exception e) {
             // to be overridden
         }
 
         /**
-         * Returns true if the attribute should be included in the element
-         * corresponding to the given node. Subclasses can override this
-         * method to filter out some attributes.
+         * Returns true if the attribute should be included in the element corresponding
+         * to the given node. Subclasses can override this method to filter out some
+         * attributes.
          *
-         * @param node      Node owning the attribute
-         * @param attribute Attribute to test
+         * @param node
+         *            Node owning the attribute
+         * @param attribute
+         *            Attribute to test
          */
         protected boolean takeAttribute(Node node, Attribute attribute) {
             return true;
         }
 
         /**
-         * Sets the string that should be used to separate lines. The
-         * default is the platform-specific line separator. The following
-         * special values are interpreted specially: {@code CR}, {@code CRLF},
-         * {@code LF}, {@code \r}, {@code \r\n} and {@code \n}. The latter
-         * three use literal backslashes and are interpreted like Java
-         * escapes. The former three are named aliases for the same.
+         * Sets the string that should be used to separate lines. The default is the
+         * platform-specific line separator. The following special values are
+         * interpreted specially: {@code CR}, {@code CRLF}, {@code LF}, {@code \r},
+         * {@code \r\n} and {@code \n}. The latter three use literal backslashes and are
+         * interpreted like Java escapes. The former three are named aliases for the
+         * same.
          *
-         * @throws NullPointerException If the argument is null
+         * @throws NullPointerException
+         *             If the argument is null
          */
         public XmlRenderingConfig lineSeparator(String lineSeparator) {
             this.lineSeparator = interpretLineSep(lineSeparator);
@@ -248,10 +247,11 @@ public final class XmlTreeRenderer implements TreeRenderer {
         }
 
         /**
-         * Sets the delimiters use for attribute values. The default is
-         * to use single quotes.
+         * Sets the delimiters use for attribute values. The default is to use single
+         * quotes.
          *
-         * @param useSingleQuote True for single quotes, false for double quotes
+         * @param useSingleQuote
+         *            True for single quotes, false for double quotes
          */
         public XmlRenderingConfig singleQuoteAttributes(boolean useSingleQuote) {
             this.singleQuoteAttributes = useSingleQuote;
@@ -259,8 +259,7 @@ public final class XmlTreeRenderer implements TreeRenderer {
         }
 
         /**
-         * Sets whether to render an XML prolog or not. The default is
-         * true.
+         * Sets whether to render an XML prolog or not. The default is true.
          */
         public XmlRenderingConfig renderProlog(boolean renderProlog) {
             this.renderProlog = renderProlog;
@@ -268,10 +267,11 @@ public final class XmlTreeRenderer implements TreeRenderer {
         }
 
         /**
-         * Sets the string that should be used to indent children elements.
-         * The default is four spaces.
+         * Sets the string that should be used to indent children elements. The default
+         * is four spaces.
          *
-         * @throws NullPointerException If the argument is null
+         * @throws NullPointerException
+         *             If the argument is null
          */
         public XmlRenderingConfig indentWith(String indentString) {
             this.indentString = Objects.requireNonNull(indentString);

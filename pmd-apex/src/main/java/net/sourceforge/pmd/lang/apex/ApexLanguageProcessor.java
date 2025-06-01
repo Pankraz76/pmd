@@ -11,8 +11,7 @@ import net.sourceforge.pmd.lang.apex.multifile.ApexMultifileAnalysis;
 import net.sourceforge.pmd.lang.apex.multifile.InternalApiBridge;
 import net.sourceforge.pmd.lang.impl.BatchLanguageProcessor;
 
-public class ApexLanguageProcessor
-    extends BatchLanguageProcessor<ApexLanguageProperties> {
+public class ApexLanguageProcessor extends BatchLanguageProcessor<ApexLanguageProperties> {
 
     private final ApexMultifileAnalysis multifileAnalysis;
     private final ApexLanguageHandler services;

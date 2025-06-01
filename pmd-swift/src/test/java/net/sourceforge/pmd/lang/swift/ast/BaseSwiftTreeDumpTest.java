@@ -4,7 +4,6 @@
 
 package net.sourceforge.pmd.lang.swift.ast;
 
-
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import net.sourceforge.pmd.lang.test.ast.BaseTreeDumpTest;

@@ -14,9 +14,10 @@ import net.sourceforge.pmd.lang.ast.impl.TokenDocument;
 import net.sourceforge.pmd.lang.document.TextDocument;
 
 /**
- * Token document for Javacc implementations. This is a helper object
- * for generated token managers. Note: the extension point is a custom
- * implementation of {@link TokenDocumentBehavior}, see {@link JjtreeParserAdapter#tokenBehavior()}.
+ * Token document for Javacc implementations. This is a helper object for
+ * generated token managers. Note: the extension point is a custom
+ * implementation of {@link TokenDocumentBehavior}, see
+ * {@link JjtreeParserAdapter#tokenBehavior()}.
  */
 public final class JavaccTokenDocument extends TokenDocument<JavaccToken> {
 
@@ -42,35 +43,37 @@ public final class JavaccTokenDocument extends TokenDocument<JavaccToken> {
         }
 
         /**
-         * Returns true if the lexer should accumulate the image of MORE
-         * tokens into the StringBuilder jjimage. This is useless in our
-         * current implementations, because the image of tokens can be cut
-         * out using text coordinates, so doesn't need to be put into a separate string.
-         * The default returns false, which makes {@link CharStream#appendSuffix(StringBuilder, int)} a noop.
+         * Returns true if the lexer should accumulate the image of MORE tokens into the
+         * StringBuilder jjimage. This is useless in our current implementations,
+         * because the image of tokens can be cut out using text coordinates, so doesn't
+         * need to be put into a separate string. The default returns false, which makes
+         * {@link CharStream#appendSuffix(StringBuilder, int)} a noop.
          */
         public boolean useMarkSuffix() {
             return false;
         }
 
         /**
-         * Translate the escapes of the source document. The default implementation
-         * does not perform any escaping.
+         * Translate the escapes of the source document. The default implementation does
+         * not perform any escaping.
          *
-         * @param text Source doc
+         * @param text
+         *            Source doc
          *
          * @see EscapeTranslator
          *
-         * TODO move that to LanguageVersionHandler once #3919 (Merge CPD and PMD language) is implemented
+         *      TODO move that to LanguageVersionHandler once #3919 (Merge CPD and PMD
+         *      language) is implemented
          */
         public TextDocument translate(TextDocument text) throws MalformedSourceException {
             return text;
         }
 
-
         /**
          * Returns a string that describes the token kind.
          *
-         * @param kind Kind of token
+         * @param kind
+         *            Kind of token
          *
          * @return A descriptive string
          */
@@ -86,15 +89,17 @@ public final class JavaccTokenDocument extends TokenDocument<JavaccToken> {
         }
 
         /**
-         * Describe the given kind. If this returns a non-null value, then
-         * that's what {@link #describeKind(int)} will use. Otherwise a default
-         * implementation is used.
+         * Describe the given kind. If this returns a non-null value, then that's what
+         * {@link #describeKind(int)} will use. Otherwise a default implementation is
+         * used.
          *
-         * <p>An implementation typically uses the JavaCC-generated array
-         * named {@code <parser name>Constants.tokenImage}. Remember to
-         * check the bounds of the array.
+         * <p>
+         * An implementation typically uses the JavaCC-generated array named
+         * {@code <parser name>Constants.tokenImage}. Remember to check the bounds of
+         * the array.
          *
-         * @param kind Kind of token
+         * @param kind
+         *            Kind of token
          *
          * @return A descriptive string, or null to use default
          */
@@ -105,29 +110,25 @@ public final class JavaccTokenDocument extends TokenDocument<JavaccToken> {
             return null;
         }
 
-
         /**
-         * Creates a new token with the given kind. This is called back to
-         * by JavaCC-generated token managers (jjFillToken). Note that a
-         * created token is not guaranteed to end up in the final token chain.
+         * Creates a new token with the given kind. This is called back to by
+         * JavaCC-generated token managers (jjFillToken). Note that a created token is
+         * not guaranteed to end up in the final token chain.
          *
-         * @param kind  Kind of the token
-         * @param cs    Char stream of the file. This can be used to get text
-         *              coordinates and the image
-         * @param image Shared instance of the image token. If this is non-null,
-         *              then no call to {@link CharStream#getTokenImage()} should be
-         *              issued.
+         * @param kind
+         *            Kind of the token
+         * @param cs
+         *            Char stream of the file. This can be used to get text coordinates
+         *            and the image
+         * @param image
+         *            Shared instance of the image token. If this is non-null, then no
+         *            call to {@link CharStream#getTokenImage()} should be issued.
          *
          * @return A new token
          */
         public JavaccToken createToken(JavaccTokenDocument self, int kind, CharStream cs, @Nullable String image) {
-            return new JavaccToken(
-                kind,
-                image == null ? cs.getTokenImageCs() : image,
-                cs.getStartOffset(),
-                cs.getEndOffset(),
-                self
-            );
+            return new JavaccToken(kind, image == null ? cs.getTokenImageCs() : image, cs.getStartOffset(),
+                    cs.getEndOffset(), self);
         }
     }
 
@@ -139,10 +140,11 @@ public final class JavaccTokenDocument extends TokenDocument<JavaccToken> {
      * Open the document. This is only meant to be used by a Javacc-generated
      * parser.
      *
-     * @return The token for the document start. This token is implicit and
-     *     will never end up in the final token chain.
+     * @return The token for the document start. This token is implicit and will
+     *         never end up in the final token chain.
      *
-     * @throws IllegalStateException If the document has already been opened
+     * @throws IllegalStateException
+     *             If the document has already been opened
      */
     public JavaccToken open() {
         synchronized (this) {
@@ -153,7 +155,6 @@ public final class JavaccTokenDocument extends TokenDocument<JavaccToken> {
         }
         return first;
     }
-
 
     @Override
     public JavaccToken getFirstToken() {
@@ -171,7 +172,8 @@ public final class JavaccTokenDocument extends TokenDocument<JavaccToken> {
     }
 
     /**
-     * @see TokenDocumentBehavior#createToken(JavaccTokenDocument, int, CharStream, String)
+     * @see TokenDocumentBehavior#createToken(JavaccTokenDocument, int, CharStream,
+     *      String)
      */
     public JavaccToken createToken(int kind, CharStream cs, @Nullable String image) {
         return behavior.createToken(this, kind, cs, image);

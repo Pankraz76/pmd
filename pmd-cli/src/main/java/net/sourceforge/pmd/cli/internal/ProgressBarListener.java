@@ -19,8 +19,8 @@ import me.tongfei.progressbar.ProgressBarBuilder;
 import me.tongfei.progressbar.ProgressBarStyle;
 
 /**
- * Collects runtime analysis statistics and displays them live on command line output.
- * Toggled off through --no-progress command line argument.
+ * Collects runtime analysis statistics and displays them live on command line
+ * output. Toggled off through --no-progress command line argument.
  */
 public final class ProgressBarListener implements GlobalAnalysisListener {
     private ProgressBar progressBar;
@@ -32,15 +32,11 @@ public final class ProgressBarListener implements GlobalAnalysisListener {
         return new ListenerInitializer() {
             @Override
             public void setNumberOfFilesToAnalyze(int totalFiles) {
-                // We need to delay initialization until we know how many files there are to avoid a first bogus render
-                progressBar = new ProgressBarBuilder()
-                        .setTaskName("Processing files")
-                        .setStyle(ProgressBarStyle.ASCII)
-                        .hideEta()
-                        .continuousUpdate()
-                        .setInitialMax(totalFiles)
-                        .setConsumer(PmdProgressBarFriend.createConsoleConsumer(System.out))
-                        .clearDisplayOnFinish()
+                // We need to delay initialization until we know how many files there are to
+                // avoid a first bogus render
+                progressBar = new ProgressBarBuilder().setTaskName("Processing files").setStyle(ProgressBarStyle.ASCII)
+                        .hideEta().continuousUpdate().setInitialMax(totalFiles)
+                        .setConsumer(PmdProgressBarFriend.createConsoleConsumer(System.out)).clearDisplayOnFinish()
                         .build();
                 progressBar.setExtraMessage(extraMessage());
             }
@@ -48,7 +44,8 @@ public final class ProgressBarListener implements GlobalAnalysisListener {
     }
 
     /**
-     * Updates progress bar string and forces it to be output regardless of its update interval.
+     * Updates progress bar string and forces it to be output regardless of its
+     * update interval.
      */
     private void refreshProgressBar() {
         progressBar.setExtraMessage(extraMessage());
@@ -69,7 +66,7 @@ public final class ProgressBarListener implements GlobalAnalysisListener {
 
             @Override
             public void onSuppressedRuleViolation(Report.SuppressedViolation violation) {
-                /*Not handled*/
+                /* Not handled */
             }
 
             @Override

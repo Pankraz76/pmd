@@ -75,7 +75,6 @@ class PmdCliTest extends BaseCliTest {
         writeString(srcDir.resolve("someSource.dummy"), "dummy text");
     }
 
-
     @Test
     void testPreExistingReportFile() throws Exception {
         Path reportFile = tempRoot().resolve("out/reportFile.txt");
@@ -99,7 +98,8 @@ class PmdCliTest extends BaseCliTest {
 
         assertTrue(Files.exists(reportFile), "Report file should exist");
 
-        runCliSuccessfully("--dir", srcDir.toString(), "--rulesets", RULESET_NO_VIOLATIONS, "--report-file", reportFile.toString());
+        runCliSuccessfully("--dir", srcDir.toString(), "--rulesets", RULESET_NO_VIOLATIONS, "--report-file",
+                reportFile.toString());
 
         assertNotEquals(readString(reportFile), STRING_TO_REPLACE, "Report file should have been overwritten");
     }
@@ -124,7 +124,8 @@ class PmdCliTest extends BaseCliTest {
 
         assertFalse(Files.exists(reportFile), "Report file should not exist");
 
-        runCliSuccessfully("--dir", srcDir.toString(), "--rulesets", RULESET_NO_VIOLATIONS, "--report-file", reportFile.toString());
+        runCliSuccessfully("--dir", srcDir.toString(), "--rulesets", RULESET_NO_VIOLATIONS, "--report-file",
+                reportFile.toString());
 
         assertTrue(Files.exists(reportFile), "Report file should have been created");
     }
@@ -137,7 +138,8 @@ class PmdCliTest extends BaseCliTest {
 
         // restoring system properties: --debug might change logging properties
         SystemLambda.restoreSystemProperties(() -> {
-            runCliSuccessfully("--dir", srcDir.toString(), "--rulesets", RULESET_NO_VIOLATIONS, "--report-file", reportFile.toString(), "--debug");
+            runCliSuccessfully("--dir", srcDir.toString(), "--rulesets", RULESET_NO_VIOLATIONS, "--report-file",
+                    reportFile.toString(), "--debug");
         });
 
         assertTrue(Files.exists(reportFile), "Report file should have been created");
@@ -148,9 +150,10 @@ class PmdCliTest extends BaseCliTest {
     /**
      * This tests to create the report file in the current working directory.
      *
-     * <p>Note: We can't change the cwd in the running VM, so the file will not be created
-     * in the temporary folder, but really in the cwd. The test fails if a file already exists
-     * and makes sure to cleanup the file afterwards.
+     * <p>
+     * Note: We can't change the cwd in the running VM, so the file will not be
+     * created in the temporary folder, but really in the cwd. The test fails if a
+     * file already exists and makes sure to cleanup the file afterwards.
      */
     @Test
     void testRelativeReportFile() throws Exception {
@@ -175,31 +178,30 @@ class PmdCliTest extends BaseCliTest {
         assertFalse(Files.exists(absoluteReportFile), "Report file must not exist yet!");
 
         try {
-            runCliSuccessfully("--dir", srcDir.toString(), "--rulesets", RULESET_NO_VIOLATIONS, "--report-file", reportFile);
+            runCliSuccessfully("--dir", srcDir.toString(), "--rulesets", RULESET_NO_VIOLATIONS, "--report-file",
+                    reportFile);
             assertTrue(Files.exists(absoluteReportFile), "Report file should have been created");
         } finally {
             Files.deleteIfExists(absoluteReportFile);
         }
     }
 
-
     @Test
     void testRelativeFileInputs() throws Exception {
         SystemLambda.restoreSystemProperties(() -> {
             // change working directory
             System.setProperty("user.dir", srcDir.toString());
-            runCli(VIOLATIONS_FOUND, "--dir", ".", "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS)
-                .verify(res -> res.checkStdOut(containsString(
-                    "./src/test/resources/net/sourceforge/pmd/cli/src/anotherfile.dummy".replace('/', File.separatorChar)
-                )));
+            runCli(VIOLATIONS_FOUND, "--dir", ".", "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS).verify(res -> res
+                    .checkStdOut(containsString("./src/test/resources/net/sourceforge/pmd/cli/src/anotherfile.dummy"
+                            .replace('/', File.separatorChar))));
 
         });
     }
 
-
     @Test
     void debugLogging() throws Exception {
-        CliExecutionResult result = runCliSuccessfully("--debug", "--dir", srcDir.toString(), "--rulesets", RULESET_NO_VIOLATIONS);
+        CliExecutionResult result = runCliSuccessfully("--debug", "--dir", srcDir.toString(), "--rulesets",
+                RULESET_NO_VIOLATIONS);
         result.checkStdErr(containsString("[DEBUG] Log level is at TRACE"));
     }
 
@@ -231,7 +233,7 @@ class PmdCliTest extends BaseCliTest {
         CliExecutionResult result = runCli(USAGE_ERROR);
         result.checkStdErr(containsString("Missing required option: '--rulesets=<rulesets>'"));
     }
-    
+
     @Test
     void testMissingSource() throws Exception {
         CliExecutionResult result = runCli(USAGE_ERROR, "--rulesets", RULESET_NO_VIOLATIONS);
@@ -239,7 +241,8 @@ class PmdCliTest extends BaseCliTest {
     }
 
     /**
-     * @see <a href="https://github.com/pmd/pmd/issues/3427">[core] Stop printing CLI usage text when exiting due to invalid parameters #3427</a>
+     * @see <a href="https://github.com/pmd/pmd/issues/3427">[core] Stop printing
+     *      CLI usage text when exiting due to invalid parameters #3427</a>
      */
     @Test
     void testWrongCliOptionsDoPrintUsage() throws Exception {
@@ -256,10 +259,8 @@ class PmdCliTest extends BaseCliTest {
      */
     @Test
     void testWrongRuleset() throws Exception {
-        runCli(ERROR, "-d", srcDir.toString(), "-f", "text", "-R", NOT_A_RULESET)
-            .verify(result -> result.checkStdErr(
-                containsString("Cannot resolve rule/ruleset reference"
-                                   + " '" + NOT_A_RULESET + "'")));
+        runCli(ERROR, "-d", srcDir.toString(), "-f", "text", "-R", NOT_A_RULESET).verify(result -> result
+                .checkStdErr(containsString("Cannot resolve rule/ruleset reference" + " '" + NOT_A_RULESET + "'")));
     }
 
     /**
@@ -268,9 +269,8 @@ class PmdCliTest extends BaseCliTest {
     @Test
     void testWrongRulesetWithRulename() throws Exception {
         runCli(ERROR, "-d", srcDir.toString(), "-f", "text", "-R", NOT_A_RULESET + "/NotARule")
-            .verify(result -> result.checkStdErr(
-                containsString("Cannot resolve rule/ruleset reference"
-                                   + " '" + NOT_A_RULESET + "/NotARule'")));
+                .verify(result -> result.checkStdErr(
+                        containsString("Cannot resolve rule/ruleset reference" + " '" + NOT_A_RULESET + "/NotARule'")));
     }
 
     /**
@@ -279,71 +279,59 @@ class PmdCliTest extends BaseCliTest {
     @Test
     void testWrongRulename() throws Exception {
         runCli(OK, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_NO_VIOLATIONS + "/ThisRuleDoesNotExist")
-            .verify(result -> result.checkStdErr(
-                containsString(
-                    "No rules found. Maybe you misspelled a rule name?"
-                        + " (" + RULESET_NO_VIOLATIONS + "/ThisRuleDoesNotExist)"
-                )
-            ));
+                .verify(result -> result.checkStdErr(containsString("No rules found. Maybe you misspelled a rule name?"
+                        + " (" + RULESET_NO_VIOLATIONS + "/ThisRuleDoesNotExist)")));
     }
 
     @Test
     void changeSourceVersion() throws Exception {
-        runCli(OK, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_NO_VIOLATIONS, "--debug",
-               "--use-version", "dummy-1.2")
-            .verify(result -> result.checkStdErr(
-                containsPattern("Adding file .*\\.dummy \\(lang: dummy 1\\.2\\)"))
-            );
+        runCli(OK, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_NO_VIOLATIONS, "--debug", "--use-version",
+                "dummy-1.2")
+                .verify(result -> result
+                        .checkStdErr(containsPattern("Adding file .*\\.dummy \\(lang: dummy 1\\.2\\)")));
     }
-
 
     @Test
     void exitStatusWithViolationsAndWithoutFailOnViolations() throws Exception {
         runCli(OK, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--no-fail-on-violation")
-            .verify(r -> r.checkStdOut(
-                containsString("Violation from ReportAllRootNodes")
-            ));
+                .verify(r -> r.checkStdOut(containsString("Violation from ReportAllRootNodes")));
     }
 
     @Test
     void exitStatusWithNoViolations() throws Exception {
         runCli(OK, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_NO_VIOLATIONS)
-            .verify(r -> r.checkStdOut(equalTo("")));
+                .verify(r -> r.checkStdOut(equalTo("")));
     }
 
     @Test
     void exitStatusWithViolations() throws Exception {
         runCli(VIOLATIONS_FOUND, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION)
-            .verify(r -> r.checkStdOut(
-                containsString("Violation from ReportAllRootNodes")
-            ));
+                .verify(r -> r.checkStdOut(containsString("Violation from ReportAllRootNodes")));
     }
 
     @Test
     void exitStatusWithErrors() throws Exception {
-        runCli(RECOVERED_ERRORS_OR_VIOLATIONS, "--use-version", "dummy-parserThrows",
-                "-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION)
-            .verify(r -> {
-                r.checkStdOut(containsString("someSource.dummy\t-\tParseException: Parse exception: ohio"));
-                r.checkStdErr(containsString("An error occurred while executing PMD."));
-            });
+        runCli(RECOVERED_ERRORS_OR_VIOLATIONS, "--use-version", "dummy-parserThrows", "-d", srcDir.toString(), "-f",
+                "text", "-R", RULESET_WITH_VIOLATION).verify(r -> {
+                    r.checkStdOut(containsString("someSource.dummy\t-\tParseException: Parse exception: ohio"));
+                    r.checkStdErr(containsString("An error occurred while executing PMD."));
+                });
     }
 
     @Test
     void exitStatusWithErrorsNoFail() throws Exception {
-        runCli(OK, "--use-version", "dummy-parserThrows",
-                "-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION,
-                "--no-fail-on-error")
-            .verify(r -> {
-                r.checkStdOut(containsString("someSource.dummy\t-\tParseException: Parse exception: ohio"));
-                r.checkStdErr(containsString("An error occurred while executing PMD."));
-            });
+        runCli(OK, "--use-version", "dummy-parserThrows", "-d", srcDir.toString(), "-f", "text", "-R",
+                RULESET_WITH_VIOLATION, "--no-fail-on-error").verify(r -> {
+                    r.checkStdOut(containsString("someSource.dummy\t-\tParseException: Parse exception: ohio"));
+                    r.checkStdErr(containsString("An error occurred while executing PMD."));
+                });
     }
 
     @Test
     void testZipFileAsSource() throws Exception {
         Path zipArchive = createTemporaryZipArchive("sources.zip");
-        CliExecutionResult result = runCli(VIOLATIONS_FOUND, "--dir", zipArchive.toString(), "--rulesets", "rulesets/dummy/basic.xml");
+        CliExecutionResult result = runCli(VIOLATIONS_FOUND, "--dir", zipArchive.toString(), "--rulesets",
+                "rulesets/dummy/basic.xml");
         result.checkStdErr(not(containsStringIgnoringCase("Cannot open zip file")));
         String reportPath = IOUtil.normalizePath(zipArchive.toString()) + "!/someSource.dummy";
         result.checkStdOut(containsString(reportPath + ":1:\tSampleXPathRule:\tTest Rule 2"));
@@ -352,7 +340,8 @@ class PmdCliTest extends BaseCliTest {
     @Test
     void testJarFileAsSource() throws Exception {
         Path jarArchive = createTemporaryZipArchive("sources.jar");
-        CliExecutionResult result = runCli(VIOLATIONS_FOUND, "--dir", jarArchive.toString(), "--rulesets", "rulesets/dummy/basic.xml");
+        CliExecutionResult result = runCli(VIOLATIONS_FOUND, "--dir", jarArchive.toString(), "--rulesets",
+                "rulesets/dummy/basic.xml");
         result.checkStdErr(not(containsStringIgnoringCase("Cannot open zip file")));
         String reportPath = IOUtil.normalizePath(jarArchive.toString()) + "!/someSource.dummy";
         result.checkStdOut(containsString(reportPath + ":1:\tSampleXPathRule:\tTest Rule 2"));
@@ -372,31 +361,32 @@ class PmdCliTest extends BaseCliTest {
     @Test
     void testNoRelativizeWithAbsoluteSrcDir() throws Exception {
         assertTrue(srcDir.isAbsolute(), "srcDir should be absolute");
-        runCli(VIOLATIONS_FOUND, "--dir", srcDir.toString(), "--rulesets",
-                DUMMY_RULESET_WITH_VIOLATIONS)
-                .verify(result -> result.checkStdOut(
-                        containsString(srcDir.resolve("someSource.dummy").toString())));
+        runCli(VIOLATIONS_FOUND, "--dir", srcDir.toString(), "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS)
+                .verify(result -> result.checkStdOut(containsString(srcDir.resolve("someSource.dummy").toString())));
     }
 
     @Test
     void testNoRelativizeWithRelativeSrcDir() throws Exception {
-        // Note, that we can't reliably change the current working directory for the current java process
-        // therefore we use the current directory and make sure, we are at the correct place - in pmd-cli
+        // Note, that we can't reliably change the current working directory for the
+        // current java process
+        // therefore we use the current directory and make sure, we are at the correct
+        // place - in pmd-cli
         Path cwd = Paths.get(".").toRealPath();
         assertThat(cwd.toString(), endsWith("pmd-cli"));
         String relativeSrcDir = "src/test/resources/net/sourceforge/pmd/cli/src";
         assertTrue(Files.isDirectory(cwd.resolve(relativeSrcDir)));
 
-        runCli(VIOLATIONS_FOUND, "--dir", relativeSrcDir, "--rulesets",
-                DUMMY_RULESET_WITH_VIOLATIONS)
-                .verify(result -> result.checkStdOut(
-                        containsString("\n" + IOUtil.normalizePath(relativeSrcDir + "/somefile.dummy"))));
+        runCli(VIOLATIONS_FOUND, "--dir", relativeSrcDir, "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS)
+                .verify(result -> result
+                        .checkStdOut(containsString("\n" + IOUtil.normalizePath(relativeSrcDir + "/somefile.dummy"))));
     }
 
     @Test
     void testNoRelativizeWithRelativeSrcDirParent() throws Exception {
-        // Note, that we can't reliably change the current working directory for the current java process
-        // therefore we use the current directory and make sure, we are at the correct place - in pmd-cli
+        // Note, that we can't reliably change the current working directory for the
+        // current java process
+        // therefore we use the current directory and make sure, we are at the correct
+        // place - in pmd-cli
         Path cwd = Paths.get(".").toRealPath();
         assertThat(cwd.toString(), endsWith("pmd-cli"));
         String relativeSrcDir = "src/test/resources/net/sourceforge/pmd/cli/src";
@@ -407,14 +397,15 @@ class PmdCliTest extends BaseCliTest {
 
         String expectedFile = "\n" + relativeSrcDirWithParent.resolve("src/somefile.dummy");
         runCli(VIOLATIONS_FOUND, "--dir", relativeSrcDirWithParent.toString(), "--rulesets",
-               DUMMY_RULESET_WITH_VIOLATIONS)
-                .verify(result -> result.checkStdOut(containsString(expectedFile)));
+                DUMMY_RULESET_WITH_VIOLATIONS).verify(result -> result.checkStdOut(containsString(expectedFile)));
     }
 
     @Test
     void testRelativizeWithRootRelativeSrcDir() throws Exception {
-        // Note, that we can't reliably change the current working directory for the current java process
-        // therefore we use the current directory and make sure, we are at the correct place - in pmd-cli
+        // Note, that we can't reliably change the current working directory for the
+        // current java process
+        // therefore we use the current directory and make sure, we are at the correct
+        // place - in pmd-cli
         Path cwd = Paths.get(".").toRealPath();
         assertThat(cwd.toString(), endsWith("pmd-cli"));
         String relativeSrcDir = "src/test/resources/net/sourceforge/pmd/cli/src";
@@ -423,18 +414,15 @@ class PmdCliTest extends BaseCliTest {
         String root = cwd.getRoot().toString();
         String absoluteSrcPath = cwd.resolve(relativeSrcDir).resolve("somefile.dummy").toString();
 
-        runCli(VIOLATIONS_FOUND, "--dir", relativeSrcDir, "--rulesets",
-                DUMMY_RULESET_WITH_VIOLATIONS, "--relativize-paths-with", root)
-                .verify(result -> result.checkStdOut(
-                        containsString("\n" + absoluteSrcPath))
-            );
+        runCli(VIOLATIONS_FOUND, "--dir", relativeSrcDir, "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS,
+                "--relativize-paths-with", root)
+                .verify(result -> result.checkStdOut(containsString("\n" + absoluteSrcPath)));
     }
 
     @Test
     void testRelativizeWith() throws Exception {
-        runCli(VIOLATIONS_FOUND, "--dir", srcDir.toString(), "--rulesets",
-                DUMMY_RULESET_WITH_VIOLATIONS, "-z", srcDir.getParent().toString())
-                .verify(result -> {
+        runCli(VIOLATIONS_FOUND, "--dir", srcDir.toString(), "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS, "-z",
+                srcDir.getParent().toString()).verify(result -> {
                     result.checkStdOut(not(containsString(srcDir.resolve("someSource.dummy").toString())));
                     result.checkStdOut(startsWith(IOUtil.normalizePath("src/someSource.dummy")));
                 });
@@ -445,9 +433,8 @@ class PmdCliTest extends BaseCliTest {
         // srcDir = /tmp/junit123/src
         // symlinkedSrcDir = /tmp/junit123/sources -> /tmp/junit123/src
         Path symlinkedSrcDir = Files.createSymbolicLink(tempRoot().resolve("sources"), srcDir);
-        runCli(VIOLATIONS_FOUND, "--dir", symlinkedSrcDir.toString(), "--rulesets",
-                DUMMY_RULESET_WITH_VIOLATIONS, "-z", symlinkedSrcDir.toString())
-                .verify(result -> {
+        runCli(VIOLATIONS_FOUND, "--dir", symlinkedSrcDir.toString(), "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS, "-z",
+                symlinkedSrcDir.toString()).verify(result -> {
                     result.checkStdOut(not(containsString(srcDir.resolve("someSource.dummy").toString())));
                     result.checkStdOut(not(containsString(symlinkedSrcDir.resolve("someSource.dummy").toString())));
                     result.checkStdOut(startsWith("someSource.dummy"));
@@ -462,9 +449,8 @@ class PmdCliTest extends BaseCliTest {
         Files.delete(tempPath);
         Path symlinkedSrcDir = Files.createSymbolicLink(tempPath, srcDir);
         // relativizing against parent of symlinkedSrcDir: /tmp
-        runCli(VIOLATIONS_FOUND, "--dir", symlinkedSrcDir.toString(), "--rulesets",
-                DUMMY_RULESET_WITH_VIOLATIONS, "-z", symlinkedSrcDir.getParent().toString())
-                .verify(result -> {
+        runCli(VIOLATIONS_FOUND, "--dir", symlinkedSrcDir.toString(), "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS, "-z",
+                symlinkedSrcDir.getParent().toString()).verify(result -> {
                     result.checkStdOut(not(containsString(srcDir.resolve("someSource.dummy").toString())));
                     result.checkStdOut(not(containsString(symlinkedSrcDir.resolve("someSource.dummy").toString())));
                     // base path is symlinkedSrcDir without /tmp: e.g. junit-relativize-with-123
@@ -475,9 +461,8 @@ class PmdCliTest extends BaseCliTest {
 
     @Test
     void testRelativizeWithMultiple() throws Exception {
-        runCli(VIOLATIONS_FOUND, "--dir", srcDir.toString(), "--rulesets",
-                DUMMY_RULESET_WITH_VIOLATIONS, "-z", srcDir.getParent().toString() + "," + srcDir.toString())
-                .verify(result -> {
+        runCli(VIOLATIONS_FOUND, "--dir", srcDir.toString(), "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS, "-z",
+                srcDir.getParent().toString() + "," + srcDir.toString()).verify(result -> {
                     result.checkStdOut(not(containsString(srcDir.resolve("someSource.dummy").toString())));
                     result.checkStdOut(startsWith("someSource.dummy"));
                 });
@@ -485,13 +470,11 @@ class PmdCliTest extends BaseCliTest {
 
     @Test
     void testRelativizeWithFileIsError() throws Exception {
-        runCli(USAGE_ERROR, "--dir", srcDir.toString(), "--rulesets",
-                DUMMY_RULESET_WITH_VIOLATIONS, "-z", srcDir.resolve("someSource.dummy").toString())
+        runCli(USAGE_ERROR, "--dir", srcDir.toString(), "--rulesets", DUMMY_RULESET_WITH_VIOLATIONS, "-z",
+                srcDir.resolve("someSource.dummy").toString())
                 .verify(result -> result.checkStdErr(
-                        containsString(
-                                "Expected a directory path for option '--relativize-paths-with', found a file: "
-                                        + srcDir.resolve("someSource.dummy"))
-                ));
+                        containsString("Expected a directory path for option '--relativize-paths-with', found a file: "
+                                + srcDir.resolve("someSource.dummy"))));
     }
 
     @Test
@@ -499,30 +482,31 @@ class PmdCliTest extends BaseCliTest {
         Path filelist = tempDir.resolve("filelist.txt");
         writeString(filelist, srcDir.resolve("someSource.dummy") + System.lineSeparator());
         runCli(VIOLATIONS_FOUND, "--file-list", filelist.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION)
-                .verify(r -> r.checkStdOut(
-                        containsString("Violation from ReportAllRootNodes")
-                ));
+                .verify(r -> r.checkStdOut(containsString("Violation from ReportAllRootNodes")));
     }
 
     @Test
     void minimumPriorityOption() throws Exception {
-        runCli(VIOLATIONS_FOUND, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority", "Medium")
-                .verify(r -> r.checkStdOut(
-                        containsString("Violation from ReportAllRootNodes")
-                ));
-        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority", "High");
-        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority", "medium HIGH");
-        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority", "Medium_High");
+        runCli(VIOLATIONS_FOUND, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION,
+                "--minimum-priority", "Medium")
+                .verify(r -> r.checkStdOut(containsString("Violation from ReportAllRootNodes")));
+        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority",
+                "High");
+        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority",
+                "medium HIGH");
+        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority",
+                "Medium_High");
     }
 
     @Test
     void minimumPriorityOptionNumeric() throws Exception {
-        runCli(VIOLATIONS_FOUND, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority", "3")
-                .verify(r -> r.checkStdOut(
-                        containsString("Violation from ReportAllRootNodes")
-                ));
-        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority", "1");
-        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority", "2");
+        runCli(VIOLATIONS_FOUND, "-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION,
+                "--minimum-priority", "3")
+                .verify(r -> r.checkStdOut(containsString("Violation from ReportAllRootNodes")));
+        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority",
+                "1");
+        runCliSuccessfully("-d", srcDir.toString(), "-f", "text", "-R", RULESET_WITH_VIOLATION, "--minimum-priority",
+                "2");
     }
 
     // utilities
@@ -530,13 +514,11 @@ class PmdCliTest extends BaseCliTest {
         return tempDir;
     }
 
-
     // available in Files on java 11+
     private static void writeString(Path path, String text) throws IOException {
         ByteBuffer encoded = StandardCharsets.UTF_8.encode(text);
         Files.write(path, encoded.array());
     }
-
 
     // available in Files on java 11+
     private static String readString(Path path) throws IOException {
@@ -544,12 +526,10 @@ class PmdCliTest extends BaseCliTest {
         ByteBuffer buf = ByteBuffer.wrap(bytes);
         return StandardCharsets.UTF_8.decode(buf).toString();
     }
-    
+
     @Override
     protected List<String> cliStandardArgs() {
-        return listOf(
-            "check", "--no-cache", "--no-progress"
-        );
+        return listOf("check", "--no-cache", "--no-progress");
     }
 
     public static class FooRule extends MockRule {

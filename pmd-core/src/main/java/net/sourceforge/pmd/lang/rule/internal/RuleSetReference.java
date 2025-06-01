@@ -13,7 +13,8 @@ import net.sourceforge.pmd.lang.rule.RuleSetLoader;
 /**
  * This class represents a reference to RuleSet.
  *
- * <p>Note: This is part of the internals of the {@link RuleSetLoader}.
+ * <p>
+ * Note: This is part of the internals of the {@link RuleSetLoader}.
  */
 public class RuleSetReference {
     private final String ruleSetFileName;

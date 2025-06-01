@@ -15,17 +15,16 @@ import net.sourceforge.pmd.properties.PropertyFactory;
  */
 public class ApexLanguageProperties extends LanguagePropertyBundle {
 
-    public static final PropertyDescriptor<Optional<String>> MULTIFILE_DIRECTORY =
-        PropertyFactory.stringProperty("rootDirectory")
-                       .desc("The root directory of the Salesforce metadata, where `sfdx-project.json` resides.")
-                       .defaultValue("") // is this ok?
-                       .toOptional("")
-                       .build();
+    public static final PropertyDescriptor<Optional<String>> MULTIFILE_DIRECTORY = PropertyFactory
+            .stringProperty("rootDirectory")
+            .desc("The root directory of the Salesforce metadata, where `sfdx-project.json` resides.").defaultValue("") // is
+                                                                                                                        // this
+                                                                                                                        // ok?
+            .toOptional("").build();
 
     public ApexLanguageProperties() {
         super(ApexLanguageModule.getInstance());
         definePropertyDescriptor(MULTIFILE_DIRECTORY);
     }
-
 
 }

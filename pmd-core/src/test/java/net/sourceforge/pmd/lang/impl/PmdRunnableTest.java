@@ -56,7 +56,6 @@ class PmdRunnableTest {
     private PmdReporter reporter;
     private Rule rule;
 
-
     @BeforeEach
     void prepare() {
         // reset data
@@ -68,7 +67,6 @@ class PmdRunnableTest {
         // so this test only makes sense without separate threads
         configuration.setThreads(0);
     }
-
 
     private Report process(LanguageVersion lv) {
         configuration.setForceLanguageVersion(lv);
@@ -121,13 +119,11 @@ class PmdRunnableTest {
         });
     }
 
-
     @Test
     void semanticErrorShouldAbortTheRun() {
         Report report = process(versionWithParserThatReportsSemanticError());
 
-        verify(reporter, times(1))
-            .log(eq(Level.ERROR), eq("at test.dummy:1:1: " + TEST_MESSAGE_SEMANTIC_ERROR));
+        verify(reporter, times(1)).log(eq(Level.ERROR), eq("at test.dummy:1:1: " + TEST_MESSAGE_SEMANTIC_ERROR));
         verify(rule, never()).apply(Mockito.any(), Mockito.any());
 
         assertEquals(1, report.getProcessingErrors().size());
@@ -160,12 +156,9 @@ class PmdRunnableTest {
         static final ThrowingLanguageModule INSTANCE = new ThrowingLanguageModule();
 
         ThrowingLanguageModule() {
-            super(LanguageMetadata.withId("foo").name("Foo").extensions("foo")
-                                  .addVersion(THROWS_ASSERTION_ERROR)
-                                  .addVersion(THROWS_SEMANTIC_ERROR)
-                                  .addVersion(PARSER_REPORTS_SEMANTIC_ERROR)
-                                  .addDefaultVersion("defalt"),
-                  ThrowingLanguageModule::makeParser);
+            super(LanguageMetadata.withId("foo").name("Foo").extensions("foo").addVersion(THROWS_ASSERTION_ERROR)
+                    .addVersion(THROWS_SEMANTIC_ERROR).addVersion(PARSER_REPORTS_SEMANTIC_ERROR)
+                    .addDefaultVersion("defalt"), ThrowingLanguageModule::makeParser);
         }
 
         private static Parser makeParser() {

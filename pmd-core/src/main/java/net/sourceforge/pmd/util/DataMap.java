@@ -14,12 +14,12 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * An opaque, strongly typed heterogeneous data container. Data maps can
- * be set to accept only a certain type of key, with the type parameter.
- * The key can itself constrain the type of values, using its own type
- * parameter {@code T}.
+ * An opaque, strongly typed heterogeneous data container. Data maps can be set
+ * to accept only a certain type of key, with the type parameter. The key can
+ * itself constrain the type of values, using its own type parameter {@code T}.
  *
- * @param <K> Type of keys in this map.
+ * @param <K>
+ *            Type of keys in this map.
  */
 public final class DataMap<K> {
 
@@ -32,9 +32,12 @@ public final class DataMap<K> {
     /**
      * Set the mapping to the given data.
      *
-     * @param key  Key
-     * @param data Data mapped to the key
-     * @param <T>  Type of the data
+     * @param key
+     *            Key
+     * @param data
+     *            Data mapped to the key
+     * @param <T>
+     *            Type of the data
      *
      * @return Previous value associated with the key (nullable)
      */
@@ -46,8 +49,10 @@ public final class DataMap<K> {
     /**
      * Retrieves the data currently mapped to the key.
      *
-     * @param key Key
-     * @param <T> Type of the data
+     * @param key
+     *            Key
+     * @param <T>
+     *            Type of the data
      *
      * @return Value associated with the key (nullable)
      */
@@ -64,9 +69,12 @@ public final class DataMap<K> {
     /**
      * Retrieve the value, or compute it if it is missing.
      *
-     * @param key      Key
-     * @param supplier Supplier for a value
-     * @param <T>      Type of the data
+     * @param key
+     *            Key
+     * @param supplier
+     *            Supplier for a value
+     * @param <T>
+     *            Type of the data
      *
      * @return Value associated with the key (as nullable as the
      */
@@ -76,12 +84,15 @@ public final class DataMap<K> {
     }
 
     /**
-     * Create or replace a mapping with a value computed from the current
-     * value (or null if missing).
+     * Create or replace a mapping with a value computed from the current value (or
+     * null if missing).
      *
-     * @param key      Key
-     * @param function Supplier for a value
-     * @param <T>      Type of the data
+     * @param key
+     *            Key
+     * @param function
+     *            Supplier for a value
+     * @param <T>
+     *            Type of the data
      *
      * @return Value returned by the parameter function
      */
@@ -94,7 +105,8 @@ public final class DataMap<K> {
      * @see Map#merge(Object, Object, BiFunction)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public <T> T merge(DataKey<? extends K, T> key, T value, BiFunction<? super @NonNull T, ? super T, ? extends T> function) {
+    public <T> T merge(DataKey<? extends K, T> key, T value,
+            BiFunction<? super @NonNull T, ? super T, ? extends T> function) {
         return (T) getMap().merge(key, value, (BiFunction) function);
     }
 
@@ -114,7 +126,8 @@ public final class DataMap<K> {
     /**
      * Returns true if the given key has a non-null value in the map.
      *
-     * @param key Key
+     * @param key
+     *            Key
      *
      * @return True if some value is set
      */
@@ -131,12 +144,13 @@ public final class DataMap<K> {
     }
 
     /**
-     * A key for type-safe access into a {@link DataMap}. Data keys use
-     * reference identity and are only compared by reference within
-     * {@link DataMap}.
+     * A key for type-safe access into a {@link DataMap}. Data keys use reference
+     * identity and are only compared by reference within {@link DataMap}.
      *
-     * @param <K> Type of the family of keys this is a part of
-     * @param <T> Type of the addressed data
+     * @param <K>
+     *            Type of the family of keys this is a part of
+     * @param <T>
+     *            Type of the addressed data
      */
     public interface DataKey<K extends DataKey<K, T>, T> {
 

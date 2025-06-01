@@ -35,13 +35,12 @@ public class AvoidHardcodingIdRule extends AbstractApexRule {
         return RuleTargetSelector.forTypes(ASTLiteralExpression.class);
     }
 
-
     @Override
     public Object visit(ASTLiteralExpression node, Object data) {
         if (node.isString()) {
             String literal = node.getImage();
             if (PATTERN.matcher(literal).matches()) {
-                // 18-digit ids are just 15 digit ids + checksums, validate it  or it's not an id
+                // 18-digit ids are just 15 digit ids + checksums, validate it or it's not an id
                 if (literal.length() == 18 && !validateChecksum(literal)) {
                     return data;
                 }
@@ -53,8 +52,8 @@ public class AvoidHardcodingIdRule extends AbstractApexRule {
 
     /*
      * ID validation - sources:
-     * https://stackoverflow.com/questions/9742913/validating-a-salesforce-id#answer-29299786
-     * https://gist.github.com/jeriley/36b29f7c46527af4532aaf092c90dd56
+     * https://stackoverflow.com/questions/9742913/validating-a-salesforce-id#answer
+     * -29299786 https://gist.github.com/jeriley/36b29f7c46527af4532aaf092c90dd56
      */
     private boolean validateChecksum(String literal) {
         final String part1 = literal.substring(0, 5);
@@ -65,8 +64,7 @@ public class AvoidHardcodingIdRule extends AbstractApexRule {
         final char checksum2 = checksum(part2);
         final char checksum3 = checksum(part3);
 
-        return literal.charAt(15) == checksum1 && literal.charAt(16) == checksum2
-                && literal.charAt(17) == checksum3;
+        return literal.charAt(15) == checksum1 && literal.charAt(16) == checksum2 && literal.charAt(17) == checksum3;
     }
 
     private char checksum(String part) {

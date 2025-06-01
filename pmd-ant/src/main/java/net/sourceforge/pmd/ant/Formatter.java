@@ -36,11 +36,13 @@ import net.sourceforge.pmd.reporting.GlobalAnalysisListener;
 import net.sourceforge.pmd.reporting.ListenerInitializer;
 
 /**
- * Part of PMD Ant task configuration. Setters of this class are interpreted by Ant as properties
- * settable in the XML. This is therefore published API.
+ * Part of PMD Ant task configuration. Setters of this class are interpreted by
+ * Ant as properties settable in the XML. This is therefore published API.
  *
- * <p>This class is used to configure a specific {@link Renderer} for outputting the violations. This is called
- * a formatter in PMD Ant task configuration and might look like this:
+ * <p>
+ * This class is used to configure a specific {@link Renderer} for outputting
+ * the violations. This is called a formatter in PMD Ant task configuration and
+ * might look like this:
  *
  * <pre>{@code
  * <pmd>
@@ -225,9 +227,12 @@ public class Formatter {
             }
 
             {
-                // try to use the system property "sun.jnu.encoding", which is the platform encoding.
-                // this property is not specified and might not always be available, but it is for
-                // openjdk 11: https://github.com/openjdk/jdk11u/blob/cee8535a9d3de8558b4b5028d68e397e508bef71/src/java.base/share/native/libjava/System.c#L384
+                // try to use the system property "sun.jnu.encoding", which is the platform
+                // encoding.
+                // this property is not specified and might not always be available, but it is
+                // for
+                // openjdk 11:
+                // https://github.com/openjdk/jdk11u/blob/cee8535a9d3de8558b4b5028d68e397e508bef71/src/java.base/share/native/libjava/System.c#L384
                 // if it exists, we use it - this avoids illegal reflective access below.
                 String jnuEncoding = System.getProperty("sun.jnu.encoding");
                 if (jnuEncoding != null) {

@@ -51,8 +51,7 @@ class ApexMultifileAnalysisTest {
             assertTrue(analysisInstance.isFailed());
             assertTrue(analysisInstance.getFileIssues("any file").isEmpty());
         });
-        assertThat(log,
-                containsStringIgnoringCase("Error: line 3 at 4: 'path' is required"));
+        assertThat(log, containsStringIgnoringCase("Error: line 3 at 4: 'path' is required"));
     }
 
     @Test
@@ -70,7 +69,8 @@ class ApexMultifileAnalysisTest {
 
     private @NonNull ApexMultifileAnalysis getAnalysisForTempFolder() {
         ApexLanguageProperties props = new ApexLanguageProperties();
-        props.setProperty(ApexLanguageProperties.MULTIFILE_DIRECTORY, Optional.of(tempFolder.toAbsolutePath().toString()));
+        props.setProperty(ApexLanguageProperties.MULTIFILE_DIRECTORY,
+                Optional.of(tempFolder.toAbsolutePath().toString()));
         return new ApexMultifileAnalysis(props);
     }
 

@@ -87,7 +87,8 @@ public abstract class RuleTst {
     void runTest(RuleTestDescriptor test) {
         Rule rule = test.getRule();
 
-        // always reinitialize the rule, regardless of test.getReinitializeRule() (#3976 / #3302)
+        // always reinitialize the rule, regardless of test.getReinitializeRule() (#3976
+        // / #3302)
         rule = reinitializeRule(rule);
 
         Map<PropertyDescriptor<?>, Object> oldProperties = rule.getPropertiesByPropertyDescriptor();
@@ -125,7 +126,7 @@ public abstract class RuleTst {
                 printReport(test, report);
             }
             assertEquals(test.getExpectedProblems(), res,
-                         '"' + test.getDescription() + "\" resulted in wrong number of failures,");
+                    '"' + test.getDescription() + "\" resulted in wrong number of failures,");
             assertMessages(report, test);
             assertLineNumbers(report, test);
         } finally {
@@ -136,18 +137,17 @@ public abstract class RuleTst {
         }
     }
 
-
     /**
      * Code to be executed if the rule is reinitialised.
      *
-     * @param rule The rule to reinitialise
+     * @param rule
+     *            The rule to reinitialise
      *
      * @return The rule once it has been reinitialised
      */
     private Rule reinitializeRule(Rule rule) {
         return rule.deepCopy();
     }
-
 
     private void assertMessages(Report report, RuleTestDescriptor test) {
         if (report == null || test.getExpectedMessages().isEmpty()) {
@@ -157,7 +157,7 @@ public abstract class RuleTst {
         List<String> expectedMessages = test.getExpectedMessages();
         if (report.getViolations().size() != expectedMessages.size()) {
             throw new RuntimeException("Test setup error: number of expected messages doesn't match "
-                                           + "number of violations for test case '" + test.getDescription() + "'");
+                    + "number of violations for test case '" + test.getDescription() + "'");
         }
 
         int index = 0;
@@ -167,8 +167,7 @@ public abstract class RuleTst {
                 printReport(test, report);
             }
             assertEquals(expectedMessages.get(index), actual,
-                         '"' + test.getDescription() + "\" produced wrong message on violation number " + (index + 1)
-                             + ".");
+                    '"' + test.getDescription() + "\" produced wrong message on violation number " + (index + 1) + ".");
             index++;
         }
     }
@@ -182,9 +181,8 @@ public abstract class RuleTst {
         List<Integer> expectedEndLines = test.getExpectedEndLineNumbers();
         if (report.getViolations().size() != expected.size()) {
             throw new RuntimeException("Test setup error: number of expected line numbers " + expected.size()
-                                           + " doesn't match number of violations " + report.getViolations().size()
-                                           + " for test case '"
-                                           + test.getDescription() + "'");
+                    + " doesn't match number of violations " + report.getViolations().size() + " for test case '"
+                    + test.getDescription() + "'");
         }
 
         int index = 0;
@@ -198,13 +196,11 @@ public abstract class RuleTst {
             if (isFailing) {
                 printReport(test, report);
             }
-            assertEquals(expected.get(index), actualBeginLine,
-                         '"' + test.getDescription() + "\" violation on wrong line number: violation number "
-                             + (index + 1) + ".");
+            assertEquals(expected.get(index), actualBeginLine, '"' + test.getDescription()
+                    + "\" violation on wrong line number: violation number " + (index + 1) + ".");
             if (!expectedEndLines.isEmpty()) {
-                assertEquals(expectedEndLines.get(index), actualEndLine,
-                        '"' + test.getDescription() + "\" violation on wrong end line number: violation number "
-                            + (index + 1) + ".");
+                assertEquals(expectedEndLines.get(index), actualEndLine, '"' + test.getDescription()
+                        + "\" violation on wrong end line number: violation number " + (index + 1) + ".");
             }
             index++;
         }
@@ -213,9 +209,8 @@ public abstract class RuleTst {
     private void printReport(RuleTestDescriptor test, Report report) {
         System.out.println("--------------------------------------------------------------");
         System.out.println("Test Failure: " + test.getDescription());
-        System.out.println(
-            " -> Expected " + test.getExpectedProblems() + " problem(s), " + report.getViolations().size()
-                + " problem(s) found.");
+        System.out.println(" -> Expected " + test.getExpectedProblems() + " problem(s), "
+                + report.getViolations().size() + " problem(s) found.");
         System.out.println(" -> Expected messages: " + test.getExpectedMessages());
         System.out.println(" -> Expected begin line numbers: " + test.getExpectedLineNumbers());
         if (!test.getExpectedEndLineNumbers().isEmpty()) {
@@ -262,7 +257,8 @@ public abstract class RuleTst {
         }
 
         try {
-            TEST_AUXCLASSPATH_CLASSLOADER = new ClasspathClassLoader(PATH_TO_JRT_FS_JAR.toString(), PMDConfiguration.class.getClassLoader());
+            TEST_AUXCLASSPATH_CLASSLOADER = new ClasspathClassLoader(PATH_TO_JRT_FS_JAR.toString(),
+                    PMDConfiguration.class.getClassLoader());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -317,15 +313,14 @@ public abstract class RuleTst {
     }
 
     /**
-     * Extract a set of tests from an XML file with the given name. The file
-     * should be ./xml/[testsFileName].xml relative to the test class. The
-     * format is defined in test-data.xsd.
+     * Extract a set of tests from an XML file with the given name. The file should
+     * be ./xml/[testsFileName].xml relative to the test class. The format is
+     * defined in test-data.xsd.
      */
     private RuleTestCollection parseTestXml(Rule rule, String testsFileName, String baseDirectory) {
         String testXmlFileName = baseDirectory + testsFileName + ".xml";
         String absoluteUriToTestXmlFile = new File(".").getAbsoluteFile().toURI() + "/src/test/resources/"
-                + this.getClass().getPackage().getName().replaceAll("\\.", "/")
-                + "/" + testXmlFileName;
+                + this.getClass().getPackage().getName().replaceAll("\\.", "/") + "/" + testXmlFileName;
 
         try (InputStream inputStream = getClass().getResourceAsStream(testXmlFileName)) {
             if (inputStream == null) {
@@ -354,8 +349,8 @@ public abstract class RuleTst {
 
     /**
      * Run a set of tests defined in a XML test-data file. The file should be
-     * ./xml/[testsFileName].xml relative to the test-class. The format is
-     * defined in test-data.xsd.
+     * ./xml/[testsFileName].xml relative to the test-class. The format is defined
+     * in test-data.xsd.
      */
     public void runTests(Rule rule, String testsFileName) {
         runTests(parseTestCollection(rule, testsFileName));
@@ -388,15 +383,12 @@ public abstract class RuleTst {
     }
 
     private DynamicTest toDynamicTest(RuleTestCollection collection, RuleTestDescriptor testDescriptor) {
-        URI testSourceUri = URI.create(
-            collection.getAbsoluteUriToTestXmlFile() + "?line=" + testDescriptor.getLineNumber());
+        URI testSourceUri = URI
+                .create(collection.getAbsoluteUriToTestXmlFile() + "?line=" + testDescriptor.getLineNumber());
         if (testDescriptor.isDisabled()) {
-            return DynamicTest.dynamicTest("[IGNORED] " + testDescriptor.getDescription(),
-                                           testSourceUri,
-                                           () -> { });
+            return DynamicTest.dynamicTest("[IGNORED] " + testDescriptor.getDescription(), testSourceUri, () -> {
+            });
         }
-        return DynamicTest.dynamicTest(testDescriptor.getDescription(),
-                                       testSourceUri,
-                                       () -> runTest(testDescriptor));
+        return DynamicTest.dynamicTest(testDescriptor.getDescription(), testSourceUri, () -> runTest(testDescriptor));
     }
 }

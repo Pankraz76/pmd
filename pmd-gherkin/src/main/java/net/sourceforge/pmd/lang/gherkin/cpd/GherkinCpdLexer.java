@@ -13,7 +13,10 @@ import net.sourceforge.pmd.lang.gherkin.ast.GherkinLexer;
 /**
  * The Gherkin Tokenizer.
  *
- * <p>Note: This class has been called GherkinTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called GherkinTokenizer in PMD 6
+ * </p>
+ * .
  */
 public class GherkinCpdLexer extends AntlrCpdLexer {
 

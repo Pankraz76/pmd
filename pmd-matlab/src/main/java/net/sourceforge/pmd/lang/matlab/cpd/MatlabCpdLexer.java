@@ -14,7 +14,10 @@ import net.sourceforge.pmd.lang.matlab.ast.MatlabTokenKinds;
 /**
  * The Matlab Tokenizer.
  *
- * <p>Note: This class has been called MatlabTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called MatlabTokenizer in PMD 6
+ * </p>
+ * .
  */
 public class MatlabCpdLexer extends JavaccCpdLexer {
 

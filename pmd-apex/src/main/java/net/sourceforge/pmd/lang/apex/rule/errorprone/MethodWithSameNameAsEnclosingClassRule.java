@@ -18,7 +18,6 @@ public class MethodWithSameNameAsEnclosingClassRule extends AbstractApexRule {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
-
     @Override
     public Object visit(ASTUserClass node, Object data) {
         String className = node.getSimpleName();

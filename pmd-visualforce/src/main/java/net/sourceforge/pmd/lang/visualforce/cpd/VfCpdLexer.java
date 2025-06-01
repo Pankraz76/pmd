@@ -16,7 +16,11 @@ import net.sourceforge.pmd.lang.document.TextDocument;
 import net.sourceforge.pmd.lang.visualforce.ast.VfTokenKinds;
 
 /**
- * <p>Note: This class has been called VfTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called VfTokenizer in PMD 6
+ * </p>
+ * .
+ * 
  * @author sergey.gorbaty
  */
 public class VfCpdLexer extends JavaccCpdLexer {

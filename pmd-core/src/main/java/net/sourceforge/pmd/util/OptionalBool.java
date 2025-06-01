@@ -10,6 +10,7 @@ public enum OptionalBool {
 
     /**
      * Returns the logical complement.
+     * 
      * <pre>{@code
      * yes -> no
      * unk -> unk
@@ -37,6 +38,7 @@ public enum OptionalBool {
 
     /**
      * If both values are the same, return it. Otherwise return UNKNOWN.
+     * 
      * <pre>{@code
      * yes, yes -> yes
      * no, no -> no

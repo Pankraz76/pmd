@@ -23,12 +23,14 @@ package net.sourceforge.pmd.lang.velocity.ast;
 /**
  * ASTMethod.java
  *
- * <p>Method support for references : $foo.method()
+ * <p>
+ * Method support for references : $foo.method()
  *
- * <p>NOTE :
- * introspection is now done at render time.
+ * <p>
+ * NOTE : introspection is now done at render time.
  *
- * <p>Please look at the Parser.jjt file which is what controls the generation of
+ * <p>
+ * Please look at the Parser.jjt file which is what controls the generation of
  * this class.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>

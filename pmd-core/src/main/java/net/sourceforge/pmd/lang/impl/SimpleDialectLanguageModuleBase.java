@@ -34,16 +34,19 @@ import net.sourceforge.pmd.util.CollectionUtil;
 import net.sourceforge.pmd.util.designerbindings.DesignerBindings;
 
 /**
- * The simplest implementation of a dialect, where only a {@link LanguageMetadata}
- * needs to be implemented. Everything gets delegated to the base language,
- * with all dialect extension applied.
+ * The simplest implementation of a dialect, where only a
+ * {@link LanguageMetadata} needs to be implemented. Everything gets delegated
+ * to the base language, with all dialect extension applied.
  *
  * @author Juan Martín Sotuyo Dodero
  * @since 7.13.0
- * @experimental Since 7.13.0. See <a href="https://github.com/pmd/pmd/pull/5438">[core] Support language dialects #5438</a>.
+ * @experimental Since 7.13.0. See
+ *               <a href="https://github.com/pmd/pmd/pull/5438">[core] Support
+ *               language dialects #5438</a>.
  */
 @Experimental
-public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implements PmdCapableLanguage, CpdCapableLanguage {
+public class SimpleDialectLanguageModuleBase extends LanguageModuleBase
+        implements PmdCapableLanguage, CpdCapableLanguage {
 
     private final Function<LanguagePropertyBundle, BasePmdDialectLanguageVersionHandler> handler;
 
@@ -51,11 +54,13 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
         this(metadata, new BasePmdDialectLanguageVersionHandler());
     }
 
-    protected SimpleDialectLanguageModuleBase(DialectLanguageMetadata metadata, BasePmdDialectLanguageVersionHandler handler) {
+    protected SimpleDialectLanguageModuleBase(DialectLanguageMetadata metadata,
+            BasePmdDialectLanguageVersionHandler handler) {
         this(metadata, p -> handler);
     }
 
-    protected SimpleDialectLanguageModuleBase(DialectLanguageMetadata metadata, Function<LanguagePropertyBundle, BasePmdDialectLanguageVersionHandler> makeHandler) {
+    protected SimpleDialectLanguageModuleBase(DialectLanguageMetadata metadata,
+            Function<LanguagePropertyBundle, BasePmdDialectLanguageVersionHandler> makeHandler) {
         super(metadata);
         assert getBaseLanguageId() != null : "Language " + getId() + " is not a dialect of another language.";
 
@@ -66,18 +71,18 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
         final Language baseLanguage = registry.getLanguageById(getBaseLanguageId());
 
         if (baseLanguage == null) {
-            throw new IllegalStateException(
-                    "Language " + getId() + " has unsatisfied dependencies: "
-                            + getBaseLanguageId() + " is not found in " + registry
-            );
+            throw new IllegalStateException("Language " + getId() + " has unsatisfied dependencies: "
+                    + getBaseLanguageId() + " is not found in " + registry);
         }
 
         return baseLanguage;
     }
 
     /**
-     * Creates a combined property bundle with all properties from the dialect and the base language.
-     * To define dialect-specific properties to be added to this bundle, override {@link #newDialectPropertyBundle()}
+     * Creates a combined property bundle with all properties from the dialect and
+     * the base language. To define dialect-specific properties to be added to this
+     * bundle, override {@link #newDialectPropertyBundle()}
+     * 
      * @return A new set of properties
      */
     @Override
@@ -113,17 +118,20 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
     }
 
     /**
-     * A Language processor for dialects. It delegates everything to the base language, but extends
-     * the {@link LanguageVersionHandler} with any dialect-specific options.
+     * A Language processor for dialects. It delegates everything to the base
+     * language, but extends the {@link LanguageVersionHandler} with any
+     * dialect-specific options.
      */
     private static final class DialectLanguageProcessor extends BatchLanguageProcessor<LanguagePropertyBundle> {
         private final LanguageProcessor baseLanguageProcessor;
         private final LanguageVersionHandler combinedHandler;
 
-        private DialectLanguageProcessor(PmdCapableLanguage baseLanguage, BasePmdDialectLanguageVersionHandler dialectHandler, LanguagePropertyBundle bundle) {
+        private DialectLanguageProcessor(PmdCapableLanguage baseLanguage,
+                BasePmdDialectLanguageVersionHandler dialectHandler, LanguagePropertyBundle bundle) {
             super(bundle);
             this.baseLanguageProcessor = baseLanguage.createProcessor(bundle);
-            this.combinedHandler = new SimpleDialectLanguageVersionHandler(baseLanguageProcessor.services(), dialectHandler);
+            this.combinedHandler = new SimpleDialectLanguageVersionHandler(baseLanguageProcessor.services(),
+                    dialectHandler);
         }
 
         @Override
@@ -144,14 +152,16 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
     }
 
     /**
-     * A composite language version handler that merges a dialect's extension with the bae language.
+     * A composite language version handler that merges a dialect's extension with
+     * the bae language.
      */
     private static class SimpleDialectLanguageVersionHandler extends AbstractPmdLanguageVersionHandler {
 
         private final LanguageVersionHandler baseLanguageVersionHandler;
         private final LanguageVersionHandler dialectLanguageVersionHandler;
 
-        SimpleDialectLanguageVersionHandler(LanguageVersionHandler baseLanguageVersionHandler, LanguageVersionHandler dialectLanguageVersionHandler) {
+        SimpleDialectLanguageVersionHandler(LanguageVersionHandler baseLanguageVersionHandler,
+                LanguageVersionHandler dialectLanguageVersionHandler) {
             this.baseLanguageVersionHandler = baseLanguageVersionHandler;
             this.dialectLanguageVersionHandler = dialectLanguageVersionHandler;
         }
@@ -171,15 +181,13 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
 
         @Override
         public ViolationDecorator getViolationDecorator() {
-            return ViolationDecorator.chain(
-                    Arrays.asList(baseLanguageVersionHandler.getViolationDecorator(),
-                            dialectLanguageVersionHandler.getViolationDecorator()));
+            return ViolationDecorator.chain(Arrays.asList(baseLanguageVersionHandler.getViolationDecorator(),
+                    dialectLanguageVersionHandler.getViolationDecorator()));
         }
 
         @Override
         public List<ViolationSuppressor> getExtraViolationSuppressors() {
-            return CollectionUtil.concatView(
-                    baseLanguageVersionHandler.getExtraViolationSuppressors(),
+            return CollectionUtil.concatView(baseLanguageVersionHandler.getExtraViolationSuppressors(),
                     dialectLanguageVersionHandler.getExtraViolationSuppressors());
         }
 
@@ -205,7 +213,8 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
         @Override
         public DesignerBindings getDesignerBindings() {
             // if the dialect set something it has priority
-            if (DesignerBindings.DefaultDesignerBindings.getInstance().equals(dialectLanguageVersionHandler.getDesignerBindings())) {
+            if (DesignerBindings.DefaultDesignerBindings.getInstance()
+                    .equals(dialectLanguageVersionHandler.getDesignerBindings())) {
                 return baseLanguageVersionHandler.getDesignerBindings();
             }
 

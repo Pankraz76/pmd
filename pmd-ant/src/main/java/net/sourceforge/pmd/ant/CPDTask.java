@@ -38,7 +38,9 @@ import net.sourceforge.pmd.lang.LanguageRegistry;
  * CPD Ant task. Setters of this class are interpreted by Ant as properties
  * settable in the XML. This is therefore published API.
  *
- * <p>Runs the CPD utility via ant. The ant task looks like this:</p>
+ * <p>
+ * Runs the CPD utility via ant. The ant task looks like this:
+ * </p>
  *
  * <pre>{@code
  *   <project name="CPDProject" default="main" basedir=".">
@@ -47,11 +49,13 @@ import net.sourceforge.pmd.lang.LanguageRegistry;
  *             <include name="*.jar"/>
  *         </fileset>
  *     </path>
- *     <taskdef name="cpd" classname="net.sourceforge.pmd.ant.CPDTask" classpathref="pmd.classpath" />
+ *     <taskdef name="cpd" classname=
+"net.sourceforge.pmd.ant.CPDTask" classpathref="pmd.classpath" />
  *
  *     <target name="main">
  *       <cpd encoding="UTF-16LE" language="java" ignoreIdentifiers="true"
- *            ignoreLiterals="true" ignoreAnnotations="true" minimumTokenCount="100"
+ *            ignoreLiterals="true" ignoreAnnotations="true" minimumTokenCount=
+"100"
  *            outputFile="c:\cpdrun.txt">
  *         <fileset dir="/path/to/my/src">
  *           <include name="*.java"/>
@@ -61,7 +65,9 @@ import net.sourceforge.pmd.lang.LanguageRegistry;
  *   </project>
  * }</pre>
  *
- * <p>Required: minimumTokenCount, outputFile, and at least one file</p>
+ * <p>
+ * Required: minimumTokenCount, outputFile, and at least one file
+ * </p>
  */
 public class CPDTask extends Task {
 
@@ -277,7 +283,8 @@ public class CPDTask extends Task {
     }
 
     /**
-     * Whether to fail the build if any recoverable errors occurred while processing the files.
+     * Whether to fail the build if any recoverable errors occurred while processing
+     * the files.
      *
      * @since 7.3.0
      */

@@ -53,10 +53,8 @@ class SarifRendererTest extends AbstractRendererTest {
     @Override
     String getExpectedError(Report.ProcessingError error) {
         String expected = readFile("expected-error.sarif.json");
-        expected = expected.replace("###REPLACE_ME###", error.getDetail()
-                .replaceAll("\r", "\\\\r")
-                .replaceAll("\n", "\\\\n")
-                .replaceAll("\t", "\\\\t"));
+        expected = expected.replace("###REPLACE_ME###",
+                error.getDetail().replaceAll("\r", "\\\\r").replaceAll("\n", "\\\\n").replaceAll("\t", "\\\\t"));
         return expected;
     }
 
@@ -68,10 +66,8 @@ class SarifRendererTest extends AbstractRendererTest {
     @Override
     String getExpectedErrorWithoutMessage(Report.ProcessingError error) {
         String expected = readFile("expected-error-nomessage.sarif.json");
-        expected = expected.replace("###REPLACE_ME###", error.getDetail()
-                .replaceAll("\r", "\\\\r")
-                .replaceAll("\n", "\\\\n")
-                .replaceAll("\t", "\\\\t"));
+        expected = expected.replace("###REPLACE_ME###",
+                error.getDetail().replaceAll("\r", "\\\\r").replaceAll("\n", "\\\\n").replaceAll("\t", "\\\\t"));
         return expected;
     }
 
@@ -82,10 +78,12 @@ class SarifRendererTest extends AbstractRendererTest {
     }
 
     /**
-     * Multiple occurrences of the same rule should be reported as individual results.
+     * Multiple occurrences of the same rule should be reported as individual
+     * results.
      * 
-     * @see <a href="https://github.com/pmd/pmd/issues/3768"> [core] SARIF formatter reports multiple locations
-     *      when it should report multiple results #3768</a>
+     * @see <a href="https://github.com/pmd/pmd/issues/3768"> [core] SARIF formatter
+     *      reports multiple locations when it should report multiple results
+     *      #3768</a>
      */
     @Test
     void testRendererMultipleLocations() throws Exception {

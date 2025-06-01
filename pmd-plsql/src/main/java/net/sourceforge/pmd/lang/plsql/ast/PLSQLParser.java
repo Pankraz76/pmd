@@ -28,7 +28,8 @@ public class PLSQLParser extends JjtreeParserAdapter<ASTInput> {
     // is always upper-case, regardless of the actual case used in the code.
     // The original casing can be found by looking at the TextDocument for the file.
 
-    // NOTE: the size of this array should be greater than the number of tokens in the file.
+    // NOTE: the size of this array should be greater than the number of tokens in
+    // the file.
     private static final String[] STRING_LITERAL_IMAGES_EXTRA = new String[PLSQLTokenKinds.TOKEN_NAMES.size()];
 
     static {
@@ -65,9 +66,8 @@ public class PLSQLParser extends JjtreeParserAdapter<ASTInput> {
                 // We use uppercase and not lowercase because that way, PLSQL keywords
                 // will be returned unchanged (they are already uppercase, see PLSQLParser),
                 // therefore creating fewer strings in memory.
-                if (kind != PLSQLTokenKinds.CHARACTER_LITERAL
-                    && kind != PLSQLTokenKinds.STRING_LITERAL
-                    && kind != PLSQLTokenKinds.QUOTED_LITERAL) {
+                if (kind != PLSQLTokenKinds.CHARACTER_LITERAL && kind != PLSQLTokenKinds.STRING_LITERAL
+                        && kind != PLSQLTokenKinds.QUOTED_LITERAL) {
                     image = image.toUpperCase(Locale.ROOT);
                 }
             }

@@ -47,7 +47,6 @@ public class ApexDangerousMethodsRule extends AbstractApexRule {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
-
     @Override
     public Object visit(ASTUserClass node, Object data) {
         if (Helper.isTestMethodOrClass(node)) {

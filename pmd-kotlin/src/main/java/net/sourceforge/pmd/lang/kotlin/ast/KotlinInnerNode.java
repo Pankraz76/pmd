@@ -24,7 +24,6 @@ abstract class KotlinInnerNode extends BaseAntlrInnerNode<KotlinNode> implements
         return visitor.visitNode(this, data);
     }
 
-
     @Override // override to make visible in package
     protected PmdAsAntlrInnerNode<KotlinNode> asAntlrNode() {
         return super.asAntlrNode();

@@ -19,12 +19,18 @@ import net.sourceforge.pmd.reporting.Report;
 import net.sourceforge.pmd.reporting.RuleViolation;
 
 /**
- * <p>Sharing settings are not inherited by inner classes. Sharing settings need to be declared on the class that
- * contains the Database method, DML, SOQL, or SOSL.</p>
+ * <p>
+ * Sharing settings are not inherited by inner classes. Sharing settings need to
+ * be declared on the class that contains the Database method, DML, SOQL, or
+ * SOSL.
+ * </p>
  *
- * <p>This test runs against Apex code that has an Outer class and and Inner class. Different Apex code is generated
- * based on the boolean permutations. Any classes that includes data access cod, but doesn't declare a sharing setting
- * should trigger a violation.</p>
+ * <p>
+ * This test runs against Apex code that has an Outer class and and Inner class.
+ * Different Apex code is generated based on the boolean permutations. Any
+ * classes that includes data access cod, but doesn't declare a sharing setting
+ * should trigger a violation.
+ * </p>
  */
 class ApexSharingViolationsNestedClassTest extends ApexParserTestBase {
     /**
@@ -52,13 +58,13 @@ class ApexSharingViolationsNestedClassTest extends ApexParserTestBase {
     }
 
     /**
-     * The permutations used for class generation. See {@link #generateClass(boolean, Operation, boolean, Operation)}
+     * The permutations used for class generation. See
+     * {@link #generateClass(boolean, Operation, boolean, Operation)}
      */
     @ParameterizedTest
     @MethodSource("data")
-    void testSharingPermutation(boolean outerSharingDeclared, Operation outerOperation,
-                                boolean innerSharingDeclared, Operation innerOperation,
-                                int expectedViolations, List<Integer> expectedLineNumbers) {
+    void testSharingPermutation(boolean outerSharingDeclared, Operation outerOperation, boolean innerSharingDeclared,
+            Operation innerOperation, int expectedViolations, List<Integer> expectedLineNumbers) {
         String apexClass = generateClass(outerSharingDeclared, outerOperation, innerSharingDeclared, innerOperation);
         ApexSharingViolationsRule rule = new ApexSharingViolationsRule();
         rule.setMessage("a message");
@@ -75,7 +81,7 @@ class ApexSharingViolationsNestedClassTest extends ApexParserTestBase {
     static Collection<?> data() {
         List<Object[]> data = new ArrayList<>();
 
-        boolean[] boolPermutations = {false, true};
+        boolean[] boolPermutations = { false, true };
 
         for (boolean outerSharingDeclared : boolPermutations) {
             for (Operation outerOperation : Operation.values()) {
@@ -92,11 +98,12 @@ class ApexSharingViolationsNestedClassTest extends ApexParserTestBase {
                         if (innerOperation.requiresSharingDeclaration && !innerSharingDeclared) {
                             // The inner class contains SOQL but doesn't declare sharing
                             expectedViolations++;
-                            // The location of the inner class declaration depends upon the content of the outer class
+                            // The location of the inner class declaration depends upon the content of the
+                            // outer class
                             expectedLineNumbers.add(outerOperation.requiresSharingDeclaration ? 3 : 2);
                         }
-                        data.add(new Object[]{outerSharingDeclared, outerOperation, innerSharingDeclared, innerOperation,
-                                              expectedViolations, expectedLineNumbers});
+                        data.add(new Object[] { outerSharingDeclared, outerOperation, innerSharingDeclared,
+                            innerOperation, expectedViolations, expectedLineNumbers });
                     }
                 }
             }
@@ -106,8 +113,11 @@ class ApexSharingViolationsNestedClassTest extends ApexParserTestBase {
     }
 
     /**
-     * <p>Generate an Apex class with various Sharing/Database/DML/SOQL/SOSL permutations. An example of the class
-     * returned when invoked with generateClass(true, SOQL, true, SOQL).</p>
+     * <p>
+     * Generate an Apex class with various Sharing/Database/DML/SOQL/SOSL
+     * permutations. An example of the class returned when invoked with
+     * generateClass(true, SOQL, true, SOQL).
+     * </p>
      *
      * <pre>
      * public with sharing class Outer {
@@ -118,14 +128,18 @@ class ApexSharingViolationsNestedClassTest extends ApexParserTestBase {
      * }
      * </pre>
      *
-     * @param outerSharing Add 'with sharing' to Outer class definition
-     * @param outerOperation Add a method to Outer class that performs the given operation
-     * @param innerSharing Add 'with sharing' to Inner class definition
-     * @param innerOperation Add a method to Inner class that performs the given operation
+     * @param outerSharing
+     *            Add 'with sharing' to Outer class definition
+     * @param outerOperation
+     *            Add a method to Outer class that performs the given operation
+     * @param innerSharing
+     *            Add 'with sharing' to Inner class definition
+     * @param innerOperation
+     *            Add a method to Inner class that performs the given operation
      * @return String that represents Apex code
      */
     private static String generateClass(boolean outerSharing, Operation outerOperation, boolean innerSharing,
-                                        Operation innerOperation) {
+            Operation innerOperation) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("public ");
@@ -138,7 +152,8 @@ class ApexSharingViolationsNestedClassTest extends ApexParserTestBase {
             // Do nothing
             break;
         default:
-            sb.append(String.format("\t\tpublic void outer%s(){ %s }\n", outerOperation.name(), outerOperation.codeSnippet));
+            sb.append(String.format("\t\tpublic void outer%s(){ %s }\n", outerOperation.name(),
+                    outerOperation.codeSnippet));
             break;
         }
         sb.append("\tpublic ");
@@ -151,7 +166,8 @@ class ApexSharingViolationsNestedClassTest extends ApexParserTestBase {
             // DO Nothing
             break;
         default:
-            sb.append(String.format("\t\tpublic void inner%s(){ %s }\n", innerOperation.name(), innerOperation.codeSnippet));
+            sb.append(String.format("\t\tpublic void inner%s(){ %s }\n", innerOperation.name(),
+                    innerOperation.codeSnippet));
             break;
         }
         sb.append("\t}\n"); // Closes class Inner

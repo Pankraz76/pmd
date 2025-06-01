@@ -9,6 +9,7 @@ import java.io.Writer;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -55,8 +56,8 @@ public final class XMLRenderer implements CPDReportRenderer {
      * Creates a XML Renderer with a specific output encoding.
      *
      * @param encoding
-     *            the encoding to use or null. If null, default (platform
-     *            dependent) encoding is used.
+     *            the encoding to use or null. If null, default (platform dependent)
+     *            encoding is used.
      */
     public XMLRenderer(String encoding) {
         this(encoding, true);
@@ -108,17 +109,18 @@ public final class XMLRenderer implements CPDReportRenderer {
         }
     }
 
-
     @Override
     public void render(final CPDReport report, final Writer writer) throws IOException {
         final Document doc = createDocument();
         final Element root = createElement(doc, "pmd-cpd");
 
         if (newFormat) {
-            root.setAttributeNS(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI, "xsi:schemaLocation", NAMESPACE_URI + " " + NAMESPACE_LOCATION);
+            root.setAttributeNS(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI, "xsi:schemaLocation",
+                    NAMESPACE_URI + " " + NAMESPACE_LOCATION);
             root.setAttributeNS(NAMESPACE_URI, "version", SCHEMA_VERSION);
             root.setAttributeNS(NAMESPACE_URI, "pmdVersion", PMDVersion.VERSION);
-            root.setAttributeNS(NAMESPACE_URI, "timestamp", OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+            root.setAttributeNS(NAMESPACE_URI, "timestamp",
+                    OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
         }
 
         final Map<FileId, Integer> numberOfTokensPerFile = report.getNumberOfTokensPerFile();
@@ -176,9 +178,11 @@ public final class XMLRenderer implements CPDReportRenderer {
             String platformSpecific = codeSnippet.toString().replace("\n", System.lineSeparator());
             Element codefragment = createElement(doc, "codefragment");
             // only remove invalid characters, escaping is not necessary in CDATA.
-            // if the string contains the end marker of a CDATA section, then the DOM impl will
+            // if the string contains the end marker of a CDATA section, then the DOM impl
+            // will
             // create two cdata sections automatically.
-            codefragment.appendChild(doc.createCDATASection(StringUtil.removedInvalidXml10Characters(platformSpecific)));
+            codefragment
+                    .appendChild(doc.createCDATASection(StringUtil.removedInvalidXml10Characters(platformSpecific)));
             duplication.appendChild(codefragment);
         }
     }

@@ -12,7 +12,6 @@ public final class ASTNewKeyValueObjectExpression extends AbstractApexNode.Singl
         super(constructorInitializer);
     }
 
-
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
@@ -21,8 +20,8 @@ public final class ASTNewKeyValueObjectExpression extends AbstractApexNode.Singl
     /**
      * Returns the type name.
      *
-     * This includes any type arguments.
-     * If the type is a primitive, its case will be normalized.
+     * This includes any type arguments. If the type is a primitive, its case will
+     * be normalized.
      */
     public String getType() {
         return caseNormalizedTypeIfPrimitive(node.getType().asCodeString());

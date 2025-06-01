@@ -7,9 +7,8 @@ package net.sourceforge.pmd.lang.java.symbols.table;
 import net.sourceforge.pmd.lang.java.symbols.table.coreimpl.ShadowChainIterator;
 
 /**
- * A {@linkplain ShadowChainIterator#getScopeTag() scope tag} for java
- * shadow chains. This gives information about why a declaration is in
- * scope.
+ * A {@linkplain ShadowChainIterator#getScopeTag() scope tag} for java shadow
+ * chains. This gives information about why a declaration is in scope.
  */
 public enum ScopeInfo {
 

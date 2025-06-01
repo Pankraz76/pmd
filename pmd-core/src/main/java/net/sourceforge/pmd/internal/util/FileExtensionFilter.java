@@ -32,9 +32,8 @@ final class FileExtensionFilter implements Predicate<String> {
         boolean accept = extensions == null;
         if (!accept) {
             for (String extension : extensions) {
-                boolean matches =
-                    ignoreCase ? StringUtils.endsWithIgnoreCase(path, extension)
-                               : path.endsWith(extension);
+                boolean matches = ignoreCase ? StringUtils.endsWithIgnoreCase(path, extension)
+                        : path.endsWith(extension);
                 if (matches) {
                     accept = true;
                     break;

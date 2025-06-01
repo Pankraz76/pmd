@@ -9,9 +9,9 @@ import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * A category for a {@link TimedOperation}, rendered either as a section
- * if several operations are registered on the same category but with
- * distinct labels, or put into the "remaining categories" section.
+ * A category for a {@link TimedOperation}, rendered either as a section if
+ * several operations are registered on the same category but with distinct
+ * labels, or put into the "remaining categories" section.
  *
  * @author Juan Martín Sotuyo Dodero
  */

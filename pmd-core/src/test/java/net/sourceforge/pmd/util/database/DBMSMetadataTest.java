@@ -39,8 +39,7 @@ class DBMSMetadataTest {
     static final String C_ORACLE_THIN_5 = "jdbc:oracle:thin:@//192.168.100.21:1521/ORCL?characterset=utf8&schemas=scott,hr,sh,system&objectTypes=procedures,functions,triggers,package,types&languages=plsql,java&name=PKG_%25%7C%7CPRC_%25&amp;user=system&amp;password=oracle";
 
     /**
-     * URI with minimum information, relying on defaults in
-     * testdefaults.properties
+     * URI with minimum information, relying on defaults in testdefaults.properties
      */
     static final String C_TEST_DEFAULTS = "jdbc:oracle:testdefault://192.168.100.21:1521/ORCL";
 
@@ -183,14 +182,12 @@ class DBMSMetadataTest {
         Reader result = instance.getSourceCode(objectType, name, schema);
 
         /*
-         * StringBuilder stringBuilder = new StringBuilder(1024); char[]
-         * charArray = new char[1024]; int readChars = 0; while(( readChars =
-         * result.read(charArray)) > 0 ) {
-         * System.out.println("Reader.read(CharArray)=="+readChars);
+         * StringBuilder stringBuilder = new StringBuilder(1024); char[] charArray = new
+         * char[1024]; int readChars = 0; while(( readChars = result.read(charArray)) >
+         * 0 ) { System.out.println("Reader.read(CharArray)=="+readChars);
          * stringBuilder.append(charArray, 0, readChars); } result.close();
          *
-         * System.out.println("getSourceCode()==\""+stringBuilder.toString()+
-         * "\"" );
+         * System.out.println("getSourceCode()==\""+stringBuilder.toString()+ "\"" );
          *
          * assertTrue(stringBuilder.toString().startsWith("\n  CREATE "));
          */

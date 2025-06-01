@@ -71,8 +71,9 @@ class RuleViolationComparatorTest {
     }
 
     private RuleViolation createJavaRuleViolation(Rule rule, String fileName, int beginLine, String description,
-                                                  int beginColumn, int endLine, int endColumn) {
-        FileLocation loc = FileLocation.range(FileId.fromPathLikeString(fileName), TextRange2d.range2d(beginLine, beginColumn, endLine, endColumn));
+            int beginColumn, int endLine, int endColumn) {
+        FileLocation loc = FileLocation.range(FileId.fromPathLikeString(fileName),
+                TextRange2d.range2d(beginLine, beginColumn, endLine, endColumn));
         return new ParametricRuleViolation(rule, loc, description, Collections.emptyMap());
     }
 }

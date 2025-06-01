@@ -62,24 +62,19 @@ abstract class BaseCliTest {
             System.setOut(new PrintStream(out));
             System.setErr(new PrintStream(err));
             // restoring system properties: --debug might change logging properties
-            SystemLambda.restoreSystemProperties(
-                () -> {
-                    int actualExitCode = PmdCli.mainWithoutExit(argList.toArray(new String[0]));
-                    exitCode.set(CliExitCode.fromInt(actualExitCode));
-                }
-            );
+            SystemLambda.restoreSystemProperties(() -> {
+                int actualExitCode = PmdCli.mainWithoutExit(argList.toArray(new String[0]));
+                exitCode.set(CliExitCode.fromInt(actualExitCode));
+            });
         } finally {
             System.setOut(formerOut);
             System.setErr(formerErr);
         }
 
-        return new CliExecutionResult(
-            out, err, exitCode.get()
-        ).verify(e -> assertEquals(expectedExitCode, e.exitCode));
+        return new CliExecutionResult(out, err, exitCode.get()).verify(e -> assertEquals(expectedExitCode, e.exitCode));
     }
 
     protected abstract List<String> cliStandardArgs();
-
 
     public static Matcher<String> containsPattern(final String regex) {
         return new BaseMatcher<String>() {
@@ -107,12 +102,10 @@ abstract class BaseCliTest {
 
             @Override
             public boolean matches(Object o) {
-                return o instanceof String
-                    && StringUtils.countMatches((String) o, substring) == times;
+                return o instanceof String && StringUtils.countMatches((String) o, substring) == times;
             }
         };
     }
-
 
     static class CliExecutionResult {
 
@@ -120,9 +113,7 @@ abstract class BaseCliTest {
         private final ByteArrayOutputStream err;
         private final CliExitCode exitCode;
 
-        CliExecutionResult(ByteArrayOutputStream out,
-                           ByteArrayOutputStream err,
-                           CliExitCode exitCode) {
+        CliExecutionResult(ByteArrayOutputStream out, ByteArrayOutputStream err, CliExitCode exitCode) {
             this.out = out;
             this.err = err;
             this.exitCode = exitCode;
@@ -135,7 +126,6 @@ abstract class BaseCliTest {
         public String getErr() {
             return err.toString();
         }
-
 
         public void checkOk() {
             assertEquals(CliExitCode.OK, exitCode);

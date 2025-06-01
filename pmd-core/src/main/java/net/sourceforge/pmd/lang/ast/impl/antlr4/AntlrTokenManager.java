@@ -22,7 +22,6 @@ public class AntlrTokenManager implements TokenManager<AntlrToken> {
     private final TextDocument textDoc;
     private AntlrToken previousToken;
 
-
     public AntlrTokenManager(final Lexer lexer, final TextDocument textDocument) {
         this.lexer = lexer;
         this.textDoc = textDocument;
@@ -57,12 +56,8 @@ public class AntlrTokenManager implements TokenManager<AntlrToken> {
     private final class ErrorHandler extends BaseErrorListener {
 
         @Override
-        public void syntaxError(final Recognizer<?, ?> recognizer,
-                                final Object offendingSymbol,
-                                final int line,
-                                final int charPositionInLine,
-                                final String msg,
-                                final RecognitionException ex) {
+        public void syntaxError(final Recognizer<?, ?> recognizer, final Object offendingSymbol, final int line,
+                final int charPositionInLine, final String msg, final RecognitionException ex) {
             throw new LexException(line, charPositionInLine, textDoc.getFileId(), msg, ex);
         }
     }

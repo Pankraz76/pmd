@@ -42,7 +42,6 @@ class VfDocStyleTest extends AbstractVfTest {
     void testElementAttributeAndNamespace() {
         ASTCompilationUnit root = vf.parse(TEST_ELEMENT_AND_NAMESPACE);
 
-
         List<ASTElement> elementNodes = root.descendants(ASTElement.class).toList();
         assertEquals(1, elementNodes.size(), "One element node expected!");
         ASTElement element = elementNodes.iterator().next();
@@ -63,8 +62,8 @@ class VfDocStyleTest extends AbstractVfTest {
     }
 
     /**
-     * Test exposing a bug of parsing error when having a hash as last character
-     * in an attribute value.
+     * Test exposing a bug of parsing error when having a hash as last character in
+     * an attribute value.
      *
      */
     @Test
@@ -75,13 +74,11 @@ class VfDocStyleTest extends AbstractVfTest {
 
         ASTAttribute attr = attributes.get(0);
         assertEquals("something", attr.getName(), "Correct attribute name expected!");
-        assertEquals("#yes#", attr.descendants(ASTText.class).first().getImage(),
-                "Correct attribute value expected!");
+        assertEquals("#yes#", attr.descendants(ASTText.class).first().getImage(), "Correct attribute value expected!");
 
         attr = attributes.get(1);
         assertEquals("foo", attr.getName(), "Correct attribute name expected!");
-        assertEquals("CREATE", attr.descendants(ASTText.class).first().getImage(),
-                "Correct attribute value expected!");
+        assertEquals("CREATE", attr.descendants(ASTText.class).first().getImage(), "Correct attribute value expected!");
 
         attr = attributes.get(2);
         assertEquals("href", attr.getName(), "Correct attribute name expected!");
@@ -221,8 +218,8 @@ class VfDocStyleTest extends AbstractVfTest {
     }
 
     /**
-     * Test parsing of HTML &lt;script src="x"/&gt; element. It might not be
-     * valid html but it is likely to appear in .page files.
+     * Test parsing of HTML &lt;script src="x"/&gt; element. It might not be valid
+     * html but it is likely to appear in .page files.
      */
     @Test
     void testImportHtmlScript() {
@@ -285,8 +282,8 @@ class VfDocStyleTest extends AbstractVfTest {
     }
 
     /**
-     * Test parsing of HTML with no spaces between tags. Parser is likely in
-     * this scenario.
+     * Test parsing of HTML with no spaces between tags. Parser is likely in this
+     * scenario.
      */
     @Test
     void noSpacesBetweenTags() {
@@ -300,8 +297,8 @@ class VfDocStyleTest extends AbstractVfTest {
     }
 
     /**
-     * the $ sign might trick the parser into thinking an EL is next. He should
-     * be able to treat it as plain text
+     * the $ sign might trick the parser into thinking an EL is next. He should be
+     * able to treat it as plain text
      */
     @Test
     void unclosedTagsWithDollar() {
@@ -312,8 +309,8 @@ class VfDocStyleTest extends AbstractVfTest {
     }
 
     /**
-     * Make sure EL expressions aren't treated as plain text when they are
-     * around unclosed tags.
+     * Make sure EL expressions aren't treated as plain text when they are around
+     * unclosed tags.
      */
     @Test
     void unclosedTagsWithELWithin() {
@@ -557,11 +554,11 @@ class VfDocStyleTest extends AbstractVfTest {
     }
 
     /**
-     * &lt;x&gt; &lt;a&gt; &lt;b&gt; &lt;b&gt; &lt;/z&gt; &lt;/a&gt; &lt;/x&gt;
-     * An unmatched closing of 'z' appears randomly in the document. This should
-     * be disregarded and structure of children and parents should not be
-     * influenced. in other words &lt;/a&gt; should close the first &lt;a&gt;
-     * tag , &lt;/x&gt; should close the first &lt;x&gt;, etc.
+     * &lt;x&gt; &lt;a&gt; &lt;b&gt; &lt;b&gt; &lt;/z&gt; &lt;/a&gt; &lt;/x&gt; An
+     * unmatched closing of 'z' appears randomly in the document. This should be
+     * disregarded and structure of children and parents should not be influenced.
+     * in other words &lt;/a&gt; should close the first &lt;a&gt; tag , &lt;/x&gt;
+     * should close the first &lt;x&gt;, etc.
      */
     @Test
     void unmatchedTagDoesNotInfluenceStructure() {
@@ -592,10 +589,10 @@ class VfDocStyleTest extends AbstractVfTest {
 
     /**
      * &lt;a&gt; &lt;x&gt; &lt;a&gt; &lt;b&gt; &lt;b&gt; &lt;/z&gt; &lt;/a&gt;
-     * &lt;/x&gt; An unmatched closing of 'z' appears randomly in the document.
-     * This should be disregarded and structure of children and parents should
-     * not be influenced. Also un unclosed &lt;a&gt; tag appears at the start of
-     * the document
+     * &lt;/x&gt; An unmatched closing of 'z' appears randomly in the document. This
+     * should be disregarded and structure of children and parents should not be
+     * influenced. Also un unclosed &lt;a&gt; tag appears at the start of the
+     * document
      */
     @Test
     void unclosedStartTagWithUnmatchedCloseOfDifferentTag() {
@@ -630,10 +627,9 @@ class VfDocStyleTest extends AbstractVfTest {
     }
 
     /**
-     * will sort the AST element in list in alphabetical order and if tag name
-     * is the same it will sort against o1.getBeginColumn() +""+
-     * o1.getBeginLine(). so first criteria is the name, then the second is the
-     * column +""+line string.
+     * will sort the AST element in list in alphabetical order and if tag name is
+     * the same it will sort against o1.getBeginColumn() +""+ o1.getBeginLine(). so
+     * first criteria is the name, then the second is the column +""+line string.
      *
      * @param elements
      * @return
@@ -752,8 +748,8 @@ class VfDocStyleTest extends AbstractVfTest {
     private static final String TEST_UNCLOSED_UNMATCHED_CLOSING_TAG = "<x> <a> <b> <b> </z> </a> </x>";
 
     /**
-     * First <a> tag does not close. The first closing of </a> will match the
-     * second opening of a. Another rogue </z> is there for testing compliance
+     * First <a> tag does not close. The first closing of </a> will match the second
+     * opening of a. Another rogue </z> is there for testing compliance
      */
     private static final String TEST_UNCLOSED_START_TAG_WITH_UNMATCHED_CLOSE = "<a> <x> <a> <b> <b> </z> </a> </x>";
 

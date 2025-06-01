@@ -12,9 +12,12 @@ import net.sf.saxon.expr.parser.Token;
 import net.sf.saxon.om.AxisInfo;
 
 /**
- * Simple printer for saxon expressions. Might be useful for debugging / during development.
+ * Simple printer for saxon expressions. Might be useful for debugging / during
+ * development.
  *
- * <p>Example:
+ * <p>
+ * Example:
+ * 
  * <pre>
  * ExpressionPrinter printer = new ExpressionPrinter();
  * printer.visit(query.xpathExpression.getInternalExpression());

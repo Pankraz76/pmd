@@ -18,11 +18,12 @@ import net.sourceforge.pmd.lang.document.FileLocation;
 /**
  * An exception that occurs while processing a file. Subtypes include
  * <ul>
- * <li>{@link MalformedSourceException}: error in source format, eg invalid character escapes (in case that happens before lexing)
+ * <li>{@link MalformedSourceException}: error in source format, eg invalid
+ * character escapes (in case that happens before lexing)
  * <li>{@link LexException}: lexical syntax errors
  * <li>{@link ParseException}: syntax errors
- * <li>{@link SemanticException}: exceptions occurring after the parsing
- * phase, because the source code is semantically invalid
+ * <li>{@link SemanticException}: exceptions occurring after the parsing phase,
+ * because the source code is semantically invalid
  * </ul>
  */
 public class FileAnalysisException extends ContextedRuntimeException {
@@ -86,18 +87,22 @@ public class FileAnalysisException extends ContextedRuntimeException {
         return result;
     }
 
-
     /**
      * Wraps the cause into an analysis exception. If it is itself an analysis
      * exception, just returns it after setting the filename for context.
      *
-     * @param fileId Filename
-     * @param message  Context message, if the cause is not a {@link FileAnalysisException}
-     * @param cause    Exception to wrap
+     * @param fileId
+     *            Filename
+     * @param message
+     *            Context message, if the cause is not a
+     *            {@link FileAnalysisException}
+     * @param cause
+     *            Exception to wrap
      *
      * @return An exception
      */
-    public static FileAnalysisException wrap(@NonNull FileId fileId, @NonNull String message, @NonNull Throwable cause) {
+    public static FileAnalysisException wrap(@NonNull FileId fileId, @NonNull String message,
+            @NonNull Throwable cause) {
         if (cause instanceof FileAnalysisException) {
             return ((FileAnalysisException) cause).setFileId(fileId);
         }

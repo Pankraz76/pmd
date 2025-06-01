@@ -41,9 +41,9 @@ import net.sourceforge.pmd.reporting.Report.ReportBuilderListener;
  * <p>
  * An implementation of the Renderer interface is expected to have a default
  * constructor. Properties should be defined using the
- * {@link #definePropertyDescriptor(PropertyDescriptor)}
- * method. After the instance is created, the property values are set. This
- * means, you won't have access to property values in your constructor.
+ * {@link #definePropertyDescriptor(PropertyDescriptor)} method. After the
+ * instance is created, the property values are set. This means, you won't have
+ * access to property values in your constructor.
  */
 // TODO Are implementations expected to be thread-safe?
 public interface Renderer extends PropertySource {
@@ -115,21 +115,23 @@ public interface Renderer extends PropertySource {
      * Some report formats require a specific format for paths (eg a URI), and are
      * allowed to circumvent the provided strategy.
      *
-     * @param fileNameRenderer a non-null file name renderer
+     * @param fileNameRenderer
+     *            a non-null file name renderer
      */
     void setFileNameRenderer(FileNameRenderer fileNameRenderer);
 
     /**
      * Set the Writer for the Renderer.
      *
-     * @param writer The Writer.
+     * @param writer
+     *            The Writer.
      */
     void setWriter(Writer writer);
 
     /**
      * This method is called before any source files are processed. The Renderer
-     * will have been fully initialized by the time this method is called, so
-     * the Writer and other state will be available.
+     * will have been fully initialized by the time this method is called, so the
+     * Writer and other state will be available.
      *
      * @throws IOException
      */
@@ -140,9 +142,9 @@ public interface Renderer extends PropertySource {
      * after {@link Renderer#start()}, but before
      * {@link Renderer#renderFileReport(Report)} and {@link Renderer#end()}.
      *
-     * This method may be invoked by different threads which are processing
-     * files independently. Therefore, any non-trivial implementation of this
-     * method needs to be thread-safe.
+     * This method may be invoked by different threads which are processing files
+     * independently. Therefore, any non-trivial implementation of this method needs
+     * to be thread-safe.
      *
      * @param dataSource
      *            The source file.
@@ -150,11 +152,10 @@ public interface Renderer extends PropertySource {
     void startFileAnalysis(TextFile dataSource);
 
     /**
-     * Render the given file Report. There may be multiple Report instances
-     * which need to be rendered if produced by different threads. It is called
-     * after {@link Renderer#start()} and
-     * {@link Renderer#startFileAnalysis(TextFile)}, but before
-     * {@link Renderer#end()}.
+     * Render the given file Report. There may be multiple Report instances which
+     * need to be rendered if produced by different threads. It is called after
+     * {@link Renderer#start()} and {@link Renderer#startFileAnalysis(TextFile)},
+     * but before {@link Renderer#end()}.
      *
      * @param report
      *            A file Report.
@@ -173,27 +174,28 @@ public interface Renderer extends PropertySource {
     void flush() throws IOException;
 
     /**
-     * Sets the filename where the report should be written to. If no filename is provided,
-     * the renderer should write to stdout.
+     * Sets the filename where the report should be written to. If no filename is
+     * provided, the renderer should write to stdout.
      *
-     * <p>Implementations must initialize the writer of the renderer.
+     * <p>
+     * Implementations must initialize the writer of the renderer.
      *
-     * <p>See {@link AbstractRenderer#setReportFile(String)} for the default impl.
+     * <p>
+     * See {@link AbstractRenderer#setReportFile(String)} for the default impl.
      *
-     * @param reportFilename the filename (optional).
+     * @param reportFilename
+     *            the filename (optional).
      */
     void setReportFile(String reportFilename);
 
-
-
     /**
-     * Returns a new analysis listener, that handles violations by rendering
-     * them in an implementation-defined way.
+     * Returns a new analysis listener, that handles violations by rendering them in
+     * an implementation-defined way.
      */
     // TODO the default implementation matches the current behavior,
-    //  ie violations are batched by file and forwarded to the renderer
-    //  when the file is done. Many renderers could directly handle
-    //  violations as they come though.
+    // ie violations are batched by file and forwarded to the renderer
+    // when the file is done. Many renderers could directly handle
+    // violations as they come though.
     default GlobalAnalysisListener newListener() throws IOException {
         try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.REPORTING)) {
             this.start();
@@ -229,11 +231,13 @@ public interface Renderer extends PropertySource {
                 return new CloseHookFileListener<ReportBuilderListener>(new ReportBuilderListener()) {
 
                     @Override
-                    protected void doClose(ReportBuilderListener reportBuilder, @Nullable Exception ignoredEx) throws Exception {
+                    protected void doClose(ReportBuilderListener reportBuilder, @Nullable Exception ignoredEx)
+                            throws Exception {
                         reportBuilder.close();
                         synchronized (reportMergeLock) {
                             // TODO renderFileReport should be thread-safe instead
-                            try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.REPORTING)) {
+                            try (TimedOperation ignored = TimeTracker
+                                    .startOperation(TimedOperationCategory.REPORTING)) {
                                 renderer.renderFileReport(reportBuilder.getResult());
                             }
                         }

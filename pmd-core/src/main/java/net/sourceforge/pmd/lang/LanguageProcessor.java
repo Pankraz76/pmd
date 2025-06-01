@@ -25,7 +25,8 @@ public interface LanguageProcessor extends AutoCloseable {
     /**
      * A collection of extension points implemented by the language.
      */
-    @NonNull LanguageVersionHandler services();
+    @NonNull
+    LanguageVersionHandler services();
 
     /**
      * Launch the analysis based on the given {@link AnalysisTask analysis task}.
@@ -34,28 +35,32 @@ public interface LanguageProcessor extends AutoCloseable {
      * return without blocking. In that case the returned Closeable will join the
      * analysis threads when being closed.
      *
-     * @param analysisTask Configuration of the analysis
+     * @param analysisTask
+     *            Configuration of the analysis
      *
-     * @return A closeable - the analysis is only ended when the close method returns.
+     * @return A closeable - the analysis is only ended when the close method
+     *         returns.
      */
-    @NonNull AutoCloseable launchAnalysis(
-        @NonNull AnalysisTask analysisTask
-    );
+    @NonNull
+    AutoCloseable launchAnalysis(@NonNull AnalysisTask analysisTask);
 
     /**
      * The language of this processor.
      */
-    @NonNull PmdCapableLanguage getLanguage();
+    @NonNull
+    PmdCapableLanguage getLanguage();
 
     /**
      * The language version that was configured when creating this processor.
      */
-    @NonNull LanguageVersion getLanguageVersion();
+    @NonNull
+    LanguageVersion getLanguageVersion();
 
     /**
-     * Configuration of an analysis, as given to {@link #launchAnalysis(AnalysisTask)}.
-     * This includes eg the set of files to process (which may be of various languages),
-     * the cache manager, and the rulesets.
+     * Configuration of an analysis, as given to
+     * {@link #launchAnalysis(AnalysisTask)}. This includes eg the set of files to
+     * process (which may be of various languages), the cache manager, and the
+     * rulesets.
      */
     class AnalysisTask {
 
@@ -67,20 +72,13 @@ public interface LanguageProcessor extends AutoCloseable {
         private final PmdReporter messageReporter;
         private final LanguageProcessorRegistry lpRegistry;
 
-
         /**
-         * Create a new task. This constructor is internal and will be
-         * called by PMD.
+         * Create a new task. This constructor is internal and will be called by PMD.
          *
          * @apiNote Internal API
          */
-        AnalysisTask(RuleSets rulesets,
-                            List<TextFile> files,
-                            GlobalAnalysisListener listener,
-                            int threadCount,
-                            AnalysisCache analysisCache,
-                            PmdReporter messageReporter,
-                            LanguageProcessorRegistry lpRegistry) {
+        AnalysisTask(RuleSets rulesets, List<TextFile> files, GlobalAnalysisListener listener, int threadCount,
+                AnalysisCache analysisCache, PmdReporter messageReporter, LanguageProcessorRegistry lpRegistry) {
             this.rulesets = rulesets;
             this.files = files;
             this.listener = listener;
@@ -124,17 +122,9 @@ public interface LanguageProcessor extends AutoCloseable {
          * @apiNote Internal API
          */
         AnalysisTask withFiles(List<TextFile> newFiles) {
-            return new AnalysisTask(
-                rulesets,
-                newFiles,
-                listener,
-                threadCount,
-                analysisCache,
-                messageReporter,
-                lpRegistry
-            );
+            return new AnalysisTask(rulesets, newFiles, listener, threadCount, analysisCache, messageReporter,
+                    lpRegistry);
         }
     }
-
 
 }

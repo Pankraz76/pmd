@@ -22,21 +22,25 @@ import net.sourceforge.pmd.lang.rule.Rule;
 import net.sourceforge.pmd.util.BaseResultProducingCloseable;
 
 /**
- * A {@link Report} collects all information during a PMD execution. This includes violations,
- * suppressed violations, metrics, recoverable errors (that occurred during processing)
- * and configuration errors.
+ * A {@link Report} collects all information during a PMD execution. This
+ * includes violations, suppressed violations, metrics, recoverable errors (that
+ * occurred during processing) and configuration errors.
  *
- * <p>A report may be created by a {@link GlobalReportBuilderListener} that you
- * use as the {@linkplain GlobalAnalysisListener} in {@link PmdAnalysis#performAnalysisAndCollectReport() PMD's entry point}.
- * You can also create one manually with {@link #buildReport(Consumer)}.
+ * <p>
+ * A report may be created by a {@link GlobalReportBuilderListener} that you use
+ * as the {@linkplain GlobalAnalysisListener} in
+ * {@link PmdAnalysis#performAnalysisAndCollectReport() PMD's entry point}. You
+ * can also create one manually with {@link #buildReport(Consumer)}.
  *
- * <p>For special use cases, like filtering the report after PMD analysis and
+ * <p>
+ * For special use cases, like filtering the report after PMD analysis and
  * before rendering the report, some transformation operations are provided:
  * <ul>
- *     <li>{@link #filterViolations(Predicate)}</li>
- *     <li>{@link #union(Report)}</li>
+ * <li>{@link #filterViolations(Predicate)}</li>
+ * <li>{@link #union(Report)}</li>
  * </ul>
- * These methods create a new {@link Report} rather than modifying their receiver.
+ * These methods create a new {@link Report} rather than modifying their
+ * receiver.
  *
  */
 public final class Report {
@@ -52,8 +56,8 @@ public final class Report {
     /**
      * Represents a configuration error for a specific rule.
      *
-     * <p>This might be a missing rule property
-     * or rule property with pointless values.
+     * <p>
+     * This might be a missing rule property or rule property with pointless values.
      */
     public static class ConfigurationError {
 
@@ -95,13 +99,16 @@ public final class Report {
     /**
      * Represents a recovered error that occurred during analysis.
      *
-     * <p>This might be a parse error or an unexpected error originating from a rule.
-     * Such errors are called recoverable, because PMD can just skip
-     * the problematic file, continue the analysis with the other files and still create a report.
+     * <p>
+     * This might be a parse error or an unexpected error originating from a rule.
+     * Such errors are called recoverable, because PMD can just skip the problematic
+     * file, continue the analysis with the other files and still create a report.
      * However, due to these errors, the report might be incomplete.
      *
-     * <p>Some report formats, such as {@link net.sourceforge.pmd.renderers.XMLRenderer}, include these
-     * errors for further investigation.
+     * <p>
+     * Some report formats, such as
+     * {@link net.sourceforge.pmd.renderers.XMLRenderer}, include these errors for
+     * further investigation.
      */
     public static class ProcessingError {
 
@@ -126,8 +133,7 @@ public final class Report {
         }
 
         public String getDetail() {
-            try (StringWriter stringWriter = new StringWriter();
-                 PrintWriter writer = new PrintWriter(stringWriter)) {
+            try (StringWriter stringWriter = new StringWriter(); PrintWriter writer = new PrintWriter(stringWriter)) {
                 error.printStackTrace(writer);
                 return stringWriter.toString();
             } catch (IOException e) {
@@ -157,9 +163,12 @@ public final class Report {
         /**
          * Creates a suppressed violation.
          *
-         * @param rv          The violation, that has been suppressed
-         * @param suppressor  The suppressor which suppressed the violation
-         * @param userMessage Any relevant info given by the suppressor
+         * @param rv
+         *            The violation, that has been suppressed
+         * @param suppressor
+         *            The suppressor which suppressed the violation
+         * @param userMessage
+         *            Any relevant info given by the suppressor
          */
         public SuppressedViolation(RuleViolation rv, ViolationSuppressor suppressor, String userMessage) {
             this.suppressor = suppressor;
@@ -183,7 +192,8 @@ public final class Report {
     /**
      * Adds a new rule violation to the report and notify the listeners.
      *
-     * @param violation the violation to add
+     * @param violation
+     *            the violation to add
      */
     private void addRuleViolation(RuleViolation violation) {
         synchronized (violations) {
@@ -204,7 +214,8 @@ public final class Report {
     /**
      * Adds a new configuration error to the report.
      *
-     * @param error the error to add
+     * @param error
+     *            the error to add
      */
     private void addConfigError(ConfigurationError error) {
         configErrors.add(error);
@@ -213,7 +224,8 @@ public final class Report {
     /**
      * Adds a new processing error to the report.
      *
-     * @param error the error to add
+     * @param error
+     *            the error to add
      */
     private void addError(ProcessingError error) {
         errors.add(error);
@@ -227,28 +239,27 @@ public final class Report {
     }
 
     /**
-     * Returns an unmodifiable list of violations that have been
-     * recorded until now. None of those violations were suppressed.
+     * Returns an unmodifiable list of violations that have been recorded until now.
+     * None of those violations were suppressed.
      *
-     * <p>The violations list is sorted with {@link RuleViolation#DEFAULT_COMPARATOR}.
+     * <p>
+     * The violations list is sorted with {@link RuleViolation#DEFAULT_COMPARATOR}.
      */
     public List<RuleViolation> getViolations() {
         return Collections.unmodifiableList(violations);
     }
 
-
     /**
-     * Returns an unmodifiable list of processing errors that have been
-     * recorded until now.
+     * Returns an unmodifiable list of processing errors that have been recorded
+     * until now.
      */
     public List<ProcessingError> getProcessingErrors() {
         return Collections.unmodifiableList(errors);
     }
 
-
     /**
-     * Returns an unmodifiable list of configuration errors that have
-     * been recorded until now.
+     * Returns an unmodifiable list of configuration errors that have been recorded
+     * until now.
      */
     public List<ConfigurationError> getConfigurationErrors() {
         return Collections.unmodifiableList(configErrors);
@@ -263,10 +274,10 @@ public final class Report {
     }
 
     /**
-     * A {@link FileAnalysisListener} that accumulates events into a
-     * {@link Report}.
+     * A {@link FileAnalysisListener} that accumulates events into a {@link Report}.
      */
-    public static final class ReportBuilderListener extends BaseResultProducingCloseable<Report> implements FileAnalysisListener {
+    public static final class ReportBuilderListener extends BaseResultProducingCloseable<Report>
+            implements FileAnalysisListener {
 
         private final Report report;
 
@@ -305,10 +316,11 @@ public final class Report {
     }
 
     /**
-     * A {@link GlobalAnalysisListener} that accumulates the events of
-     * all files into a {@link Report}.
+     * A {@link GlobalAnalysisListener} that accumulates the events of all files
+     * into a {@link Report}.
      */
-    public static final class GlobalReportBuilderListener extends BaseResultProducingCloseable<Report> implements GlobalAnalysisListener {
+    public static final class GlobalReportBuilderListener extends BaseResultProducingCloseable<Report>
+            implements GlobalAnalysisListener {
 
         private final Report report = new Report();
 
@@ -330,10 +342,11 @@ public final class Report {
     }
 
     /**
-     * Creates a new report taking all the information from this report,
-     * but filtering the violations.
+     * Creates a new report taking all the information from this report, but
+     * filtering the violations.
      *
-     * @param filter when true, the violation will be kept.
+     * @param filter
+     *            when true, the violation will be kept.
      * @return copy of this report
      */
     public Report filterViolations(Predicate<RuleViolation> filter) {
@@ -352,10 +365,11 @@ public final class Report {
     }
 
     /**
-     * Creates a new report by combining this report with another report.
-     * The lowest start time and greatest end time are kept in the copy.
+     * Creates a new report by combining this report with another report. The lowest
+     * start time and greatest end time are kept in the copy.
      *
-     * @param other the other report to combine
+     * @param other
+     *            the other report to combine
      * @return a new report which is the combination of this and the other report.
      */
     public Report union(Report other) {

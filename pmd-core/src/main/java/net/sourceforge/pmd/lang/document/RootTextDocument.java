@@ -10,16 +10,14 @@ import java.util.Objects;
 import net.sourceforge.pmd.internal.util.BaseCloseable;
 import net.sourceforge.pmd.lang.LanguageVersion;
 
-
 /**
- * A text document directly backed by a {@link TextFile}. In the future
- * some other implementations of the interface may be eg views on part
- * of another document.
+ * A text document directly backed by a {@link TextFile}. In the future some
+ * other implementations of the interface may be eg views on part of another
+ * document.
  */
 final class RootTextDocument extends BaseCloseable implements TextDocument {
 
     private final TextFile backend;
-
 
     // to support CPD with the same api, we could probably just store
     // a soft reference to the contents, and build the positioner eagerly.
@@ -67,17 +65,9 @@ final class RootTextDocument extends BaseCloseable implements TextDocument {
         // We use longs to return both numbers at the same time
         // This limits us to 2 billion lines or columns, which is FINE
         TextPos2d bpos = positioner.lineColFromOffset(region.getStartOffset(), true);
-        TextPos2d epos = region.isEmpty() ? bpos
-                                          : positioner.lineColFromOffset(region.getEndOffset(), false);
+        TextPos2d epos = region.isEmpty() ? bpos : positioner.lineColFromOffset(region.getEndOffset(), false);
 
-        return new FileLocation(
-            fileId,
-            bpos.getLine(),
-            bpos.getColumn(),
-            epos.getLine(),
-            epos.getColumn(),
-            region
-        );
+        return new FileLocation(fileId, bpos.getLine(), bpos.getColumn(), epos.getLine(), epos.getColumn(), region);
     }
 
     @Override
@@ -94,9 +84,8 @@ final class RootTextDocument extends BaseCloseable implements TextDocument {
     public TextRegion createLineRange(int startLineInclusive, int endLineInclusive) {
         SourceCodePositioner positioner = content.getPositioner();
 
-        if (!positioner.isValidLine(startLineInclusive)
-            || !positioner.isValidLine(endLineInclusive)
-            || startLineInclusive > endLineInclusive) {
+        if (!positioner.isValidLine(startLineInclusive) || !positioner.isValidLine(endLineInclusive)
+                || startLineInclusive > endLineInclusive) {
             throw invalidLineRange(startLineInclusive, endLineInclusive, positioner.getLastLine());
         }
 

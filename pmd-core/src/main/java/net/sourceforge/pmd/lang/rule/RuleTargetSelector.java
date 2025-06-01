@@ -4,7 +4,6 @@
 
 package net.sourceforge.pmd.lang.rule;
 
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,11 +31,13 @@ public abstract class RuleTargetSelector extends TargetSelectorInternal {
     /**
      * Target nodes having one of the given XPath local name.
      *
-     * @param names XPath names
+     * @param names
+     *            XPath names
      *
      * @return A selector
      *
-     * @throws IllegalArgumentException If the argument is empty
+     * @throws IllegalArgumentException
+     *             If the argument is empty
      */
     public static RuleTargetSelector forXPathNames(Collection<String> names) {
         if (names.isEmpty()) {
@@ -48,13 +49,17 @@ public abstract class RuleTargetSelector extends TargetSelectorInternal {
     /**
      * Target nodes that are subtypes of any of the given classes.
      *
-     * @param types Node types
+     * @param types
+     *            Node types
      *
      * @return A selector
      *
-     * @throws IllegalArgumentException If the argument is empty
-     * @throws NullPointerException     If the argument is null
-     * @throws NullPointerException     If any of the elements is null
+     * @throws IllegalArgumentException
+     *             If the argument is empty
+     * @throws NullPointerException
+     *             If the argument is null
+     * @throws NullPointerException
+     *             If any of the elements is null
      */
     public static RuleTargetSelector forTypes(Collection<Class<? extends Node>> types) {
         if (types.isEmpty()) {
@@ -66,11 +71,13 @@ public abstract class RuleTargetSelector extends TargetSelectorInternal {
     /**
      * Target nodes that are subtypes of any of the given classes.
      *
-     * @param types Node types
+     * @param types
+     *            Node types
      *
      * @return A selector
      *
-     * @throws NullPointerException if any of the arguments is null
+     * @throws NullPointerException
+     *             if any of the arguments is null
      */
     @SafeVarargs
     public static RuleTargetSelector forTypes(Class<? extends Node> first, Class<? extends Node>... types) {
@@ -110,7 +117,8 @@ public abstract class RuleTargetSelector extends TargetSelectorInternal {
 
     private static final class ClassRulechainVisits extends RuleTargetSelector {
 
-        public static final RuleTargetSelector ROOT_ONLY = new ClassRulechainVisits(Collections.singleton(RootNode.class));
+        public static final RuleTargetSelector ROOT_ONLY = new ClassRulechainVisits(
+                Collections.singleton(RootNode.class));
 
         private final Set<Class<? extends Node>> visits;
 

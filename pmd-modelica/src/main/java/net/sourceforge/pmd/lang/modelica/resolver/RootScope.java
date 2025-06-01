@@ -11,10 +11,11 @@ import net.sourceforge.pmd.lang.modelica.resolver.internal.ResolutionContext;
 import net.sourceforge.pmd.lang.modelica.resolver.internal.Watchdog;
 
 /**
- * A pseudo lexical scope corresponding to "unnamed enclosing class" for top-level entities.
- * See "5.2 Enclosing Classes" from MLS 3.4.
+ * A pseudo lexical scope corresponding to "unnamed enclosing class" for
+ * top-level entities. See "5.2 Enclosing Classes" from MLS 3.4.
  *
- * Unlike in MLS, this class aggregates <b>source file scopes</b>, not the top-level entities themselves.
+ * Unlike in MLS, this class aggregates <b>source file scopes</b>, not the
+ * top-level entities themselves.
  */
 public final class RootScope extends AbstractModelicaScope {
     private final List<ModelicaSourceFileScope> sourceFiles = new ArrayList<>();
@@ -26,7 +27,7 @@ public final class RootScope extends AbstractModelicaScope {
     void resolveBuiltin(ResolutionContext result, CompositeName name) {
         if (!name.isEmpty() && name.getTail().isEmpty()) {
             String simpleName = name.getHead();
-            for (ModelicaBuiltinType.BaseType tpe: ModelicaBuiltinType.BaseType.values()) {
+            for (ModelicaBuiltinType.BaseType tpe : ModelicaBuiltinType.BaseType.values()) {
                 if (tpe.getName().equals(simpleName)) {
                     result.addCandidate(new ModelicaBuiltinType(tpe));
                 }
@@ -38,10 +39,11 @@ public final class RootScope extends AbstractModelicaScope {
     public void resolveLexically(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
         CompositeName nameToLookup = CompositeName.ROOT_PSEUDO_NAME.equals(name.getHead()) ? name.getTail() : name;
         resolveBuiltin(result, name);
-        for (ModelicaSourceFileScope sourceFile: sourceFiles) {
+        for (ModelicaSourceFileScope sourceFile : sourceFiles) {
             ResolutionContext tmpContext = result.getState().createContext();
             sourceFile.lookupGlobally(tmpContext, nameToLookup);
-            // According to "5.2 Enclosing classes" from MLS 3.4, the order of definitions inside the unnamed
+            // According to "5.2 Enclosing classes" from MLS 3.4, the order of definitions
+            // inside the unnamed
             // enclosing class is unspecified, so handle name hiding with care.
             result.accumulate(tmpContext.get(ResolvableEntity.class));
         }

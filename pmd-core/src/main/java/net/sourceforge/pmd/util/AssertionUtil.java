@@ -4,7 +4,6 @@
 
 package net.sourceforge.pmd.util;
 
-
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -23,7 +22,7 @@ public final class AssertionUtil {
 
     static {
         boolean assertEnabled = false;
-        //noinspection AssertWithSideEffects
+        // noinspection AssertWithSideEffects
         assert assertEnabled = true; // SUPPRESS CHECKSTYLE now
         ASSERT_ENABLED = assertEnabled;
     }
@@ -39,7 +38,10 @@ public final class AssertionUtil {
         return ASSERT_ENABLED;
     }
 
-    /** @throws NullPointerException if any item is null */
+    /**
+     * @throws NullPointerException
+     *             if any item is null
+     */
     public static void requireContainsNoNullValue(String name, Collection<?> c) {
         int i = 0;
         for (Object o : c) {
@@ -50,7 +52,10 @@ public final class AssertionUtil {
         }
     }
 
-    /** @throws IllegalArgumentException if empty */
+    /**
+     * @throws IllegalArgumentException
+     *             if empty
+     */
     public static void requireNotEmpty(String name, Collection<?> c) {
         if (c.isEmpty()) {
             throw new IllegalArgumentException(name + " is empty");
@@ -63,7 +68,8 @@ public final class AssertionUtil {
     }
 
     /**
-     * @throws IllegalArgumentException if the name is not a binary name
+     * @throws IllegalArgumentException
+     *             if the name is not a binary name
      */
     public static void assertValidJavaBinaryName(CharSequence name) {
         if (!isJavaBinaryName(name)) {
@@ -72,7 +78,8 @@ public final class AssertionUtil {
     }
 
     /**
-     * @throws IllegalArgumentException if the name is not a binary name
+     * @throws IllegalArgumentException
+     *             if the name is not a binary name
      */
     public static void assertValidJavaBinaryNameNoArray(CharSequence name) {
         if (!BINARY_NAME_NO_ARRAY.matcher(name).matches()) {
@@ -92,7 +99,6 @@ public final class AssertionUtil {
         return "Invalid range [" + startInclusive + "," + endExclusive + "[ in [" + minIndex + "," + maxIndex + "[";
     }
 
-
     /** Throws {@link IllegalStateException} if the condition is false. */
     public static void validateState(boolean condition, String failed) {
         if (!condition) {
@@ -100,10 +106,10 @@ public final class AssertionUtil {
         }
     }
 
-
     /**
-     * @throws IllegalArgumentException if [startInclusive,endExclusive[ is
-     *                                  not a valid substring range for the given string
+     * @throws IllegalArgumentException
+     *             if [startInclusive,endExclusive[ is not a valid substring range
+     *             for the given string
      */
     public static void validateStringRange(CharSequence string, int startInclusive, int endExclusive) {
         if (!isValidRange(startInclusive, endExclusive, 0, string.length())) {
@@ -112,20 +118,22 @@ public final class AssertionUtil {
     }
 
     /**
-     * Like {@link #validateStringRange(CharSequence, int, int)} but eliminated
-     * at runtime if running without assertions.
+     * Like {@link #validateStringRange(CharSequence, int, int)} but eliminated at
+     * runtime if running without assertions.
      */
     public static void assertValidStringRange(CharSequence string, int startInclusive, int endExclusive) {
         assert isValidRange(startInclusive, endExclusive, 0, string.length())
-            : invalidRangeMessage(startInclusive, endExclusive, 0, string.length());
+                : invalidRangeMessage(startInclusive, endExclusive, 0, string.length());
     }
 
     /**
      * Returns true if the charsequence is a valid java identifier.
      *
-     * @param name Name (non-null)
+     * @param name
+     *            Name (non-null)
      *
-     * @throws NullPointerException If the name is null
+     * @throws NullPointerException
+     *             If the name is null
      */
     public static boolean isJavaIdentifier(CharSequence name) {
         int len = name.length();
@@ -149,9 +157,9 @@ public final class AssertionUtil {
         return value;
     }
 
-
     /**
-     * @throws IllegalArgumentException If {@code value < 0}
+     * @throws IllegalArgumentException
+     *             If {@code value < 0}
      */
     public static int requireNonNegative(String name, int value) {
         if (value < 0) {
@@ -160,9 +168,9 @@ public final class AssertionUtil {
         return value;
     }
 
-
     /**
-     * @throws IndexOutOfBoundsException If {@code value < 0}
+     * @throws IndexOutOfBoundsException
+     *             If {@code value < 0}
      */
     public static int requireIndexNonNegative(String name, int value) {
         if (value < 0) {
@@ -172,14 +180,16 @@ public final class AssertionUtil {
     }
 
     /**
-     * @throws IndexOutOfBoundsException If {@code value < 0 || value >= maxValue}
+     * @throws IndexOutOfBoundsException
+     *             If {@code value < 0 || value >= maxValue}
      */
     public static int requireInNonNegativeRange(String name, int value, int maxValue) {
         return requireInExclusiveRange(name, value, 0, maxValue);
     }
 
     /**
-     * @throws IndexOutOfBoundsException If {@code value < 1 || value >= maxValue}
+     * @throws IndexOutOfBoundsException
+     *             If {@code value < 1 || value >= maxValue}
      */
     public static int requireInPositiveRange(String name, int value, int maxValue) {
         return requireInExclusiveRange(name, value, 1, maxValue);
@@ -188,14 +198,16 @@ public final class AssertionUtil {
     // the difference between those two is the message
 
     /**
-     * @throws IndexOutOfBoundsException If {@code value < minValue || value > maxValue}
+     * @throws IndexOutOfBoundsException
+     *             If {@code value < minValue || value > maxValue}
      */
     public static int requireInInclusiveRange(String name, int value, int minValue, int maxValue) {
         return requireInRange(name, value, minValue, maxValue, true);
     }
 
     /**
-     * @throws IndexOutOfBoundsException If {@code value < minValue || value > maxValue}
+     * @throws IndexOutOfBoundsException
+     *             If {@code value < minValue || value > maxValue}
      */
     public static int requireInExclusiveRange(String name, int value, int minValue, int maxValue) {
         return requireInRange(name, value, minValue, maxValue, false);
@@ -214,7 +226,8 @@ public final class AssertionUtil {
         return mustBe(name, value, condition, IllegalArgumentException::new);
     }
 
-    public static <E extends RuntimeException> E mustBe(String name, Object value, String condition, Function<String, E> exceptionMaker) {
+    public static <E extends RuntimeException> E mustBe(String name, Object value, String condition,
+            Function<String, E> exceptionMaker) {
         return exceptionMaker.apply(String.format("%s must be %s, got %s", name, condition, value));
     }
 
@@ -233,8 +246,7 @@ public final class AssertionUtil {
 
     public static @NonNull AssertionError shouldNotReachHere(String message, Throwable cause) {
         String prefix = "This should be unreachable";
-        message = StringUtils.isBlank(message) ? prefix
-                                               : prefix + ": " + message;
+        message = StringUtils.isBlank(message) ? prefix : prefix + ": " + message;
         return new AssertionError(message, cause);
     }
 
@@ -248,7 +260,7 @@ public final class AssertionUtil {
 
     public static @NonNull ContextedRuntimeException contexted(RuntimeException e) {
         return e instanceof ContextedRuntimeException ? (ContextedRuntimeException) e
-                                                      : new ContextedRuntimeException(e);
+                : new ContextedRuntimeException(e);
     }
 
 }

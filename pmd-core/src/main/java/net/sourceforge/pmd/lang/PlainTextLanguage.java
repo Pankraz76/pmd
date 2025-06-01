@@ -16,11 +16,11 @@ import net.sourceforge.pmd.lang.document.TextRegion;
 import net.sourceforge.pmd.lang.impl.SimpleLanguageModuleBase;
 
 /**
- * A dummy language implementation whose parser produces a single node.
- * This is provided for cases where a non-null language is required, but
- * the parser is not useful. This is useful eg to mock rules when no other
- * language is on the classpath. This language is not exposed by {@link LanguageRegistry}
- * and can only be used explicitly with {@link #getInstance()}.
+ * A dummy language implementation whose parser produces a single node. This is
+ * provided for cases where a non-null language is required, but the parser is
+ * not useful. This is useful eg to mock rules when no other language is on the
+ * classpath. This language is not exposed by {@link LanguageRegistry} and can
+ * only be used explicitly with {@link #getInstance()}.
  *
  * @author Clément Fournier
  * @since 6.48.0
@@ -31,17 +31,16 @@ public final class PlainTextLanguage extends SimpleLanguageModuleBase implements
     private static final PlainTextLanguage INSTANCE = new PlainTextLanguage();
 
     private PlainTextLanguage() {
-        super(LanguageMetadata.withId(ID).name("Plain text")
-                              .extensions("plain-text-file-goo-extension")
-                              .addDefaultVersion("default"),
-              new TextLvh());
+        super(LanguageMetadata.withId(ID).name("Plain text").extensions("plain-text-file-goo-extension")
+                .addDefaultVersion("default"), new TextLvh());
     }
 
     /**
      * Returns the singleton instance of this language.
      */
     public static PlainTextLanguage getInstance() {
-        return INSTANCE; // note: this language is _not_ exposed via LanguageRegistry (no entry in META-INF/services)
+        return INSTANCE; // note: this language is _not_ exposed via LanguageRegistry (no entry in
+                         // META-INF/services)
     }
 
     @Override
@@ -62,7 +61,6 @@ public final class PlainTextLanguage extends SimpleLanguageModuleBase implements
     public static class PlainTextFile extends AbstractNode<PlainTextFile, PlainTextFile> implements RootNode {
 
         private final AstInfo<PlainTextFile> astInfo;
-
 
         PlainTextFile(ParserTask task) {
             this.astInfo = new AstInfo<>(task, this);

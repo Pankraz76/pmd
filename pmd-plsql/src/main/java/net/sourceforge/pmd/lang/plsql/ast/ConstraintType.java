@@ -5,8 +5,5 @@
 package net.sourceforge.pmd.lang.plsql.ast;
 
 public enum ConstraintType {
-    UNIQUE,
-    PRIMARY,
-    FOREIGN,
-    CHECK;
+    UNIQUE, PRIMARY, FOREIGN, CHECK;
 }

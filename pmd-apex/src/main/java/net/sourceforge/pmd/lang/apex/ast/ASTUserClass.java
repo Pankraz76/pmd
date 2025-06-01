@@ -10,7 +10,8 @@ import java.util.stream.Collectors;
 import com.google.summit.ast.TypeRef;
 import com.google.summit.ast.declaration.ClassDeclaration;
 
-public final class ASTUserClass extends BaseApexClass<ClassDeclaration> implements ASTUserClassOrInterface<ClassDeclaration> {
+public final class ASTUserClass extends BaseApexClass<ClassDeclaration>
+        implements ASTUserClassOrInterface<ClassDeclaration> {
 
     ASTUserClass(ClassDeclaration userClass) {
         super(userClass);
@@ -21,9 +22,9 @@ public final class ASTUserClass extends BaseApexClass<ClassDeclaration> implemen
         return visitor.visit(this, data);
     }
 
-
     /**
-     * Returns the name of the superclass of this class, or an empty string if there is none.
+     * Returns the name of the superclass of this class, or an empty string if there
+     * is none.
      *
      * The type name does NOT include type arguments.
      */
@@ -41,8 +42,6 @@ public final class ASTUserClass extends BaseApexClass<ClassDeclaration> implemen
      * The type names do NOT include type arguments. (This is tested.)
      */
     public List<String> getInterfaceNames() {
-        return node.getImplementsTypes().stream()
-            .map(TypeRef::asTypeErasedString)
-            .collect(Collectors.toList());
+        return node.getImplementsTypes().stream().map(TypeRef::asTypeErasedString).collect(Collectors.toList());
     }
 }

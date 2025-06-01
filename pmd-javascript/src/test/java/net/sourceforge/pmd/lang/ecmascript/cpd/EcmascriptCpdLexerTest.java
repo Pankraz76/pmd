@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import net.sourceforge.pmd.lang.ecmascript.EcmascriptLanguageModule;
 import net.sourceforge.pmd.lang.test.cpd.CpdTextComparisonTest;
 
-
-
 class EcmascriptCpdLexerTest extends CpdTextComparisonTest {
 
     EcmascriptCpdLexerTest() {

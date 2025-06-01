@@ -15,7 +15,6 @@ public final class ASTBlockStatement extends AbstractApexNode.Single<Node> {
         super(blockStatement);
     }
 
-
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);

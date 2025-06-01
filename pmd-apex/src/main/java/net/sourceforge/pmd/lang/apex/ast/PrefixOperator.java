@@ -10,12 +10,7 @@ import com.google.summit.ast.expression.UnaryExpression;
  * Apex prefix operator
  */
 public enum PrefixOperator {
-    POSITIVE("+"),
-    NEGATIVE("-"),
-    LOGICAL_NOT("!"),
-    BITWISE_NOT("~"),
-    INCREMENT("++"),
-    DECREMENT("--");
+    POSITIVE("+"), NEGATIVE("-"), LOGICAL_NOT("!"), BITWISE_NOT("~"), INCREMENT("++"), DECREMENT("--");
 
     private final String symbol;
 
@@ -29,8 +24,8 @@ public enum PrefixOperator {
     }
 
     /**
-     * Returns a {@link PrefixOperator} corresponding to the given {@link
-     * UnaryExpression.Operator}.
+     * Returns a {@link PrefixOperator} corresponding to the given
+     * {@link UnaryExpression.Operator}.
      */
     public static PrefixOperator valueOf(UnaryExpression.Operator op) {
         switch (op) {

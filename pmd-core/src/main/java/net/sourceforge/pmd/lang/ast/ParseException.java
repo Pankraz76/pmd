@@ -20,9 +20,9 @@ import net.sourceforge.pmd.util.StringUtil;
 public class ParseException extends FileAnalysisException {
 
     /**
-     * This is the last token that has been consumed successfully.  If
-     * this object has been created due to a parse error, the token
-     * followng this token will (therefore) be the first error token.
+     * This is the last token that has been consumed successfully. If this object
+     * has been created due to a parse error, the token followng this token will
+     * (therefore) be the first error token.
      */
     private @Nullable FileLocation location;
 
@@ -39,8 +39,7 @@ public class ParseException extends FileAnalysisException {
     /**
      * This constructor is called by Javacc.
      */
-    public ParseException(@NonNull JavaccToken currentTokenVal,
-                          int[][] expectedTokenSequencesVal) {
+    public ParseException(@NonNull JavaccToken currentTokenVal, int[][] expectedTokenSequencesVal) {
         super(makeMessage(currentTokenVal, expectedTokenSequencesVal));
         location = currentTokenVal.getNext().getReportLocation();
     }
@@ -55,7 +54,6 @@ public class ParseException extends FileAnalysisException {
         return withLocation(reportable.getReportLocation());
     }
 
-
     @Override
     protected String errorKind() {
         return "Parse exception";
@@ -67,14 +65,12 @@ public class ParseException extends FileAnalysisException {
     }
 
     /**
-     * It uses "currentToken" and "expectedTokenSequences" to generate a parse
-     * error message and returns it.  If this object has been created
-     * due to a parse error, and you do not catch it (it gets thrown
-     * from the parser) the correct error message
-     * gets displayed.
+     * It uses "currentToken" and "expectedTokenSequences" to generate a parse error
+     * message and returns it. If this object has been created due to a parse error,
+     * and you do not catch it (it gets thrown from the parser) the correct error
+     * message gets displayed.
      */
-    private static String makeMessage(@NonNull JavaccToken currentToken,
-                                      int[][] expectedTokenSequences) {
+    private static String makeMessage(@NonNull JavaccToken currentToken, int[][] expectedTokenSequences) {
 
         JavaccTokenDocument document = currentToken.getDocument();
         String eol = System.lineSeparator();

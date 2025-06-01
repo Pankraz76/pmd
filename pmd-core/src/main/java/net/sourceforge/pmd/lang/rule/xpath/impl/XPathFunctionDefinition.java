@@ -5,6 +5,7 @@
 package net.sourceforge.pmd.lang.rule.xpath.impl;
 
 import java.util.Objects;
+
 import javax.xml.namespace.QName;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -39,8 +40,8 @@ public abstract class XPathFunctionDefinition {
     }
 
     /**
-     * Defines the types of the function arguments. By default, an empty array is returned, indicating
-     * that the function takes no arguments.
+     * Defines the types of the function arguments. By default, an empty array is
+     * returned, indicating that the function takes no arguments.
      */
     public Type[] getArgumentTypes() {
         return new Type[0];
@@ -52,10 +53,11 @@ public abstract class XPathFunctionDefinition {
     public abstract Type getResultType();
 
     /**
-     * If the function depends on the context item, then
-     * this method should return {@code true}.
+     * If the function depends on the context item, then this method should return
+     * {@code true}.
      *
-     * <p>Note: Only if this is true, the contextNode parameter will be present in the
+     * <p>
+     * Note: Only if this is true, the contextNode parameter will be present in the
      * {@link FunctionCall#call(Node, Object[])} method.
      */
     public boolean dependsOnContext() {
@@ -86,8 +88,9 @@ public abstract class XPathFunctionDefinition {
     }
 
     /**
-     * Supported types of a custom XPath function. These can be used as {@link #getResultType() result types}
-     * or {@link #getArgumentTypes() argument types}.
+     * Supported types of a custom XPath function. These can be used as
+     * {@link #getResultType() result types} or {@link #getArgumentTypes() argument
+     * types}.
      */
     public enum Type {
         /** Represents {@link String}. */
@@ -113,29 +116,39 @@ public abstract class XPathFunctionDefinition {
         /**
          * This method is called at runtime to evaluate the XPath function expression.
          *
-         * @param contextNode the context node or {@code null}, if this function doesn't depend on the context.
-         *                    See {@link XPathFunctionDefinition#dependsOnContext()}.
-         * @param arguments The arguments converted as the corresponding java types.
-         *                  See {@link XPathFunctionDefinition#getArgumentTypes()}.
-         * @return The result of the function. This should be the corresponding java type of
-         * {@link XPathFunctionDefinition#getResultType()}.
-         * @throws XPathFunctionException when any problem during evaluation occurs, like invalid arguments.
+         * @param contextNode
+         *            the context node or {@code null}, if this function doesn't depend
+         *            on the context. See
+         *            {@link XPathFunctionDefinition#dependsOnContext()}.
+         * @param arguments
+         *            The arguments converted as the corresponding java types. See
+         *            {@link XPathFunctionDefinition#getArgumentTypes()}.
+         * @return The result of the function. This should be the corresponding java
+         *         type of {@link XPathFunctionDefinition#getResultType()}.
+         * @throws XPathFunctionException
+         *             when any problem during evaluation occurs, like invalid
+         *             arguments.
          */
         Object call(@Nullable Node contextNode, Object[] arguments) throws XPathFunctionException;
 
         /**
-         * This is called once before the function is evaluated. It can be used to optimize the
-         * implementation by doing expensive operations only once and cache the result.
-         * This is useful, if the argument of the function is of type {@link String} and is provided
-         * as a String literal in the XPath expression.
+         * This is called once before the function is evaluated. It can be used to
+         * optimize the implementation by doing expensive operations only once and cache
+         * the result. This is useful, if the argument of the function is of type
+         * {@link String} and is provided as a String literal in the XPath expression.
          *
-         * <p>This is an optional step. The default implementation does nothing.
+         * <p>
+         * This is an optional step. The default implementation does nothing.
          *
-         * @param arguments The arguments converted as the corresponding java types.
-         *                  See {@link XPathFunctionDefinition#getArgumentTypes()}.
-         *                  Note: This array might contain {@code null} elements, if the values are
-         *                  not known yet because they are dynamic. Only literal values are available.
-         * @throws XPathFunctionException when any problem during initialization occurs, like invalid arguments.
+         * @param arguments
+         *            The arguments converted as the corresponding java types. See
+         *            {@link XPathFunctionDefinition#getArgumentTypes()}. Note: This
+         *            array might contain {@code null} elements, if the values are not
+         *            known yet because they are dynamic. Only literal values are
+         *            available.
+         * @throws XPathFunctionException
+         *             when any problem during initialization occurs, like invalid
+         *             arguments.
          */
         default void staticInit(Object[] arguments) throws XPathFunctionException {
             // default implementation does nothing

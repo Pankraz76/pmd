@@ -9,8 +9,8 @@ import java.io.IOException;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * Base class for documents that apply a transform to their output offsets.
- * This includes translated documents, and slices (subdocument views).
+ * Base class for documents that apply a transform to their output offsets. This
+ * includes translated documents, and slices (subdocument views).
  */
 abstract class BaseMappedDocument implements TextDocument {
 
@@ -57,13 +57,14 @@ abstract class BaseMappedDocument implements TextDocument {
     }
 
     /**
-     * Translate a region given in the coordinate system of this
-     * document, to the coordinate system of the base document.
-     * This works as if creating a new region with both start and end
-     * offsets translated through {@link #inputOffset(int, boolean)}. The
-     * returned region may have a different length.
+     * Translate a region given in the coordinate system of this document, to the
+     * coordinate system of the base document. This works as if creating a new
+     * region with both start and end offsets translated through
+     * {@link #inputOffset(int, boolean)}. The returned region may have a different
+     * length.
      *
-     * @param outputRegion Output region
+     * @param outputRegion
+     *            Output region
      *
      * @return Input region
      */
@@ -72,14 +73,13 @@ abstract class BaseMappedDocument implements TextDocument {
             return TextRegion.caretAt(inputOffset(outputRegion.getStartOffset(), true));
         }
         return TextRegion.fromBothOffsets(inputOffset(outputRegion.getStartOffset(), true),
-                                          inputOffset(outputRegion.getEndOffset(), false));
+                inputOffset(outputRegion.getEndOffset(), false));
     }
 
     /**
-     * Returns the input offset for the given output offset. This maps
-     * back an offset in the coordinate system of this document, to the
-     * coordinate system of the base document. This includes the
-     * length of any unicode escapes.
+     * Returns the input offset for the given output offset. This maps back an
+     * offset in the coordinate system of this document, to the coordinate system of
+     * the base document. This includes the length of any unicode escapes.
      *
      * <pre>
      * input:      "a\u00a0b"   (original document)
@@ -90,9 +90,11 @@ abstract class BaseMappedDocument implements TextDocument {
      * translateOffset(2) = 7 // includes the length of the escape
      * </pre>
      *
-     * @param outOffset Output offset
-     * @param inclusive Whether the offset is to be interpreted as the index of a character (true),
-     *                  or the position after a character (false)
+     * @param outOffset
+     *            Output offset
+     * @param inclusive
+     *            Whether the offset is to be interpreted as the index of a
+     *            character (true), or the position after a character (false)
      *
      * @return Input offset
      */
@@ -107,7 +109,6 @@ abstract class BaseMappedDocument implements TextDocument {
      * Output offset to input offset.
      */
     protected abstract int localOffsetTransform(int outOffset, boolean inclusive);
-
 
     @Override
     public void close() throws IOException {

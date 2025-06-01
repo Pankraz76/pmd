@@ -45,11 +45,8 @@ class ApexLanguageHandler implements LanguageVersionHandler {
 
     private static final class ApexMetricsProvider implements LanguageMetricsProvider {
 
-        private final Set<Metric<?, ?>> metrics = setOf(
-            ApexMetrics.COGNITIVE_COMPLEXITY,
-            ApexMetrics.CYCLO,
-            ApexMetrics.WEIGHED_METHOD_COUNT
-        );
+        private final Set<Metric<?, ?>> metrics = setOf(ApexMetrics.COGNITIVE_COMPLEXITY, ApexMetrics.CYCLO,
+                ApexMetrics.WEIGHED_METHOD_COUNT);
 
         @Override
         public Set<Metric<?, ?>> getMetrics() {

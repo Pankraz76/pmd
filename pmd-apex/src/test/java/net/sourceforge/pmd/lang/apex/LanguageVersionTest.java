@@ -12,8 +12,6 @@ import net.sourceforge.pmd.test.AbstractLanguageVersionTest;
 class LanguageVersionTest extends AbstractLanguageVersionTest {
 
     static Collection<TestDescriptor> data() {
-        return Arrays.asList(
-            TestDescriptor.defaultVersionIs(ApexLanguageModule.getInstance(), "60")
-        );
+        return Arrays.asList(TestDescriptor.defaultVersionIs(ApexLanguageModule.getInstance(), "60"));
     }
 }

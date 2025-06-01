@@ -160,9 +160,9 @@ public class DBType {
         LOG.trace("class_path={}", System.getProperty("java.class.path"));
 
         /*
-         * Attempt to match properties files in this order:- File path with
-         * properties suffix File path without properties suffix Resource
-         * without class prefix Resource with class prefix
+         * Attempt to match properties files in this order:- File path with properties
+         * suffix File path without properties suffix Resource without class prefix
+         * Resource with class prefix
          */
         File propertiesFile = new File(matchString);
         LOG.trace("Attempting File no file suffix: {}", matchString);
@@ -187,7 +187,8 @@ public class DBType {
                 } catch (Exception notInJarWithoutPath) {
                     LOG.trace("Attempting JARWithClass prefix: {}.{}", DBType.class.getCanonicalName(), matchString);
                     try {
-                        resourceBundle = ResourceBundle.getBundle(DBType.class.getPackage().getName() + "." + matchString);
+                        resourceBundle = ResourceBundle
+                                .getBundle(DBType.class.getPackage().getName() + "." + matchString);
                         propertiesSource = "[" + INTERNAL_SETTINGS + "]" + File.separator + matchString + ".properties";
                         LOG.trace("found InJarWithPath");
                     } catch (Exception notInJarWithPath) {
@@ -206,9 +207,9 @@ public class DBType {
         String saveLoadedFrom = getPropertiesSource();
 
         /*
-         * If the matched properties contain the "extends" key, use the value as
-         * a matchstring, to recursively set the properties before overwriting
-         * any previous properties with the matched properties.
+         * If the matched properties contain the "extends" key, use the value as a
+         * matchstring, to recursively set the properties before overwriting any
+         * previous properties with the matched properties.
          */
         String extendedPropertyFile = (String) matchedProperties.remove("extends");
         if (null != extendedPropertyFile && !"".equals(extendedPropertyFile.trim())) {
@@ -221,8 +222,8 @@ public class DBType {
         }
 
         /*
-         * Record the location of the original matched resource/property file,
-         * and the current set of properties secured.
+         * Record the location of the original matched resource/property file, and the
+         * current set of properties secured.
          */
         propertiesSource = saveLoadedFrom;
         setProperties(matchedProperties);

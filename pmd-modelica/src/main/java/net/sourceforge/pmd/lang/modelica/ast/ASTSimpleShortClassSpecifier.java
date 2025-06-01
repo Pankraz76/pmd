@@ -20,10 +20,7 @@ public final class ASTSimpleShortClassSpecifier extends AbstractModelicaClassSpe
     @Override
     public void populateExtendsAndImports(ModelicaClassType classTypeDeclaration) {
         super.populateExtendsAndImports(classTypeDeclaration);
-        InternalApiBridge.addExtendToClass(
-                classTypeDeclaration,
-                Visibility.UNSPEC,
-                firstChild(ASTName.class).getCompositeName()
-        );
+        InternalApiBridge.addExtendToClass(classTypeDeclaration, Visibility.UNSPEC,
+                firstChild(ASTName.class).getCompositeName());
     }
 }

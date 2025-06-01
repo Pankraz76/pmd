@@ -3,6 +3,7 @@
  */
 
 /**
- *  Contains the Antlr grammar for Coco.
+ * Contains the Antlr grammar for Coco.
  */
+
 package net.sourceforge.pmd.lang.coco.ast;

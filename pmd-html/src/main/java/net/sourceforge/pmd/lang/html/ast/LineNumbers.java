@@ -4,7 +4,6 @@
 
 package net.sourceforge.pmd.lang.html.ast;
 
-
 import net.sourceforge.pmd.lang.document.Chars;
 
 class LineNumbers {

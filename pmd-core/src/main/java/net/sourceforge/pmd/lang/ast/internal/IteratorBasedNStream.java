@@ -30,8 +30,8 @@ import net.sourceforge.pmd.util.IteratorUtil;
 
 /**
  * Implementations are based on the iterator rather than the stream.
- * Benchmarking shows that stream overhead is significant, and doesn't
- * decrease when the pipeline grows longer.
+ * Benchmarking shows that stream overhead is significant, and doesn't decrease
+ * when the pipeline grows longer.
  */
 abstract class IteratorBasedNStream<T extends Node> implements NodeStream<T> {
 
@@ -49,8 +49,10 @@ abstract class IteratorBasedNStream<T extends Node> implements NodeStream<T> {
     }
 
     @Override
-    public <R extends Node> NodeStream<R> flatMap(Function<? super T, ? extends @Nullable NodeStream<? extends R>> mapper) {
-        // Note temporary function is complete typing is needed so that it compiles with ejc
+    public <R extends Node> NodeStream<R> flatMap(
+            Function<? super T, ? extends @Nullable NodeStream<? extends R>> mapper) {
+        // Note temporary function is complete typing is needed so that it compiles with
+        // ejc
         // see https://bugs.eclipse.org/bugs/show_bug.cgi?id=561482
         Function<? super T, Iterator<? extends R>> mapped = mapper.andThen(IteratorBasedNStream::safeMap);
         return mapIter(iter -> IteratorUtil.flatMap(iter, mapped));
@@ -90,12 +92,11 @@ abstract class IteratorBasedNStream<T extends Node> implements NodeStream<T> {
         return flatMapDescendants(node -> node.descendants(rClass));
     }
 
-
     @NonNull
-    protected <R extends Node> DescendantNodeStream<R> flatMapDescendants(Function<T, DescendantNodeStream<? extends R>> mapper) {
+    protected <R extends Node> DescendantNodeStream<R> flatMapDescendants(
+            Function<T, DescendantNodeStream<? extends R>> mapper) {
         return new DescendantMapping<>(this, mapper);
     }
-
 
     @Override
     public void forEach(Consumer<? super T> action) {
@@ -176,7 +177,6 @@ abstract class IteratorBasedNStream<T extends Node> implements NodeStream<T> {
         return IteratorUtil.allMatch(iterator(), predicate);
     }
 
-
     @Override
     public int count() {
         return IteratorUtil.count(iterator());
@@ -232,23 +232,19 @@ abstract class IteratorBasedNStream<T extends Node> implements NodeStream<T> {
         return new IteratorMapping<>(fun);
     }
 
-
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " ["
-            + toStream().map(Objects::toString).collect(Collectors.joining(", "))
-            + "]";
+        return getClass().getSimpleName() + " [" + toStream().map(Objects::toString).collect(Collectors.joining(", "))
+                + "]";
     }
 
     private final class IteratorMapping<S extends Node> extends IteratorBasedNStream<S> {
 
         private final Function<Iterator<T>, Iterator<S>> fun;
 
-
         private IteratorMapping(Function<Iterator<T>, Iterator<S>> fun) {
             this.fun = fun;
         }
-
 
         @Override
         public Iterator<S> iterator() {
@@ -256,39 +252,37 @@ abstract class IteratorBasedNStream<T extends Node> implements NodeStream<T> {
         }
     }
 
-
-    private static class DescendantMapping<T extends Node, S extends Node> extends IteratorBasedNStream<S> implements DescendantNodeStream<S> {
+    private static class DescendantMapping<T extends Node, S extends Node> extends IteratorBasedNStream<S>
+            implements DescendantNodeStream<S> {
 
         private final Function<? super T, ? extends DescendantNodeStream<? extends S>> fun;
         private final TreeWalker walker;
         private final IteratorBasedNStream<T> upstream;
 
-
-        private DescendantMapping(IteratorBasedNStream<T> upstream, Function<? super T, ? extends DescendantNodeStream<? extends S>> fun, TreeWalker walker) {
+        private DescendantMapping(IteratorBasedNStream<T> upstream,
+                Function<? super T, ? extends DescendantNodeStream<? extends S>> fun, TreeWalker walker) {
             this.fun = fun;
             this.walker = walker;
             this.upstream = upstream;
         }
 
-        DescendantMapping(IteratorBasedNStream<T> upstream, Function<? super T, ? extends DescendantNodeStream<? extends S>> fun) {
+        DescendantMapping(IteratorBasedNStream<T> upstream,
+                Function<? super T, ? extends DescendantNodeStream<? extends S>> fun) {
             this(upstream, fun, TreeWalker.DEFAULT);
         }
 
         @Override
         public Iterator<S> iterator() {
-            return IteratorUtil.flatMap(
-                upstream.iterator(),
-                t -> {
-                    DescendantNodeStream<? extends S> app = fun.apply(t);
-                    return walker.apply(app).iterator();
-                });
+            return IteratorUtil.flatMap(upstream.iterator(), t -> {
+                DescendantNodeStream<? extends S> app = fun.apply(t);
+                return walker.apply(app).iterator();
+            });
         }
 
         @Override
         public DescendantNodeStream<S> crossFindBoundaries(boolean cross) {
-            return walker.isCrossFindBoundaries() == cross
-                   ? this
-                   : new DescendantMapping<>(upstream, fun, walker.crossFindBoundaries(cross));
+            return walker.isCrossFindBoundaries() == cross ? this
+                    : new DescendantMapping<>(upstream, fun, walker.crossFindBoundaries(cross));
         }
     }
 }

@@ -10,8 +10,7 @@ import com.google.summit.ast.expression.UnaryExpression;
  * Apex postfix operator
  */
 public enum PostfixOperator {
-    INCREMENT("++"),
-    DECREMENT("--");
+    INCREMENT("++"), DECREMENT("--");
 
     private final String symbol;
 
@@ -25,8 +24,8 @@ public enum PostfixOperator {
     }
 
     /**
-     * Returns a {@link PostfixOperator} corresponding to the given {@link
-     * UnaryExpression.Operator}.
+     * Returns a {@link PostfixOperator} corresponding to the given
+     * {@link UnaryExpression.Operator}.
      */
     public static PostfixOperator valueOf(UnaryExpression.Operator op) {
         switch (op) {

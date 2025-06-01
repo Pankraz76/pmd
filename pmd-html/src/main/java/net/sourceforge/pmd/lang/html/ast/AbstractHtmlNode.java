@@ -2,7 +2,6 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
-
 package net.sourceforge.pmd.lang.html.ast;
 
 import org.jsoup.nodes.Node;
@@ -11,7 +10,8 @@ import net.sourceforge.pmd.lang.ast.AstVisitor;
 import net.sourceforge.pmd.lang.ast.impl.AbstractNode;
 import net.sourceforge.pmd.lang.document.TextRegion;
 
-abstract class AbstractHtmlNode<T extends Node> extends AbstractNode<AbstractHtmlNode<?>, HtmlNode> implements HtmlNode {
+abstract class AbstractHtmlNode<T extends Node> extends AbstractNode<AbstractHtmlNode<?>, HtmlNode>
+        implements HtmlNode {
 
     protected final T node;
     protected int startOffset;

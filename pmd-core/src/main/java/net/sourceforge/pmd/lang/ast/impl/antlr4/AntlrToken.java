@@ -26,15 +26,18 @@ public class AntlrToken implements GenericToken<AntlrToken> {
     private final int kind;
     AntlrToken next;
 
-
     /**
      * Constructor
      *
-     * @param token           The antlr token implementation
-     * @param previousComment The previous comment
-     * @param textDoc         The text document
+     * @param token
+     *            The antlr token implementation
+     * @param previousComment
+     *            The previous comment
+     * @param textDoc
+     *            The text document
      *
-     * @deprecated Don't create antlr tokens directly, use an {@link AntlrTokenManager}
+     * @deprecated Don't create antlr tokens directly, use an
+     *             {@link AntlrTokenManager}
      */
     @Deprecated
     public AntlrToken(final Token token, final AntlrToken previousComment, TextDocument textDoc) {

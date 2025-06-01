@@ -31,11 +31,8 @@ public class ExecutionResult {
 
     @Override
     public String toString() {
-        return "ExecutionResult:\n"
-            + " exit code: " + exitCode + "\n"
-            + " output:\n" + output + "\n"
-            + " errorOutput:\n" + errorOutput + "\n"
-            + " report:\n" + report + "\n";
+        return "ExecutionResult:\n" + " exit code: " + exitCode + "\n" + " output:\n" + output + "\n"
+                + " errorOutput:\n" + errorOutput + "\n" + " report:\n" + report + "\n";
     }
 
     public ExecutionResult assertExitCode(int expectedExitCode) {
@@ -65,7 +62,8 @@ public class ExecutionResult {
     /**
      * Asserts that the given error message is not in the error output.
      *
-     * @param errorMessage the error message to search for
+     * @param errorMessage
+     *            the error message to search for
      */
     public void assertNoError(String errorMessage) {
         assertStdErr(not(containsString(errorMessage)));
@@ -73,7 +71,9 @@ public class ExecutionResult {
 
     /**
      * Asserts that the given error message is not in the report.
-     * @param errorMessage the error message to search for
+     * 
+     * @param errorMessage
+     *            the error message to search for
      */
     public void assertNoErrorInReport(String errorMessage) {
         assertReport(not(containsString(errorMessage)));
@@ -84,7 +84,8 @@ public class ExecutionResult {
     }
 
     public void assertIdenticalResults(ExecutionResult other) {
-        // Notice we don't check for error output, as log messages may differ due to cache
+        // Notice we don't check for error output, as log messages may differ due to
+        // cache
         assertEquals(exitCode, other.exitCode, "Exit codes differ");
         assertEquals(output, other.output, "Outputs differ");
         assertEquals(report, other.report, "Reports differ");

@@ -27,15 +27,17 @@ public class ConfigurableFileNameRenderer implements FileNameRenderer {
     private final List<Path> relativizeRootPaths = new ArrayList<>();
 
     /**
-     * Add a prefix that is used to relativize file paths as their display name.
-     * For instance, when adding a file {@code /tmp/src/main/java/org/foo.java},
-     * and relativizing with {@code /tmp/src/}, the registered {@link TextFile}
-     * will have a path id of {@code /tmp/src/main/java/org/foo.java}, and a
-     * display name of {@code main/java/org/foo.java}.
+     * Add a prefix that is used to relativize file paths as their display name. For
+     * instance, when adding a file {@code /tmp/src/main/java/org/foo.java}, and
+     * relativizing with {@code /tmp/src/}, the registered {@link TextFile} will
+     * have a path id of {@code /tmp/src/main/java/org/foo.java}, and a display name
+     * of {@code main/java/org/foo.java}.
      *
-     * <p>This only matters for files added from a {@link Path} object.
+     * <p>
+     * This only matters for files added from a {@link Path} object.
      *
-     * @param path Path with which to relativize
+     * @param path
+     *            Path with which to relativize
      */
     public void relativizeWith(Path path) {
         this.relativizeRootPaths.add(Objects.requireNonNull(path));
@@ -81,8 +83,8 @@ public class ConfigurableFileNameRenderer implements FileNameRenderer {
         // with the empty string.
         int maxi = Math.min(base.getNameCount(), otherSegments.length - 1);
         while (prefixLength < maxi
-            // here we add 1 for the same reason                          vvvvvvvvvvvvvvvv
-            && base.getName(prefixLength).toString().equals(otherSegments[prefixLength + 1])) {
+                // here we add 1 for the same reason vvvvvvvvvvvvvvvv
+                && base.getName(prefixLength).toString().equals(otherSegments[prefixLength + 1])) {
             prefixLength++;
         }
 
@@ -104,10 +106,12 @@ public class ConfigurableFileNameRenderer implements FileNameRenderer {
     }
 
     /**
-     * Return the textfile's display name. Takes the shortest path we
-     * can construct from the relativize roots.
+     * Return the textfile's display name. Takes the shortest path we can construct
+     * from the relativize roots.
      *
-     * <p>package private for test only</p>
+     * <p>
+     * package private for test only
+     * </p>
      */
     static String getDisplayName(FileId file, List<Path> relativizeRoots) {
         final String fileAbsPath = file.getAbsolutePath();

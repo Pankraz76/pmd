@@ -207,7 +207,8 @@ class IOUtilTest {
         for (int i = 0; i < size; i++) {
             data[i] = 'A';
         }
-        data[8192] = 'ä'; // block size border - in UTF-8 these are two bytes. Decoding needs to take the bytes
+        data[8192] = 'ä'; // block size border - in UTF-8 these are two bytes. Decoding needs to take the
+                          // bytes
         // from previous block and new block
         try (InputStream inputStream = IOUtil.fromReader(new StringReader(new String(data)))) {
             byte[] bytes = IOUtil.toByteArray(inputStream);
@@ -223,7 +224,7 @@ class IOUtilTest {
             data[i] = 'A';
         }
         try (InputStream stream = new ByteArrayInputStream(data);
-             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+                ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             IOUtil.copy(stream, out);
             byte[] bytes = out.toByteArray();
             assertEquals(size, bytes.length);
@@ -238,8 +239,7 @@ class IOUtilTest {
         for (int i = 0; i < size; i++) {
             data[i] = 'A';
         }
-        try (Reader reader = new CharArrayReader(data);
-             StringWriter writer = new StringWriter()) {
+        try (Reader reader = new CharArrayReader(data); StringWriter writer = new StringWriter()) {
             IOUtil.copy(reader, writer);
             char[] chars = writer.toString().toCharArray();
             assertEquals(size, chars.length);

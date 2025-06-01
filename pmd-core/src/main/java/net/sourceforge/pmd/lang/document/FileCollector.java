@@ -43,8 +43,8 @@ import net.sourceforge.pmd.util.AssertionUtil;
 import net.sourceforge.pmd.util.log.PmdReporter;
 
 /**
- * Collects files to analyse before a PMD run. This API allows opening
- * zip files and makes sure they will be closed at the end of a run.
+ * Collects files to analyse before a PMD run. This API allows opening zip files
+ * and makes sure they will be closed at the end of a run.
  *
  * @author Clément Fournier
  */
@@ -74,7 +74,7 @@ public final class FileCollector implements AutoCloseable {
 
     /**
      * @apiNote Internal API - please use {@link PmdAnalysis#files()} instead of
-     * creating a collector yourself.
+     *          creating a collector yourself.
      */
     static FileCollector newCollector(LanguageVersionDiscoverer discoverer, PmdReporter reporter) {
         return new FileCollector(discoverer, reporter, null);
@@ -84,7 +84,7 @@ public final class FileCollector implements AutoCloseable {
      * Returns a new collector using the same configuration except for the logger.
      *
      * @apiNote Internal API - please use {@link PmdAnalysis#files()} instead of
-     * creating a collector yourself.
+     *          creating a collector yourself.
      */
     FileCollector newCollector(PmdReporter logger) {
         FileCollector fileCollector = new FileCollector(discoverer, logger, null);
@@ -97,7 +97,8 @@ public final class FileCollector implements AutoCloseable {
     /**
      * Returns an unmodifiable list of all files that have been collected.
      *
-     * @throws IllegalStateException if the collector was already closed
+     * @throws IllegalStateException
+     *             if the collector was already closed
      */
     public List<TextFile> getCollectedFiles() {
         if (closed) {
@@ -107,7 +108,6 @@ public final class FileCollector implements AutoCloseable {
         allFilesToProcess.sort(Comparator.comparing(TextFile::getFileId));
         return Collections.unmodifiableList(allFilesToProcess);
     }
-
 
     /**
      * Returns the reporter for the file collection phase.
@@ -134,11 +134,12 @@ public final class FileCollector implements AutoCloseable {
     // collection
 
     /**
-     * Add a file, language is determined automatically from
-     * the extension/file patterns. The encoding is the current
-     * encoding ({@link #setCharset(Charset)}).
+     * Add a file, language is determined automatically from the extension/file
+     * patterns. The encoding is the current encoding
+     * ({@link #setCharset(Charset)}).
      *
-     * @param file File to add
+     * @param file
+     *            File to add
      *
      * @return True if the file has been added
      */
@@ -148,19 +149,19 @@ public final class FileCollector implements AutoCloseable {
             return false;
         }
         LanguageVersion languageVersion = discoverLanguage(file.toString());
-        return languageVersion != null
-            && addFileImpl(TextFile.builderForPath(file, charset, languageVersion)
-                                   .setParentFsPath(outerFsPath)
-                                   .build());
+        return languageVersion != null && addFileImpl(
+                TextFile.builderForPath(file, charset, languageVersion).setParentFsPath(outerFsPath).build());
     }
 
     /**
-     * Add a file with the given language (which overrides the file patterns).
-     * The encoding is the current encoding ({@link #setCharset(Charset)}).
+     * Add a file with the given language (which overrides the file patterns). The
+     * encoding is the current encoding ({@link #setCharset(Charset)}).
      *
-     * @param file     Path to a file
-     * @param language A language. The language version will be taken to be the
-     *                 contextual default version.
+     * @param file
+     *            Path to a file
+     * @param language
+     *            A language. The language version will be taken to be the
+     *            contextual default version.
      *
      * @return True if the file has been added
      */
@@ -172,15 +173,13 @@ public final class FileCollector implements AutoCloseable {
         }
         LanguageVersion lv = discoverer.getDefaultLanguageVersion(language);
         Objects.requireNonNull(lv);
-        return addFileImpl(TextFile.builderForPath(file, charset, lv)
-                                   .setParentFsPath(outerFsPath)
-                                   .build());
+        return addFileImpl(TextFile.builderForPath(file, charset, lv).setParentFsPath(outerFsPath).build());
     }
 
     /**
-     * Add a pre-configured text file. The language version will be checked
-     * to match the contextual default for the language (the file cannot be added
-     * if it has a different version).
+     * Add a pre-configured text file. The language version will be checked to match
+     * the contextual default for the language (the file cannot be added if it has a
+     * different version).
      *
      * @return True if the file has been added
      */
@@ -190,8 +189,8 @@ public final class FileCollector implements AutoCloseable {
     }
 
     /**
-     * Add a text file given its contents and a name. The language version
-     * will be determined from the name as usual.
+     * Add a text file given its contents and a name. The language version will be
+     * determined from the name as usual.
      *
      * @return True if the file has been added
      */
@@ -200,14 +199,13 @@ public final class FileCollector implements AutoCloseable {
         AssertionUtil.requireParamNotNull("pathId", fileId);
 
         LanguageVersion version = discoverLanguage(fileId.getFileName());
-        return version != null
-            && addFileImpl(TextFile.builderForCharSeq(sourceContents, fileId, version)
-                                   .setParentFsPath(outerFsPath)
-                                   .build());
+        return version != null && addFileImpl(
+                TextFile.builderForCharSeq(sourceContents, fileId, version).setParentFsPath(outerFsPath).build());
     }
 
     private boolean addFileImpl(TextFile textFile) {
-        LOG.trace("Adding file {} (lang: {}) ", textFile.getFileId().getAbsolutePath(), textFile.getLanguageVersion().getTerseName());
+        LOG.trace("Adding file {} (lang: {}) ", textFile.getFileId().getAbsolutePath(),
+                textFile.getLanguageVersion().getTerseName());
 
         if (!fileFilter.test(textFile.getFileId())) {
             LOG.trace("File was skipped due to fileFilter...");
@@ -239,32 +237,28 @@ public final class FileCollector implements AutoCloseable {
     }
 
     /**
-     * Whether the LanguageVersion of the file matches the one set in
-     * the {@link LanguageVersionDiscoverer}. This is required to ensure
-     * that all files for a given language have the same language version.
+     * Whether the LanguageVersion of the file matches the one set in the
+     * {@link LanguageVersionDiscoverer}. This is required to ensure that all files
+     * for a given language have the same language version.
      */
     private boolean checkContextualVersion(TextFile textFile) {
         LanguageVersion fileVersion = textFile.getLanguageVersion();
         Language language = fileVersion.getLanguage();
         LanguageVersion contextVersion = discoverer.getDefaultLanguageVersion(language);
         if (!fileVersion.equals(contextVersion)) {
-            reporter.error(
-                "Cannot add file {0}: version ''{1}'' does not match ''{2}''",
-                textFile.getFileId(),
-                fileVersion,
-                contextVersion
-            );
+            reporter.error("Cannot add file {0}: version ''{1}'' does not match ''{2}''", textFile.getFileId(),
+                    fileVersion, contextVersion);
             return false;
         }
         return true;
     }
 
-
     /**
-     * Add a directory recursively using {@link #addFile(Path)} on
-     * all regular files.
+     * Add a directory recursively using {@link #addFile(Path)} on all regular
+     * files.
      *
-     * @param dir Directory path
+     * @param dir
+     *            Directory path
      *
      * @return True if the directory has been added
      */
@@ -289,7 +283,6 @@ public final class FileCollector implements AutoCloseable {
         });
         return true;
     }
-
 
     /**
      * Add a file or directory recursively. Language is determined automatically
@@ -319,12 +312,15 @@ public final class FileCollector implements AutoCloseable {
     }
 
     /**
-     * Opens a zip file and adds all files of the zip file to the list
-     * of files to be processed.
+     * Opens a zip file and adds all files of the zip file to the list of files to
+     * be processed.
      *
-     * <p>The zip file is registered as a resource to close at the end of analysis.</p>
+     * <p>
+     * The zip file is registered as a resource to close at the end of analysis.
+     * </p>
      *
-     * @return True if the zip file including its content has been added without errors
+     * @return True if the zip file including its content has been added without
+     *         errors
      */
     public boolean addZipFileWithContent(Path zipFile) throws IOException {
         if (!Files.isRegularFile(zipFile)) {
@@ -363,8 +359,10 @@ public final class FileCollector implements AutoCloseable {
         return true;
     }
 
-
-    /** A collector that prefixes the display name of the files it will contain with the path of the zip. */
+    /**
+     * A collector that prefixes the display name of the files it will contain with
+     * the path of the zip.
+     */
     private FileCollector newZipCollector(Path zipFilePath) {
         return new FileCollector(discoverer, reporter, FileId.fromPath(zipFilePath));
     }
@@ -376,22 +374,25 @@ public final class FileCollector implements AutoCloseable {
     }
 
     /**
-     * Sets the charset to use for subsequent calls to {@link #addFile(Path)}
-     * and other overloads using a {@link Path}.
+     * Sets the charset to use for subsequent calls to {@link #addFile(Path)} and
+     * other overloads using a {@link Path}.
      *
-     * @param charset A charset
+     * @param charset
+     *            A charset
      */
     public void setCharset(Charset charset) {
         this.charset = Objects.requireNonNull(charset);
     }
 
     /**
-     * Sets an additional filter that is being called before adding the
-     * file to the list.
+     * Sets an additional filter that is being called before adding the file to the
+     * list.
      *
-     * @param fileFilter the filter should return {@code true} if the file
-     *                      should be collected and analyzed.
-     * @throws NullPointerException if {@code fileFilter} is {@code null}.
+     * @param fileFilter
+     *            the filter should return {@code true} if the file should be
+     *            collected and analyzed.
+     * @throws NullPointerException
+     *             if {@code fileFilter} is {@code null}.
      */
     public void setFileFilter(Predicate<FileId> fileFilter) {
         this.fileFilter = Objects.requireNonNull(fileFilter);
@@ -414,8 +415,8 @@ public final class FileCollector implements AutoCloseable {
     }
 
     /**
-     * Add all files collected in the other collector into this one.
-     * Transfers resources to close as well. The parameter is left empty.
+     * Add all files collected in the other collector into this one. Transfers
+     * resources to close as well. The parameter is left empty.
      */
     public void absorb(FileCollector otherCollector) {
         this.allFilesToProcess.addAll(otherCollector.allFilesToProcess);
@@ -438,7 +439,6 @@ public final class FileCollector implements AutoCloseable {
             }
         }
     }
-
 
     @Override
     public String toString() {

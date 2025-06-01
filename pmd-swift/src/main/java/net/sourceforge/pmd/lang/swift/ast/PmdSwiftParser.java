@@ -28,11 +28,14 @@ public final class PmdSwiftParser extends AntlrBaseParser<SwiftNode, SwTopLevel>
         parser.removeErrorListeners();
         parser.addErrorListener(new BaseErrorListener() {
             @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                LOGGER.warn("Syntax error at {}:{}:{}: {}", task.getFileId().getOriginalPath(),
-                        line, charPositionInLine, msg);
+            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line,
+                    int charPositionInLine, String msg, RecognitionException e) {
+                LOGGER.warn("Syntax error at {}:{}:{}: {}", task.getFileId().getOriginalPath(), line,
+                        charPositionInLine, msg);
                 // TODO: eventually we should throw a parse exception
-                // throw new ParseException(msg).withLocation(FileLocation.caret(task.getFileId(), line, charPositionInLine));
+                // throw new
+                // ParseException(msg).withLocation(FileLocation.caret(task.getFileId(), line,
+                // charPositionInLine));
             }
         });
         return parser.topLevel().makeAstInfo(task);

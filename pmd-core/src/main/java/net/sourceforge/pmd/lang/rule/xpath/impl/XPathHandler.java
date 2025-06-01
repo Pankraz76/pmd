@@ -11,7 +11,6 @@ import java.util.Set;
 import net.sourceforge.pmd.lang.rule.xpath.internal.DefaultXPathFunctions;
 import net.sourceforge.pmd.util.CollectionUtil;
 
-
 /**
  * Interface for performing Language specific XPath handling, such as
  * initialization and navigation.
@@ -19,11 +18,10 @@ import net.sourceforge.pmd.util.CollectionUtil;
 public interface XPathHandler {
 
     /**
-     * Returns the set of extension functions for this language module.
-     * These are the additional functions available in XPath queries.
+     * Returns the set of extension functions for this language module. These are
+     * the additional functions available in XPath queries.
      */
     Set<XPathFunctionDefinition> getRegisteredExtensionFunctions();
-
 
     static XPathHandler noFunctionDefinitions() {
         return DefaultXPathFunctions::getDefaultFunctions;
@@ -40,8 +38,11 @@ public interface XPathHandler {
     }
 
     /**
-     * Return a new XPath handler combining all available functions from this and another handler.
-     * @param other The handler whose functions to merge with this one.
+     * Return a new XPath handler combining all available functions from this and
+     * another handler.
+     * 
+     * @param other
+     *            The handler whose functions to merge with this one.
      * @return A new handler exposing all functions from both XPath handlers.
      * @since 7.13.0
      */

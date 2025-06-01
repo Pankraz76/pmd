@@ -27,7 +27,8 @@ class ScalaCpdLexerTest extends CpdTextComparisonTest {
 
     @Test
     void unclosedLiteral() {
-        // note: this failed before PMD 7.10.0 with a LexException, but now the string literal is just
+        // note: this failed before PMD 7.10.0 with a LexException, but now the string
+        // literal is just
         // expanded to the end of the line
         doTest("unclosed_literal");
     }

@@ -38,7 +38,8 @@ public class RuleSets {
     /**
      * Copy constructor. Deep copies RuleSets.
      *
-     * @param ruleSets The RuleSets to copy.
+     * @param ruleSets
+     *            The RuleSets to copy.
      */
     public RuleSets(final RuleSets ruleSets) {
         List<RuleSet> rsets = new ArrayList<>();
@@ -55,7 +56,8 @@ public class RuleSets {
     /**
      * Public constructor. Add the given rule set.
      *
-     * @param ruleSet the RuleSet
+     * @param ruleSet
+     *            the RuleSet
      */
     public RuleSets(RuleSet ruleSet) {
         this.ruleSets = Collections.singletonList(ruleSet);
@@ -70,7 +72,7 @@ public class RuleSets {
                     rule.initialize(lpReg.getProcessor(rule.getLanguage()));
                 } catch (Exception e) {
                     reporter.errorEx(
-                        "Exception while initializing rule " + rule.getName() + ", the rule will not be run", e);
+                            "Exception while initializing rule " + rule.getName() + ", the rule will not be run", e);
                     iterator.remove();
                 }
             }
@@ -117,8 +119,8 @@ public class RuleSets {
      *
      * @param file
      *            the source file to check
-     * @return <code>true</code> if the file should be checked,
-     *         <code>false</code> otherwise
+     * @return <code>true</code> if the file should be checked, <code>false</code>
+     *         otherwise
      */
     public boolean applies(TextFile file) {
         for (RuleSet ruleSet : ruleSets) {
@@ -131,12 +133,13 @@ public class RuleSets {
 
     /**
      * Apply all applicable rules to the compilation units. Applicable means the
-     * language of the rules must match the language of the source (@see
-     * applies).
+     * language of the rules must match the language of the source (@see applies).
      *
-     * @param root     the List of compilation units; the type these must have,
-     *                 depends on the source language
-     * @param listener Listener that will handle events while analysing.
+     * @param root
+     *            the List of compilation units; the type these must have, depends
+     *            on the source language
+     * @param listener
+     *            Listener that will handle events while analysing.
      */
     public void apply(RootNode root, FileAnalysisListener listener) {
         if (ruleApplicator == null) {
@@ -160,8 +163,8 @@ public class RuleSets {
     /**
      * Returns the first Rule found with the given name.
      *
-     * Note: Since we support multiple languages, rule names are not expected to
-     * be unique within any specific ruleset.
+     * Note: Since we support multiple languages, rule names are not expected to be
+     * unique within any specific ruleset.
      *
      * @param ruleName
      *            the exact name of the rule to find
@@ -189,7 +192,6 @@ public class RuleSets {
         return count;
     }
 
-
     /**
      * Remove and collect any rules that report problems.
      *
@@ -202,8 +204,8 @@ public class RuleSets {
     }
 
     /**
-     * Retrieves a checksum of the rulesets being used. Any change to any rule
-     * of any ruleset should trigger a checksum change.
+     * Retrieves a checksum of the rulesets being used. Any change to any rule of
+     * any ruleset should trigger a checksum change.
      *
      * @return The checksum for this ruleset collection.
      */

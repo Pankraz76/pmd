@@ -21,16 +21,14 @@ public final class ASTAttribute extends AbstractJspNode {
     }
 
     /**
-     * @return boolean - true if the element has a namespace-prefix, false
-     *         otherwise
+     * @return boolean - true if the element has a namespace-prefix, false otherwise
      */
     public boolean isHasNamespacePrefix() {
         return name.indexOf(':') >= 0;
     }
 
     /**
-     * @return String - the part of the name that is before the (first) colon
-     *         (":")
+     * @return String - the part of the name that is before the (first) colon (":")
      */
     public String getNamespacePrefix() {
         int colonIndex = name.indexOf(':');
@@ -38,9 +36,8 @@ public final class ASTAttribute extends AbstractJspNode {
     }
 
     /**
-     * @return String - The part of the name that is after the first colon
-     *         (":"). If the name does not contain a colon, the full name is
-     *         returned.
+     * @return String - The part of the name that is after the first colon (":"). If
+     *         the name does not contain a colon, the full name is returned.
      */
     public String getLocalName() {
         int colonIndex = name.indexOf(':');

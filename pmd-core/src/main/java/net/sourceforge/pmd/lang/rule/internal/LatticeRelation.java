@@ -30,27 +30,32 @@ import net.sourceforge.pmd.util.AssertionUtil;
 import net.sourceforge.pmd.util.GraphUtil;
 
 /**
- * Indexes data of type {@code <V>} with keys of type {@code <K>}, where
- * a partial order exists between the keys. Values are accumulated into
- * a type {@code <C>} (can be an arbitrary collection). The value associated
- * to a key is the recursive union of the values of all its *predecessors*
- * according to the partial order.
+ * Indexes data of type {@code <V>} with keys of type {@code <K>}, where a
+ * partial order exists between the keys. Values are accumulated into a type
+ * {@code <C>} (can be an arbitrary collection). The value associated to a key
+ * is the recursive union of the values of all its *predecessors* according to
+ * the partial order.
  *
- * <p>For example if your type of keys is {@link Class}, and you use
- * subtyping as a partial order, then the value associated to a class C
- * will be the union of the individual values added for C, and those
- * added for all its subtypes.
+ * <p>
+ * For example if your type of keys is {@link Class}, and you use subtyping as a
+ * partial order, then the value associated to a class C will be the union of
+ * the individual values added for C, and those added for all its subtypes.
  *
- * <p>The internal structure only allows <i>some</i> keys to be queried
- * among all keys encountered. This optimises the structure, because we
- * don't accumulate values nobody cares about. This is configured by
- * a predicate given to the constructor.
+ * <p>
+ * The internal structure only allows <i>some</i> keys to be queried among all
+ * keys encountered. This optimises the structure, because we don't accumulate
+ * values nobody cares about. This is configured by a predicate given to the
+ * constructor.
  *
- * @param <K> Type of keys, must have a corresponding {@link TopoOrder},
- *            must be suitable for use as a map key (immutable, consistent
+ * @param <K>
+ *            Type of keys, must have a corresponding {@link TopoOrder}, must be
+ *            suitable for use as a map key (immutable, consistent
  *            equals/hashcode)
- * @param <V> Type of elements indexed by K
- * @param <C> Type of collection the values are accumulated in (configurable with an arbitrary collector)
+ * @param <V>
+ *            Type of elements indexed by K
+ * @param <C>
+ *            Type of collection the values are accumulated in (configurable
+ *            with an arbitrary collector)
  */
 class LatticeRelation<K, @NonNull V, C> {
 
@@ -65,18 +70,21 @@ class LatticeRelation<K, @NonNull V, C> {
     /**
      * Creates a new relation with the given configuration.
      *
-     * @param keyOrder         Partial order generating the lattice
-     * @param queryKeySelector Filter determining which keys can be queried
-     *                         through {@link #get(Object)}
-     * @param keyToString      Strategy to render keys when dumping the lattice to a graph
-     * @param collector        Collector used to accumulate values
-     *                         
-     * @param <A>              Internal accumulator type of the collector
+     * @param keyOrder
+     *            Partial order generating the lattice
+     * @param queryKeySelector
+     *            Filter determining which keys can be queried through
+     *            {@link #get(Object)}
+     * @param keyToString
+     *            Strategy to render keys when dumping the lattice to a graph
+     * @param collector
+     *            Collector used to accumulate values
+     * 
+     * @param <A>
+     *            Internal accumulator type of the collector
      */
-    <A> LatticeRelation(TopoOrder<K> keyOrder,
-                        Predicate<? super K> queryKeySelector,
-                        Function<? super K, String> keyToString,
-                        Collector<? super V, A, ? extends C> collector) {
+    <A> LatticeRelation(TopoOrder<K> keyOrder, Predicate<? super K> queryKeySelector,
+            Function<? super K, String> keyToString, Collector<? super V, A, ? extends C> collector) {
         this.keyOrder = keyOrder;
         this.queryKeySelector = queryKeySelector;
         this.keyToString = keyToString;
@@ -85,17 +93,16 @@ class LatticeRelation<K, @NonNull V, C> {
     }
 
     /**
-     * Works like the other constructor, the filter being containment
-     * in the given query set. This means, only keys that are in this
-     * set may be queried.
+     * Works like the other constructor, the filter being containment in the given
+     * query set. This means, only keys that are in this set may be queried.
      *
-     * @throws IllegalArgumentException If the query set contains a null key
-     * @throws IllegalStateException    If the topo order generates a cycle
+     * @throws IllegalArgumentException
+     *             If the query set contains a null key
+     * @throws IllegalStateException
+     *             If the topo order generates a cycle
      */
-    <A> LatticeRelation(TopoOrder<K> keyOrder,
-                        Set<? extends K> querySet,
-                        Function<? super K, String> keyToString,
-                        Collector<? super V, A, ? extends C> collector) {
+    <A> LatticeRelation(TopoOrder<K> keyOrder, Set<? extends K> querySet, Function<? super K, String> keyToString,
+            Collector<? super V, A, ? extends C> collector) {
         this.keyOrder = keyOrder;
         this.queryKeySelector = querySet::contains;
         this.keyToString = keyToString;
@@ -111,14 +118,17 @@ class LatticeRelation<K, @NonNull V, C> {
     }
 
     /**
-     * Adds the val to the node corresponding to the [key], and all its
-     * successors, creating them if needed. If the key matches the filter,
-     * a QueryNode is created.
+     * Adds the val to the node corresponding to the [key], and all its successors,
+     * creating them if needed. If the key matches the filter, a QueryNode is
+     * created.
      *
-     * @param preds Predecessors to which the given key must be linked
-     * @param k     Key to add
-     * @param val   Proper value to add to the given key (if null, nothing
-     *              is to be added, we just create the topology)
+     * @param preds
+     *            Predecessors to which the given key must be linked
+     * @param k
+     *            Key to add
+     * @param val
+     *            Proper value to add to the given key (if null, nothing is to be
+     *            added, we just create the topology)
      */
     private void addSucc(@Nullable Deque<LNode> preds, final K k, final @Nullable V val) {
         if (any(preds, n -> n.key.equals(k))) {
@@ -175,11 +185,13 @@ class LatticeRelation<K, @NonNull V, C> {
     }
 
     /**
-     * Adds one value to the given key. This value will be joined to the
-     * values of all keys inferior to it when calling {@link #get(Object)}.
+     * Adds one value to the given key. This value will be joined to the values of
+     * all keys inferior to it when calling {@link #get(Object)}.
      *
-     * @throws IllegalStateException If the order has a cycle
-     * @throws NullPointerException  If either of the parameters is null
+     * @throws IllegalStateException
+     *             If the order has a cycle
+     * @throws NullPointerException
+     *             If either of the parameters is null
      */
     public void put(@NonNull K key, @NonNull V value) {
         AssertionUtil.requireParamNotNull("key", key);
@@ -192,14 +204,15 @@ class LatticeRelation<K, @NonNull V, C> {
     }
 
     /**
-     * Returns the computed value for the given key, or the default value
-     * of the collector.
-     * <p>Only keys matching the filter given when constructing the lattice
-     * can be queried, if that is not the case, then this will return
-     * the default value even if some values were {@link #put(Object, Object)}
-     * for it.
+     * Returns the computed value for the given key, or the default value of the
+     * collector.
+     * <p>
+     * Only keys matching the filter given when constructing the lattice can be
+     * queried, if that is not the case, then this will return the default value
+     * even if some values were {@link #put(Object, Object)} for it.
      *
-     * @throws NullPointerException If the key is null
+     * @throws NullPointerException
+     *             If the key is null
      */
     @NonNull
     public C get(@NonNull K key) {
@@ -218,26 +231,22 @@ class LatticeRelation<K, @NonNull V, C> {
     public String toString() {
         // generates a DOT representation of the lattice
         // Visualize eg at http://webgraphviz.com/
-        return GraphUtil.toDot(
-            nodes.values(),
-            n -> n.transitiveSuccs,
-            n -> n.getClass() == QueryNode.class ? DotColor.GREEN : DotColor.BLACK,
-            n -> keyToString.apply(n.key)
-        );
+        return GraphUtil.toDot(nodes.values(), n -> n.transitiveSuccs,
+                n -> n.getClass() == QueryNode.class ? DotColor.GREEN : DotColor.BLACK, n -> keyToString.apply(n.key));
     }
 
     /**
-     * A lattice node. The default behaviour is to ignore values, only
-     * the subclass {@link QueryNode} accumulates them.
+     * A lattice node. The default behaviour is to ignore values, only the subclass
+     * {@link QueryNode} accumulates them.
      */
     private class LNode {
 
         protected final @NonNull K key;
 
         /**
-         * These are all the transitive strict successors, not just the direct
-         * ones. Each time a value is added to this node, it is added to
-         * all these successors too.
+         * These are all the transitive strict successors, not just the direct ones.
+         * Each time a value is added to this node, it is added to all these successors
+         * too.
          */
         final Set<QueryNode<?>> transitiveSuccs = new LinkedHashSet<>();
 
@@ -266,7 +275,8 @@ class LatticeRelation<K, @NonNull V, C> {
             // they just forward to their transitive QNode successors
         }
 
-        @NonNull C computeValue() {
+        @NonNull
+        C computeValue() {
             return emptyValue;
         }
 
@@ -284,9 +294,10 @@ class LatticeRelation<K, @NonNull V, C> {
     /**
      * A node that may be queried with {@link #get(Object)}.
      *
-     * @param <A> Internal accumulator type of the collector, this is
-     *            the second type argument of the collector of the lattice,
-     *            it doesn't matter outside of this class
+     * @param <A>
+     *            Internal accumulator type of the collector, this is the second
+     *            type argument of the collector of the lattice, it doesn't matter
+     *            outside of this class
      */
     private final class QueryNode<A> extends LNode {
 
@@ -314,7 +325,8 @@ class LatticeRelation<K, @NonNull V, C> {
         }
 
         @Override
-        @NonNull C computeValue() {
+        @NonNull
+        C computeValue() {
             if (finished == null) {
                 this.finished = finish(collector(), accumulator);
             }

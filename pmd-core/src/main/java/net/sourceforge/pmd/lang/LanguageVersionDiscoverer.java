@@ -27,13 +27,13 @@ public class LanguageVersionDiscoverer {
     private final Map<Language, LanguageVersion> languageToLanguageVersion = new HashMap<>();
     private LanguageVersion forcedVersion;
 
-
     /**
      * Build a new instance.
      *
-     * @param forcedVersion If non-null, all files should be assigned this version.
-     *                      The methods of this class still work as usual and do not
-     *                      care about the forced language version.
+     * @param forcedVersion
+     *            If non-null, all files should be assigned this version. The
+     *            methods of this class still work as usual and do not care about
+     *            the forced language version.
      */
     public LanguageVersionDiscoverer(LanguageRegistry registry, LanguageVersion forcedVersion) {
         this.languageRegistry = registry;
@@ -87,8 +87,7 @@ public class LanguageVersionDiscoverer {
      * @param sourceFile
      *            The file.
      * @return The currently configured LanguageVersion for the source file, or
-     *         <code>null</code> if there are no supported Languages for the
-     *         file.
+     *         <code>null</code> if there are no supported Languages for the file.
      */
     public LanguageVersion getDefaultLanguageVersionForFile(File sourceFile) {
         return getDefaultLanguageVersionForFile(sourceFile.getName());
@@ -101,8 +100,7 @@ public class LanguageVersionDiscoverer {
      * @param fileName
      *            The file name.
      * @return The currently configured LanguageVersion for the source file or
-     *         <code>null</code> if there are no supported Languages for the
-     *         file.
+     *         <code>null</code> if there are no supported Languages for the file.
      */
     public @Nullable LanguageVersion getDefaultLanguageVersionForFile(String fileName) {
         List<Language> languages = getLanguagesForFile(fileName);
@@ -130,9 +128,8 @@ public class LanguageVersionDiscoverer {
      */
     public List<Language> getLanguagesForFile(String fileName) {
         String extension = getExtension(fileName);
-        List<Language> matching = languageRegistry.getLanguages().stream()
-                                                  .filter(it -> it.hasExtension(extension))
-                                                  .collect(CollectionUtil.toMutableList());
+        List<Language> matching = languageRegistry.getLanguages().stream().filter(it -> it.hasExtension(extension))
+                .collect(CollectionUtil.toMutableList());
 
         if (matching.size() > 1) {
             // Remove all languages that have a more specific dialect that matched.
@@ -148,13 +145,14 @@ public class LanguageVersionDiscoverer {
     }
 
     /**
-     * Make it so that the only extensions that are considered are those
-     * of the given language. This is different from {@link #setForcedVersion(LanguageVersion)}.
-     * because that one will assign the given language version to all files
-     * irrespective of extension. This method, on the other hand, will
-     * ignore files that do not match the given language.
+     * Make it so that the only extensions that are considered are those of the
+     * given language. This is different from
+     * {@link #setForcedVersion(LanguageVersion)}. because that one will assign the
+     * given language version to all files irrespective of extension. This method,
+     * on the other hand, will ignore files that do not match the given language.
      *
-     * @param lang A language
+     * @param lang
+     *            A language
      */
     public void onlyRecognizeLanguages(LanguageRegistry lang) {
         this.languageRegistry = Objects.requireNonNull(lang);
@@ -163,7 +161,6 @@ public class LanguageVersionDiscoverer {
     @Override
     public String toString() {
         return "LanguageVersionDiscoverer(" + languageRegistry
-                + (forcedVersion != null ? ",forcedVersion=" + forcedVersion : "")
-                + ")";
+                + (forcedVersion != null ? ",forcedVersion=" + forcedVersion : "") + ")";
     }
 }

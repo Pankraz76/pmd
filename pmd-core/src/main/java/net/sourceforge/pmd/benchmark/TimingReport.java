@@ -12,6 +12,7 @@ import net.sourceforge.pmd.benchmark.TimeTracker.TimedResult;
 
 /**
  * A report on timing data obtained through the execution of PMD
+ * 
  * @author Juan Martín Sotuyo Dodero
  */
 public class TimingReport {
@@ -19,7 +20,8 @@ public class TimingReport {
     private final long wallClockMillis;
     private final Map<TimedOperationKey, TimedResult> results;
 
-    /* package */ TimingReport(final long wallClockMillis, final Map<TimedOperationKey, TimedResult> accumulatedResults) {
+    /* package */ TimingReport(final long wallClockMillis,
+            final Map<TimedOperationKey, TimedResult> accumulatedResults) {
         this.wallClockMillis = wallClockMillis;
         results = accumulatedResults;
     }

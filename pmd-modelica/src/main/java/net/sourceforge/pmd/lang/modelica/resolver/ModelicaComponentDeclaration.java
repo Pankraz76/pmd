@@ -25,9 +25,7 @@ import net.sourceforge.pmd.lang.modelica.resolver.internal.Watchdog;
 
 public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration implements ModelicaDeclaration {
     public enum ComponentKind {
-        FLOW("flow"),
-        STREAM("stream"),
-        NOTHING_SPECIAL("");
+        FLOW("flow"), STREAM("stream"), NOTHING_SPECIAL("");
 
         private String name;
 
@@ -42,10 +40,7 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
     }
 
     public enum ComponentVariability {
-        DISCRETE("discrete"),
-        PARAMETER("parameter"),
-        CONSTANT("constant"),
-        CONTINUOUS("continuous");
+        DISCRETE("discrete"), PARAMETER("parameter"), CONSTANT("constant"), CONTINUOUS("continuous");
 
         private String name;
 
@@ -60,9 +55,7 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
     }
 
     public enum ComponentCausality {
-        INPUT("input"),
-        OUTPUT("output"),
-        ACAUSAL("acausal");
+        INPUT("input"), OUTPUT("output"), ACAUSAL("acausal");
 
         private String name;
 
@@ -91,9 +84,7 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
         ASTComponentClause declarationRoot = node.ancestors(ASTComponentClause.class).first();
         ASTTypePrefix prefixes = declarationRoot.firstChild(ASTTypePrefix.class);
         parseTypePrefix(prefixes);
-        typeName = declarationRoot
-                .firstChild(ASTTypeSpecifier.class)
-                .firstChild(ASTName.class);
+        typeName = declarationRoot.firstChild(ASTTypeSpecifier.class).firstChild(ASTName.class);
     }
 
     void setContainingScope(ModelicaClassScope scope) {
@@ -138,14 +129,16 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
     }
 
     /**
-     * Whether this component is declared as <code>flow</code>, <code>stream</code> or nothing special.
+     * Whether this component is declared as <code>flow</code>, <code>stream</code>
+     * or nothing special.
      */
     public ComponentKind getKind() {
         return kind;
     }
 
     /**
-     * Whether this component is a constant, a parameter, a discrete or a continuous variable.
+     * Whether this component is a constant, a parameter, a discrete or a continuous
+     * variable.
      */
     public ComponentVariability getVariability() {
         return variability;
@@ -210,11 +203,11 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
         }
 
         ResolutionResult<ModelicaType> resolvedType = getTypeCandidates();
-        for (ModelicaType decl: resolvedType.getBestCandidates()) {
+        for (ModelicaType decl : resolvedType.getBestCandidates()) {
             ((AbstractModelicaDeclaration) decl).resolveFurtherNameComponents(result, name);
         }
         result.markHidingPoint();
-        for (ModelicaType decl: resolvedType.getHiddenCandidates()) {
+        for (ModelicaType decl : resolvedType.getHiddenCandidates()) {
             ((AbstractModelicaDeclaration) decl).resolveFurtherNameComponents(result, name);
         }
     }

@@ -23,7 +23,8 @@ import net.sourceforge.pmd.reporting.RuleViolation;
 
 /**
  * <p>
- * A console renderer with color support for terminal supporting ansi color codes.
+ * A console renderer with color support for terminal supporting ansi color
+ * codes.
  * </p>
  *
  * <pre>
@@ -89,40 +90,20 @@ public class TextColorRenderer extends AbstractAccumulatingRenderer {
             String nextFile = determineFileName(rv.getFileId());
             if (!nextFile.equals(lastFile)) {
                 lastFile = nextFile;
-                buf.append(this.yellowBold)
-                        .append("*")
-                        .append(this.colorReset)
-                        .append(" file: ")
-                        .append(this.whiteBold)
-                        .append(this.getRelativePath(lastFile))
-                        .append(this.colorReset)
-                        .append(System.lineSeparator());
+                buf.append(this.yellowBold).append("*").append(this.colorReset).append(" file: ").append(this.whiteBold)
+                        .append(this.getRelativePath(lastFile)).append(this.colorReset).append(System.lineSeparator());
             }
-            buf.append(this.green)
-                    .append("    src:  ")
-                    .append(this.cyan)
-                    .append(lastFile.substring(lastFile.lastIndexOf(File.separator) + 1))
-                    .append(this.colorReset).append(":")
-                    .append(this.cyan)
-                    .append(rv.getBeginLine())
-                    .append(rv.getEndLine() == -1 ? "" : ":" + rv.getEndLine())
-                    .append(this.colorReset)
+            buf.append(this.green).append("    src:  ").append(this.cyan)
+                    .append(lastFile.substring(lastFile.lastIndexOf(File.separator) + 1)).append(this.colorReset)
+                    .append(":").append(this.cyan).append(rv.getBeginLine())
+                    .append(rv.getEndLine() == -1 ? "" : ":" + rv.getEndLine()).append(this.colorReset)
                     .append(System.lineSeparator());
-            buf.append(this.green)
-                    .append("    rule: ")
-                    .append(this.colorReset)
-                    .append(rv.getRule().getName())
+            buf.append(this.green).append("    rule: ").append(this.colorReset).append(rv.getRule().getName())
                     .append(System.lineSeparator());
-            buf.append(this.green)
-                    .append("    msg:  ")
-                    .append(this.colorReset)
-                    .append(rv.getDescription())
+            buf.append(this.green).append("    msg:  ").append(this.colorReset).append(rv.getDescription())
                     .append(System.lineSeparator());
-            buf.append(this.green)
-                    .append("    code: ")
-                    .append(this.colorReset)
-                    .append(this.getLine(lastFile, rv.getBeginLine()))
-                    .append(System.lineSeparator())
+            buf.append(this.green).append("    code: ").append(this.colorReset)
+                    .append(this.getLine(lastFile, rv.getBeginLine())).append(System.lineSeparator())
                     .append(System.lineSeparator());
             writer.write(buf.toString());
         }
@@ -143,24 +124,11 @@ public class TextColorRenderer extends AbstractAccumulatingRenderer {
             String nextFile = determineFileName(error.getFileId());
             if (!nextFile.equals(lastFile)) {
                 lastFile = nextFile;
-                buf.append(this.redBold)
-                        .append("*")
-                        .append(this.colorReset)
-                        .append(" file: ")
-                        .append(this.whiteBold)
-                        .append(this.getRelativePath(lastFile))
-                        .append(this.colorReset)
-                        .append(System.lineSeparator());
+                buf.append(this.redBold).append("*").append(this.colorReset).append(" file: ").append(this.whiteBold)
+                        .append(this.getRelativePath(lastFile)).append(this.colorReset).append(System.lineSeparator());
             }
-            buf.append(this.green)
-                    .append("    err:  ")
-                    .append(this.cyan)
-                    .append(error.getMsg())
-                    .append(this.colorReset)
-                    .append(System.lineSeparator())
-                    .append(this.red)
-                    .append(error.getDetail())
-                    .append(colorReset)
+            buf.append(this.green).append("    err:  ").append(this.cyan).append(error.getMsg()).append(this.colorReset)
+                    .append(System.lineSeparator()).append(this.red).append(error.getDetail()).append(colorReset)
                     .append(System.lineSeparator());
             writer.println(buf);
         }
@@ -168,19 +136,9 @@ public class TextColorRenderer extends AbstractAccumulatingRenderer {
         for (ConfigurationError error : report.getConfigurationErrors()) {
             buf.setLength(0);
             numberOfErrors++;
-            buf.append(this.redBold)
-                    .append("*")
-                    .append(this.colorReset)
-                    .append(" rule: ")
-                    .append(this.whiteBold)
-                    .append(error.rule().getName())
-                    .append(this.colorReset)
-                    .append(System.lineSeparator());
-            buf.append(this.green)
-                    .append("    err:  ")
-                    .append(this.cyan)
-                    .append(error.issue())
-                    .append(this.colorReset)
+            buf.append(this.redBold).append("*").append(this.colorReset).append(" rule: ").append(this.whiteBold)
+                    .append(error.rule().getName()).append(this.colorReset).append(System.lineSeparator());
+            buf.append(this.green).append("    err:  ").append(this.cyan).append(error.issue()).append(this.colorReset)
                     .append(System.lineSeparator());
             writer.println(buf);
         }
@@ -193,7 +151,6 @@ public class TextColorRenderer extends AbstractAccumulatingRenderer {
         writer.println(this.yellowBold + "*" + this.colorReset + " warnings: " + this.whiteBold + numberOfWarnings
                 + this.colorReset);
     }
-
 
     /**
      * Calculate a summary of violation counts per fully classified class name.
@@ -218,7 +175,6 @@ public class TextColorRenderer extends AbstractAccumulatingRenderer {
         String className = rv.getAdditionalInfo().getOrDefault(RuleViolation.CLASS_NAME, "");
         return StringUtils.isNotBlank(packageName) ? packageName + '.' + className : "";
     }
-
 
     /**
      * Retrieves the requested line from the specified file.
@@ -254,9 +210,9 @@ public class TextColorRenderer extends AbstractAccumulatingRenderer {
     }
 
     /**
-     * Attempts to determine the relative path to the file. If relative path
-     * cannot be found, the original path is returnedi, ie - the current path
-     * for the supplied file.
+     * Attempts to determine the relative path to the file. If relative path cannot
+     * be found, the original path is returnedi, ie - the current path for the
+     * supplied file.
      *
      * @param fileName
      *            well, the file with its original path.

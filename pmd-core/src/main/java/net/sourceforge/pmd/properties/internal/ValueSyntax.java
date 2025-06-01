@@ -26,8 +26,9 @@ import net.sourceforge.pmd.properties.PropertyConstraint;
  *  <value>1,2,3</value>
  * }</pre>
  *
- * <pre>This class is special because it enables compatibility with the
- * pre 7.0.0 XML syntax.
+ * <pre>
+ * This class is special because it enables compatibility with the pre 7.0.0 XML
+ * syntax.
  */
 class ValueSyntax<T> extends InternalApiBridge.InternalPropertySerializer<T> {
 
@@ -37,9 +38,8 @@ class ValueSyntax<T> extends InternalApiBridge.InternalPropertySerializer<T> {
     // these are not applied, just used to document the possible values
     private final List<PropertyConstraint<? super T>> docConstraints;
 
-    ValueSyntax(Function<? super T, String> toString,
-                Function<@NonNull String, ? extends T> fromString,
-                List<PropertyConstraint<? super T>> docConstraints) {
+    ValueSyntax(Function<? super T, String> toString, Function<@NonNull String, ? extends T> fromString,
+            List<PropertyConstraint<? super T>> docConstraints) {
         this.toString = toString;
         this.fromString = fromString;
         this.docConstraints = docConstraints;
@@ -61,35 +61,27 @@ class ValueSyntax<T> extends InternalApiBridge.InternalPropertySerializer<T> {
     }
 
     /**
-     * Creates a value syntax that cannot parse just any string, but
-     * which only applies the fromString parser if a precondition holds.
-     * The precondition is represented by a constraint on strings, and
-     * is documented as a constraint on the returned XML mapper.
+     * Creates a value syntax that cannot parse just any string, but which only
+     * applies the fromString parser if a precondition holds. The precondition is
+     * represented by a constraint on strings, and is documented as a constraint on
+     * the returned XML mapper.
      */
     static <T> ValueSyntax<T> partialFunction(Function<? super T, @NonNull String> toString,
-                                              Function<@NonNull String, ? extends T> fromString,
-                                              PropertyConstraint<? super @NonNull String> checker) {
-        PropertyConstraint<T> docConstraint = PropertyConstraint.fromPredicate(
-            PredicateUtil.always(),
-            checker.getConstraintDescription()
-        );
+            Function<@NonNull String, ? extends T> fromString, PropertyConstraint<? super @NonNull String> checker) {
+        PropertyConstraint<T> docConstraint = PropertyConstraint.fromPredicate(PredicateUtil.always(),
+                checker.getConstraintDescription());
 
-        return new ValueSyntax<>(
-            toString,
-            s -> {
-                checker.validate(s);
-                return fromString.apply(s);
-            },
-            listOf(docConstraint)
-        );
+        return new ValueSyntax<>(toString, s -> {
+            checker.validate(s);
+            return fromString.apply(s);
+        }, listOf(docConstraint));
     }
 
     static <T> ValueSyntax<T> withDefaultToString(Function<String, ? extends T> fromString) {
         return new ValueSyntax<>(Objects::toString, fromString, Collections.emptyList());
     }
 
-    static <T> ValueSyntax<T> create(Function<? super T, String> toString,
-                                     Function<String, ? extends T> fromString) {
+    static <T> ValueSyntax<T> create(Function<? super T, String> toString, Function<String, ? extends T> fromString) {
         return new ValueSyntax<>(toString, fromString, Collections.emptyList());
     }
 }

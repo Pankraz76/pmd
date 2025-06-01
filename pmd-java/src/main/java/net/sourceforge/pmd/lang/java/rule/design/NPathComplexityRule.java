@@ -19,7 +19,6 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 import net.sourceforge.pmd.properties.PropertyFactory;
 import net.sourceforge.pmd.reporting.RuleContext;
 
-
 /**
  * Simple n-path complexity rule.
  *
@@ -28,15 +27,14 @@ import net.sourceforge.pmd.reporting.RuleContext;
  */
 public class NPathComplexityRule extends AbstractJavaRulechainRule {
 
-    private static final PropertyDescriptor<Integer> REPORT_LEVEL_DESCRIPTOR
-        = PropertyFactory.intProperty("reportLevel").desc("N-Path Complexity reporting threshold")
-                         .require(positive()).defaultValue(200).build();
+    private static final PropertyDescriptor<Integer> REPORT_LEVEL_DESCRIPTOR = PropertyFactory
+            .intProperty("reportLevel").desc("N-Path Complexity reporting threshold").require(positive())
+            .defaultValue(200).build();
 
     public NPathComplexityRule() {
         super(ASTExecutableDeclaration.class);
         definePropertyDescriptor(REPORT_LEVEL_DESCRIPTOR);
     }
-
 
     @Override
     public Object visitJavaNode(JavaNode node, Object data) {
@@ -52,12 +50,9 @@ public class NPathComplexityRule extends AbstractJavaRulechainRule {
         BigInteger npath = MetricsUtil.computeMetric(JavaMetrics.NPATH, node);
         if (npath.compareTo(BigInteger.valueOf(reportLevel)) >= 0) {
             asCtx(data).addViolation(node, node instanceof ASTMethodDeclaration ? "method" : "constructor",
-                                     PrettyPrintingUtil.displaySignature(node),
-                                     String.valueOf(npath),
-                                     String.valueOf(reportLevel));
+                    PrettyPrintingUtil.displaySignature(node), String.valueOf(npath), String.valueOf(reportLevel));
         }
 
         return data;
     }
 }
-

@@ -17,7 +17,8 @@ import net.sourceforge.pmd.lang.apex.ast.ASTUserClass;
 import net.sourceforge.pmd.lang.apex.ast.ApexVisitorBase;
 
 /**
- * Visits an Apex class to determine a mapping of referenceable expressions to expression type.
+ * Visits an Apex class to determine a mapping of referenceable expressions to
+ * expression type.
  */
 final class ApexClassPropertyTypesVisitor extends ApexVisitorBase<Void, Void> {
 
@@ -26,7 +27,8 @@ final class ApexClassPropertyTypesVisitor extends ApexVisitorBase<Void, Void> {
      */
     private static final String BEAN_GETTER_PREFIX = "get";
     /**
-     * This is the prefix assigned to automatic get/set properties such as String myProp { get; set; }
+     * This is the prefix assigned to automatic get/set properties such as String
+     * myProp { get; set; }
      */
     private static final String PROPERTY_PREFIX_ACCESSOR = "__sfdc_";
 
@@ -46,13 +48,12 @@ final class ApexClassPropertyTypesVisitor extends ApexVisitorBase<Void, Void> {
     }
 
     /**
-     * Stores the return type of the method in {@link #variables} if the method is referenceable from a
-     * Visualforce page.
+     * Stores the return type of the method in {@link #variables} if the method is
+     * referenceable from a Visualforce page.
      */
     @Override
     public Void visit(ASTMethod node, Void data) {
-        if (node.getArity() == 0
-                && isVisibleToVisualForce(node)
+        if (node.getArity() == 0 && isVisibleToVisualForce(node)
                 && !RETURN_TYPE_VOID.equalsIgnoreCase(node.getReturnType())
                 && (node.hasRealLoc() || node.ancestors(ASTProperty.class).first() != null)) {
             StringBuilder sb = new StringBuilder();
@@ -62,7 +63,7 @@ final class ApexClassPropertyTypesVisitor extends ApexVisitorBase<Void, Void> {
                 sb.append(parent.getSimpleName()).append(".");
             }
             String name = node.getImage();
-            for (String prefix : new String[]{BEAN_GETTER_PREFIX, PROPERTY_PREFIX_ACCESSOR}) {
+            for (String prefix : new String[] { BEAN_GETTER_PREFIX, PROPERTY_PREFIX_ACCESSOR }) {
                 if (name.startsWith(prefix)) {
                     name = name.substring(prefix.length());
                 }

@@ -13,7 +13,10 @@ import net.sourceforge.pmd.lang.swift.ast.SwiftLexer;
 /**
  * SwiftTokenizer
  *
- * <p>Note: This class has been called SwiftTokenizer in PMD 6</p>.
+ * <p>
+ * Note: This class has been called SwiftTokenizer in PMD 6
+ * </p>
+ * .
  */
 public class SwiftCpdLexer extends AntlrCpdLexer {
 

@@ -22,7 +22,8 @@ class LanguageVersionDiscovererTest {
         DummyLanguageModule lang = DummyLanguageModule.getInstance();
         LanguageRegistry lr = LanguageRegistry.singleton(lang);
         LanguageVersionDiscoverer lvDicoverer = new LanguageVersionDiscoverer(lr);
-        LanguageVersion versionForFile = lvDicoverer.getDefaultLanguageVersionForFile(new File("file.unknown-extension"));
+        LanguageVersion versionForFile = lvDicoverer
+                .getDefaultLanguageVersionForFile(new File("file.unknown-extension"));
 
         assertNull(versionForFile);
     }

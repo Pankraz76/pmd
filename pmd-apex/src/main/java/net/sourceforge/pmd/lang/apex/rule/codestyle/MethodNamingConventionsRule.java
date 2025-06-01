@@ -34,12 +34,10 @@ public class MethodNamingConventionsRule extends AbstractNamingConventionsRule {
         definePropertyDescriptor(INSTANCE_REGEX);
     }
 
-
     @Override
     protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTMethod.class);
     }
-
 
     @Override
     public Object visit(ASTMethod node, Object data) {

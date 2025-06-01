@@ -22,8 +22,8 @@ public class MethodNameDeclaration extends AbstractNameDeclaration {
     }
 
     /**
-     * Treat a TimingPointSection within a Compound Trigger like a packaged
-     * FUNCTION or PROCEDURE. SRT
+     * Treat a TimingPointSection within a Compound Trigger like a packaged FUNCTION
+     * or PROCEDURE. SRT
      *
      * @param node
      */
@@ -139,13 +139,12 @@ public class MethodNameDeclaration extends AbstractNameDeclaration {
     @Override
     public int hashCode() {
         try {
-            // SRT node.getImage().hashCode() + ((ASTMethodDeclarator)node).getParameterCount();
+            // SRT node.getImage().hashCode() +
+            // ((ASTMethodDeclarator)node).getParameterCount();
             return node.hashCode();
         } catch (Exception e) {
-            LOG.trace(
-                    "MethodNameDeclaration problem for {} of class {} => {}/{}",
-                            node, node.getClass().getCanonicalName(),
-                            node.getBeginLine(), node.getBeginColumn());
+            LOG.trace("MethodNameDeclaration problem for {} of class {} => {}/{}", node,
+                    node.getClass().getCanonicalName(), node.getBeginLine(), node.getBeginColumn());
             // @TODO SRT restore the thrown exception - throw e;
             return 0;
         }

@@ -57,7 +57,8 @@ class BaseTestParserImpl {
             RuleTestDescriptor descriptor = new RuleTestDescriptor(i, rule.deepCopy());
 
             try (PmdXmlReporter errScope = err.newScope()) {
-                parseSingleTest(testCodes.get(i), descriptor, codeFragments, usedFragments, positionedXmlDoc.getPositioner(), errScope);
+                parseSingleTest(testCodes.get(i), descriptor, codeFragments, usedFragments,
+                        positionedXmlDoc.getPositioner(), errScope);
                 if (!errScope.hasError()) {
                     result.addTest(descriptor);
                 }
@@ -87,12 +88,8 @@ class BaseTestParserImpl {
         return codeFragments;
     }
 
-    private void parseSingleTest(Element testCode,
-                                 RuleTestDescriptor descriptor,
-                                 Map<String, Element> fragments,
-                                 Set<String> usedFragments,
-                                 XmlPositioner xmlPositioner,
-                                 PmdXmlReporter err) {
+    private void parseSingleTest(Element testCode, RuleTestDescriptor descriptor, Map<String, Element> fragments,
+            Set<String> usedFragments, XmlPositioner xmlPositioner, PmdXmlReporter err) {
         {
             String description = getSingleChildText(testCode, "description", true, err);
             if (description == null) {
@@ -101,20 +98,21 @@ class BaseTestParserImpl {
             descriptor.setDescription(description.trim());
         }
 
-        parseBoolAttribute(testCode, "reinitializeRule", true, err, "Attribute 'reinitializeRule' is deprecated and ignored, assumed true");
-        parseBoolAttribute(testCode, "useAuxClasspath", true, err, "Attribute 'useAuxClasspath' is deprecated and ignored, assumed true");
+        parseBoolAttribute(testCode, "reinitializeRule", true, err,
+                "Attribute 'reinitializeRule' is deprecated and ignored, assumed true");
+        parseBoolAttribute(testCode, "useAuxClasspath", true, err,
+                "Attribute 'useAuxClasspath' is deprecated and ignored, assumed true");
 
         boolean disabled = parseBoolAttribute(testCode, "disabled", false, err, null)
-                          | !parseBoolAttribute(testCode, "regressionTest", true, err, "Attribute ''regressionTest'' is deprecated, use ''disabled'' with inverted value");
+                | !parseBoolAttribute(testCode, "regressionTest", true, err,
+                        "Attribute ''regressionTest'' is deprecated, use ''disabled'' with inverted value");
 
         descriptor.setDisabled(disabled);
 
-
         boolean focused = parseBoolAttribute(testCode, "focused", false, err,
-                                             "Attribute focused is used, do not forget to remove it when checking in sources");
+                "Attribute focused is used, do not forget to remove it when checking in sources");
 
         descriptor.setFocused(focused);
-
 
         Properties properties = parseRuleProperties(testCode, descriptor.getRule(), err);
         descriptor.getProperties().putAll(properties);
@@ -126,7 +124,6 @@ class BaseTestParserImpl {
             return;
         }
         descriptor.setCode(code);
-
 
         LanguageVersion lversion = parseLanguageVersion(testCode, err);
         if (lversion != null) {
@@ -151,7 +148,8 @@ class BaseTestParserImpl {
                 expectedMessages = new ArrayList<>();
                 List<Element> messageNodes = DomUtils.childrenNamed(messagesNode, "message");
                 if (messageNodes.size() != expectedProblems) {
-                    err.at(expectedProblemsNode).error("Number of ''expected-messages'' ({0}) does not match", messageNodes.size());
+                    err.at(expectedProblemsNode).error("Number of ''expected-messages'' ({0}) does not match",
+                            messageNodes.size());
                     return;
                 }
 
@@ -170,7 +168,8 @@ class BaseTestParserImpl {
                 expectedEndLineNumbers = new ArrayList<>();
                 String[] linenos = parseTextNode(lineNumbers).split(",");
                 if (linenos.length != expectedProblems) {
-                    err.at(expectedProblemsNode).error("Number of ''expected-linenumbers'' ({0}) does not match", linenos.length);
+                    err.at(expectedProblemsNode).error("Number of ''expected-linenumbers'' ({0}) does not match",
+                            linenos.length);
                     return;
                 }
                 for (String num : linenos) {
@@ -185,23 +184,20 @@ class BaseTestParserImpl {
             }
         }
 
-        descriptor.recordExpectedViolations(
-            expectedProblems,
-            expectedLineNumbers,
-            expectedEndLineNumbers,
-            expectedMessages
-        );
+        descriptor.recordExpectedViolations(expectedProblems, expectedLineNumbers, expectedEndLineNumbers,
+                expectedMessages);
 
     }
 
-    private String getTestCode(Element testCode, Map<String, Element> fragments, Set<String> usedFragments, PmdXmlReporter err) {
+    private String getTestCode(Element testCode, Map<String, Element> fragments, Set<String> usedFragments,
+            PmdXmlReporter err) {
         String code = getSingleChildText(testCode, "code", false, err);
         if (code == null) {
             // Should have a coderef
             List<Element> coderefs = DomUtils.childrenNamed(testCode, "code-ref");
             if (coderefs.isEmpty()) {
                 throw new RuntimeException(
-                    "Required tag is missing from the test-xml. Supply either a code or a code-ref tag");
+                        "Required tag is missing from the test-xml. Supply either a code or a code-ref tag");
             }
             Element coderef = coderefs.get(0);
             Attr id = getRequiredAttribute("id", coderef, err);
@@ -236,7 +232,10 @@ class BaseTestParserImpl {
         return null;
     }
 
-    /** FIXME this is stupid, the language version may be of a different language than the Rule... */
+    /**
+     * FIXME this is stupid, the language version may be of a different language
+     * than the Rule...
+     */
     private static LanguageVersion parseSourceType(String languageIdAndVersion) {
         final String version;
         final String languageId;
@@ -286,7 +285,8 @@ class BaseTestParserImpl {
         return nameAttr;
     }
 
-    private boolean parseBoolAttribute(Element testCode, String attrName, boolean defaultValue, PmdXmlReporter err, String deprecationMessage) {
+    private boolean parseBoolAttribute(Element testCode, String attrName, boolean defaultValue, PmdXmlReporter err,
+            String deprecationMessage) {
         Attr attrNode = testCode.getAttributeNode(attrName);
         if (attrNode != null) {
             if (deprecationMessage != null) {
@@ -296,7 +296,6 @@ class BaseTestParserImpl {
         }
         return defaultValue;
     }
-
 
     private String getSingleChildText(Element parentElm, String nodeName, boolean required, PmdXmlReporter err) {
         Node node = getSingleChild(parentElm, nodeName, required, err);
@@ -333,6 +332,5 @@ class BaseTestParserImpl {
         }
         return buffer.toString();
     }
-
 
 }

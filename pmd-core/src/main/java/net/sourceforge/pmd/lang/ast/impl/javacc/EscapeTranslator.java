@@ -16,8 +16,9 @@ import net.sourceforge.pmd.util.AssertionUtil;
  * An object that can translate an input document into an output document,
  * typically by replacing escape sequences with the character they represent.
  *
- * <p>This is an abstract class because the default implementation does not
- * perform any escape processing. Subclasses refine this behavior.
+ * <p>
+ * This is an abstract class because the default implementation does not perform
+ * any escape processing. Subclasses refine this behavior.
  */
 @SuppressWarnings("PMD.AssignmentInOperand")
 public abstract class EscapeTranslator {
@@ -27,15 +28,16 @@ public abstract class EscapeTranslator {
     // was removed for simplicity.
 
     /**
-     * Source characters. When there is an escape, eg \ u00a0, the
-     * first backslash is replaced with the translated value of the
-     * escape. The bufpos is updated so that we read the next char
-     * after the escape.
+     * Source characters. When there is an escape, eg \ u00a0, the first backslash
+     * is replaced with the translated value of the escape. The bufpos is updated so
+     * that we read the next char after the escape.
      */
     protected Chars input;
     /** Position of the next char to read in the input. */
     protected int bufpos;
-    /** Keep track of adjustments to make to the offsets, caused by unicode escapes. */
+    /**
+     * Keep track of adjustments to make to the offsets, caused by unicode escapes.
+     */
     final FragmentedDocBuilder builder;
 
     private Chars curEscape;
@@ -44,9 +46,11 @@ public abstract class EscapeTranslator {
     /**
      * Create a translator that will read from the given document.
      *
-     * @param original Original document
+     * @param original
+     *            Original document
      *
-     * @throws NullPointerException If the parameter is null
+     * @throws NullPointerException
+     *             If the parameter is null
      */
     public EscapeTranslator(TextDocument original) {
         AssertionUtil.requireParamNotNull("builder", original);
@@ -55,14 +59,16 @@ public abstract class EscapeTranslator {
         this.builder = new FragmentedDocBuilder(original);
     }
 
-
     /**
      * Translate all the input in the buffer. This consumes this object.
      *
-     * @return The translated text document. If there is no escape, returns the original text
+     * @return The translated text document. If there is no escape, returns the
+     *         original text
      *
-     * @throws IllegalStateException    If this method is called more than once on the same object
-     * @throws MalformedSourceException If there are invalid escapes in the source
+     * @throws IllegalStateException
+     *             If this method is called more than once on the same object
+     * @throws MalformedSourceException
+     *             If there are invalid escapes in the source
      */
     public TextDocument translateDocument() throws MalformedSourceException {
         ensureOpen();
@@ -112,10 +118,11 @@ public abstract class EscapeTranslator {
     }
 
     /**
-     * Returns the max offset, EXclusive, up to which we can cut the input
-     * array from the bufpos to dump it into the output array.
+     * Returns the max offset, EXclusive, up to which we can cut the input array
+     * from the bufpos to dump it into the output array.
      *
-     * @param maxOff Max offset up to which to read ahead
+     * @param maxOff
+     *            Max offset up to which to read ahead
      */
     protected int gobbleMaxWithoutEscape(int maxOff) throws MalformedSourceException {
         this.bufpos = maxOff;
@@ -132,14 +139,13 @@ public abstract class EscapeTranslator {
     }
 
     /**
-     * Closing a translator does not close the underlying document, it just
-     * clears the intermediary state.
+     * Closing a translator does not close the underlying document, it just clears
+     * the intermediary state.
      */
     private void close() {
         this.bufpos = -1;
         this.input = null;
     }
-
 
     /** Check to make sure that the stream has not been closed */
     protected final void ensureOpen() {

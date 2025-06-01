@@ -18,12 +18,13 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
- * Stores the XPath name of antlr terminals. I found no simple way to
- * give names to punctuation (we could add a lexer rule, but it may
- * conflict with other tokens). So their names are hardcoded here.
+ * Stores the XPath name of antlr terminals. I found no simple way to give names
+ * to punctuation (we could add a lexer rule, but it may conflict with other
+ * tokens). So their names are hardcoded here.
  *
- * <p>Terminal names start with {@code "T-"} in XPath to avoid conflicts
- * with other stuff.
+ * <p>
+ * Terminal names start with {@code "T-"} in XPath to avoid conflicts with other
+ * stuff.
  */
 public class AntlrNameDictionary {
 
@@ -66,7 +67,6 @@ public class AntlrNameDictionary {
                 } // otherwise something like "final"
             }
 
-
             assert name != null : "Token of kind " + i + " has no XPath name (literal " + vocab.getLiteralName(i) + ")";
 
             String finalName = "T-" + name;
@@ -77,9 +77,8 @@ public class AntlrNameDictionary {
             terminalXPathNames[i] = finalName;
         }
 
-
         assert Stream.of(terminalXPathNames).distinct().count() == terminalXPathNames.length
-            : "Duplicate names in " + Arrays.toString(terminalXPathNames);
+                : "Duplicate names in " + Arrays.toString(terminalXPathNames);
     }
 
     public Vocabulary getVocabulary() {
@@ -87,81 +86,134 @@ public class AntlrNameDictionary {
     }
 
     /**
-     * Override this to customize the XPath name of tokes with no symbolic
-     * name and with an image that is non-alphanumeric. Return null to give
-     * up. The default just gives some name to common punctuation. Remember
-     * that the same token may mean several things in different contexts, so
-     * eg using {@code "not"} as the name of {@code "!"} is too specific.
+     * Override this to customize the XPath name of tokes with no symbolic name and
+     * with an image that is non-alphanumeric. Return null to give up. The default
+     * just gives some name to common punctuation. Remember that the same token may
+     * mean several things in different contexts, so eg using {@code "not"} as the
+     * name of {@code "!"} is too specific.
      */
     protected @Nullable String nonAlphaNumName(String name) {
         switch (name) {
-        case "!": return "bang";
-        case "!!": return "double-bang";
+        case "!":
+            return "bang";
+        case "!!":
+            return "double-bang";
 
-        case "?": return "question";
-        case "??": return "double-question";
-        case "?:": return "elvis";
-        case "?.": return "question-dot";
+        case "?":
+            return "question";
+        case "??":
+            return "double-question";
+        case "?:":
+            return "elvis";
+        case "?.":
+            return "question-dot";
 
-        case ":": return "colon";
-        case ";": return "semi";
-        case ",": return "comma";
+        case ":":
+            return "colon";
+        case ";":
+            return "semi";
+        case ",":
+            return "comma";
 
-        case "(": return "lparen";
-        case ")": return "rparen";
-        case "[": return "lbracket";
-        case "]": return "rbracket";
-        case "{": return "lbrace";
-        case "}": return "rbrace";
+        case "(":
+            return "lparen";
+        case ")":
+            return "rparen";
+        case "[":
+            return "lbracket";
+        case "]":
+            return "rbracket";
+        case "{":
+            return "lbrace";
+        case "}":
+            return "rbrace";
 
-        case "_": return "underscore";
+        case "_":
+            return "underscore";
 
-        case ".": return "dot";
-        case "..": return "double-dot";
-        case "...": return "ellipsis";
+        case ".":
+            return "dot";
+        case "..":
+            return "double-dot";
+        case "...":
+            return "ellipsis";
 
-        case "@": return "at-symbol";
-        case "$": return "dollar";
-        case "#": return "hash";
+        case "@":
+            return "at-symbol";
+        case "$":
+            return "dollar";
+        case "#":
+            return "hash";
 
-        case "\\": return "backslash";
-        case "/": return "slash";
-        case "//": return "double-slash";
-        case "`": return "backtick";
-        case "'": return "squote";
-        case "\"": return "dquote";
-        case "\"\"\"": return "triple-quote";
+        case "\\":
+            return "backslash";
+        case "/":
+            return "slash";
+        case "//":
+            return "double-slash";
+        case "`":
+            return "backtick";
+        case "'":
+            return "squote";
+        case "\"":
+            return "dquote";
+        case "\"\"\"":
+            return "triple-quote";
 
-        case ">": return "gt";
-        case ">=": return "ge";
-        case "<": return "lt";
-        case "<=": return "le";
+        case ">":
+            return "gt";
+        case ">=":
+            return "ge";
+        case "<":
+            return "lt";
+        case "<=":
+            return "le";
 
-        case ">>": return "double-gt";
-        case "<<": return "double-lt";
-        case ">>>": return "triple-gt";
-        case "<<<": return "triple-lt";
+        case ">>":
+            return "double-gt";
+        case "<<":
+            return "double-lt";
+        case ">>>":
+            return "triple-gt";
+        case "<<<":
+            return "triple-lt";
 
-        case "=": return "eq";
-        case "==": return "double-eq";
-        case "===": return "triple-eq";
-        case "!=": return "not-eq";
+        case "=":
+            return "eq";
+        case "==":
+            return "double-eq";
+        case "===":
+            return "triple-eq";
+        case "!=":
+            return "not-eq";
 
-        case "&": return "amp";
-        case "&&": return "double-amp";
-        case "|": return "pipe";
-        case "||": return "double-pipe";
+        case "&":
+            return "amp";
+        case "&&":
+            return "double-amp";
+        case "|":
+            return "pipe";
+        case "||":
+            return "double-pipe";
 
-        case "*": return "star";
-        case "**": return "double-star";
+        case "*":
+            return "star";
+        case "**":
+            return "double-star";
 
-        case "+": return "plus";
-        case "++": return "double-plus";
-        case "-": return "minus";
-        case "--": return "double-minus";
+        case "+":
+            return "plus";
+        case "++":
+            return "double-plus";
+        case "-":
+            return "minus";
+        case "--":
+            return "double-minus";
 
-        case "->": return "rarrow";
-        case "<-": return "larrow";
+        case "->":
+            return "rarrow";
+        case "<-":
+            return "larrow";
 
         default:
             return null;
@@ -171,7 +223,8 @@ public class AntlrNameDictionary {
     /**
      * Gets the xpath name of a terminal node with a given {@link Token#getType()}.
      *
-     * @throws IllegalArgumentException If the index is invalid
+     * @throws IllegalArgumentException
+     *             If the index is invalid
      */
     public @NonNull String getXPathNameOfToken(int tokenType) {
         if (tokenType >= 0 && tokenType < terminalXPathNames.length) {
@@ -186,10 +239,10 @@ public class AntlrNameDictionary {
     }
 
     /**
-     * Returns the constant image of the given token (a shared string),
-     * or null if the token has none. This is a memory optimization to
-     * avoid creating a new string for tokens with constant images. Antlr
-     * does not do this by itself sadly.
+     * Returns the constant image of the given token (a shared string), or null if
+     * the token has none. This is a memory optimization to avoid creating a new
+     * string for tokens with constant images. Antlr does not do this by itself
+     * sadly.
      */
     public @Nullable String getConstantImageOfToken(Token token) {
         int tokenType = token.getType();
@@ -202,9 +255,11 @@ public class AntlrNameDictionary {
     }
 
     /**
-     * Gets the xpath name of an inner node with a given {@link ParserRuleContext#getRuleIndex()}.
+     * Gets the xpath name of an inner node with a given
+     * {@link ParserRuleContext#getRuleIndex()}.
      *
-     * @throws IndexOutOfBoundsException If the index is invalid
+     * @throws IndexOutOfBoundsException
+     *             If the index is invalid
      */
     public @NonNull String getXPathNameOfRule(int idx) {
         return nonTermXpathNames[idx];

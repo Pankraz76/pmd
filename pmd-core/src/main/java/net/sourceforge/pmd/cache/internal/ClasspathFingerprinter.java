@@ -18,11 +18,12 @@ public class ClasspathFingerprinter {
     private static final Logger LOG = LoggerFactory.getLogger(ClasspathFingerprinter.class);
 
     // TODO : With Java 9 we could use List.of()…
-    private static final List<ClasspathEntryFingerprinter> FINGERPRINTERS = Collections.unmodifiableList(Arrays.asList(
-            new ZipFileFingerprinter(),
-            new RawFileFingerprinter(),
-            new NoopFingerprinter() // catch-all fingerprinter, MUST be last
-        ));
+    private static final List<ClasspathEntryFingerprinter> FINGERPRINTERS = Collections.unmodifiableList(
+            Arrays.asList(new ZipFileFingerprinter(), new RawFileFingerprinter(), new NoopFingerprinter() // catch-all
+                                                                                                          // fingerprinter,
+                                                                                                          // MUST be
+                                                                                                          // last
+            ));
 
     public long fingerprint(final URL... classpathEntry) {
         final Adler32 adler32 = new Adler32();

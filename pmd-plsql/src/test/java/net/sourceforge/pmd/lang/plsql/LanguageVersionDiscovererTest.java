@@ -25,7 +25,6 @@ class LanguageVersionDiscovererTest extends AbstractPLSQLParserTst {
         File plsqlFile = new File("/path/to/MY_PACKAGE.sql");
 
         LanguageVersion languageVersion = discoverer.getDefaultLanguageVersionForFile(plsqlFile);
-        assertEquals(plsql.getLanguage().getDefaultVersion(), languageVersion,
-                "LanguageVersion must be PLSQL!");
+        assertEquals(plsql.getLanguage().getDefaultVersion(), languageVersion, "LanguageVersion must be PLSQL!");
     }
 }
