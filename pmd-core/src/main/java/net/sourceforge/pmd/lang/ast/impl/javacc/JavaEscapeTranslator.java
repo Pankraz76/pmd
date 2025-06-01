@@ -8,8 +8,8 @@ import net.sourceforge.pmd.lang.document.Chars;
 import net.sourceforge.pmd.lang.document.TextDocument;
 
 /**
- * An implementation of {@link EscapeTranslator} that translates Java unicode
- * escapes.
+ * An implementation of {@link EscapeTranslator} that translates Java
+ * unicode escapes.
  */
 @SuppressWarnings("PMD.AssignmentInOperand")
 public final class JavaEscapeTranslator extends BackslashEscapeTranslator {
@@ -28,7 +28,7 @@ public final class JavaEscapeTranslator extends BackslashEscapeTranslator {
         int bslashCount = off - firstBackslashOff;
         // is there an escape at offset firstBslashOff?
         if ((bslashCount & 1) == 1 // odd number of backslashes
-                && off < input.length() && input.charAt(off) == 'u') { // at least one 'u'
+            && off < input.length() && input.charAt(off) == 'u') { // at least one 'u'
             // this is enough to expect an escape or throw an exception
             while (off < input.length() && input.charAt(off) == 'u') {
                 // consume all the 'u's
@@ -45,16 +45,18 @@ public final class JavaEscapeTranslator extends BackslashEscapeTranslator {
     private Chars escapeValue(int posOfFirstBackSlash, final int offOfTheU) throws MalformedSourceException {
         int off = offOfTheU;
         try {
-            char c = (char) (hexVal(input.charAt(++off)) << 12 // SUPPRESS CHECKSTYLE paren pad
-                    | hexVal(input.charAt(++off)) << 8 | hexVal(input.charAt(++off)) << 4
-                    | hexVal(input.charAt(++off)));
+            char c = (char)
+                ( hexVal(input.charAt(++off)) << 12 // SUPPRESS CHECKSTYLE paren pad
+                | hexVal(input.charAt(++off)) << 8
+                | hexVal(input.charAt(++off)) << 4
+                | hexVal(input.charAt(++off))
+                );
 
             return Chars.wrap(Character.toString(c));
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             // cut off u and 4 digits
             String escape = input.substring(offOfTheU, Math.min(input.length(), offOfTheU + 5));
-            throw new MalformedSourceException("Invalid unicode escape \\" + escape, e,
-                    locationAt(posOfFirstBackSlash));
+            throw new MalformedSourceException("Invalid unicode escape \\" + escape, e, locationAt(posOfFirstBackSlash));
         }
     }
 

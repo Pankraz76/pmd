@@ -13,6 +13,6 @@ class LanguageVersionTest extends AbstractLanguageVersionTest {
 
     static Collection<TestDescriptor> data() {
         return Arrays.asList(new TestDescriptor(VtlLanguageModule.NAME, VtlLanguageModule.ID, "2.3",
-                getLanguage(VtlLanguageModule.NAME).getDefaultVersion()));
+            getLanguage(VtlLanguageModule.NAME).getDefaultVersion()));
     }
 }

@@ -5,9 +5,7 @@
 /**
  * The violation caching system. This is mostly an internal subsystem.
  *
- * <p>
- * The only public API entry point is
+ * <p>The only public API entry point is
  * {@link net.sourceforge.pmd.PMDConfiguration#setAnalysisCacheLocation(java.lang.String)}.
  */
-
 package net.sourceforge.pmd.cache;

@@ -14,27 +14,25 @@ import net.sourceforge.pmd.lang.document.TextDocument;
 import net.sourceforge.pmd.util.AssertionUtil;
 
 /**
- * Produces an AST from a source file. Instances of this interface must be
- * stateless (which makes them trivially threadsafe).
+ * Produces an AST from a source file. Instances of this interface must
+ * be stateless (which makes them trivially threadsafe).
  */
 public interface Parser {
 
     /**
-     * Parses an entire tree for this language. This may perform some semantic
-     * analysis, like name resolution.
+     * Parses an entire tree for this language. This may perform some
+     * semantic analysis, like name resolution.
      *
-     * @param task
-     *            Description of the parsing task
+     * @param task Description of the parsing task
      *
      * @return The root of the tree corresponding to the source code.
      *
-     * @throws IllegalArgumentException
-     *             If the language version of the parsing task is for an incorrect
-     *             language
-     * @throws FileAnalysisException
-     *             If any error occurs
+     * @throws IllegalArgumentException If the language version of the
+     *                                  parsing task is for an incorrect language
+     * @throws FileAnalysisException    If any error occurs
      */
     RootNode parse(ParserTask task) throws FileAnalysisException;
+
 
     /**
      * Parameters passed to a parsing task.
@@ -51,6 +49,7 @@ public interface Parser {
             this.lpRegistry = AssertionUtil.requireParamNotNull("lpRegistry", lpRegistry);
             Objects.requireNonNull(lpRegistry.getProcessor(textDoc.getLanguageVersion().getLanguage()));
         }
+
 
         public LanguageVersion getLanguageVersion() {
             return textDoc.getLanguageVersion();
@@ -90,8 +89,13 @@ public interface Parser {
         }
 
         public ParserTask withTextDocument(TextDocument textDocument) {
-            return new ParserTask(textDocument, this.reporter, this.lpRegistry);
+            return new ParserTask(
+                textDocument,
+                this.reporter,
+                this.lpRegistry
+            );
         }
     }
+
 
 }

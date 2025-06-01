@@ -4,6 +4,7 @@
 
 package net.sourceforge.pmd.internal.util;
 
+
 import static net.sourceforge.pmd.util.AssertionUtil.requireOver1;
 import static net.sourceforge.pmd.util.AssertionUtil.requireParamNotNull;
 
@@ -37,24 +38,22 @@ public final class PredicateUtil {
     /**
      * Returns a case-insensitive predicate for files with the given extensions.
      *
-     * @throws NullPointerException
-     *             If the extensions array is null
+     * @throws NullPointerException If the extensions array is null
      */
     public static Predicate<String> getFileExtensionFilter(String... extensions) {
         requireParamNotNull("extensions", extensions);
         // TODO add first parameter to mandate that. This affects a
-        // constructor of AbstractLanguage and should be done later
+        //  constructor of AbstractLanguage and should be done later
         requireOver1("Extension count", extensions.length);
         return new FileExtensionFilter(true, extensions);
     }
 
     /**
-     * Returns a predicate that tests if the name of a file matches the given string
-     * filter. The returned predicate normalizes backslashes ({@code '\'}) to
-     * {@code '/'} to be more easily cross-platform.
+     * Returns a predicate that tests if the name of a file matches the
+     * given string filter. The returned predicate normalizes backslashes
+     * ({@code '\'}) to {@code '/'} to be more easily cross-platform.
      *
-     * @param filter
-     *            A predicate on the file name
+     * @param filter A predicate on the file name
      *
      * @return A predicate on files
      */
@@ -74,15 +73,13 @@ public final class PredicateUtil {
      * </ul>
      * In other words, include patterns override exclude patterns.
      *
-     * @param includeRegexes
-     *            Regular expressions overriding the excludes.
-     * @param excludeRegexes
-     *            Regular expressions filtering strings out.
+     * @param includeRegexes Regular expressions overriding the excludes.
+     * @param excludeRegexes Regular expressions filtering strings out.
      *
      * @return A predicate for strings.
      */
     public static Predicate<String> buildRegexFilterIncludeOverExclude(@NonNull Collection<Pattern> includeRegexes,
-            @NonNull Collection<Pattern> excludeRegexes) {
+                                                                       @NonNull Collection<Pattern> excludeRegexes) {
         AssertionUtil.requireParamNotNull("includeRegexes", includeRegexes);
         AssertionUtil.requireParamNotNull("excludeRegexes", includeRegexes);
 

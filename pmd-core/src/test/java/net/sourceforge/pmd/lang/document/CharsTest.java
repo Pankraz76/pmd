@@ -103,7 +103,7 @@ class CharsTest {
     @Test
     void indexOf() {
         Chars bc = Chars.wrap("aaaaabcdb").slice(5, 2);
-        // --
+        //                          --
         assertEquals(0, bc.indexOf('b', 0));
         assertEquals(1, bc.indexOf('c', 0));
 
@@ -114,10 +114,11 @@ class CharsTest {
         assertEquals(-1, bc.indexOf('a', -1));
     }
 
+
     @Test
     void indexOfWithEndOffset() {
         Chars bc = Chars.wrap("aaaaabcdb").slice(5, 2);
-        // --
+        //                          --
         assertEquals(-1, bc.indexOf('b', 0, 0));
         assertEquals(0, bc.indexOf('b', 0, 1));
         assertEquals(0, bc.indexOf('b', 0, 15));
@@ -137,7 +138,7 @@ class CharsTest {
     @Test
     void indexOfWithEndOffsetFullStr() {
         Chars bc = Chars.wrap("aaaaabc").slice(5, 2);
-        // --
+        //                          --
         assertEquals(-1, bc.indexOf('b', 0, 0));
         assertEquals(0, bc.indexOf('b', 0, 1));
         assertEquals(0, bc.indexOf('b', 0, 15));
@@ -159,7 +160,7 @@ class CharsTest {
     @Test
     void indexOfString() {
         Chars bc = Chars.wrap("aaaaabcdb").slice(5, 2);
-        // --
+        //                          --
         assertEquals(0, bc.indexOf("b", 0));
         assertEquals(0, bc.indexOf("bc", 0));
         assertEquals(1, bc.indexOf("c", 0));
@@ -173,18 +174,18 @@ class CharsTest {
         assertEquals(-1, bc.indexOf("ab", -1));
 
         bc = Chars.wrap("aaaaabcdbxdb").slice(5, 5);
-        // -----
+        //                    -----
         assertEquals(3, bc.indexOf("bx", 0));
 
         bc = Chars.wrap("aaaaabcbxdb").slice(5, 5);
-        // -----
+        //                    -----
         assertEquals(2, bc.indexOf("bx", 0));
     }
 
     @Test
     void lastIndexOf() {
         Chars bc = Chars.wrap("aaaaabcdb").slice(5, 2);
-        // --
+        //                          --
         assertEquals(0, bc.lastIndexOf('b', 0));
         assertEquals(0, bc.lastIndexOf('b', 1));
         assertEquals(1, bc.lastIndexOf('c', 1));
@@ -205,18 +206,19 @@ class CharsTest {
         assertTrue(bc.startsWith("bc"));
         assertTrue(bc.startsWith("bc", 0));
         assertTrue(bc.startsWith("c", 1));
-        assertTrue(bc.startsWith('c', 1)); // with a char
+        assertTrue(bc.startsWith('c', 1)); //with a char
         assertTrue(bc.startsWith("", 1));
         assertTrue(bc.startsWith("", 0));
 
+
         assertFalse(bc.startsWith("c", 0));
-        assertFalse(bc.startsWith('c', 0)); // with a char
+        assertFalse(bc.startsWith('c', 0)); //with a char
 
         assertFalse(bc.startsWith("bcd", 0));
         assertFalse(bc.startsWith("xcd", 0));
 
         assertFalse(bc.startsWith("b", -1));
-        assertFalse(bc.startsWith('b', -1)); // with a char
+        assertFalse(bc.startsWith('b', -1)); //with a char
 
         assertFalse(bc.startsWith("", -1));
         assertFalse(bc.startsWith("", 5));
@@ -226,14 +228,14 @@ class CharsTest {
     @Test
     void removeSuffix() {
         Chars bc = Chars.wrap("abcdb").slice(1, 2);
-        // --
+        //                      --
 
         assertEquals("bc", bc.toString());
         assertEquals("b", bc.removeSuffix("c").toString());
         assertEquals("", bc.removeSuffix("bc").toString());
 
         bc = Chars.wrap("aaaaaaa").slice(2, 3);
-        // ---
+        //                 ---
 
         assertEquals("", bc.removeSuffix("aaa").toString());
         assertEquals("aaa", bc.removeSuffix("aaaa").toString());
@@ -242,7 +244,7 @@ class CharsTest {
     @Test
     void removePrefix() {
         Chars bc = Chars.wrap("abcdb").slice(1, 2);
-        // --
+        //                      --
 
         assertEquals("bc", bc.toString());
         assertEquals("bc", bc.removePrefix("c").toString());
@@ -250,7 +252,7 @@ class CharsTest {
         assertEquals("c", bc.removePrefix("b").toString());
 
         bc = Chars.wrap("aaaaaaa").slice(2, 3);
-        // ---
+        //                 ---
 
         assertEquals("aaa", bc.toString());
         assertEquals("", bc.removePrefix("aaa").toString());
@@ -269,7 +271,7 @@ class CharsTest {
     @Test
     void trimStartAndEnd() {
         Chars bc = Chars.wrap("a   bc db").slice(1, 6);
-        // ------
+        //                      ------
         assertEquals("   bc ", bc.toString());
         assertEquals("bc ", bc.trimStart().toString());
         assertEquals("   bc", bc.trimEnd().toString());
@@ -280,7 +282,7 @@ class CharsTest {
     void charAt() {
 
         Chars bc = Chars.wrap("a   bc db").slice(1, 6);
-        // ------
+        //                      ------
         assertEquals(' ', bc.charAt(0));
         assertEquals('b', bc.charAt(3));
         assertEquals('c', bc.charAt(4));
@@ -293,7 +295,7 @@ class CharsTest {
     void linesTest() {
 
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
-        // ------------
+        //                      ------------
         List<String> lines = CollectionUtil.map(bc.lines(), Chars::toString);
         assertEquals(listOf(" ", "  ", "bc "), lines);
     }
@@ -322,8 +324,9 @@ class CharsTest {
     @Test
     void testEqualsHashCode() {
 
+
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
-        // -----
+        //                          -----
         assertEquals(Chars.wrap("a_b_c"), chars);
         assertNotEquals("a_b_c", chars);
 
@@ -338,8 +341,9 @@ class CharsTest {
     @Test
     void testContentEquals() {
 
+
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
-        // -----
+        //                          -----
         assertTrue(chars.contentEquals("a_b_c"));
         assertTrue(chars.contentEquals(Chars.wrap("a_b_c")));
 
@@ -366,6 +370,7 @@ class CharsTest {
 
         assertEquals(listOf("", "b", "c"), listSplits(chars, "_"));
 
+
         testSplits(Chars.wrap("abc"), "");
         testSplits(Chars.wrap(""), "");
     }
@@ -386,7 +391,7 @@ class CharsTest {
     void testSlice() {
         // slice is offset + length
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
-        // -----
+        //                          -----
         assertEquals(Chars.wrap("_b_"), chars.slice(1, 3));
         assertThrows(IndexOutOfBoundsException.class, () -> chars.slice(0, -1));
         assertThrows(IndexOutOfBoundsException.class, () -> chars.slice(0, 6));
@@ -396,7 +401,7 @@ class CharsTest {
     void testSubsequence() {
         // subsequence is start + end
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
-        // -----
+        //                          -----
         assertEquals(Chars.wrap("_b"), chars.subSequence(1, 3));
         assertThrows(IndexOutOfBoundsException.class, () -> chars.slice(0, -1));
         assertThrows(IndexOutOfBoundsException.class, () -> chars.slice(0, 6));
@@ -406,15 +411,17 @@ class CharsTest {
     void testSubstring() {
         // substring is start + end
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
-        // -----
+        //                          -----
         assertEquals("_b", chars.substring(1, 3));
         assertThrows(IndexOutOfBoundsException.class, () -> chars.substring(0, -1));
         assertThrows(IndexOutOfBoundsException.class, () -> chars.substring(0, 6));
     }
 
+
     @Test
     void testTrimBlankLines() {
-        assertTrimBlankLinesEquals(" \n \n abc \n \n de \n \n ", " abc \n \n de ");
+        assertTrimBlankLinesEquals(" \n \n abc \n \n de \n \n ",
+                                   " abc \n \n de ");
         assertTrimBlankLinesEquals("", "");
     }
 
@@ -423,10 +430,11 @@ class CharsTest {
         assertEquals(Chars.wrap(expected), actual);
     }
 
+
     @Test
     void testReaderSingleChars() throws IOException {
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
-        // ------------
+        //                      ------------
 
         try (Reader reader = bc.newReader()) {
             assertEquals(' ', reader.read());
@@ -445,7 +453,7 @@ class CharsTest {
     @Test
     void testReaderBuffer() throws IOException {
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
-        // ------------
+        //                      ------------
 
         char[] cbuf = new char[4];
 
@@ -463,7 +471,7 @@ class CharsTest {
     @Test
     void testReaderSlicedBuffer() throws IOException {
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
-        // ------------
+        //                      ------------
 
         // use \0 as padding before and after
         char[] cbuf = new char[6];
@@ -482,7 +490,7 @@ class CharsTest {
     @Test
     void testReadClosed() throws IOException {
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
-        // ------------
+        //                      ------------
 
         Reader reader = bc.newReader();
         reader.close();
@@ -492,7 +500,7 @@ class CharsTest {
     @Test
     void testReaderMark() throws IOException {
         Chars bc = Chars.wrap("abcdefghijklmnop").slice(1, 9);
-        // ------------
+        //                      ------------
 
         try (Reader reader = bc.newReader()) {
             assertTrue(reader.markSupported(), "markSupported");
@@ -522,7 +530,7 @@ class CharsTest {
     @Test
     void testReaderMissingMark() throws IOException {
         Chars bc = Chars.wrap("abcdefghijklmnop").slice(1, 9);
-        // ------------
+        //                      ------------
 
         try (Reader reader = bc.newReader()) {
             assertTrue(reader.markSupported(), "markSupported");
@@ -535,7 +543,7 @@ class CharsTest {
     @Test
     void testReaderSkip() throws IOException {
         Chars bc = Chars.wrap("abcdefghijklmnop").slice(1, 9);
-        // ------------
+        //                      ------------
 
         try (Reader reader = bc.newReader()) {
             assertEquals('b', reader.read());
@@ -559,7 +567,7 @@ class CharsTest {
     @Test
     void testReaderInvalidParams() throws IOException {
         Chars bc = Chars.wrap("abcdefghijklmnop").slice(1, 9);
-        // ------------
+        //                      ------------
         char[] cbuf = new char[4];
 
         try (Reader reader = bc.newReader()) {

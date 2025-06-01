@@ -65,8 +65,8 @@ public class ZipFileFingerprinter implements ClasspathEntryFingerprinter {
             final List<ZipEntry> meaningfulEntries = getMeaningfulEntries(zip);
 
             /*
-             * Make sure the order of entries in the zip do not matter. Duplicates are
-             * technically possible, but shouldn't exist in classpath entries
+             *  Make sure the order of entries in the zip do not matter.
+             *  Duplicates are technically possible, but shouldn't exist in classpath entries
              */
             Collections.sort(meaningfulEntries, FILE_NAME_COMPARATOR);
 
@@ -74,8 +74,8 @@ public class ZipFileFingerprinter implements ClasspathEntryFingerprinter {
 
             for (final ZipEntry zipEntry : meaningfulEntries) {
                 /*
-                 * The CRC actually uses 4 bytes, but as it's unsigned Java uses a long… the
-                 * cast changes the sign, but not the underlying byte values themselves
+                 * The CRC actually uses 4 bytes, but as it's unsigned Java uses a long…
+                 * the cast changes the sign, but not the underlying byte values themselves
                  */
                 buffer.putInt(0, (int) zipEntry.getCrc());
                 checksum.update(buffer.array(), 0, 4);
@@ -89,11 +89,8 @@ public class ZipFileFingerprinter implements ClasspathEntryFingerprinter {
     }
 
     /**
-     * Retrieve a filtered list of entries discarding those that do not matter for
-     * classpath computation
-     * 
-     * @param zip
-     *            The zip file whose entries to retrieve
+     * Retrieve a filtered list of entries discarding those that do not matter for classpath computation
+     * @param zip The zip file whose entries to retrieve
      * @return The filtered list of zip entries
      */
     private List<ZipEntry> getMeaningfulEntries(ZipFile zip) {

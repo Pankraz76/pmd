@@ -42,19 +42,24 @@ import net.sourceforge.pmd.properties.PropertySource;
  * </pre>
  *
  *
- * By default, just prints the structure, like shown above. You can configure it
- * to render nodes differently by overriding
- * {@link #appendNodeInfoLn(Appendable, Node)}.
+ * By default, just prints the structure, like shown above. You can
+ * configure it to render nodes differently by overriding {@link #appendNodeInfoLn(Appendable, Node)}.
  */
 public class TextTreeRenderer implements TreeRenderer {
 
     static final TreeRendererDescriptor DESCRIPTOR = new TreeRendererDescriptor() {
 
-        private final PropertyDescriptor<Boolean> onlyAscii = PropertyFactory.booleanProperty("onlyAsciiChars")
-                .defaultValue(false).desc("Use only ASCII characters in the structure").build();
+        private final PropertyDescriptor<Boolean> onlyAscii =
+            PropertyFactory.booleanProperty("onlyAsciiChars")
+                           .defaultValue(false)
+                           .desc("Use only ASCII characters in the structure")
+                           .build();
 
-        private final PropertyDescriptor<Integer> maxLevel = PropertyFactory.intProperty("maxLevel").defaultValue(-1)
-                .desc("Max level on which to recurse. Negative means unbounded").build();
+        private final PropertyDescriptor<Integer> maxLevel =
+            PropertyFactory.intProperty("maxLevel")
+                           .defaultValue(-1)
+                           .desc("Max level on which to recurse. Negative means unbounded")
+                           .build();
 
         @Override
         public PropertySource newPropertyBundle() {
@@ -99,14 +104,13 @@ public class TextTreeRenderer implements TreeRenderer {
     /**
      * Creates a new text renderer.
      *
-     * @param onlyAscii
-     *            Whether to output the skeleton of the tree with only ascii
-     *            characters. If false, uses unicode chars like '├'
-     * @param maxLevel
-     *            Max level on which to recurse. Negative means unbounded. If the
-     *            max level is reached, a placeholder is dumped, like "1 child is
-     *            not shown". This is controlled by
-     *            {@link #appendBoundaryForNodeLn(Node, Appendable, String)}.
+     * @param onlyAscii Whether to output the skeleton of the tree with
+     *                  only ascii characters. If false, uses unicode chars
+     *                  like '├'
+     * @param maxLevel  Max level on which to recurse. Negative means
+     *                  unbounded. If the max level is reached, a placeholder
+     *                  is dumped, like "1 child is not shown". This is
+     *                  controlled by {@link #appendBoundaryForNodeLn(Node, Appendable, String)}.
      */
     public TextTreeRenderer(boolean onlyAscii, int maxLevel) {
         this.str = onlyAscii ? Strings.ASCII : Strings.UNICODE;
@@ -122,21 +126,26 @@ public class TextTreeRenderer implements TreeRenderer {
         return prefix + (isTail ? str.gap : str.verticalEdge);
     }
 
+
     protected final void appendIndent(Appendable out, String prefix, boolean isTail) throws IOException {
         out.append(prefix).append(isTail ? str.tailFork : str.fork);
     }
 
     /**
-     * Append info about the node. The indent has already been appended. This should
-     * end with a newline. The default just appends the name of the node, and no
-     * other information.
+     * Append info about the node. The indent has already been appended.
+     * This should end with a newline. The default just appends the name
+     * of the node, and no other information.
      */
     protected void appendNodeInfoLn(Appendable out, Node node) throws IOException {
         out.append(node.getXPathNodeName()).append("\n");
     }
 
-    private void printInnerNode(Node node, Appendable out, int level, String prefix, boolean isTail)
-            throws IOException {
+
+    private void printInnerNode(Node node,
+                                Appendable out,
+                                int level,
+                                String prefix,
+                                boolean isTail) throws IOException {
 
         appendIndent(out, prefix, isTail);
         appendNodeInfoLn(out, node);
@@ -169,13 +178,24 @@ public class TextTreeRenderer implements TreeRenderer {
 
     private static final class Strings {
 
-        private static final Strings ASCII = new Strings("+- ", "+- ", "|  ", "   ");
-        private static final Strings UNICODE = new Strings("└─ ", "├─ ", "│  ", "   ");
+        private static final Strings ASCII = new Strings(
+            "+- ",
+            "+- ",
+            "|  ",
+            "   "
+        );
+        private static final Strings UNICODE = new Strings(
+            "└─ ",
+            "├─ ",
+            "│  ",
+            "   "
+        );
 
         private final String tailFork;
         private final String fork;
         private final String verticalEdge;
         private final String gap;
+
 
         private Strings(String tailFork, String fork, String verticalEdge, String gap) {
             this.tailFork = tailFork;

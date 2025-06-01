@@ -7,7 +7,6 @@ package net.sourceforge.pmd.lang.rule.xpath.internal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.xml.namespace.QName;
 
 import net.sourceforge.pmd.lang.ast.Node;
@@ -34,8 +33,7 @@ import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
 
 /**
- * Converts PMD's {@link XPathFunctionDefinition} into Saxon's
- * {@link ExtensionFunctionDefinition}.
+ * Converts PMD's {@link XPathFunctionDefinition} into Saxon's {@link ExtensionFunctionDefinition}.
  */
 public class SaxonExtensionFunctionDefinitionAdapter extends ExtensionFunctionDefinition {
     private static final SequenceType SINGLE_ELEMENT_SEQUENCE_TYPE = NodeKindTest.ELEMENT.one();
@@ -48,20 +46,13 @@ public class SaxonExtensionFunctionDefinitionAdapter extends ExtensionFunctionDe
 
     private SequenceType convertToSequenceType(XPathFunctionDefinition.Type type) {
         switch (type) {
-        case SINGLE_STRING:
-            return SequenceType.SINGLE_STRING;
-        case SINGLE_BOOLEAN:
-            return SequenceType.SINGLE_BOOLEAN;
-        case SINGLE_ELEMENT:
-            return SINGLE_ELEMENT_SEQUENCE_TYPE;
-        case SINGLE_INTEGER:
-            return SequenceType.SINGLE_INTEGER;
-        case STRING_SEQUENCE:
-            return SequenceType.STRING_SEQUENCE;
-        case OPTIONAL_STRING:
-            return SequenceType.OPTIONAL_STRING;
-        case OPTIONAL_DECIMAL:
-            return SequenceType.OPTIONAL_DECIMAL;
+        case SINGLE_STRING: return SequenceType.SINGLE_STRING;
+        case SINGLE_BOOLEAN: return SequenceType.SINGLE_BOOLEAN;
+        case SINGLE_ELEMENT: return SINGLE_ELEMENT_SEQUENCE_TYPE;
+        case SINGLE_INTEGER: return SequenceType.SINGLE_INTEGER;
+        case STRING_SEQUENCE: return SequenceType.STRING_SEQUENCE;
+        case OPTIONAL_STRING: return SequenceType.OPTIONAL_STRING;
+        case OPTIONAL_DECIMAL: return SequenceType.OPTIONAL_DECIMAL;
         default:
             throw new UnsupportedOperationException("Type " + type + " is not supported");
         }
@@ -127,17 +118,17 @@ public class SaxonExtensionFunctionDefinitionAdapter extends ExtensionFunctionDe
                 Object[] convertedArguments = new Object[definition.getArgumentTypes().length];
                 for (int i = 0; i < convertedArguments.length; i++) {
                     switch (definition.getArgumentTypes()[i]) {
-                    case SINGLE_STRING:
-                        convertedArguments[i] = arguments[i].head().getStringValue();
-                        break;
-                    case SINGLE_ELEMENT:
-                        convertedArguments[i] = arguments[i].head();
-                        break;
-                    default:
-                        throw new UnsupportedOperationException(
-                                "Don't know how to convert argument type " + definition.getArgumentTypes()[i]);
+                        case SINGLE_STRING:
+                            convertedArguments[i] = arguments[i].head().getStringValue();
+                            break;
+                        case SINGLE_ELEMENT:
+                            convertedArguments[i] = arguments[i].head();
+                            break;
+                        default:
+                            throw new UnsupportedOperationException("Don't know how to convert argument type " + definition.getArgumentTypes()[i]);
                     }
                 }
+
 
                 Object result = null;
                 try {
@@ -147,34 +138,32 @@ public class SaxonExtensionFunctionDefinitionAdapter extends ExtensionFunctionDe
                 }
                 Sequence convertedResult = null;
                 switch (definition.getResultType()) {
-                case SINGLE_BOOLEAN:
-                    convertedResult = BooleanValue.get((Boolean) result);
-                    break;
-                case SINGLE_INTEGER:
-                    convertedResult = Int64Value.makeIntegerValue((Integer) result);
-                    break;
-                case SINGLE_STRING:
-                    convertedResult = new StringValue((String) result);
-                    break;
-                case OPTIONAL_STRING:
-                    convertedResult = result instanceof Optional && ((Optional<String>) result).isPresent()
-                            ? new StringValue(((Optional<String>) result).get())
-                            : EmptyAtomicSequence.getInstance();
-                    break;
-                case STRING_SEQUENCE:
-                    convertedResult = result instanceof List
-                            ? new SequenceExtent.Of<>(
-                                    ((List<String>) result).stream().map(StringValue::new).collect(Collectors.toList()))
-                            : EmptySequence.getInstance();
-                    break;
-                case OPTIONAL_DECIMAL:
-                    convertedResult = result instanceof Optional && ((Optional<Double>) result).isPresent()
-                            ? new BigDecimalValue(((Optional<Double>) result).get())
-                            : EmptySequence.getInstance();
-                    break;
-                default:
-                    throw new UnsupportedOperationException(
-                            "Don't know how to convert result type " + definition.getResultType());
+                    case SINGLE_BOOLEAN:
+                        convertedResult = BooleanValue.get((Boolean) result);
+                        break;
+                    case SINGLE_INTEGER:
+                        convertedResult = Int64Value.makeIntegerValue((Integer) result);
+                        break;
+                    case SINGLE_STRING:
+                        convertedResult = new StringValue((String) result);
+                        break;
+                    case OPTIONAL_STRING:
+                        convertedResult = result instanceof Optional && ((Optional<String>) result).isPresent()
+                                ? new StringValue(((Optional<String>) result).get())
+                                : EmptyAtomicSequence.getInstance();
+                        break;
+                    case STRING_SEQUENCE:
+                        convertedResult = result instanceof List
+                                ? new SequenceExtent.Of<>(((List<String>) result).stream().map(StringValue::new).collect(Collectors.toList()))
+                                : EmptySequence.getInstance();
+                        break;
+                    case OPTIONAL_DECIMAL:
+                        convertedResult = result instanceof Optional && ((Optional<Double>) result).isPresent()
+                                ? new BigDecimalValue(((Optional<Double>) result).get())
+                                : EmptySequence.getInstance();
+                        break;
+                    default:
+                        throw new UnsupportedOperationException("Don't know how to convert result type " + definition.getResultType());
                 }
                 return convertedResult;
             }

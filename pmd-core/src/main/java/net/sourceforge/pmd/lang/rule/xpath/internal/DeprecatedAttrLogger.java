@@ -16,18 +16,19 @@ import net.sourceforge.pmd.lang.rule.xpath.InternalApiBridge;
 import net.sourceforge.pmd.lang.rule.xpath.XPathRule;
 
 /**
- * Records usages of deprecated attributes in XPath rules. This needs to be
- * threadsafe, XPath rules have one each (and share it).
+ * Records usages of deprecated attributes in XPath rules. This needs
+ * to be threadsafe, XPath rules have one each (and share it).
  */
 public abstract class DeprecatedAttrLogger {
 
     private static final Logger LOG = LoggerFactory.getLogger(Attribute.class);
 
+
     public abstract void recordUsageOf(Attribute attribute);
 
     /**
-     * Create a new context for the given rule, returns a noop implementation if the
-     * warnings would be ignored anyway.
+     * Create a new context for the given rule, returns a noop implementation
+     * if the warnings would be ignored anyway.
      */
     public static DeprecatedAttrLogger create(XPathRule rule) {
         return doCreate(rule, false);
@@ -89,11 +90,10 @@ public abstract class DeprecatedAttrLogger {
                 String name = getLoggableAttributeName(attribute);
                 Boolean b = deprecated.putIfAbsent(name, Boolean.TRUE);
                 if (b == null) {
-                    // this message needs to be kept in sync with PMDCoverageTest /
-                    // BinaryDistributionIT
+                    // this message needs to be kept in sync with PMDCoverageTest / BinaryDistributionIT
 
                     String user = isSuppressionQuery ? "violationSuppressXPath for rule " + ruleToString()
-                            : "XPath rule " + ruleToString();
+                                                     : "XPath rule " + ruleToString();
                     String msg = "Use of deprecated attribute '" + name + "' by " + user;
                     if (!replacement.isEmpty()) {
                         msg += ", please use " + replacement + " instead";
@@ -120,14 +120,12 @@ public abstract class DeprecatedAttrLogger {
             String replacement = InternalApiBridge.replacementIfDeprecated(attribute);
             if (replacement != null) {
                 String name = getLoggableAttributeName(attribute);
-                // this message needs to be kept in sync with PMDCoverageTest /
-                // BinaryDistributionIT
+                // this message needs to be kept in sync with PMDCoverageTest / BinaryDistributionIT
                 String msg = "Use of deprecated attribute '" + name + "' in a findChildNodesWithXPath navigation";
                 if (!replacement.isEmpty()) {
                     msg += ", please use " + replacement + " instead";
                 }
-                // log with exception stack trace to help figure out where exactly the xpath is
-                // used.
+                // log with exception stack trace to help figure out where exactly the xpath is used.
                 LOG.warn(msg, new RuntimeException(msg));
             }
         }

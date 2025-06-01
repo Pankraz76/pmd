@@ -34,19 +34,23 @@ public interface Rule extends PropertySource {
      * The property descriptor to universally suppress violations with messages
      * matching a regular expression.
      */
-    PropertyDescriptor<Optional<Pattern>> VIOLATION_SUPPRESS_REGEX_DESCRIPTOR = PropertyFactory
-            .regexProperty("violationSuppressRegex")
-            .desc("Suppress violations with messages matching a regular expression").toOptional("")
-            .defaultValue(Optional.empty()).build();
+    PropertyDescriptor<Optional<Pattern>> VIOLATION_SUPPRESS_REGEX_DESCRIPTOR =
+        PropertyFactory.regexProperty("violationSuppressRegex")
+                       .desc("Suppress violations with messages matching a regular expression")
+                       .toOptional("")
+                       .defaultValue(Optional.empty())
+                       .build();
 
     /**
-     * Name of the property to universally suppress violations on nodes which match
-     * a given relative XPath expression.
+     * Name of the property to universally suppress violations on nodes which
+     * match a given relative XPath expression.
      */
-    PropertyDescriptor<Optional<String>> VIOLATION_SUPPRESS_XPATH_DESCRIPTOR = PropertyFactory
-            .stringProperty("violationSuppressXPath")
-            .desc("Suppress violations on nodes which match a given relative XPath expression.").toOptional("")
-            .defaultValue(Optional.empty()).build();
+    PropertyDescriptor<Optional<String>> VIOLATION_SUPPRESS_XPATH_DESCRIPTOR =
+        PropertyFactory.stringProperty("violationSuppressXPath")
+                       .desc("Suppress violations on nodes which match a given relative XPath expression.")
+                       .toOptional("")
+                       .defaultValue(Optional.empty())
+                       .build();
 
     /**
      * Get the Language of this Rule.
@@ -64,8 +68,8 @@ public interface Rule extends PropertySource {
     void setLanguage(Language language);
 
     /**
-     * Get the minimum LanguageVersion to which this Rule applies. If this value is
-     * <code>null</code> it indicates there is no minimum bound.
+     * Get the minimum LanguageVersion to which this Rule applies. If this value
+     * is <code>null</code> it indicates there is no minimum bound.
      *
      * @return the minimum language version
      */
@@ -80,8 +84,8 @@ public interface Rule extends PropertySource {
     void setMinimumLanguageVersion(LanguageVersion minimumLanguageVersion);
 
     /**
-     * Get the maximum LanguageVersion to which this Rule applies. If this value is
-     * <code>null</code> it indicates there is no maximum bound.
+     * Get the maximum LanguageVersion to which this Rule applies. If this value
+     * is <code>null</code> it indicates there is no maximum bound.
      *
      * @return the maximum language version
      */
@@ -99,10 +103,10 @@ public interface Rule extends PropertySource {
      * Gets whether this Rule is deprecated. A deprecated Rule is one which:
      * <ul>
      * <li>is scheduled for removal in a future version of PMD</li>
-     * <li>or, has been removed and replaced with a non-functioning place-holder and
-     * will be completely removed in a future version of PMD</li>
-     * <li>or, has been renamed/moved and the old name will be completely removed in
-     * a future version of PMD</li>
+     * <li>or, has been removed and replaced with a non-functioning place-holder
+     * and will be completely removed in a future version of PMD</li>
+     * <li>or, has been renamed/moved and the old name will be completely
+     * removed in a future version of PMD</li>
      * </ul>
      *
      * @return <code>true</code> if this rule is deprecated
@@ -134,8 +138,8 @@ public interface Rule extends PropertySource {
     void setName(String name);
 
     /**
-     * Get the version of PMD in which this Rule was added. Return <code>null</code>
-     * if not applicable.
+     * Get the version of PMD in which this Rule was added. Return
+     * <code>null</code> if not applicable.
      *
      * @return version of PMD since when this rule was added
      */
@@ -256,38 +260,36 @@ public interface Rule extends PropertySource {
      */
     void setPriority(RulePriority priority);
 
+
     /**
-     * Returns the object that selects the nodes to which this rule applies. The
-     * selected nodes will be handed to {@link #apply(Node, RuleContext)}.
+     * Returns the object that selects the nodes to which this rule applies.
+     * The selected nodes will be handed to {@link #apply(Node, RuleContext)}.
      */
     RuleTargetSelector getTargetSelector();
 
     /**
      * Initialize the rule using the language processor if needed.
      *
-     * @param languageProcessor
-     *            The processor for the rule's language
+     * @param languageProcessor The processor for the rule's language
      */
     default void initialize(LanguageProcessor languageProcessor) {
-        // by default do nothing
+         // by default do nothing
     }
 
     /**
      * Start processing. Called once per file, before apply() is first called.
      *
-     * @param ctx
-     *            the rule context
+     * @param ctx the rule context
      */
     void start(RuleContext ctx);
 
+
     /**
-     * Process the given node. The nodes that are fed to this method are the nodes
-     * selected by {@link #getTargetSelector()}.
+     * Process the given node. The nodes that are fed to this method
+     * are the nodes selected by {@link #getTargetSelector()}.
      *
-     * @param target
-     *            Node on which to apply the rule
-     * @param ctx
-     *            Rule context, handling violations
+     * @param target Node on which to apply the rule
+     * @param ctx    Rule context, handling violations
      */
     void apply(Node target, RuleContext ctx);
 
@@ -301,9 +303,9 @@ public interface Rule extends PropertySource {
 
     /**
      * Creates a new copy of this rule.
-     * 
      * @return A new exact copy of this rule
      */
     Rule deepCopy();
+
 
 }

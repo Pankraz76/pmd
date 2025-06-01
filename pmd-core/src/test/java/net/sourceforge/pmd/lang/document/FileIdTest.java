@@ -18,8 +18,7 @@ import org.junit.jupiter.api.Test;
  * @author Clément Fournier
  */
 class FileIdTest {
-    // note we can't hardcode the expected paths because they look different on win
-    // and nix
+    // note we can't hardcode the expected paths because they look different on win and nix
 
     @Test
     void testFromPath() {
@@ -28,6 +27,7 @@ class FileIdTest {
         FileId fileId = FileId.fromPath(path);
         checkId(fileId, absPath.toString(), "a", path.toUri().toString(), path.toString());
     }
+
 
     @Test
     void testFromUri() {
@@ -55,9 +55,9 @@ class FileIdTest {
         FileId fileId = FileId.fromURI(uriStr);
         String absLocalPath = "/x/c.d".replace('/', File.separatorChar);
         checkId(fileId, absLocalPath, "c.d", uriStr, "/x/c.d");
-        checkId(fileId.getParentFsPath(), zipPath.toAbsolutePath().toString(), "b.zip", zipPath.toUri().toString(),
-                zipPath.toAbsolutePath().toString());
+        checkId(fileId.getParentFsPath(), zipPath.toAbsolutePath().toString(), "b.zip", zipPath.toUri().toString(), zipPath.toAbsolutePath().toString());
     }
+
 
     private static void checkId(FileId fileId, String absPath, String fileName, String uri, String originalPath) {
         assertNotNull(fileId);

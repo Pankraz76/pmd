@@ -13,8 +13,7 @@ import net.sourceforge.pmd.lang.ast.NodeStream;
  *
  * @author Clément Fournier
  *
- * @param <T>
- *            placeholder
+ * @param <T> placeholder
  */
 public interface ASTUserClassOrInterface<T> extends ApexQualifiableNode, ApexNode<Void> {
 
@@ -37,7 +36,6 @@ public interface ASTUserClassOrInterface<T> extends ApexQualifiableNode, ApexNod
 
     /**
      * Returns true if this type declaration is nested inside a class.
-     * 
      * @since 7.4.0
      */
     default boolean isNested() {

@@ -86,8 +86,8 @@ public class PLSQLNameOccurrence implements NameOccurrence {
          */
 
         /*
-         * if (!(primaryExpression.getChild(1) instanceof ASTAssignmentOperator)) {
-         * return false; }
+         * if (!(primaryExpression.getChild(1) instanceof
+         * ASTAssignmentOperator)) { return false; }
          */
 
         /*
@@ -99,53 +99,57 @@ public class PLSQLNameOccurrence implements NameOccurrence {
 
     /*
      * private boolean isCompoundAssignment(Node primaryExpression) { return
-     * ((ASTAssignmentOperator) primaryExpression.getChild(1)).isCompound(); }
+     * ((ASTAssignmentOperator) primaryExpression.getChild(1)).isCompound();
+     * }
      *
      * private boolean isStandAlonePostfix(Node primaryExpression) { if
      * (!(primaryExpression instanceof ASTPostfixExpression) ||
-     * !(primaryExpression.getParent() instanceof ASTStatementExpression)) { return
-     * false; }
+     * !(primaryExpression.getParent() instanceof ASTStatementExpression)) {
+     * return false; }
      *
      * ASTPrimaryPrefix pf = (ASTPrimaryPrefix) ((ASTPrimaryExpression)
-     * primaryExpression.getChild(0)).getChild(0); if (pf.usesThisModifier()) {
-     * return true; }
+     * primaryExpression.getChild(0)).getChild(0); if
+     * (pf.usesThisModifier()) { return true; }
      *
      * return thirdChildHasDottedName(primaryExpression); }
      *
      * private boolean thirdChildHasDottedName(Node primaryExpression) { Node
-     * thirdChild = primaryExpression.getChild(0).getChild(0).getChild(0); return
+     * thirdChild =
+     * primaryExpression.getChild(0).getChild(0).getChild(0); return
      * thirdChild instanceof ASTName && ((ASTName)
      * thirdChild).getImage().indexOf('.') == -1; }
      */
 
     /**
-     * Assert it the occurrence is a self assignment such as: <code>
+     * Assert it the occurrence is a self assignment such as:
+     * <code>
      * i += 3;
      * </code>
      *
      * @return true, if the occurrence is self-assignment, false, otherwise.
      */
     /*
-     * @SuppressWarnings("PMD.AvoidBranchingStatementAsLastInLoop") public boolean
-     * isSelfAssignment() { Node l = location; while (true) { Node p =
-     * l.getParent(); Node gp = p.getParent(); Node node = gp.getParent(); if (node
-     * instanceof ASTPreDecrementExpression || node instanceof
-     * ASTPreIncrementExpression || node instanceof ASTPostfixExpression) { return
-     * true; }
+     * @SuppressWarnings("PMD.AvoidBranchingStatementAsLastInLoop") public
+     * boolean isSelfAssignment() { Node l = location; while (true) { Node p =
+     * l.getParent(); Node gp = p.getParent(); Node node =
+     * gp.getParent(); if (node instanceof ASTPreDecrementExpression || node
+     * instanceof ASTPreIncrementExpression || node instanceof
+     * ASTPostfixExpression) { return true; }
      *
      * if (hasAssignmentOperator(gp)) { return isCompoundAssignment(gp); }
      *
      * if (hasAssignmentOperator(node)) { return isCompoundAssignment(node); }
      *
-     * // deal with extra parenthesis: "(i)++" if (p instanceof ASTPrimaryPrefix &&
-     * p.getNumChildren() == 1 && gp instanceof ASTPrimaryExpression &&
+     * // deal with extra parenthesis: "(i)++" if (p instanceof ASTPrimaryPrefix
+     * && p.getNumChildren() == 1 && gp instanceof ASTPrimaryExpression &&
      * gp.getNumChildren() == 1&& node instanceof ASTExpression &&
-     * node.getNumChildren() == 1 && node.getParent() instanceof ASTPrimaryPrefix &&
-     * node.getParent().getNumChildren() == 1) { l = node; continue; }
+     * node.getNumChildren() == 1 && node.getParent() instanceof
+     * ASTPrimaryPrefix && node.getParent().getNumChildren() == 1) { l =
+     * node; continue; }
      *
-     * // catch this.i++ or ++this.i return gp instanceof ASTPreDecrementExpression
-     * || gp instanceof ASTPreIncrementExpression || gp instanceof
-     * ASTPostfixExpression; } }
+     * // catch this.i++ or ++this.i return gp instanceof
+     * ASTPreDecrementExpression || gp instanceof ASTPreIncrementExpression ||
+     * gp instanceof ASTPostfixExpression; } }
      */
 
     /*
@@ -170,12 +174,12 @@ public class PLSQLNameOccurrence implements NameOccurrence {
      * @return true, if keyword is used, false otherwise.
      */
     /*
-     * public boolean useThisOrSuper() { Node node = location.getParent(); if ( node
-     * instanceof ASTPrimaryExpression ) { ASTPrimaryExpression primaryExpression =
-     * (ASTPrimaryExpression)node; ASTPrimaryPrefix prefix = (ASTPrimaryPrefix)
-     * primaryExpression.getChild(0); if ( prefix != null ) { return
-     * prefix.usesSuperModifier() || prefix.usesThisModifier(); } } return
-     * image.startsWith(THIS_DOT) || image.startsWith(SUPER_DOT); }
+     * public boolean useThisOrSuper() { Node node = location.getParent(); if
+     * ( node instanceof ASTPrimaryExpression ) { ASTPrimaryExpression
+     * primaryExpression = (ASTPrimaryExpression)node; ASTPrimaryPrefix prefix =
+     * (ASTPrimaryPrefix) primaryExpression.getChild(0); if ( prefix != null
+     * ) { return prefix.usesSuperModifier() || prefix.usesThisModifier(); } }
+     * return image.startsWith(THIS_DOT) || image.startsWith(SUPER_DOT); }
      */
 
     @Override

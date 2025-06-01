@@ -42,11 +42,10 @@ class YAHTMLRendererTest extends AbstractRendererTest {
         assertTrue(outputDir.mkdir());
     }
 
-    private RuleViolation newRuleViolation(int beginLine, int beginColumn, int endLine, int endColumn,
-            final String packageNameArg, final String classNameArg) {
+    private RuleViolation newRuleViolation(int beginLine, int beginColumn, int endLine, int endColumn, final String packageNameArg, final String classNameArg) {
         FileLocation loc = createLocation(beginLine, beginColumn, endLine, endColumn);
         Map<String, String> additionalInfo = CollectionUtil.mapOf(RuleViolation.PACKAGE_NAME, packageNameArg,
-                RuleViolation.CLASS_NAME, classNameArg);
+                                                                  RuleViolation.CLASS_NAME, classNameArg);
         return InternalApiBridge.createRuleViolation(new FooRule(), loc, "blah", additionalInfo);
     }
 

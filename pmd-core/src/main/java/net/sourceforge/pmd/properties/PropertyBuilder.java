@@ -26,32 +26,27 @@ import net.sourceforge.pmd.util.IteratorUtil;
 
 // @formatter:off
 /**
- * Base class for generic property builders. Property builders are obtained from
- * the {@link PropertyFactory}, and are used to build
- * {@link PropertyDescriptor}s.
+ * Base class for generic property builders.
+ * Property builders are obtained from the {@link PropertyFactory},
+ * and are used to build {@link PropertyDescriptor}s.
  *
- * <p>
- * All properties <i>must</i> specify the following attributes to build
+ * <p>All properties <i>must</i> specify the following attributes to build
  * properly:
  * <ul>
- * <li>A name: filled-in when obtaining the builder
- * <li>A description: see {@link #desc(String)}
- * <li>A default value: see {@link #defaultValue(Object)}
+ *   <li>A name: filled-in when obtaining the builder
+ *   <li>A description: see {@link #desc(String)}
+ *   <li>A default value: see {@link #defaultValue(Object)}
  * </ul>
  *
- * <p>
- * The {@link PropertyDescriptor} may be built after those required steps by
+ * <p>The {@link PropertyDescriptor} may be built after those required steps by
  * calling {@link #build()}.
  *
- * <p>
- * A property builder may throw {@link IllegalArgumentException} at any stage
- * during the build process to indicate invalid input. It usually tries to do so
- * as early as possible, rather than waiting for the call to {@link #build()}.
+ * <p>A property builder may throw {@link IllegalArgumentException} at any
+ * stage during the build process to indicate invalid input. It usually tries
+ * to do so as early as possible, rather than waiting for the call to {@link #build()}.
  *
- * @param <B>
- *            Concrete type of this builder instance
- * @param <T>
- *            Type of values the property handles
+ * @param <B> Concrete type of this builder instance
+ * @param <T> Type of values the property handles
  *
  * @author Clément Fournier
  * @since 6.10.0
@@ -69,6 +64,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
      */
     protected @Nullable PropertyTypeId typeId;
     protected boolean isXPathAvailable = false;
+
 
     PropertyBuilder(String name) {
 
@@ -91,6 +87,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         return StringUtils.isNotBlank(description);
     }
 
+
     /** Returns the value, asserting it has been set. */
     T getDefaultValue() {
         if (!isDefaultValueSet()) {
@@ -98,6 +95,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         }
         return defaultValue;
     }
+
 
     boolean isDefaultValueSet() {
         return defaultValue != null;
@@ -108,16 +106,13 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
      * Please describe precisely how the property may change the behaviour of the
      * rule. Providing complete information should be preferred over being concise.
      *
-     * <p>
-     * Calling this method is required for {@link #build()} to succeed.
+     * <p>Calling this method is required for {@link #build()} to succeed.
      *
-     * @param desc
-     *            The description
+     * @param desc The description
      *
      * @return The same builder
      *
-     * @throws IllegalArgumentException
-     *             If the description is null or whitespace
+     * @throws IllegalArgumentException If the description is null or whitespace
      */
     @SuppressWarnings("unchecked")
     public B desc(String desc) {
@@ -135,12 +130,11 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
     }
 
     /**
-     * If true, the property will be made available to XPath queries as an XPath
-     * variable. The default is false (except for properties of XPath rules that
-     * were defined in XML).
+     * If true, the property will be made available to XPath queries as
+     * an XPath variable. The default is false (except for properties
+     * of XPath rules that were defined in XML).
      *
-     * @param b
-     *            Whether to enable or not
+     * @param b Whether to enable or not
      *
      * @return This builder
      */
@@ -150,18 +144,16 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
     }
 
     /**
-     * Add a constraint on the values that this property may take. The validity of
-     * values will be checked when parsing the XML, and invalid values will be
-     * reported. A rule will never be run if some of its properties violate some
-     * constraints.
+     * Add a constraint on the values that this property may take.
+     * The validity of values will be checked when parsing the XML,
+     * and invalid values will be reported. A rule will never be run
+     * if some of its properties violate some constraints.
      *
-     * <p>
-     * Constraints should be independent from each other, and should perform no side
-     * effects. PMD doesn't specify how many times a constraint predicate will be
-     * executed, or in what order.
+     * <p>Constraints should be independent from each other, and should
+     * perform no side effects. PMD doesn't specify how many times a
+     * constraint predicate will be executed, or in what order.
      *
-     * @param constraint
-     *            The constraint
+     * @param constraint The constraint
      *
      * @return The same builder
      *
@@ -170,26 +162,23 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
     @SuppressWarnings("unchecked")
     public abstract B require(PropertyConstraint<? super T> constraint);
 
+
     /**
-     * Specify a default value. Some subclasses provide convenient related methods,
-     * see e.g.
-     * {@link GenericCollectionPropertyBuilder#defaultValues(Object, Object[])}.
+     * Specify a default value. Some subclasses provide convenient
+     * related methods, see e.g. {@link GenericCollectionPropertyBuilder#defaultValues(Object, Object[])}.
      * Using the null value is prohibited.
      *
-     * <p>
-     * Calling this method is required for {@link #build()} to succeed.
+     * <p>Calling this method is required for {@link #build()} to succeed.
      *
-     * @param val
-     *            Default value
+     * @param val Default value
      *
      * @return The same builder
      *
-     * @throws IllegalArgumentException
-     *             If the argument is null
+     * @throws IllegalArgumentException If the argument is null
      */
     @SuppressWarnings("unchecked")
     public B defaultValue(@NonNull T val) {
-        // noinspection ConstantConditions
+        //noinspection ConstantConditions
         if (val == null) {
             throw new IllegalArgumentException("Property values may not be null.");
         }
@@ -197,17 +186,17 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         return (B) this;
     }
 
+
     /**
      * Builds the descriptor and returns it.
      *
      * @return The built descriptor
      *
-     * @throws IllegalArgumentException
-     *             if the description or default value were not provided
-     * @throws IllegalArgumentException
-     *             if the default value does not satisfy the given constraints
+     * @throws IllegalArgumentException if the description or default value were not provided
+     * @throws IllegalArgumentException if the default value does not satisfy the given constraints
      */
     public abstract PropertyDescriptor<T> build();
+
 
     /**
      * Returns the name of the property to be built.
@@ -216,24 +205,24 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         return name;
     }
 
+
     // Technically this may very well be merged into PropertyBuilder
     // We'd have all properties (even collection properties) enjoy a ValueParser,
-    // which means they could be parsed in a <value> tag (collections would use
-    // delimiters) if they opt in.
-    // The delimiters wouldn't be configurable (we'd take our current defaults). If
-    // they could ambiguous
+    // which means they could be parsed in a <value> tag (collections would use delimiters) if they opt in.
+    // The delimiters wouldn't be configurable (we'd take our current defaults). If they could ambiguous
     // then the <seq> syntax should be the only one available.
-    // This would allow specifying eg lists of numbers as <value>1,2,3</value>, for
-    // which the <seq> syntax would look clumsy
+    // This would allow specifying eg lists of numbers as <value>1,2,3</value>, for which the <seq> syntax would look clumsy
     abstract static class BaseSinglePropertyBuilder<B extends PropertyBuilder<B, T>, T> extends PropertyBuilder<B, T> {
 
         private PropertySerializer<T> parser;
+
 
         // Class is not final but a package-private constructor restricts inheritance
         BaseSinglePropertyBuilder(String name, PropertySerializer<T> parser) {
             super(name);
             this.parser = parser;
         }
+
 
         protected PropertySerializer<T> getParser() {
             return parser;
@@ -247,14 +236,14 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         }
 
         /**
-         * Returns a new builder that can be used to build a property handling lists of
-         * Ts. The validators already added are converted to list validators. The
-         * default value cannot have previously been set.
+         * Returns a new builder that can be used to build a property
+         * handling lists of Ts. The validators already added are
+         * converted to list validators. The default value cannot have
+         * previously been set.
          *
          * @return A new list property builder
          *
-         * @throws IllegalStateException
-         *             if the default value has already been set
+         * @throws IllegalStateException if the default value has already been set
          *
          * @see #map(Collector)
          */
@@ -263,14 +252,13 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         }
 
         /**
-         * Returns a new builder that can be used to build a property with value type
-         * {@code <C>}. The validators already added are converted to collection
-         * validators. The default value cannot have previously been set. The returned
-         * builder will support conversion to and from a delimited string.
+         * Returns a new builder that can be used to build a property
+         * with value type {@code <C>}. The validators already added are
+         * converted to collection validators. The default value cannot
+         * have previously been set. The returned builder will support
+         * conversion to and from a delimited string.
          *
-         * <p>
-         * Example usage:
-         * 
+         * <p>Example usage:
          * <pre>{@code
          * // this can be set with
          * // <value>a,b,c</value>
@@ -284,18 +272,15 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
          *
          * @return A new list property builder
          *
-         * @throws IllegalStateException
-         *             if the default value has already been set
+         * @throws IllegalStateException if the default value has already been set
          */
-        public <C extends Iterable<T>> GenericCollectionPropertyBuilder<T, C> map(
-                Collector<? super T, ?, ? extends C> collector) {
+        public <C extends Iterable<T>> GenericCollectionPropertyBuilder<T, C> map(Collector<? super T, ?, ? extends C> collector) {
 
             if (isDefaultValueSet()) {
                 throw new IllegalStateException("The default value is already set!");
             }
 
-            GenericCollectionPropertyBuilder<T, C> result = new GenericCollectionPropertyBuilder<>(getName(),
-                    getParser(), collector);
+            GenericCollectionPropertyBuilder<T, C> result = new GenericCollectionPropertyBuilder<>(getName(), getParser(), collector);
 
             if (isDescriptionSet()) {
                 result.desc(getDescription());
@@ -305,21 +290,22 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         }
 
         /**
-         * Returns a new builder that can be used to build a property handling
-         * {@code Optional<T>}. The validators already added are used on the validator
-         * property. If the default value was previously set, it is converted to an
-         * optional with {@link Optional#of(Object)}.
+         * Returns a new builder that can be used to build a property
+         * handling {@code Optional<T>}. The validators already added
+         * are used on the validator property. If the default value was
+         * previously set, it is converted to an optional with {@link Optional#of(Object)}.
          *
-         * @param missingValue
-         *            The string representation of the empty optional.
+         * @param missingValue The string representation of the empty optional.
          *
          * @return A new property builder for an optional.
          */
         public GenericPropertyBuilder<Optional<T>> toOptional(String missingValue) {
             AssertionUtil.requireParamNotNull("missingValue", missingValue);
 
-            PropertySerializer<Optional<T>> serializer = PropertyParsingUtil.toOptional(getParser(), missingValue);
-            GenericPropertyBuilder<Optional<T>> result = new GenericPropertyBuilder<>(this.getName(), serializer);
+            PropertySerializer<Optional<T>> serializer =
+                PropertyParsingUtil.toOptional(getParser(), missingValue);
+            GenericPropertyBuilder<Optional<T>> result =
+                new GenericPropertyBuilder<>(this.getName(), serializer);
 
             if (isDefaultValueSet()) {
                 result.defaultValue(Optional.of(getDefaultValue()));
@@ -332,30 +318,35 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
             return result;
         }
 
+
         @Override
         public PropertyDescriptor<T> build() {
-            return new PropertyDescriptor<>(getName(), getDescription(), getDefaultValue(), parser, typeId,
-                    isXPathAvailable);
+            return new PropertyDescriptor<>(
+                getName(),
+                getDescription(),
+                getDefaultValue(),
+                parser,
+                typeId,
+                isXPathAvailable);
         }
     }
 
     /**
      * Generic builder for a single-value property.
      *
-     * @param <T>
-     *            Type of values the property handles
+     * @param <T> Type of values the property handles
      *
      * @author Clément Fournier
      * @since 6.10.0
      */
-    // Note: This type is used to fix the first type parameter for classes that
-    // don't need more API.
+    // Note: This type is used to fix the first type parameter for classes that don't need more API.
     public static class GenericPropertyBuilder<T> extends BaseSinglePropertyBuilder<GenericPropertyBuilder<T>, T> {
 
         GenericPropertyBuilder(String name, PropertySerializer<T> parser) {
             super(name, parser);
         }
     }
+
 
     /**
      * Specialized builder for regex properties. Allows specifying the pattern as a
@@ -370,40 +361,35 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
             super(name, PropertyParsingUtil.REGEX);
         }
 
+
         /**
-         * Specify a default value using a string pattern. The argument is compiled to a
-         * pattern using {@link Pattern#compile(String)}.
+         * Specify a default value using a string pattern. The argument is
+         * compiled to a pattern using {@link Pattern#compile(String)}.
          *
-         * @param pattern
-         *            String pattern
+         * @param pattern String pattern
          *
          * @return The same builder
          *
-         * @throws java.util.regex.PatternSyntaxException
-         *             If the argument is not a valid pattern
+         * @throws java.util.regex.PatternSyntaxException If the argument is not a valid pattern
          */
         public RegexPropertyBuilder defaultValue(String pattern) {
             super.defaultValue(Pattern.compile(pattern));
             return this;
         }
 
+
         /**
-         * Specify a default value using a string pattern. The argument is compiled to a
-         * pattern using {@link Pattern#compile(String, int)}.
+         * Specify a default value using a string pattern. The argument is
+         * compiled to a pattern using {@link Pattern#compile(String, int)}.
          *
-         * @param pattern
-         *            String pattern
-         * @param flags
-         *            Regex compilation flags, the same as for
-         *            {@link Pattern#compile(String, int)}
+         * @param pattern String pattern
+         * @param flags   Regex compilation flags, the same as for {@link Pattern#compile(String, int)}
          *
          * @return The same builder
          *
-         * @throws java.util.regex.PatternSyntaxException
-         *             If the argument is not a valid pattern
-         * @throws IllegalArgumentException
-         *             If bit values other than those corresponding to the defined match
-         *             flags are set in {@code flags}
+         * @throws java.util.regex.PatternSyntaxException If the argument is not a valid pattern
+         * @throws IllegalArgumentException               If bit values other than those corresponding to the defined
+         *                                                match flags are set in {@code flags}
          */
         public RegexPropertyBuilder defaultValue(String pattern, int flags) {
             super.defaultValue(Pattern.compile(pattern, flags));
@@ -411,39 +397,40 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         }
     }
 
+
     /**
-     * Generic builder for a collection-valued property. This class adds methods
-     * related to {@link #defaultValue(Iterable)} to make its use more flexible. See
-     * e.g. {@link #defaultValues(Object, Object[])}.
+     * Generic builder for a collection-valued property.
+     * This class adds methods related to {@link #defaultValue(Iterable)}
+     * to make its use more flexible. See e.g. {@link #defaultValues(Object, Object[])}.
      *
-     * <p>
-     * Note: this is designed to support arbitrary collections. Pre-7.0.0, the only
-     * collections available from the {@link PropertyFactory} are list types though.
+     * <p>Note: this is designed to support arbitrary collections.
+     * Pre-7.0.0, the only collections available from the {@link PropertyFactory}
+     * are list types though.
      *
-     * @param <V>
-     *            Component type of the collection
-     * @param <C>
-     *            Collection type for the property being built
+     * @param <V> Component type of the collection
+     * @param <C> Collection type for the property being built
      *
      * @author Clément Fournier
      * @since 6.10.0
      */
-    public static final class GenericCollectionPropertyBuilder<V, C extends Iterable<V>>
-            extends PropertyBuilder<GenericCollectionPropertyBuilder<V, C>, C> {
+    public static final class GenericCollectionPropertyBuilder<V, C extends Iterable<V>> extends PropertyBuilder<GenericCollectionPropertyBuilder<V, C>, C> {
 
         private PropertySerializer<V> itemParser;
         private final Collector<? super V, ?, ? extends C> collector;
         private final List<PropertyConstraint<? super C>> collectionConstraints = new ArrayList<>();
 
+
         /**
          * Builds a new builder for a collection type. Package-private.
          */
-        GenericCollectionPropertyBuilder(String name, PropertySerializer<V> itemParser,
-                Collector<? super V, ?, ? extends C> collector) {
+        GenericCollectionPropertyBuilder(String name,
+                                         PropertySerializer<V> itemParser,
+                                         Collector<? super V, ?, ? extends C> collector) {
             super(name);
             this.itemParser = itemParser;
             this.collector = collector;
         }
+
 
         private C getDefaultValue(Iterable<? extends V> list) {
             return IteratorUtil.toStream(list).collect(collector);
@@ -456,11 +443,10 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         }
 
         /**
-         * Specify a default value. This will be converted to type {@code <C>} with the
-         * supplied collector.
+         * Specify a default value. This will be converted to type
+         * {@code <C>} with the supplied collector.
          *
-         * @param val
-         *            List of values
+         * @param val List of values
          *
          * @return The same builder
          */
@@ -469,14 +455,13 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
             return this;
         }
 
+
         /**
-         * Specify default values. To specify an empty default value, use
-         * {@link #emptyDefaultValue()}.
+         * Specify default values. To specify an empty
+         * default value, use {@link #emptyDefaultValue()}.
          *
-         * @param head
-         *            First value
-         * @param tail
-         *            Rest of the values
+         * @param head First value
+         * @param tail Rest of the values
          *
          * @return The same builder
          */
@@ -484,6 +469,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         public GenericCollectionPropertyBuilder<V, C> defaultValues(V head, V... tail) {
             return this.defaultValue(listOf(head, tail));
         }
+
 
         /**
          * Specify that the default value is an empty collection.
@@ -494,13 +480,13 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
             return this.defaultValue(emptyList());
         }
 
+
         /**
-         * Require that the given constraint be fulfilled on each item of the value of
-         * this property. This is a convenient shorthand for
+         * Require that the given constraint be fulfilled on each item of the
+         * value of this property. This is a convenient shorthand for
          * {@code require(constraint.toCollectionConstraint())}.
          *
-         * @param constraint
-         *            Constraint to impose on the items of the collection value
+         * @param constraint Constraint to impose on the items of the collection value
          *
          * @return The same builder
          */
@@ -512,12 +498,16 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         @Override
         public PropertyDescriptor<C> build() {
             PropertySerializer<C> syntax = PropertyParsingUtil.delimitedString(itemParser, collector);
-            syntax = PropertyParsingUtil.withAllConstraints(syntax,
-                    CollectionUtil.map(itemParser.getConstraints(), PropertyConstraint::toCollectionConstraint));
+            syntax = PropertyParsingUtil.withAllConstraints(syntax, CollectionUtil.map(itemParser.getConstraints(), PropertyConstraint::toCollectionConstraint));
             syntax = PropertyParsingUtil.withAllConstraints(syntax, collectionConstraints);
 
-            return new PropertyDescriptor<>(getName(), getDescription(), getDefaultValue(), syntax, typeId,
-                    isXPathAvailable);
+            return new PropertyDescriptor<>(
+                getName(),
+                getDescription(),
+                getDefaultValue(),
+                syntax,
+                typeId,
+                isXPathAvailable);
         }
     }
 }

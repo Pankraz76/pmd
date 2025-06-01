@@ -101,8 +101,7 @@ final class TypeSigParser {
         char next = b.charAt(cur);
         if (next == '[' || next == 'L' || next == 'T') {
             // If the character after the ':' class bound marker is not the start of a
-            // ReferenceTypeSignature, it means the class bound is empty (which is a valid
-            // case).
+            // ReferenceTypeSignature, it means the class bound is empty (which is a valid case).
             cur = typeSignature(cur, b);
             bounds.add(b.pop());
         }
@@ -211,12 +210,14 @@ final class TypeSigParser {
         }
     }
 
+
     private static int arrayType(final int start, TypeScanner b) {
         int cur = b.consumeChar(start, '[', "array type");
         cur = typeSignature(cur, b);
         b.push(b.ts.arrayType(b.pop()));
         return cur;
     }
+
 
     private static int typeVar(final int start, TypeScanner b) {
         int cur = b.consumeChar(start, 'T', "type variable");
@@ -228,6 +229,7 @@ final class TypeSigParser {
         b.push(b.lookupTvar(nameBuilder.toString()));
         return cur;
     }
+
 
     private static int classId(final int start, SignatureScanner b, StringBuilder internalName) {
         int cur = start;
@@ -254,6 +256,7 @@ final class TypeSigParser {
         }
         return cur;
     }
+
 
     private static boolean isIdentifierChar(char c) {
         switch (c) {
@@ -324,43 +327,35 @@ final class TypeSigParser {
         }
 
         /**
-         * Makes a class symbol from its internal name. This should return non-null, if
-         * the symbol is not found (linkage error) then return an unresolved symbol.
+         * Makes a class symbol from its internal name. This should return
+         * non-null, if the symbol is not found (linkage error) then return
+         * an unresolved symbol.
          */
         @NonNull
         public abstract JClassSymbol makeClassSymbol(String internalName, int observedArity);
 
+
         public JTypeMirror getBaseType(char baseType) {
             switch (baseType) {
-            case 'V':
-                return ts.NO_TYPE;
-            case 'Z':
-                return ts.BOOLEAN;
-            case 'C':
-                return ts.CHAR;
-            case 'B':
-                return ts.BYTE;
-            case 'S':
-                return ts.SHORT;
-            case 'I':
-                return ts.INT;
-            case 'F':
-                return ts.FLOAT;
-            case 'J':
-                return ts.LONG;
-            case 'D':
-                return ts.DOUBLE;
-            default:
-                throw new IllegalArgumentException("'" + baseType + "' is not a valid base type descriptor");
+            case 'V': return ts.NO_TYPE;
+            case 'Z': return ts.BOOLEAN;
+            case 'C': return ts.CHAR;
+            case 'B': return ts.BYTE;
+            case 'S': return ts.SHORT;
+            case 'I': return ts.INT;
+            case 'F': return ts.FLOAT;
+            case 'J': return ts.LONG;
+            case 'D': return ts.DOUBLE;
+            default: throw new IllegalArgumentException("'" + baseType + "' is not a valid base type descriptor");
             }
         }
 
         public JTypeMirror lookupTvar(String name) {
-            @Nullable
-            SubstVar mapped = lexicalScope.apply(name);
+            @Nullable SubstVar mapped = lexicalScope.apply(name);
             if (mapped == null) {
                 throw new IllegalArgumentException(
-                        "The lexical scope " + lexicalScope + " does not contain an entry for type variable " + name);
+                    "The lexical scope " + lexicalScope + " does not contain an entry for type variable " + name
+                );
             }
             return mapped;
         }

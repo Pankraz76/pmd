@@ -18,8 +18,8 @@ import net.sourceforge.pmd.lang.java.symbols.JConstructorSymbol;
 public interface MethodUsage extends JavaNode {
 
     /**
-     * Returns the name of the called method. If this is a constructor call, returns
-     * {@link JConstructorSymbol#CTOR_NAME}.
+     * Returns the name of the called method. If this is a constructor
+     * call, returns {@link JConstructorSymbol#CTOR_NAME}.
      */
     default @NonNull String getMethodName() {
         return JConstructorSymbol.CTOR_NAME;

@@ -19,10 +19,7 @@ import net.sourceforge.pmd.lang.cs.ast.CSharpLexer;
 /**
  * The C# tokenizer.
  *
- * <p>
- * Note: This class has been called CsTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called CsTokenizer in PMD 6</p>.
  */
 public class CsCpdLexer extends AntlrCpdLexer {
 
@@ -50,8 +47,8 @@ public class CsCpdLexer extends AntlrCpdLexer {
      * The {@link CsTokenFilter} extends the {@link AntlrTokenFilter} to discard
      * C#-specific tokens.
      * <p>
-     * By default, it enables annotation-based CPD suppression. If the
-     * --ignoreUsings flag is provided, using directives are filtered out.
+     * By default, it enables annotation-based CPD suppression.
+     * If the --ignoreUsings flag is provided, using directives are filtered out.
      * </p>
      */
     private static class CsTokenFilter extends BaseTokenFilter<AntlrToken> {
@@ -69,8 +66,7 @@ public class CsCpdLexer extends AntlrCpdLexer {
         private AntlrToken discardingLiteralsUntil = null;
         private boolean discardCurrent = false;
 
-        CsTokenFilter(final TokenManager<AntlrToken> tokenManager, boolean ignoreUsings, boolean ignoreLiteralSequences,
-                boolean ignoreAttributes) {
+        CsTokenFilter(final TokenManager<AntlrToken> tokenManager, boolean ignoreUsings, boolean ignoreLiteralSequences, boolean ignoreAttributes) {
             super(tokenManager);
             this.ignoreUsings = ignoreUsings;
             this.ignoreLiteralSequences = ignoreLiteralSequences;
@@ -122,8 +118,7 @@ public class CsCpdLexer extends AntlrCpdLexer {
                         // Example: using (var font1 = new Font("Arial", 10.0f);
                         return false;
                     case CSharpLexer.IDENTIFIER:
-                        // This is either a type for a using statement or an alias for a using
-                        // directive.
+                        // This is either a type for a using statement or an alias for a using directive.
                         // Example (directive): using Project = PC.MyCompany.Project;
                         // Example (statement): using Font font1 = new Font("Arial", 10.0f);
                         usingState = UsingState.IDENTIFIER;
@@ -146,8 +141,7 @@ public class CsCpdLexer extends AntlrCpdLexer {
                     case CSharpLexer.DOT:
                         // This should be considered part of the same type; revert to previous state.
                         // Example (directive): using System.Text;
-                        // Example (statement): using System.Drawing.Font font1 = new Font("Arial",
-                        // 10.0f);
+                        // Example (statement): using System.Drawing.Font font1 = new Font("Arial", 10.0f);
                         usingState = UsingState.KEYWORD;
                         break;
                     case CSharpLexer.SEMICOLON:
@@ -240,8 +234,7 @@ public class CsCpdLexer extends AntlrCpdLexer {
 
         @Override
         protected boolean isLanguageSpecificDiscarding() {
-            return discardingUsings || discardingNL || isDiscardingAttribute || isDiscardingLiterals()
-                    || discardCurrent;
+            return discardingUsings || discardingNL || isDiscardingAttribute || isDiscardingLiterals() || discardCurrent;
         }
     }
 }

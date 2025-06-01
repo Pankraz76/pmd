@@ -81,8 +81,7 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
     @Override
     public void setMinimumLanguageVersion(LanguageVersion minimumLanguageVersion) {
         if (minimumLanguageVersion != null && !minimumLanguageVersion.getLanguage().equals(getLanguage())) {
-            throw new IllegalArgumentException(
-                    "Version " + minimumLanguageVersion + " does not belong to language " + getLanguage());
+            throw new IllegalArgumentException("Version " + minimumLanguageVersion + " does not belong to language " + getLanguage());
         }
         this.minimumLanguageVersion = minimumLanguageVersion;
     }
@@ -95,8 +94,7 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
     @Override
     public void setMaximumLanguageVersion(LanguageVersion maximumLanguageVersion) {
         if (maximumLanguageVersion != null && !maximumLanguageVersion.getLanguage().equals(getLanguage())) {
-            throw new IllegalArgumentException(
-                    "Version " + maximumLanguageVersion + " does not belong to language " + getLanguage());
+            throw new IllegalArgumentException("Version " + maximumLanguageVersion + " does not belong to language " + getLanguage());
         }
         this.maximumLanguageVersion = maximumLanguageVersion;
     }
@@ -202,6 +200,7 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
         this.priority = priority;
     }
 
+
     private Set<Class<? extends Node>> getClassRuleChainVisits() {
         if (classRuleChainVisits.isEmpty() && ruleChainVisits.isEmpty()) {
             return Collections.singleton(RootNode.class);
@@ -218,13 +217,14 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
     }
 
     /**
-     * Create the targeting strategy for this rule. Use the factory methods of
-     * {@link RuleTargetSelector}.
+     * Create the targeting strategy for this rule.
+     * Use the factory methods of {@link RuleTargetSelector}.
      */
     @NonNull
     protected RuleTargetSelector buildTargetSelector() {
         Set<Class<? extends Node>> crvs = getClassRuleChainVisits();
-        return crvs.isEmpty() ? RuleTargetSelector.forRootOnly() : RuleTargetSelector.forTypes(crvs);
+        return crvs.isEmpty() ? RuleTargetSelector.forRootOnly()
+                              : RuleTargetSelector.forTypes(crvs);
     }
 
     @Override
@@ -241,10 +241,9 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
 
     /**
      * Cast the argument to a {@link RuleContext}. Use it to report violations:
-     * 
      * <pre>{@code
-     * asCtx(data).addViolation(node);
-     * asCtx(data).addViolationWithMessage(node, "Some message");
+     *  asCtx(data).addViolation(node);
+     *  asCtx(data).addViolationWithMessage(node, "Some message");
      * }</pre>
      *
      * In longer term, rules will have type-safe access to a RuleContext, when the
@@ -254,7 +253,8 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
      */
     protected final RuleContext asCtx(Object ctx) {
         if (ctx instanceof RuleContext) {
-            assert isThisRule(InternalApiBridge.getRule((RuleContext) ctx)) : "not an appropriate rule context!";
+            assert isThisRule(InternalApiBridge.getRule((RuleContext) ctx))
+                : "not an appropriate rule context!";
             return (RuleContext) ctx;
         } else {
             throw new ClassCastException("Unexpected context object! " + ctx);
@@ -263,7 +263,7 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
 
     private boolean isThisRule(Rule rule) {
         return rule == this // NOPMD CompareObjectsWithEquals
-                || rule instanceof RuleReference && this.isThisRule(((RuleReference) rule).getRule());
+            || rule instanceof RuleReference && this.isThisRule(((RuleReference) rule).getRule());
     }
 
     /**
@@ -285,7 +285,8 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
         }
 
         AbstractRule that = (AbstractRule) o;
-        return Objects.equals(getName(), that.getName()) && Objects.equals(getPriority(), that.getPriority())
+        return Objects.equals(getName(), that.getName())
+                && Objects.equals(getPriority(), that.getPriority())
                 && super.equals(o);
     }
 
@@ -302,8 +303,7 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
             Constructor<? extends AbstractRule> declaredConstructor = getClass().getDeclaredConstructor();
             declaredConstructor.setAccessible(true);
             result = declaredConstructor.newInstance();
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException
-                | InvocationTargetException ignored) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ignored) {
             // Can't happen... we already have an instance
             throw new RuntimeException(ignored); // in case it happens anyway, something is really wrong...
         }

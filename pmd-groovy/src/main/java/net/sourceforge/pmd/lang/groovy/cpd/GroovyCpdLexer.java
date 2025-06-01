@@ -20,10 +20,7 @@ import groovyjarjarantlr4.v4.runtime.CharStreams;
 /**
  * The Groovy Tokenizer
  *
- * <p>
- * Note: This class has been called GroovyTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called GroovyTokenizer in PMD 6</p>.
  */
 public class GroovyCpdLexer extends CpdLexerBase<GroovyToken> {
 

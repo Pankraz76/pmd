@@ -14,9 +14,8 @@ import net.sourceforge.pmd.lang.jsp.ast.ASTElement;
 import net.sourceforge.pmd.lang.jsp.rule.AbstractJspRule;
 
 /**
- * This rule checks that no "style" elements (like &lt;B&gt;, &lt;FONT&gt;, ...)
- * are used, and that no "style" attributes (like "font", "size", "align") are
- * used.
+ * This rule checks that no "style" elements (like &lt;B&gt;, &lt;FONT&gt;, ...) are used,
+ * and that no "style" attributes (like "font", "size", "align") are used.
  *
  * @author pieter_van_raemdonck
  */
@@ -27,20 +26,21 @@ public class NoInlineStyleInformationRule extends AbstractJspRule {
     /**
      * List of HTML element-names that define style.
      */
-    private static final Set<String> STYLE_ELEMENT_NAMES = setOf("B", "I", "FONT", "BASEFONT", "U", "CENTER");
+    private static final Set<String> STYLE_ELEMENT_NAMES =
+        setOf("B", "I", "FONT", "BASEFONT", "U", "CENTER");
 
     /**
      * List of HTML element-names that can have attributes defining style.
      */
-    private static final Set<String> ELEMENT_NAMES_THAT_CAN_HAVE_STYLE_ATTRIBUTES = setOf("P", "TABLE", "THEAD",
-            "TBODY", "TFOOT", "TR", "TD", "COL", "COLGROUP");
+    private static final Set<String> ELEMENT_NAMES_THAT_CAN_HAVE_STYLE_ATTRIBUTES =
+        setOf("P", "TABLE", "THEAD", "TBODY", "TFOOT", "TR", "TD", "COL", "COLGROUP");
 
     /**
      * List of attributes that define style when they are attributes of HTML
      * elements with names in ELEMENT_NAMES_THAT_CAN_HAVE_STYLE_ATTRIBUTES.
      */
-    private static final Set<String> STYLE_ATTRIBUTES = setOf("STYLE", "FONT", "SIZE", "COLOR", "FACE", "ALIGN",
-            "VALIGN", "BGCOLOR");
+    private static final Set<String> STYLE_ATTRIBUTES =
+        setOf("STYLE", "FONT", "SIZE", "COLOR", "FACE", "ALIGN", "VALIGN", "BGCOLOR");
 
     @Override
     public Object visit(ASTAttribute node, Object data) {
@@ -77,7 +77,8 @@ public class NoInlineStyleInformationRule extends AbstractJspRule {
      *
      * @param attributeNode
      *            The attribute node.
-     * @return <code>true</code> if a style attribute, <code>false</code> otherwise.
+     * @return <code>true</code> if a style attribute, <code>false</code>
+     *         otherwise.
      */
     private boolean isStyleAttribute(ASTAttribute attributeNode) {
         if (STYLE_ATTRIBUTES.contains(attributeNode.getName().toUpperCase(Locale.ROOT))) {

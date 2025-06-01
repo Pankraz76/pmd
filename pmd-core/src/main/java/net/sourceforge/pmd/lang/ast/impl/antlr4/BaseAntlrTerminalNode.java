@@ -18,7 +18,7 @@ import net.sourceforge.pmd.lang.ast.impl.antlr4.BaseAntlrTerminalNode.AntlrTermi
  * Base class for terminal nodes (they wrap a {@link TerminalNode}).
  */
 public abstract class BaseAntlrTerminalNode<N extends AntlrNode<N>>
-        extends BaseAntlrNode<AntlrTerminalPmdAdapter<N>, N> {
+    extends BaseAntlrNode<AntlrTerminalPmdAdapter<N>, N> {
 
     private final AntlrTerminalPmdAdapter<N> antlrNode;
 
@@ -37,9 +37,8 @@ public abstract class BaseAntlrTerminalNode<N extends AntlrNode<N>>
     /**
      * Returns the text of the token.
      *
-     * @implNote This should use
-     *           {@link AntlrNameDictionary#getConstantImageOfToken(Token)}, or
-     *           default to {@link Token#getText()}
+     * @implNote This should use {@link AntlrNameDictionary#getConstantImageOfToken(Token)},
+     *     or default to {@link Token#getText()}
      */
     public abstract @NonNull String getText();
 
@@ -72,8 +71,7 @@ public abstract class BaseAntlrTerminalNode<N extends AntlrNode<N>>
         throw new IndexOutOfBoundsException("Index " + index + " for terminal node");
     }
 
-    protected static class AntlrTerminalPmdAdapter<N extends AntlrNode<N>> extends TerminalNodeImpl
-            implements BaseAntlrNode.AntlrToPmdParseTreeAdapter<N> {
+    protected static class AntlrTerminalPmdAdapter<N extends AntlrNode<N>> extends TerminalNodeImpl implements BaseAntlrNode.AntlrToPmdParseTreeAdapter<N> {
 
         private final BaseAntlrTerminalNode<N> pmdNode;
 
@@ -99,8 +97,7 @@ public abstract class BaseAntlrTerminalNode<N extends AntlrNode<N>>
         }
     }
 
-    protected static class AntlrErrorPmdAdapter<N extends AntlrNode<N>> extends AntlrTerminalPmdAdapter<N>
-            implements ErrorNode {
+    protected static class AntlrErrorPmdAdapter<N extends AntlrNode<N>> extends AntlrTerminalPmdAdapter<N> implements ErrorNode {
 
         public AntlrErrorPmdAdapter(BaseAntlrTerminalNode<N> pmdNode, Token symbol) {
             super(pmdNode, symbol);

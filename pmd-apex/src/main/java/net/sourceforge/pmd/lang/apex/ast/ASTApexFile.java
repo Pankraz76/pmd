@@ -25,8 +25,10 @@ public final class ASTApexFile extends AbstractApexNode.Single<CompilationUnit> 
     private final AstInfo<ASTApexFile> astInfo;
     private final @NonNull ApexMultifileAnalysis multifileAnalysis;
 
-    ASTApexFile(ParserTask task, CompilationUnit compilationUnit, Map<Integer, String> suppressMap,
-            @NonNull ApexLanguageProcessor apexLang) {
+    ASTApexFile(ParserTask task,
+                CompilationUnit compilationUnit,
+                Map<Integer, String> suppressMap,
+                @NonNull ApexLanguageProcessor apexLang) {
         super(compilationUnit);
         this.astInfo = new AstInfo<>(task, this).withSuppressMap(suppressMap);
         this.multifileAnalysis = apexLang.getMultiFileState();
@@ -46,6 +48,7 @@ public final class ASTApexFile extends AbstractApexNode.Single<CompilationUnit> 
     public @NonNull ASTApexFile getRoot() {
         return this;
     }
+
 
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {

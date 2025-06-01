@@ -23,8 +23,7 @@ package net.sourceforge.pmd.lang.velocity.ast;
 /**
  * This class is responsible for handling Escapes in VTL.
  *
- * <p>
- * Please look at the Parser.jjt file which is what controls the generation of
+ * <p>Please look at the Parser.jjt file which is what controls the generation of
  * this class.
  *
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
@@ -34,6 +33,7 @@ public final class ASTEscape extends AbstractVtlNode {
 
     /** Used by the parser. */
     private String val;
+
 
     ASTEscape(int id) {
         super(id);

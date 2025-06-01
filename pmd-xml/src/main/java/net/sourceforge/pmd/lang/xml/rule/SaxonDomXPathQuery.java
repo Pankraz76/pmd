@@ -49,8 +49,8 @@ final class SaxonDomXPathQuery {
 
     private static final NamePool NAME_POOL = new NamePool();
 
-    private static final SimpleDataKey<DocumentWrapper> SAXON_DOM_WRAPPER = DataMap
-            .simpleDataKey("pmd.saxon.dom.wrapper");
+    private static final SimpleDataKey<DocumentWrapper> SAXON_DOM_WRAPPER
+        = DataMap.simpleDataKey("pmd.saxon.dom.wrapper");
 
     /** The XPath expression as a string. */
     private final String xpath;
@@ -58,10 +58,13 @@ final class SaxonDomXPathQuery {
     /** The executable XPath expression. */
     private final XPathExpressionWithProperties xpathExpression;
 
+
     private final Configuration configuration;
 
-    SaxonDomXPathQuery(String xpath, String defaultNsUri, List<PropertyDescriptor<?>> properties,
-            XPathHandler xpathHandler) {
+    SaxonDomXPathQuery(String xpath,
+                       String defaultNsUri,
+                       List<PropertyDescriptor<?>> properties,
+                       XPathHandler xpathHandler) {
         this.xpath = xpath;
         this.xpathHandler = xpathHandler;
         configuration = new Configuration();
@@ -69,8 +72,7 @@ final class SaxonDomXPathQuery {
         xpathExpression = makeXPathExpression(this.xpath, defaultNsUri, properties);
     }
 
-    private XPathExpressionWithProperties makeXPathExpression(String xpath, String defaultUri,
-            List<PropertyDescriptor<?>> properties) {
+    private XPathExpressionWithProperties makeXPathExpression(String xpath, String defaultUri, List<PropertyDescriptor<?>> properties) {
         final IndependentContext xpathStaticContext = new IndependentContext(configuration);
         xpathStaticContext.declareNamespace("fn", NamespaceUri.FN);
         xpathStaticContext.setDefaultElementNamespace(NamespaceUri.of(defaultUri));
@@ -82,21 +84,23 @@ final class SaxonDomXPathQuery {
             this.configuration.registerExtensionFunction(fun);
         }
 
-        Map<PropertyDescriptor<?>, XPathVariable> xpathVariables = declareXPathVariables(properties,
-                xpathStaticContext);
+        Map<PropertyDescriptor<?>, XPathVariable> xpathVariables = declareXPathVariables(properties, xpathStaticContext);
 
         try {
             final XPathEvaluator xpathEvaluator = new XPathEvaluator(configuration);
             xpathEvaluator.setStaticContext(xpathStaticContext);
             XPathExpression expression = xpathEvaluator.createExpression(xpath);
-            return new XPathExpressionWithProperties(expression, xpathVariables);
+            return new XPathExpressionWithProperties(
+                expression,
+                xpathVariables
+            );
         } catch (final XPathException e) {
-            throw new ContextedRuntimeException(e).addContextValue("XPath", xpath);
+            throw new ContextedRuntimeException(e)
+                .addContextValue("XPath", xpath);
         }
     }
 
-    private Map<PropertyDescriptor<?>, XPathVariable> declareXPathVariables(
-            List<PropertyDescriptor<?>> accessibleProperties, XPathStaticContext xpathStaticContext) {
+    private Map<PropertyDescriptor<?>, XPathVariable> declareXPathVariables(List<PropertyDescriptor<?>> accessibleProperties, XPathStaticContext xpathStaticContext) {
         Map<PropertyDescriptor<?>, XPathVariable> xpathVariables = new HashMap<>();
         for (final PropertyDescriptor<?> propertyDescriptor : accessibleProperties) {
             final String name = propertyDescriptor.name();
@@ -109,8 +113,10 @@ final class SaxonDomXPathQuery {
     }
 
     private boolean isExcludedProperty(String name) {
-        return "xpath".equals(name) || "defaultNsUri".equals(name) || "violationSuppressRegex".equals(name)
-                || "violationSuppressXPath".equals(name);
+        return "xpath".equals(name)
+               || "defaultNsUri".equals(name)
+               || "violationSuppressRegex".equals(name)
+               || "violationSuppressXPath".equals(name);
     }
 
     @Override
@@ -135,7 +141,8 @@ final class SaxonDomXPathQuery {
             }
             return result;
         } catch (XPathException e) {
-            throw new ContextedRuntimeException(e).addContextValue("XPath", xpath);
+            throw new ContextedRuntimeException(e)
+                .addContextValue("XPath", xpath);
         }
 
     }
@@ -146,7 +153,9 @@ final class SaxonDomXPathQuery {
             return userMap.get(SAXON_DOM_WRAPPER);
         }
         Document domRoot = node.getNode();
-        DocumentWrapper wrapper = new DocumentWrapper(domRoot, domRoot.getBaseURI(), configuration);
+        DocumentWrapper wrapper = new DocumentWrapper(
+            domRoot, domRoot.getBaseURI(), configuration
+        );
         userMap.set(SAXON_DOM_WRAPPER, wrapper);
         return wrapper;
     }
@@ -161,14 +170,12 @@ final class SaxonDomXPathQuery {
             this.xpathVariables = xpathVariables;
         }
 
-        private List<Item> evaluate(final DocumentWrapper elementNode, PropertySource properties)
-                throws XPathException {
+        private List<Item> evaluate(final DocumentWrapper elementNode, PropertySource properties) throws XPathException {
             XPathDynamicContext dynamicContext = createDynamicContext(elementNode, properties);
             return expr.evaluate(dynamicContext);
         }
 
-        private XPathDynamicContext createDynamicContext(final DocumentWrapper elementNode, PropertySource properties)
-                throws XPathException {
+        private XPathDynamicContext createDynamicContext(final DocumentWrapper elementNode, PropertySource properties) throws XPathException {
             final XPathDynamicContext dynamicContext = expr.createDynamicContext(elementNode.getRootNode());
 
             // Set variable values on the dynamic context
@@ -178,14 +185,14 @@ final class SaxonDomXPathQuery {
                 try {
                     dynamicContext.setVariable(variable, saxonValue);
                 } catch (XPathException e) {
-                    throw new ContextedRuntimeException(e).addContextValue("Variable", variable);
+                    throw new ContextedRuntimeException(e)
+                        .addContextValue("Variable", variable);
                 }
             }
             return dynamicContext;
         }
 
-        private static AtomicSequence getSaxonValue(PropertySource properties,
-                Entry<PropertyDescriptor<?>, XPathVariable> entry) {
+        private static AtomicSequence getSaxonValue(PropertySource properties, Entry<PropertyDescriptor<?>, XPathVariable> entry) {
             Object value = properties.getProperty(entry.getKey());
             Objects.requireNonNull(value, "null property value for " + entry.getKey());
             return DomainConversion.convert(value);

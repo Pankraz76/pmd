@@ -26,7 +26,9 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
     private final String typeName;
 
     ASTField(TypeRef typeRef, Identifier name, Optional<Expression> value) {
-        super(value.isPresent() ? Arrays.asList(typeRef, name, value.get()) : Arrays.asList(typeRef, name));
+        super(value.isPresent()
+              ? Arrays.asList(typeRef, name, value.get())
+              : Arrays.asList(typeRef, name));
         this.name = name;
         this.value = value;
         this.typeName = caseNormalizedTypeIfPrimitive(typeRef.asCodeString());
@@ -39,6 +41,7 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
         this.typeName = enumType.getId().asCodeString();
     }
 
+
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
@@ -49,12 +52,12 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
         return getName();
     }
 
+
     /**
      * Returns the type name.
      *
-     * <p>
-     * This includes any type arguments. (This is tested.) If the type is a
-     * primitive, its case will be normalized.
+     * <p>This includes any type arguments. (This is tested.)
+     * If the type is a primitive, its case will be normalized.
      */
     public String getType() {
         return typeName;
@@ -83,12 +86,10 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
             return super.hasRealLoc();
         }
 
-        // only special case if the first child is a TypeRef - then we need to look
-        // deeper
+        // only special case if the first child is a TypeRef - then we need to look deeper
         // TypeRef itself doesn't have a source location
         TypeRef typeRef = (TypeRef) nodes.get(0);
-        boolean allHaveRealLoc = typeRef.getComponents().stream()
-                .noneMatch(c -> c.getId().getSourceLocation().isUnknown());
+        boolean allHaveRealLoc = typeRef.getComponents().stream().noneMatch(c -> c.getId().getSourceLocation().isUnknown());
         // check the remaining nodes (name and optional value)
         for (int i = 1; i < nodes.size(); i++) {
             allHaveRealLoc &= !nodes.get(i).getSourceLocation().isUnknown();
@@ -102,10 +103,8 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
             super.calculateTextRegion(sourceCode);
         }
 
-        // only special case this time: enum field. Then we need to ignore the first
-        // child node,
-        // which represents the complete enum declaration. So we need to only look at
-        // the identifier,
+        // only special case this time: enum field. Then we need to ignore the first child node,
+        // which represents the complete enum declaration. So we need to only look at the identifier,
         // if we have a location for that
         SourceLocation loc = name.getSourceLocation();
         if (loc.isUnknown()) {
@@ -115,6 +114,7 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
         // Column+1 because Summit columns are 0-based and PMD are 1-based
         setRegion(TextRegion.fromBothOffsets(
                 sourceCode.offsetAtLineColumn(TextPos2d.pos2d(loc.getStartLine(), loc.getStartColumn() + 1)),
-                sourceCode.offsetAtLineColumn(TextPos2d.pos2d(loc.getEndLine(), loc.getEndColumn() + 1))));
+                sourceCode.offsetAtLineColumn(TextPos2d.pos2d(loc.getEndLine(), loc.getEndColumn() + 1))
+        ));
     }
 }

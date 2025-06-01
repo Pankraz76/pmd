@@ -22,7 +22,7 @@ import net.sourceforge.pmd.lang.rule.xpath.InternalApiBridge;
 import net.sourceforge.pmd.lang.rule.xpath.XPathRule;
 
 /**
- * @apiNote Internal API
+ * @apiNote  Internal API
  */
 public class ResourceLoader {
 
@@ -57,11 +57,9 @@ public class ResourceLoader {
     /**
      * Attempts to load the resource from file, a URL or the classpath.
      *
-     * <p>
-     * Caller is responsible for closing the {@link InputStream}.
+     * <p>Caller is responsible for closing the {@link InputStream}.
      *
-     * @param name
-     *            The resource to attempt and load
+     * @param name The resource to attempt and load
      *
      * @return InputStream
      */
@@ -91,8 +89,7 @@ public class ResourceLoader {
             return loadClassPathResourceAsStreamOrThrow(name);
         }
 
-        throw new IOException("Can't find resource " + name
-                + ". Make sure the resource is a valid file or URL or is on the classpath");
+        throw new IOException("Can't find resource " + name + ". Make sure the resource is a valid file or URL or is on the classpath");
     }
 
     public @Nullable InputStream loadClassPathResourceAsStream(final String name) throws IOException {
@@ -106,12 +103,9 @@ public class ResourceLoader {
             return null;
         } else {
             final URLConnection connection = resource.openConnection();
-            // This avoids reusing the underlying file, if the resource is loaded from a Jar
-            // file.
-            // The file is closed with the input stream then thus not leaving a leaked
-            // resource behind.
-            // See https://github.com/pmd/pmd/issues/364 and
-            // https://github.com/pmd/pmd/issues/337
+            // This avoids reusing the underlying file, if the resource is loaded from a Jar file.
+            // The file is closed with the input stream then thus not leaving a leaked resource behind.
+            // See https://github.com/pmd/pmd/issues/364 and https://github.com/pmd/pmd/issues/337
             connection.setUseCaches(false);
             return connection.getInputStream();
         }
@@ -126,19 +120,17 @@ public class ResourceLoader {
         }
 
         if (is == null) {
-            throw new FileNotFoundException(
-                    "Can't find resource " + name + ". Make sure the resource is on the classpath");
+            throw new FileNotFoundException("Can't find resource " + name
+                    + ". Make sure the resource is on the classpath");
         }
 
         return is;
     }
 
     /**
-     * Load the rule from the classloader from resource loader, consistent with the
-     * ruleset
+     * Load the rule from the classloader from resource loader, consistent with the ruleset
      */
-    public Rule loadRuleFromClassPath(final String clazz)
-            throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public Rule loadRuleFromClassPath(final String clazz) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         if (XPathRule.class.getName().equals(clazz)) {
             return InternalApiBridge.newXPathRule();
         }

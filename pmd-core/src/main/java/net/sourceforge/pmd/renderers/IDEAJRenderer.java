@@ -25,13 +25,12 @@ public class IDEAJRenderer extends AbstractIncrementingRenderer {
 
     public static final String NAME = "ideaj";
 
-    public static final PropertyDescriptor<String> FILE_NAME = PropertyFactory.stringProperty("fileName")
-            .desc("File name.").defaultValue("").build();
-    public static final PropertyDescriptor<String> SOURCE_PATH = PropertyFactory.stringProperty("sourcePath")
-            .desc("Source path.").defaultValue("").build();
-    public static final PropertyDescriptor<String> CLASS_AND_METHOD_NAME = PropertyFactory
-            .stringProperty("classAndMethodName")
-            .desc("Class and Method name, pass '.method' when processing a directory.").defaultValue("").build();
+    public static final PropertyDescriptor<String> FILE_NAME =
+        PropertyFactory.stringProperty("fileName").desc("File name.").defaultValue("").build();
+    public static final PropertyDescriptor<String> SOURCE_PATH =
+        PropertyFactory.stringProperty("sourcePath").desc("Source path.").defaultValue("").build();
+    public static final PropertyDescriptor<String> CLASS_AND_METHOD_NAME =
+        PropertyFactory.stringProperty("classAndMethodName").desc("Class and Method name, pass '.method' when processing a directory.").defaultValue("").build();
 
     private static final String FILE_SEPARATOR = System.getProperty("file.separator");
     private static final String PATH_SEPARATOR = System.getProperty("path.separator");
@@ -69,9 +68,8 @@ public class IDEAJRenderer extends AbstractIncrementingRenderer {
             buf.setLength(0);
             RuleViolation rv = violations.next();
             buf.append(rv.getDescription()).append(System.lineSeparator());
-            // todo is this the right thing? vvvvvvvvvvvvvvvv
-            buf.append(" at ").append(getFullyQualifiedClassName(rv.getFileId().getAbsolutePath(), sourcePath))
-                    .append(".method(");
+            // todo is this the right thing?                                    vvvvvvvvvvvvvvvv
+            buf.append(" at ").append(getFullyQualifiedClassName(rv.getFileId().getAbsolutePath(), sourcePath)).append(".method(");
             buf.append(rv.getFileId().getFileName()).append(':').append(rv.getBeginLine()).append(')');
             writer.println(buf);
         }

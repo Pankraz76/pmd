@@ -40,12 +40,10 @@ import net.sourceforge.pmd.util.log.PmdReporter;
  *
  * <h2>Usage overview</h2>
  *
- * <p>
- * Create and configure a {@link CPDConfiguration}, then use
- * {@link #create(CPDConfiguration)} to obtain an instance. You can perform
- * additional configuration on the instance, e.g. adding files to process or add
- * a listener. Then call {@link #performAnalysis()} or
- * {@link #performAnalysis(Consumer)} in order to get the report directly.
+ * <p>Create and configure a {@link CPDConfiguration}, then use {@link #create(CPDConfiguration)} to
+ * obtain an instance. You can perform additional configuration on the instance, e.g. adding
+ * files to process or add a listener. Then call {@link #performAnalysis()} or {@link #performAnalysis(Consumer)}
+ * in order to get the report directly.
  *
  * <h2>Simple example</h2>
  *
@@ -79,10 +77,14 @@ public final class CpdAnalysis implements AutoCloseable {
     private final @Nullable CPDReportRenderer renderer;
     private @NonNull CPDListener listener = new CPDNullListener();
 
+
     private CpdAnalysis(CPDConfiguration config) {
         this.configuration = config;
         this.reporter = config.getReporter();
-        this.files = InternalApiBridge.newCollector(config.getLanguageVersionDiscoverer(), reporter);
+        this.files = InternalApiBridge.newCollector(
+            config.getLanguageVersionDiscoverer(),
+            reporter
+        );
 
         this.renderer = config.getCPDReportRenderer();
 
@@ -94,11 +96,10 @@ public final class CpdAnalysis implements AutoCloseable {
     }
 
     /**
-     * Create a new instance from the given configuration. The configuration should
-     * not be modified after this.
+     * Create a new instance from the given configuration. The configuration
+     * should not be modified after this.
      *
-     * @param config
-     *            Configuration
+     * @param config Configuration
      *
      * @return A new analysis instance
      */
@@ -116,18 +117,14 @@ public final class CpdAnalysis implements AutoCloseable {
         LanguagePropertyBundle props = configuration.getLanguageProperties(language);
 
         setPropertyIfMissing(CpdLanguageProperties.CPD_ANONYMIZE_LITERALS, props, configuration.isIgnoreLiterals());
-        setPropertyIfMissing(CpdLanguageProperties.CPD_ANONYMIZE_IDENTIFIERS, props,
-                configuration.isIgnoreIdentifiers());
+        setPropertyIfMissing(CpdLanguageProperties.CPD_ANONYMIZE_IDENTIFIERS, props, configuration.isIgnoreIdentifiers());
         setPropertyIfMissing(CpdLanguageProperties.CPD_IGNORE_METADATA, props, configuration.isIgnoreAnnotations());
         setPropertyIfMissing(CpdLanguageProperties.CPD_IGNORE_IMPORTS, props, configuration.isIgnoreUsings());
-        setPropertyIfMissing(CpdLanguageProperties.CPD_IGNORE_LITERAL_SEQUENCES, props,
-                configuration.isIgnoreLiteralSequences());
-        setPropertyIfMissing(CpdLanguageProperties.CPD_IGNORE_LITERAL_AND_IDENTIFIER_SEQUENCES, props,
-                configuration.isIgnoreIdentifierAndLiteralSequences());
+        setPropertyIfMissing(CpdLanguageProperties.CPD_IGNORE_LITERAL_SEQUENCES, props, configuration.isIgnoreLiteralSequences());
+        setPropertyIfMissing(CpdLanguageProperties.CPD_IGNORE_LITERAL_AND_IDENTIFIER_SEQUENCES, props, configuration.isIgnoreIdentifierAndLiteralSequences());
         if (!configuration.isNoSkipBlocks()) {
             // see net.sourceforge.pmd.lang.cpp.CppLanguageModule.CPD_SKIP_BLOCKS
-            PropertyDescriptor<String> skipBlocks = (PropertyDescriptor) props
-                    .getPropertyDescriptor("cpdSkipBlocksPattern");
+            PropertyDescriptor<String> skipBlocks = (PropertyDescriptor) props.getPropertyDescriptor("cpdSkipBlocksPattern");
             setPropertyIfMissing(skipBlocks, props, configuration.getSkipBlocksPattern());
         }
     }
@@ -151,18 +148,18 @@ public final class CpdAnalysis implements AutoCloseable {
     }
 
     public void performAnalysis() {
-        performAnalysis(r -> {
-        });
+        performAnalysis(r -> { });
     }
 
     @SuppressWarnings("PMD.CloseResource")
     public void performAnalysis(Consumer<CPDReport> consumer) {
         try (SourceManager sourceManager = new SourceManager(files.getCollectedFiles())) {
-            Map<Language, CpdLexer> tokenizers = sourceManager.getTextFiles().stream()
-                    .map(it -> it.getLanguageVersion().getLanguage()).distinct()
-                    .filter(it -> it instanceof CpdCapableLanguage)
-                    .collect(Collectors.toMap(lang -> lang, lang -> ((CpdCapableLanguage) lang)
-                            .createCpdLexer(configuration.getLanguageProperties(lang))));
+            Map<Language, CpdLexer> tokenizers =
+                sourceManager.getTextFiles().stream()
+                             .map(it -> it.getLanguageVersion().getLanguage())
+                             .distinct()
+                             .filter(it -> it instanceof CpdCapableLanguage)
+                             .collect(Collectors.toMap(lang -> lang, lang -> ((CpdCapableLanguage) lang).createCpdLexer(configuration.getLanguageProperties(lang))));
 
             Map<FileId, Integer> numberOfTokensPerFile = new HashMap<>();
 
@@ -172,8 +169,7 @@ public final class CpdAnalysis implements AutoCloseable {
                 TextDocument textDocument = sourceManager.get(textFile);
                 Tokens.State savedState = tokens.savePoint();
                 try {
-                    int newTokens = doTokenize(textDocument,
-                            tokenizers.get(textFile.getLanguageVersion().getLanguage()), tokens);
+                    int newTokens = doTokenize(textDocument, tokenizers.get(textFile.getLanguageVersion().getLanguage()), tokens);
                     numberOfTokensPerFile.put(textDocument.getFileId(), newTokens);
                     listener.addedFile(1);
                 } catch (IOException | FileAnalysisException e) {
@@ -187,8 +183,7 @@ public final class CpdAnalysis implements AutoCloseable {
                 }
             }
             if (!processingErrors.isEmpty() && !configuration.isSkipLexicalErrors()) {
-                reporter.error(
-                        "Errors were detected while lexing source, exiting because --skip-lexical-errors is unset.");
+                reporter.error("Errors were detected while lexing source, exiting because --skip-lexical-errors is unset.");
                 return;
             }
 
@@ -212,6 +207,7 @@ public final class CpdAnalysis implements AutoCloseable {
         }
         // source manager is closed and closes all text files now.
     }
+
 
     @Override
     public void close() throws IOException {

@@ -14,13 +14,14 @@ import net.sourceforge.pmd.lang.DummyLanguageModule;
 import net.sourceforge.pmd.lang.document.Chars;
 import net.sourceforge.pmd.lang.document.TextDocument;
 
+
 class JavaEscapeReaderTest {
 
     TextDocument readString(String input) {
-        TextDocument intext = TextDocument.readOnlyString(Chars.wrap(input),
-                DummyLanguageModule.getInstance().getDefaultVersion());
+        TextDocument intext = TextDocument.readOnlyString(Chars.wrap(input), DummyLanguageModule.getInstance().getDefaultVersion());
         return new JavaEscapeTranslator(intext).translateDocument();
     }
+
 
     @Test
     void testSimpleRead() throws IOException {

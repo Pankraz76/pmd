@@ -48,8 +48,8 @@ public class OccurrenceFinder extends PlsqlVisitorBase<Object, Object> {
                     // there
                     Scope scope = decl.getScope();
                     if (null == scope) {
-                        LOG.trace("NameOccurrence has no Scope:{}=>{}", decl.getClass().getCanonicalName(),
-                                decl.getImage());
+                        LOG.trace("NameOccurrence has no Scope:{}=>{}",
+                                decl.getClass().getCanonicalName(), decl.getImage());
                         break;
                     }
                     search.execute(scope);

@@ -67,8 +67,7 @@ public class VBHTMLRenderer extends AbstractIncrementingRenderer {
             }
 
             colorize = !colorize;
-            sb.append("<td width=\"50\" align=\"right\"><font class=body>").append(rv.getBeginLine())
-                    .append("&nbsp;&nbsp;&nbsp;</font></td>");
+            sb.append("<td width=\"50\" align=\"right\"><font class=body>").append(rv.getBeginLine()).append("&nbsp;&nbsp;&nbsp;</font></td>");
             sb.append("<td><font class=body>").append(rv.getDescription()).append("</font></td>");
             sb.append("</tr>");
             sb.append(lineSep);
@@ -108,8 +107,7 @@ public class VBHTMLRenderer extends AbstractIncrementingRenderer {
         if (!configErrors.isEmpty()) {
             sb.setLength(0);
             sb.append("<table border=\"0\" width=\"80%\">");
-            sb.append(
-                    "<tr id=TableHeader><td colspan=\"2\"><font class=title>&nbsp;Configuration problems found</font></td></tr>");
+            sb.append("<tr id=TableHeader><td colspan=\"2\"><font class=title>&nbsp;Configuration problems found</font></td></tr>");
             boolean colorize = false;
             for (Report.ConfigurationError error : configErrors) {
                 if (colorize) {
@@ -129,16 +127,17 @@ public class VBHTMLRenderer extends AbstractIncrementingRenderer {
     }
 
     private String header() {
-        return "<html><head><title>PMD</title></head>" + "<style type=\"text/css\">" + "<!--" + System.lineSeparator()
-                + "body { background-color: white; font-family:verdana, arial, helvetica, geneva; font-size: 16px; font-style: italic; color: black; }"
-                + System.lineSeparator()
-                + ".title { font-family: verdana, arial, helvetica,geneva; font-size: 12px; font-weight:bold; color: white; }"
-                + System.lineSeparator()
-                + ".body { font-family: verdana, arial, helvetica, geneva; font-size: 12px; font-weight:plain; color: black; }"
-                + System.lineSeparator() + "#TableHeader { background-color: #003366; }" + System.lineSeparator()
-                + "#RowColor1 { background-color: #eeeeee; }" + System.lineSeparator()
-                + "#RowColor2 { background-color: white; }" + System.lineSeparator() + "-->" + "</style>"
-                + "<body><center>";
+        return "<html><head><title>PMD</title></head>"
+            + "<style type=\"text/css\">" + "<!--" + System.lineSeparator()
+            + "body { background-color: white; font-family:verdana, arial, helvetica, geneva; font-size: 16px; font-style: italic; color: black; }"
+            + System.lineSeparator()
+            + ".title { font-family: verdana, arial, helvetica,geneva; font-size: 12px; font-weight:bold; color: white; }"
+            + System.lineSeparator()
+            + ".body { font-family: verdana, arial, helvetica, geneva; font-size: 12px; font-weight:plain; color: black; }"
+            + System.lineSeparator() + "#TableHeader { background-color: #003366; }" + System.lineSeparator()
+            + "#RowColor1 { background-color: #eeeeee; }" + System.lineSeparator()
+            + "#RowColor2 { background-color: white; }" + System.lineSeparator() + "-->" + "</style>"
+            + "<body><center>";
     }
 
     private String footer() {

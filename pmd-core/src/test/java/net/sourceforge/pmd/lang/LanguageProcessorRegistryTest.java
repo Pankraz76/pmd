@@ -28,15 +28,16 @@ class LanguageProcessorRegistryTest {
         DummyLanguagePropertyBundle bundle = new DummyLanguagePropertyBundle(dummyLanguage);
         languageProperties.put(dummyLanguage, bundle);
 
-        try (LanguageProcessorRegistry ignored = LanguageProcessorRegistry.create(languageRegistry, languageProperties,
-                PmdReporter.quiet(), env)) {
+        try (LanguageProcessorRegistry ignored = LanguageProcessorRegistry.create(languageRegistry, languageProperties, PmdReporter.quiet(), env)) {
             assertEquals("theValue", bundle.getRootDirectory());
         }
     }
 
     private static class DummyLanguagePropertyBundle extends LanguagePropertyBundle {
         private static final PropertyDescriptor<String> ROOT_DIRECTORY = PropertyFactory.stringProperty("rootDirectory")
-                .desc("Test").defaultValue("").build();
+                .desc("Test")
+                .defaultValue("")
+                .build();
 
         DummyLanguagePropertyBundle(Language language) {
             super(language);

@@ -16,14 +16,19 @@ import com.google.summit.ast.modifier.Modifier;
 public final class ASTModifierNode extends AbstractApexNode.Many<Modifier> implements AccessNode {
 
     private static final Map<Keyword, Integer> OPCODES = ImmutableMap.<Keyword, Integer>builder()
-            .put(Keyword.PUBLIC, AccessNode.PUBLIC).put(Keyword.PRIVATE, AccessNode.PRIVATE)
-            .put(Keyword.PROTECTED, AccessNode.PROTECTED).put(Keyword.ABSTRACT, AccessNode.ABSTRACT)
-            .put(Keyword.STATIC, AccessNode.STATIC).put(Keyword.FINAL, AccessNode.FINAL)
-            .put(Keyword.TRANSIENT, AccessNode.TRANSIENT).build();
+            .put(Keyword.PUBLIC, AccessNode.PUBLIC)
+            .put(Keyword.PRIVATE, AccessNode.PRIVATE)
+            .put(Keyword.PROTECTED, AccessNode.PROTECTED)
+            .put(Keyword.ABSTRACT, AccessNode.ABSTRACT)
+            .put(Keyword.STATIC, AccessNode.STATIC)
+            .put(Keyword.FINAL, AccessNode.FINAL)
+            .put(Keyword.TRANSIENT, AccessNode.TRANSIENT)
+            .build();
 
     ASTModifierNode(List<Modifier> modifierNode) {
         super(modifierNode);
     }
+
 
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
@@ -32,8 +37,12 @@ public final class ASTModifierNode extends AbstractApexNode.Many<Modifier> imple
 
     @Override
     public int getModifiers() {
-        int modifiers = nodes.stream().filter(mod -> mod instanceof KeywordModifier).map(mod -> (KeywordModifier) mod)
-                .filter(mod -> OPCODES.containsKey(mod.getKeyword())).mapToInt(mod -> OPCODES.get(mod.getKeyword()))
+        int modifiers = nodes
+                .stream()
+                .filter(mod -> mod instanceof KeywordModifier)
+                .map(mod -> (KeywordModifier) mod)
+                .filter(mod -> OPCODES.containsKey(mod.getKeyword()))
+                .mapToInt(mod -> OPCODES.get(mod.getKeyword()))
                 .reduce(0, (current, bit) -> current | bit);
 
         // interface methods are implicit public and abstract
@@ -90,12 +99,18 @@ public final class ASTModifierNode extends AbstractApexNode.Many<Modifier> imple
     }
 
     private boolean hasKeyword(Keyword keyword) {
-        return nodes.stream().filter(mod -> mod instanceof KeywordModifier).map(mod -> (KeywordModifier) mod)
+        return nodes
+                .stream()
+                .filter(mod -> mod instanceof KeywordModifier)
+                .map(mod -> (KeywordModifier) mod)
                 .anyMatch(mod -> mod.getKeyword() == keyword);
     }
 
     private boolean hasAnnotation(String name) {
-        return nodes.stream().filter(mod -> mod instanceof AnnotationModifier).map(mod -> (AnnotationModifier) mod)
+        return nodes
+                .stream()
+                .filter(mod -> mod instanceof AnnotationModifier)
+                .map(mod -> (AnnotationModifier) mod)
                 .anyMatch(mod -> mod.getName().getString().equalsIgnoreCase(name));
     }
 

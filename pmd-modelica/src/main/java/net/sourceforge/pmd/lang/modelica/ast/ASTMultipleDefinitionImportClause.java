@@ -41,14 +41,12 @@ public final class ASTMultipleDefinitionImportClause extends AbstractModelicaImp
     }
 
     @Override
-    protected ResolutionResult<ModelicaDeclaration> getCacheableImportSources(ResolutionState state,
-            ModelicaScope scope) {
+    protected ResolutionResult<ModelicaDeclaration> getCacheableImportSources(ResolutionState state, ModelicaScope scope) {
         return scope.safeResolveLexically(ModelicaDeclaration.class, state, importFrom.getCompositeName());
     }
 
     @Override
-    protected void fetchImportedClassesFromSource(ResolutionContext result, ModelicaDeclaration source,
-            String simpleName) throws Watchdog.CountdownException {
+    protected void fetchImportedClassesFromSource(ResolutionContext result, ModelicaDeclaration source, String simpleName) throws Watchdog.CountdownException {
         if (importedNames.contains(simpleName)) {
             InternalApiBridge.resolveFurtherNameComponents(source, result, CompositeName.create(simpleName));
         }

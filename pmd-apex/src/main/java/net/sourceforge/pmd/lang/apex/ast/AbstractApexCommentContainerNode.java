@@ -9,11 +9,9 @@ import com.google.summit.ast.Node;
 /**
  * Abstract base class for nodes which can contain comments.
  *
- * @param <T>
- *            the node type
+ * @param <T> the node type
  */
-abstract class AbstractApexCommentContainerNode<T extends Node> extends AbstractApexNode.Single<T>
-        implements ASTCommentContainer {
+abstract class AbstractApexCommentContainerNode<T extends Node> extends AbstractApexNode.Single<T> implements ASTCommentContainer {
 
     private boolean containsComment = false;
 

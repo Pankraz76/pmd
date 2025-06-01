@@ -86,6 +86,7 @@ class AbstractAntTest {
             this.logLevel = logLevel;
         }
 
+
         @Override
         public void buildStarted(BuildEvent event) {
         }

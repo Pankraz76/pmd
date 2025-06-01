@@ -22,9 +22,7 @@ import net.sourceforge.pmd.lang.rule.RulePriority;
  * PMD Ant task. Setters of this class are interpreted by Ant as properties
  * settable in the XML. This is therefore published API.
  *
- * <p>
- * Runs PMD analysis via ant. The ant task looks like this:
- * </p>
+ * <p>Runs PMD analysis via ant. The ant task looks like this:</p>
  *
  * <pre>{@code
  *   <project name="PMDProject" default="main" basedir=".">
@@ -33,8 +31,7 @@ import net.sourceforge.pmd.lang.rule.RulePriority;
  *             <include name="*.jar"/>
  *         </fileset>
  *     </path>
- *     <taskdef name="pmd" classname=
-"net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
+ *     <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
  *
  *     <target name="main">
  *       <pmd>
@@ -48,9 +45,7 @@ import net.sourceforge.pmd.lang.rule.RulePriority;
  *   </project>
  * }</pre>
  *
- * <p>
- * Required: rulesetfiles/ruleset, fileset
- * </p>
+ * <p>Required: rulesetfiles/ruleset, fileset</p>
  */
 public class PMDTask extends Task {
 
@@ -275,6 +270,7 @@ public class PMDTask extends Task {
     public void setCacheLocation(String cacheLocation) {
         this.cacheLocation = cacheLocation;
     }
+
 
     public boolean isNoCache() {
         return noCache;

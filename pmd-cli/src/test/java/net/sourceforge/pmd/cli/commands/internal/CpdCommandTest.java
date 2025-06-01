@@ -19,25 +19,33 @@ class CpdCommandTest extends BaseCommandTest<CpdCommand> {
 
     @Test
     void testMultipleDirs() {
-        final CpdCommand cmd = setupAndParse("-d", "a", "b");
+        final CpdCommand cmd = setupAndParse(
+            "-d", "a", "b"
+        );
         assertMultipleDirs(cmd);
     }
 
     @Test
     void testMultipleDirsWithCommas() {
-        final CpdCommand cmd = setupAndParse("-d", "a,b");
+        final CpdCommand cmd = setupAndParse(
+            "-d", "a,b"
+        );
         assertMultipleDirs(cmd);
     }
 
     @Test
     void testMultipleDirsWithRepeatedOption() {
-        final CpdCommand cmd = setupAndParse("-d", "a", "-d", "b");
+        final CpdCommand cmd = setupAndParse(
+            "-d", "a", "-d", "b"
+        );
         assertMultipleDirs(cmd);
     }
 
     @Test
     void testNoPositionalParametersAllowed() {
-        final CpdCommand cmd = setupAndParse("-d", "a", "--", "b");
+        final CpdCommand cmd = setupAndParse(
+            "-d", "a", "--", "b"
+        );
         assertMultipleDirs(cmd);
     }
 

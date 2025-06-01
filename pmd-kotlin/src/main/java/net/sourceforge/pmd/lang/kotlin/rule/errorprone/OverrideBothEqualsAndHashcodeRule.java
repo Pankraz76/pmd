@@ -2,6 +2,7 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
 package net.sourceforge.pmd.lang.kotlin.rule.errorprone;
 
 import java.util.List;
@@ -38,7 +39,9 @@ public class OverrideBothEqualsAndHashcodeRule extends AbstractKotlinRule {
         @Override
         public Void visitClassMemberDeclarations(KtClassMemberDeclarations node, RuleContext data) {
             List<KtFunctionDeclaration> functions = node.children(KtClassMemberDeclaration.class)
-                    .children(KtDeclaration.class).children(KtFunctionDeclaration.class).toList();
+                .children(KtDeclaration.class)
+                .children(KtFunctionDeclaration.class)
+                .toList();
 
             boolean hasEqualMethod = functions.stream().filter(this::isEqualsMethod).count() == 1L;
             boolean hasHashCodeMethod = functions.stream().filter(this::isHashCodeMethod).count() == 1L;
@@ -67,7 +70,8 @@ public class OverrideBothEqualsAndHashcodeRule extends AbstractKotlinRule {
         }
 
         private boolean hasOverrideModifier(KtFunctionDeclaration fun) {
-            return fun.modifiers().descendants(KotlinTerminalNode.class).any(t -> "override".equals(t.getText()));
+            return fun.modifiers().descendants(KotlinTerminalNode.class)
+                    .any(t -> "override".equals(t.getText()));
         }
 
         private int getArity(KtFunctionDeclaration fun) {

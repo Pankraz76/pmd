@@ -18,21 +18,18 @@ import com.google.summit.ast.declaration.MethodDeclaration;
 public final class ASTMethod extends AbstractApexNode implements ApexQualifiableNode {
     /**
      * Internal name used by constructors.
-     * 
      * @see #isConstructor()
      */
     private static final String CONSTRUCTOR_ID = "<init>";
 
     /**
      * Internal name used by static initialization blocks.
-     * 
      * @see #isStaticInitializer()
      */
     private static final String STATIC_INIT_ID = "<clinit>";
 
     /**
      * Internal name used by the synthetic trigger method.
-     * 
      * @see #isTriggerBlock()
      */
     private static final String TRIGGER_INVOKE_ID = "<invoke>";
@@ -46,8 +43,12 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
     private final String returnType;
     private final SourceLocation sourceLocation;
 
-    ASTMethod(String name, String internalName, List<String> parameterTypes, String returnType,
-            SourceLocation sourceLocation) {
+    ASTMethod(
+        String name,
+        String internalName,
+        List<String> parameterTypes,
+        String returnType,
+        SourceLocation sourceLocation) {
 
         this.name = name;
         this.internalName = internalName;
@@ -66,10 +67,16 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
             internalName = CONSTRUCTOR_ID;
         }
 
-        return new ASTMethod(name, internalName, node.getParameterDeclarations().stream()
-                .map(p -> caseNormalizedTypeIfPrimitive(p.getType().asCodeString())).collect(Collectors.toList()),
-                caseNormalizedTypeIfPrimitive(node.getReturnType().asCodeString()), node.getSourceLocation());
+        return new ASTMethod(
+            name,
+            internalName,
+            node.getParameterDeclarations().stream()
+                .map(p -> caseNormalizedTypeIfPrimitive(p.getType().asCodeString()))
+                .collect(Collectors.toList()),
+            caseNormalizedTypeIfPrimitive(node.getReturnType().asCodeString()),
+            node.getSourceLocation());
     }
+
 
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
@@ -86,7 +93,8 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
                 sourceCode.offsetAtLineColumn(
                         TextPos2d.pos2d(sourceLocation.getStartLine(), sourceLocation.getStartColumn() + 1)),
                 sourceCode.offsetAtLineColumn(
-                        TextPos2d.pos2d(sourceLocation.getEndLine(), sourceLocation.getEndColumn() + 1))));
+                        TextPos2d.pos2d(sourceLocation.getEndLine(), sourceLocation.getEndColumn() + 1))
+        ));
     }
 
     @Override
@@ -139,8 +147,8 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
     /**
      * Returns the method return type name.
      *
-     * This includes any type arguments. If the type is a primitive, its case will
-     * be normalized.
+     * This includes any type arguments.
+     * If the type is a primitive, its case will be normalized.
      */
     public String getReturnType() {
         return returnType;
@@ -152,7 +160,6 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
 
     /**
      * Checks whether this method is the synthetic trigger method.
-     * 
      * @return true if this method is the synthetic trigger method
      * @since 7.5.0
      */

@@ -63,14 +63,16 @@ class CPDConfigurationTest {
         assertEquals(StandardCharsets.UTF_16.name(), ((XMLRenderer) renderer).getEncoding());
     }
 
+
     @Test
     void testCpdNotSupported() {
         DummyLanguageNoCapabilities lang = DummyLanguageNoCapabilities.getInstance();
         final CPDConfiguration configuration = new CPDConfiguration(LanguageRegistry.singleton(lang));
 
-        assertThrows(UnsupportedOperationException.class, () -> configuration.setOnlyRecognizeLanguage(lang));
         assertThrows(UnsupportedOperationException.class,
-                () -> configuration.setDefaultLanguageVersion(lang.getDefaultVersion()));
+            () -> configuration.setOnlyRecognizeLanguage(lang));
+        assertThrows(UnsupportedOperationException.class,
+            () -> configuration.setDefaultLanguageVersion(lang.getDefaultVersion()));
     }
 
 }

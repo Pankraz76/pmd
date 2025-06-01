@@ -17,34 +17,30 @@ import net.sourceforge.pmd.util.DataMap;
 import net.sourceforge.pmd.util.DataMap.DataKey;
 
 /**
- * Base class for an antlr node. This implements the PMD interfaces only, not
- * the antlr ones. It wraps an antlr node (they are linked both ways). Antlr
- * primarily distinguishes {@link ParserRuleContext} for inner nodes,
+ * Base class for an antlr node. This implements the PMD interfaces only,
+ * not the antlr ones. It wraps an antlr node (they are linked both ways).
+ * Antlr primarily distinguishes {@link ParserRuleContext} for inner nodes,
  * {@link TerminalNode} for nodes that wrap tokens (and can have no children),
- * and {@link ErrorNode}, a subtype of {@link TerminalNode}. These each have a
- * base class here, which refines the type of the underlying antlr node:
- * {@link BaseAntlrInnerNode}, {@link BaseAntlrTerminalNode} and
- * {@link BaseAntlrErrorNode}. These must be implemented in each language module
- * with a class that also implements {@code <N>}.
+ * and {@link ErrorNode}, a subtype of {@link TerminalNode}. These each have
+ * a base class here, which refines the type of the underlying antlr node:
+ * {@link BaseAntlrInnerNode}, {@link BaseAntlrTerminalNode} and {@link BaseAntlrErrorNode}.
+ * These must be implemented in each language module with a class that also
+ * implements {@code <N>}.
  *
- * <p>
- * During tree construction, the antlr runtime does its thing with the
- * underlying antlr nodes. The PMD nodes are just wrappers around those, that
- * respect the contract of {@link GenericNode}.
+ * <p>During tree construction, the antlr runtime does its thing with the
+ * underlying antlr nodes. The PMD nodes are just wrappers around those,
+ * that respect the contract of {@link GenericNode}.
  *
- * @param <A>
- *            Type of the underlying antlr node
- * @param <N>
- *            Public interface (eg SwiftNode)
+ * @param <A> Type of the underlying antlr node
+ * @param <N> Public interface (eg SwiftNode)
  */
-public abstract class BaseAntlrNode<A extends AntlrToPmdParseTreeAdapter<N>, N extends AntlrNode<N>>
-        implements AntlrNode<N> {
+public abstract class BaseAntlrNode<A extends AntlrToPmdParseTreeAdapter<N>, N extends AntlrNode<N>> implements AntlrNode<N> {
 
     private DataMap<DataKey<?, ?>> userMap;
 
     /**
-     * The only node for which this is not overwritten is the root node, for which
-     * by contract, this is -1.
+     * The only node for which this is not overwritten is the root node, for
+     * which by contract, this is -1.
      */
     private int indexInParent = -1;
 
@@ -62,7 +58,8 @@ public abstract class BaseAntlrNode<A extends AntlrToPmdParseTreeAdapter<N>, N e
 
     @Override
     public TextRegion getTextRegion() {
-        return TextRegion.fromBothOffsets(getFirstAntlrToken().getStartIndex(), getLastAntlrToken().getStopIndex() + 1);
+        return TextRegion.fromBothOffsets(getFirstAntlrToken().getStartIndex(),
+                                          getLastAntlrToken().getStopIndex() + 1);
     }
 
     void setIndexInParent(int indexInParent) {
@@ -113,9 +110,11 @@ public abstract class BaseAntlrNode<A extends AntlrToPmdParseTreeAdapter<N>, N e
 
     protected abstract A asAntlrNode();
 
+
     protected interface AntlrToPmdParseTreeAdapter<N extends AntlrNode<N>> extends ParseTree {
 
         BaseAntlrNode<?, N> getPmdNode();
+
 
         @Override
         AntlrToPmdParseTreeAdapter<N> getParent();

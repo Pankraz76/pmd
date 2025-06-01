@@ -29,10 +29,12 @@ public class LocalVariableNamingConventionsRule extends AbstractNamingConvention
         definePropertyDescriptor(LOCAL_REGEX);
     }
 
+
     @Override
     protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTVariableDeclaration.class);
     }
+
 
     @Override
     public Object visit(ASTVariableDeclaration node, Object data) {

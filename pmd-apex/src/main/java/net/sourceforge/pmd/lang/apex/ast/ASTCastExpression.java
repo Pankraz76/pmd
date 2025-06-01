@@ -12,6 +12,7 @@ public final class ASTCastExpression extends AbstractApexNode.Single<CastExpress
         super(castExpression);
     }
 
+
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
@@ -19,7 +20,6 @@ public final class ASTCastExpression extends AbstractApexNode.Single<CastExpress
 
     /**
      * Returns the target type name of the cast expression.
-     * 
      * @since 7.12.0
      */
     public String getType() {

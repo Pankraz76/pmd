@@ -1,8 +1,7 @@
 #Organize Import Order
-#Sun Nov 20 10:59:37 CET 2016
-5=
-4=net.sourceforge.pmd
+#Wed Jan 23 12:03:29 AEDT 2019
+0=java
+1=javax
+2=jakarta
 3=org
-2=javax
-1=java
-0=\#
+4=com

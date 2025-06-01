@@ -15,9 +15,7 @@ public class AntlrTokenFilter extends BaseTokenFilter<AntlrToken> {
 
     /**
      * Creates a new AntlrTokenFilter
-     * 
-     * @param tokenManager
-     *            The token manager from which to retrieve tokens to be filtered
+     * @param tokenManager The token manager from which to retrieve tokens to be filtered
      */
     public AntlrTokenFilter(final TokenManager<AntlrToken> tokenManager) {
         super(tokenManager);

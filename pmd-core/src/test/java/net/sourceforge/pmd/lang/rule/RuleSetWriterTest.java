@@ -60,8 +60,11 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
     @Test
     void testWrite() throws Exception {
         RuleSet braces = new RuleSetLoader().loadFromResource("net/sourceforge/pmd/lang/rule/TestRuleset1.xml");
-        RuleSet ruleSet = new RuleSetBuilder(new Random().nextLong()).withName("ruleset")
-                .withDescription("ruleset description").addRuleSetByReference(braces, true, "MockRule2").build();
+        RuleSet ruleSet = new RuleSetBuilder(new Random().nextLong())
+                .withName("ruleset")
+                .withDescription("ruleset description")
+                .addRuleSetByReference(braces, true, "MockRule2")
+                .build();
 
         writer.write(ruleSet);
 
@@ -79,7 +82,8 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
     void testRuleReferenceOverriddenName() throws Exception {
         RuleSet rs = new RuleSetLoader().loadFromResource("rulesets/dummy/basic.xml");
 
-        RuleReference ruleRef = new RuleReference(rs.getRuleByName("DummyBasicMockRule"),
+        RuleReference ruleRef = new RuleReference(
+                rs.getRuleByName("DummyBasicMockRule"),
                 new RuleSetReference("rulesets/dummy/basic.xml"));
         ruleRef.setName("Foo"); // override the name
 
@@ -94,10 +98,17 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
     @Test
     void testPropertyConstraintRange() throws Exception {
         RuleSet ruleSet = loadRuleSet("created-on-the-fly.xml",
-                rulesetXml(dummyRule(attrs -> attrs.put(SchemaConstants.CLASS, XPathRule.class.getName()),
-                        properties(propertyWithValueAttr("xpath", "//foo"), propertyDefWithValueAttr("rangeProp",
-                                "the description", "Integer", "5",
-                                mapOf(SchemaConstants.PROPERTY_MIN, "0", SchemaConstants.PROPERTY_MAX, "10"))))));
+                rulesetXml(
+                        dummyRule(
+                                attrs -> attrs.put(SchemaConstants.CLASS, XPathRule.class.getName()),
+                                properties(
+                                        propertyWithValueAttr("xpath", "//foo"),
+                                        propertyDefWithValueAttr("rangeProp", "the description", "Integer", "5",
+                                                mapOf(SchemaConstants.PROPERTY_MIN, "0", SchemaConstants.PROPERTY_MAX, "10"))
+                                )
+                        )
+                )
+        );
 
         writer.write(ruleSet);
         String written = out.toString(StandardCharsets.UTF_8.name());
@@ -108,9 +119,17 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
     @Test
     void testPropertyConstraintAbove() throws Exception {
         RuleSet ruleSet = loadRuleSet("created-on-the-fly.xml",
-                rulesetXml(dummyRule(attrs -> attrs.put(SchemaConstants.CLASS, XPathRule.class.getName()),
-                        properties(propertyWithValueAttr("xpath", "//foo"), propertyDefWithValueAttr("rangeProp",
-                                "the description", "Integer", "5", mapOf(SchemaConstants.PROPERTY_MIN, "0"))))));
+                rulesetXml(
+                        dummyRule(
+                                attrs -> attrs.put(SchemaConstants.CLASS, XPathRule.class.getName()),
+                                properties(
+                                        propertyWithValueAttr("xpath", "//foo"),
+                                        propertyDefWithValueAttr("rangeProp", "the description", "Integer", "5",
+                                                mapOf(SchemaConstants.PROPERTY_MIN, "0"))
+                                )
+                        )
+                )
+        );
 
         writer.write(ruleSet);
         String written = out.toString(StandardCharsets.UTF_8.name());
@@ -121,9 +140,17 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
     @Test
     void testPropertyConstraintBelow() throws Exception {
         RuleSet ruleSet = loadRuleSet("created-on-the-fly.xml",
-                rulesetXml(dummyRule(attrs -> attrs.put(SchemaConstants.CLASS, XPathRule.class.getName()),
-                        properties(propertyWithValueAttr("xpath", "//foo"), propertyDefWithValueAttr("rangeProp",
-                                "the description", "Integer", "5", mapOf(SchemaConstants.PROPERTY_MAX, "10"))))));
+                rulesetXml(
+                        dummyRule(
+                                attrs -> attrs.put(SchemaConstants.CLASS, XPathRule.class.getName()),
+                                properties(
+                                        propertyWithValueAttr("xpath", "//foo"),
+                                        propertyDefWithValueAttr("rangeProp", "the description", "Integer", "5",
+                                                mapOf(SchemaConstants.PROPERTY_MAX, "10"))
+                                )
+                        )
+                )
+        );
 
         writer.write(ruleSet);
         String written = out.toString(StandardCharsets.UTF_8.name());
@@ -134,8 +161,14 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
     @Test
     void overridingDefaultValueOfPropertyInReference() throws Exception {
         RuleSet ruleSet = loadRuleSet("created-on-the-fly.xml",
-                rulesetXml(ruleRef("net/sourceforge/pmd/lang/rule/rulesetwriter-test.xml/SampleXPathRuleWithProperty",
-                        properties(propertyWithValueAttr("minimum", "42")))));
+                rulesetXml(
+                    ruleRef("net/sourceforge/pmd/lang/rule/rulesetwriter-test.xml/SampleXPathRuleWithProperty",
+                            properties(
+                                propertyWithValueAttr("minimum", "42")
+                            )
+                    )
+                )
+        );
         writer.write(ruleSet);
         String written = out.toString(StandardCharsets.UTF_8.name());
         assertThat(written, not(containsString("min=\"")));

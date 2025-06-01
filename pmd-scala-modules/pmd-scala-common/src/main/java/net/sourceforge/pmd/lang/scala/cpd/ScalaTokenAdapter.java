@@ -13,8 +13,7 @@ import net.sourceforge.pmd.lang.document.TextRegion;
 import scala.meta.tokens.Token;
 
 /**
- * Adapts the scala.meta.tokens.Token so that it can be used with the generic
- * BaseTokenFilter
+ * Adapts the scala.meta.tokens.Token so that it can be used with the generic BaseTokenFilter
  */
 public class ScalaTokenAdapter implements GenericToken<ScalaTokenAdapter> {
 
@@ -70,6 +69,9 @@ public class ScalaTokenAdapter implements GenericToken<ScalaTokenAdapter> {
 
     @Override
     public String toString() {
-        return "ScalaTokenAdapter{" + "token=" + token + ", previousComment=" + previousComment + "}";
+        return "ScalaTokenAdapter{"
+                + "token=" + token
+                + ", previousComment=" + previousComment
+                + "}";
     }
 }

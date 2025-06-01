@@ -5,5 +5,4 @@
 /**
  * Logic about reporting: violations, suppression etc.
  */
-
 package net.sourceforge.pmd.reporting;

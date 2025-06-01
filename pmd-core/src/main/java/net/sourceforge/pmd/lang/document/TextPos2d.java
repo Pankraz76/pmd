@@ -8,9 +8,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A place in a text document, represented as line/column information.
- * <p>
- * Line and column are 1-based.
- * </p>
+ * <p>Line and column are 1-based.</p>
  */
 public final class TextPos2d implements Comparable<TextPos2d> {
 
@@ -41,12 +39,12 @@ public final class TextPos2d implements Comparable<TextPos2d> {
     /**
      * Builds a new region from offset and length.
      *
-     * @throws AssertionError
-     *             If either parameter is negative
+     * @throws AssertionError If either parameter is negative
      */
     public static TextPos2d pos2d(int line, int column) {
         return new TextPos2d(line, column);
     }
+
 
     /** Compares the start offset, then the length of a region. */
     @Override
@@ -93,7 +91,8 @@ public final class TextPos2d implements Comparable<TextPos2d> {
             return false;
         }
         TextPos2d that = (TextPos2d) o;
-        return line == that.getLine() && column == that.getColumn();
+        return line == that.getLine()
+            && column == that.getColumn();
     }
 
     @Override

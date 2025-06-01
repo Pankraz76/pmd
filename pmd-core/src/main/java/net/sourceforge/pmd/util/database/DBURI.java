@@ -176,17 +176,16 @@ public class DBURI {
      * <li>source code</li>
      * </ul>
      *
-     * @param uri
-     *            A URI
+     * @param uri A URI
      */
     public DBURI(URI uri) throws URISyntaxException, IOException {
         /*
          * A JDBC URL is an opaque URL and does not have a query.
          *
-         * We pretend that it does, strip off the query, use the real JDBC URL component
-         * to infer languages JDBC driver class supported languages default source code
-         * types default schemas generate a faux HTTP URI with the query, extract the
-         * query parameters
+         * We pretend that it does, strip off the query, use the real JDBC URL
+         * component to infer languages JDBC driver class supported languages
+         * default source code types default schemas generate a faux HTTP URI
+         * with the query, extract the query parameters
          */
 
         this.uri = uri;
@@ -204,6 +203,7 @@ public class DBURI {
 
         // Explode URL into its separate components
         setFields();
+
 
         // If the original URI string contained a query component, split it
         // into parameters
@@ -280,8 +280,7 @@ public class DBURI {
      */
     static void dump(String description, URI dburi) {
 
-        LOG.debug(
-                "dump ({})\n: isOpaque={}, isAbsolute={} Scheme={},\n SchemeSpecificPart={},\n Host={},\n Port={},\n Path={},\n Fragment={},\n Query={}",
+        LOG.debug("dump ({})\n: isOpaque={}, isAbsolute={} Scheme={},\n SchemeSpecificPart={},\n Host={},\n Port={},\n Path={},\n Fragment={},\n Query={}",
                 description, dburi.isOpaque(), dburi.isAbsolute(), dburi.getScheme(), dburi.getSchemeSpecificPart(),
                 dburi.getHost(), dburi.getPort(), dburi.getPath(), dburi.getFragment(), dburi.getQuery());
 
@@ -435,10 +434,11 @@ public class DBURI {
             }
 
             /*
-             * Expect jdbc : subprotocol [ : subname ] : connection details uriParts.length
-             * < 3 Error uriParts.length = 3 Driver information may be inferred from part[1]
-             * - the subprotocol uriParts.length >= 4 Driver information may be inferred
-             * from part[2]- the first part of the subname
+             * Expect jdbc : subprotocol [ : subname ] : connection details
+             * uriParts.length < 3 Error uriParts.length = 3 Driver information
+             * may be inferred from part[1] - the subprotocol uriParts.length >=
+             * 4 Driver information may be inferred from part[2]- the first part
+             * of the subname
              */
             if (3 == uriParts.length) {
                 subprotocol = uriParts[1];
@@ -454,8 +454,8 @@ public class DBURI {
             // Set values from DBType defaults
             this.dbType = new DBType(subprotocol, subnamePrefix);
 
-            LOG.debug("DBType properties found at {} with {} properties.", dbType.getPropertiesSource(),
-                    dbType.getProperties().size());
+            LOG.debug("DBType properties found at {} with {} properties.",
+                    dbType.getPropertiesSource(), dbType.getProperties().size());
 
             LOG.trace("DBType properties are:- {}", dbType.getProperties());
 

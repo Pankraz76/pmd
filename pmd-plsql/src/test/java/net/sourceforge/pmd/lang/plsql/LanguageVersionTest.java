@@ -13,6 +13,6 @@ class LanguageVersionTest extends AbstractLanguageVersionTest {
 
     static Collection<TestDescriptor> data() {
         return Arrays.asList(new TestDescriptor(PLSQLLanguageModule.NAME, PLSQLLanguageModule.ID, "21c",
-                getLanguage(PLSQLLanguageModule.NAME).getDefaultVersion()));
+            getLanguage(PLSQLLanguageModule.NAME).getDefaultVersion()));
     }
 }

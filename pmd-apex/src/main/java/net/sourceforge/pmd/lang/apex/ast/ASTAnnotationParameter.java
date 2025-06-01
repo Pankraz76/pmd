@@ -18,6 +18,7 @@ public final class ASTAnnotationParameter extends AbstractApexNode.Single<Elemen
         super(elementArgument);
     }
 
+
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
@@ -53,11 +54,10 @@ public final class ASTAnnotationParameter extends AbstractApexNode.Single<Elemen
     }
 
     /**
-     * Checks whether this annotation parameter has the given name. The check is
-     * done case-insensitive.
+     * Checks whether this annotation parameter has the given name.
+     * The check is done case-insensitive.
      *
-     * @param name
-     *            the expected annotation parameter name
+     * @param name the expected annotation parameter name
      * @return {@code true} if this parameter has the expected name.
      * @see #SEE_ALL_DATA
      * @since 7.4.0

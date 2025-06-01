@@ -18,9 +18,9 @@ import net.sourceforge.pmd.lang.ast.RootNode;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.om.GenericTreeInfo;
 
+
 /**
- * A wrapper around the root node of an AST, implementing
- * {@link net.sf.saxon.om.TreeInfo}.
+ * A wrapper around the root node of an AST, implementing {@link net.sf.saxon.om.TreeInfo}.
  */
 public final class AstTreeInfo extends GenericTreeInfo {
 
@@ -29,8 +29,11 @@ public final class AstTreeInfo extends GenericTreeInfo {
         @Override
         protected boolean removeEldestEntry(Entry eldest) {
             /*
-             * hit ratio depending on cache size: 512: 61% 1024: 75% 2048: 82% unbounded:
-             * 85%
+            hit ratio depending on cache size:
+            512: 61%
+            1024: 75%
+            2048: 82%
+            unbounded: 85%
              */
             return size() > 1024;
         }
@@ -39,10 +42,8 @@ public final class AstTreeInfo extends GenericTreeInfo {
     /**
      * Builds an AstDocument, with the given node as the root.
      *
-     * @param node
-     *            The root AST Node.
-     * @param configuration
-     *            Configuration of the run
+     * @param node          The root AST Node.
+     * @param configuration Configuration of the run
      *
      * @see AstElementNode
      */
@@ -97,14 +98,15 @@ public final class AstTreeInfo extends GenericTreeInfo {
     }
 
     /**
-     * Returns the document node of the tree. Note that this has a single child of
-     * element type. Both the document and this element child have the
-     * {@link RootNode} as {@link AstElementNode#getUnderlyingNode()}.
+     * Returns the document node of the tree. Note that this has a single
+     * child of element type. Both the document and this element child have
+     * the {@link RootNode} as {@link AstElementNode#getUnderlyingNode()}.
      */
     @Override
     public AstDocumentNode getRootNode() {
         return (AstDocumentNode) super.getRootNode();
     }
+
 
     public void setAttrCtx(DeprecatedAttrLogger attrCtx) {
         this.logger = attrCtx;

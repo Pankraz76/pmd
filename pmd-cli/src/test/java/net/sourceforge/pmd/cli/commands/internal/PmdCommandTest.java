@@ -23,33 +23,40 @@ class PmdCommandTest extends BaseCommandTest<PmdCommand> {
     void testVersionGiven() throws Exception {
         final PmdCommand cmd = setupAndParse("--use-version", "dummy-1.2", "-d", "a", "-R", "x.xml");
         final LanguageVersion dummyLatest = cmd.toConfiguration().getLanguageVersionOfFile("foo.dummy");
-
-        // LanguageVersion do not implement equals, but we can check their string
-        // representations
+        
+        // LanguageVersion do not implement equals, but we can check their string representations
         assertEquals(DummyLanguageModule.getInstance().getVersion("1.2").toString(), dummyLatest.toString());
     }
 
     @Test
     void testMultipleDirsAndRuleSets() {
-        final PmdCommand cmd = setupAndParse("-d", "a", "b", "-R", "x.xml", "y.xml");
+        final PmdCommand cmd = setupAndParse(
+            "-d", "a", "b", "-R", "x.xml", "y.xml"
+        );
         assertMultipleDirsAndRulesets(cmd);
     }
 
     @Test
     void testMultipleDirsAndRuleSetsWithCommas() {
-        final PmdCommand cmd = setupAndParse("-d", "a,b", "-R", "x.xml,y.xml");
+        final PmdCommand cmd = setupAndParse(
+            "-d", "a,b", "-R", "x.xml,y.xml"
+        );
         assertMultipleDirsAndRulesets(cmd);
     }
 
     @Test
     void testMultipleDirsAndRuleSetsWithRepeatedOption() {
-        final PmdCommand cmd = setupAndParse("-d", "a", "-d", "b", "-R", "x.xml", "-R", "y.xml");
+        final PmdCommand cmd = setupAndParse(
+            "-d", "a", "-d", "b", "-R", "x.xml", "-R", "y.xml"
+        );
         assertMultipleDirsAndRulesets(cmd);
     }
 
     @Test
     void testNoPositionalParametersAllowed() {
-        final PmdCommand cmd = setupAndParse("-R", "x.xml", "-R", "y.xml", "-d", "a", "--", "b");
+        final PmdCommand cmd = setupAndParse(
+            "-R", "x.xml", "-R", "y.xml", "-d", "a", "--", "b"
+        );
         assertMultipleDirsAndRulesets(cmd);
     }
 

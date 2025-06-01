@@ -10,7 +10,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Collections;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -32,7 +31,9 @@ class XMLOldRendererTest {
         renderer.render(CpdTestUtils.makeReport(Collections.emptyList()), sw);
         String report = sw.toString();
 
-        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<pmd-cpd/>\n", report, "no namespace expected");
+        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<pmd-cpd/>\n",
+                report,
+                "no namespace expected");
 
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                 .parse(new ByteArrayInputStream(report.getBytes(ENCODING)));
@@ -82,7 +83,6 @@ class XMLOldRendererTest {
             assertEquals("1", file.getAttributes().getNamedItem("endcolumn").getNodeValue());
         }
         assertEquals(1, doc.getElementsByTagName("codefragment").getLength());
-        assertEquals(CpdTestUtils.generateDummyContent(lineCount),
-                doc.getElementsByTagName("codefragment").item(0).getTextContent());
+        assertEquals(CpdTestUtils.generateDummyContent(lineCount), doc.getElementsByTagName("codefragment").item(0).getTextContent());
     }
 }

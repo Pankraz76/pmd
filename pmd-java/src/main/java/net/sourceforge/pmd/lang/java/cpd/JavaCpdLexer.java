@@ -21,10 +21,7 @@ import net.sourceforge.pmd.lang.java.ast.JavaTokenKinds;
 import net.sourceforge.pmd.lang.java.internal.JavaLanguageProperties;
 
 /**
- * <p>
- * Note: This class has been called JavaTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called JavaTokenizer in PMD 6</p>.
  */
 public class JavaCpdLexer extends JavaccCpdLexer {
 
@@ -80,8 +77,7 @@ public class JavaCpdLexer extends JavaccCpdLexer {
      * Java-specific tokens.
      * <p>
      * By default, it discards semicolons, package and import statements, and
-     * enables annotation-based CPD suppression. Optionally, all annotations can be
-     * ignored, too.
+     * enables annotation-based CPD suppression. Optionally, all annotations can be ignored, too.
      * </p>
      */
     private static class JavaTokenFilter extends JavaCCTokenFilter {
@@ -151,7 +147,8 @@ public class JavaCpdLexer extends JavaccCpdLexer {
 
         @Override
         protected boolean isLanguageSpecificDiscarding() {
-            return discardingSemicolon || discardingKeywords || discardingAnnotations || discardingSuppressing;
+            return discardingSemicolon || discardingKeywords || discardingAnnotations
+                    || discardingSuppressing;
         }
 
         private void detectAnnotations(JavaccToken currentToken) {
@@ -179,9 +176,10 @@ public class JavaCpdLexer extends JavaccCpdLexer {
     }
 
     /**
-     * The {@link ConstructorDetector} consumes token by token and maintains state.
-     * It can detect, whether the current token belongs to a constructor method
-     * identifier and if so, is able to restore it when using ignoreIdentifiers.
+     * The {@link ConstructorDetector} consumes token by token and maintains
+     * state. It can detect, whether the current token belongs to a constructor
+     * method identifier and if so, is able to restore it when using
+     * ignoreIdentifiers.
      */
     private static class ConstructorDetector {
         private final boolean ignoreIdentifiers;
@@ -241,7 +239,8 @@ public class JavaCpdLexer extends JavaccCpdLexer {
                 /*
                  * Did we find a "class" token not followed by an identifier? i.e:
                  * expectThrows(IllegalStateException.class, () -> {
-                 * newSearcher(r).search(parentQuery.build(), c); });
+                 *  newSearcher(r).search(parentQuery.build(), c);
+                 * });
                  */
                 if (storeNextIdentifier) {
                     classMembersIndentations.pop();

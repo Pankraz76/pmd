@@ -25,6 +25,7 @@ import java.util.stream.StreamSupport;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+
 /**
  * Operations for dealing with {@link Iterator}s.
  *
@@ -63,8 +64,7 @@ public final class IteratorUtil {
         return tmp.iterator();
     }
 
-    public static <T, R> Iterator<R> flatMap(Iterator<? extends T> iter,
-            Function<? super T, ? extends @Nullable Iterator<? extends R>> f) {
+    public static <T, R> Iterator<R> flatMap(Iterator<? extends T> iter, Function<? super T, ? extends @Nullable Iterator<? extends R>> f) {
         return new AbstractIterator<R>() {
             private Iterator<? extends R> current = null;
 
@@ -88,13 +88,12 @@ public final class IteratorUtil {
     }
 
     /**
-     * Like flatMap, but yields each element of the input iterator before yielding
-     * the results of the mapper function. Null elements of the input iterator are
-     * both yielded by the returned iterator and passed to the stepper. If the
-     * stepper returns null, that result is ignored.
+     * Like flatMap, but yields each element of the input iterator before
+     * yielding the results of the mapper function. Null elements of the
+     * input iterator are both yielded by the returned iterator and passed
+     * to the stepper. If the stepper returns null, that result is ignored.
      */
-    public static <R> Iterator<R> flatMapWithSelf(Iterator<? extends R> iter,
-            Function<? super R, ? extends @Nullable Iterator<? extends R>> f) {
+    public static <R> Iterator<R> flatMapWithSelf(Iterator<? extends R> iter, Function<? super R, ? extends @Nullable Iterator<? extends R>> f) {
         return new AbstractIterator<R>() {
             private Iterator<? extends R> current = null;
 
@@ -121,8 +120,7 @@ public final class IteratorUtil {
         return filter(it, Objects::nonNull);
     }
 
-    public static <T, R> Iterator<@NonNull R> mapNotNull(Iterator<? extends T> it,
-            Function<@NonNull ? super T, @Nullable ? extends R> mapper) {
+    public static <T, R> Iterator<@NonNull R> mapNotNull(Iterator<? extends T> it, Function<@NonNull ? super T, @Nullable ? extends R> mapper) {
         return new AbstractIterator<R>() {
             @Override
             protected void computeNext() {
@@ -181,8 +179,7 @@ public final class IteratorUtil {
     /**
      * Apply a transform on the iterator of an iterable.
      */
-    public static <T, R> Iterable<R> mapIterator(Iterable<? extends T> iter,
-            Function<? super Iterator<? extends T>, ? extends Iterator<R>> mapper) {
+    public static <T, R> Iterable<R> mapIterator(Iterable<? extends T> iter, Function<? super Iterator<? extends T>, ? extends Iterator<R>> mapper) {
         return () -> mapper.apply(iter.iterator());
     }
 
@@ -236,8 +233,7 @@ public final class IteratorUtil {
     }
 
     /**
-     * Remove the last n elements of the iterator. This uses n elements as a
-     * lookahead.
+     * Remove the last n elements of the iterator. This uses n elements as a lookahead.
      */
     public static <T> Iterator<@NonNull T> dropLast(Iterator<? extends @Nullable T> it, final int n) {
         AssertionUtil.requireNonNegative("n", n);
@@ -279,7 +275,7 @@ public final class IteratorUtil {
             protected void computeNext() {
                 if (it.hasNext()) {
                     setNext((T) ringBuffer[idx]); // yield element X from the buffer
-                    ringBuffer[idx] = it.next(); // overwrite with the element X+n
+                    ringBuffer[idx] = it.next();  // overwrite with the element X+n
                     idx = (idx + 1) % ringBuffer.length; // compute idx of element X+1
                 } else {
                     // that's it: our buffer contains the n tail elements
@@ -322,15 +318,16 @@ public final class IteratorUtil {
     }
 
     /**
-     * Returns the nth element of this iterator, or null if the iterator is shorter.
+     * Returns the nth element of this iterator, or null if the iterator
+     * is shorter.
      *
-     * @throws IllegalArgumentException
-     *             If n is negative
+     * @throws IllegalArgumentException If n is negative
      */
     public static <T> @Nullable T getNth(Iterator<? extends T> iterator, int n) {
         advance(iterator, n);
         return iterator.hasNext() ? iterator.next() : null;
     }
+
 
     /** Advance {@code n} times. */
     public static void advance(Iterator<?> iterator, int n) {
@@ -342,9 +339,7 @@ public final class IteratorUtil {
         }
     }
 
-    /**
-     * Limit the number of elements yielded by this iterator to the given number.
-     */
+    /** Limit the number of elements yielded by this iterator to the given number. */
     public static <T> Iterator<T> take(Iterator<? extends T> iterator, final int n) {
         AssertionUtil.requireNonNegative("n", n);
         if (n == 0) {
@@ -366,10 +361,7 @@ public final class IteratorUtil {
         };
     }
 
-    /**
-     * Produce an iterator whose first element is the nth element of the given
-     * source.
-     */
+    /** Produce an iterator whose first element is the nth element of the given source. */
     public static <T> Iterator<T> drop(Iterator<? extends T> source, final int n) {
         AssertionUtil.requireNonNegative("n", n);
         if (n == 0) {
@@ -395,18 +387,15 @@ public final class IteratorUtil {
     }
 
     /**
-     * Returns an iterator that applies a stepping function to the previous value
-     * yielded. Iteration stops on the first null value returned by the stepper.
+     * Returns an iterator that applies a stepping function to the previous
+     * value yielded. Iteration stops on the first null value returned by
+     * the stepper.
      *
-     * @param seed
-     *            First value. If null then the iterator is empty
-     * @param stepper
-     *            Step function
-     * @param <T>
-     *            Type of values
+     * @param seed    First value. If null then the iterator is empty
+     * @param stepper Step function
+     * @param <T>     Type of values
      */
-    public static <T> Iterator<@NonNull T> generate(@Nullable T seed,
-            Function<? super @NonNull T, ? extends @Nullable T> stepper) {
+    public static <T> Iterator<@NonNull T> generate(@Nullable T seed, Function<? super @NonNull T, ? extends @Nullable T> stepper) {
         return new AbstractIterator<T>() {
             T next = seed;
 
@@ -493,15 +482,18 @@ public final class IteratorUtil {
 
             ListIterator<T> li = lst.listIterator(lst.size());
 
+
             @Override
             public boolean hasNext() {
                 return li.hasPrevious();
             }
 
+
             @Override
             public T next() {
                 return li.previous();
             }
+
 
             @Override
             public void remove() {
@@ -523,14 +515,13 @@ public final class IteratorUtil {
 
     /**
      * Note, that this iterator doesn't support the {@code remove} operation.
-     * 
-     * @param <T>
-     *            the type of the elements
+     * @param <T> the type of the elements
      */
     public abstract static class AbstractIterator<T> implements Iterator<T> {
 
         private State state = State.NOT_READY;
         private T next = null;
+
 
         @Override
         public boolean hasNext() {
@@ -570,8 +561,8 @@ public final class IteratorUtil {
         }
 
         /**
-         * Compute the next element. Implementations must call either {@link #done()} or
-         * {@link #setNext(Object)} exactly once.
+         * Compute the next element. Implementations must call either
+         * {@link #done()} or {@link #setNext(Object)} exactly once.
          */
         protected abstract void computeNext();
 
@@ -583,9 +574,8 @@ public final class IteratorUtil {
          * This implementation throws an instance of
          * {@link UnsupportedOperationException} and performs no other action.
          *
-         * @throws UnsupportedOperationException
-         *             always, as the {@code remove} operation is not supported by this
-         *             iterator
+         * @throws UnsupportedOperationException always, as the {@code remove}
+         *         operation is not supported by this iterator
          */
         @Override
         public final void remove() {

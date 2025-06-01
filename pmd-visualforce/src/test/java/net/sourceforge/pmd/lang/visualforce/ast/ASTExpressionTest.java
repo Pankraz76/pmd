@@ -21,12 +21,12 @@ import net.sourceforge.pmd.util.treeexport.XmlTreeRenderer;
 class ASTExpressionTest {
 
     /**
-     * Slightly different scenarios which cause different AST, but should return the
-     * same results.
+     * Slightly different scenarios which cause different AST, but should return the same results.
      */
-    private static final String[] SNIPPET_TEMPLATES = new String[] { "{!%s}",
+    private static final String[] SNIPPET_TEMPLATES = new String[] {
+        "{!%s}",
         "<apex:outputText value=\"{!%s}\" escape=\"false\"/>",
-        "<script>function someFunc() {var foo = \"{!%s}\";}</script>" };
+        "<script>function someFunc() {var foo = \"{!%s}\";}</script>"};
 
     @Test
     void testExpressionWithApexGetter() throws ASTExpression.DataNodeStateException {
@@ -85,8 +85,7 @@ class ASTExpressionTest {
     @Test
     void testMultipleIdentifiers() throws ASTExpression.DataNodeStateException {
         for (String template : SNIPPET_TEMPLATES) {
-            ASTCompilationUnit compilationUnit = compile(
-                    String.format(template, "MyObject__c.Text__c + ' this is a string' + MyObject__c.Text2__c"));
+            ASTCompilationUnit compilationUnit = compile(String.format(template, "MyObject__c.Text__c + ' this is a string' + MyObject__c.Text2__c"));
 
             List<Node> nodes = getExpressions(compilationUnit);
             assertEquals(1, nodes.size(), template);
@@ -126,8 +125,7 @@ class ASTExpressionTest {
     @Test
     void testMultipleIdentifiersWithRelation() throws ASTExpression.DataNodeStateException {
         for (String template : SNIPPET_TEMPLATES) {
-            ASTCompilationUnit compilationUnit = compile(String.format(template,
-                    "MyObject1__c.MyObject2__r.Text__c + ' this is a string' + MyObject1__c.MyObject2__r.Text2__c"));
+            ASTCompilationUnit compilationUnit = compile(String.format(template, "MyObject1__c.MyObject2__r.Text__c + ' this is a string' + MyObject1__c.MyObject2__r.Text2__c"));
 
             List<Node> nodes = getExpressions(compilationUnit);
             assertEquals(1, nodes.size(), template);
@@ -146,9 +144,8 @@ class ASTExpressionTest {
     }
 
     /**
-     * The current implementation does not support expressing statements using array
-     * notation. This notation introduces complexities that may be addressed in a
-     * future release.
+     * The current implementation does not support expressing statements using array notation. This notation introduces
+     * complexities that may be addressed in a future release.
      */
     @Test
     void testExpressionWithArrayIndexingNotSupported() {
@@ -171,8 +168,7 @@ class ASTExpressionTest {
     @Test
     void testIdentifierWithRelationIndexedAsArrayNotSupported() {
         for (String template : SNIPPET_TEMPLATES) {
-            ASTCompilationUnit compilationUnit = compile(
-                    String.format(template, "MyObject1__c['MyObject2__r'].Text__c"));
+            ASTCompilationUnit compilationUnit = compile(String.format(template, "MyObject1__c['MyObject2__r'].Text__c"));
 
             List<Node> nodes = getExpressions(compilationUnit);
             assertEquals(2, nodes.size(), template);
@@ -214,7 +210,7 @@ class ASTExpressionTest {
      */
     private Map<String, Node> invertMap(Map<VfTypedNode, String> map) {
         Map<String, Node> result = map.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+                                      .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
         // Ensure no values have been lost
         assertEquals(map.size(), result.size());
         return result;
@@ -225,7 +221,11 @@ class ASTExpressionTest {
     }
 
     private ASTCompilationUnit compile(String snippet, boolean renderAST) {
-        ASTCompilationUnit node = VfParsingHelper.DEFAULT.parse("<apex:page>" + snippet + "</apex:page>");
+        ASTCompilationUnit node = VfParsingHelper.DEFAULT.parse(
+            "<apex:page>"
+                + snippet
+                + "</apex:page>"
+        );
 
         if (renderAST) {
             try {

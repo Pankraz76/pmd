@@ -2,6 +2,7 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
 package net.sourceforge.pmd.lang.java.symbols;
 
 import java.lang.reflect.Modifier;
@@ -12,12 +13,14 @@ import net.sourceforge.pmd.lang.java.ast.ASTMethodDeclaration;
 import net.sourceforge.pmd.lang.java.types.JTypeMirror;
 import net.sourceforge.pmd.lang.java.types.Substitution;
 
+
 /**
  * Reference to a method.
  *
  * @since 7.0.0
  */
 public interface JMethodSymbol extends JExecutableSymbol, BoundToNode<ASTMethodDeclaration> {
+
 
     // note that for now, bridge methods are filtered out from the ASM
     // symbols, and bridge methods are not reflected by the AST symbols
@@ -27,6 +30,7 @@ public interface JMethodSymbol extends JExecutableSymbol, BoundToNode<ASTMethodD
     default boolean isStatic() {
         return Modifier.isStatic(getModifiers());
     }
+
 
     /** Returns the return type under the given substitution. */
     JTypeMirror getReturnType(Substitution subst);
@@ -40,12 +44,13 @@ public interface JMethodSymbol extends JExecutableSymbol, BoundToNode<ASTMethodD
     }
 
     /**
-     * Return whether this method defines an attribute of the enclosing annotation
-     * type.
+     * Return whether this method defines an attribute of the enclosing
+     * annotation type.
      */
     default boolean isAnnotationAttribute() {
         return !isStatic() && getEnclosingClass().isAnnotation() && getArity() == 0;
     }
+
 
     @Override
     default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {

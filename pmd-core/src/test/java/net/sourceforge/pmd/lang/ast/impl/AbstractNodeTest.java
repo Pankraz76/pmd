@@ -30,8 +30,7 @@ class AbstractNodeTest {
     private static final int NUM_CHILDREN = 3;
     private static final int NUM_GRAND_CHILDREN = 3;
 
-    // Note that in order to successfully run JUnitParams, we need to explicitly use
-    // `Integer` instead of `int`
+    // Note that in order to successfully run JUnitParams, we need to explicitly use `Integer` instead of `int`
 
     static Integer[] childrenIndexes() {
         return getIntRange(NUM_CHILDREN);
@@ -66,24 +65,25 @@ class AbstractNodeTest {
 
     @BeforeEach
     void setUpSampleNodeTree() {
-        rootNode = tree(() -> {
-            DummyRootNode root = root();
+        rootNode = tree(
+            () -> {
+                DummyRootNode root = root();
 
-            for (int i = 0; i < NUM_CHILDREN; i++) {
-                final DummyNode child = node();
-                for (int j = 0; j < NUM_GRAND_CHILDREN; j++) {
-                    child.addChild(node(), j);
+                for (int i = 0; i < NUM_CHILDREN; i++) {
+                    final DummyNode child = node();
+                    for (int j = 0; j < NUM_GRAND_CHILDREN; j++) {
+                        child.addChild(node(), j);
+                    }
+                    root.addChild(child, i);
                 }
-                root.addChild(child, i);
+                return root;
             }
-            return root;
-        });
+        );
 
     }
 
     /**
-     * Explicitly tests the {@code remove} method, and implicitly the
-     * {@code removeChildAtIndex} method
+     * Explicitly tests the {@code remove} method, and implicitly the {@code removeChildAtIndex} method
      */
     @ParameterizedTest
     @MethodSource("childrenIndexes")
@@ -121,9 +121,8 @@ class AbstractNodeTest {
     }
 
     /**
-     * Explicitly tests the {@code remove} method, and implicitly the
-     * {@code removeChildAtIndex} method. This is a border case as the root node
-     * does not have any parent.
+     * Explicitly tests the {@code remove} method, and implicitly the {@code removeChildAtIndex} method.
+     * This is a border case as the root node does not have any parent.
      */
     @Test
     void testRemoveRootNode() {
@@ -134,7 +133,7 @@ class AbstractNodeTest {
         rootNode.remove();
 
         // Check that conditions have been successfully changed, i.e.,
-        // the root node is expected to still have all its children and vice versa
+        //  the root node is expected to still have all its children and vice versa
         assertEquals(NUM_CHILDREN, rootNode.getNumChildren());
         assertNull(rootNode.getParent());
         for (final Node aChild : children) {
@@ -143,9 +142,8 @@ class AbstractNodeTest {
     }
 
     /**
-     * Explicitly tests the {@code remove} method, and implicitly the
-     * {@code removeChildAtIndex} method. These are border cases as grandchildren
-     * nodes do not have any child.
+     * Explicitly tests the {@code remove} method, and implicitly the {@code removeChildAtIndex} method.
+     * These are border cases as grandchildren nodes do not have any child.
      */
     @ParameterizedTest
     @MethodSource("childrenAndGrandChildrenIndexes")
@@ -189,8 +187,8 @@ class AbstractNodeTest {
     }
 
     /**
-     * Explicitly tests the {@code removeChildAtIndex} method. Test that invalid
-     * indexes cases are handled without exception.
+     * Explicitly tests the {@code removeChildAtIndex} method.
+     * Test that invalid indexes cases are handled without exception.
      */
     @Test
     void testRemoveChildAtIndexWithInvalidIndex() {
@@ -203,8 +201,8 @@ class AbstractNodeTest {
     }
 
     /**
-     * Explicitly tests the {@code removeChildAtIndex} method. This is a border case
-     * as the method invocation should do nothing.
+     * Explicitly tests the {@code removeChildAtIndex} method.
+     * This is a border case as the method invocation should do nothing.
      */
     @ParameterizedTest
     @MethodSource("grandChildrenIndexes")

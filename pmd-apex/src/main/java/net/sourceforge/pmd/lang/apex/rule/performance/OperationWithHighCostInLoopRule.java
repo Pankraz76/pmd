@@ -20,8 +20,10 @@ import net.sourceforge.pmd.util.CollectionUtil;
  */
 public class OperationWithHighCostInLoopRule extends AbstractAvoidNodeInLoopsRule {
 
-    private static final Set<String> SCHEMA_PERFORMANCE_METHODS = CollectionUtil
-            .setOf("System.Schema.getGlobalDescribe", "Schema.getGlobalDescribe", "System.Schema.describeSObjects",
+    private static final Set<String> SCHEMA_PERFORMANCE_METHODS = CollectionUtil.setOf(
+                    "System.Schema.getGlobalDescribe",
+                    "Schema.getGlobalDescribe",
+                    "System.Schema.describeSObjects",
                     "Schema.describeSObjects")
             .stream().map(s -> s.toLowerCase(Locale.ROOT)).collect(Collectors.toSet());
 

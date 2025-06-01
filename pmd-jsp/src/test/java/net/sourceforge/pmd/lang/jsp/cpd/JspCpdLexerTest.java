@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import net.sourceforge.pmd.lang.jsp.JspLanguageModule;
 import net.sourceforge.pmd.lang.test.cpd.CpdTextComparisonTest;
 
+
 class JspCpdLexerTest extends CpdTextComparisonTest {
 
     JspCpdLexerTest() {

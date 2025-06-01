@@ -27,8 +27,7 @@ class VfUnescapeElTest extends PmdRuleTst {
      */
     @Test
     void testSfdxCustomFields() {
-        Path vfPagePath = VFTestUtils
-                .getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
+        Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
                 .resolve("StandardAccount.page");
 
         Report report = runRule(vfPagePath);
@@ -53,9 +52,7 @@ class VfUnescapeElTest extends PmdRuleTst {
      */
     @Test
     void testMdapiCustomFields() {
-        Path vfPagePath = VFTestUtils
-                .getMetadataPath(this, VFTestUtils.MetadataFormat.MDAPI, VFTestUtils.MetadataType.Vf)
-                .resolve("StandardAccount.page");
+        Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.MDAPI, VFTestUtils.MetadataType.Vf).resolve("StandardAccount.page");
 
         Report report = runRule(vfPagePath);
         List<RuleViolation> ruleViolations = report.getViolations();
@@ -73,9 +70,7 @@ class VfUnescapeElTest extends PmdRuleTst {
      */
     @Test
     void testApexController() {
-        Path vfPagePath = VFTestUtils
-                .getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
-                .resolve("ApexController.page");
+        Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf).resolve("ApexController.page");
 
         Report report = runRule(vfPagePath);
         List<RuleViolation> ruleViolations = report.getViolations();
@@ -94,8 +89,7 @@ class VfUnescapeElTest extends PmdRuleTst {
      */
     @Test
     void testExtensions() {
-        Path vfPagePath = VFTestUtils
-                .getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
+        Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
                 .resolve(Paths.get("StandardAccountWithExtensions.page"));
 
         Report report = runRule(vfPagePath);

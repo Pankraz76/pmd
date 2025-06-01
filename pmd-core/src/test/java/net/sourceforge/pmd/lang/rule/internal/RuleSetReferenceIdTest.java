@@ -33,26 +33,27 @@ class RuleSetReferenceIdTest {
 
     @Test
     void testAbsoluteWithAbsolute() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new RuleSetReferenceId("ruleset.xml/SomeRule", new RuleSetReferenceId("ruleset2.xml")));
+        assertThrows(IllegalArgumentException.class, () ->
+                new RuleSetReferenceId("ruleset.xml/SomeRule", new RuleSetReferenceId("ruleset2.xml")));
     }
 
     @Test
     void testAbsoluteWithAbsolute2() {
-        assertThrows(IllegalArgumentException.class, () -> new RuleSetReferenceId("someruleset.xml/SomeRule",
-                new RuleSetReferenceId("someruleset.xml/SomeOtherRule")));
+        assertThrows(IllegalArgumentException.class, () ->
+                new RuleSetReferenceId("someruleset.xml/SomeRule", new RuleSetReferenceId("someruleset.xml/SomeOtherRule")));
     }
 
     @Test
     void testRelativeWithRelative() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new RuleSetReferenceId("SomeRule", new RuleSetReferenceId("SomeOtherRule")));
+        assertThrows(IllegalArgumentException.class, () ->
+            new RuleSetReferenceId("SomeRule", new RuleSetReferenceId("SomeOtherRule")));
     }
+
 
     @Test
     void testAbsoluteWithRelative() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new RuleSetReferenceId("someruleset.xml/SomeRule", new RuleSetReferenceId("SomeOtherRule")));
+        assertThrows(IllegalArgumentException.class, () ->
+            new RuleSetReferenceId("someruleset.xml/SomeRule", new RuleSetReferenceId("SomeOtherRule")));
     }
 
     @Test
@@ -86,21 +87,15 @@ class RuleSetReferenceIdTest {
     void testExamplesFromJavaDoc() {
         assertRuleSetReferenceId(true, "rulesets/java/basic.xml", true, null, "rulesets/java/basic.xml",
                 new RuleSetReferenceId("rulesets/java/basic.xml"));
-        assertRuleSetReferenceId(true, "rulesets/java/basic.xml", false, "EmptyCatchBlock",
-                "rulesets/java/basic.xml/EmptyCatchBlock",
+        assertRuleSetReferenceId(true, "rulesets/java/basic.xml", false, "EmptyCatchBlock", "rulesets/java/basic.xml/EmptyCatchBlock",
                 new RuleSetReferenceId("rulesets/java/basic.xml/EmptyCatchBlock"));
         assertRuleSetReferenceId(false, null, false, "EmptyCatchBlock", "EmptyCatchBlock",
                 new RuleSetReferenceId("EmptyCatchBlock"));
-        assertRuleSetReferenceId(true,
-                "https://raw.githubusercontent.com/pmd/pmd/main/pmd-java/src/main/resources/rulesets/java/quickstart.xml",
-                false, "ConstantsInInterface",
-                "https://raw.githubusercontent.com/pmd/pmd/main/pmd-java/src/main/resources/rulesets/java/quickstart.xml/ConstantsInInterface",
-                new RuleSetReferenceId(
-                        "https://raw.githubusercontent.com/pmd/pmd/main/pmd-java/src/main/resources/rulesets/java/quickstart.xml/ConstantsInInterface"));
-        assertRuleSetReferenceId(true, "https://example.org/ruleset/MyRule", true, null,
-                "https://example.org/ruleset/MyRule", new RuleSetReferenceId("https://example.org/ruleset/MyRule"));
-        assertRuleSetReferenceId(true, "https://example.org/ruleset.xml", false, "MyRule",
-                "https://example.org/ruleset.xml/MyRule",
+        assertRuleSetReferenceId(true, "https://raw.githubusercontent.com/pmd/pmd/main/pmd-java/src/main/resources/rulesets/java/quickstart.xml", false, "ConstantsInInterface", "https://raw.githubusercontent.com/pmd/pmd/main/pmd-java/src/main/resources/rulesets/java/quickstart.xml/ConstantsInInterface",
+                new RuleSetReferenceId("https://raw.githubusercontent.com/pmd/pmd/main/pmd-java/src/main/resources/rulesets/java/quickstart.xml/ConstantsInInterface"));
+        assertRuleSetReferenceId(true, "https://example.org/ruleset/MyRule", true, null, "https://example.org/ruleset/MyRule",
+                new RuleSetReferenceId("https://example.org/ruleset/MyRule"));
+        assertRuleSetReferenceId(true, "https://example.org/ruleset.xml", false, "MyRule", "https://example.org/ruleset.xml/MyRule",
                 new RuleSetReferenceId("https://example.org/ruleset.xml/MyRule"));
     }
 
@@ -111,6 +106,7 @@ class RuleSetReferenceIdTest {
         assertRuleSetReferenceId(true, sonarRulesetUrlId, true, null, sonarRulesetUrlId, ruleSetReferenceId);
     }
 
+
     @Test
     void testOldSimpleRuleSetReferences() {
         assertRuleSetReferenceId(false, null, false, "dummy-basic", "dummy-basic",
@@ -119,7 +115,8 @@ class RuleSetReferenceIdTest {
 
     @Test
     void testRuleSetReferenceWithSpaces() {
-        assertRuleSetReferenceId(false, null, false, "MyRule", "MyRule", new RuleSetReferenceId(" MyRule "));
+        assertRuleSetReferenceId(false, null, false, "MyRule", "MyRule",
+                new RuleSetReferenceId(" MyRule "));
         assertRuleSetReferenceId(true, "ruleset.xml", true, null, "ruleset.xml",
                 new RuleSetReferenceId(" ruleset.xml "));
         assertRuleSetReferenceId(true, "ruleset.xml", false, "MyRule", "ruleset.xml/MyRule",
@@ -131,8 +128,7 @@ class RuleSetReferenceIdTest {
      */
     @Test
     void testMultipleRulesWithSpaces() {
-        List<RuleSetReferenceId> references = RuleSetReferenceId
-                .parse("rulesets/dummy/basic.xml, rulesets/dummy/unusedcode.xml, rulesets/dummy2/basic.xml");
+        List<RuleSetReferenceId> references = RuleSetReferenceId.parse("rulesets/dummy/basic.xml, rulesets/dummy/unusedcode.xml, rulesets/dummy2/basic.xml");
         assertEquals(3, references.size());
         assertRuleSetReferenceId(true, "rulesets/dummy/basic.xml", true, null, "rulesets/dummy/basic.xml",
                 references.get(0));

@@ -49,38 +49,35 @@ class MultiThreadProcessorTest extends AbstractPMDProcessorTest {
         assertEquals("test error", error.getMessage());
 
         // in multithreading mode, all files are started but eventually fail
-        // depending on how many tasks have been started before getting the first
-        // results
+        // depending on how many tasks have been started before getting the first results
         // we might have started only one file analysis or more. But we rethrow
         // the error on the first.
         assertTrue(reportListener.files.get() >= 1);
         // we report the first error
         Mockito.verify(reporter).error(Mockito.eq("Unknown error occurred while executing a PmdRunnable: {0}"),
-                Mockito.eq("java.lang.Error: test error"), Mockito.any(Error.class));
+                Mockito.eq("java.lang.Error: test error"),
+                Mockito.any(Error.class));
     }
 
     // TODO: Dysfunctional rules are pruned upstream of the processor.
     //
-    // @Test
-    // void testRulesDysnfunctionalLog() throws Exception {
-    // RuleSets ruleSets =
-    // setUpForTest("rulesets/MultiThreadProcessorTest/dysfunctional.xml");
-    // final SimpleRenderer renderer = new SimpleRenderer(null, null);
-    // renderer.start();
-    // processor.processFiles(ruleSets, files, listener);
-    // renderer.end();
+    //    @Test
+    //    void testRulesDysnfunctionalLog() throws Exception {
+    //        RuleSets ruleSets = setUpForTest("rulesets/MultiThreadProcessorTest/dysfunctional.xml");
+    //        final SimpleRenderer renderer = new SimpleRenderer(null, null);
+    //        renderer.start();
+    //        processor.processFiles(ruleSets, files, listener);
+    //        renderer.end();
     //
-    // final Iterator<ConfigurationError> configErrors =
-    // renderer.getReport().getConfigurationErrors().iterator();
-    // final ConfigurationError error = configErrors.next();
+    //        final Iterator<ConfigurationError> configErrors = renderer.getReport().getConfigurationErrors().iterator();
+    //        final ConfigurationError error = configErrors.next();
     //
-    // assertEquals("Dysfunctional rule message not present",
-    // DysfunctionalRule.DYSFUNCTIONAL_RULE_REASON, error.issue());
-    // assertEquals("Dysfunctional rule is wrong",
-    // DysfunctionalRule.class, error.rule().getClass());
-    // assertFalse("More configuration errors found than expected",
-    // configErrors.hasNext());
-    // }
+    //        assertEquals("Dysfunctional rule message not present",
+    //                DysfunctionalRule.DYSFUNCTIONAL_RULE_REASON, error.issue());
+    //        assertEquals("Dysfunctional rule is wrong",
+    //                DysfunctionalRule.class, error.rule().getClass());
+    //        assertFalse("More configuration errors found than expected", configErrors.hasNext());
+    //    }
 
     @Test
     void testRulesThreadSafety() throws Exception {

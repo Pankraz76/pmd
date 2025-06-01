@@ -14,6 +14,7 @@ class DartCpdLexerTest extends CpdTextComparisonTest {
         super("dart", ".dart");
     }
 
+
     @Test
     void testComment() {
         doTest("comment");
@@ -34,10 +35,12 @@ class DartCpdLexerTest extends CpdTextComparisonTest {
         doTest("escaped_string");
     }
 
+
     @Test
     void testIncrement() {
         doTest("increment");
     }
+
 
     @Test
     void testImports() {
@@ -58,6 +61,7 @@ class DartCpdLexerTest extends CpdTextComparisonTest {
     void testRegex() {
         doTest("regex");
     }
+
 
     @Test
     void testRegex2() {

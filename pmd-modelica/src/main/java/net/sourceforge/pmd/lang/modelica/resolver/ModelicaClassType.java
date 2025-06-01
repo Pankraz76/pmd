@@ -5,8 +5,7 @@
 package net.sourceforge.pmd.lang.modelica.resolver;
 
 /**
- * A Modelica type that is defined as a <i>class</i> (i.e., class, package,
- * model, etc.).
+ * A Modelica type that is defined as a <i>class</i> (i.e., class, package, model, etc.).
  */
 public interface ModelicaClassType extends ModelicaType, ModelicaDeclaration, SubcomponentResolver {
     /**

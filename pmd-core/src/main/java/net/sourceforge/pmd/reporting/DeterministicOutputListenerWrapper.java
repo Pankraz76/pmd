@@ -25,18 +25,17 @@ import net.sourceforge.pmd.reporting.Report.ReportBuilderListener;
 import net.sourceforge.pmd.reporting.Report.SuppressedViolation;
 
 /**
- * A listener that mediates access to another listener to order events in a
- * predetermined, stable way. When running PMD with multiple threads, file
- * listeners may be called in any order. This makes runs non-deterministic, as
- * Renderers can output reports in the particular order files were processed,
+ * A listener that mediates access to another listener to order events
+ * in a predetermined, stable way. When running PMD with multiple threads,
+ * file listeners may be called in any order. This makes runs non-deterministic,
+ * as Renderers can output reports in the particular order files were processed,
  * which varies between runs. This class will reorder the events by buffering
  * them, to call the methods of the underlying GlobalAnalysisListener in a
  * deterministic order.
  *
- * <p>
- * Any renderer whose output may depend on ordering of files should be shielded
- * by an instance of this wrapper. Note that each wrapper maintains its own
- * buffer so it should be
+ * <p>Any renderer whose output may depend on ordering of files should be shielded
+ * by an instance of this wrapper. Note that each wrapper maintains its own buffer
+ * so it should be
  *
  * @since 7.12.0
  */
@@ -46,11 +45,11 @@ public class DeterministicOutputListenerWrapper implements GlobalAnalysisListene
     private final GlobalAnalysisListener listener;
     private final Map<FileId, Integer> filesToIdx = new HashMap<>();
 
-    // use linkedlist because we are mostly doing one-element insertions and
-    // removals
+    // use linkedlist because we are mostly doing one-element insertions and removals
     private final List<ReportWrapper> reportBuffer = new LinkedList<>();
     private final Object lock = new Object();
     private int nextToOutput;
+
 
     public DeterministicOutputListenerWrapper(GlobalAnalysisListener listener) {
         this.listener = Objects.requireNonNull(listener);
@@ -128,8 +127,7 @@ public class DeterministicOutputListenerWrapper implements GlobalAnalysisListene
         synchronized (lock) {
             tryToFlushBuffer();
             if (!reportBuffer.isEmpty()) {
-                // this would be a problem in PmdAnalysis, maybe because it didn't join on the
-                // parallel processing tasks.
+                // this would be a problem in PmdAnalysis, maybe because it didn't join on the parallel processing tasks.
                 throw new AssertionError("Closed listener but not all files have been processed");
             }
         }

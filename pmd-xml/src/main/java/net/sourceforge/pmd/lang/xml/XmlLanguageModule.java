@@ -17,7 +17,10 @@ public class XmlLanguageModule extends SimpleLanguageModuleBase {
     private static final String ID = "xml";
 
     public XmlLanguageModule() {
-        super(LanguageMetadata.withId(ID).name("XML").extensions("xml").addVersion("1.0").addDefaultVersion("1.1"),
+        super(LanguageMetadata.withId(ID).name("XML")
+                              .extensions("xml")
+                              .addVersion("1.0")
+                              .addDefaultVersion("1.1"),
                 new XmlHandler());
     }
 

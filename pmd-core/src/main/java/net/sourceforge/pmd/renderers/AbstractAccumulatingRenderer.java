@@ -24,13 +24,13 @@ import net.sourceforge.pmd.reporting.Report.GlobalReportBuilderListener;
  * quite large in some scenarios. Consider using
  * {@link AbstractIncrementingRenderer} which can use significantly less memory.
  *
- * <p>
- * Subclasses should only implement the {@link #outputReport(Report)} method to
- * output the complete {@link Report} in the end.
+ * <p>Subclasses should only implement the {@link #outputReport(Report)} method to output the
+ * complete {@link Report} in the end.
  *
  * @see AbstractIncrementingRenderer
  */
 public abstract class AbstractAccumulatingRenderer extends AbstractRenderer {
+
 
     public AbstractAccumulatingRenderer(String name, String description) {
         super(name, description);
@@ -54,11 +54,10 @@ public abstract class AbstractAccumulatingRenderer extends AbstractRenderer {
     /**
      * {@inheritDoc}
      *
-     * @implNote The implementation in this class does nothing. All the reported
-     *           violations and errors are accumulated and can be rendered once with
-     *           {@link #outputReport(Report)} in the end. Subclasses of
-     *           {@link AbstractAccumulatingRenderer} cannot override this method
-     *           anymore.
+     * @implNote The implementation in this class does nothing. All the reported violations and
+     * errors are accumulated and can be rendered once with {@link #outputReport(Report)} in the
+     * end. Subclasses of {@link AbstractAccumulatingRenderer} cannot override this method
+     * anymore.
      */
     @Override
     public final void renderFileReport(Report report) throws IOException {
@@ -72,6 +71,7 @@ public abstract class AbstractAccumulatingRenderer extends AbstractRenderer {
      * {@inheritDoc}
      */
     protected abstract void outputReport(Report report) throws IOException;
+
 
     @Override
     public GlobalAnalysisListener newListener() throws IOException {

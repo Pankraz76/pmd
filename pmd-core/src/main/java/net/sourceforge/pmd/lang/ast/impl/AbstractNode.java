@@ -14,23 +14,21 @@ import net.sourceforge.pmd.util.DataMap;
 import net.sourceforge.pmd.util.DataMap.DataKey;
 
 /**
- * Base class for implementations of the Node interface whose children are
- * stored in an array. This class provides the basic utilities to link children
- * and parent. It's used by most most nodes, but currently not the antlr nodes,
- * so downcasting {@link Node} to this class may fail and is very bad practice.
+ * Base class for implementations of the Node interface whose children
+ * are stored in an array. This class provides the basic utilities to
+ * link children and parent. It's used by most most nodes, but currently
+ * not the antlr nodes, so downcasting {@link Node} to this class may fail
+ * and is very bad practice.
  *
- * @param <B>
- *            Self type (eg AbstractJavaNode in the java module), this must
- *            ultimately implement {@code <N>}, though the java type system does
- *            not allow us to express that
- * @param <N>
- *            Public interface for nodes of this language (eg JavaNode in the
- *            java module).
+ * @param <B> Self type (eg AbstractJavaNode in the java module), this
+ *            must ultimately implement {@code <N>}, though the java type
+ *            system does not allow us to express that
+ * @param <N> Public interface for nodes of this language (eg JavaNode
+ *            in the java module).
  */
 public abstract class AbstractNode<B extends AbstractNode<B, N>,
-        // node the Node as first bound here is to make casts from Node to N noops at
-        // runtime.
-        N extends Node & GenericNode<N>> implements GenericNode<N> {
+    // node the Node as first bound here is to make casts from Node to N noops at runtime.
+    N extends Node & GenericNode<N>> implements GenericNode<N> {
 
     private static final Node[] EMPTY_ARRAY = new Node[0];
 
@@ -76,22 +74,19 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
     }
 
     /**
-     * Set the child at the given index to the given node. This resizes the children
-     * array to be able to contain the given index. Implementations must take care
-     * that this does not leave any "holes" in the array. This method throws if
-     * there is already a child at the given index.
+     * Set the child at the given index to the given node. This resizes
+     * the children array to be able to contain the given index. Implementations
+     * must take care that this does not leave any "holes" in the array.
+     * This method throws if there is already a child at the given index.
      *
-     * <p>
-     * Note that it is more efficient to add children in reverse (from right to
-     * left), because the array is resized only the first time.
+     * <p>Note that it is more efficient to add children in reverse
+     * (from right to left), because the array is resized only the
+     * first time.
      *
-     * <p>
-     * This method also calls {@link #setParent(AbstractNode)}.
+     * <p>This method also calls {@link #setParent(AbstractNode)}.
      *
-     * @param child
-     *            The child to add
-     * @param index
-     *            The index to which the child will be added
+     * @param child The child to add
+     * @param index The index to which the child will be added
      */
     protected void addChild(final B child, final int index) {
         assert index >= 0 : "Invalid index " + index;
@@ -107,9 +102,8 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
     }
 
     /**
-     * Set the child at the given index. The difference with
-     * {@link #addChild(AbstractNode, int) addChild} is that the index must exist,
-     * while addChild may resizes the array.
+     * Set the child at the given index. The difference with {@link #addChild(AbstractNode, int) addChild}
+     * is that the index must exist, while addChild may resizes the array.
      */
     protected void setChild(final B child, final int index) {
         assert index >= 0 && index < children.length : "Invalid index " + index + " for length " + children.length;
@@ -119,19 +113,17 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
     }
 
     /**
-     * Insert a child at the given index, shifting all the following children to the
-     * right.
+     * Insert a child at the given index, shifting all the following
+     * children to the right.
      *
-     * @param child
-     *            New child
-     * @param index
-     *            Index (must be {@code 0 <= index <= getNumChildren()}), i.e. you
-     *            cannot insert a node beyond the end, because that would leave
-     *            holes in the array
+     * @param child New child
+     * @param index Index (must be {@code 0 <= index <= getNumChildren()}), i.e.
+     *              you cannot insert a node beyond the end, because that
+     *              would leave holes in the array
      */
     protected void insertChild(final B child, final int index) {
         assert index >= 0 && index <= children.length
-                : "Invalid index for insertion into array of length " + children.length + ": " + index;
+            : "Invalid index for insertion into array of length " + children.length + ": " + index;
 
         Node[] newChildren = new Node[children.length + 1];
         if (index != 0) {
@@ -148,6 +140,7 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
         }
         this.children = newChildren;
     }
+
 
     protected void remove() {
         // Detach current node of its parent, if any
@@ -171,11 +164,10 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
     }
 
     /**
-     * Sets the index of this node from the perspective of its parent. This means:
-     * this.getParent().getChild(index) == this.
+     * Sets the index of this node from the perspective of its parent. This
+     * means: this.getParent().getChild(index) == this.
      *
-     * @param index
-     *            the child index
+     * @param index the child index
      */
     void setChildIndex(final int index) {
         childIndex = index;
@@ -188,6 +180,7 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
         }
         return userData;
     }
+
 
     @Override
     public String toString() {

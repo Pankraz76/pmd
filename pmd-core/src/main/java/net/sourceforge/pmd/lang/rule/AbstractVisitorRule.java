@@ -18,12 +18,12 @@ public abstract class AbstractVisitorRule extends AbstractRule {
     }
 
     /**
-     * Returns a rule visitor that can visit nodes for the given rule context. This
-     * visitor should explore the nodes it's interested in and report violations on
-     * the given rule context.
+     * Returns a rule visitor that can visit nodes for the given rule context.
+     * This visitor should explore the nodes it's interested in and report
+     * violations on the given rule context.
      * <p>
-     * Language specific subclasses should redefine the return type to use a
-     * language specific visitor interface.
+     *     Language specific subclasses should redefine the return type to use
+     *     a language specific visitor interface.
      * </p>
      *
      * @return A visitor bound to the given rule context

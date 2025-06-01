@@ -24,15 +24,14 @@ import net.sourceforge.pmd.reporting.RuleContext;
 import com.google.common.reflect.ClassPath;
 
 /**
- * Finds custom apex types with the same name as standard built-in system and
- * schema types. Declaring such a custom apex type shadows the built-in type
- * which can lead to confusion and unexpected behavior.
+ * Finds custom apex types with the same name as standard built-in system and schema types.
+ * Declaring such a custom apex type shadows the built-in type which can lead to confusion
+ * and unexpected behavior.
  *
  * @since 7.13.0
- * @implNote This finds the available system / schema types by searching for
- *           classes in the dependency io.github.apex-dev-tools:standard-types
- *           in the packages {@code com.nawforce.runforce.System} and
- *           {@code com.nawforce.runforce.Schema}.
+ * @implNote This finds the available system / schema types by searching for classes in the dependency
+ *     io.github.apex-dev-tools:standard-types in the packages {@code com.nawforce.runforce.System}
+ *     and {@code com.nawforce.runforce.Schema}.
  */
 public class TypeShadowsBuiltInNamespaceRule extends AbstractRule {
     private static final ApexVisitor<RuleContext, Void> VISITOR = new Visitor();
@@ -54,13 +53,19 @@ public class TypeShadowsBuiltInNamespaceRule extends AbstractRule {
         private Visitor() {
             try {
                 String systemPackageName = com.nawforce.runforce.System.System.class.getPackage().getName();
-                systemTypes = ClassPath.from(ClassLoader.getSystemClassLoader()).getTopLevelClasses(systemPackageName)
-                        .stream().map(ClassPath.ClassInfo::getSimpleName).map(s -> s.toLowerCase(Locale.ROOT))
+                systemTypes = ClassPath.from(ClassLoader.getSystemClassLoader())
+                        .getTopLevelClasses(systemPackageName)
+                        .stream()
+                        .map(ClassPath.ClassInfo::getSimpleName)
+                        .map(s -> s.toLowerCase(Locale.ROOT))
                         .collect(Collectors.toSet());
 
                 String schemaPackageName = com.nawforce.runforce.Schema.SObjectType.class.getPackage().getName();
-                schemaTypes = ClassPath.from(ClassLoader.getSystemClassLoader()).getTopLevelClasses(schemaPackageName)
-                        .stream().map(ClassPath.ClassInfo::getSimpleName).map(s -> s.toLowerCase(Locale.ROOT))
+                schemaTypes = ClassPath.from(ClassLoader.getSystemClassLoader())
+                        .getTopLevelClasses(schemaPackageName)
+                        .stream()
+                        .map(ClassPath.ClassInfo::getSimpleName)
+                        .map(s -> s.toLowerCase(Locale.ROOT))
                         .collect(Collectors.toSet());
             } catch (IOException e) {
                 throw new RuntimeException(e);

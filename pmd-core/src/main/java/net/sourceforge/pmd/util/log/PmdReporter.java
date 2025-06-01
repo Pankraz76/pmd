@@ -14,13 +14,9 @@ import net.sourceforge.pmd.util.log.internal.QuietReporter;
 /**
  * Façade to report user-facing messages (info, warning and error).
  *
- * <p>
- * Note: messages are formatted using {@link MessageFormat}.
+ * <p>Note: messages are formatted using {@link MessageFormat}.
  *
- * <p>
- * Note: This interface was called net.sourceforge.pmd.util.log.MessageReporter
- * in PMD 6.
- * </p>
+ * <p>Note: This interface was called net.sourceforge.pmd.util.log.MessageReporter in PMD 6.</p>
  *
  * @author Clément Fournier
  */
@@ -38,11 +34,10 @@ public interface PmdReporter {
     void logEx(Level level, @Nullable String message, Object[] formatArgs, @Nullable Throwable error);
 
     /**
-     * Logs and returns a new exception. Message and cause may not be null a the
-     * same time.
+     * Logs and returns a new exception.
+     * Message and cause may not be null a the same time.
      */
-    default RuntimeException newException(Level level, @Nullable Throwable cause, @Nullable String message,
-            Object... formatArgs) {
+    default RuntimeException newException(Level level, @Nullable Throwable cause, @Nullable String message, Object... formatArgs) {
         logEx(level, message, formatArgs, cause);
         if (message == null) {
             return new RuntimeException(cause);
@@ -90,16 +85,17 @@ public interface PmdReporter {
     }
 
     /**
-     * Returns the number of errors reported on this instance. Any call to
-     * {@link #log(Level, String, Object...)} or
-     * {@link #logEx(Level, String, Object[], Throwable)} with a level of
-     * {@link Level#ERROR} should increment this number.
+     * Returns the number of errors reported on this instance.
+     * Any call to {@link #log(Level, String, Object...)} or
+     * {@link #logEx(Level, String, Object[], Throwable)} with a level
+     * of {@link Level#ERROR} should increment this number.
      */
     int numErrors();
 
+
     /**
-     * Returns a reporter instance that does not output anything, but still counts
-     * errors.
+     * Returns a reporter instance that does not output anything, but
+     * still counts errors.
      */
     static PmdReporter quiet() {
         return new QuietReporter();

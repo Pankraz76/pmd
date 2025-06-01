@@ -56,6 +56,7 @@ class SourceCodePositionerTest {
         assertEquals(0, positioner.offsetFromLineColumn(1, 1));
         assertEquals(2, positioner.offsetFromLineColumn(1, 3));
 
+
         assertEquals("abcd\n".length(), positioner.offsetFromLineColumn(2, 1));
         assertEquals("abcd\nd".length(), positioner.offsetFromLineColumn(2, 2));
         assertEquals("abcd\nde".length(), positioner.offsetFromLineColumn(2, 3));
@@ -67,6 +68,7 @@ class SourceCodePositionerTest {
         assertEquals(source.length(), positioner.offsetFromLineColumn(5, 1));
         assertEquals(-1, positioner.offsetFromLineColumn(5, 2));
     }
+
 
     @Test
     void testWrongOffsets() {
@@ -81,8 +83,10 @@ class SourceCodePositionerTest {
         assertEquals(4, positioner.offsetFromLineColumn(1, 5));
         assertEquals(5, positioner.offsetFromLineColumn(1, 6)); // this is right after the '\n'
 
+
         assertEquals(-1, positioner.offsetFromLineColumn(1, 7));
     }
+
 
     @Test
     void testEmptyDocument() {
@@ -115,9 +119,12 @@ class SourceCodePositionerTest {
 
     }
 
+
     @Test
     void lineToOffsetMappingWithLineFeedShouldSucceed() {
-        final String code = "public static int main(String[] args) {\n" + "int var;\n" + "}";
+        final String code = "public static int main(String[] args) {\n"
+            + "int var;\n"
+            + "}";
 
         SourceCodePositioner positioner = SourceCodePositioner.create(code);
 
@@ -126,7 +133,9 @@ class SourceCodePositionerTest {
 
     @Test
     void lineToOffsetMappingWithCarriageReturnFeedLineFeedShouldSucceed() {
-        final String code = "public static int main(String[] args) {\r\n" + "int var;\r\n" + "}";
+        final String code = "public static int main(String[] args) {\r\n"
+            + "int var;\r\n"
+            + "}";
 
         SourceCodePositioner positioner = SourceCodePositioner.create(code);
 
@@ -135,7 +144,9 @@ class SourceCodePositionerTest {
 
     @Test
     void lineToOffsetMappingWithMixedLineSeparatorsShouldSucceed() {
-        final String code = "public static int main(String[] args) {\r\n" + "int var;\n" + "}";
+        final String code = "public static int main(String[] args) {\r\n"
+            + "int var;\n"
+            + "}";
 
         SourceCodePositioner positioner = SourceCodePositioner.create(code);
 

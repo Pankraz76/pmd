@@ -33,7 +33,8 @@ public class CollapsibleIfStatementsRule extends AbstractVtlRule {
     }
 
     private void handleIfElseIf(final VtlNode node, final Object data) {
-        if (node.firstChild(ASTElseStatement.class) == null && node.firstChild(ASTElseIfStatement.class) == null) {
+        if (node.firstChild(ASTElseStatement.class) == null
+                && node.firstChild(ASTElseIfStatement.class) == null) {
             final ASTBlock ifBlock = node.firstChild(ASTBlock.class);
             boolean violationFound = false;
             int ifCounter = 0;

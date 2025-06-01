@@ -18,8 +18,8 @@ import net.sourceforge.pmd.lang.document.FileId;
 import net.sourceforge.pmd.lang.document.TextDocument;
 
 /**
- * Global token collector for CPD. This is populated by lexing all files, after
- * which the match algorithm proceeds.
+ * Global token collector for CPD. This is populated by lexing all files,
+ * after which the match algorithm proceeds.
  */
 public class Tokens {
 
@@ -32,7 +32,7 @@ public class Tokens {
     /**
      * Create a new instance.
      *
-     * @apiNote Internal API
+     * @apiNote  Internal API
      */
     Tokens() {
         // constructor is package private
@@ -80,8 +80,7 @@ public class Tokens {
     }
 
     TokenEntry addToken(String image, FileId fileName, int startLine, int startCol, int endLine, int endCol) {
-        TokenEntry newToken = new TokenEntry(getImageId(image), fileName, startLine, startCol, endLine, endCol,
-                tokens.size());
+        TokenEntry newToken = new TokenEntry(getImageId(image), fileName, startLine, startCol, endLine, endCol, tokens.size());
         add(newToken);
         return newToken;
     }
@@ -92,13 +91,11 @@ public class Tokens {
 
     /**
      * Creates a token factory to process the given file with
-     * {@link CpdLexer#tokenize(TextDocument, TokenFactory)}. Tokens are accumulated
-     * in the {@link Tokens} parameter.
+     * {@link CpdLexer#tokenize(TextDocument, TokenFactory)}.
+     * Tokens are accumulated in the {@link Tokens} parameter.
      *
-     * @param file
-     *            Document for the file to process
-     * @param tokens
-     *            Token sink
+     * @param file   Document for the file to process
+     * @param tokens Token sink
      *
      * @return A new token factory
      */
@@ -143,7 +140,8 @@ public class Tokens {
     }
 
     /**
-     * Helper class to preserve and restore the current state of the token entries.
+     * Helper class to preserve and restore the current state of the token
+     * entries.
      */
     static final class State {
 

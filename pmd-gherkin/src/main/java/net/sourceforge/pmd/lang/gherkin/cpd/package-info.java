@@ -3,7 +3,6 @@
  */
 
 /**
- * Contains Gherkin tokenizer and language classes.
+ *  Contains Gherkin tokenizer and language classes.
  */
-
 package net.sourceforge.pmd.lang.gherkin.cpd;

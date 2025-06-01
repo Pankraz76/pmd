@@ -61,18 +61,19 @@ class MatchCollector {
 
     private void reportMatch(TokenEntry mark1, TokenEntry mark2, int dupes) {
         /*
-         * Check if the match is previously know. This can happen when a snippet is
-         * duplicated more than once. If A, B and C are identical snippets,
-         * MatchAlgorithm will find the matching pairs: - AB - AC - BC It should be
-         * reduced to a single match with 3 marks
+         * Check if the match is previously know. This can happen when a snippet is duplicated more than once.
+         * If A, B and C are identical snippets, MatchAlgorithm will find the matching pairs:
+         *  - AB
+         *  - AC
+         *  - BC
+         * It should be reduced to a single match with 3 marks
          */
         if (tokenMatchSets.computeIfAbsent(mark1.getIndex(), (i) -> new HashSet<>()).contains(mark2.getIndex())) {
             return;
         }
 
         // This may not be a "new match", but actually a sub-match of a larger one.
-        // always rely on the lowest mark index, as that's the order in which process
-        // them
+        // always rely on the lowest mark index, as that's the order in which process them
         final int lowestKey = tokenMatchSets.get(mark1.getIndex()).stream().reduce(mark1.getIndex(), Math::min);
 
         List<Match> matches = matchTree.computeIfAbsent(lowestKey, (i) -> new ArrayList<>());
@@ -88,12 +89,10 @@ class MatchCollector {
                 }
 
                 // does the new match supersedes this one?
-                if (otherEnd.getIndex() < mark2.getIndex()
-                        && otherEnd.getIndex() + m.getTokenCount() >= mark2.getIndex() + dupes) {
+                if (otherEnd.getIndex() < mark2.getIndex() && otherEnd.getIndex() + m.getTokenCount() >= mark2.getIndex() + dupes) {
                     // this match is embedded in the previous one… ignore it.
                     return;
-                } else if (mark2.getIndex() < otherEnd.getIndex()
-                        && mark2.getIndex() + dupes >= otherEnd.getIndex() + m.getTokenCount()) {
+                } else if (mark2.getIndex() < otherEnd.getIndex() && mark2.getIndex() + dupes >= otherEnd.getIndex() + m.getTokenCount()) {
                     // the new match is longer and overlaps with the old one - replace it
                     matchIterator.remove();
                     break;
@@ -141,6 +140,8 @@ class MatchCollector {
     }
 
     private boolean matchEnded(TokenEntry token1, TokenEntry token2) {
-        return token1.getIdentifier() != token2.getIdentifier() || token1.isEof() || token2.isEof();
+        return token1.getIdentifier() != token2.getIdentifier()
+                || token1.isEof()
+                || token2.isEof();
     }
 }

@@ -71,26 +71,25 @@ import net.sourceforge.pmd.util.log.PmdReporter;
  *
  * <h2>Usage overview</h2>
  *
- * <p>
- * Create and configure a {@link PMDConfiguration}, then use
- * {@link #create(PMDConfiguration)} to obtain an instance. You can perform
- * additional configuration on the instance, e.g. adding files to process, or
- * additional rulesets and renderers. Then, call {@link #performAnalysis()} or
- * one of the related terminal methods.
+ * <p>Create and configure a {@link PMDConfiguration},
+ * then use {@link #create(PMDConfiguration)} to obtain an instance.
+ * You can perform additional configuration on the instance, e.g. adding
+ * files to process, or additional rulesets and renderers. Then, call
+ * {@link #performAnalysis()} or one of the related terminal methods.
  *
  * <h2>Simple example</h2>
  *
  * <pre>{@code
- * PMDConfiguration config = new PMDConfiguration();
- * config.setDefaultLanguageVersion(LanguageRegistry.findLanguageByTerseName("java").getVersion("11"));
- * config.addInputPath(Path.of("src/main/java"));
- * config.prependClasspath("target/classes");
- * config.setMinimumPriority(RulePriority.HIGH);
- * config.addRuleSet("rulesets/java/quickstart.xml");
- * config.setReportFormat("xml");
- * config.setReportFile("target/pmd-report.xml");
+ *   PMDConfiguration config = new PMDConfiguration();
+ *   config.setDefaultLanguageVersion(LanguageRegistry.findLanguageByTerseName("java").getVersion("11"));
+ *   config.addInputPath(Path.of("src/main/java"));
+ *   config.prependClasspath("target/classes");
+ *   config.setMinimumPriority(RulePriority.HIGH);
+ *   config.addRuleSet("rulesets/java/quickstart.xml");
+ *   config.setReportFormat("xml");
+ *   config.setReportFile("target/pmd-report.xml");
  *
- * try (PmdAnalysis pmd = PmdAnalysis.create(config)) {
+ *   try (PmdAnalysis pmd = PmdAnalysis.create(config)) {
  *     // note: don't use `config` once a PmdAnalysis has been created.
  *     // optional: add more rulesets
  *     pmd.addRuleSet(pmd.newRuleSetLoader().loadFromResource("custom-ruleset.xml"));
@@ -100,55 +99,44 @@ import net.sourceforge.pmd.util.log.PmdReporter;
  *     pmd.addRenderer(renderer);
  *
  *     pmd.performAnalysis();
- * }
+ *   }
  * }</pre>
  *
  * <h2>Rendering reports</h2>
  *
- * <p>
- * If you just want to render a report to a file like with the CLI, you should
- * use a {@link Renderer}. You can add a custom one with
- * {@link PmdAnalysis#addRenderer(Renderer)}. You can add one of the builtin
- * renderers from its ID using {@link PMDConfiguration#setReportFormat(String)}.
+ * <p>If you just want to render a report to a file like with the CLI, you
+ * should use a {@link Renderer}. You can add a custom one with {@link PmdAnalysis#addRenderer(Renderer)}.
+ * You can add one of the builtin renderers from its ID using {@link PMDConfiguration#setReportFormat(String)}.
  *
  * <h2>Reports and events</h2>
  *
- * <p>
- * If you want strongly typed access to violations and other analysis events,
- * you can implement and register a {@link GlobalAnalysisListener} with
- * {@link #addListener(GlobalAnalysisListener)}. The listener needs to provide a
- * new {@link FileAnalysisListener} for each file, which will receive events
- * from the analysis. The listener's lifecycle happens only once the analysis is
- * started ({@link #performAnalysis()}).
+ * <p>If you want strongly typed access to violations and other analysis events,
+ * you can implement and register a {@link GlobalAnalysisListener} with {@link #addListener(GlobalAnalysisListener)}.
+ * The listener needs to provide a new {@link FileAnalysisListener} for each file,
+ * which will receive events from the analysis. The listener's lifecycle
+ * happens only once the analysis is started ({@link #performAnalysis()}).
  *
- * <p>
- * If you want access to all events once the analysis ends instead of processing
- * events as they go, you can obtain a {@link Report} instance from
- * {@link #performAnalysisAndCollectReport()}, or use
- * {@link Report.GlobalReportBuilderListener} manually. Keep in mind collecting
- * a report is less memory-efficient than using a listener.
+ * <p>If you want access to all events once the analysis ends instead of processing
+ * events as they go, you can obtain a {@link Report} instance from {@link #performAnalysisAndCollectReport()},
+ * or use {@link Report.GlobalReportBuilderListener} manually. Keep in
+ * mind collecting a report is less memory-efficient than using a listener.
  *
- * <p>
- * If you want to process events in batches, one per file, you can use
- * {@link Report.ReportBuilderListener}. to implement
- * {@link GlobalAnalysisListener#startFileAnalysis(TextFile)}.
+ * <p>If you want to process events in batches, one per file, you can
+ * use {@link Report.ReportBuilderListener}. to implement {@link GlobalAnalysisListener#startFileAnalysis(TextFile)}.
  *
- * <p>
- * Listeners can be used alongside renderers.
+ * <p>Listeners can be used alongside renderers.
  *
  * <h2>Specifying the Java classpath</h2>
  *
- * <p>
- * Java rules work better if you specify the path to the compiled classes of the
- * analysed sources. See {@link PMDConfiguration#prependAuxClasspath(String)}.
+ * <p>Java rules work better if you specify the path to the compiled classes
+ * of the analysed sources. See {@link PMDConfiguration#prependAuxClasspath(String)}.
  *
  * <h2>Customizing message output</h2>
  *
- * <p>
- * The analysis reports messages like meta warnings and errors through a
- * {@link PmdReporter} instance. To override how those messages are output, you
- * can set it in {@link PMDConfiguration#setReporter(PmdReporter)}. By default,
- * it forwards messages to SLF4J.
+ * <p>The analysis reports messages like meta warnings and errors through a
+ * {@link PmdReporter} instance. To override how those messages are output,
+ * you can set it in {@link PMDConfiguration#setReporter(PmdReporter)}.
+ * By default, it forwards messages to SLF4J.
  *
  */
 public final class PmdAnalysis implements AutoCloseable {
@@ -167,15 +155,18 @@ public final class PmdAnalysis implements AutoCloseable {
     private final ConfigurableFileNameRenderer fileNameRenderer = new ConfigurableFileNameRenderer();
 
     /**
-     * Constructs a new instance. The files paths (input files, filelist, exclude
-     * list, etc) given in the configuration are collected into the file collector
-     * ({@link #files()}), but more can be added programmatically using the file
-     * collector.
+     * Constructs a new instance. The files paths (input files, filelist,
+     * exclude list, etc) given in the configuration are collected into
+     * the file collector ({@link #files()}), but more can be added
+     * programmatically using the file collector.
      */
     private PmdAnalysis(PMDConfiguration config) {
         this.configuration = config;
         this.reporter = config.getReporter();
-        this.collector = newCollector(config.getLanguageVersionDiscoverer(), reporter);
+        this.collector = newCollector(
+            config.getLanguageVersionDiscoverer(),
+            reporter
+        );
 
     }
 
@@ -183,14 +174,13 @@ public final class PmdAnalysis implements AutoCloseable {
      * Constructs a new instance from a configuration.
      *
      * <ul>
-     * <li>The files paths (input files, filelist, exclude list, etc) are explored
-     * and the files to analyse are collected into the file collector
-     * ({@link #files()}). More can be added programmatically using the file
-     * collector.
-     * <li>The rulesets given in the configuration are loaded
-     * ({@link PMDConfiguration#getRuleSetPaths()})
-     * <li>A renderer corresponding to the parameters of the configuration is
-     * created and added (but not started).
+     * <li> The files paths (input files, filelist,
+     * exclude list, etc) are explored and the files to analyse are
+     * collected into the file collector ({@link #files()}).
+     * More can be added programmatically using the file collector.
+     * <li>The rulesets given in the configuration are loaded ({@link PMDConfiguration#getRuleSetPaths()})
+     * <li>A renderer corresponding to the parameters of the configuration
+     * is created and added (but not started).
      * </ul>
      */
     public static PmdAnalysis create(PMDConfiguration config) {
@@ -224,7 +214,7 @@ public final class PmdAnalysis implements AutoCloseable {
             }
 
             // TODO replace those with actual language properties when the
-            // CLI syntax is implemented. #2947
+            //  CLI syntax is implemented. #2947
             props.setProperty(LanguagePropertyBundle.SUPPRESS_MARKER, config.getSuppressMarker());
             if (props instanceof JvmLanguagePropertyBundle) {
                 ((JvmLanguagePropertyBundle) props).setClassLoader(config.getClassLoader());
@@ -248,6 +238,7 @@ public final class PmdAnalysis implements AutoCloseable {
         return renderers;
     }
 
+
     /**
      * Returns the file collector for the analysed sources.
      */
@@ -256,8 +247,8 @@ public final class PmdAnalysis implements AutoCloseable {
     }
 
     /**
-     * Returns a new ruleset loader, which can be used to create new rulesets (add
-     * them then with {@link #addRuleSet(RuleSet)}).
+     * Returns a new ruleset loader, which can be used to create new
+     * rulesets (add them then with {@link #addRuleSet(RuleSet)}).
      *
      * <pre>{@code
      * try (PmdAnalysis pmd = create(config)) {
@@ -270,11 +261,10 @@ public final class PmdAnalysis implements AutoCloseable {
     }
 
     /**
-     * Add a new renderer. The given renderer must not already be started, it will
-     * be started by {@link #performAnalysis()}.
+     * Add a new renderer. The given renderer must not already be started,
+     * it will be started by {@link #performAnalysis()}.
      *
-     * @throws NullPointerException
-     *             If the parameter is null
+     * @throws NullPointerException If the parameter is null
      */
     public void addRenderer(Renderer renderer) {
         AssertionUtil.requireParamNotNull("renderer", renderer);
@@ -284,8 +274,7 @@ public final class PmdAnalysis implements AutoCloseable {
     /**
      * Add several renderers at once.
      *
-     * @throws NullPointerException
-     *             If the parameter is null, or any of its items is null.
+     * @throws NullPointerException If the parameter is null, or any of its items is null.
      */
     public void addRenderers(Collection<Renderer> renderers) {
         renderers.forEach(this::addRenderer);
@@ -293,13 +282,12 @@ public final class PmdAnalysis implements AutoCloseable {
 
     /**
      * Add a new listener. As per the contract of {@link GlobalAnalysisListener},
-     * this object must be ready for interaction. However, nothing will be done with
-     * the listener until {@link #performAnalysis()} is called. The listener will be
-     * closed by {@link #performAnalysis()}, or {@link #close()}, whichever happens
-     * first.
+     * this object must be ready for interaction. However, nothing will
+     * be done with the listener until {@link #performAnalysis()} is called.
+     * The listener will be closed by {@link #performAnalysis()}, or
+     * {@link #close()}, whichever happens first.
      *
-     * @throws NullPointerException
-     *             If the parameter is null
+     * @throws NullPointerException If the parameter is null
      */
     public void addListener(GlobalAnalysisListener listener) {
         AssertionUtil.requireParamNotNull("listener", listener);
@@ -309,8 +297,7 @@ public final class PmdAnalysis implements AutoCloseable {
     /**
      * Add several listeners at once.
      *
-     * @throws NullPointerException
-     *             If the parameter is null, or any of its items is null.
+     * @throws NullPointerException If the parameter is null, or any of its items is null.
      * @see #addListener(GlobalAnalysisListener)
      */
     public void addListeners(Collection<? extends GlobalAnalysisListener> listeners) {
@@ -320,8 +307,7 @@ public final class PmdAnalysis implements AutoCloseable {
     /**
      * Add a new ruleset.
      *
-     * @throws NullPointerException
-     *             If the parameter is null
+     * @throws NullPointerException If the parameter is null
      */
     public void addRuleSet(RuleSet ruleSet) {
         AssertionUtil.requireParamNotNull("rule set", ruleSet);
@@ -331,55 +317,57 @@ public final class PmdAnalysis implements AutoCloseable {
     /**
      * Add several rulesets at once.
      *
-     * @throws NullPointerException
-     *             If the parameter is null, or any of its items is null.
+     * @throws NullPointerException If the parameter is null, or any of its items is null.
      */
     public void addRuleSets(Collection<RuleSet> ruleSets) {
         ruleSets.forEach(this::addRuleSet);
     }
 
     /**
-     * Returns an unmodifiable view of the ruleset list. That will be processed.
+     * Returns an unmodifiable view of the ruleset list. That will be
+     * processed.
      */
     public List<RuleSet> getRulesets() {
         return Collections.unmodifiableList(ruleSets);
     }
 
+
     /**
-     * Returns a mutable bundle of language properties that are associated to the
-     * given language (always the same for a given language).
+     * Returns a mutable bundle of language properties that are associated
+     * to the given language (always the same for a given language).
      *
-     * @param language
-     *            A language, which must be registered
+     * @param language A language, which must be registered
      */
     public LanguagePropertyBundle getLanguageProperties(Language language) {
         configuration.checkLanguageIsRegistered(language);
         return langProperties.computeIfAbsent(language, Language::newPropertyBundle);
     }
 
+
     public ConfigurableFileNameRenderer fileNameRenderer() {
         return fileNameRenderer;
     }
 
     /**
-     * Run PMD with the current state of this instance. This will start and finish
-     * the registered renderers, and close all
-     * {@linkplain #addListener(GlobalAnalysisListener) registered listeners}. All
-     * files collected in the {@linkplain #files() file collector} are processed.
-     * This does not return a report, as the analysis results are consumed by
-     * {@link GlobalAnalysisListener} instances (of which Renderers are a special
-     * case). Note that this does not throw, errors are instead accumulated into a
-     * {@link PmdReporter}.
+     * Run PMD with the current state of this instance. This will start
+     * and finish the registered renderers, and close all
+     * {@linkplain #addListener(GlobalAnalysisListener) registered listeners}.
+     * All files collected in the {@linkplain #files() file collector} are
+     * processed. This does not return a report, as the analysis results
+     * are consumed by {@link GlobalAnalysisListener} instances (of which
+     * Renderers are a special case). Note that this does
+     * not throw, errors are instead accumulated into a {@link PmdReporter}.
      */
     public void performAnalysis() {
         performAnalysisImpl(Collections.emptyList());
     }
 
     /**
-     * Run PMD with the current state of this instance. This will start and finish
-     * the registered renderers. All files collected in the {@linkplain #files()
-     * file collector} are processed. Returns the output report. Note that this does
-     * not throw, errors are instead accumulated into a {@link PmdReporter}.
+     * Run PMD with the current state of this instance. This will start
+     * and finish the registered renderers. All files collected in the
+     * {@linkplain #files() file collector} are processed. Returns the
+     * output report. Note that this does not throw, errors are instead
+     * accumulated into a {@link PmdReporter}.
      */
     public Report performAnalysisAndCollectReport() {
         try (GlobalReportBuilderListener reportBuilder = new GlobalReportBuilderListener()) {
@@ -401,11 +389,15 @@ public final class PmdAnalysis implements AutoCloseable {
         GlobalAnalysisListener listener;
         try {
             @SuppressWarnings("PMD.CloseResource")
-            AnalysisCacheListener cacheListener = new AnalysisCacheListener(configuration.getAnalysisCache(), rulesets,
-                    configuration.getClassLoader(), textFiles);
+            AnalysisCacheListener cacheListener = new AnalysisCacheListener(configuration.getAnalysisCache(),
+                                                                            rulesets,
+                                                                            configuration.getClassLoader(),
+                                                                            textFiles);
             listener = GlobalAnalysisListener.tee(listOf(createComposedRendererListener(renderers),
-                    GlobalAnalysisListener.tee(listeners), GlobalAnalysisListener.tee(extraListeners), cacheListener));
-
+                                                         GlobalAnalysisListener.tee(listeners),
+                                                         GlobalAnalysisListener.tee(extraListeners),
+                                                         cacheListener));
+            
             // Initialize listeners
             try (ListenerInitializer initializer = listener.initializer()) {
                 initializer.setNumberOfFilesToAnalyze(textFiles.size());
@@ -429,13 +421,23 @@ public final class PmdAnalysis implements AutoCloseable {
             encourageToUseIncrementalAnalysis(configuration);
 
             try (LanguageProcessorRegistry lpRegistry = LanguageProcessorRegistry.create(
-                    // only start the applicable languages (and dependencies)
-                    new LanguageRegistry(getApplicableLanguages(true)), langProperties, reporter)) {
+                // only start the applicable languages (and dependencies)
+                new LanguageRegistry(getApplicableLanguages(true)),
+                langProperties,
+                reporter
+            )) {
                 // Note the analysis task is shared: all processors see
                 // the same file list, which may contain files for other
                 // languages.
-                AnalysisTask analysisTask = InternalApiBridge.createAnalysisTask(rulesets, textFiles, listener,
-                        configuration.getThreads(), configuration.getAnalysisCache(), reporter, lpRegistry);
+                AnalysisTask analysisTask = InternalApiBridge.createAnalysisTask(
+                    rulesets,
+                    textFiles,
+                    listener,
+                    configuration.getThreads(),
+                    configuration.getAnalysisCache(),
+                    reporter,
+                    lpRegistry
+                );
 
                 List<AutoCloseable> analyses = new ArrayList<>();
                 try {
@@ -463,6 +465,7 @@ public final class PmdAnalysis implements AutoCloseable {
         }
     }
 
+
     private GlobalAnalysisListener createComposedRendererListener(List<Renderer> renderers) throws Exception {
         if (renderers.isEmpty()) {
             return GlobalAnalysisListener.noop();
@@ -476,8 +479,8 @@ public final class PmdAnalysis implements AutoCloseable {
 
             try {
                 @SuppressWarnings("PMD.CloseResource")
-                GlobalAnalysisListener listener = Objects.requireNonNull(renderer.newListener(),
-                        "Renderer should provide non-null listener");
+                GlobalAnalysisListener listener =
+                    Objects.requireNonNull(renderer.newListener(), "Renderer should provide non-null listener");
                 rendererListeners.add(listener);
             } catch (Exception ioe) {
                 // close listeners so far, throw their close exception or the ioe
@@ -486,10 +489,8 @@ public final class PmdAnalysis implements AutoCloseable {
             }
         }
         GlobalAnalysisListener rendererListener = GlobalAnalysisListener.tee(rendererListeners);
-        // If all are non-incremental then they do their own buffering and should sort
-        // the events.
-        // If any is incremental then we need to reorder the events for deterministic
-        // output.
+        // If all are non-incremental then they do their own buffering and should sort the events.
+        // If any is incremental then we need to reorder the events for deterministic output.
         if (isAnyIncremental) {
             rendererListener = new DeterministicOutputListenerWrapper(rendererListener);
         }
@@ -510,8 +511,7 @@ public final class PmdAnalysis implements AutoCloseable {
                         configuration.checkLanguageIsRegistered(ruleLanguage);
                         languages.add(ruleLanguage);
                         if (!quiet) {
-                            LOG.trace("Using {} version ''{}''", version.getLanguage().getName(),
-                                    version.getTerseName());
+                            LOG.trace("Using {} version ''{}''", version.getLanguage().getName(), version.getTerseName());
                         }
                     }
                 }
@@ -528,16 +528,17 @@ public final class PmdAnalysis implements AutoCloseable {
                     Language depLang = reg.getLanguageById(depId);
                     if (depLang == null) {
                         // todo maybe report all then throw
-                        throw new IllegalStateException("Language " + lang.getId() + " has unsatisfied dependencies: "
-                                + depId + " is not found in " + reg);
+                        throw new IllegalStateException(
+                            "Language " + lang.getId() + " has unsatisfied dependencies: "
+                                + depId + " is not found in " + reg
+                        );
                     }
                     changed |= languages.add(depLang);
                 }
             }
         } while (changed);
 
-        // include all available dialects of applicable languages - ie: if we have XML
-        // rules, all XML dialects are applicable
+        // include all available dialects of applicable languages - ie: if we have XML rules, all XML dialects are applicable
         do {
             changed = false;
             for (Language lang : reg) {
@@ -554,19 +555,21 @@ public final class PmdAnalysis implements AutoCloseable {
     }
 
     /**
-     * Remove and return the misconfigured rules from the rulesets and log them for
-     * good measure.
+     * Remove and return the misconfigured rules from the rulesets and log them
+     * for good measure.
      */
     private Set<Rule> removeBrokenRules(final RuleSets ruleSets) {
         final Set<Rule> brokenRules = new HashSet<>();
         ruleSets.removeDysfunctionalRules(brokenRules);
 
         for (final Rule rule : brokenRules) {
-            reporter.warn("Removed misconfigured rule: {0} cause: {1}", rule.getName(), rule.dysfunctionReason());
+            reporter.warn("Removed misconfigured rule: {0} cause: {1}",
+                          rule.getName(), rule.dysfunctionReason());
         }
 
         return brokenRules;
     }
+
 
     public PmdReporter getReporter() {
         return reporter;
@@ -584,9 +587,9 @@ public final class PmdAnalysis implements AutoCloseable {
         IOUtil.closeAll(listeners);
 
         /*
-         * Make sure it's our own classloader before attempting to close it.... Maven +
-         * Jacoco provide us with a cloaseable classloader that if closed will throw a
-         * ClassNotFoundException.
+         * Make sure it's our own classloader before attempting to close it....
+         * Maven + Jacoco provide us with a cloaseable classloader that if closed
+         * will throw a ClassNotFoundException.
          */
         if (configuration.getClassLoader() instanceof ClasspathClassLoader) {
             IOUtil.tryCloseClassLoader(configuration.getClassLoader());
@@ -635,11 +638,12 @@ public final class PmdAnalysis implements AutoCloseable {
         final PmdReporter reporter = configuration.getReporter();
 
         if (!configuration.isIgnoreIncrementalAnalysis()
-                && configuration.getAnalysisCache() instanceof NoopAnalysisCache && reporter.isLoggable(Level.WARN)) {
-            final String version = PMDVersion.isUnknown() || PMDVersion.isSnapshot() ? "latest"
-                    : "pmd-doc-" + PMDVersion.VERSION;
+            && configuration.getAnalysisCache() instanceof NoopAnalysisCache
+            && reporter.isLoggable(Level.WARN)) {
+            final String version =
+                PMDVersion.isUnknown() || PMDVersion.isSnapshot() ? "latest" : "pmd-doc-" + PMDVersion.VERSION;
             reporter.warn("This analysis could be faster, please consider using Incremental Analysis: "
-                    + "https://docs.pmd-code.org/{0}/pmd_userdocs_incremental_analysis.html", version);
+                            + "https://docs.pmd-code.org/{0}/pmd_userdocs_incremental_analysis.html", version);
         }
     }
 

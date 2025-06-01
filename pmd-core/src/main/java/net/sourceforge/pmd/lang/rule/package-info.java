@@ -3,8 +3,7 @@
  */
 
 /**
- * Contains {@link net.sourceforge.pmd.lang.rule.Rule} and
- * {@link net.sourceforge.pmd.lang.rule.RuleSet} related classes.
+ * Contains {@link net.sourceforge.pmd.lang.rule.Rule} and {@link net.sourceforge.pmd.lang.rule.RuleSet}
+ * related classes.
  */
-
 package net.sourceforge.pmd.lang.rule;

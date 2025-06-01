@@ -61,10 +61,8 @@ public final class ASTNumberLiteral extends AbstractEcmascriptNode<NumberLiteral
     }
 
     /**
-     * Checks if this number literal cannot be represented exactly without loss as a
-     * JavaScript Number. The number is either too big or uses too many decimal
-     * places.
-     * 
+     * Checks if this number literal cannot be represented exactly without loss as
+     * a JavaScript Number. The number is either too big or uses too many decimal places.
      * @return {@code true} if the literal is inaccurate.
      * @since 7.4.0
      */

@@ -57,8 +57,10 @@ class NodeFindingUtilTest {
         DummyLanguageModule lang = DummyLanguageModule.getInstance();
         try (LanguageProcessor processor = lang.createProcessor(lang.newPropertyBundle())) {
             Parser.ParserTask task = new Parser.ParserTask(
-                    TextDocument.readOnlyString(source, lang.getDefaultVersion()), SemanticErrorReporter.noop(),
-                    LanguageProcessorRegistry.singleton(processor));
+                TextDocument.readOnlyString(source, lang.getDefaultVersion()),
+                SemanticErrorReporter.noop(),
+                LanguageProcessorRegistry.singleton(processor)
+            );
             RootNode root = processor.services().getParser().parse(task);
 
             return (DummyNode.DummyRootNode) root;

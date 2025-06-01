@@ -2,6 +2,7 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
 package net.sourceforge.pmd.lang.ecmascript.ast;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -14,9 +15,7 @@ class ASTForInLoopTest extends EcmascriptParserTestBase {
     /**
      * Note: for each loops are deprecated.
      *
-     * @see <a href=
-     *      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for_each...in">for
-     *      each...in</a>
+     * @see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for_each...in">for each...in</a>
      */
     @Test
     void testForEachLoop() {

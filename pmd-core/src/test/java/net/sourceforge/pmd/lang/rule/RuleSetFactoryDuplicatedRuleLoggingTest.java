@@ -28,9 +28,9 @@ class RuleSetFactoryDuplicatedRuleLoggingTest extends RulesetFactoryTestBase {
             assertNotNull(mockRule);
             assertEquals(RulePriority.MEDIUM, mockRule.getPriority());
         });
-        assertThat(log,
-                containsString("The rule DummyBasicMockRule is referenced multiple times in ruleset 'Custom Rules'. "
-                        + "Only the last rule configuration is used"));
+        assertThat(log, containsString(
+            "The rule DummyBasicMockRule is referenced multiple times in ruleset 'Custom Rules'. "
+                + "Only the last rule configuration is used"));
     }
 
     @Test
@@ -71,10 +71,8 @@ class RuleSetFactoryDuplicatedRuleLoggingTest extends RulesetFactoryTestBase {
             assertEquals(RulePriority.MEDIUM_HIGH, mockRule.getPriority());
             assertNotNull(ruleset.getRuleByName("SampleXPathRule"));
         });
-        assertThat(log, containsString(
-                "The rule DummyBasicMockRule is referenced multiple times in ruleset 'Custom Rules'. Only the last rule configuration is used."));
-        assertThat(log, containsString(
-                "The ruleset rulesets/dummy/basic.xml is referenced multiple times in ruleset 'Custom Rules'"));
+        assertThat(log, containsString("The rule DummyBasicMockRule is referenced multiple times in ruleset 'Custom Rules'. Only the last rule configuration is used."));
+        assertThat(log, containsString("The ruleset rulesets/dummy/basic.xml is referenced multiple times in ruleset 'Custom Rules'"));
     }
 
 }

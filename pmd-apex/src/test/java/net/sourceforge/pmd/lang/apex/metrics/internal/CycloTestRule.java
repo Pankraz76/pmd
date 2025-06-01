@@ -21,10 +21,13 @@ public class CycloTestRule extends AbstractMetricTestRule.OfInt {
         super(ApexMetrics.CYCLO);
     }
 
+
     @Override
     protected boolean reportOn(Node node) {
         return node instanceof ASTUserClassOrInterface || node instanceof ASTMethod;
     }
+
+
 
     @Override
     protected String violationMessage(Node node, Integer result) {

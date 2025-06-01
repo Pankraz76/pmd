@@ -41,8 +41,7 @@ public class RulesetFactoryTestBase {
 
     @BeforeEach
     void setup() {
-        SimpleMessageReporter reporter = new SimpleMessageReporter(
-                LoggerFactory.getLogger(RulesetFactoryTestBase.class));
+        SimpleMessageReporter reporter = new SimpleMessageReporter(LoggerFactory.getLogger(RulesetFactoryTestBase.class));
         mockReporter = spy(reporter);
     }
 
@@ -66,29 +65,31 @@ public class RulesetFactoryTestBase {
     }
 
     /**
-     * @param messageTest
-     *            This is a MessageFormat string!
+     * @param messageTest This is a MessageFormat string!
      */
     protected void verifyFoundAWarningWithMessage(Predicate<String> messageTest) {
         verifyFoundWarningWithMessage(times(1), messageTest);
     }
 
     /**
-     * @param messageTest
-     *            This is a MessageFormat string!
+     * @param messageTest This is a MessageFormat string!
      */
     protected void verifyFoundWarningWithMessage(VerificationMode mode, Predicate<String> messageTest) {
-        verify(mockReporter, mode).logEx(eq(Level.WARN), argThat(messageTest::test), any(), any());
+        verify(mockReporter, mode)
+            .logEx(eq(Level.WARN), argThat(messageTest::test), any(), any());
     }
 
     protected void verifyFoundAnErrorWithMessage(Predicate<String> messageTest) {
-        verify(mockReporter, times(1)).logEx(eq(Level.ERROR), argThat(messageTest::test), any(), any());
+        verify(mockReporter, times(1))
+            .logEx(eq(Level.ERROR), argThat(messageTest::test), any(), any());
     }
+
 
     protected RuleSet loadRuleSetInDir(String resourceDir, String ruleSetFilename) {
         RuleSetLoader loader = new RuleSetLoader().withReporter(mockReporter);
         return loader.loadFromResource(resourceDir + "/" + ruleSetFilename);
     }
+
 
     protected Rule loadFirstRule(String ruleSetXml) {
         RuleSet rs = loadRuleSet(ruleSetXml);
@@ -108,7 +109,9 @@ public class RulesetFactoryTestBase {
         PMDConfiguration config = new PMDConfiguration();
         config.setReporter(mockReporter);
         try (PmdAnalysis pmd = PmdAnalysis.create(config)) {
-            return pmd.newRuleSetLoader().warnDeprecated(true).loadFromString("dummyRuleset.xml", ruleSetXml);
+            return pmd.newRuleSetLoader()
+                      .warnDeprecated(true)
+                      .loadFromString("dummyRuleset.xml", ruleSetXml);
         }
     }
 
@@ -116,16 +119,18 @@ public class RulesetFactoryTestBase {
         return assertThrows(RuleSetLoadException.class, () -> loadFirstRule(xmlContent));
     }
     /*
-     * DSL to build a ruleset XML file with method calls.
+        DSL to build a ruleset XML file with method calls.
      */
+
 
     protected static @NonNull String rulesetXml(String... contents) {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "\n"
-                + "<ruleset name=\"Custom ruleset\" xmlns=\"http://pmd.sourceforge.net/ruleset/2.0.0\"\n"
-                + "    xmlns:xsi=\"http:www.w3.org/2001/XMLSchema-instance\"\n"
-                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd\">\n"
-                + "    <description>Ruleset which references a empty ruleset</description>\n" + "\n" + body(contents)
-                + "</ruleset>\n";
+            + "<ruleset name=\"Custom ruleset\" xmlns=\"http://pmd.sourceforge.net/ruleset/2.0.0\"\n"
+            + "    xmlns:xsi=\"http:www.w3.org/2001/XMLSchema-instance\"\n"
+            + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd\">\n"
+            + "    <description>Ruleset which references a empty ruleset</description>\n" + "\n"
+            + body(contents)
+            + "</ruleset>\n";
     }
 
     protected static @NonNull String ruleRef(String ref) {
@@ -133,7 +138,9 @@ public class RulesetFactoryTestBase {
     }
 
     protected static @NonNull String rule(Map<SchemaConstant, String> attrs, String... body) {
-        return "<rule " + attrs(attrs) + ">\n" + body(body) + "</rule>";
+        return "<rule " + attrs(attrs) + ">\n"
+            + body(body)
+            + "</rule>";
     }
 
     protected static @NonNull String dummyRule(Consumer<Map<SchemaConstant, String>> attributes, String... body) {
@@ -141,33 +148,38 @@ public class RulesetFactoryTestBase {
     }
 
     protected static @NonNull String dummyRule(String... body) {
-        return dummyRule(m -> {
-        }, body);
+        return dummyRule(m -> { }, body);
     }
 
     /**
      * Default attributes used by {@link #dummyRule(Consumer, String...)}.
      */
     protected static Map<SchemaConstant, String> dummyRuleDefAttrs() {
-        return buildMap(map -> {
-            map.put(SchemaConstants.NAME, "MockRuleName");
-            map.put(SchemaConstants.LANGUAGE, DummyLanguageModule.TERSE_NAME);
-            map.put(SchemaConstants.CLASS, net.sourceforge.pmd.lang.rule.MockRuleWithNoProperties.class.getName());
-            map.put(SchemaConstants.MESSAGE, "avoid the mock rule");
-        });
+        return buildMap(
+            map -> {
+                map.put(SchemaConstants.NAME, "MockRuleName");
+                map.put(SchemaConstants.LANGUAGE, DummyLanguageModule.TERSE_NAME);
+                map.put(SchemaConstants.CLASS, net.sourceforge.pmd.lang.rule.MockRuleWithNoProperties.class.getName());
+                map.put(SchemaConstants.MESSAGE, "avoid the mock rule");
+            }
+        );
     }
 
     private static @NonNull String attrs(Map<SchemaConstant, String> str) {
-        return str.entrySet().stream().map(it -> it.getKey().xmlName() + "=\"" + it.getValue() + "\"")
-                .collect(Collectors.joining(" "));
+        return str.entrySet().stream()
+                  .map(it -> it.getKey().xmlName() + "=\"" + it.getValue() + "\"")
+                  .collect(Collectors.joining(" "));
     }
+
 
     protected static @NonNull String rulesetRef(String ref, String... body) {
         return ruleRef(ref, body);
     }
 
     protected static @NonNull String ruleRef(String ref, String... body) {
-        return "<rule ref=\"" + ref + "\">\n" + body(body) + "</rule>\n";
+        return "<rule ref=\"" + ref + "\">\n"
+            + body(body)
+            + "</rule>\n";
     }
 
     protected static @NonNull String excludePattern(String pattern) {
@@ -202,25 +214,34 @@ public class RulesetFactoryTestBase {
         return "<property name='" + name + "' value='" + valueAttr + "'/>\n";
     }
 
-    protected static @NonNull String propertyDefWithValueAttr(String name, String description, String type,
-            String valueAttr) {
+    protected static @NonNull String propertyDefWithValueAttr(String name,
+                                                              String description,
+                                                              String type,
+                                                              String valueAttr) {
         return propertyDefWithValueAttr(name, description, type, valueAttr, Collections.emptyMap());
     }
 
-    protected static @NonNull String propertyDefWithValueAttr(String name, String description, String type,
-            String valueAttr, Map<SchemaConstant, String> constraints) {
-        return emptyTag("property", buildMap(map -> {
-            map.put(SchemaConstants.NAME, name);
-            map.put(SchemaConstants.DESCRIPTION, description);
-            map.put(SchemaConstants.PROPERTY_TYPE, type);
-            map.put(SchemaConstants.PROPERTY_VALUE, valueAttr);
-            map.putAll(constraints);
-        }));
+    protected static @NonNull String propertyDefWithValueAttr(String name,
+                                                              String description,
+                                                              String type,
+                                                              String valueAttr,
+                                                              Map<SchemaConstant, String> constraints) {
+        return emptyTag("property", buildMap(
+                map -> {
+                    map.put(SchemaConstants.NAME, name);
+                    map.put(SchemaConstants.DESCRIPTION, description);
+                    map.put(SchemaConstants.PROPERTY_TYPE, type);
+                    map.put(SchemaConstants.PROPERTY_VALUE, valueAttr);
+                    map.putAll(constraints);
+                }
+        ));
 
     }
 
     protected static @NonNull String tag(String tagName, String... body) {
-        return "<" + tagName + ">\n" + body(body) + "</" + tagName + ">";
+        return "<" + tagName + ">\n"
+            + body(body)
+            + "</" + tagName + ">";
     }
 
     protected static @NonNull String emptyTag(String tagName, Map<SchemaConstant, String> attrs) {

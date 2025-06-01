@@ -34,8 +34,8 @@ public enum BinaryOperator {
     }
 
     /**
-     * Returns a {@link BinaryOperator} corresponding to the given
-     * {@link BinaryExpression.Operator}.
+     * Returns a {@link BinaryOperator} corresponding to the given {@link
+     * BinaryExpression.Operator}.
      */
     public static BinaryOperator valueOf(BinaryExpression.Operator op) {
         switch (op) {

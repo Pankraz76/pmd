@@ -37,8 +37,9 @@ public final class ASTName extends AbstractModelicaNode implements ResolvableMod
 
     public String getName() {
         String prefix = absolute ? "." : "";
-        return prefix
-                + children(ASTSimpleName.class).toStream().map(ASTSimpleName::getName).collect(Collectors.joining("."));
+        return prefix + children(ASTSimpleName.class).toStream()
+                .map(ASTSimpleName::getName)
+                .collect(Collectors.joining("."));
     }
 
     void markAbsolute() {
@@ -54,8 +55,7 @@ public final class ASTName extends AbstractModelicaNode implements ResolvableMod
     }
 
     /**
-     * Returns a {@link CompositeName} object representing a lexical reference
-     * contained in this node.
+     * Returns a {@link CompositeName} object representing a lexical reference contained in this node.
      */
     public CompositeName getCompositeName() {
         return CompositeName.create(absolute, nameComponents);
@@ -64,14 +64,12 @@ public final class ASTName extends AbstractModelicaNode implements ResolvableMod
     /**
      * Returns resolution candidates for the referred entity.
      *
-     * We do not decide on entity type on behalf of the rule code, since this may
-     * introduce false negatives.
+     * We do not decide on entity type on behalf of the rule code, since this may introduce false negatives.
      */
     @Override
     public ResolutionResult<ResolvableEntity> getResolutionCandidates() {
         if (resolutionCandidates == null) {
-            resolutionCandidates = getMostSpecificScope().safeResolveLexically(ResolvableEntity.class,
-                    ResolutionState.forType(), getCompositeName());
+            resolutionCandidates = getMostSpecificScope().safeResolveLexically(ResolvableEntity.class, ResolutionState.forType(), getCompositeName());
         }
         return resolutionCandidates;
     }

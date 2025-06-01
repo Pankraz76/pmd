@@ -31,6 +31,7 @@ public final class ASTAstRoot extends AbstractEcmascriptNode<AstRoot> implements
         return node.getComments() != null ? node.getComments().size() : 0;
     }
 
+
     public ASTComment getComment(int index) {
         return (ASTComment) getChild(getNumChildren() - 1 - getNumComments() + index);
     }

@@ -80,6 +80,7 @@ class RuleViolationTest {
         Rule rule = new MockRule("name", "desc", "msg", "rulesetname");
         Comparator<RuleViolation> comp = RuleViolation.DEFAULT_COMPARATOR;
 
+
         FileLocation loc = FileLocation.range(filename, TextRange2d.range2d(10, 1, 15, 10));
         RuleViolation r1 = violation(rule, loc, "description");
         RuleViolation r2 = violation(rule, loc, "description");

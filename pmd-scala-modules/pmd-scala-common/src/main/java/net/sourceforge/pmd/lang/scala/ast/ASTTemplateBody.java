@@ -8,7 +8,6 @@ import scala.meta.Template;
 
 /**
  * The ASTTemplateBody node implementation.
- * 
  * @since 7.10.0
  */
 public final class ASTTemplateBody extends AbstractScalaNode<Template.Body> {

@@ -120,6 +120,7 @@ class CppCpdLexerTest extends CpdTextComparisonTest {
         expectLexException(sourceText("issue-1559"), dontSkipBlocks());
     }
 
+
     @Test
     void testRawStringLiterals() {
         doTest("issue-1784");
@@ -182,8 +183,8 @@ class CppCpdLexerTest extends CpdTextComparisonTest {
         return properties(false, null, false, false, true, false);
     }
 
-    private static LanguagePropertyConfig properties(boolean skipBlocks, String skipPattern,
-            boolean skipLiteralSequences, boolean skipSequences, boolean ignoreLiterals, boolean ignoreIdents) {
+
+    private static LanguagePropertyConfig properties(boolean skipBlocks, String skipPattern, boolean skipLiteralSequences, boolean skipSequences, boolean ignoreLiterals, boolean ignoreIdents) {
         return properties -> {
             if (!skipBlocks) {
                 properties.setProperty(CppLanguageModule.CPD_SKIP_BLOCKS, "");

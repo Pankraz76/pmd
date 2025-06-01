@@ -21,8 +21,13 @@ public final class EscapeUtils {
     }
 
     public static String escapeMarkdown(String unescaped) {
-        return unescaped.replace("\\", "\\\\").replace("*", "\\*").replace("_", "\\_").replace("~", "\\~")
-                .replace("[", "\\[").replace("]", "\\]").replace("|", "\\|");
+        return unescaped.replace("\\", "\\\\")
+                .replace("*", "\\*")
+                .replace("_", "\\_")
+                .replace("~", "\\~")
+                .replace("[", "\\[")
+                .replace("]", "\\]")
+                .replace("|", "\\|");
     }
 
     public static String escapeSingleLine(String line) {
@@ -90,11 +95,9 @@ public final class EscapeUtils {
 
     /**
      * If quotes are used for rule tags, e.g. {@code {% rule "OtherRule" %}}, these
-     * quotes might have been escaped for html, but it's actually
-     * markdown/jekyll/liquid and not html. This undoes the escaping.
-     * 
-     * @param text
-     *            the already escaped text that might contain rule tags
+     * quotes might have been escaped for html, but it's actually markdown/jekyll/liquid
+     * and not html. This undoes the escaping.
+     * @param text the already escaped text that might contain rule tags
      * @return text with the fixed rule tags
      */
     public static String preserveRuleTagQuotes(String text) {

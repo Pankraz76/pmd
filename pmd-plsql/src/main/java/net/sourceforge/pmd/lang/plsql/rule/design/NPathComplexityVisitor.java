@@ -33,6 +33,7 @@ import net.sourceforge.pmd.lang.plsql.ast.PlsqlVisitorBase;
  */
 class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
 
+
     public int compute(ExecutableCode root) {
         return (int) root.acceptVisitor(this, null);
     }
@@ -91,25 +92,27 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
 
         List<PLSQLNode> statementChildren = new ArrayList<>();
         for (int i = 0; i < node.getNumChildren(); i++) {
-            if (node.getChild(i).getClass() == ASTStatement.class || node.getChild(i).getClass() == ASTElsifClause.class
-                    || node.getChild(i).getClass() == ASTElseClause.class) {
+            if (node.getChild(i).getClass() == ASTStatement.class
+                || node.getChild(i).getClass() == ASTElsifClause.class
+                || node.getChild(i).getClass() == ASTElseClause.class) {
                 statementChildren.add(node.getChild(i));
             }
         }
 
         /*
-         * SRT if (statementChildren.isEmpty() || statementChildren.size() == 1 && (
-         * null != node.firstChild(ASTElseClause.class) ) //.hasElse() ||
-         * statementChildren.size() != 1 && ( null ==
-         * node.firstChild(ASTElseClause.class) ) // !node.hasElse() ) { throw new
+         * SRT if (statementChildren.isEmpty() || statementChildren.size() == 1
+         * && ( null != node.firstChild(ASTElseClause.class) )
+         * //.hasElse() || statementChildren.size() != 1 && ( null ==
+         * node.firstChild(ASTElseClause.class) ) // !node.hasElse() )
+         * { throw new
          * IllegalStateException("If node has wrong number of children"); }
          */
 
         /*
-         * @TODO Any explicit Elsif clause(s) and Else clause are included in the list
-         * of statements // add path for not taking if if (null ==
-         * node.firstChild(ASTElsifClause.class) ) // !node.hasElse()!node.hasElse()) {
-         * complexity++; }
+         * @TODO Any explicit Elsif clause(s) and Else clause are included in
+         * the list of statements // add path for not taking if if (null ==
+         * node.firstChild(ASTElsifClause.class) ) //
+         * !node.hasElse()!node.hasElse()) { complexity++; }
          *
          * if (null == node.firstChild(ASTElseClause.class) ) //
          * !node.hasElse()!node.hasElse()) { complexity++; }
@@ -139,10 +142,11 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         }
 
         /*
-         * SRT if (statementChildren.isEmpty() || statementChildren.size() == 1 && (
-         * null != node.firstChild(ASTElseClause.class) ) //.hasElse() ||
-         * statementChildren.size() != 1 && ( null ==
-         * node.firstChild(ASTElseClause.class) ) // !node.hasElse() ) { throw new
+         * SRT if (statementChildren.isEmpty() || statementChildren.size() == 1
+         * && ( null != node.firstChild(ASTElseClause.class) )
+         * //.hasElse() || statementChildren.size() != 1 && ( null ==
+         * node.firstChild(ASTElseClause.class) ) // !node.hasElse() )
+         * { throw new
          * IllegalStateException("If node has wrong number of children"); }
          */
 

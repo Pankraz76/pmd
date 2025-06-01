@@ -24,12 +24,12 @@ import net.sourceforge.pmd.util.IteratorUtil;
  */
 class NoAttributeTest {
 
+
     @Test
     void testNoAttrInherited() {
         Node child = new NodeNoInherited();
 
-        Set<String> attrNames = IteratorUtil.toList(child.getXPathAttributesIterator()).stream().map(Attribute::getName)
-                .collect(Collectors.toSet());
+        Set<String> attrNames = IteratorUtil.toList(child.getXPathAttributesIterator()).stream().map(Attribute::getName).collect(Collectors.toSet());
 
         assertTrue(attrNames.contains("SomeInt"));
         assertTrue(attrNames.contains("Child"));
@@ -41,14 +41,14 @@ class NoAttributeTest {
         assertFalse(attrNames.contains("SomeName"));
     }
 
+
     @Test
     void testNoAttrAll() {
 
         assertTrue(0 < IteratorUtil.count(new NodeAllAttr(12).getXPathAttributesIterator()));
 
         NodeNoAttrAll child = new NodeNoAttrAll();
-        Set<String> attrNames = IteratorUtil.toList(child.getXPathAttributesIterator()).stream().map(Attribute::getName)
-                .collect(Collectors.toSet());
+        Set<String> attrNames = IteratorUtil.toList(child.getXPathAttributesIterator()).stream().map(Attribute::getName).collect(Collectors.toSet());
 
         // from Noded, so not suppressed
         assertTrue(attrNames.contains("Image"));
@@ -61,14 +61,14 @@ class NoAttributeTest {
 
         NodeNoAttrAllChild child = new NodeNoAttrAllChild();
 
-        Set<String> attrNames = IteratorUtil.toList(child.getXPathAttributesIterator()).stream().map(Attribute::getName)
-                .collect(Collectors.toSet());
+        Set<String> attrNames = IteratorUtil.toList(child.getXPathAttributesIterator()).stream().map(Attribute::getName).collect(Collectors.toSet());
 
         // suppressed because the parent has NoAttribute(scope = ALL)
         assertFalse(attrNames.contains("MySuppressedAttr"));
         // not suppressed because defined in the class, which has no annotation
         assertTrue(attrNames.contains("NotSuppressedAttr"));
     }
+
 
     private static class DummyNodeParent extends DummyNode {
 
@@ -92,6 +92,7 @@ class NoAttributeTest {
             return 42;
         }
 
+
         @Override
         public Iterator<Attribute> getXPathAttributesIterator() {
             return new AttributeAxisIterator(this);
@@ -102,12 +103,12 @@ class NoAttributeTest {
     public static class NodeNoInherited extends DummyNodeParent {
 
         // getSomeName is inherited and filtered out by NoAttrScope.INHERITED
-        // getSomeInt is inherited but overridden here, so NoAttrScope.INHERITED has no
-        // effect
+        // getSomeInt is inherited but overridden here, so NoAttrScope.INHERITED has no effect
         // getSomeLong is inherited and overridden here,
-        // and even with scope INHERITED its @NoAttribute takes precedence
+        //      and even with scope INHERITED its @NoAttribute takes precedence
 
         // isChild overrides nothing so with INHERITED it's not filtered out
+
 
         @Override
         public int getSomeInt() {
@@ -120,6 +121,7 @@ class NoAttributeTest {
             return 43;
         }
 
+
         @NoAttribute(scope = NoAttrScope.INHERITED)
         @Override
         public String getImage() {
@@ -129,6 +131,7 @@ class NoAttributeTest {
         public boolean isChild() {
             return true;
         }
+
 
     }
 
@@ -148,12 +151,15 @@ class NoAttributeTest {
 
     }
 
+
     public static class NodeNoAttrAllChild extends NodeNoAttrAll {
 
         public int getNotSuppressedAttr() {
             return 12;
         }
 
+
     }
+
 
 }

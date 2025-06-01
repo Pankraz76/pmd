@@ -48,9 +48,8 @@ public class RuleSet implements ChecksumAware {
     private final String description;
 
     /*
-     * Order is unimportant, but we preserve the order given by the user to be
-     * deterministic. Using Sets is useless, since Pattern does not override #equals
-     * anyway.
+     * Order is unimportant, but we preserve the order given by the user to be deterministic.
+     * Using Sets is useless, since Pattern does not override #equals anyway.
      */
     private final List<Pattern> excludePatterns;
     private final List<Pattern> includePatterns;
@@ -68,14 +67,12 @@ public class RuleSet implements ChecksumAware {
         fileName = builder.fileName;
         name = Objects.requireNonNull(builder.name, MISSING_RULESET_NAME);
         description = Objects.requireNonNull(builder.description, MISSING_RULESET_DESCRIPTION);
-        // TODO: ideally, the rules would be unmodifiable, too. But
-        // removeDysfunctionalRules might change the rules. #3868
+        // TODO: ideally, the rules would be unmodifiable, too. But removeDysfunctionalRules might change the rules. #3868
         rules = builder.rules;
         excludePatterns = Collections.unmodifiableList(new ArrayList<>(builder.excludePatterns));
         includePatterns = Collections.unmodifiableList(new ArrayList<>(builder.includePatterns));
 
-        final Predicate<String> regexFilter = PredicateUtil.buildRegexFilterIncludeOverExclude(includePatterns,
-                excludePatterns);
+        final Predicate<String> regexFilter = PredicateUtil.buildRegexFilterIncludeOverExclude(includePatterns, excludePatterns);
         filter = PredicateUtil.toNormalizedFileFilter(regexFilter);
     }
 
@@ -96,11 +93,10 @@ public class RuleSet implements ChecksumAware {
     }
 
     /**
-     * Creates a new ruleset containing a single rule. The ruleset will have default
-     * description, name, and null file name.
+     * Creates a new ruleset containing a single rule. The ruleset will
+     * have default description, name, and null file name.
      *
-     * @param rule
-     *            The rule being created
+     * @param rule The rule being created
      *
      * @return The newly created RuleSet
      */
@@ -113,48 +109,49 @@ public class RuleSet implements ChecksumAware {
             checksum = rule.getPropertiesByPropertyDescriptor().values().hashCode() * 31 + rule.getName().hashCode();
         }
 
-        final RuleSetBuilder builder = new RuleSetBuilder(checksum).withName(rule.getName())
+        final RuleSetBuilder builder =
+            new RuleSetBuilder(checksum)
+                .withName(rule.getName())
                 .withDescription("RuleSet for " + rule.getName());
         builder.addRule(rule);
         return builder.build();
     }
 
+
     /**
      * Creates a new ruleset with the given metadata such as name, description,
-     * fileName, exclude/include patterns are used. The rules are taken from the
-     * given collection.
+     * fileName, exclude/include patterns are used. The rules are taken from the given
+     * collection.
      *
-     * <p>
-     * <strong>Note:</strong> The rule instances are shared between the collection
-     * and the new ruleset (copy-by-reference). This might lead to concurrency
-     * issues, if the rules of the collection are also referenced by other rulesets
-     * and used in different threads.
+     * <p><strong>Note:</strong> The rule instances are shared between the collection
+     * and the new ruleset (copy-by-reference). This might lead to concurrency issues,
+     * if the rules of the collection are also referenced by other rulesets and used
+     * in different threads.
      * </p>
      *
-     * @param name
-     *            the name of the ruleset
-     * @param description
-     *            the description
-     * @param fileName
-     *            the filename
-     * @param excludePatterns
-     *            list of exclude patterns
-     * @param includePatterns
-     *            list of include patterns, that override the exclude patterns
-     * @param rules
-     *            the collection with the rules to add to the new ruleset
+     * @param name            the name of the ruleset
+     * @param description     the description
+     * @param fileName        the filename
+     * @param excludePatterns list of exclude patterns
+     * @param includePatterns list of include patterns, that override the exclude patterns
+     * @param rules           the collection with the rules to add to the new ruleset
      *
      * @return the new ruleset
      *
-     * @throws NullPointerException
-     *             If any parameter is null, or the collections contain null
-     *             elements
+     * @throws NullPointerException If any parameter is null, or the collections contain null elements
      */
-    public static RuleSet create(String name, String description, String fileName, Collection<Pattern> excludePatterns,
-            Collection<Pattern> includePatterns, Iterable<? extends Rule> rules) {
+    public static RuleSet create(String name,
+                                 String description,
+                                 String fileName,
+                                 Collection<Pattern> excludePatterns,
+                                 Collection<Pattern> includePatterns,
+                                 Iterable<? extends Rule> rules) {
         RuleSetBuilder builder = new RuleSetBuilder(0L); // TODO: checksum missing
-        builder.withName(name).withDescription(description).withFileName(fileName)
-                .replaceFileExclusions(excludePatterns).replaceFileInclusions(includePatterns);
+        builder.withName(name)
+               .withDescription(description)
+               .withFileName(fileName)
+               .replaceFileExclusions(excludePatterns)
+               .replaceFileInclusions(includePatterns);
         for (Rule rule : rules) {
             builder.addRule(rule);
         }
@@ -162,17 +159,15 @@ public class RuleSet implements ChecksumAware {
     }
 
     /**
-     * Creates a copy of the given ruleset. All properties like name, description,
-     * fileName and exclude/include patterns are copied.
+     * Creates a copy of the given ruleset. All properties like name, description, fileName
+     * and exclude/include patterns are copied.
      *
-     * <p>
-     * <strong>Note:</strong> The rule instances are shared between the original and
-     * the new ruleset (copy-by-reference). This might lead to concurrency issues,
+     * <p><strong>Note:</strong> The rule instances are shared between the original
+     * and the new ruleset (copy-by-reference). This might lead to concurrency issues,
      * if the original ruleset and the new ruleset are used in different threads.
      * </p>
      *
-     * @param original
-     *            the original rule set to copy from
+     * @param original the original rule set to copy from
      *
      * @return the copy
      */
@@ -197,15 +192,17 @@ public class RuleSet implements ChecksumAware {
         /** Copy constructor. Takes the same checksum as the original ruleset. */
         /* package */ RuleSetBuilder(final RuleSet original) {
             checksum = original.getChecksum();
-            this.withName(original.getName()).withDescription(original.getDescription())
-                    .withFileName(original.getFileName()).replaceFileExclusions(original.getFileExclusions())
-                    .replaceFileInclusions(original.getFileInclusions());
+            this.withName(original.getName())
+                .withDescription(original.getDescription())
+                .withFileName(original.getFileName())
+                .replaceFileExclusions(original.getFileExclusions())
+                .replaceFileInclusions(original.getFileInclusions());
             addRuleSet(original);
         }
 
         /**
-         * Add a new rule to this ruleset. Note that this method does not check for
-         * duplicates.
+         * Add a new rule to this ruleset. Note that this method does not check
+         * for duplicates.
          *
          * @param newRule
          *            the rule to be added
@@ -221,7 +218,8 @@ public class RuleSet implements ChecksumAware {
             for (Rule rule : rules) {
                 if (rule.getName().equals(newRule.getName()) && rule.getLanguage().equals(newRule.getLanguage())) {
                     LOG.warn("The rule with name {} is duplicated. "
-                            + "Future versions of PMD will reject to load such rulesets.", newRule.getName());
+                            + "Future versions of PMD will reject to load such rulesets.",
+                            newRule.getName());
                     break;
                 }
             }
@@ -232,11 +230,8 @@ public class RuleSet implements ChecksumAware {
 
         /**
          * Finds an already added rule by same name and language, if it already exists.
-         * 
-         * @param rule
-         *            the rule to search
-         * @return the already added rule or <code>null</code> if no rule was added yet
-         *         to the builder.
+         * @param rule the rule to search
+         * @return the already added rule or <code>null</code> if no rule was added yet to the builder.
          */
         Rule getExistingRule(final Rule rule) {
             for (Rule r : rules) {
@@ -251,20 +246,18 @@ public class RuleSet implements ChecksumAware {
         /**
          * Checks, whether a rule with the same name and language already exists in the
          * ruleset.
-         * 
-         * @param rule
-         *            to rule to check
-         * @return <code>true</code> if the rule already exists, <code>false</code> if
-         *         the given rule is the first configuration of this rule.
+         * @param rule to rule to check
+         * @return <code>true</code> if the rule already exists, <code>false</code> if the given
+         *     rule is the first configuration of this rule.
          */
         boolean hasRule(final Rule rule) {
             return getExistingRule(rule) != null;
         }
 
         /**
-         * Adds a rule. If a rule with the same name and language already existed before
-         * in the ruleset, then the new rule will replace it. This makes sure that the
-         * rule configured is overridden.
+         * Adds a rule. If a rule with the same name and language already
+         * existed before in the ruleset, then the new rule will replace it.
+         * This makes sure that the rule configured is overridden.
          *
          * @param rule
          *            the new rule to add
@@ -286,9 +279,9 @@ public class RuleSet implements ChecksumAware {
         }
 
         /**
-         * Only adds a rule to the ruleset if no rule with the same name for the same
-         * language was added before, so that the existent rule configuration won't be
-         * overridden.
+         * Only adds a rule to the ruleset if no rule with the same name for the
+         * same language was added before, so that the existent rule
+         * configuration won't be overridden.
          *
          * @param ruleOrRef
          *            the new rule to add
@@ -354,14 +347,16 @@ public class RuleSet implements ChecksumAware {
         }
 
         /**
-         * Add all rules by reference from one RuleSet to this RuleSet. The rules can be
-         * added as individual references, or collectively as an all rule reference.
+         * Add all rules by reference from one RuleSet to this RuleSet. The
+         * rules can be added as individual references, or collectively as an
+         * all rule reference.
          *
          * @param ruleSet
          *            the RuleSet to add
          * @param allRules
-         *            <code>true</code> if the ruleset should be added collectively or
-         *            <code>false</code> to add individual references for each rule.
+         *            <code>true</code> if the ruleset should be added
+         *            collectively or <code>false</code> to add individual
+         *            references for each rule.
          * @return The same builder, for a fluid programming interface
          */
         public RuleSetBuilder addRuleSetByReference(final RuleSet ruleSet, final boolean allRules) {
@@ -369,14 +364,16 @@ public class RuleSet implements ChecksumAware {
         }
 
         /**
-         * Add all rules by reference from one RuleSet to this RuleSet. The rules can be
-         * added as individual references, or collectively as an all rule reference.
+         * Add all rules by reference from one RuleSet to this RuleSet. The
+         * rules can be added as individual references, or collectively as an
+         * all rule reference.
          *
          * @param ruleSet
          *            the RuleSet to add
          * @param allRules
-         *            <code>true</code> if the ruleset should be added collectively or
-         *            <code>false</code> to add individual references for each rule.
+         *            <code>true</code> if the ruleset should be added
+         *            collectively or <code>false</code> to add individual
+         *            references for each rule.
          * @param excludes
          *            names of the rules that should be excluded.
          * @return The same builder, for a fluid programming interface
@@ -391,8 +388,7 @@ public class RuleSet implements ChecksumAware {
             if (excludes == null) {
                 ruleSetReference = new RuleSetReference(ruleSet.getFileName(), allRules);
             } else {
-                ruleSetReference = new RuleSetReference(ruleSet.getFileName(), allRules,
-                        new LinkedHashSet<>(Arrays.asList(excludes)));
+                ruleSetReference = new RuleSetReference(ruleSet.getFileName(), allRules, new LinkedHashSet<>(Arrays.asList(excludes)));
             }
 
             for (final Rule rule : ruleSet.getRules()) {
@@ -405,15 +401,12 @@ public class RuleSet implements ChecksumAware {
         /**
          * Adds some new file exclusion patterns.
          *
-         * @param p1
-         *            The first pattern
-         * @param rest
-         *            Additional patterns
+         * @param p1   The first pattern
+         * @param rest Additional patterns
          *
          * @return This builder
          *
-         * @throws NullPointerException
-         *             If any of the specified patterns is null
+         * @throws NullPointerException If any of the specified patterns is null
          */
         public RuleSetBuilder withFileExclusions(Pattern p1, Pattern... rest) {
             Objects.requireNonNull(p1, "Pattern was null");
@@ -429,13 +422,11 @@ public class RuleSet implements ChecksumAware {
         /**
          * Adds some new file exclusion patterns.
          *
-         * @param patterns
-         *            Exclusion patterns to add
+         * @param patterns Exclusion patterns to add
          *
          * @return This builder
          *
-         * @throws NullPointerException
-         *             If any of the specified patterns is null
+         * @throws NullPointerException If any of the specified patterns is null
          */
         public RuleSetBuilder withFileExclusions(Collection<? extends Pattern> patterns) {
             Objects.requireNonNull(patterns, "Pattern collection was null");
@@ -449,13 +440,11 @@ public class RuleSet implements ChecksumAware {
         /**
          * Replaces the existing exclusion patterns with the given patterns.
          *
-         * @param patterns
-         *            Exclusion patterns to set
+         * @param patterns Exclusion patterns to set
          *
          * @return This builder
          *
-         * @throws NullPointerException
-         *             If any of the specified patterns is null
+         * @throws NullPointerException If any of the specified patterns is null
          */
         public RuleSetBuilder replaceFileExclusions(Collection<? extends Pattern> patterns) {
             Objects.requireNonNull(patterns, "Pattern collection was null");
@@ -467,18 +456,16 @@ public class RuleSet implements ChecksumAware {
             return this;
         }
 
+
         /**
          * Adds some new file inclusion patterns.
          *
-         * @param p1
-         *            The first pattern
-         * @param rest
-         *            Additional patterns
+         * @param p1   The first pattern
+         * @param rest Additional patterns
          *
          * @return This builder
          *
-         * @throws NullPointerException
-         *             If any of the specified patterns is null
+         * @throws NullPointerException If any of the specified patterns is null
          */
         public RuleSetBuilder withFileInclusions(Pattern p1, Pattern... rest) {
             Objects.requireNonNull(p1, "Pattern was null");
@@ -494,13 +481,11 @@ public class RuleSet implements ChecksumAware {
         /**
          * Adds some new file inclusion patterns.
          *
-         * @param patterns
-         *            Inclusion patterns to add
+         * @param patterns Inclusion patterns to add
          *
          * @return This builder
          *
-         * @throws NullPointerException
-         *             If any of the specified patterns is null
+         * @throws NullPointerException If any of the specified patterns is null
          */
         public RuleSetBuilder withFileInclusions(Collection<? extends Pattern> patterns) {
             Objects.requireNonNull(patterns, "Pattern collection was null");
@@ -514,13 +499,11 @@ public class RuleSet implements ChecksumAware {
         /**
          * Replaces the existing inclusion patterns with the given patterns.
          *
-         * @param patterns
-         *            Inclusion patterns to set
+         * @param patterns Inclusion patterns to set
          *
          * @return This builder
          *
-         * @throws NullPointerException
-         *             If any of the specified patterns is null
+         * @throws NullPointerException If any of the specified patterns is null
          */
         public RuleSetBuilder replaceFileInclusions(Collection<? extends Pattern> patterns) {
             Objects.requireNonNull(patterns, "Pattern collection was null");
@@ -564,8 +547,8 @@ public class RuleSet implements ChecksumAware {
             while (iterator.hasNext()) {
                 Rule rule = iterator.next();
                 if (rule.getPriority().compareTo(minimumPriority) > 0) {
-                    LOG.debug("Removing rule {} due to priority: {} required: {}", rule.getName(), rule.getPriority(),
-                            minimumPriority);
+                    LOG.debug("Removing rule {} due to priority: {} required: {}",
+                            rule.getName(), rule.getPriority(), minimumPriority);
                     iterator.remove();
                 }
             }
@@ -590,11 +573,12 @@ public class RuleSet implements ChecksumAware {
         return rules;
     }
 
+
     /**
      * Returns the first Rule found with the given name (case-sensitive).
      *
-     * Note: Since we support multiple languages, rule names are not expected to be
-     * unique within any specific ruleset.
+     * Note: Since we support multiple languages, rule names are not expected to
+     * be unique within any specific ruleset.
      *
      * @param ruleName
      *            the exact name of the rule to find
@@ -611,17 +595,16 @@ public class RuleSet implements ChecksumAware {
     }
 
     /**
-     * Check if a given source file should be checked by rules in this RuleSet. A
-     * file should not be checked if there is an <code>exclude</code> pattern which
-     * matches the file, unless there is an <code>include</code> pattern which also
-     * matches the file. In other words, <code>include</code> patterns override
-     * <code>exclude</code> patterns.
+     * Check if a given source file should be checked by rules in this RuleSet.
+     * A file should not be checked if there is an <code>exclude</code> pattern
+     * which matches the file, unless there is an <code>include</code> pattern
+     * which also matches the file. In other words, <code>include</code>
+     * patterns override <code>exclude</code> patterns.
      *
-     * @param qualFileName
-     *            the source path to check
+     * @param qualFileName the source path to check
      *
-     * @return <code>true</code> if the file should be checked, <code>false</code>
-     *         otherwise
+     * @return <code>true</code> if the file should be checked,
+     *     <code>false</code> otherwise
      *
      * @apiNote Internal API.
      */
@@ -630,17 +613,17 @@ public class RuleSet implements ChecksumAware {
     }
 
     /**
-     * Does the given Rule apply to the given LanguageVersion? If so, the Language
-     * must be the same and be between the minimum and maximums versions on the
-     * Rule.
+     * Does the given Rule apply to the given LanguageVersion? If so, the
+     * Language must be the same and be between the minimum and maximums
+     * versions on the Rule.
      *
      * @param rule
      *            The rule.
      * @param languageVersion
      *            The language version.
      *
-     * @return <code>true</code> if the given rule matches the given language, which
-     *         means, that the rule would be executed.
+     * @return <code>true</code> if the given rule matches the given language,
+     *         which means, that the rule would be executed.
      *
      * @apiNote This is internal API.
      */
@@ -716,6 +699,7 @@ public class RuleSet implements ChecksumAware {
         return includePatterns;
     }
 
+
     /**
      * Remove and collect any misconfigured rules.
      *
@@ -723,9 +707,8 @@ public class RuleSet implements ChecksumAware {
      *            the removed rules will be added to this collection
      */
     // TODO remove this method. This mutates rulesets for nothing. Whether a rule
-    // is dysfunctional or not should be checked when it is initialized.
-    // See also https://github.com/pmd/pmd/issues/3868 and
-    // https://github.com/pmd/pmd/issues/3901
+    //  is dysfunctional or not should be checked when it is initialized.
+    //  See also https://github.com/pmd/pmd/issues/3868 and https://github.com/pmd/pmd/issues/3901
     public void removeDysfunctionalRules(Collection<Rule> collector) {
         Iterator<Rule> iter = rules.iterator();
 

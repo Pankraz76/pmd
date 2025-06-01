@@ -46,15 +46,15 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
     private static final Logger LOG = LoggerFactory.getLogger(ScopeAndDeclarationFinder.class);
 
     /**
-     * A stack of scopes reflecting the scope hierarchy when a node is visited. This
-     * is used to set the parents of the created scopes correctly.
+     * A stack of scopes reflecting the scope hierarchy when a node is visited.
+     * This is used to set the parents of the created scopes correctly.
      */
     private Deque<Scope> scopes = new ArrayDeque<>();
 
     /**
-     * Sets the scope of a node and adjusts the scope stack accordingly. The scope
-     * on top of the stack is set as the parent of the given scope, which is then
-     * also stored on the scope stack.
+     * Sets the scope of a node and adjusts the scope stack accordingly. The
+     * scope on top of the stack is set as the parent of the given scope, which
+     * is then also stored on the scope stack.
      *
      * @param newScope
      *            the scope for the node.
@@ -70,9 +70,9 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
     }
 
     /**
-     * Creates a new local scope for an AST node. The scope on top of the stack is
-     * set as the parent of the new scope, which is then also stored on the scope
-     * stack.
+     * Creates a new local scope for an AST node. The scope on top of the stack
+     * is set as the parent of the new scope, which is then also stored on the
+     * scope stack.
      *
      * @param node
      *            the AST node for which the scope has to be created.
@@ -84,9 +84,9 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
     }
 
     /**
-     * Creates a new method scope for an AST node. The scope on top of the stack is
-     * set as the parent of the new scope, which is then also stored on the scope
-     * stack.
+     * Creates a new method scope for an AST node. The scope on top of the stack
+     * is set as the parent of the new scope, which is then also stored on the
+     * scope stack.
      *
      * @param node
      *            the AST node for which the scope has to be created.
@@ -98,9 +98,9 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
     }
 
     /**
-     * Creates a new class scope for an AST node. The scope on top of the stack is
-     * set as the parent of the new scope, which is then also stored on the scope
-     * stack.
+     * Creates a new class scope for an AST node. The scope on top of the stack
+     * is set as the parent of the new scope, which is then also stored on the
+     * scope stack.
      *
      * @param node
      *            the AST node for which the scope has to be created.
@@ -116,8 +116,8 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
     }
 
     /**
-     * Creates a new global scope for an AST node. The new scope is stored on the
-     * scope stack.
+     * Creates a new global scope for an AST node. The new scope is stored on
+     * the scope stack.
      *
      * @param node
      *            the AST node for which the scope has to be created.
@@ -182,8 +182,8 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
     }
 
     /*
-     * @Override public Object visit(ASTCompoundTriggerBlock node, Object data) {
-     * createMethodScope(node); ASTMethodDeclarator md =
+     * @Override public Object visit(ASTCompoundTriggerBlock node, Object data)
+     * { createMethodScope(node); ASTMethodDeclarator md =
      * node.getFirstChildOfType(ASTMethodDeclarator.class);
      * node.getScope().getEnclosingClassScope().addDeclaration(new
      * MethodNameDeclaration(md)); cont(node); return data; }
@@ -227,10 +227,11 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
 
     /*
      * @Override public Object visit(ASTMethodDeclaration node, Object data) {
-     * createMethodScope(node); // // A method declaration my be- // ASTProgramUnit
-     * - a standalone or packaged FUNCTION or PROCEDURE // ASTTypeMethod - an OBJECT
-     * TYPE method // // The Method declarator is below the ASTProgramUnit /
-     * ASTTypeMethod /// List<ASTMethodDeclarator> methodDeclarators =
+     * createMethodScope(node); // // A method declaration my be- //
+     * ASTProgramUnit - a standalone or packaged FUNCTION or PROCEDURE //
+     * ASTTypeMethod - an OBJECT TYPE method // // The Method declarator is
+     * below the ASTProgramUnit / ASTTypeMethod /// List<ASTMethodDeclarator>
+     * methodDeclarators =
      * node.findDescendantsOfType(ASTMethodDeclarator.class); if
      * (!methodDeclarators.isEmpty() ) { //Use first Declarator in the list
      * ASTMethodDeclarator md = methodDeclarators.get(0);
@@ -241,8 +242,8 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
      * node.getFirstChildOfType(ASTMethodDeclarator.class); // A PLSQL Method
      * (FUNCTION|PROCEDURE) may be schema-level try {
      * node.getScope().getEnclosingClassScope().addDeclaration(new
-     * MethodNameDeclaration(md)); } catch (Exception e) { //@TODO possibly add to a
-     * pseudo-ClassScope equivalent to the Schema name
+     * MethodNameDeclaration(md)); } catch (Exception e) { //@TODO possibly add
+     * to a pseudo-ClassScope equivalent to the Schema name
      * LOGGER.finest("ProgramUnit getEnclosingClassScope Exception string=\""+e.
      * getMessage()+"\"");
      * if("getEnclosingClassScope() called on SourceFileScope".equals(e.
@@ -273,16 +274,16 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
             // Schema name
             LOG.trace("ProgramUnit getEnclosingClassScope Exception string=\"{}\"", e.getMessage());
             if ("getEnclosingClassScope() called on SourceFileScope".equals(e.getMessage())) {
-                LOG.trace("ClassScope skipped for Schema-level method: methodName={}; Image={}", md.getImage(),
-                        node.getImage());
+                LOG.trace("ClassScope skipped for Schema-level method: methodName={}; Image={}",
+                        md.getImage(), node.getImage());
 
                 // A File-level/Schema-level object may have a Schema-name
                 // explicitly specified in the declaration
                 ASTObjectNameDeclaration on = md.firstChild(ASTObjectNameDeclaration.class);
                 if (1 < on.getNumChildren()) {
                     ASTID schemaName = on.firstChild(ASTID.class);
-                    LOG.trace("SchemaName for Schema-level method: methodName={}; Image={} is {}", md.getImage(),
-                            node.getImage(), schemaName.getImage());
+                    LOG.trace("SchemaName for Schema-level method: methodName={}; Image={} is {}",
+                            md.getImage(), node.getImage(), schemaName.getImage());
 
                 }
             }
@@ -290,7 +291,7 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
         cont(node);
         return data;
     }
-
+    
     @Override
     public Object visit(ASTTypeMethod node, Object data) {
         return visitMethodLike(node, data);

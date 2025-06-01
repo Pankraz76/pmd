@@ -12,8 +12,7 @@ package net.sourceforge.pmd.lang.rule;
  * avoided in favor of {@link RulePriority#getPriority()} and
  * {@link RulePriority#valueOf(int)}
  *
- * @see <a href=
- *      "https://docs.pmd-code.org/latest/pmd_userdocs_extending_rule_guidelines.html">How
+ * @see <a href="https://docs.pmd-code.org/latest/pmd_userdocs_extending_rule_guidelines.html">How
  *      to define rules priority</a>
  */
 public enum RulePriority {
@@ -31,13 +30,13 @@ public enum RulePriority {
      */
     MEDIUM(3, "Medium"),
     /**
-     * Medium to low: Change optional. Behavior is not likely to be buggy, but more
-     * just flies in the face of standards/style/good taste.
+     * Medium to low: Change optional. Behavior is not likely to be buggy, but
+     * more just flies in the face of standards/style/good taste.
      */
     MEDIUM_LOW(4, "Medium Low"),
     /**
-     * Low: Change highly optional. Nice to have, such as a consistent naming policy
-     * for package/class/fields...
+     * Low: Change highly optional. Nice to have, such as a consistent naming
+     * policy for package/class/fields...
      */
     LOW(5, "Low");
 
@@ -81,8 +80,8 @@ public enum RulePriority {
 
     /**
      * Get the priority which corresponds to the given number as returned by
-     * {@link RulePriority#getPriority()}. If the number is an invalid value, then
-     * {@link RulePriority#LOW} will be returned.
+     * {@link RulePriority#getPriority()}. If the number is an invalid value,
+     * then {@link RulePriority#LOW} will be returned.
      *
      * @param priority
      *            The numeric priority value.
@@ -98,11 +97,10 @@ public enum RulePriority {
 
     /**
      * Returns the priority which corresponds to the given number as returned by
-     * {@link RulePriority#getPriority()}. If the number is an invalid value, then
-     * null will be returned.
+     * {@link RulePriority#getPriority()}. If the number is an invalid value,
+     * then null will be returned.
      *
-     * @param priority
-     *            The numeric priority value.
+     * @param priority The numeric priority value.
      */
     public static RulePriority valueOfNullable(int priority) {
         try {
@@ -114,11 +112,10 @@ public enum RulePriority {
 
     /**
      * Returns the priority which corresponds to the given number as returned by
-     * {@link RulePriority#getPriority()}. If the number is an invalid value, then
-     * null will be returned.
+     * {@link RulePriority#getPriority()}. If the number is an invalid value,
+     * then null will be returned.
      *
-     * @param priority
-     *            The numeric priority value.
+     * @param priority The numeric priority value.
      */
     public static RulePriority valueOfNullable(String priority) {
         try {

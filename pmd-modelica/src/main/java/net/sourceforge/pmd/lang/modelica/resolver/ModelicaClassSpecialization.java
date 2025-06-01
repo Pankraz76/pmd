@@ -5,9 +5,8 @@
 package net.sourceforge.pmd.lang.modelica.resolver;
 
 /**
- * Enumerates "specialized kinds of classes" (package, model, connector, etc.)
- * that define some restrictions and enhancements on what can be defined inside
- * and how can they be used.
+ * Enumerates "specialized kinds of classes" (package, model, connector, etc.) that define
+ * some restrictions and enhancements on what can be defined inside and how can they be used.
  *
  * See "4.6 Specialized classes" from MLS 3.4
  */

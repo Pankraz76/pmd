@@ -25,16 +25,20 @@ public class DummyLanguageDialectModule extends SimpleDialectLanguageModuleBase 
     public static final String NAME = "DummyDialect";
     public static final String TERSE_NAME = "dummydialect";
 
-    public static final Metric<Node, Number> DUMMY_DIALECT_METRIC = Metric.of((node, options) -> null, (node) -> node,
+    public static final Metric<Node, Number> DUMMY_DIALECT_METRIC =
+            Metric.of((node, options) -> null, (node) -> node,
             "Constant NULL metric", "null");
 
-    public static final PropertyDescriptor<Boolean> DUMMY_DIALECT_PROP = PropertyFactory
-            .booleanProperty("dummyDialectProperty").defaultValue(false).desc("Some dummy boolean without purpose")
-            .build();
+    public static final PropertyDescriptor<Boolean> DUMMY_DIALECT_PROP =
+            PropertyFactory.booleanProperty("dummyDialectProperty")
+                    .defaultValue(false)
+                    .desc("Some dummy boolean without purpose")
+                    .build();
 
     public DummyLanguageDialectModule() {
-        super(LanguageMetadata.withId(TERSE_NAME).name(NAME).extensions("txt", "dummydlc").addDefaultVersion("1.0")
-                .asDialectOf(DummyLanguageModule.TERSE_NAME), new Handler());
+        super(LanguageMetadata.withId(TERSE_NAME).name(NAME)
+                .extensions("txt", "dummydlc")
+                .addDefaultVersion("1.0").asDialectOf(DummyLanguageModule.TERSE_NAME), new Handler());
     }
 
     public static DummyLanguageDialectModule getInstance() {
@@ -66,7 +70,7 @@ public class DummyLanguageDialectModule extends SimpleDialectLanguageModuleBase 
         return new XPathFunctionDefinition("dummyDialectFn", DummyLanguageDialectModule.getInstance()) {
             @Override
             public Type[] getArgumentTypes() {
-                return new Type[] { Type.SINGLE_STRING };
+                return new Type[] {Type.SINGLE_STRING};
             }
 
             @Override

@@ -16,6 +16,7 @@ import net.sourceforge.pmd.lang.document.TextRange2d;
  */
 public class ExcessiveParameterListRule extends AbstractCounterCheckRule<ASTMethod> {
 
+
     public ExcessiveParameterListRule() {
         super(ASTMethod.class);
     }

@@ -3,8 +3,6 @@
  */
 
 /**
- * This module contains only internal code to generate the rule documentation
- * pages.
+ * This module contains only internal code to generate the rule documentation pages.
  */
-
 package net.sourceforge.pmd.doc;

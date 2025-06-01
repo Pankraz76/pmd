@@ -93,8 +93,7 @@ public class RuleTagChecker {
             String category = ruleRefMatcher.group(2);
             String rule = ruleRefMatcher.group(3);
 
-            Path ruleDocPage = pagesDirectory
-                    .resolve("pmd/rules/" + language + "/" + category.toLowerCase(Locale.ROOT) + ".md");
+            Path ruleDocPage = pagesDirectory.resolve("pmd/rules/" + language + "/" + category.toLowerCase(Locale.ROOT) + ".md");
             Set<String> rules = getRules(ruleDocPage);
             return rules.contains(rule);
         } else if (simpleRefMatcher.matches()) {

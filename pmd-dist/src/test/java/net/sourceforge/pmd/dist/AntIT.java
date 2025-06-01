@@ -26,13 +26,10 @@ import org.junit.jupiter.api.condition.OS;
 import net.sourceforge.pmd.internal.util.IOUtil;
 
 /**
- * This test calls ant in a fake terminal to make sure we have a
- * {@link java.io.Console} connected. This however only works under linux.
+ * This test calls ant in a fake terminal to make sure we have a {@link java.io.Console} connected.
+ * This however only works under linux.
  * <p>
- * See <a href="#
- * https://stackoverflow.com/questions/1401002/how-to-trick-an-application-into-thinking-its-stdout-is-a-terminal-not-a-pipe/20401674#20401674">How
- * to trick an application into thinking its stdout is a terminal, not a
- * pipe</a>.
+ * See <a href="# https://stackoverflow.com/questions/1401002/how-to-trick-an-application-into-thinking-its-stdout-is-a-terminal-not-a-pipe/20401674#20401674">How to trick an application into thinking its stdout is a terminal, not a pipe</a>.
  */
 class AntIT extends AbstractBinaryDistributionTest {
 
@@ -44,11 +41,13 @@ class AntIT extends AbstractBinaryDistributionTest {
         File antTestProjectFolder = prepareAntTestProjectFolder();
 
         ExecutionResult result = runAnt(antBasepath, pmdHome, antTestProjectFolder);
-        result.assertExitCode(0).assertStdOut(containsString("BUILD SUCCESSFUL"))
-                .assertStdOut(not(containsStringIgnoringCase("Illegal reflective access"))) // #1860
-                // the no package rule
-                .assertStdOut(containsString("NoPackage"));
+        result.assertExitCode(0)
+              .assertStdOut(containsString("BUILD SUCCESSFUL"))
+              .assertStdOut(not(containsStringIgnoringCase("Illegal reflective access"))) // #1860
+              // the no package rule
+              .assertStdOut(containsString("NoPackage"));
     }
+
 
     private File prepareAntTestProjectFolder() throws IOException {
         final Path sourceProjectFolder = new File("src/test/resources/ant-it").toPath();
@@ -75,10 +74,11 @@ class AntIT extends AbstractBinaryDistributionTest {
         return projectFolder.toFile();
     }
 
+
     private ExecutionResult runAnt(String antLibPath, String pmdHomePath, File antTestProjectFolder)
             throws IOException, InterruptedException {
-        String cmd = System.getenv("JAVA_HOME") + "/bin/java" + " -cp \"" + antLibPath + "/*\"" + " -jar " + antLibPath
-                + "/ant-launcher.jar -Dpmd.home=" + pmdHomePath;
+        String cmd = System.getenv("JAVA_HOME") + "/bin/java" + " -cp \"" + antLibPath + "/*\""
+                + " -jar " + antLibPath + "/ant-launcher.jar -Dpmd.home=" + pmdHomePath;
 
         // https://stackoverflow.com/questions/1401002/how-to-trick-an-application-into-thinking-its-stdout-is-a-terminal-not-a-pipe/20401674#20401674
         ProcessBuilder pb = new ProcessBuilder("script", "-qfec", cmd, "/dev/null");

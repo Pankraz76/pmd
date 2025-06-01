@@ -8,11 +8,10 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * Provides backwards compatible XML renderer, which doesn't use namespaces,
- * schema and doesn't output error information.
+ * Provides backwards compatible XML renderer, which doesn't use namespaces, schema and
+ * doesn't output error information.
  *
- * <p>
- * This renderer is available as "xmlold".
+ * <p>This renderer is available as "xmlold".
  *
  * @deprecated Update your tools to use the standard XML renderer "xml" again.
  */

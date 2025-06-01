@@ -26,8 +26,8 @@ import net.sourceforge.pmd.cpd.CpdCapableLanguage;
 import net.sourceforge.pmd.util.CollectionUtil;
 
 /**
- * A set of languages with convenient methods. In the PMD CLI, languages are
- * loaded from the classloader of this class. These are in the registry
+ * A set of languages with convenient methods. In the PMD CLI, languages
+ * are loaded from the classloader of this class. These are in the registry
  * {@link #PMD}. You can otherwise create different registries with different
  * languages, eg filter some out.
  */
@@ -36,17 +36,18 @@ public final class LanguageRegistry implements Iterable<Language> {
     private static final Logger LOG = LoggerFactory.getLogger(LanguageRegistry.class);
 
     // test only
-    static final LanguageRegistry ALL_LANGUAGES = loadLanguages(LanguageRegistry.class.getClassLoader());
+    static final LanguageRegistry ALL_LANGUAGES =
+        loadLanguages(LanguageRegistry.class.getClassLoader());
 
     /**
-     * Contains the languages that support PMD and are found on the classpath of the
-     * classloader of this class. This can be used as a "default" registry.
+     * Contains the languages that support PMD and are found on the classpath
+     * of the classloader of this class. This can be used as a "default" registry.
      */
     public static final LanguageRegistry PMD = ALL_LANGUAGES.filter(it -> it instanceof PmdCapableLanguage);
 
     /**
-     * Contains the languages that support CPD and are found on the classpath of the
-     * classloader of this class.
+     * Contains the languages that support CPD and are found on the classpath
+     * of the classloader of this class.
      */
     public static final LanguageRegistry CPD = ALL_LANGUAGES.filter(it -> it instanceof CpdCapableLanguage);
 
@@ -57,13 +58,12 @@ public final class LanguageRegistry implements Iterable<Language> {
 
     /**
      * Create a new registry that contains the given set of languages.
-     * 
-     * @throws NullPointerException
-     *             If the parameter is null
+     * @throws NullPointerException If the parameter is null
      */
     public LanguageRegistry(Set<? extends Language> languages) {
-        this.languages = languages.stream().sorted(Comparator.comparing(Language::getId, String::compareToIgnoreCase))
-                .collect(CollectionUtil.toUnmodifiableSet());
+        this.languages = languages.stream()
+                                  .sorted(Comparator.comparing(Language::getId, String::compareToIgnoreCase))
+                                  .collect(CollectionUtil.toUnmodifiableSet());
         this.languagesById = CollectionUtil.associateBy(languages, Language::getId);
         this.languagesByFullName = CollectionUtil.associateBy(languages, Language::getName);
     }
@@ -72,24 +72,25 @@ public final class LanguageRegistry implements Iterable<Language> {
      * Create a new registry with the languages that satisfy the predicate.
      */
     public LanguageRegistry filter(Predicate<Language> filterFun) {
-        return new LanguageRegistry(languages.stream().filter(filterFun).collect(Collectors.toSet()));
+        return new LanguageRegistry(languages.stream().filter(filterFun)
+                                             .collect(Collectors.toSet()));
     }
 
     /**
-     * Creates a language registry containing a single language. Note that this may
-     * be inconvertible to a {@link LanguageProcessorRegistry} if the language
-     * depends on other languages.
+     * Creates a language registry containing a single language. Note
+     * that this may be inconvertible to a {@link LanguageProcessorRegistry}
+     * if the language depends on other languages.
      */
     public static LanguageRegistry singleton(Language l) {
         return new LanguageRegistry(Collections.singleton(l));
     }
 
     /**
-     * Creates a language registry containing the given language and its
-     * dependencies, fetched from this language registry or the parameter.
+     * Creates a language registry containing the given language and
+     * its dependencies, fetched from this language registry or the
+     * parameter.
      *
-     * @throws IllegalStateException
-     *             If dependencies cannot be fulfilled.
+     * @throws IllegalStateException If dependencies cannot be fulfilled.
      */
     public LanguageRegistry getDependenciesOf(Language lang) {
         Set<Language> result = new HashSet<>();
@@ -102,7 +103,8 @@ public final class LanguageRegistry implements Iterable<Language> {
         for (String depId : l.getDependencies()) {
             Language dep = getLanguageById(depId);
             if (dep == null) {
-                throw new IllegalStateException("Cannot find language " + depId + " in " + this);
+                throw new IllegalStateException(
+                    "Cannot find language " + depId + " in " + this);
             }
             if (languages.add(dep)) {
                 addDepsOrThrow(dep, languages);
@@ -116,11 +118,10 @@ public final class LanguageRegistry implements Iterable<Language> {
     }
 
     /**
-     * Create a new registry by loading the languages registered via
-     * {@link ServiceLoader} on the classpath of the given classloader.
+     * Create a new registry by loading the languages registered via {@link ServiceLoader}
+     * on the classpath of the given classloader.
      *
-     * @param classLoader
-     *            A classloader
+     * @param classLoader A classloader
      */
     public static @NonNull LanguageRegistry loadLanguages(ClassLoader classLoader) {
         // sort languages by terse name. Avoiding differences in the order of languages
@@ -129,8 +130,7 @@ public final class LanguageRegistry implements Iterable<Language> {
         ServiceLoader<Language> languageLoader = ServiceLoader.load(Language.class, classLoader);
         Iterator<Language> iterator = languageLoader.iterator();
         while (true) {
-            // this loop is weird, but both hasNext and next may throw
-            // ServiceConfigurationError,
+            // this loop is weird, but both hasNext and next may throw ServiceConfigurationError,
             // it's more robust that way
             try {
                 if (iterator.hasNext()) {
@@ -149,19 +149,18 @@ public final class LanguageRegistry implements Iterable<Language> {
     }
 
     /**
-     * Returns a set of all the known languages. The ordering of the languages is by
-     * terse name.
+     * Returns a set of all the known languages. The ordering of the languages
+     * is by terse name.
      */
     public Set<Language> getLanguages() {
         return languages;
     }
 
     /**
-     * Returns a language from its {@linkplain Language#getId() ID} (eg
-     * {@code "java"}). This is case-sensitive.
+     * Returns a language from its {@linkplain Language#getId() ID}
+     * (eg {@code "java"}). This is case-sensitive.
      *
-     * @param langId
-     *            Language ID
+     * @param langId Language ID
      *
      * @return A language, or null if the name is unknown, or the parameter is null
      */
@@ -173,10 +172,8 @@ public final class LanguageRegistry implements Iterable<Language> {
      * Returns a language version from its {@linkplain Language#getId() language ID}
      * (eg {@code "java"}). This is case-sensitive.
      *
-     * @param langId
-     *            Language ID
-     * @param version
-     *            Version ID
+     * @param langId  Language ID
+     * @param version Version ID
      *
      * @return A language, or null if the name is unknown
      */
@@ -185,15 +182,15 @@ public final class LanguageRegistry implements Iterable<Language> {
         if (lang == null) {
             return null;
         }
-        return version == null ? lang.getDefaultVersion() : lang.getVersion(version);
+        return version == null ? lang.getDefaultVersion()
+                               : lang.getVersion(version);
     }
 
     /**
-     * Returns a language from its {@linkplain Language#getName() full name} (eg
-     * {@code "Java"}). This is case sensitive.
+     * Returns a language from its {@linkplain Language#getName() full name}
+     * (eg {@code "Java"}). This is case sensitive.
      *
-     * @param languageName
-     *            Language name
+     * @param languageName Language name
      *
      * @return A language, or null if the name is unknown
      */
@@ -202,8 +199,8 @@ public final class LanguageRegistry implements Iterable<Language> {
     }
 
     /**
-     * Formats the set of languages with the given formatter, sort and join
-     * everything with commas. Convenience method.
+     * Formats the set of languages with the given formatter, sort and
+     * join everything with commas. Convenience method.
      */
     public @NonNull String commaSeparatedList(Function<? super Language, String> languageToString) {
         return getLanguages().stream().map(languageToString).sorted().collect(Collectors.joining(", "));

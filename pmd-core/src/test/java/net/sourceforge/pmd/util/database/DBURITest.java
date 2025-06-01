@@ -22,7 +22,8 @@ import org.junit.jupiter.api.Test;
 class DBURITest {
 
     /**
-     * URI with minimum information, relying on defaults in testdefaults.properties
+     * URI with minimum information, relying on defaults in
+     * testdefaults.properties
      */
     static final String C_TEST_DEFAULTS = "jdbc:oracle:testdefault://192.168.100.21:1521/ORCL";
 
@@ -43,8 +44,8 @@ class DBURITest {
     static final String C_TEST_EXPLICIT = "jdbc:oracle:testdefault:system/oracle@//192.168.100.21:1521/ORCL?characterset=us7ascii&schemas=scott,hr,sh,system&sourcecodetypes=procedures,functions,triggers,package,types&languages=plsql,java&sourcecodenames=PKG_%25%25,PRC_%25%25";
 
     /*
-     * Expected values from testdefaults.properties, with values overridden by URI
-     * query parameters
+     * Expected values from testdefaults.properties, with values overridden by
+     * URI query parameters
      */
     static final String C_EXPLICIT_USER = "system";
     static final String C_EXPLICIT_PASSWORD = "oracle";
@@ -500,7 +501,8 @@ class DBURITest {
     }
 
     /**
-     * Verify that default languages are returned if non are provided in the DBURI.
+     * Verify that default languages are returned if non are provided in the
+     * DBURI.
      */
     @Test
     void testDefaultLanguagesList() throws URISyntaxException, Exception {
@@ -533,7 +535,8 @@ class DBURITest {
     }
 
     /**
-     * Verify that default languages are returned if non are provided in the DBURI.
+     * Verify that default languages are returned if non are provided in the
+     * DBURI.
      */
     @Test
     void testDefaultSchemasList() throws URISyntaxException, Exception {
@@ -550,8 +553,8 @@ class DBURITest {
     }
 
     /**
-     * Verify that default Source Code Types are returned if non are provided in the
-     * DBURI.
+     * Verify that default Source Code Types are returned if non are provided in
+     * the DBURI.
      */
     @Test
     void testDefaultSourceCodeTypesList() throws URISyntaxException, Exception {
@@ -568,7 +571,8 @@ class DBURITest {
     }
 
     /**
-     * Verify that default languages are returned if non are provided in the DBURI.
+     * Verify that default languages are returned if non are provided in the
+     * DBURI.
      */
     @Test
     void testDefaultSourceCodeNamesList() throws URISyntaxException, Exception {

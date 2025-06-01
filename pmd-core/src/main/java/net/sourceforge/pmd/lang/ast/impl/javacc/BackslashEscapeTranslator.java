@@ -17,12 +17,13 @@ public abstract class BackslashEscapeTranslator extends EscapeTranslator {
     private static final char BACKSLASH = '\\';
 
     /**
-     * An offset until which we read backslashes and decided they were not an
-     * escape. The read procedure may cut off in the middle of the escape, and turn
-     * an even num of backslashes into an odd one, so until we crossed this offset,
-     * backslashes are not treated specially.
+     * An offset until which we read backslashes and decided they were not
+     * an escape. The read procedure may cut off in the middle of the escape,
+     * and turn an even num of backslashes into an odd one, so until we crossed
+     * this offset, backslashes are not treated specially.
      */
     private int savedNotEscapeSpecialEnd = Integer.MAX_VALUE;
+
 
     public BackslashEscapeTranslator(TextDocument builder) {
         super(builder);

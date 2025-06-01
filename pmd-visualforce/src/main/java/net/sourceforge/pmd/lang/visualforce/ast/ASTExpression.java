@@ -27,34 +27,31 @@ public final class ASTExpression extends AbstractVfNode {
     }
 
     private void logWarning(String warning, Node node) {
-        LOG.warn("{}: {}\n{}", node.getReportLocation().startPosToStringWithFile(), warning, node);
+        LOG.warn("{}: {}\n{}",
+                node.getReportLocation().startPosToStringWithFile(),
+                warning,
+                node);
     }
 
     /**
      * <p>
-     * An Expression can contain one or more strings that map to a piece of data.
-     * This method maps the string from the Visualforce page to terminal AST node
-     * that the string represents. The terminal node will be either an ASTIdentifier
-     * or ASTLiteral. It is the terminal node that is most important since it
-     * represents the type of data that will be displayed in the page.
+     * An Expression can contain one or more strings that map to a piece of data. This method maps the string
+     * from the Visualforce page to terminal AST node that the string represents. The terminal node will be either an
+     * ASTIdentifier or ASTLiteral. It is the terminal node that is most important since it represents the type of data
+     * that will be displayed in the page.
      * </p>
      * <p>
-     * The string representation can be reconstructed by starting at the
-     * {@code Identifier} node and traversing its siblings until a node other than a
-     * {@code DotExpression} is encountered. Some more advanced situations aren't
-     * currently handled by this method. The method will throw an exception in such
-     * cases.
+     * The string representation can be reconstructed by starting at the {@code Identifier} node and traversing its
+     * siblings until a node other than a {@code DotExpression} is encountered. Some more advanced situations aren't
+     * currently handled by this method. The method will throw an exception in such cases.
      * </p>
-     * 
      * <pre>{@code
      * <apex:outputText value="{!MyValue}" /> results in AST
      * <Identifier Image='MyValue'/>
      * The method would return key=ASTIdentifier(Image='MyValue'), value="MyValue"
      * }</pre>
-     * 
      * <pre>{@code
-     * <apex:outputText value=
-    "{!MyObject__c.Text__c}" /> results in AST (It's important to notice that DotExpression is
+     * <apex:outputText value="{!MyObject__c.Text__c}" /> results in AST (It's important to notice that DotExpression is
      * a sibling of Identifier.
      * <Identifier Image='MyObject__c'/>
      * <DotExpression Image=''>
@@ -63,10 +60,9 @@ public final class ASTExpression extends AbstractVfNode {
      * This method would return key=ASTIdentifier(Image='Text__c'), value="MyObject__c.Text__c"
      * }</pre>
      *
-     * THE FOLLOWING SITUATIONS ARE NOT HANDLED AND WILL THROW AN EXCEPTION. This
-     * syntax causes ambiguities with Apex Controller methods that return Maps
-     * versus accessing a CustomObject's field via array notation. This may be
-     * addressed in a future release.
+     * THE FOLLOWING SITUATIONS ARE NOT HANDLED AND WILL THROW AN EXCEPTION.
+     * This syntax causes ambiguities with Apex Controller methods that return Maps versus accessing a CustomObject's
+     * field via array notation. This may be addressed in a future release.
      *
      * <pre>{@code
      * <apex:outputText value="{!MyObject__c['Text__c']}" /> results in AST
@@ -74,9 +70,8 @@ public final class ASTExpression extends AbstractVfNode {
      * <Expression Image=''>
      *     <Literal Image='&apos;Text__c&apos;'>
      * </Expression>
-    
-     * <apex:outputText value=
-    "{!MyObject__c[AnotherObject__c.Id]}" /> results in AST
+
+     * <apex:outputText value="{!MyObject__c[AnotherObject__c.Id]}" /> results in AST
      * <Identifier Image='MyObject__c'/>
      * <Expression Image=''>
      *     <Identifier Image='AnotherObject__c'/>
@@ -87,10 +82,8 @@ public final class ASTExpression extends AbstractVfNode {
      * </Expression>
      * }</pre>
      *
-     * @throws DataNodeStateException
-     *             if the results of this method could have been incorrect. Callers
-     *             should typically not rethrow this exception, as it will happen
-     *             often and doesn't represent a terminal exception.
+     * @throws DataNodeStateException if the results of this method could have been incorrect. Callers should typically
+     * not rethrow this exception, as it will happen often and doesn't represent a terminal exception.
      */
     public Map<VfTypedNode, String> getDataNodes() throws DataNodeStateException {
         Map<VfTypedNode, String> result = new IdentityHashMap<>();
@@ -105,10 +98,8 @@ public final class ASTExpression extends AbstractVfNode {
             int index = identifier.getIndexInParent();
 
             // Iterate through the rest of the children looking for ASTDotExpression nodes.
-            // The Image value of these nodes will be used to reconstruct the string. Any
-            // other node encountered will
-            // cause the while loop to break. The content of identifierNodes is used to
-            // construct the string and map
+            // The Image value of these nodes will be used to reconstruct the string. Any other node encountered will
+            // cause the while loop to break. The content of identifierNodes is used to construct the string and map
             // it to the last element in identifierNodes.
             index++;
             while (index < numChildren) {
@@ -130,31 +121,30 @@ public final class ASTExpression extends AbstractVfNode {
                         throw new DataNodeStateException();
                     }
                 } else if (node instanceof ASTExpression) {
-                    // Not currently supported. This can occur in a couple of cases that may be
-                    // supported in the future.
+                    // Not currently supported. This can occur in a couple of cases that may be supported in the future.
                     // 1. Custom Field using array notation. MyObject__c['Text__c']
                     // 2. An Apex method that returns a map. ControllerMethod['KeyForMap']
                     throw new DataNodeStateException();
                 } else {
-                    // Any other node type is not considered part of the identifier and breaks out
-                    // of the loop
+                    // Any other node type is not considered part of the identifier and breaks out of the loop
                     break;
                 }
                 index++;
             }
 
-            // Convert the list of nodes to a string representation, store the last node in
-            // the list as the map's key
-            String idString = String.join(".",
-                    identifierNodes.stream().map(i -> i.getImage()).collect(Collectors.toList()));
+            // Convert the list of nodes to a string representation, store the last node in the list as the map's key
+            String idString = String.join(".", identifierNodes.stream()
+                    .map(i -> i.getImage())
+                    .collect(Collectors.toList()));
             result.put(identifierNodes.getLast(), idString);
         }
         return result;
     }
 
+
     /**
-     * Thrown in cases where the the Identifiers in this node aren't ALL
-     * successfully parsed in a call to {@link #getDataNodes()}
+     * Thrown in cases where the the Identifiers in this node aren't ALL successfully parsed in a call to
+     * {@link #getDataNodes()}
      */
     public static final class DataNodeStateException extends Exception {
     }

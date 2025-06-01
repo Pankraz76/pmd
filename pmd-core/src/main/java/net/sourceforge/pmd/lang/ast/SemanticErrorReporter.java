@@ -19,56 +19,50 @@ import net.sourceforge.pmd.util.log.PmdReporter;
 public interface SemanticErrorReporter {
     // TODO use resource bundle keys instead of string messages.
 
+
     /**
-     * Report a warning at the given location. Warnings do not abort the analysis.
-     * They are usually recoverable errors. They are used to warn the user that
-     * something wrong is going on, which may cause subsequent errors or
-     * inconsistent behavior.
+     * Report a warning at the given location. Warnings do not abort
+     * the analysis. They are usually recoverable errors. They are used
+     * to warn the user that something wrong is going on, which may cause
+     * subsequent errors or inconsistent behavior.
      *
-     * @param location
-     *            Location where the warning should be reported
-     * @param message
-     *            Message (rendered using a {@link MessageFormat})
-     * @param formatArgs
-     *            Format arguments
+     * @param location   Location where the warning should be reported
+     * @param message    Message (rendered using a {@link MessageFormat})
+     * @param formatArgs Format arguments
      */
     void warning(Node location, String message, Object... formatArgs);
 
+
     /**
-     * Report an error at the given location. Errors abort subsequent analysis and
-     * cause a processing error to be put in the report. The produced error can be
-     * thrown by the caller if it cannot be recovered from.
+     * Report an error at the given location. Errors abort subsequent analysis
+     * and cause a processing error to be put in the report. The produced error
+     * can be thrown by the caller if it cannot be recovered from.
      *
-     * @param location
-     *            Location where the error should be reported
-     * @param message
-     *            Message (rendered using a {@link MessageFormat})
-     * @param formatArgs
-     *            Format arguments
+     * @param location   Location where the error should be reported
+     * @param message    Message (rendered using a {@link MessageFormat})
+     * @param formatArgs Format arguments
      */
     SemanticException error(Node location, String message, Object... formatArgs);
 
     /**
-     * If the given error has not been reported yet
-     * ({@link SemanticException#wasReported()}), report it using this logger. This
-     * is used to report semantic exceptions that were produced outside this logger,
-     * but have been caught.
+     * If the given error has not been reported yet ({@link SemanticException#wasReported()}),
+     * report it using this logger. This is used to report semantic exceptions that were produced
+     * outside this logger, but have been caught.
      *
-     * @param e
-     *            a semantic exception
+     * @param e a semantic exception
      */
     default void acceptError(SemanticException e) {
         e.setReported();
     }
 
+
     /**
-     * If {@link #error(Node, String, Object...)} has been called, return a semantic
-     * exception instance with the correct message. If it has been called more than
-     * once, return the first exception, possibly with suppressed exceptions for
-     * subsequent calls to {@link #error(Node, String, Object...)}.
+     * If {@link #error(Node, String, Object...)} has been called, return
+     * a semantic exception instance with the correct message. If it has been
+     * called more than once, return the first exception, possibly with suppressed
+     * exceptions for subsequent calls to {@link #error(Node, String, Object...)}.
      */
-    @Nullable
-    SemanticException getFirstError();
+    @Nullable SemanticException getFirstError();
 
     static SemanticErrorReporter noop() {
         return new SemanticErrorReporter() {
@@ -99,9 +93,10 @@ public interface SemanticErrorReporter {
         };
     }
 
+
     /**
-     * Forwards to a {@link PmdReporter}, except trace and debug messages which are
-     * reported on a logger.
+     * Forwards to a {@link PmdReporter}, except trace and debug
+     * messages which are reported on a logger.
      */
     static SemanticErrorReporter reportToLogger(PmdReporter reporter) {
         return new SemanticErrorReporter() {
@@ -109,7 +104,8 @@ public interface SemanticErrorReporter {
             private SemanticException exception = null;
 
             private String locPrefix(Node loc) {
-                return "at " + loc.getReportLocation().startPosToStringWithFile() + ": ";
+                return "at " + loc.getReportLocation().startPosToStringWithFile()
+                    + ": ";
             }
 
             private String makeMessage(Node location, String message, Object[] args) {

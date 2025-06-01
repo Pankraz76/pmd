@@ -16,23 +16,22 @@ import net.sourceforge.pmd.reporting.RuleViolation;
 import net.sourceforge.pmd.util.AssertionUtil;
 
 /**
- * Represents the coordinates of a text region, used for reporting. This
- * provides access to the line and column positions, as well as the text file.
- * Instances can be obtained from a {@link TextRegion} with
- * {@link TextDocument#toLocation(TextRegion) TextDocument::toLocation}.
+ * Represents the coordinates of a text region, used for reporting. This provides access
+ * to the line and column positions, as well as the text file. Instances
+ * can be obtained from a {@link TextRegion} with {@link TextDocument#toLocation(TextRegion) TextDocument::toLocation}.
  *
- * <p>
- * This should replace the text coordinates methods in {@link Node},
- * {@link GenericToken}, and {@link RuleViolation} at least (see
- * {@link Reportable}).
+ * <p>This should replace the text coordinates methods in {@link Node},
+ * {@link GenericToken}, and {@link RuleViolation} at least (see {@link Reportable}).
  */
 public final class FileLocation {
 
-    public static final Comparator<FileLocation> COORDS_COMPARATOR = Comparator.comparing(FileLocation::getStartPos)
-            .thenComparing(FileLocation::getEndPos);
+    public static final Comparator<FileLocation> COORDS_COMPARATOR =
+        Comparator.comparing(FileLocation::getStartPos)
+                  .thenComparing(FileLocation::getEndPos);
 
-    public static final Comparator<FileLocation> COMPARATOR = Comparator.comparing(FileLocation::getFileId)
-            .thenComparing(COORDS_COMPARATOR);
+
+    public static final Comparator<FileLocation> COMPARATOR =
+        Comparator.comparing(FileLocation::getFileId).thenComparing(COORDS_COMPARATOR);
 
     private final int beginLine;
     private final int endLine;
@@ -45,8 +44,7 @@ public final class FileLocation {
         this(fileName, beginLine, beginColumn, endLine, endColumn, null);
     }
 
-    FileLocation(FileId fileName, int beginLine, int beginColumn, int endLine, int endColumn,
-            @Nullable TextRegion region) {
+    FileLocation(FileId fileName, int beginLine, int beginColumn, int endLine, int endColumn, @Nullable TextRegion region) {
         this.fileName = Objects.requireNonNull(fileName);
         this.beginLine = AssertionUtil.requireOver1("Begin line", beginLine);
         this.endLine = AssertionUtil.requireOver1("End line", endLine);
@@ -99,6 +97,7 @@ public final class FileLocation {
         return TextPos2d.pos2d(beginLine, beginColumn);
     }
 
+
     /**
      * Returns the end position.
      */
@@ -125,6 +124,7 @@ public final class FileLocation {
         return getStartPos().toDisplayStringInEnglish();
     }
 
+
     /**
      * Formats the start position as e.g. {@code "/path/to/file:1:2"}.
      */
@@ -139,39 +139,36 @@ public final class FileLocation {
     /**
      * Creates a new location for a range of text.
      *
-     * @throws IllegalArgumentException
-     *             If the file name is null
-     * @throws IllegalArgumentException
-     *             If any of the line/col parameters are strictly less than 1
-     * @throws IllegalArgumentException
-     *             If the line and column are not correctly ordered
-     * @throws IllegalArgumentException
-     *             If the start offset or length are negative
+     * @throws IllegalArgumentException If the file name is null
+     * @throws IllegalArgumentException If any of the line/col parameters are strictly less than 1
+     * @throws IllegalArgumentException If the line and column are not correctly ordered
+     * @throws IllegalArgumentException If the start offset or length are negative
      */
     public static FileLocation range(FileId fileName, TextRange2d range2d) {
         TextPos2d start = range2d.getStartPos();
         TextPos2d end = range2d.getEndPos();
-        return new FileLocation(fileName, start.getLine(), start.getColumn(), end.getLine(), end.getColumn());
+        return new FileLocation(fileName,
+                                start.getLine(),
+                                start.getColumn(),
+                                end.getLine(),
+                                end.getColumn());
     }
 
     /**
      * Returns a new location that starts and ends at the same position.
      *
-     * @param fileName
-     *            File name
-     * @param line
-     *            Line number
-     * @param column
-     *            Column number
+     * @param fileName File name
+     * @param line     Line number
+     * @param column   Column number
      *
      * @return A new location
      *
-     * @throws IllegalArgumentException
-     *             See {@link #range(FileId, TextRange2d)}
+     * @throws IllegalArgumentException See {@link #range(FileId, TextRange2d)}
      */
     public static FileLocation caret(FileId fileName, int line, int column) {
         return new FileLocation(fileName, line, column, line, column);
     }
+
 
     @Override
     public String toString() {

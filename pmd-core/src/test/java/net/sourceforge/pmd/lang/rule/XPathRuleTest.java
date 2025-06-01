@@ -45,10 +45,9 @@ class XPathRuleTest {
             Report report = getReportForRuleApply(xpr, firstNode);
             assertEquals(1, report.getViolations().size());
         });
-        assertThat(log,
-                Matchers.containsString("Use of deprecated attribute 'dummyNode/@Size' by XPath rule 'SomeRule'"));
-        assertThat(log, Matchers.containsString(
-                "Use of deprecated attribute 'dummyNode/@Name' by XPath rule 'SomeRule', please use @Image instead"));
+        assertThat(log, Matchers.containsString("Use of deprecated attribute 'dummyNode/@Size' by XPath rule 'SomeRule'"));
+        assertThat(log, Matchers.containsString("Use of deprecated attribute 'dummyNode/@Name' by XPath rule 'SomeRule', please use @Image instead"));
+
 
         log = SystemLambda.tapSystemErrAndOut(() -> {
             // with another node
@@ -56,6 +55,7 @@ class XPathRuleTest {
             assertEquals(1, report.getViolations().size());
         });
         assertEquals("", log); // no additional warnings
+
 
         log = SystemLambda.tapSystemErrAndOut(() -> {
             // with another rule forked from the same one (in multithreaded processor)
@@ -72,10 +72,8 @@ class XPathRuleTest {
             Report report = getReportForRuleApply(otherRule, firstNode);
             assertEquals(1, report.getViolations().size());
         });
-        assertThat(log, Matchers.containsString(
-                "Use of deprecated attribute 'dummyNode/@Size' by XPath rule 'OtherRule' (in ruleset 'rset.xml')"));
-        assertThat(log, Matchers.containsString(
-                "Use of deprecated attribute 'dummyNode/@Name' by XPath rule 'OtherRule' (in ruleset 'rset.xml'), please use @Image instead"));
+        assertThat(log, Matchers.containsString("Use of deprecated attribute 'dummyNode/@Size' by XPath rule 'OtherRule' (in ruleset 'rset.xml')"));
+        assertThat(log, Matchers.containsString("Use of deprecated attribute 'dummyNode/@Name' by XPath rule 'OtherRule' (in ruleset 'rset.xml'), please use @Image instead"));
     }
 
     XPathRule makeRule(XPathVersion version, String name) {
@@ -85,6 +83,7 @@ class XPathRuleTest {
         xpr.setMessage("gotcha");
         return xpr;
     }
+
 
     XPathRule makeXPath(String xpathExpr) {
         XPathRule xpr = new XPathRule(XPathVersion.DEFAULT, xpathExpr);
@@ -96,35 +95,40 @@ class XPathRuleTest {
 
     @Test
     void testFileNameInXpath() {
-        Report report = executeRule(makeXPath("//*[pmd:fileName() = 'Foo.cls']"), newRoot("src/Foo.cls"));
+        Report report = executeRule(makeXPath("//*[pmd:fileName() = 'Foo.cls']"),
+                                    newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }
 
     @Test
     void testBeginLine() {
-        Report report = executeRule(makeXPath("//*[pmd:startLine(.)=1]"), newRoot("src/Foo.cls"));
+        Report report = executeRule(makeXPath("//*[pmd:startLine(.)=1]"),
+                                    newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }
 
     @Test
     void testBeginCol() {
-        Report report = executeRule(makeXPath("//*[pmd:startColumn(.)=1]"), newRoot("src/Foo.cls"));
+        Report report = executeRule(makeXPath("//*[pmd:startColumn(.)=1]"),
+                                    newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }
 
     @Test
     void testEndLine() {
-        Report report = executeRule(makeXPath("//*[pmd:endLine(.)=1]"), newRoot("src/Foo.cls"));
+        Report report = executeRule(makeXPath("//*[pmd:endLine(.)=1]"),
+                                    newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }
 
     @Test
     void testEndColumn() {
-        Report report = executeRule(makeXPath("//*[pmd:endColumn(.)>1]"), newRoot("src/Foo.cls"));
+        Report report = executeRule(makeXPath("//*[pmd:endColumn(.)>1]"),
+                                    newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }
@@ -132,6 +136,7 @@ class XPathRuleTest {
     Report executeRule(Rule rule, DummyNode node) {
         return getReportForRuleApply(rule, node);
     }
+
 
     DummyRootNode newNode() {
         DummyRootNode root = newRoot("file");
@@ -144,5 +149,6 @@ class XPathRuleTest {
     public DummyRootNode newRoot(String fileName) {
         return helper.parse("dummy code", fileName);
     }
+
 
 }

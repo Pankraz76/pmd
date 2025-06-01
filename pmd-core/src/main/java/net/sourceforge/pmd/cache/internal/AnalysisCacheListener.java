@@ -13,15 +13,14 @@ import net.sourceforge.pmd.reporting.FileAnalysisListener;
 import net.sourceforge.pmd.reporting.GlobalAnalysisListener;
 
 /**
- * Adapter to wrap {@link AnalysisCache} behaviour in a
- * {@link GlobalAnalysisListener}.
+ * Adapter to wrap {@link AnalysisCache} behaviour in a {@link GlobalAnalysisListener}.
  */
 public class AnalysisCacheListener implements GlobalAnalysisListener {
 
     private final AnalysisCache cache;
 
     public AnalysisCacheListener(AnalysisCache cache, RuleSets ruleSets, ClassLoader classLoader,
-            Collection<? extends TextFile> textFiles) {
+                                 Collection<? extends TextFile> textFiles) {
         this.cache = cache;
         cache.checkValidity(ruleSets, classLoader, textFiles);
     }

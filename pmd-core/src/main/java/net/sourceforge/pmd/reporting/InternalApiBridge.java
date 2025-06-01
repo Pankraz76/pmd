@@ -13,20 +13,17 @@ import net.sourceforge.pmd.lang.rule.Rule;
 /**
  * Internal API.
  *
- * <p>
- * Acts as a bridge between outer parts of PMD and the restricted access
+ * <p>Acts as a bridge between outer parts of PMD and the restricted access
  * internal API of this package.
  *
- * <p>
- * <b>None of this is published API, and compatibility can be broken
- * anytime!</b> Use this only at your own risk.
+ * <p><b>None of this is published API, and compatibility can be broken anytime!</b>
+ * Use this only at your own risk.
  *
  * @apiNote Internal API
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {
-    }
+    private InternalApiBridge() {}
 
     public static Rule getRule(RuleContext ruleContext) {
         return ruleContext.getRule();
@@ -41,8 +38,7 @@ public final class InternalApiBridge {
         return new RuleContext(listener, rule);
     }
 
-    public static ParametricRuleViolation createRuleViolation(Rule theRule, FileLocation location, String message,
-            Map<String, String> additionalInfo) {
+    public static ParametricRuleViolation createRuleViolation(Rule theRule, FileLocation location, String message, Map<String, String> additionalInfo) {
         return new ParametricRuleViolation(theRule, location, message, additionalInfo);
     }
 }

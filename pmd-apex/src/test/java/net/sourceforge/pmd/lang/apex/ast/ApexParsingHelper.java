@@ -11,6 +11,7 @@ public class ApexParsingHelper extends BaseParsingHelper<ApexParsingHelper, ASTA
 
     public static final ApexParsingHelper DEFAULT = new ApexParsingHelper(Params.getDefault());
 
+
     private ApexParsingHelper(Params p) {
         super(ApexLanguageModule.getInstance(), ASTApexFile.class, p);
     }

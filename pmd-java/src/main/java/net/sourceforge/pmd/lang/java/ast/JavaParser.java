@@ -28,11 +28,14 @@ public class JavaParser extends JjtreeParserAdapter<ASTCompilationUnit> {
     private final JavaLanguageProcessor javaProcessor;
     private final boolean postProcess;
 
-    public JavaParser(String suppressMarker, JavaLanguageProcessor javaProcessor, boolean postProcess) {
+    public JavaParser(String suppressMarker,
+                      JavaLanguageProcessor javaProcessor,
+                      boolean postProcess) {
         this.suppressMarker = suppressMarker;
         this.javaProcessor = javaProcessor;
         this.postProcess = postProcess;
     }
+
 
     @Override
     protected TokenDocumentBehavior tokenBehavior() {
@@ -54,9 +57,11 @@ public class JavaParser extends JjtreeParserAdapter<ASTCompilationUnit> {
         ASTCompilationUnit root = parser.CompilationUnit();
         root.setAstInfo(new AstInfo<>(task, root).withSuppressMap(parser.getSuppressMap()));
 
-        LanguageLevelChecker<?> levelChecker = new LanguageLevelChecker<>(jdkVersion, preview,
-                // TODO change this strategy with a new lang property
-                ReportingStrategy.reporterThatThrows());
+        LanguageLevelChecker<?> levelChecker =
+            new LanguageLevelChecker<>(jdkVersion,
+                                       preview,
+                                       // TODO change this strategy with a new lang property
+                                       ReportingStrategy.reporterThatThrows());
 
         levelChecker.check(root);
 

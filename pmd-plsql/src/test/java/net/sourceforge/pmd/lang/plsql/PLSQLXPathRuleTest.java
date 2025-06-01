@@ -17,15 +17,16 @@ import net.sourceforge.pmd.reporting.Report;
  */
 class PLSQLXPathRuleTest extends AbstractPLSQLParserTst {
 
-    private static final String SOURCE = "create or replace\n" + "package pkg_xpath_problem\n" + "AS\n"
-            + "    PROCEDURE pkg_minimal\n" + "    IS\n" + "        a_variable VARCHAR2(1);\n" + "    BEGIN \n"
-            + "        --PRAGMA INLINE(output,'YES');\n" + "        a_variable := 'Y' ;\n" + "    END ;\n"
-            + "end pkg_xpath_problem;\n" + "/\n";
+    private static final String SOURCE =
+        "create or replace\n" + "package pkg_xpath_problem\n" + "AS\n" + "    PROCEDURE pkg_minimal\n" + "    IS\n"
+            + "        a_variable VARCHAR2(1);\n" + "    BEGIN \n" + "        --PRAGMA INLINE(output,'YES');\n"
+            + "        a_variable := 'Y' ;\n" + "    END ;\n" + "end pkg_xpath_problem;\n" + "/\n";
 
     @Test
     void testXPathRule() {
         testOnVersion(XPathVersion.DEFAULT);
     }
+
 
     private void testOnVersion(XPathVersion xpath10) {
         XPathRule rule = plsql.newXpathRule("//PrimaryPrefix", xpath10);

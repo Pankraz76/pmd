@@ -55,7 +55,8 @@ public class PmdXPathException extends ContextedRuntimeException {
     }
 
     public enum Phase {
-        INITIALIZATION, EVALUATION
+        INITIALIZATION,
+        EVALUATION
     }
 
 }

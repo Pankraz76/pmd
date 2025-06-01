@@ -25,8 +25,7 @@ import net.sourceforge.pmd.reporting.RuleContext;
 
 public class AvoidNonRestrictiveQueriesRule extends AbstractApexRule {
     private static final Pattern RESTRICTIVE_PATTERN = Pattern.compile("\\b(where|limit)\\b", Pattern.CASE_INSENSITIVE);
-    private static final Pattern SELECT_OR_FIND_PATTERN = Pattern.compile("(select\\s+|find\\s+)",
-            Pattern.CASE_INSENSITIVE);
+    private static final Pattern SELECT_OR_FIND_PATTERN = Pattern.compile("(select\\s+|find\\s+)", Pattern.CASE_INSENSITIVE);
     private static final Pattern SUB_QUERY_PATTERN = Pattern.compile("(?i)\\(\\s*select\\s+[^)]+\\)");
 
     @Override
@@ -49,19 +48,28 @@ public class AvoidNonRestrictiveQueriesRule extends AbstractApexRule {
     private void visitSoqlOrSosl(ApexNode<?> node, String type, String query, RuleContext ruleContext) {
         ASTMethod method = node.ancestors(ASTMethod.class).first();
         if (method != null && method.getModifiers().isTest()) {
-            Optional<ASTAnnotation> methodAnnotation = method.children(ASTModifierNode.class)
-                    .children(ASTAnnotation.class).filter(a -> "isTest".equalsIgnoreCase(a.getName())).firstOpt();
+            Optional<ASTAnnotation> methodAnnotation = method
+                    .children(ASTModifierNode.class)
+                    .children(ASTAnnotation.class)
+                    .filter(a -> "isTest".equalsIgnoreCase(a.getName()))
+                    .firstOpt();
 
-            Optional<ASTAnnotation> classAnnotation = method.ancestors(ASTUserClass.class).firstOpt()
-                    .map(u -> u.children(ASTModifierNode.class)).map(s -> s.children(ASTAnnotation.class))
+            Optional<ASTAnnotation> classAnnotation = method
+                    .ancestors(ASTUserClass.class)
+                    .firstOpt()
+                    .map(u -> u.children(ASTModifierNode.class))
+                    .map(s -> s.children(ASTAnnotation.class))
                     .map(NodeStream::first);
 
             Optional<Boolean> methodSeeAllData = methodAnnotation.flatMap(m -> m.children(ASTAnnotationParameter.class)
-                    .filter(p -> p.hasName(ASTAnnotationParameter.SEE_ALL_DATA)).firstOpt()
+                    .filter(p -> p.hasName(ASTAnnotationParameter.SEE_ALL_DATA))
+                    .firstOpt()
                     .map(ASTAnnotationParameter::getBooleanValue));
             boolean classSeeAllData = classAnnotation.flatMap(m -> m.children(ASTAnnotationParameter.class)
-                    .filter(p -> p.hasName(ASTAnnotationParameter.SEE_ALL_DATA)).firstOpt()
-                    .map(ASTAnnotationParameter::getBooleanValue)).orElse(false);
+                            .filter(p -> p.hasName(ASTAnnotationParameter.SEE_ALL_DATA))
+                            .firstOpt()
+                            .map(ASTAnnotationParameter::getBooleanValue))
+                    .orElse(false);
 
             if (methodSeeAllData.isPresent()) {
                 if (!methodSeeAllData.get()) {

@@ -34,9 +34,8 @@ public enum AssignmentOperator {
     }
 
     /**
-     * Returns a {@link AssignmentOperator} corresponding to the given
-     * {@link BinaryExpression.Operator}. If {@code op} is {@code null},
-     * {@link #EQUALS} is returned.
+     * Returns a {@link AssignmentOperator} corresponding to the given {@link
+     * BinaryExpression.Operator}. If {@code op} is {@code null}, {@link #EQUALS} is returned.
      */
     public static AssignmentOperator valueOf(BinaryExpression.Operator op) {
         if (op == null) {

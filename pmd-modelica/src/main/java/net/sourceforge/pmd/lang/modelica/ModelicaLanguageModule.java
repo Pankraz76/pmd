@@ -14,8 +14,11 @@ public class ModelicaLanguageModule extends SimpleLanguageModuleBase {
     private static final String ID = "modelica";
 
     public ModelicaLanguageModule() {
-        super(LanguageMetadata.withId(ID).name("Modelica").extensions("mo").addVersion("3.4").addDefaultVersion("3.5"),
-                new ModelicaHandler());
+        super(LanguageMetadata.withId(ID).name("Modelica")
+                              .extensions("mo")
+                              .addVersion("3.4")
+                              .addDefaultVersion("3.5"),
+              new ModelicaHandler());
     }
 
     public static ModelicaLanguageModule getInstance() {

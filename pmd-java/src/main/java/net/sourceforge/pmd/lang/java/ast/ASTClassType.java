@@ -14,14 +14,11 @@ import net.sourceforge.pmd.util.AssertionUtil;
 
 // @formatter:off
 /**
- * Represents a class or interface type, possibly parameterised with type
- * arguments.
+ * Represents a class or interface type, possibly parameterised with type arguments.
  *
- * <p>
- * This node corresponds to the JLS' <a href=
- * "https://docs.oracle.com/javase/specs/jls/se11/html/jls-4.html#jls-ClassOrInterfaceType">ClassOrInterfaceType</a>,
- * and also to the related productions TypeIdentifier and TypeName. Merging
- * those allow to treat them uniformly.
+ * <p>This node corresponds to the JLS' <a href="https://docs.oracle.com/javase/specs/jls/se11/html/jls-4.html#jls-ClassOrInterfaceType">ClassOrInterfaceType</a>,
+ * and also to the related productions TypeIdentifier and TypeName. Merging those allow
+ * to treat them uniformly.
  *
  * <pre class="grammar">
  *
@@ -30,11 +27,11 @@ import net.sourceforge.pmd.util.AssertionUtil;
  *
  * </pre>
  *
- * <p>
- * Note: This node was called ASTClassOrInterfaceType in PMD 6.
+ * <p>Note: This node was called ASTClassOrInterfaceType in PMD 6.
  *
- * @implNote The parser may produce an AmbiguousName for the qualifier. This is
- *           systematically removed by the disambiguation phase.
+ * @implNote
+ * The parser may produce an AmbiguousName for the qualifier.
+ * This is systematically removed by the disambiguation phase.
  */
 // @formatter:on
 public final class ASTClassType extends AbstractJavaTypeNode implements ASTReferenceType {
@@ -55,6 +52,7 @@ public final class ASTClassType extends AbstractJavaTypeNode implements ASTRefer
         this.setSimpleName(simpleName);
     }
 
+
     ASTClassType(ASTAmbiguousName simpleName) {
         super(JavaParserImplTreeConstants.JJTCLASSTYPE);
         this.setSimpleName(simpleName.getFirstToken().getImage());
@@ -71,16 +69,17 @@ public final class ASTClassType extends AbstractJavaTypeNode implements ASTRefer
         this.setLastToken(identifier);
     }
 
+
     ASTClassType(int id) {
         super(id);
     }
 
     /**
-     * Returns true if the type was written with a full package qualification. For
-     * example, {@code java.lang.Override}. For nested types, only the leftmost type
-     * is considered fully qualified. Eg in {@code p.Outer.Inner}, this method will
-     * return true for the type corresponding to {@code p.Outer}, but false for the
-     * enclosing {@code p.Outer.Inner}.
+     * Returns true if the type was written with a full package qualification.
+     * For example, {@code java.lang.Override}. For nested types, only the
+     * leftmost type is considered fully qualified. Eg in {@code p.Outer.Inner},
+     * this method will return true for the type corresponding to {@code p.Outer},
+     * but false for the enclosing {@code p.Outer.Inner}.
      */
     public boolean isFullyQualified() {
         return isFqcn;
@@ -100,16 +99,16 @@ public final class ASTClassType extends AbstractJavaTypeNode implements ASTRefer
     }
 
     /**
-     * Returns the type symbol this type refers to. This is never null after
-     * disambiguation has been run. This is also very internal.
+     * Returns the type symbol this type refers to. This is never null
+     * after disambiguation has been run. This is also very internal.
      */
     JTypeDeclSymbol getReferencedSym() {
         return symbol;
     }
 
     /**
-     * Gets the owner type of this type if it's not ambiguous. This is a type we
-     * know for sure that this type is a member of.
+     * Gets the owner type of this type if it's not ambiguous. This is a
+     * type we know for sure that this type is a member of.
      *
      * @return A type, or null if this is a base type
      */
@@ -126,21 +125,24 @@ public final class ASTClassType extends AbstractJavaTypeNode implements ASTRefer
         return firstChild(ASTTypeArguments.class);
     }
 
+
     /**
-     * Return the package qualifier, if this is a fully qualified name. Note that
-     * this will only be the case if we could resolve the qualifier to a package
-     * name during disambiguation. In other words, if the auxclasspath is not
-     * complete, and the qualifier could not be disambiguated, this method will
-     * return null (and an AmbiguousName will stay in the tree).
+     * Return the package qualifier, if this is a fully qualified name.
+     * Note that this will only be the case if we could resolve the
+     * qualifier to a package name during disambiguation. In other words,
+     * if the auxclasspath is not complete, and the qualifier could not
+     * be disambiguated, this method will return null (and an AmbiguousName
+     * will stay in the tree).
      *
-     * <p>
-     * If a nested type is package-qualified, this method will only return a
-     * non-null result for the leftmost (=innermost) ASTClassType node. For instance
-     * in {@code java.util.Map.Entry}, the node {@code java.util.Map} has package
-     * qualifier {@code "java.util"}, while the node for {@code Entry} has package
-     * qualifier {@code null}. Note that the
-     * {@linkplain JClassSymbol#getPackageName() package name} of the symbol and
-     * type mirror will reflect that package name anyway, on both nodes.
+     * <p>If a nested type is package-qualified, this method
+     * will only return a non-null result for the leftmost (=innermost)
+     * ASTClassType node. For instance in {@code java.util.Map.Entry},
+     * the node {@code java.util.Map} has package qualifier
+     * {@code "java.util"}, while the node for {@code Entry}
+     * has package qualifier {@code null}. Note that the
+     * {@linkplain JClassSymbol#getPackageName() package name}
+     * of the symbol and type mirror will reflect that package
+     * name anyway, on both nodes.
      */
     public @Nullable String getPackageQualifier() {
         if (isFullyQualified()) {
@@ -155,19 +157,22 @@ public final class ASTClassType extends AbstractJavaTypeNode implements ASTRefer
         return visitor.visit(this, data);
     }
 
+
     void setSimpleName(String simpleName) {
         this.simpleName = simpleName;
         assertSimpleNameOk();
     }
 
     private void assertSimpleNameOk() {
-        assert this.simpleName != null && this.simpleName.indexOf('.') < 0
-                && AssertionUtil.isJavaIdentifier(this.simpleName) : "Invalid simple name '" + this.simpleName + "'";
+        assert this.simpleName != null
+                && this.simpleName.indexOf('.') < 0
+                && AssertionUtil.isJavaIdentifier(this.simpleName)
+                : "Invalid simple name '" + this.simpleName + "'";
     }
 
     /**
-     * Returns the simple name of this type. Use the {@linkplain #getReferencedSym()
-     * symbol} to get more information.
+     * Returns the simple name of this type. Use the {@linkplain #getReferencedSym() symbol}
+     * to get more information.
      */
     public String getSimpleName() {
         return simpleName;

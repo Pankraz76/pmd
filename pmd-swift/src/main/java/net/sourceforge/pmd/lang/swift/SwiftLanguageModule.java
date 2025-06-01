@@ -20,9 +20,20 @@ public class SwiftLanguageModule extends SimpleLanguageModuleBase {
      * Create a new instance of Swift Language Module.
      */
     public SwiftLanguageModule() {
-        super(LanguageMetadata.withId(ID).name("Swift").extensions("swift").addVersion("4.2").addVersion("5.0")
-                .addVersion("5.1").addVersion("5.2").addVersion("5.3").addVersion("5.4").addVersion("5.5")
-                .addVersion("5.6").addVersion("5.7").addVersion("5.8").addDefaultVersion("5.9"), new SwiftHandler());
+        super(LanguageMetadata.withId(ID).name("Swift")
+                              .extensions("swift")
+                              .addVersion("4.2")
+                              .addVersion("5.0")
+                              .addVersion("5.1")
+                              .addVersion("5.2")
+                              .addVersion("5.3")
+                              .addVersion("5.4")
+                              .addVersion("5.5")
+                              .addVersion("5.6")
+                              .addVersion("5.7")
+                              .addVersion("5.8")
+                              .addDefaultVersion("5.9"),
+              new SwiftHandler());
     }
 
     public static SwiftLanguageModule getInstance() {

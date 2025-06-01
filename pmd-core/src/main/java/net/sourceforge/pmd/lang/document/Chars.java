@@ -4,6 +4,7 @@
 
 package net.sourceforge.pmd.lang.document;
 
+
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -28,15 +29,15 @@ import net.sourceforge.pmd.util.IteratorUtil.AbstractIterator;
 /**
  * View on a string which doesn't copy the array for subsequence operations.
  * This view is immutable. Since it uses a string internally it benefits from
- * Java 9's compacting feature, it can also be efficiently created from a
- * StringBuilder. When confronted with an instance of this interface, please
+ * Java 9's compacting feature, it can also be efficiently created from
+ * a StringBuilder. When confronted with an instance of this interface, please
  * don't create substrings unnecessarily. Both {@link #subSequence(int, int)}
- * and {@link #slice(int, int)} can cut out a subsequence without copying the
- * underlying byte array. The {@link Pattern} API also works perfectly on
- * arbitrary {@link CharSequence}s, not just on strings. Lastly some methods
- * here provided provide mediated access to the underlying string, which for
- * many use cases is much more optimal than using this CharSequence directly, eg
- * {@link #appendChars(StringBuilder)}, {@link #writeFully(Writer)}.
+ * and {@link #slice(int, int)} can cut out a subsequence without copying
+ * the underlying byte array. The {@link Pattern} API also works perfectly
+ * on arbitrary {@link CharSequence}s, not just on strings. Lastly some
+ * methods here provided provide mediated access to the underlying string,
+ * which for many use cases is much more optimal than using this CharSequence
+ * directly, eg {@link #appendChars(StringBuilder)}, {@link #writeFully(Writer)}.
  *
  * @see Chars#wrap(CharSequence) Chars::wrap, the factory method
  */
@@ -72,17 +73,19 @@ public final class Chars implements CharSequence {
         return this.start + off;
     }
 
+
     /** Whether this slice is the empty string. */
     @SuppressWarnings("PMD.MissingOverride") // with Java 15, isEmpty() has been added to java.lang.CharSequence (#4291)
     public boolean isEmpty() {
         return len == 0;
     }
 
+
     /**
-     * Wraps the given char sequence into a {@link Chars}. This may call
-     * {@link CharSequence#toString()}. If the sequence is already a {@link Chars},
-     * returns it. This is the main factory method for this class. You can eg pass a
-     * StringBuilder if you want.
+     * Wraps the given char sequence into a {@link Chars}. This may
+     * call {@link CharSequence#toString()}. If the sequence is already
+     * a {@link Chars}, returns it. This is the main factory method for
+     * this class. You can eg pass a StringBuilder if you want.
      */
     public static Chars wrap(CharSequence chars) {
         if (chars instanceof Chars) {
@@ -96,11 +99,9 @@ public final class Chars implements CharSequence {
     /**
      * Write all characters of this buffer into the given writer.
      *
-     * @param writer
-     *            A writer
+     * @param writer A writer
      *
-     * @throws NullPointerException
-     *             If the writer is null
+     * @throws NullPointerException If the writer is null
      */
     public void writeFully(@NonNull Writer writer) throws IOException {
         write(writer, 0, length());
@@ -109,17 +110,12 @@ public final class Chars implements CharSequence {
     /**
      * Write a range of characters to the given writer.
      *
-     * @param writer
-     *            A writer
-     * @param start
-     *            Start offset in this CharSequence
-     * @param count
-     *            Number of characters
+     * @param writer A writer
+     * @param start  Start offset in this CharSequence
+     * @param count  Number of characters
      *
-     * @throws IOException
-     *             If the writer throws
-     * @throws IndexOutOfBoundsException
-     *             See {@link Writer#write(int)}
+     * @throws IOException               If the writer throws
+     * @throws IndexOutOfBoundsException See {@link Writer#write(int)}
      */
     public void write(@NonNull Writer writer, int start, int count) throws IOException {
         writer.write(str, idx(start), count);
@@ -129,19 +125,13 @@ public final class Chars implements CharSequence {
      * Copies 'count' characters from index 'srcBegin' into the given array,
      * starting at 'dstBegin'.
      *
-     * @param srcBegin
-     *            Start offset in this CharSequence
-     * @param cbuf
-     *            Character array
-     * @param count
-     *            Number of characters to copy
-     * @param dstBegin
-     *            Start index in the array
+     * @param srcBegin Start offset in this CharSequence
+     * @param cbuf     Character array
+     * @param count    Number of characters to copy
+     * @param dstBegin Start index in the array
      *
-     * @throws NullPointerException
-     *             If the array is null (may)
-     * @throws IndexOutOfBoundsException
-     *             See {@link String#getChars(int, int, char[], int)}
+     * @throws NullPointerException      If the array is null (may)
+     * @throws IndexOutOfBoundsException See {@link String#getChars(int, int, char[], int)}
      */
     public void getChars(int srcBegin, char @NonNull [] cbuf, int dstBegin, int count) {
         validateRange(srcBegin, count, length());
@@ -150,18 +140,15 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Appends the character range identified by start and end offset into the
-     * string builder. This is much more efficient than calling
-     * {@link StringBuilder#append(CharSequence)} with this as the parameter,
-     * especially on Java 9+.
+     * Appends the character range identified by start and end offset into
+     * the string builder. This is much more efficient than calling
+     * {@link StringBuilder#append(CharSequence)} with this as the
+     * parameter, especially on Java 9+.
      *
-     * @param start
-     *            Start index (inclusive)
-     * @param end
-     *            End index (exclusive)
+     * @param start Start index (inclusive)
+     * @param end   End index (exclusive)
      *
-     * @throws IndexOutOfBoundsException
-     *             See {@link StringBuilder#append(CharSequence, int, int)}
+     * @throws IndexOutOfBoundsException See {@link StringBuilder#append(CharSequence, int, int)}
      */
     public void appendChars(StringBuilder sb, int start, int end) {
         if (end == 0) {
@@ -171,19 +158,20 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Append this character sequence on the given stringbuilder. This is much more
-     * efficient than calling {@link StringBuilder#append(CharSequence)} with this
-     * as the parameter, especially on Java 9+.
+     * Append this character sequence on the given stringbuilder.
+     * This is much more efficient than calling {@link StringBuilder#append(CharSequence)}
+     * with this as the parameter, especially on Java 9+.
      *
-     * @param sb
-     *            String builder
+     * @param sb String builder
      */
     public void appendChars(StringBuilder sb) {
         sb.append(str, start, start + len);
     }
 
+
     /**
-     * Returns the characters of this charsequence encoded with the given charset.
+     * Returns the characters of this charsequence encoded with the
+     * given charset.
      */
     public ByteBuffer getBytes(Charset charset) {
         return charset.encode(CharBuffer.wrap(str, start, start + len));
@@ -229,15 +217,10 @@ public final class Chars implements CharSequence {
 
     /**
      * Search a character in a range of this Chars instance.
-     * 
-     * @param ch
-     *            Character to search
-     * @param fromIndex
-     *            From index (inclusive)
-     * @param toIndex
-     *            To index (exclusive)
-     * @throws AssertionError
-     *             if fromIndex &gt; toIndex
+     * @param ch Character to search
+     * @param fromIndex From index (inclusive)
+     * @param toIndex To index (exclusive)
+     * @throws AssertionError if fromIndex &gt; toIndex
      */
     public int indexOf(int ch, int fromIndex, int toIndex) {
         assert fromIndex <= toIndex : "Malformed range " + fromIndex + " > " + toIndex;
@@ -314,6 +297,7 @@ public final class Chars implements CharSequence {
         return startsWith(prefix, 0);
     }
 
+
     public boolean startsWith(char prefix, int fromIndex) {
         if (fromIndex < 0 || fromIndex + 1 > len) {
             return false;
@@ -329,8 +313,8 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Returns a subsequence which does not start with control characters
-     * ({@code <= 32}). This is consistent with {@link String#trim()}.
+     * Returns a subsequence which does not start with control characters ({@code <= 32}).
+     * This is consistent with {@link String#trim()}.
      */
     public Chars trimStart() {
         int i = start;
@@ -343,8 +327,8 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Returns a subsequence which does not end with control characters
-     * ({@code <= 32}). This is consistent with {@link String#trim()}.
+     * Returns a subsequence which does not end with control characters ({@code <= 32}).
+     * This is consistent with {@link String#trim()}.
      */
     public Chars trimEnd() {
         int i = start + len;
@@ -362,8 +346,8 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Remove trailing and leading blank lines. The resulting string does not end
-     * with a line terminator.
+     * Remove trailing and leading blank lines. The resulting string
+     * does not end with a line terminator.
      */
     public Chars trimBlankLines() {
         int offsetOfFirstNonBlankChar = length();
@@ -419,16 +403,15 @@ public final class Chars implements CharSequence {
         return this;
     }
 
+
     /**
-     * Returns true if this char sequence is logically equal to the parameter. This
-     * means they're equal character-by-character. This is more general than
-     * {@link #equals(Object)}, which will only answer true if the parameter is a
-     * {@link Chars}.
+     * Returns true if this char sequence is logically equal to the
+     * parameter. This means they're equal character-by-character. This
+     * is more general than {@link #equals(Object)}, which will only answer
+     * true if the parameter is a {@link Chars}.
      *
-     * @param cs
-     *            Another char sequence
-     * @param ignoreCase
-     *            Whether to ignore case
+     * @param cs         Another char sequence
+     * @param ignoreCase Whether to ignore case
      *
      * @return True if both sequences are logically equal
      */
@@ -442,11 +425,10 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Like {@link #contentEquals(CharSequence, boolean)}, considering case
-     * distinctions.
+     * Like {@link #contentEquals(CharSequence, boolean)}, considering
+     * case distinctions.
      *
-     * @param cs
-     *            A char sequence
+     * @param cs A char sequence
      *
      * @return True if both sequences are logically equal, considering case
      */
@@ -473,8 +455,8 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Returns the subsequence that starts at the given offset and ends at the end
-     * of this string. Similar to {@link String#substring(int)}.
+     * Returns the subsequence that starts at the given offset and ends
+     * at the end of this string. Similar to {@link String#substring(int)}.
      */
     public Chars subSequence(int start) {
         return slice(start, len - start);
@@ -483,31 +465,26 @@ public final class Chars implements CharSequence {
     /**
      * Slice a region of text.
      *
-     * @param region
-     *            A region
+     * @param region A region
      *
      * @return A Chars instance
      *
-     * @throws IndexOutOfBoundsException
-     *             If the region is not a valid range
+     * @throws IndexOutOfBoundsException If the region is not a valid range
      */
     public Chars slice(TextRegion region) {
         return slice(region.getStartOffset(), region.getLength());
     }
 
     /**
-     * Like {@link #subSequence(int, int)} but with offset + length instead of start
-     * + end.
+     * Like {@link #subSequence(int, int)} but with offset + length instead
+     * of start + end.
      *
-     * @param off
-     *            Start of the slice ({@code 0 <= off < this.length()})
-     * @param len
-     *            Length of the slice ({@code 0 <= len <= this.length() - off})
+     * @param off Start of the slice ({@code 0 <= off < this.length()})
+     * @param len Length of the slice ({@code 0 <= len <= this.length() - off})
      *
      * @return A Chars instance
      *
-     * @throws IndexOutOfBoundsException
-     *             If the parameters are not a valid range
+     * @throws IndexOutOfBoundsException If the parameters are not a valid range
      */
     public Chars slice(int off, int len) {
         validateRange(off, len, this.len);
@@ -520,21 +497,19 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Returns the substring between the given offsets. given length.
+     * Returns the substring between the given offsets.
+     * given length.
      *
-     * <p>
-     * Note: Unlike slice or subSequence, this method will create a new String which
-     * involves copying the backing char array. Don't use it unnecessarily.
+     * <p>Note: Unlike slice or subSequence, this method will create a
+     * new String which involves copying the backing char array. Don't
+     * use it unnecessarily.
      *
-     * @param start
-     *            Start offset ({@code 0 <= start < this.length()})
-     * @param end
-     *            End offset ({@code start <= end <= this.length()})
+     * @param start Start offset ({@code 0 <= start < this.length()})
+     * @param end   End offset ({@code start <= end <= this.length()})
      *
      * @return A substring
      *
-     * @throws IndexOutOfBoundsException
-     *             If the parameters are not a valid range
+     * @throws IndexOutOfBoundsException If the parameters are not a valid range
      * @see String#substring(int, int)
      */
     public String substring(int start, int end) {
@@ -589,9 +564,9 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Returns an iterable over the lines of this char sequence. The lines are
-     * yielded without line separators. Like {@link BufferedReader#readLine()}, a
-     * line delimiter is {@code CR}, {@code LF} or {@code CR+LF}.
+     * Returns an iterable over the lines of this char sequence. The lines
+     * are yielded without line separators. Like {@link BufferedReader#readLine()},
+     * a line delimiter is {@code CR}, {@code LF} or {@code CR+LF}.
      */
     public Iterable<Chars> lines() {
         return () -> new Iterator<Chars>() {
@@ -666,8 +641,8 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Returns a new stringbuilder containing the whole contents of this char
-     * sequence.
+     * Returns a new stringbuilder containing the whole contents of this
+     * char sequence.
      */
     public StringBuilder toStringBuilder() {
         StringBuilder sb = new StringBuilder(length());
@@ -676,8 +651,8 @@ public final class Chars implements CharSequence {
     }
 
     /**
-     * Split this slice into subslices, like {@link String#split(String)}, except
-     * it's iterated lazily.
+     * Split this slice into subslices, like {@link String#split(String)},
+     * except it's iterated lazily.
      */
     public Iterable<Chars> splits(Pattern regex) {
         return () -> new AbstractIterator<Chars>() {

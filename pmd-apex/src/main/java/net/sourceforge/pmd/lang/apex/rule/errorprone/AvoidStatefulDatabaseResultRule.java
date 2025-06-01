@@ -19,16 +19,11 @@ import net.sourceforge.pmd.util.CollectionUtil;
  * Using stateful {@code Database.[x]Result} instance variables can cause odd
  * serialization errors between successive batch iterations.
  *
- * <p>
- * This rule scans classes which implement the {@code Database.Stateful}
- * interface. If there are instance variables of type {@code Database.[x]Result}
- * (ex: {@code Database.SaveResult}), then a violation will be added to those
- * variables.
+ * <p>This rule scans classes which implement the {@code Database.Stateful} interface. If
+ * there are instance variables of type {@code Database.[x]Result} (ex:
+ * {@code Database.SaveResult}), then a violation will be added to those variables.
  *
- * @see <a href=
- *      "https://issues.salesforce.com/issue/a028c00000qPwlqAAC/stateful-batch-job-that-stores-databasesaveresult-failed-after-validation-errors-throws-error-during-deserialization">Stateful
- *      batch job that stores Database.SaveResult (failed after validation
- *      errors) throws error during deserialization</a>
+ * @see <a href="https://issues.salesforce.com/issue/a028c00000qPwlqAAC/stateful-batch-job-that-stores-databasesaveresult-failed-after-validation-errors-throws-error-during-deserialization">Stateful batch job that stores Database.SaveResult (failed after validation errors) throws error during deserialization</a>
  * @since 7.11.0
  */
 public final class AvoidStatefulDatabaseResultRule extends AbstractApexRule {
@@ -57,9 +52,7 @@ public final class AvoidStatefulDatabaseResultRule extends AbstractApexRule {
         return data;
     }
 
-    /**
-     * Determines if the class implements the {@code Database.Stateful} interface.
-     */
+    /** Determines if the class implements the {@code Database.Stateful} interface. */
     private boolean implementsDatabaseStateful(ASTUserClass theClass) {
         for (String interfaceName : theClass.getInterfaceNames()) {
             if ("database.stateful".equalsIgnoreCase(interfaceName)) {
@@ -70,9 +63,9 @@ public final class AvoidStatefulDatabaseResultRule extends AbstractApexRule {
     }
 
     /**
-     * Determines if a variable's definition may cause issues within batch iteration
-     * by being: an instance variable, not transient, and a data type of
-     * {@code Database.[x]Result} (or collection of them).
+     * Determines if a variable's definition may cause issues within batch
+     * iteration by being: an instance variable, not transient, and a data type
+     * of {@code Database.[x]Result} (or collection of them).
      */
     private boolean isNonTransientInstanceDatabaseResultField(ASTField theField) {
         return !theField.getModifiers().isStatic() && !theField.getModifiers().isTransient()
@@ -81,8 +74,8 @@ public final class AvoidStatefulDatabaseResultRule extends AbstractApexRule {
 
     /**
      * Determines if any of the unsupported types contains the type. We check
-     * containment even as a substring to check if the type is a collection of the
-     * result types ex: {@code List<Database.SaveResult>}.
+     * containment even as a substring to check if the type is a collection of
+     * the result types ex: {@code List<Database.SaveResult>}.
      */
     private boolean isDatabaseResultOrCollection(String type) {
         for (String databaseResultType : DATABASE_RESULT_TYPES) {

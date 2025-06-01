@@ -14,10 +14,7 @@ import net.sourceforge.pmd.lang.objectivec.ast.ObjectiveCTokenKinds;
 /**
  * The Objective-C Tokenizer
  *
- * <p>
- * Note: This class has been called ObjectiveCTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called ObjectiveCTokenizer in PMD 6</p>.
  */
 public class ObjectiveCCpdLexer extends JavaccCpdLexer {
 

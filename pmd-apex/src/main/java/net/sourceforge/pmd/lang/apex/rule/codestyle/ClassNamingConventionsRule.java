@@ -25,11 +25,11 @@ public class ClassNamingConventionsRule extends AbstractNamingConventionsRule {
     private static final PropertyDescriptor<Pattern> INNER_CLASS_REGEX = prop("innerClassPattern", "inner class",
             DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(PASCAL_CASE_WITH_UNDERSCORES).build();
 
-    private static final PropertyDescriptor<Pattern> ABSTRACT_CLASS_REGEX = prop("abstractClassPattern",
-            "abstract class", DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(PASCAL_CASE_WITH_UNDERSCORES).build();
+    private static final PropertyDescriptor<Pattern> ABSTRACT_CLASS_REGEX = prop("abstractClassPattern", "abstract class",
+            DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(PASCAL_CASE_WITH_UNDERSCORES).build();
 
-    private static final PropertyDescriptor<Pattern> INNER_INTERFACE_REGEX = prop("innerInterfacePattern",
-            "inner interface", DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(PASCAL_CASE_WITH_UNDERSCORES).build();
+    private static final PropertyDescriptor<Pattern> INNER_INTERFACE_REGEX = prop("innerInterfacePattern", "inner interface",
+            DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(PASCAL_CASE_WITH_UNDERSCORES).build();
 
     private static final PropertyDescriptor<Pattern> CLASS_REGEX = prop("classPattern", "class",
             DESCRIPTOR_TO_DISPLAY_NAME).defaultValue(PASCAL_CASE_WITH_UNDERSCORES).build();

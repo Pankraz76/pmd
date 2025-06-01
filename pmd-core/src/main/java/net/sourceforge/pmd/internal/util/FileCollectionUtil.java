@@ -56,8 +56,7 @@ public final class FileCollectionUtil {
                 try {
                     String signature = path.getFileName() + "_" + Files.size(path);
                     if (!alreadyAddedFileNamesWithSize.add(signature)) {
-                        LOG.info(
-                                "Skipping {} since it appears to be a duplicate file and --skip-duplicate-files is set",
+                        LOG.info("Skipping {} since it appears to be a duplicate file and --skip-duplicate-files is set",
                                 path);
                         return false;
                     }
@@ -77,11 +76,13 @@ public final class FileCollectionUtil {
             collector.setRecursive(configuration.collectFilesRecursively());
         }
 
+
         collectFiles(collector, configuration.getInputPathList());
 
         if (configuration.getUri() != null) {
             collectDB(collector, configuration.getUri());
         }
+
 
         if (configuration.getInputFile() != null) {
             collectFileList(collector, configuration.getInputFile());
@@ -104,12 +105,13 @@ public final class FileCollectionUtil {
         }
     }
 
+
     public static void collectFiles(FileCollector collector, List<Path> filePaths) {
         for (Path rootLocation : filePaths) {
             try {
                 addRoot(collector, rootLocation);
             } catch (IOException e) {
-                collector.getReporter().errorEx("Error collecting {0}", new Object[] { rootLocation }, e);
+                collector.getReporter().errorEx("Error collecting {0}", new Object[]{ rootLocation }, e);
             }
         }
     }
@@ -168,7 +170,8 @@ public final class FileCollectionUtil {
                     collector.addSourceFile(FileId.fromPathLikeString(falseFilePath), source);
                 } catch (SQLException ex) {
                     collector.getReporter().warnEx("Cannot get SourceCode for {0}  - skipping ...",
-                            new Object[] { falseFilePath }, ex);
+                                                   new Object[] { falseFilePath },
+                                                   ex);
                 }
             }
         } catch (ClassNotFoundException e) {

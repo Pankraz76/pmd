@@ -3,7 +3,6 @@
  */
 
 /**
- * Contains Coco tokenizer and language classes.
+ *  Contains Coco tokenizer and language classes.
  */
-
 package net.sourceforge.pmd.lang.coco.cpd;

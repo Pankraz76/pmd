@@ -8,22 +8,19 @@ package net.sourceforge.pmd.lang.ast;
  * Base implementation of {@link AstVisitor}, that performs a top-down
  * (preorder) visit and may accumulate a result.
  *
- * <p>
- * Note that if you care about the result ({@code <R>}), then you need to
- * override {@link #visitChildren(Node, Object) visitChildren} to implement the
- * logic that combines values from children, if any.
+ * <p>Note that if you care about the result ({@code <R>}), then you need
+ * to override {@link #visitChildren(Node, Object) visitChildren} to implement
+ * the logic that combines values from children, if any.
  */
 public abstract class AstVisitorBase<P, R> implements AstVisitor<P, R> {
 
     /**
-     * Visit the children. By default the data parameter is passed unchanged to all
-     * descendants, and null is returned. Override this method to customize this
-     * behavior.
+     * Visit the children. By default the data parameter is passed unchanged
+     * to all descendants, and null is returned. Override this method to customize
+     * this behavior.
      *
-     * @param node
-     *            Node whose children should be visited
-     * @param data
-     *            Parameter of the visit
+     * @param node Node whose children should be visited
+     * @param data Parameter of the visit
      *
      * @return Some value for the children
      */

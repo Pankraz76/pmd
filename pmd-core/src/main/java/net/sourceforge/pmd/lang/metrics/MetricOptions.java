@@ -12,8 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Bundles a set of options to pass to a metric. Metrics may use these options
- * as they see fit.
+ * Bundles a set of options to pass to a metric. Metrics may use these options as they see fit.
  *
  * @author Clément Fournier
  * @since 6.0.0
@@ -24,14 +23,17 @@ public final class MetricOptions {
     private static final MetricOptions EMPTY_OPTIONS;
     private final Set<MetricOption> options;
 
+
     static {
         EMPTY_OPTIONS = new MetricOptions();
         POOL.put(EMPTY_OPTIONS, EMPTY_OPTIONS);
     }
 
+
     private MetricOptions() {
         options = Collections.emptySet();
     }
+
 
     private MetricOptions(Set<? extends MetricOption> opts) {
 
@@ -48,6 +50,7 @@ public final class MetricOptions {
         }
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -62,14 +65,15 @@ public final class MetricOptions {
         return options.equals(other.options);
     }
 
+
     @Override
     public int hashCode() {
         return options.hashCode();
     }
 
+
     /**
-     * Returns an immutable set of options. Metrics may use these options as they
-     * see fit.
+     * Returns an immutable set of options. Metrics may use these options as they see fit.
      *
      * @return The set of options of this version
      */
@@ -77,20 +81,24 @@ public final class MetricOptions {
         return options;
     }
 
+
     /**
      * Returns true if this bundle contains the given option.
      *
-     * @param option
-     *            Option to look for
+     * @param option Option to look for
      */
     public boolean contains(MetricOption option) {
         return options.contains(option);
     }
 
+
     @Override
     public String toString() {
-        return "MetricOptions{" + "options=" + options + '}';
+        return "MetricOptions{"
+            + "options=" + options
+            + '}';
     }
+
 
     /**
      * Returns an empty options bundle.
@@ -102,11 +110,11 @@ public final class MetricOptions {
         return EMPTY_OPTIONS;
     }
 
+
     /**
      * Gets an options bundle from a collection of options.
      *
-     * @param options
-     *            The options to build the bundle from
+     * @param options The options to build the bundle from
      *
      * @return An options bundle
      */
@@ -116,13 +124,12 @@ public final class MetricOptions {
         return builder.build();
     }
 
+
     /**
      * Gets an options bundle from options.
      *
-     * @param option
-     *            Mandatory first argument
-     * @param options
-     *            Rest of the options
+     * @param option  Mandatory first argument
+     * @param options Rest of the options
      *
      * @return An options bundle
      */
@@ -138,9 +145,12 @@ public final class MetricOptions {
         return builder.build();
     }
 
+
     private static final class MetricOptionsBuilder {
 
+
         private Set<MetricOption> opts = new HashSet<>();
+
 
         void add(MetricOption option) {
             if (option != null) {
@@ -148,12 +158,14 @@ public final class MetricOptions {
             }
         }
 
+
         void addAll(Collection<? extends MetricOption> options) {
             if (options != null) {
                 this.opts.addAll(options);
                 opts.remove(null);
             }
         }
+
 
         MetricOptions build() {
             if (opts.isEmpty()) {

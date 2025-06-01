@@ -15,9 +15,7 @@ public class JavaCCTokenFilter extends BaseTokenFilter<JavaccToken> {
 
     /**
      * Creates a new JavaCCTokenFilter
-     * 
-     * @param tokenManager
-     *            The token manager from which to retrieve tokens to be filtered
+     * @param tokenManager The token manager from which to retrieve tokens to be filtered
      */
     public JavaCCTokenFilter(final TokenManager<JavaccToken> tokenManager) {
         super(tokenManager);

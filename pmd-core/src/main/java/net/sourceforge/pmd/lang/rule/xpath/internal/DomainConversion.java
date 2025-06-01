@@ -25,6 +25,7 @@ import net.sf.saxon.value.Int64Value;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
 
+
 /**
  * Converts Java values into XPath values.
  */
@@ -33,6 +34,7 @@ public final class DomainConversion {
     private DomainConversion() {
 
     }
+
 
     public static SchemaType buildType(java.lang.reflect.Type type) {
         switch (type.getTypeName()) {
@@ -111,12 +113,12 @@ public final class DomainConversion {
         }
     }
 
+
     /**
-     * Gets the Saxon representation of the parameter, if its type corresponds to an
-     * XPath 2.0 atomic datatype.
+     * Gets the Saxon representation of the parameter, if its type corresponds
+     * to an XPath 2.0 atomic datatype.
      *
-     * @param value
-     *            The value to convert
+     * @param value The value to convert
      *
      * @return The converted AtomicValue
      */
@@ -124,10 +126,9 @@ public final class DomainConversion {
     public static AtomicValue getAtomicRepresentation(final Object value) {
 
         /*
-         * FUTURE When supported, we should consider refactor this implementation to use
-         * Pattern Matching (see http://openjdk.java.net/jeps/305) so that it looks
-         * clearer.
-         */
+        FUTURE When supported, we should consider refactor this implementation to use Pattern Matching
+        (see http://openjdk.java.net/jeps/305) so that it looks clearer.
+        */
         if (value == null) {
             return StringValue.ZERO_LENGTH_UNTYPED;
 

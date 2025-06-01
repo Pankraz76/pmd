@@ -10,7 +10,6 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,10 +30,10 @@ import net.sourceforge.pmd.lang.xml.ast.XmlNode;
 
 public final class XmlParserImpl {
     // never throws on unresolved resource
-    private static final EntityResolver SILENT_ENTITY_RESOLVER = (publicId,
-            systemId) -> new InputSource(new ByteArrayInputStream("".getBytes()));
+    private static final EntityResolver SILENT_ENTITY_RESOLVER = (publicId, systemId) -> new InputSource(new ByteArrayInputStream("".getBytes()));
 
     private final Map<org.w3c.dom.Node, XmlNode> nodeCache = new HashMap<>();
+
 
     private Document parseDocument(String xmlData) throws ParseException {
         nodeCache.clear();
@@ -57,6 +56,7 @@ public final class XmlParserImpl {
         }
     }
 
+
     public RootXmlNode parse(ParserTask task) {
         String xmlData = task.getSourceText();
         Document document = parseDocument(xmlData);
@@ -67,11 +67,11 @@ public final class XmlParserImpl {
         return root;
     }
 
+
     /**
      * Gets the wrapper for a DOM node, implementing PMD interfaces.
      *
-     * @param domNode
-     *            The node to wrap
+     * @param domNode The node to wrap
      *
      * @return The wrapper
      */
@@ -83,6 +83,7 @@ public final class XmlParserImpl {
         }
         return wrapper;
     }
+
 
     /**
      * The root should implement {@link RootNode}.
@@ -110,15 +111,15 @@ public final class XmlParserImpl {
         public Document getNode() {
             return (Document) super.getNode();
         }
-
+        
         public String getXmlEncoding() {
             return getNode().getXmlEncoding();
         }
-
+        
         public boolean isXmlStandalone() {
             return getNode().getXmlStandalone();
         }
-
+        
         public String getXmlVersion() {
             return getNode().getXmlVersion();
         }

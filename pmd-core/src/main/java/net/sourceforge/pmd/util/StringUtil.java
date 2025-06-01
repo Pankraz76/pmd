@@ -24,6 +24,7 @@ import net.sourceforge.pmd.lang.document.Chars;
  */
 public final class StringUtil {
 
+
     private static final Pattern XML_10_INVALID_CHARS = Pattern.compile("[[\\x00-\\x1F]&&[^\\x09\\x0A\\x0D]]");
 
     private StringUtil() {
@@ -40,12 +41,14 @@ public final class StringUtil {
         return "\"" + expected + "\"";
     }
 
+
     /**
-     * Returns the (1-based) line number of the character at the given index. Line
-     * terminators (\r, \n) are assumed to be on the line they *end* and not on the
-     * following line. The method also accepts that the given offset be the length
-     * of the string (in which case there's no targeted character), to get the line
-     * number of a character that would be inserted at the end of the string.
+     * Returns the (1-based) line number of the character at the given index.
+     * Line terminators (\r, \n) are assumed to be on the line they *end*
+     * and not on the following line. The method also accepts that the given
+     * offset be the length of the string (in which case there's no targeted character),
+     * to get the line number of a character that would be inserted at
+     * the end of the string.
      *
      * <pre>
      *
@@ -60,13 +63,11 @@ public final class StringUtil {
      *
      * </pre>
      *
-     * @param charSeq
-     *            Char sequence
-     * @param offsetInclusive
-     *            Offset in the sequence of the targeted character. May be the
-     *            length of the sequence.
-     * @return -1 if the offset is not in {@code [0, length]}, otherwise the line
-     *         number
+     * @param charSeq         Char sequence
+     * @param offsetInclusive Offset in the sequence of the targeted character.
+     *                        May be the length of the sequence.
+     * @return -1 if the offset is not in {@code [0, length]}, otherwise
+     * the line number
      */
     public static int lineNumberAt(CharSequence charSeq, int offsetInclusive) {
         int len = charSeq.length();
@@ -100,12 +101,12 @@ public final class StringUtil {
     }
 
     /**
-     * Returns the (1-based) column number of the character at the given index. Line
-     * terminators are by convention taken to be part of the line they end, and not
-     * the new line they start. Each character has width 1 (including {@code \t}).
-     * The method also accepts that the given offset be the length of the string (in
-     * which case there's no targeted character), to get the column number of a
-     * character that would be inserted at the end of the string.
+     * Returns the (1-based) column number of the character at the given index.
+     * Line terminators are by convention taken to be part of the line they end,
+     * and not the new line they start. Each character has width 1 (including {@code \t}).
+     * The method also accepts that the given offset be the length of the
+     * string (in which case there's no targeted character), to get the column
+     * number of a character that would be inserted at the end of the string.
      *
      * <pre>
      *
@@ -119,12 +120,10 @@ public final class StringUtil {
      *
      * </pre>
      *
-     * @param charSeq
-     *            Char sequence
-     * @param offsetInclusive
-     *            Offset in the sequence
-     * @return -1 if the offset is not in {@code [0, length]}, otherwise the column
-     *         number
+     * @param charSeq         Char sequence
+     * @param offsetInclusive Offset in the sequence
+     * @return -1 if the offset is not in {@code [0, length]}, otherwise
+     * the column number
      */
     public static int columnNumberAt(CharSequence charSeq, final int offsetInclusive) {
         if (offsetInclusive == charSeq.length()) {
@@ -152,10 +151,9 @@ public final class StringUtil {
 
     /**
      * Like {@link StringBuilder#append(CharSequence)}, but uses an optimized
-     * implementation if the charsequence happens to be a {@link Chars}.
-     * {@link StringBuilder} already optimises the cases where the charseq is a
-     * string, a StringBuilder, or a stringBuffer. This is especially useful in
-     * parsers.
+     * implementation if the charsequence happens to be a {@link Chars}. {@link StringBuilder}
+     * already optimises the cases where the charseq is a string, a StringBuilder,
+     * or a stringBuffer. This is especially useful in parsers.
      */
     public static StringBuilder append(StringBuilder sb, CharSequence charSeq) {
         if (charSeq instanceof Chars) {
@@ -167,15 +165,13 @@ public final class StringUtil {
     }
 
     /**
-     * Returns the substring following the last occurrence of the given character.
-     * If the character doesn't occur, returns the whole string. This contrasts with
-     * {@link StringUtils#substringAfterLast(String, String)}, which returns the
-     * empty string in that case.
+     * Returns the substring following the last occurrence of the
+     * given character. If the character doesn't occur, returns
+     * the whole string. This contrasts with {@link StringUtils#substringAfterLast(String, String)},
+     * which returns the empty string in that case.
      *
-     * @param str
-     *            String to cut
-     * @param c
-     *            Delimiter
+     * @param str String to cut
+     * @param c   Delimiter
      */
     public static String substringAfterLast(String str, int c) {
         int i = str.lastIndexOf(c);
@@ -185,15 +181,12 @@ public final class StringUtil {
     /**
      * Formats a double to a percentage, keeping {@code numDecimal} decimal places.
      *
-     * @param val
-     *            a double value between 0 and 1
-     * @param numDecimals
-     *            The number of decimal places to keep
+     * @param val         a double value between 0 and 1
+     * @param numDecimals The number of decimal places to keep
      *
      * @return A formatted string
      *
-     * @throws IllegalArgumentException
-     *             if the double to format is not between 0 and 1
+     * @throws IllegalArgumentException if the double to format is not between 0 and 1
      */
     public static String percentageString(double val, int numDecimals) {
         if (val < 0 || val > 1) {
@@ -203,9 +196,10 @@ public final class StringUtil {
         return String.format(Locale.ROOT, "%." + numDecimals + "f%%", 100 * val);
     }
 
+
     /**
-     * Checks for the existence of any of the listed prefixes on the non-null text
-     * and removes them.
+     * Checks for the existence of any of the listed prefixes on the non-null
+     * text and removes them.
      *
      * @return String
      */
@@ -223,12 +217,12 @@ public final class StringUtil {
     /**
      * Remove characters, that are not allowed in XML 1.0 documents.
      *
-     * <p>
-     * Allowed characters are: <blockquote> Char ::= #x9 | #xA | #xD | [#x20-#xD7FF]
-     * | [#xE000-#xFFFD] | [#x10000-#x10FFFF] // any Unicode character, excluding
-     * the surrogate blocks, FFFE, and FFFF. </blockquote> (see
-     * <a href="https://www.w3.org/TR/xml/#charsets">Extensible Markup Language
-     * (XML) 1.0 (Fifth Edition)</a>).
+     * <p>Allowed characters are:
+     * <blockquote>
+     * Char    ::=      #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+     *  // any Unicode character, excluding the surrogate blocks, FFFE, and FFFF.
+     * </blockquote>
+     * (see <a href="https://www.w3.org/TR/xml/#charsets">Extensible Markup Language (XML) 1.0 (Fifth Edition)</a>).
      */
     public static String removedInvalidXml10Characters(String text) {
         Matcher matcher = XML_10_INVALID_CHARS.matcher(text);
@@ -252,27 +246,26 @@ public final class StringUtil {
         return s;
     }
 
+
     /**
      * Determine the maximum number of common leading whitespace characters the
-     * strings share in the same sequence. Useful for determining how many leading
-     * characters can be removed to shift all the text in the strings to the left
-     * without misaligning them.
+     * strings share in the same sequence. Useful for determining how many
+     * leading characters can be removed to shift all the text in the strings to
+     * the left without misaligning them.
      *
-     * <p>
-     * Note: the spec is described in <a href=
-     * 'https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#stripIndent()'>String#stripIndent</a>
+     * <p>Note: the spec is described in
+     * <a href='https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#stripIndent()'>String#stripIndent</a>
      *
-     * <quote> The minimum indentation (min) is determined as follows:
+     * <quote>
+     * The minimum indentation (min) is determined as follows:
      * <ul>
-     * <li>For each non-blank line (as defined by isBlank()), the leading white
-     * space characters are counted.
-     * <li>The leading white space characters on the last line are also counted even
-     * if blank.
+     *     <li>For each non-blank line (as defined by isBlank()), the leading white space characters are counted.
+     *     <li>The leading white space characters on the last line are also counted even if blank.
      * </ul>
-     * The min value is the smallest of these counts. </quote>
+     * The min value is the smallest of these counts.
+     * </quote>
      *
-     * @throws NullPointerException
-     *             If the parameter is null
+     * @throws NullPointerException If the parameter is null
      */
     private static int maxCommonLeadingWhitespaceForAll(List<? extends CharSequence> lines) {
         int maxCommonWs = Integer.MAX_VALUE;
@@ -300,29 +293,31 @@ public final class StringUtil {
     }
 
     /**
-     * Trim the common indentation of each line in place in the input list. Trailing
-     * whitespace is removed on each line. Note that blank lines do not count
-     * towards computing the max common indentation, except the last one.
+     * Trim the common indentation of each line in place in the input list.
+     * Trailing whitespace is removed on each line. Note that blank lines do
+     * not count towards computing the max common indentation, except
+     * the last one.
      *
-     * @param lines
-     *            mutable list
+     * @param lines mutable list
      */
     public static void trimIndentInPlace(List<Chars> lines) {
         int trimDepth = maxCommonLeadingWhitespaceForAll(lines);
-        lines.replaceAll(
-                chars -> chars.length() >= trimDepth ? chars.subSequence(trimDepth).trimEnd() : chars.trimEnd());
+        lines.replaceAll(chars -> chars.length() >= trimDepth
+                                  ? chars.subSequence(trimDepth).trimEnd()
+                                  : chars.trimEnd());
     }
 
     /**
      * Trim common indentation in the lines of the string. Like
-     * {@link #trimIndentInPlace(List)} called with the list of lines and joined
-     * with {@code \n}.
+     * {@link #trimIndentInPlace(List)} called with the list of lines
+     * and joined with {@code \n}.
      */
     public static StringBuilder trimIndent(Chars string) {
         List<Chars> lines = string.lineStream().collect(CollectionUtil.toMutableList());
         trimIndentInPlace(lines);
         return CollectionUtil.joinCharsIntoStringBuilder(lines, "\n");
     }
+
 
     private static int countLeadingWhitespace(CharSequence s) {
         int count = 0;
@@ -332,30 +327,23 @@ public final class StringUtil {
         return count;
     }
 
+
     /**
      * Are the two String values the same. The Strings can be optionally trimmed
-     * before checking. The Strings can be optionally compared ignoring case. The
-     * Strings can be have embedded whitespace standardized before comparing. Two
-     * null values are treated as equal.
+     * before checking. The Strings can be optionally compared ignoring case.
+     * The Strings can be have embedded whitespace standardized before
+     * comparing. Two null values are treated as equal.
      *
-     * @param s1
-     *            The first String.
-     * @param s2
-     *            The second String.
-     * @param trim
-     *            Indicates if the Strings should be trimmed before comparison.
-     * @param ignoreCase
-     *            Indicates if the case of the Strings should ignored during
-     *            comparison.
-     * @param standardizeWhitespace
-     *            Indicates if the embedded whitespace should be standardized before
-     *            comparison.
+     * @param s1                    The first String.
+     * @param s2                    The second String.
+     * @param trim                  Indicates if the Strings should be trimmed before comparison.
+     * @param ignoreCase            Indicates if the case of the Strings should ignored during comparison.
+     * @param standardizeWhitespace Indicates if the embedded whitespace should be standardized before comparison.
      *
-     * @return <code>true</code> if the Strings are the same, <code>false</code>
-     *         otherwise.
+     * @return <code>true</code> if the Strings are the same, <code>false</code> otherwise.
      */
     public static boolean isSame(String s1, String s2, boolean trim, boolean ignoreCase,
-            boolean standardizeWhitespace) {
+                                 boolean standardizeWhitespace) {
         if (s1 == null && s2 == null) {
             return true;
         } else if (s1 == null || s2 == null) {
@@ -375,14 +363,13 @@ public final class StringUtil {
         }
     }
 
+
     /**
      * Formats all items onto a string with separators if more than one exists,
      * return an empty string if the items are null or empty.
      *
-     * @param items
-     *            Object[]
-     * @param separator
-     *            String
+     * @param items     Object[]
+     * @param separator String
      *
      * @return String
      */
@@ -405,9 +392,8 @@ public final class StringUtil {
 
     /**
      * If the string starts and ends with the delimiter, returns the substring
-     * within the delimiters. Otherwise returns the original string. The start and
-     * end delimiter must be 2 separate instances.
-     * 
+     * within the delimiters. Otherwise returns the original string. The
+     * start and end delimiter must be 2 separate instances.
      * <pre>{@code
      * removeSurrounding("",     _ )  = ""
      * removeSurrounding("q",   'q')  = "q"
@@ -416,30 +402,32 @@ public final class StringUtil {
      * }</pre>
      */
     public static String removeSurrounding(String string, char delimiter) {
-        if (string.length() >= 2 && string.charAt(0) == delimiter && string.charAt(string.length() - 1) == delimiter) {
+        if (string.length() >= 2
+            && string.charAt(0) == delimiter
+            && string.charAt(string.length() - 1) == delimiter) {
             return string.substring(1, string.length() - 1);
         }
         return string;
     }
 
     /**
-     * Like {@link #removeSurrounding(String, char) removeSurrounding} with a double
-     * quote as a delimiter.
+     * Like {@link #removeSurrounding(String, char) removeSurrounding} with
+     * a double quote as a delimiter.
      */
     public static String removeDoubleQuotes(String string) {
         return removeSurrounding(string, '"');
     }
 
     /**
-     * Truncate the given string to some maximum length. If it needs truncation, the
-     * ellipsis string is appended. The length of the returned string is always
-     * lower-or-equal to the maxOutputLength, even when truncation occurs.
+     * Truncate the given string to some maximum length. If it needs
+     * truncation, the ellipsis string is appended. The length of the
+     * returned string is always lower-or-equal to the maxOutputLength,
+     * even when truncation occurs.
      */
     public static String elide(String string, int maxOutputLength, String ellipsis) {
         AssertionUtil.requireNonNegative("maxOutputLength", maxOutputLength);
         if (ellipsis.length() > maxOutputLength) {
-            throw new IllegalArgumentException(
-                    "Ellipsis too long '" + ellipsis + "', maxOutputLength=" + maxOutputLength);
+            throw new IllegalArgumentException("Ellipsis too long '" + ellipsis + "', maxOutputLength=" + maxOutputLength);
         }
         if (string.length() <= maxOutputLength) {
             return string;
@@ -447,6 +435,7 @@ public final class StringUtil {
         String truncated = string.substring(0, maxOutputLength - ellipsis.length());
         return truncated + ellipsis;
     }
+
 
     /**
      * Replaces unprintable characters by their escaped (or unicode escaped)
@@ -497,17 +486,19 @@ public final class StringUtil {
     }
 
     /**
-     * Escape the string so that it appears literally when interpreted by a
-     * {@link MessageFormat}.
+     * Escape the string so that it appears literally when interpreted
+     * by a {@link MessageFormat}.
      */
     public static String quoteMessageFormat(String str) {
         return str.replaceAll("'", "''");
     }
 
+
     /** Return the empty string if the parameter is null. */
     public static String nullToEmpty(final String value) {
         return value == null ? "" : value;
     }
+
 
     public enum CaseConvention {
         /** SCREAMING_SNAKE_CASE. */
@@ -562,15 +553,10 @@ public final class StringUtil {
             }
         };
 
-        /**
-         * Split a name written with this convention into a list of *lowercase* words.
-         */
+        /** Split a name written with this convention into a list of *lowercase* words. */
         abstract List<String> toWords(String name);
 
-        /**
-         * Takes a list of lowercase words and joins them into a name following this
-         * convention.
-         */
+        /** Takes a list of lowercase words and joins them into a name following this convention. */
         abstract String joinWords(List<String> words);
 
         public String convertTo(CaseConvention to, String name) {

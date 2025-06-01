@@ -51,8 +51,7 @@ public class CodeClimateIssue {
         /**
          * Strip out all newlines from the body
          *
-         * @param body
-         *            The text to compose the content from
+         * @param body The text to compose the content from
          */
         public Content(String body) {
             this.body = body.replace(System.lineSeparator(), " ");

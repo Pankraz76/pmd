@@ -14,10 +14,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class AllRulesIT extends AbstractBinaryDistributionTest {
 
+
     static Iterable<String> languagesToTest() {
         // note: scala and wsdl have no rules
-        return Arrays.asList("java", "apex", "html", "javascript", "jsp", "modelica", "plsql", "pom", "visualforce",
-                "velocity", "xml", "xsl");
+        return Arrays.asList("java", "apex", "html", "javascript", "jsp", "modelica",
+                "plsql", "pom", "visualforce", "velocity", "xml", "xsl");
     }
 
     @ParameterizedTest
@@ -31,7 +32,8 @@ class AllRulesIT extends AbstractBinaryDistributionTest {
     }
 
     private static void assertDefaultExecutionResult(ExecutionResult result) {
-        result.assertExitCode(4).assertStdOut(containsString(""));
+        result.assertExitCode(4)
+              .assertStdOut(containsString(""));
 
         result.assertNoError("Exception applying rule");
         result.assertNoError("Ruleset not found");
@@ -40,8 +42,7 @@ class AllRulesIT extends AbstractBinaryDistributionTest {
         result.assertNoErrorInReport("Error while processing");
         result.assertNoErrorInReport("Error while parsing");
 
-        // See bug #2092: [apex] ApexLexer logs visible when Apex is the selected
-        // language upon starting the designer
+        // See bug #2092: [apex] ApexLexer logs visible when Apex is the selected language upon starting the designer
         result.assertNoError("Deduped array ApexLexer");
     }
 }

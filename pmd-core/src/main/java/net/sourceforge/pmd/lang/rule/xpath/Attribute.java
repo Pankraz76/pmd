@@ -17,17 +17,17 @@ import org.slf4j.LoggerFactory;
 import net.sourceforge.pmd.lang.ast.Node;
 
 /**
- * Represents an XPath attribute of a specific node. Attributes know their name,
- * the node they wrap, and have access to their value.
+ * Represents an XPath attribute of a specific node.
+ * Attributes know their name, the node they wrap,
+ * and have access to their value.
  *
- * <p>
- * Two attributes are equal if they have the same name and their parent nodes
- * are equal.
+ * <p>Two attributes are equal if they have the same name
+ * and their parent nodes are equal.
  *
- * <p>
- * Note that attributes do not support just any type, but a restricted set of
- * value types that can be mapped to XPath types. The exact supported types are
- * not specified, but include at least Java primitives and String.
+ * <p>Note that attributes do not support just any type, but
+ * a restricted set of value types that can be mapped to XPath types.
+ * The exact supported types are not specified, but include at
+ * least Java primitives and String.
  *
  * @see Node#getXPathAttributesIterator()
  */
@@ -51,12 +51,11 @@ public final class Attribute {
     /**
      * Creates a new attribute belonging to the given node using its accessor.
      *
-     * @param handle
-     *            A method handle, used to fetch the attribute.
-     * @param method
-     *            The method corresponding to the method handle. This is used to
-     *            perform reflective queries, eg to find annotations on the
-     *            attribute getter, but only the method handle is ever invoked.
+     * @param handle A method handle, used to fetch the attribute.
+     * @param method The method corresponding to the method handle. This
+     *               is used to perform reflective queries, eg to
+     *               find annotations on the attribute getter, but only
+     *               the method handle is ever invoked.
      */
     public Attribute(@NonNull Node parent, @NonNull String name, @NonNull MethodHandle handle, @NonNull Method method) {
         this.parent = Objects.requireNonNull(parent);
@@ -65,9 +64,7 @@ public final class Attribute {
         this.method = Objects.requireNonNull(method);
     }
 
-    /**
-     * Creates a new attribute belonging to the given node using its string value.
-     */
+    /** Creates a new attribute belonging to the given node using its string value. */
     public Attribute(@NonNull Node parent, @NonNull String name, @Nullable String value) {
         this.parent = Objects.requireNonNull(parent);
         this.name = Objects.requireNonNull(name);
@@ -77,6 +74,7 @@ public final class Attribute {
         this.stringValue = value == null ? "" : value;
         this.invoked = true;
     }
+
 
     /**
      * Gets the generic type of the value of this attribute.
@@ -90,14 +88,15 @@ public final class Attribute {
         return name;
     }
 
+
     /** Return the node that owns this attribute. */
     public @NonNull Node getParent() {
         return parent;
     }
 
     /**
-     * Returns null for "not deprecated", empty string for "deprecated without
-     * replacement", otherwise name of replacement attribute.
+     * Returns null for "not deprecated", empty string for "deprecated without replacement",
+     * otherwise name of replacement attribute.
      *
      * @apiNote Internal API
      */
@@ -106,8 +105,11 @@ public final class Attribute {
             return null;
         } else {
             DeprecatedAttribute annot = method.getAnnotation(DeprecatedAttribute.class);
-            return annot != null ? annot.replaceWith()
-                    : method.isAnnotationPresent(Deprecated.class) ? DeprecatedAttribute.NO_REPLACEMENT : null;
+            return annot != null
+                   ? annot.replaceWith()
+                   : method.isAnnotationPresent(Deprecated.class)
+                     ? DeprecatedAttribute.NO_REPLACEMENT
+                     : null;
         }
     }
 
@@ -120,8 +122,8 @@ public final class Attribute {
     }
 
     /**
-     * Return the value of the attribute. This may return null. The getter is
-     * invoked at most once.
+     * Return the value of the attribute. This may return null. The getter
+     * is invoked at most once.
      */
     public Object getValue() {
         if (this.invoked) {
@@ -144,10 +146,10 @@ public final class Attribute {
     }
 
     /**
-     * Return the string value of the attribute. If the getter returned null, then
-     * return the empty string (which is a falsy value in XPath). Otherwise, return
-     * a string representation of the value (e.g. with {@link Object#toString()},
-     * but this is not guaranteed).
+     * Return the string value of the attribute. If the getter returned null,
+     * then return the empty string (which is a falsy value in XPath).
+     * Otherwise, return a string representation of the value (e.g. with
+     * {@link Object#toString()}, but this is not guaranteed).
      */
     public @NonNull String getStringValue() {
         if (stringValue != null) {
@@ -163,6 +165,7 @@ public final class Attribute {
         return stringValue;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -172,8 +175,10 @@ public final class Attribute {
             return false;
         }
         Attribute attribute = (Attribute) o;
-        return Objects.equals(parent, attribute.parent) && Objects.equals(name, attribute.name);
+        return Objects.equals(parent, attribute.parent)
+            && Objects.equals(name, attribute.name);
     }
+
 
     @Override
     public int hashCode() {

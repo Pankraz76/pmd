@@ -22,7 +22,10 @@ public class SarifRenderer extends AbstractIncrementingRenderer {
     private static final String DEFAULT_DESCRIPTION = "Static Analysis Results Interchange Format (SARIF)";
     private static final String DEFAULT_FILE_EXTENSION = "sarif.json";
 
-    private final Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+    private final Gson gson = new GsonBuilder()
+            .disableHtmlEscaping()
+            .setPrettyPrinting()
+            .create();
 
     private SarifLogBuilder sarifLogBuilder;
 
@@ -59,7 +62,7 @@ public class SarifRenderer extends AbstractIncrementingRenderer {
             sarifLogBuilder.addRunTimeError(error);
         }
 
-        for (Report.ConfigurationError error : this.configErrors) {
+        for (Report.ConfigurationError error: this.configErrors) {
             sarifLogBuilder.addConfigurationError(error);
         }
     }

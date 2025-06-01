@@ -35,7 +35,9 @@ public abstract class MessageReporterBase implements PmdReporter {
 
     @Override
     public final boolean isLoggable(Level level) {
-        return minLevel != null && minLevel.compareTo(level) >= 0 && isLoggableImpl(level);
+        return minLevel != null
+            && minLevel.compareTo(level) >= 0
+            && isLoggableImpl(level);
     }
 
     protected boolean isLoggableImpl(Level level) {
@@ -93,6 +95,7 @@ public abstract class MessageReporterBase implements PmdReporter {
      * Perform logging assuming {@link #isLoggable(Level)} is true.
      */
     protected abstract void logImpl(Level level, String message);
+
 
     @Override
     public int numErrors() {

@@ -9,7 +9,8 @@ import net.sourceforge.pmd.lang.ast.AstVisitor;
 public interface EcmascriptVisitor<P, R> extends AstVisitor<P, R> {
 
     /**
-     * Every visit method for other JS nodes forwards to this method by default.
+     * Every visit method for other JS nodes forwards to this method
+     * by default.
      */
     default R visitJsNode(EcmascriptNode<?> node, P data) {
         return visitNode(node, data);

@@ -31,25 +31,21 @@ public final class ASTComponentReference extends AbstractModelicaNode implements
     }
 
     /**
-     * Returns a {@link CompositeName} object representing the lexical reference
-     * with subscripts being ignored, if any.
+     * Returns a {@link CompositeName} object representing the lexical reference with subscripts being ignored, if any.
      */
     public CompositeName getCompositeNameWithoutSubscripts() {
         return CompositeName.create(absolute, nameComponentsWithoutSubscripts);
     }
 
     /**
-     * Returns resolution candidates for the referred component (and <b>not</b>
-     * dereferencing its type, etc.).
+     * Returns resolution candidates for the referred component (and <b>not</b> dereferencing its type, etc.).
      *
-     * We do not decide on entity type on behalf of the rule code, since this may
-     * introduce false negatives.
+     * We do not decide on entity type on behalf of the rule code, since this may introduce false negatives.
      */
     @Override
     public ResolutionResult<ResolvableEntity> getResolutionCandidates() {
         if (resolutionCandidates == null) {
-            resolutionCandidates = getMostSpecificScope().safeResolveLexically(ResolvableEntity.class,
-                    ResolutionState.forComponentReference(), getCompositeNameWithoutSubscripts());
+            resolutionCandidates = getMostSpecificScope().safeResolveLexically(ResolvableEntity.class, ResolutionState.forComponentReference(), getCompositeNameWithoutSubscripts());
         }
         return resolutionCandidates;
     }

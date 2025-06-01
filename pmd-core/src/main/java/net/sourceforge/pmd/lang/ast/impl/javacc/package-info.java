@@ -5,5 +5,4 @@
 /**
  * Support classes for language implementations based on JavaCC.
  */
-
 package net.sourceforge.pmd.lang.ast.impl.javacc;

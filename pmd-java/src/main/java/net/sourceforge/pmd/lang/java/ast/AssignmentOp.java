@@ -19,6 +19,7 @@ import static net.sourceforge.pmd.lang.java.ast.InternalInterfaces.OperatorLike;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+
 /**
  * An assignment operator for {@link ASTAssignmentExpression}.
  *
@@ -48,7 +49,9 @@ public enum AssignmentOp implements OperatorLike {
     private final String code;
     private final BinaryOp binaryOp;
 
-    AssignmentOp(String code, @Nullable BinaryOp binaryOp) {
+
+    AssignmentOp(String code,
+                 @Nullable BinaryOp binaryOp) {
         this.code = code;
         this.binaryOp = binaryOp;
     }
@@ -63,20 +66,25 @@ public enum AssignmentOp implements OperatorLike {
         return this.code;
     }
 
+
     /**
-     * Returns true if this operator combines a binary operator with the assignment.
+     * Returns true if this operator combines
+     * a binary operator with the assignment.
      */
     public boolean isCompound() {
         return this != ASSIGN;
     }
 
+
     /**
-     * Returns the binary operator this corresponds to if this is a compound
-     * operator, otherwise returns null.
+     * Returns the binary operator this corresponds to
+     * if this is a compound operator, otherwise returns
+     * null.
      */
     @Nullable
     public BinaryOp getBinaryOp() {
         return binaryOp;
     }
+
 
 }

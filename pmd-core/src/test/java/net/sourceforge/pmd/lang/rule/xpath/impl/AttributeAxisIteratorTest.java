@@ -4,6 +4,7 @@
 
 package net.sourceforge.pmd.lang.rule.xpath.impl;
 
+
 import static net.sourceforge.pmd.util.CollectionUtil.setOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,6 +23,7 @@ import net.sourceforge.pmd.lang.ast.Node;
 import net.sourceforge.pmd.lang.rule.xpath.Attribute;
 import net.sourceforge.pmd.lang.rule.xpath.impl.dummyast.ConcreteNode;
 import net.sourceforge.pmd.util.CollectionUtil;
+
 
 /**
  * Unit test for {@link AttributeAxisIterator}
@@ -69,8 +71,7 @@ class AttributeAxisIteratorTest {
 
     /**
      * Exercises the case described in
-     * <a href="https://github.com/pmd/pmd/issues/4885">[java] AssertionError:
-     * Method should be accessible #4885</a>.
+     * <a href="https://github.com/pmd/pmd/issues/4885">[java] AssertionError: Method should be accessible #4885</a>.
      */
     @Test
     void accessPublicMethodWithAPackagePrivateImplementationInSuperclass() {

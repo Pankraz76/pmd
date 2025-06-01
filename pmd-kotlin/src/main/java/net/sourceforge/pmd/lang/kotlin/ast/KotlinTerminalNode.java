@@ -12,9 +12,11 @@ import net.sourceforge.pmd.lang.ast.impl.antlr4.BaseAntlrTerminalNode;
 
 public final class KotlinTerminalNode extends BaseAntlrTerminalNode<KotlinNode> implements KotlinNode {
 
+
     KotlinTerminalNode(Token token) {
         super(token);
     }
+
 
     @Override
     public @NonNull String getText() {
@@ -22,10 +24,12 @@ public final class KotlinTerminalNode extends BaseAntlrTerminalNode<KotlinNode> 
         return constImage == null ? getFirstAntlrToken().getText() : constImage;
     }
 
+
     @Override
     public String getXPathNodeName() {
         return KotlinParser.DICO.getXPathNameOfToken(getFirstAntlrToken().getType());
     }
+
 
     @Override
     public <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {

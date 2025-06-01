@@ -8,11 +8,10 @@ import java.io.Closeable;
 import java.util.function.Consumer;
 
 /**
- * Base class for an autocloseable that produce a result once it has been
- * closed. None of the methods of this class are synchronized.
+ * Base class for an autocloseable that produce a result once it has
+ * been closed. None of the methods of this class are synchronized.
  *
- * @param <T>
- *            Type of the result
+ * @param <T> Type of the result
  */
 public abstract class BaseResultProducingCloseable<T> implements AutoCloseable {
 
@@ -25,8 +24,7 @@ public abstract class BaseResultProducingCloseable<T> implements AutoCloseable {
     /**
      * Returns the result.
      *
-     * @throws IllegalStateException
-     *             If this instance has not been closed yet
+     * @throws IllegalStateException If this instance has not been closed yet
      */
     public final T getResult() {
         AssertionUtil.validateState(closed, "Cannot get result before listener is closed");
@@ -51,8 +49,8 @@ public abstract class BaseResultProducingCloseable<T> implements AutoCloseable {
     }
 
     /**
-     * Close this closeable as per the contract of {@link Closeable#close()}. Called
-     * exactly once. By default does nothing.
+     * Close this closeable as per the contract of {@link Closeable#close()}.
+     * Called exactly once. By default does nothing.
      */
     protected void closeImpl() {
         // override

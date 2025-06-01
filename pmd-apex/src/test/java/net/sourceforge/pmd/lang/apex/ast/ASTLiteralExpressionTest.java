@@ -40,6 +40,8 @@ class ASTLiteralExpressionTest extends ApexParserTestBase {
     }
 
     private ASTLiteralExpression createLiteral(String code) {
-        return parse("class Foo { object field = " + code + "; }").descendants(ASTLiteralExpression.class).first();
+        return parse("class Foo { object field = " + code + "; }")
+                .descendants(ASTLiteralExpression.class)
+                .first();
     }
 }

@@ -3,7 +3,6 @@
  */
 
 /**
- * Contains the Antlr grammar for Julia.
+ *  Contains the Antlr grammar for Julia.
  */
-
 package net.sourceforge.pmd.lang.julia.ast;

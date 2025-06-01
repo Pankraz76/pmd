@@ -2,6 +2,7 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
 package net.sourceforge.pmd.renderers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,8 +42,10 @@ class JsonRendererTest extends AbstractRendererTest {
     @Override
     String getExpectedError(ProcessingError error) {
         String expected = readFile("expected-processingerror.json");
-        expected = expected.replace("###REPLACE_ME###",
-                error.getDetail().replaceAll("\r", "\\\\r").replaceAll("\n", "\\\\n").replaceAll("\t", "\\\\t"));
+        expected = expected.replace("###REPLACE_ME###", error.getDetail()
+                .replaceAll("\r", "\\\\r")
+                .replaceAll("\n", "\\\\n")
+                .replaceAll("\t", "\\\\t"));
         return expected;
     }
 
@@ -54,8 +57,10 @@ class JsonRendererTest extends AbstractRendererTest {
     @Override
     String getExpectedErrorWithoutMessage(ProcessingError error) {
         String expected = readFile("expected-processingerror-no-message.json");
-        expected = expected.replace("###REPLACE_ME###",
-                error.getDetail().replaceAll("\r", "\\\\r").replaceAll("\n", "\\\\n").replaceAll("\t", "\\\\t"));
+        expected = expected.replace("###REPLACE_ME###", error.getDetail()
+                .replaceAll("\r", "\\\\r")
+                .replaceAll("\n", "\\\\n")
+                .replaceAll("\t", "\\\\t"));
         return expected;
     }
 
@@ -66,20 +71,19 @@ class JsonRendererTest extends AbstractRendererTest {
 
     @Override
     String filter(String expected) {
-        return expected.replaceAll("\"timestamp\":\\s*\"[^\"]+\"", "\"timestamp\": \"--replaced--\"")
-                .replaceAll("\"pmdVersion\":\\s*\"[^\"]+\"", "\"pmdVersion\": \"unknown\"").replaceAll("\\R", "\n"); // make
-                                                                                                                     // the
-                                                                                                                     // test
-                                                                                                                     // run
-                                                                                                                     // on
-                                                                                                                     // Windows,
-                                                                                                                     // too
+        return expected
+                .replaceAll("\"timestamp\":\\s*\"[^\"]+\"", "\"timestamp\": \"--replaced--\"")
+                .replaceAll("\"pmdVersion\":\\s*\"[^\"]+\"", "\"pmdVersion\": \"unknown\"")
+                .replaceAll("\\R", "\n"); // make the test run on Windows, too
     }
 
     @Test
     void suppressedViolations() throws IOException {
-        SuppressedViolation suppressed = new SuppressedViolation(newRuleViolation(1, 1, 1, 1, new FooRule()),
-                ViolationSuppressor.NOPMD_COMMENT_SUPPRESSOR, "test");
+        SuppressedViolation suppressed = new SuppressedViolation(
+            newRuleViolation(1, 1, 1, 1, new FooRule()),
+            ViolationSuppressor.NOPMD_COMMENT_SUPPRESSOR,
+            "test"
+        );
         String actual = renderReport(getRenderer(), it -> it.onSuppressedRuleViolation(suppressed));
         String expected = readFile("expected-suppressed.json");
         assertEquals(filter(expected), filter(actual));

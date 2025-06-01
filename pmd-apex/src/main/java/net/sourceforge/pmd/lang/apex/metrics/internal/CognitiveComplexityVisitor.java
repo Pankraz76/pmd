@@ -91,8 +91,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
 
         boolean hasElseStatement = node.hasElseStatement();
         for (ApexNode<?> child : node.children()) {
-            // If we don't have an else statement, we get an empty block statement which we
-            // shouldn't count
+            // If we don't have an else statement, we get an empty block statement which we shouldn't count
             if (!hasElseStatement && child instanceof ASTBlockStatement) {
                 break;
             }
@@ -194,8 +193,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
     public Void visit(ASTBlockStatement node, State state) {
 
         for (ApexNode<?> child : node.children()) {
-            // This needs to happen because the current 'run' of boolean operations is
-            // terminated
+            // This needs to happen because the current 'run' of boolean operations is terminated
             // once we finish a statement.
             state.booleanOperation(null);
             child.acceptVisitor(this, state);

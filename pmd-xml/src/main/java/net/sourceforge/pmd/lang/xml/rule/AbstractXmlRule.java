@@ -11,4 +11,5 @@ import net.sourceforge.pmd.lang.rule.AbstractRule;
  */
 public abstract class AbstractXmlRule extends AbstractRule {
 
+
 }

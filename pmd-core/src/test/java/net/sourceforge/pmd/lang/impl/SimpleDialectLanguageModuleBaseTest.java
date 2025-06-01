@@ -29,10 +29,8 @@ class SimpleDialectLanguageModuleBaseTest {
         try (LanguageProcessor baseProcessor = lang.createProcessor(lang.newPropertyBundle());
                 LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {
 
-            Set<XPathFunctionDefinition> dialectFunctions = dialectProcessor.services().getXPathHandler()
-                    .getRegisteredExtensionFunctions();
-            for (XPathFunctionDefinition fn : baseProcessor.services().getXPathHandler()
-                    .getRegisteredExtensionFunctions()) {
+            Set<XPathFunctionDefinition> dialectFunctions = dialectProcessor.services().getXPathHandler().getRegisteredExtensionFunctions();
+            for (XPathFunctionDefinition fn : baseProcessor.services().getXPathHandler().getRegisteredExtensionFunctions()) {
                 assertTrue(dialectFunctions.contains(fn),
                         "The function " + fn.getQName() + " is not available in the dialect.");
             }
@@ -44,8 +42,7 @@ class SimpleDialectLanguageModuleBaseTest {
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
 
         try (LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {
-            Set<XPathFunctionDefinition> dialectFunctions = dialectProcessor.services().getXPathHandler()
-                    .getRegisteredExtensionFunctions();
+            Set<XPathFunctionDefinition> dialectFunctions = dialectProcessor.services().getXPathHandler().getRegisteredExtensionFunctions();
 
             XPathFunctionDefinition dummyDialectFunction = DummyLanguageDialectModule.dummyDialectFunction();
             assertTrue(dialectFunctions.contains(dummyDialectFunction),
@@ -72,8 +69,8 @@ class SimpleDialectLanguageModuleBaseTest {
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
 
         LanguagePropertyBundle dialectPropertyBundle = dialect.newPropertyBundle();
-        assertTrue(dialectPropertyBundle.hasDescriptor(DummyLanguageDialectModule.DUMMY_DIALECT_PROP), "The property "
-                + DummyLanguageDialectModule.DUMMY_DIALECT_PROP.name() + " is not available in the dialect.");
+        assertTrue(dialectPropertyBundle.hasDescriptor(DummyLanguageDialectModule.DUMMY_DIALECT_PROP),
+                "The property " + DummyLanguageDialectModule.DUMMY_DIALECT_PROP.name() + " is not available in the dialect.");
     }
 
     @Test
@@ -84,9 +81,7 @@ class SimpleDialectLanguageModuleBaseTest {
         try (LanguageProcessor baseProcessor = lang.createProcessor(lang.newPropertyBundle());
                 LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {
             for (Metric<?, ?> metric : baseProcessor.services().getLanguageMetricsProvider().getMetrics()) {
-                assertNotNull(
-                        dialectProcessor.services().getLanguageMetricsProvider()
-                                .getMetricWithName(metric.displayName()),
+                assertNotNull(dialectProcessor.services().getLanguageMetricsProvider().getMetricWithName(metric.displayName()),
                         "The metric " + metric.displayName() + " is not available in the dialect.");
             }
         }
@@ -97,11 +92,8 @@ class SimpleDialectLanguageModuleBaseTest {
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
 
         try (LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {
-            assertTrue(
-                    dialectProcessor.services().getLanguageMetricsProvider().getMetrics()
-                            .contains(DummyLanguageDialectModule.DUMMY_DIALECT_METRIC),
-                    "The metric " + DummyLanguageDialectModule.DUMMY_DIALECT_METRIC.displayName()
-                            + "is not available in the dialect");
+            assertTrue(dialectProcessor.services().getLanguageMetricsProvider().getMetrics().contains(DummyLanguageDialectModule.DUMMY_DIALECT_METRIC),
+                    "The metric " + DummyLanguageDialectModule.DUMMY_DIALECT_METRIC.displayName() + "is not available in the dialect");
         }
     }
 }

@@ -39,9 +39,9 @@ class MarkTest {
         final int endColumn = 2;
         final int lineCount = 10;
         TokenEntry token = tokens.addToken("public", filename, beginLine, beginColumn, beginLine,
-                beginColumn + "public".length());
-        TokenEntry endToken = tokens.addToken("}", filename, beginLine + lineCount, 1, beginLine + lineCount - 1,
-                endColumn);
+                                           beginColumn + "public".length());
+        TokenEntry endToken = tokens.addToken("}", filename,
+                                              beginLine + lineCount, 1, beginLine + lineCount - 1, endColumn);
 
         final Mark mark = new Mark(token);
         mark.setEndToken(endToken);

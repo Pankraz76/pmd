@@ -50,13 +50,11 @@ public class ResolutionContext {
     }
 
     /**
-     * Mark previously resolved declarations (if any) as more important than the
-     * subsequent ones.
+     * Mark previously resolved declarations (if any) as more important than the subsequent ones.
      *
-     * It is correct to call this method even at the point when nothing is resolved
-     * yet. If there is something resolved so far, the subsequent declarations will
-     * be considered as hidden. If there is nothing resolved so far, the call is
-     * ignored.
+     * It is correct to call this method even at the point when nothing is resolved yet.
+     * If there is something resolved so far, the subsequent declarations will be considered as hidden.
+     * If there is nothing resolved so far, the call is ignored.
      */
     public void markHidingPoint() {
         if (!bestCandidates.isEmpty()) {
@@ -75,12 +73,12 @@ public class ResolutionContext {
         private final boolean timedOut;
 
         Result(Class<A> tpe, List<?> best, List<?> hidden, boolean timedOut) {
-            for (Object b : best) {
+            for (Object b: best) {
                 if (tpe.isInstance(b)) {
                     bestCandidates.add((A) b);
                 }
             }
-            for (Object h : hidden) {
+            for (Object h: hidden) {
                 if (tpe.isInstance(h)) {
                     hiddenCandidates.add((A) h);
                 }

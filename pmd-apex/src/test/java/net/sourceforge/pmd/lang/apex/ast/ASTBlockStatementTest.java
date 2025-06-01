@@ -13,14 +13,18 @@ class ASTBlockStatementTest extends ApexParserTestBase {
     @Test
     void noCurlyBraces() {
         ASTBlockStatement blockStatement = parse("class Foo { { if (true) methodCall(); } }")
-                .descendants(ASTIfBlockStatement.class).firstChild(ASTBlockStatement.class).first();
+                .descendants(ASTIfBlockStatement.class)
+                .firstChild(ASTBlockStatement.class)
+                .first();
         assertFalse(blockStatement.hasCurlyBrace());
     }
 
     @Test
     void withCurlyBraces() {
         ASTBlockStatement blockStatement = parse("class Foo { { if (true) { methodCall(); } } }")
-                .descendants(ASTIfBlockStatement.class).firstChild(ASTBlockStatement.class).first();
+                .descendants(ASTIfBlockStatement.class)
+                .firstChild(ASTBlockStatement.class)
+                .first();
         assertTrue(blockStatement.hasCurlyBrace());
     }
 }

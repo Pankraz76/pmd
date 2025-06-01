@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
-
 import javax.xml.XMLConstants;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -40,8 +39,8 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
 
     public static final String NAME = "xml";
 
-    public static final PropertyDescriptor<String> ENCODING = PropertyFactory.stringProperty("encoding")
-            .desc("XML encoding format").defaultValue("UTF-8").build();
+    public static final PropertyDescriptor<String> ENCODING =
+        PropertyFactory.stringProperty("encoding").desc("XML encoding format").defaultValue("UTF-8").build();
 
     private static final String PMD_REPORT_NS_URI = "http://pmd.sourceforge.net/report/2.0.0";
     private static final String PMD_REPORT_NS_LOCATION = "https://pmd.github.io/schema/report_2_0_0.xsd";
@@ -91,12 +90,11 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
     }
 
     /**
-     * Return a encoding, which doesn't write a BOM (byte order mark). Only UTF-16
-     * encoders might write a BOM, see {@link Charset}.
+     * Return a encoding, which doesn't write a BOM (byte order mark).
+     * Only UTF-16 encoders might write a BOM, see {@link Charset}.
      *
-     * <p>
-     * This is needed, so that we don't accidentally add BOMs whenever we insert a
-     * newline.
+     * <p>This is needed, so that we don't accidentally add BOMs whenever
+     * we insert a newline.
      *
      * @return
      */
@@ -114,10 +112,8 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
     /**
      * Outputs a platform dependent line separator.
      *
-     * @throws XMLStreamException
-     *             if XMLStreamWriter couldn't be flushed.
-     * @throws IOException
-     *             if an I/O error occurs.
+     * @throws XMLStreamException if XMLStreamWriter couldn't be flushed.
+     * @throws IOException if an I/O error occurs.
      */
     private void writeNewLine() throws XMLStreamException, IOException {
         /*
@@ -128,11 +124,12 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
          * line separator when writing "\n" which results under Windows, that "\r"
          * actually is written twice (once escaped, once raw).
          *
-         * Note2: Before writing the raw bytes to the underlying stream, we need to
-         * flush XMLStreamWriter. Notably IBM's Java 8 might still need to output data.
+         * Note2: Before writing the raw bytes to the underlying stream, we need
+         * to flush XMLStreamWriter. Notably IBM's Java 8 might still need to output
+         * data.
          *
-         * Note3: Before writing the raw bytes, we issue a empty writeCharacters, so
-         * that any open tags are closed and we are ready for writing raw bytes.
+         * Note3: Before writing the raw bytes, we issue a empty writeCharacters,
+         * so that any open tags are closed and we are ready for writing raw bytes.
          */
         xmlWriter.writeCharacters("");
         xmlWriter.flush();
@@ -200,8 +197,7 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
                 xmlWriter.writeAttribute("msg", pe.getMsg());
                 writeNewLine();
 
-                // in case the message contains itself some CDATA sections, they need to be
-                // handled
+                // in case the message contains itself some CDATA sections, they need to be handled
                 // in order to not produce invalid XML...
                 String detail = pe.getDetail();
                 // split "]]>" into "]]" and ">" into two cdata sections
@@ -253,13 +249,12 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
         String encoding = getProperty(ENCODING);
 
         try {
-            this.stream = StringUtils.isBlank(reportFilename) ? System.out
-                    : Files.newOutputStream(new File(reportFilename).toPath());
+            this.stream = StringUtils.isBlank(reportFilename)
+                    ? System.out : Files.newOutputStream(new File(reportFilename).toPath());
 
             XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
             this.xmlWriter = outputFactory.createXMLStreamWriter(this.stream, encoding);
-            // for backwards compatibility, also provide a writer. Note: xmlWriter won't use
-            // that.
+            // for backwards compatibility, also provide a writer. Note: xmlWriter won't use that.
             super.setWriter(new WrappedOutputStreamWriter(xmlWriter, stream, encoding));
         } catch (IOException | XMLStreamException e) {
             throw new IllegalArgumentException(e);
@@ -286,8 +281,7 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
     private static class WrappedOutputStreamWriter extends OutputStreamWriter {
         private final XMLStreamWriter xmlWriter;
 
-        WrappedOutputStreamWriter(XMLStreamWriter xmlWriter, OutputStream out, String charset)
-                throws UnsupportedEncodingException {
+        WrappedOutputStreamWriter(XMLStreamWriter xmlWriter, OutputStream out, String charset) throws UnsupportedEncodingException {
             super(out, charset);
             this.xmlWriter = xmlWriter;
         }
@@ -315,8 +309,9 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
 
     // FIXME: elapsed time not available until the end of the processing
     /*
-     * private String createTimeElapsedAttr(Report rpt) { Report.ReadableDuration d
-     * = new Report.ReadableDuration(rpt.getElapsedTimeInMillis()); return
+     * private String createTimeElapsedAttr(Report rpt) {
+     * Report.ReadableDuration d = new
+     * Report.ReadableDuration(rpt.getElapsedTimeInMillis()); return
      * " elapsedTime=\"" + d.getTime() + "\""; }
      */
 }

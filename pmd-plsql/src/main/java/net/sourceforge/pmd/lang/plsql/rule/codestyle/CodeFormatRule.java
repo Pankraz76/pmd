@@ -28,10 +28,15 @@ import net.sourceforge.pmd.lang.plsql.rule.AbstractPLSQLRule;
 import net.sourceforge.pmd.properties.PropertyDescriptor;
 import net.sourceforge.pmd.properties.PropertyFactory;
 
+
 public class CodeFormatRule extends AbstractPLSQLRule {
 
-    private static final PropertyDescriptor<Integer> INDENTATION_PROPERTY = PropertyFactory.intProperty("indentation")
-            .desc("Indentation to be used for blocks").defaultValue(2).require(inRange(0, 32)).build();
+    private static final PropertyDescriptor<Integer> INDENTATION_PROPERTY =
+            PropertyFactory.intProperty("indentation")
+                .desc("Indentation to be used for blocks")
+                .defaultValue(2)
+                .require(inRange(0, 32))
+                .build();
 
     private int indentation = INDENTATION_PROPERTY.defaultValue();
 
@@ -77,8 +82,7 @@ public class CodeFormatRule extends AbstractPLSQLRule {
             lineNumber++;
             Node child = node.getChild(i);
             if (child.getBeginLine() != lineNumber) {
-                asCtx(data).addViolationWithMessage(child,
-                        child.getXPathNodeName() + " should be on line " + lineNumber);
+                asCtx(data).addViolationWithMessage(child, child.getXPathNodeName() + " should be on line " + lineNumber);
             }
             List<ASTEqualityExpression> conditions = child.descendants(ASTEqualityExpression.class).toList();
 
@@ -94,8 +98,9 @@ public class CodeFormatRule extends AbstractPLSQLRule {
                 for (ASTEqualityExpression singleCondition : conditions) {
                     lineNumber++;
                     if (singleCondition.getBeginLine() != lineNumber) {
-                        asCtx(data).addViolationWithMessage(child, "Join condition \"" + singleCondition.getImage()
-                                + "\" should be on line " + lineNumber);
+                        asCtx(data).addViolationWithMessage(child,
+                                "Join condition \"" + singleCondition.getImage() + "\" should be on line "
+                                        + lineNumber);
                     }
                 }
             }
@@ -177,8 +182,8 @@ public class CodeFormatRule extends AbstractPLSQLRule {
         int variableIndentation = node.ancestors().get(1).getBeginColumn() + 2 * indentation;
         int line = node.getBeginLine();
 
-        List<ASTVariableOrConstantDeclarator> variables = node.descendants(ASTVariableOrConstantDeclarator.class)
-                .toList();
+        List<ASTVariableOrConstantDeclarator> variables = node
+                .descendants(ASTVariableOrConstantDeclarator.class).toList();
 
         int datatypeIndentation = variableIndentation;
         if (!variables.isEmpty()) {

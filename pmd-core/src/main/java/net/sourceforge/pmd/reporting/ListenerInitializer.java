@@ -18,12 +18,11 @@ import net.sourceforge.pmd.util.AssertionUtil;
  * An initializer for {@link GlobalAnalysisListener} that gets notified of
  * general analysis parameters.
  *
- * <p>
- * Each method will be called exactly once, before any events on the
- * {@link GlobalAnalysisListener}. The order of calls is unspecified, except
- * that {@link #close()} is called last, and before
- * {@link GlobalAnalysisListener#startFileAnalysis(TextFile)} is called for the
- * first time.
+ * <p>Each method will be called exactly once, before any events on the
+ * {@link GlobalAnalysisListener}. The order of calls is unspecified,
+ * except that {@link #close()} is called last, and before
+ * {@link GlobalAnalysisListener#startFileAnalysis(TextFile)} is called
+ * for the first time.
  */
 public interface ListenerInitializer extends AutoCloseable {
 
@@ -35,10 +34,11 @@ public interface ListenerInitializer extends AutoCloseable {
     }
 
     /**
-     * Set the list of files that will be analyzed during this analysis. Renderers
-     * must output each file in this order. Multithreaded processing might however
-     * pass them to the renderer in any order. Renderers may use
-     * {@link DeterministicOutputListenerWrapper} to reorder the events.
+     * Set the list of files that will be analyzed during this analysis.
+     * Renderers must output each file in this order. Multithreaded
+     * processing might however pass them to the renderer in any order.
+     * Renderers may use {@link DeterministicOutputListenerWrapper} to
+     * reorder the events.
      *
      * @since 7.12.0
      */
@@ -47,23 +47,21 @@ public interface ListenerInitializer extends AutoCloseable {
     }
 
     /**
-     * Notify this listener that the given {@link FileNameRenderer} will be used by
-     * default for this analysis. This is mostly only relevant for {@link Renderer}
-     * listeners.
+     * Notify this listener that the given {@link FileNameRenderer} will
+     * be used by default for this analysis. This is mostly only relevant
+     * for {@link Renderer} listeners.
      *
-     * @param fileNameRenderer
-     *            The renderer
+     * @param fileNameRenderer The renderer
      */
     default void setFileNameRenderer(FileNameRenderer fileNameRenderer) {
         // noop
     }
 
     /**
-     * Signals the end of initialization: no further calls will be made to this
-     * object.
+     * Signals the end of initialization: no further calls will be made
+     * to this object.
      *
-     * @throws Exception
-     *             If an exception occurs, eg IOException when writing to a renderer
+     * @throws Exception If an exception occurs, eg IOException when writing to a renderer
      */
     @Override
     default void close() throws Exception {
@@ -77,18 +75,17 @@ public interface ListenerInitializer extends AutoCloseable {
         return NoopListenerInitializer.INSTANCE;
     }
 
+
     /**
-     * Produce an analysis listener that forwards all events to the given listeners.
+     * Produce an analysis listener that forwards all events to the given
+     * listeners.
      *
-     * @param listeners
-     *            Listeners
+     * @param listeners Listeners
      *
      * @return A new listener
      *
-     * @throws IllegalArgumentException
-     *             If the parameter is empty
-     * @throws NullPointerException
-     *             If the parameter or any of its elements is null
+     * @throws IllegalArgumentException If the parameter is empty
+     * @throws NullPointerException     If the parameter or any of its elements is null
      */
     @SuppressWarnings("PMD.CloseResource")
     static ListenerInitializer tee(Collection<? extends ListenerInitializer> listeners) {

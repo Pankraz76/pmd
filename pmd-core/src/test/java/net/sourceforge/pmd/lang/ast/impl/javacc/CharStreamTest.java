@@ -73,6 +73,7 @@ class CharStreamTest {
         assertEquals('c', stream.readChar());
         assertEquals('d', stream.readChar());
 
+
         assertThrows(EOFException.class, stream::readChar);
     }
 
@@ -132,18 +133,20 @@ class CharStreamTest {
         assertThrows(IllegalArgumentException.class, () -> stream.backup(10));
     }
 
+
     CharStream simpleCharStream(String abcd) {
         return CharStream.create(TextDocument.readOnlyString(abcd, dummyVersion), TokenDocumentBehavior.DEFAULT);
     }
 
     CharStream javaCharStream(String abcd) {
-        return CharStream.create(TextDocument.readOnlyString(abcd, dummyVersion),
-                new TokenDocumentBehavior(Collections.emptyList()) {
-                    @Override
-                    public TextDocument translate(TextDocument text) throws MalformedSourceException {
-                        return new JavaEscapeTranslator(text).translateDocument();
-                    }
-                });
+        return CharStream.create(
+            TextDocument.readOnlyString(abcd, dummyVersion),
+            new TokenDocumentBehavior(Collections.emptyList()) {
+                @Override
+                public TextDocument translate(TextDocument text) throws MalformedSourceException {
+                    return new JavaEscapeTranslator(text).translateDocument();
+                }
+            });
     }
 
 }

@@ -44,6 +44,7 @@ import net.sf.saxon.sxpath.XPathVariable;
 import net.sf.saxon.trans.UncheckedXPathException;
 import net.sf.saxon.trans.XPathException;
 
+
 /**
  * This is a Saxon based XPathRule query.
  */
@@ -70,21 +71,23 @@ public class SaxonXPathRuleQuery {
     private Configuration configuration;
 
     /**
-     * Contains for each nodeName a sub expression, used for implementing rule
-     * chain.
+     * Contains for each nodeName a sub expression, used for implementing rule chain.
      */
     Map<String, List<Expression>> nodeNameToXPaths = new HashMap<>();
 
     /**
-     * Representation of an XPath query, created at {@link #initialize()} using
-     * {@link #xpathExpr}.
+     * Representation of an XPath query, created at {@link #initialize()} using {@link #xpathExpr}.
      */
     XPathExpression xpathExpression;
 
     private final DeprecatedAttrLogger attrCtx;
 
-    public SaxonXPathRuleQuery(String xpathExpr, XPathVersion version, Map<PropertyDescriptor<?>, Object> properties,
-            XPathHandler xPathHandler, DeprecatedAttrLogger logger) throws PmdXPathException {
+
+    public SaxonXPathRuleQuery(String xpathExpr,
+                               XPathVersion version,
+                               Map<PropertyDescriptor<?>, Object> properties,
+                               XPathHandler xPathHandler,
+                               DeprecatedAttrLogger logger) throws PmdXPathException {
         this.xpathExpr = xpathExpr;
         this.version = version;
         this.properties = properties;
@@ -97,13 +100,16 @@ public class SaxonXPathRuleQuery {
         }
     }
 
+
     public String getXpathExpression() {
         return xpathExpr;
     }
 
+
     public List<String> getRuleChainVisits() {
         return rulechainQueries;
     }
+
 
     public List<Node> evaluate(final Node node) {
         final AstTreeInfo documentNode = getDocumentNodeForRootNode(node);
@@ -111,8 +117,7 @@ public class SaxonXPathRuleQuery {
         try {
 
             // Map AST Node -> Saxon Node
-            final XPathDynamicContext xpathDynamicContext = xpathExpression
-                    .createDynamicContext(documentNode.findWrapperFor(node));
+            final XPathDynamicContext xpathDynamicContext = xpathExpression.createDynamicContext(documentNode.findWrapperFor(node));
 
             // XPath 2.0 sequences may contain duplicates
             final Set<Node> results = new LinkedHashSet<>();
@@ -125,8 +130,7 @@ public class SaxonXPathRuleQuery {
                     if (current instanceof AstNodeOwner) {
                         results.add(((AstNodeOwner) current).getUnderlyingNode());
                     } else {
-                        throw new XPathException(
-                                "XPath rule expression returned a non-node (" + current.getClass() + "): " + current);
+                        throw new XPathException("XPath rule expression returned a non-node (" + current.getClass() + "): " + current);
                     }
                     current = iterator.next();
                 }
@@ -162,15 +166,13 @@ public class SaxonXPathRuleQuery {
         return nodeNameToXPaths.get(SaxonXPathRuleQuery.AST_ROOT).get(0);
     }
 
+
     /**
-     * Gets the DocumentNode representation for the whole AST in which the node is,
-     * that is, if the node is not the root of the AST, then the AST is traversed
-     * all the way up until the root node is found. If the DocumentNode was cached
-     * because this method was previously called, then a new DocumentNode will not
-     * be instanced.
+     * Gets the DocumentNode representation for the whole AST in which the node is, that is, if the node is not the root
+     * of the AST, then the AST is traversed all the way up until the root node is found. If the DocumentNode was
+     * cached because this method was previously called, then a new DocumentNode will not be instanced.
      *
-     * @param node
-     *            the node from which the root node will be looked for.
+     * @param node the node from which the root node will be looked for.
      *
      * @return the DocumentNode representing the whole AST
      */
@@ -178,6 +180,7 @@ public class SaxonXPathRuleQuery {
         final RootNode root = node.getRoot();
         return root.getUserMap().computeIfAbsent(SAXON_TREE_CACHE_KEY, () -> new AstTreeInfo(root, configuration));
     }
+
 
     private void addExpressionForNode(String nodeName, Expression expression) {
         nodeNameToXPaths.computeIfAbsent(nodeName, n -> new ArrayList<>(2)).add(expression);
@@ -233,8 +236,7 @@ public class SaxonXPathRuleQuery {
             if (!rca.getRootElements().isEmpty()) {
                 rca.getRootElements().forEach(it -> addExpressionForNode(it, finalExpr));
             } else {
-                // couldn't find a root element for the expression, that means, we can't use
-                // rule chain at all
+                // couldn't find a root element for the expression, that means, we can't use rule chain at all
                 // even though, it would be possible for part of the expression.
                 useRuleChain = false;
                 break;

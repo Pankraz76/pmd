@@ -32,6 +32,7 @@ public class ApexOpenRedirectRule extends AbstractApexRule {
     private static final String PAGEREFERENCE = "PageReference";
     private final Set<String> listOfStringLiteralVariables = new HashSet<>();
 
+
     @Override
     protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);

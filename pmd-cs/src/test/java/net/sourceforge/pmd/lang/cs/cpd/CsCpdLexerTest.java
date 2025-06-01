@@ -55,6 +55,7 @@ class CsCpdLexerTest extends CpdTextComparisonTest {
         doTest("operatorsAndStuff");
     }
 
+
     @Test
     void testLineNumberAfterMultilineString() {
         doTest("strings");
@@ -117,8 +118,7 @@ class CsCpdLexerTest extends CpdTextComparisonTest {
         return properties(false, false, false);
     }
 
-    private LanguagePropertyConfig properties(boolean ignoreUsings, boolean ignoreLiteralSequences,
-            boolean ignoreAttributes) {
+    private LanguagePropertyConfig properties(boolean ignoreUsings, boolean ignoreLiteralSequences, boolean ignoreAttributes) {
         return properties -> {
             properties.setProperty(CpdLanguageProperties.CPD_IGNORE_IMPORTS, ignoreUsings);
             properties.setProperty(CpdLanguageProperties.CPD_IGNORE_LITERAL_SEQUENCES, ignoreLiteralSequences);

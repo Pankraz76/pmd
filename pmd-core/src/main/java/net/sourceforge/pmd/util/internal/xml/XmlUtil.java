@@ -31,8 +31,9 @@ public final class XmlUtil {
     }
 
     public static Stream<Element> getElementChildren(Element parent) {
-        return DomUtils.asList(parent.getChildNodes()).stream().filter(it -> it.getNodeType() == Node.ELEMENT_NODE)
-                .map(Element.class::cast);
+        return DomUtils.asList(parent.getChildNodes()).stream()
+                       .filter(it -> it.getNodeType() == Node.ELEMENT_NODE)
+                       .map(Element.class::cast);
     }
 
     public static List<Element> getElementChildrenList(Element parent) {
@@ -43,31 +44,36 @@ public final class XmlUtil {
         return getElementChildren(parent).filter(e -> matchesName(e, names));
     }
 
-    public static Stream<Element> getElementChildrenNamedReportOthers(Element parent, Set<SchemaConstant> names,
-            PmdXmlReporter err) {
-        return getElementChildren(parent).map(it -> {
-            if (matchesName(it, names)) {
-                return it;
-            } else {
-                err.at(it).warn(IGNORED__UNEXPECTED_ELEMENT_IN, it.getTagName(), formatPossibleNames(names));
-                return null;
-            }
-        }).filter(Objects::nonNull);
+    public static Stream<Element> getElementChildrenNamedReportOthers(Element parent, Set<SchemaConstant> names, PmdXmlReporter err) {
+        return getElementChildren(parent)
+            .map(it -> {
+                if (matchesName(it, names)) {
+                    return it;
+                } else {
+                    err.at(it).warn(IGNORED__UNEXPECTED_ELEMENT_IN, it.getTagName(), formatPossibleNames(names));
+                    return null;
+                }
+            }).filter(Objects::nonNull);
     }
 
     public static boolean matchesName(Element elt, Set<SchemaConstant> names) {
         return names.stream().anyMatch(it -> it.xmlName().equals(elt.getTagName()));
     }
 
-    public static void reportIgnoredUnexpectedElt(Element parent, Element unexpectedChild, Set<SchemaConstant> names,
-            PmdXmlReporter err) {
-        err.at(unexpectedChild).warn(IGNORED__UNEXPECTED_ELEMENT, unexpectedChild.getTagName(), parent.getTagName(),
-                formatPossibleNames(names));
+    public static void reportIgnoredUnexpectedElt(Element parent,
+                                                  Element unexpectedChild,
+                                                  Set<SchemaConstant> names,
+                                                  PmdXmlReporter err) {
+        err.at(unexpectedChild).warn(IGNORED__UNEXPECTED_ELEMENT,
+                                     unexpectedChild.getTagName(),
+                                     parent.getTagName(),
+                                     formatPossibleNames(names));
     }
 
     public static Stream<Element> getElementChildrenNamed(Element parent, String name) {
         return getElementChildren(parent).filter(e -> name.equals(e.getTagName()));
     }
+
 
     public static List<Element> getChildrenExpectSingleName(Element elt, String name, PmdXmlReporter err) {
         return XmlUtil.getElementChildren(elt).peek(it -> {
@@ -77,8 +83,7 @@ public final class XmlUtil {
         }).collect(Collectors.toList());
     }
 
-    public static Element getSingleChildIn(Element elt, boolean throwOnMissing, PmdXmlReporter err,
-            Set<SchemaConstant> names) {
+    public static Element getSingleChildIn(Element elt, boolean throwOnMissing, PmdXmlReporter err, Set<SchemaConstant> names) {
         List<Element> children = getElementChildrenNamed(elt, names).collect(Collectors.toList());
         if (children.size() == 1) {
             return children.get(0);
@@ -107,16 +112,17 @@ public final class XmlUtil {
         } else if (names.size() == 1) {
             return StringUtil.inSingleQuotes(names.iterator().next().xmlName());
         } else {
-            return "one of " + names.stream().map(SchemaConstant::xmlName).map(StringUtil::inSingleQuotes)
-                    .collect(Collectors.joining(", "));
+            return "one of " + names.stream()
+                                    .map(SchemaConstant::xmlName)
+                                    .map(StringUtil::inSingleQuotes)
+                                    .collect(Collectors.joining(", "));
         }
     }
 
     /**
      * Parse a String from a textually type node.
      *
-     * @param node
-     *            The node.
+     * @param node The node.
      *
      * @return The String.
      */

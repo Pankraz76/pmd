@@ -39,8 +39,8 @@ public final class TextFileContent {
     private static final String CR = "\r";
 
     /**
-     * The normalized line ending used to replace platform-specific line endings in
-     * the {@linkplain #getNormalizedText() normalized text}.
+     * The normalized line ending used to replace platform-specific
+     * line endings in the {@linkplain #getNormalizedText() normalized text}.
      */
     public static final String NORMALIZED_LINE_TERM = LF;
 
@@ -58,8 +58,7 @@ public final class TextFileContent {
     private final long checkSum;
     private final SourceCodePositioner positioner;
 
-    private TextFileContent(Chars normalizedText, String lineTerminator, long checkSum,
-            SourceCodePositioner positioner) {
+    private TextFileContent(Chars normalizedText, String lineTerminator, long checkSum, SourceCodePositioner positioner) {
         this.cdata = normalizedText;
         this.lineTerminator = lineTerminator;
         this.checkSum = checkSum;
@@ -69,10 +68,11 @@ public final class TextFileContent {
     /**
      * The text of the file, with the following normalizations:
      * <ul>
-     * <li>Line endings are normalized to {@value NORMALIZED_LINE_TERM}. For this
-     * purpose, a line ending is either {@code \r}, {@code \r\n} or {@code \n} (CR,
-     * CRLF or LF), not the full range of unicode line endings. This is consistent
-     * with {@link BufferedReader#readLine()}, and the JLS, for example.
+     * <li>Line endings are normalized to {@value NORMALIZED_LINE_TERM}.
+     * For this purpose, a line ending is either {@code \r}, {@code \r\n}
+     * or {@code \n} (CR, CRLF or LF), not the full range of unicode line
+     * endings. This is consistent with {@link BufferedReader#readLine()},
+     * and the JLS, for example.
      * <li>An initial byte-order mark is removed, if any.
      * </ul>
      */
@@ -80,22 +80,24 @@ public final class TextFileContent {
         return cdata;
     }
 
+
     /**
-     * Returns the original line terminator found in the file. This is the
-     * terminator that should be used to write the file back to disk. If the
-     * original file either has mixed line terminators, or has no line terminator at
-     * all, the line terminator defaults to the platform-specific one
-     * ({@link System#lineSeparator()}).
+     * Returns the original line terminator found in the file. This is
+     * the terminator that should be used to write the file back to disk.
+     * If the original file either has mixed line terminators, or has no
+     * line terminator at all, the line terminator defaults to the
+     * platform-specific one ({@link System#lineSeparator()}).
      */
     public String getLineTerminator() {
         return lineTerminator;
     }
 
+
     /**
-     * Returns a checksum for the contents of the file. The checksum is computed on
-     * the unnormalized bytes, so may be affected by a change line terminators. This
-     * is why two {@link TextFileContent}s with the same normalized content may have
-     * different checksums.
+     * Returns a checksum for the contents of the file. The checksum is
+     * computed on the unnormalized bytes, so may be affected by a change
+     * line terminators. This is why two {@link TextFileContent}s with the
+     * same normalized content may have different checksums.
      */
     public long getCheckSum() {
         return checkSum;
@@ -107,12 +109,12 @@ public final class TextFileContent {
 
     /**
      * Normalize the line endings of the text to {@value NORMALIZED_LINE_TERM},
-     * returns a {@link TextFileContent} containing the original line ending. If the
-     * text does not contain any line terminators, or if it contains a mix of
-     * different terminators, falls back to the platform-specific line separator.
+     * returns a {@link TextFileContent} containing the original line ending.
+     * If the text does not contain any line terminators, or if it contains a
+     * mix of different terminators, falls back to the platform-specific line
+     * separator.
      *
-     * @param text
-     *            Text content of a file
+     * @param text Text content of a file
      *
      * @return A text file content
      */
@@ -121,16 +123,14 @@ public final class TextFileContent {
     }
 
     /**
-     * Read the reader fully and produce a {@link TextFileContent}. This closes the
-     * reader. This takes care of buffering.
+     * Read the reader fully and produce a {@link TextFileContent}. This
+     * closes the reader. This takes care of buffering.
      *
-     * @param reader
-     *            A reader
+     * @param reader A reader
      *
      * @return A text file content
      *
-     * @throws IOException
-     *             If an IO exception occurs
+     * @throws IOException If an IO exception occurs
      */
     public static TextFileContent fromReader(Reader reader) throws IOException {
         try (Reader r = reader) {
@@ -138,26 +138,24 @@ public final class TextFileContent {
         }
     }
 
+
     /**
-     * Reads the contents of the input stream into a TextFileContent. This closes
-     * the input stream. This takes care of buffering.
+     * Reads the contents of the input stream into a TextFileContent.
+     * This closes the input stream. This takes care of buffering.
      *
-     * @param inputStream
-     *            Input stream
-     * @param sourceEncoding
-     *            Encoding to use to read from the data source
+     * @param inputStream    Input stream
+     * @param sourceEncoding Encoding to use to read from the data source
      */
     public static TextFileContent fromInputStream(InputStream inputStream, Charset sourceEncoding) throws IOException {
         return fromInputStream(inputStream, sourceEncoding, FALLBACK_LINESEP);
     }
 
     // test only
-    static TextFileContent fromInputStream(InputStream inputStream, Charset sourceEncoding, String fallbackLineSep)
-            throws IOException {
+    static TextFileContent fromInputStream(InputStream inputStream, Charset sourceEncoding, String fallbackLineSep) throws IOException {
         Checksum checksum = newChecksum();
         try (CheckedInputStream checkedIs = new CheckedInputStream(new BufferedInputStream(inputStream), checksum);
-                // no need to buffer this reader as we already use our own char buffer
-                Reader reader = new InputStreamReader(checkedIs, sourceEncoding)) {
+             // no need to buffer this reader as we already use our own char buffer
+             Reader reader = new InputStreamReader(checkedIs, sourceEncoding)) {
             return normalizingRead(reader, DEFAULT_BUFSIZE, fallbackLineSep, checksum, false);
         }
     }
@@ -203,8 +201,7 @@ public final class TextFileContent {
         return normalizingRead(input, bufSize, fallbackLineSep, newChecksum(), true);
     }
 
-    static TextFileContent normalizingRead(Reader input, int bufSize, String fallbackLineSep, Checksum checksum,
-            boolean updateChecksum) throws IOException {
+    static TextFileContent normalizingRead(Reader input, int bufSize, String fallbackLineSep, Checksum checksum, boolean updateChecksum) throws IOException {
         char[] cbuf = new char[bufSize];
         StringBuilder result = new StringBuilder(bufSize);
         String detectedLineTerm = null;
@@ -241,8 +238,7 @@ public final class TextFileContent {
                         if (i > 0) {
                             cbuf[i - 1] = NORMALIZED_LINE_TERM_CHAR; // replace the \r with a \n
                         } else {
-                            // The CR was trailing a buffer, so it's not in the current buffer and wasn't
-                            // copied.
+                            // The CR was trailing a buffer, so it's not in the current buffer and wasn't copied.
                             // Append a newline.
                             result.append(NORMALIZED_LINE_TERM);
                         }
@@ -295,8 +291,7 @@ public final class TextFileContent {
             detectedLineTerm = fallbackLineSep;
         }
 
-        return new TextFileContent(Chars.wrap(result), detectedLineTerm, checksum.getValue(),
-                positionerBuilder.build(bufOffset));
+        return new TextFileContent(Chars.wrap(result), detectedLineTerm, checksum.getValue(), positionerBuilder.build(bufOffset));
     }
 
     private static String detectLineTerm(@Nullable String curLineTerm, String newLineTerm, String fallback) {
@@ -320,11 +315,11 @@ public final class TextFileContent {
 
     private static void updateChecksum(Checksum checksum, CharBuffer chars) {
         ByteBuffer bytes = StandardCharsets.UTF_8.encode(chars);
-        // note: this is only needed on Java 8. On Java 9, Checksum#update(ByteBuffer)
-        // has been added.
+        // note: this is only needed on Java 8. On Java 9, Checksum#update(ByteBuffer) has been added.
         assert bytes.hasArray() : "Encoder should produce a heap buffer";
         checksum.update(bytes.array(), bytes.arrayOffset(), bytes.remaining());
     }
+
 
     private static Checksum newChecksum() {
         return new Adler32();

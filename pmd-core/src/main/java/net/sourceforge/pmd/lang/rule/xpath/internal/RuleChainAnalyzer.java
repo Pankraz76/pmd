@@ -29,22 +29,17 @@ import net.sf.saxon.pattern.NameTest;
 import net.sf.saxon.type.Type;
 
 /**
- * Analyzes the xpath expression to find the root path selector for a element.
- * If found, the element name is available via
- * {@link RuleChainAnalyzer#getRootElements()} and the expression is rewritten
- * to start at "node::self()" instead.
+ * Analyzes the xpath expression to find the root path selector for a element. If found,
+ * the element name is available via {@link RuleChainAnalyzer#getRootElements()} and the
+ * expression is rewritten to start at "node::self()" instead.
  *
- * <p>
- * It uses a visitor to visit all the different expressions.
+ * <p>It uses a visitor to visit all the different expressions.
  *
- * <p>
- * Example: The XPath expression <code>//A[condition()]/B</code> results the
- * rootElement "A" and the expression is rewritten to be
- * <code>self::node[condition()]/B</code>.
+ * <p>Example: The XPath expression <code>//A[condition()]/B</code> results the rootElement "A"
+ * and the expression is rewritten to be <code>self::node[condition()]/B</code>.
  *
- * <p>
- * DocumentSorter expression is removed. The sorting of the resulting nodes
- * needs to be done after all (sub)expressions have been executed.
+ * <p>DocumentSorter expression is removed. The sorting of the resulting nodes needs to be done
+ * after all (sub)expressions have been executed.
  */
 public class RuleChainAnalyzer extends SaxonExprVisitor {
 

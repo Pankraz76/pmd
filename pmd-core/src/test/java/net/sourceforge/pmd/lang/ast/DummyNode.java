@@ -81,6 +81,7 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
         this.region = region;
     }
 
+
     /**
      * Nodes with an image that starts with `#` also set the xpath name.
      */
@@ -115,6 +116,7 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
         attributes.add(new Attribute(this, name, value));
     }
 
+
     public void clearXPathAttributes() {
         attributes.clear();
     }
@@ -132,15 +134,22 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
     public static class DummyRootNode extends DummyNode implements RootNode, GenericNode<DummyNode> {
 
         // FIXME remove this
-        private static final LanguageProcessor STATIC_PROCESSOR = DummyLanguageModule.getInstance()
-                .createProcessor(DummyLanguageModule.getInstance().newPropertyBundle());
+        private static final LanguageProcessor STATIC_PROCESSOR =
+            DummyLanguageModule.getInstance().createProcessor(DummyLanguageModule.getInstance().newPropertyBundle());
         private AstInfo<DummyRootNode> astInfo;
 
         public DummyRootNode() {
-            TextDocument document = TextDocument.readOnlyString("dummy text", FileId.UNKNOWN,
-                    DummyLanguageModule.getInstance().getDefaultVersion());
-            astInfo = new AstInfo<>(new ParserTask(document, SemanticErrorReporter.noop(),
-                    LanguageProcessorRegistry.singleton(STATIC_PROCESSOR)), this);
+            TextDocument document = TextDocument.readOnlyString(
+                "dummy text",
+                FileId.UNKNOWN,
+                DummyLanguageModule.getInstance().getDefaultVersion()
+            );
+            astInfo = new AstInfo<>(
+                new ParserTask(
+                    document,
+                    SemanticErrorReporter.noop(),
+                    LanguageProcessorRegistry.singleton(STATIC_PROCESSOR)),
+                this);
         }
 
         public DummyRootNode withTaskInfo(ParserTask task) {

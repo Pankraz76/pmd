@@ -12,7 +12,8 @@ import net.sourceforge.pmd.lang.plsql.ast.ExecutableCode;
  */
 public class ExcessiveMethodLengthRule extends AbstractCounterCheckRule.AbstractLineLengthCheckRule<ExecutableCode> {
     public ExcessiveMethodLengthRule() {
-        super(ExecutableCode.class);
+        super(ExecutableCode.class
+        );
     }
 
     @Override

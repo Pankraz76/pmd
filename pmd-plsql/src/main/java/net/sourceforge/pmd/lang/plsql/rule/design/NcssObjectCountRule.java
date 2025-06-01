@@ -37,6 +37,6 @@ public class NcssObjectCountRule extends AbstractNcssCountRule<OracleObject> {
     @Override
     protected Object[] getViolationParameters(OracleObject node, int metric) {
         String name = node.getObjectName();
-        return new Object[] { name == null ? "(unnamed)" : name, metric };
+        return new Object[] {name == null ? "(unnamed)" : name, metric};
     }
 }

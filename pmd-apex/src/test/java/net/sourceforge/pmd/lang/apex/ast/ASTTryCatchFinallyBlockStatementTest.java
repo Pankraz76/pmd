@@ -25,8 +25,7 @@ class ASTTryCatchFinallyBlockStatementTest extends ApexParserTestBase {
 
     @Test
     void testTryCatch() {
-        ApexNode<?> node = parse(
-                "class Foo { void bar() { try { methodCall(); } catch (Exception e) { methodCall(); } } }");
+        ApexNode<?> node = parse("class Foo { void bar() { try { methodCall(); } catch (Exception e) { methodCall(); } } }");
         ASTTryCatchFinallyBlockStatement statement = node.descendants(ASTTryCatchFinallyBlockStatement.class).first();
         assertNotNull(statement.getTryBlock());
         assertEquals(0, statement.getTryBlock().getIndexInParent());
@@ -38,8 +37,7 @@ class ASTTryCatchFinallyBlockStatementTest extends ApexParserTestBase {
 
     @Test
     void testTryCatchFinally() {
-        ApexNode<?> node = parse(
-                "class Foo { void bar() { try { methodCall(); } catch (Exception e) { methodCall(); } finally { } } }");
+        ApexNode<?> node = parse("class Foo { void bar() { try { methodCall(); } catch (Exception e) { methodCall(); } finally { } } }");
         ASTTryCatchFinallyBlockStatement statement = node.descendants(ASTTryCatchFinallyBlockStatement.class).first();
         assertNotNull(statement.getTryBlock());
         assertEquals(0, statement.getTryBlock().getIndexInParent());

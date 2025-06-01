@@ -48,8 +48,8 @@ public final class FileUtil {
     }
 
     /**
-     * Normalizes the filename by taking the casing into account, e.g. on Windows,
-     * the filename is changed to lowercase only.
+     * Normalizes the filename by taking the casing into account, e.g. on
+     * Windows, the filename is changed to lowercase only.
      *
      * @param fileName
      *            the file name
@@ -72,9 +72,9 @@ public final class FileUtil {
     }
 
     /**
-     * Handy method to find a certain pattern into a file. While this method lives
-     * in the FileUtils, it was designed with with unit test in mind (to check
-     * result redirected into a file)
+     * Handy method to find a certain pattern into a file. While this method
+     * lives in the FileUtils, it was designed with with unit test in mind (to
+     * check result redirected into a file)
      *
      * @param file
      * @param pattern
@@ -102,21 +102,24 @@ public final class FileUtil {
     }
 
     /**
-     * Reads the file, which contains the filelist. This is used for the command
-     * line arguments --filelist/-filelist for both PMD and CPD. The separator in
-     * the filelist is a comma and/or newlines.
+     * Reads the file, which contains the filelist. This is used for the
+     * command line arguments --filelist/-filelist for both PMD and CPD.
+     * The separator in the filelist is a comma and/or newlines.
      *
-     * @param filelist
-     *            the file which contains the list of path names
+     * @param filelist the file which contains the list of path names
      *
      * @return a list of file paths
      *
-     * @throws IOException
-     *             if the file couldn't be read
+     * @throws IOException if the file couldn't be read
      */
     public static List<Path> readFilelistEntries(Path filelist) throws IOException {
-        return Files.readAllLines(filelist).stream().flatMap(it -> Arrays.stream(it.split(","))).map(String::trim)
-                .filter(StringUtils::isNotBlank).map(Paths::get).collect(Collectors.toList());
+        return Files.readAllLines(filelist).stream()
+                    .flatMap(it -> Arrays.stream(it.split(",")))
+                    .map(String::trim)
+                    .filter(StringUtils::isNotBlank)
+                    .map(Paths::get)
+                    .collect(Collectors.toList());
     }
+
 
 }

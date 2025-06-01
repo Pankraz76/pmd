@@ -21,8 +21,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 class TextFileContentTest {
 
     // in real life it's System.lineSeparator()
-    // to make the class more testable (and avoid some test failures being hidden
-    // depending on the platform),
+    // to make the class more testable (and avoid some test failures being hidden depending on the platform),
     // we use this dummy value
     private static final String LINESEP_SENTINEL = ":fallback:";
 
@@ -56,10 +55,8 @@ class TextFileContentTest {
         TextFileContent content = origin.normalize("\ufeffabc");
         Chars normalizedText = content.getNormalizedText();
         assertEquals(Chars.wrap("abc"), normalizedText);
-        // This means the string underlying the Chars does not start with the bom
-        // marker.
-        // It's useful for performance to have `textDocument.getText().toString()` be
-        // O(1),
+        // This means the string underlying the Chars does not start with the bom marker.
+        // It's useful for performance to have `textDocument.getText().toString()` be O(1),
         // and not create a new string.
         assertTrue(normalizedText.isFullString(), "should be full string");
         assertSame(normalizedText.toString(), normalizedText.toString());

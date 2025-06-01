@@ -38,7 +38,9 @@ public final class FileNameXPathFunction extends XPathFunctionDefinition {
         return (node, arguments) -> {
             if (node == null) {
                 throw new XPathFunctionException(
-                        "Cannot call function '" + getQName().getLocalPart() + "' without context item");
+                    "Cannot call function '" + getQName().getLocalPart()
+                        + "' without context item"
+                );
             }
             RootNode root = node.getRoot();
             Objects.requireNonNull(root, "No root node in tree?");

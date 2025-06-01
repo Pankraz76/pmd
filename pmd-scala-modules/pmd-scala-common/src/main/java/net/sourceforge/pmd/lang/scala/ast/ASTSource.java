@@ -21,6 +21,7 @@ public final class ASTSource extends AbstractScalaNode<Source> implements RootNo
         super(scalaNode);
     }
 
+
     @Override
     public AstInfo<ASTSource> getAstInfo() {
         return astInfo;

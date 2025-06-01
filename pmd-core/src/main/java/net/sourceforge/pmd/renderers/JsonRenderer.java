@@ -2,6 +2,7 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
 package net.sourceforge.pmd.renderers;
 
 import java.io.IOException;
@@ -30,10 +31,8 @@ public class JsonRenderer extends AbstractIncrementingRenderer {
     static {
         SUPPRESSION_TYPE_FORMAT_0.put(ViolationSuppressor.NOPMD_COMMENT_SUPPRESSOR.getId(), "nopmd");
         // Java and Apex Suppression Types
-        // see
-        // net.sourceforge.pmd.lang.java.rule.internal.JavaRuleViolationFactory.JAVA_ANNOT_SUPPRESSOR
-        // see
-        // net.sourceforge.pmd.lang.apex.rule.internal.ApexRuleViolationFactory.APEX_ANNOT_SUPPRESSOR
+        // see net.sourceforge.pmd.lang.java.rule.internal.JavaRuleViolationFactory.JAVA_ANNOT_SUPPRESSOR
+        // see net.sourceforge.pmd.lang.apex.rule.internal.ApexRuleViolationFactory.APEX_ANNOT_SUPPRESSOR
         SUPPRESSION_TYPE_FORMAT_0.put("@SuppressWarnings", "annotation");
     }
 

@@ -26,22 +26,22 @@ public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfigurat
     @Mixin
     protected EncodingMixin encoding;
 
-    // see the setters #setInputPaths and setPositionalInputPaths for @Option and
-    // @Parameters annotations
-    // Note: can't use annotations on the fields here, as otherwise the complete
-    // list would be replaced
+    // see the setters #setInputPaths and setPositionalInputPaths for @Option and @Parameters annotations
+    // Note: can't use annotations on the fields here, as otherwise the complete list would be replaced
     // rather than accumulated.
     protected Set<Path> inputPaths;
 
     @Option(names = "--file-list",
-            description = "Path to a file containing a list of files to analyze, one path per line. "
-                    + "One of --dir, --file-list or --uri must be provided.")
+            description =
+                "Path to a file containing a list of files to analyze, one path per line. "
+                + "One of --dir, --file-list or --uri must be provided.")
     protected Path fileListPath;
-
+    
     @Option(names = { "--uri", "-u" },
-            description = "Database URI for sources. " + "One of --dir, --file-list or --uri must be provided.")
+            description = "Database URI for sources. "
+                          + "One of --dir, --file-list or --uri must be provided.")
     protected URI uri;
-
+    
     @Option(names = "--no-fail-on-violation",
             description = "By default PMD exits with status 4 if violations or duplications are found. "
                     + "Disable this option with '--no-fail-on-violation' to exit with 0 instead. In any case a report with the found violations or duplications will be written.",
@@ -56,12 +56,11 @@ public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfigurat
 
     protected List<Path> relativizeRootPaths;
 
-    @Option(names = { "--relativize-paths-with", "-z" },
-            description = "Path relative to which directories are rendered in the report. "
-                    + "This option allows shortening directories in the report; "
-                    + "without it, paths are rendered as mentioned in the source directory (option \"--dir\"). "
-                    + "The option can be repeated, in which case the shortest relative path will be used. "
-                    + "If the root path is mentioned (e.g. \"/\" or \"C:\\\"), then the paths will be rendered as absolute.",
+    @Option(names = { "--relativize-paths-with", "-z"}, description = "Path relative to which directories are rendered in the report. "
+            + "This option allows shortening directories in the report; "
+            + "without it, paths are rendered as mentioned in the source directory (option \"--dir\"). "
+            + "The option can be repeated, in which case the shortest relative path will be used. "
+            + "If the root path is mentioned (e.g. \"/\" or \"C:\\\"), then the paths will be rendered as absolute.",
             arity = "1..*", split = ",")
     protected void setRelativizePathsWith(List<Path> rootPaths) {
         this.relativizeRootPaths = rootPaths;
@@ -101,19 +100,23 @@ public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfigurat
 
         if ((inputPaths == null || inputPaths.isEmpty()) && uri == null && fileListPath == null) {
             throw new ParameterException(spec.commandLine(),
-                    "Please provide a parameter for source root directory (--dir or -d), "
-                            + "database URI (--uri or -u), or file list path (--file-list)");
+                                         "Please provide a parameter for source root directory (--dir or -d), "
+                                             + "database URI (--uri or -u), or file list path (--file-list)");
         }
     }
+
 
     protected abstract C toConfiguration();
 
     protected abstract CliExitCode doExecute(C conf);
 
+
     @Override
     protected CliExitCode execute() {
         final C configuration = toConfiguration();
-        return PmdRootLogger.executeInLoggingContext(configuration, debug, this::doExecute);
+        return PmdRootLogger.executeInLoggingContext(configuration,
+                                                     debug,
+                                                     this::doExecute);
     }
 
 }

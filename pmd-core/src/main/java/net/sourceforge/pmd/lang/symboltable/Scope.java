@@ -30,13 +30,13 @@ public interface Scope {
     void setParent(Scope parent);
 
     /**
-     * Helper method that goes up the parent scopes to find a scope of the specified
-     * type
+     * Helper method that goes up the parent scopes to find a scope of the
+     * specified type
      *
      * @param clazz
      *            the type of the Scope to search for
-     * @return the found scope of the specified type or <code>null</code> if no such
-     *         scope was found.
+     * @return the found scope of the specified type or <code>null</code> if no
+     *         such scope was found.
      */
     <T extends Scope> T getEnclosingScope(Class<T> clazz);
 
@@ -48,9 +48,9 @@ public interface Scope {
     Map<NameDeclaration, List<NameOccurrence>> getDeclarations();
 
     /**
-     * Helper method to get only a specific type of name declarations. The return
-     * map elemens have already been casted to the correct type. This method usually
-     * returns a subset of {@link #getDeclarations()}.
+     * Helper method to get only a specific type of name declarations. The
+     * return map elemens have already been casted to the correct type. This
+     * method usually returns a subset of {@link #getDeclarations()}.
      *
      * @param clazz
      *            the type of name declarations to use
@@ -59,10 +59,11 @@ public interface Scope {
     <T extends NameDeclaration> Map<T, List<NameOccurrence>> getDeclarations(Class<T> clazz);
 
     /**
-     * Tests whether or not a {@link NameOccurrence} is directly contained in the
-     * scope. This means, whether the given {@link NameOccurrence} references a
-     * declaration, that has been declared within this scope. Note that this search
-     * is just for this scope - it doesn't go diving into any parent scopes.
+     * Tests whether or not a {@link NameOccurrence} is directly contained in
+     * the scope. This means, whether the given {@link NameOccurrence}
+     * references a declaration, that has been declared within this scope. Note
+     * that this search is just for this scope - it doesn't go diving into any
+     * parent scopes.
      */
     boolean contains(NameOccurrence occ);
 
@@ -77,12 +78,12 @@ public interface Scope {
     void addDeclaration(NameDeclaration declaration);
 
     /**
-     * Adds a {@link NameOccurrence} to this scope - only call this after getting a
-     * true back from {@link #contains(NameOccurrence)}.
+     * Adds a {@link NameOccurrence} to this scope - only call this after
+     * getting a true back from {@link #contains(NameOccurrence)}.
      *
      * @return the {@link NameDeclaration}s that are referenced by the given
-     *         {@link NameOccurrence}, if the {@link NameOccurrence} could be added.
-     *         Otherwise an empty set is returned.
+     *         {@link NameOccurrence}, if the {@link NameOccurrence} could be
+     *         added. Otherwise an empty set is returned.
      */
     Set<NameDeclaration> addNameOccurrence(NameOccurrence occurrence);
 }

@@ -17,8 +17,7 @@ class PMDVersionProvider implements CommandLine.IVersionProvider {
     public String[] getVersion() throws Exception {
         List<String> lines = new ArrayList<>(PmdBanner.loadBanner());
         lines.add(PMDVersion.getFullVersionName());
-        lines.add("Java version: " + System.getProperty("java.version") + ", vendor: "
-                + System.getProperty("java.vendor") + ", runtime: " + System.getProperty("java.home"));
+        lines.add("Java version: " + System.getProperty("java.version") + ", vendor: " + System.getProperty("java.vendor") + ", runtime: " + System.getProperty("java.home"));
         return lines.toArray(new String[0]);
     }
 }

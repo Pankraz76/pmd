@@ -13,8 +13,13 @@ import net.sourceforge.pmd.lang.document.Chars;
 class ASTAnnotationTest extends ApexParserTestBase {
     @Test
     void caseSensitiveName() {
-        ASTUserClassOrInterface<?> parsed = parse("public with sharing class Example {\n" + "\n" + "  @istest\n"
-                + "  private static void fooShouldBar() {\n" + "  }\n" + "  \n" + "}");
+        ASTUserClassOrInterface<?> parsed = parse("public with sharing class Example {\n"
+                + "\n"
+                + "  @istest\n"
+                + "  private static void fooShouldBar() {\n"
+                + "  }\n"
+                + "  \n"
+                + "}");
         ASTAnnotation annotation = parsed.descendants(ASTAnnotation.class).first();
 
         assertEquals("IsTest", annotation.getName());

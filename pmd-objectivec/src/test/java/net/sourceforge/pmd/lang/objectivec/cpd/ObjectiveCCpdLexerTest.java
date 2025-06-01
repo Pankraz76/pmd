@@ -10,6 +10,7 @@ import net.sourceforge.pmd.lang.test.cpd.CpdTextComparisonTest;
 
 class ObjectiveCCpdLexerTest extends CpdTextComparisonTest {
 
+
     ObjectiveCCpdLexerTest() {
         super("objectivec", ".m");
     }

@@ -15,9 +15,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
 /**
- * A time tracker class to measure time spent on different sections of PMD
- * analysis. The class is thread-aware, allowing to differentiate CPU and wall
- * clock time.
+ * A time tracker class to measure time spent on different sections of PMD analysis.
+ * The class is thread-aware, allowing to differentiate CPU and wall clock time.
  *
  * @author Juan Martín Sotuyo Dodero
  */
@@ -36,7 +35,7 @@ public final class TimeTracker {
 
         @Override
         public void close(final int count) {
-            // noop
+         // noop
         }
     };
 
@@ -49,9 +48,8 @@ public final class TimeTracker {
     }
 
     /**
-     * Starts global tracking. Allows tracking operations to take place and starts
-     * the wall clock. Must be called once PMD starts if tracking is desired, no
-     * tracking will be performed otherwise.
+     * Starts global tracking. Allows tracking operations to take place and starts the wall clock.
+     * Must be called once PMD starts if tracking is desired, no tracking will be performed otherwise.
      */
     public static void startGlobalTracking() {
         wallClockStartMillis = System.currentTimeMillis();
@@ -61,9 +59,7 @@ public final class TimeTracker {
     }
 
     /**
-     * Stops global tracking. Stops the wall clock. All further operations will be
-     * treated as NOOP.
-     * 
+     * Stops global tracking. Stops the wall clock. All further operations will be treated as NOOP.
      * @return The timed data obtained through the run.
      */
     public static TimingReport stopGlobalTracking() {
@@ -75,8 +71,8 @@ public final class TimeTracker {
         trackTime = false;
 
         // Fix UNACCOUNTED metric (total time is meaningless as is call count)
-        final TimedResult unaccountedResult = ACCUMULATED_RESULTS
-                .get(new TimedOperationKey(TimedOperationCategory.UNACCOUNTED, null));
+        final TimedResult unaccountedResult = ACCUMULATED_RESULTS.get(
+                new TimedOperationKey(TimedOperationCategory.UNACCOUNTED, null));
         unaccountedResult.totalTimeNanos.set(unaccountedResult.selfTimeNanos.get());
         unaccountedResult.callCount.set(0);
 
@@ -112,9 +108,7 @@ public final class TimeTracker {
 
     /**
      * Starts tracking an operation.
-     * 
-     * @param category
-     *            The category under which to track the operation.
+     * @param category The category under which to track the operation.
      * @return The current timed operation being tracked.
      */
     public static TimedOperation startOperation(final TimedOperationCategory category) {
@@ -123,12 +117,8 @@ public final class TimeTracker {
 
     /**
      * Starts tracking an operation.
-     * 
-     * @param category
-     *            The category under which to track the operation.
-     * @param label
-     *            A label to be added to the category. Allows to differentiate
-     *            measures within a single category.
+     * @param category The category under which to track the operation.
+     * @param label A label to be added to the category. Allows to differentiate measures within a single category.
      * @return The current timed operation being tracked.
      */
     public static TimedOperation startOperation(final TimedOperationCategory category, final String label) {
@@ -142,11 +132,9 @@ public final class TimeTracker {
 
     /**
      * Finishes tracking an operation.
-     * 
-     * @param extraDataCounter
-     *            An optional additional data counter to track along the
-     *            measurements. Users are free to track any extra value they want
-     *            (ie: number of analyzed nodes, iterations in a loop, etc.)
+     * @param extraDataCounter An optional additional data counter to track along the measurements.
+     *                         Users are free to track any extra value they want (ie: number of analyzed nodes,
+     *                         iterations in a loop, etc.)
      */
     /* default */ static void finishOperation(final long extraDataCounter) {
         if (!trackTime) {
@@ -183,8 +171,7 @@ public final class TimeTracker {
     }
 
     /**
-     * An entry in the open timers queue. Defines an operation that has started and
-     * hasn't finished yet.
+     * An entry in the open timers queue. Defines an operation that has started and hasn't finished yet.
      */
     private static class TimerEntry {
         /* package */ final TimedOperationKey operation;
@@ -213,13 +200,9 @@ public final class TimeTracker {
 
         /**
          * Adds a new {@link TimerEntry} to the results.
-         * 
-         * @param timerEntry
-         *            The entry to be added
-         * @param extraData
-         *            Any extra data counter to be added
-         * @return The delta time transcurred since the {@link TimerEntry} began in
-         *         nanos.
+         * @param timerEntry The entry to be added
+         * @param extraData Any extra data counter to be added
+         * @return The delta time transcurred since the {@link TimerEntry} began in nanos.
          */
         /* package */ long accumulate(final TimerEntry timerEntry, final long extraData) {
             final long delta = System.nanoTime() - timerEntry.start;
@@ -233,11 +216,8 @@ public final class TimeTracker {
         }
 
         /**
-         * Merges the times (and only the times) from another {@link TimedResult} into
-         * self.
-         * 
-         * @param timedResult
-         *            The {@link TimedResult} to merge
+         * Merges the times (and only the times) from another {@link TimedResult} into self.
+         * @param timedResult The {@link TimedResult} to merge
          */
         /* package */ void mergeTimes(final TimedResult timedResult) {
             totalTimeNanos.getAndAdd(timedResult.totalTimeNanos.get());

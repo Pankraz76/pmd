@@ -5,12 +5,11 @@
 package net.sourceforge.pmd.ant;
 
 /**
- * Part of PMD Ant task configuration. Setters of this class are interpreted by
- * Ant as properties settable in the XML. This is therefore published API.
+ * Part of PMD Ant task configuration. Setters of this class are interpreted by Ant as properties
+ * settable in the XML. This is therefore published API.
  *
- * <p>
- * This class is used to configure {@link net.sourceforge.pmd.lang.rule.RuleSet}
- * as nested XML tags. It might look like this:
+ * <p>This class is used to configure {@link net.sourceforge.pmd.lang.rule.RuleSet} as nested XML tags.
+ * It might look like this:
  *
  * <pre>{@code
  * <pmd>

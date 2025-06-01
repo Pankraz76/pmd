@@ -20,8 +20,7 @@ public class RulePriorityTypeSupport implements ITypeConverter<RulePriority>, It
             String descriptiveName = rulePriority.getName();
             String name = rulePriority.name();
             String priority = String.valueOf(rulePriority.getPriority());
-            if (descriptiveName.equalsIgnoreCase(value) || name.equalsIgnoreCase(value)
-                    || priority.equalsIgnoreCase(value)) {
+            if (descriptiveName.equalsIgnoreCase(value) || name.equalsIgnoreCase(value) || priority.equalsIgnoreCase(value)) {
                 return rulePriority;
             }
         }

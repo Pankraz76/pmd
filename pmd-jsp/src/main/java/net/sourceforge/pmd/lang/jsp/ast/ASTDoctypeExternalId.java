@@ -33,8 +33,8 @@ public final class ASTDoctypeExternalId extends AbstractJspNode {
     }
 
     /**
-     * @return Returns the publicId (or an empty string if there is none for this
-     *         external entity id).
+     * @return Returns the publicId (or an empty string if there is none for
+     *         this external entity id).
      */
     public String getPublicId() {
         return null == publicId ? "" : publicId;

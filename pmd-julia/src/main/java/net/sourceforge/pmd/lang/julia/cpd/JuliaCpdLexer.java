@@ -13,10 +13,7 @@ import net.sourceforge.pmd.lang.julia.ast.JuliaLexer;
 /**
  * The Julia Tokenizer.
  *
- * <p>
- * Note: This class has been called JuliaTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called JuliaTokenizer in PMD 6</p>.
  */
 public class JuliaCpdLexer extends AntlrCpdLexer {
     @Override

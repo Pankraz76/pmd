@@ -16,7 +16,6 @@ import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -73,19 +72,20 @@ class XMLRendererTest extends AbstractRendererTest {
 
     @Override
     String getExpectedError(ProcessingError error) {
-        return getHeader() + "<error filename=\"file\" msg=\"RuntimeException: Error\">" + EOL + "<![CDATA["
-                + error.getDetail() + "]]>" + EOL + "</error>" + EOL + "</pmd>" + EOL;
+        return getHeader() + "<error filename=\"file\" msg=\"RuntimeException: Error\">"
+                + EOL + "<![CDATA[" + error.getDetail() + "]]>" + EOL + "</error>" + EOL + "</pmd>" + EOL;
     }
 
     @Override
     String getExpectedErrorWithoutMessage(ProcessingError error) {
-        return getHeader() + "<error filename=\"file\" msg=\"NullPointerException: null\">" + EOL + "<![CDATA["
-                + error.getDetail() + "]]>" + EOL + "</error>" + EOL + "</pmd>" + EOL;
+        return getHeader() + "<error filename=\"file\" msg=\"NullPointerException: null\">"
+                + EOL + "<![CDATA[" + error.getDetail() + "]]>" + EOL + "</error>" + EOL + "</pmd>" + EOL;
     }
 
     @Override
     String getExpectedError(ConfigurationError error) {
-        return getHeader() + "<configerror rule=\"Foo\" msg=\"a configuration error\"/>" + EOL + "</pmd>" + EOL;
+        return getHeader() + "<configerror rule=\"Foo\" msg=\"a configuration error\"/>"
+                + EOL + "</pmd>" + EOL;
     }
 
     @Override
@@ -95,7 +95,7 @@ class XMLRendererTest extends AbstractRendererTest {
 
     private RuleViolation createRuleViolation(String description) {
         FileLocation loc = FileLocation.range(FileId.fromPathLikeString(getSourceCodeFilename()),
-                TextRange2d.range2d(1, 1, 1, 1));
+                                              TextRange2d.range2d(1, 1, 1, 1));
         return newRuleViolation(new FooRule(), loc, description);
     }
 
@@ -148,11 +148,9 @@ class XMLRendererTest extends AbstractRendererTest {
 
             String formFeed = "\u000C";
             // é = U+00E9 : can be represented in ISO-8859-1 as is
-            // Ā = U+0100 : cannot be represented in ISO-8859-1 -> would be a unmappable
-            // character, needs to be escaped
+            // Ā = U+0100 : cannot be represented in ISO-8859-1 -> would be a unmappable character, needs to be escaped
             String specialChars = "éĀ";
-            String originalChars = formFeed + specialChars; // u000C should be removed, é should be encoded correctly as
-                                                            // UTF-8
+            String originalChars = formFeed + specialChars; // u000C should be removed, é should be encoded correctly as UTF-8
             String msg = "The String literal \"" + originalChars + "\" appears...";
             Report report = Report.buildReport(it -> it.onRuleViolation(createRuleViolation(msg)));
             String actual = renderTempFile(renderer, report, StandardCharsets.UTF_8);
@@ -167,13 +165,12 @@ class XMLRendererTest extends AbstractRendererTest {
     }
 
     /**
-     * @see <a href="https://github.com/pmd/pmd/issues/5059">[core] xml output
-     *      doesn't escape CDATA inside its own CDATA</a>
+     * @see <a href="https://github.com/pmd/pmd/issues/5059">[core] xml output doesn't escape CDATA inside its own CDATA</a>
      */
     @Test
     void cdataSectionInError() throws Exception {
-        ProcessingError processingError = new ProcessingError(
-                new ParseException("Invalid source: '<![CDATA[ ... ]]> ...'"), FileId.fromPathLikeString("dummy.txt"));
+        ProcessingError processingError = new ProcessingError(new ParseException("Invalid source: '<![CDATA[ ... ]]> ...'"),
+                FileId.fromPathLikeString("dummy.txt"));
         String result = renderReport(getRenderer(), it -> it.onError(processingError), StandardCharsets.UTF_8);
 
         DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

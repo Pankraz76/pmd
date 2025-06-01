@@ -41,8 +41,7 @@ class ApexCpdTest {
             cpd.performAnalysis(matches -> {
                 assertEquals(1, matches.getMatches().size());
                 Match firstDuplication = matches.getMatches().get(0);
-                assertTrue(matches.getSourceCodeSlice(firstDuplication.getFirstMark())
-                        .startsWith("global with sharing class SFDCEncoder"));
+                assertTrue(matches.getSourceCodeSlice(firstDuplication.getFirstMark()).startsWith("global with sharing class SFDCEncoder"));
             });
         }
     }

@@ -14,6 +14,7 @@ public class SwiftParsingHelper extends BaseParsingHelper<SwiftParsingHelper, Sw
 
     public static final SwiftParsingHelper DEFAULT = new SwiftParsingHelper(Params.getDefault());
 
+
     public SwiftParsingHelper(@NonNull Params params) {
         super(SwiftLanguageModule.getInstance(), SwTopLevel.class, params);
     }

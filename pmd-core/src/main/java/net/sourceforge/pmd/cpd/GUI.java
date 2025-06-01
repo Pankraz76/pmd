@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
@@ -77,8 +76,11 @@ import net.sourceforge.pmd.util.CollectionUtil;
 
 public class GUI implements CPDListener {
 
-    private static final Object[][] RENDERER_SETS = { { "Text", new SimpleRenderer(), }, { "XML", new XMLRenderer(), },
-        { "CSV (comma)", new CSVRenderer(','), }, { "CSV (tab)", new CSVRenderer('\t'), }, };
+    private static final Object[][] RENDERER_SETS = {
+        { "Text", new SimpleRenderer(), },
+        { "XML", new XMLRenderer(), },
+        { "CSV (comma)", new CSVRenderer(','), },
+        { "CSV (tab)", new CSVRenderer('\t'), }, };
 
     private abstract static class LanguageConfig {
 
@@ -113,13 +115,13 @@ public class GUI implements CPDListener {
         }
 
         public boolean canIgnoreIdentifierAndLiteralSequences() {
-            return getLanguage().newPropertyBundle()
-                    .hasDescriptor(CpdLanguageProperties.CPD_IGNORE_LITERAL_AND_IDENTIFIER_SEQUENCES);
+            return getLanguage().newPropertyBundle().hasDescriptor(CpdLanguageProperties.CPD_IGNORE_LITERAL_AND_IDENTIFIER_SEQUENCES);
         }
 
     }
 
     private static final List<LanguageConfig> LANGUAGE_SETS;
+
 
     private static final LanguageConfig CUSTOM_EXTENSION_LANG = new LanguageConfig() {
         private String extension = "custom_ext";
@@ -137,7 +139,9 @@ public class GUI implements CPDListener {
         @Override
         public Language getLanguage() {
             return new CpdOnlyLanguageModuleBase(
-                    LanguageMetadata.withId("custom_extension").extensions(extension).name("By extension...")) {
+                LanguageMetadata.withId("custom_extension")
+                                .extensions(extension)
+                                .name("By extension...")) {
                 @Override
                 public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
                     return new AnyCpdLexer();
@@ -145,6 +149,7 @@ public class GUI implements CPDListener {
             };
         }
     };
+
 
     static {
         List<LanguageConfig> languages = new ArrayList<>();
@@ -159,11 +164,12 @@ public class GUI implements CPDListener {
         LANGUAGE_SETS = languages;
     }
 
+
     private static final int DEFAULT_CPD_MINIMUM_LENGTH = 75;
-    private static final Map<String, LanguageConfig> LANGUAGE_CONFIGS_BY_LABEL = CollectionUtil
-            .associateBy(LANGUAGE_SETS, l -> l.getLanguage().getName());
+    private static final Map<String, LanguageConfig> LANGUAGE_CONFIGS_BY_LABEL =
+        CollectionUtil.associateBy(LANGUAGE_SETS, l -> l.getLanguage().getName());
     private static final KeyStroke COPY_KEY_STROKE = KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK,
-            false);
+                                                                            false);
     private static final KeyStroke DELETE_KEY_STROKE = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
 
     private static class ColumnSpec {
@@ -198,7 +204,8 @@ public class GUI implements CPDListener {
     }
 
     public static final Comparator<Match> LABEL_COMPARATOR = Comparator.comparing(GUI::getLabel);
-    private final ColumnSpec[] matchColumns = { new ColumnSpec("Source", SwingConstants.LEFT, -1, LABEL_COMPARATOR),
+    private final ColumnSpec[] matchColumns = {
+        new ColumnSpec("Source", SwingConstants.LEFT, -1, LABEL_COMPARATOR),
         new ColumnSpec("Matches", SwingConstants.RIGHT, 60, Match.MATCHES_COMPARATOR),
         new ColumnSpec("Lines", SwingConstants.RIGHT, 45, Match.LINES_COMPARATOR), };
 
@@ -260,8 +267,7 @@ public class GUI implements CPDListener {
             }
 
             if (!f.canWrite()) {
-                final CPDReport report = new CPDReport(sourceManager, matches, numberOfTokensPerFile,
-                        Collections.emptyList());
+                final CPDReport report = new CPDReport(sourceManager, matches, numberOfTokensPerFile, Collections.emptyList());
                 try (PrintWriter pw = new PrintWriter(Files.newOutputStream(f.toPath()))) {
                     renderer.render(report, pw);
                     pw.flush();
@@ -446,8 +452,7 @@ public class GUI implements CPDListener {
         for (LanguageConfig lconf : LANGUAGE_SETS) {
             languageBox.addItem(lconf.getLanguage().getName());
         }
-        languageBox.addActionListener(
-                e -> adjustLanguageControlsFor(languageConfigFor((String) languageBox.getSelectedItem())));
+        languageBox.addActionListener(e -> adjustLanguageControlsFor(languageConfigFor((String) languageBox.getSelectedItem())));
         helper.add(languageBox);
         helper.nextRow();
         helper.addLabel("Also scan subdirectories?");
@@ -588,11 +593,9 @@ public class GUI implements CPDListener {
 
         resultsTable.getSelectionModel().addListSelectionListener(e -> populateResultArea());
 
-        resultsTable.registerKeyboardAction(e -> copyMatchListSelectionsToClipboard(), "Copy", COPY_KEY_STROKE,
-                JComponent.WHEN_FOCUSED);
+        resultsTable.registerKeyboardAction(e -> copyMatchListSelectionsToClipboard(), "Copy", COPY_KEY_STROKE, JComponent.WHEN_FOCUSED);
 
-        resultsTable.registerKeyboardAction(e -> deleteMatchlistSelections(), "Del", DELETE_KEY_STROKE,
-                JComponent.WHEN_FOCUSED);
+        resultsTable.registerKeyboardAction(e -> deleteMatchlistSelections(), "Del", DELETE_KEY_STROKE, JComponent.WHEN_FOCUSED);
 
         int[] alignments = new int[matchColumns.length];
         for (int i = 0; i < alignments.length; i++) {
@@ -639,7 +642,7 @@ public class GUI implements CPDListener {
             File dirPath = new File(rootDirectoryField.getText());
             if (!dirPath.exists()) {
                 JOptionPane.showMessageDialog(frame, "Can't read from that root source directory", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                                              JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -681,8 +684,8 @@ public class GUI implements CPDListener {
                     prepareNewSourceManager(config, dirPath.toPath(), recurseCheckbox.isSelected());
                     String reportString = new SimpleRenderer().renderToString(report);
                     if (reportString.isEmpty()) {
-                        JOptionPane.showMessageDialog(frame, "Done. Couldn't find any duplicates longer than "
-                                + minimumLengthField.getText() + " tokens");
+                        JOptionPane.showMessageDialog(frame,
+                                                      "Done. Couldn't find any duplicates longer than " + minimumLengthField.getText() + " tokens");
                     } else {
                         resultsTextArea.setText(reportString);
                     }
@@ -709,12 +712,10 @@ public class GUI implements CPDListener {
         try {
             closeSourceManager();
             // fileCollector itself is empty, contains no closable resources.
-            // the created sourceManager will be closed when exiting or when a new analysis
-            // is started,
+            // the created sourceManager will be closed when exiting or when a new analysis is started,
             // see #closeSourceManager().
             @SuppressWarnings("PMD.CloseResource")
-            FileCollector fileCollector = InternalApiBridge.newCollector(config.getLanguageVersionDiscoverer(),
-                    config.getReporter());
+            FileCollector fileCollector = InternalApiBridge.newCollector(config.getLanguageVersionDiscoverer(), config.getReporter());
             fileCollector.addFileOrDirectory(dirPath, recurse);
             sourceManager = new SourceManager(fileCollector.getCollectedFiles());
         } catch (Exception e) {

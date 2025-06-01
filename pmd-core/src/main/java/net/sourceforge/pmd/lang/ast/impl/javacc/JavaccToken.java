@@ -12,18 +12,17 @@ import net.sourceforge.pmd.lang.document.TextRegion;
 /**
  * A generic token implementation for JavaCC parsers.
  *
- * <p>
- * Largely has the same interface as the default generated token class. The main
- * difference is that the position of the token is encoded as a start and end
- * offset in the source file, instead of a (begin,end)x(line,column) 4-tuple.
- * This offers two practical advantages:
+ * <p>Largely has the same interface as the default generated token class.
+ * The main difference is that the position of the token is encoded as
+ * a start and end offset in the source file, instead of a (begin,end)x(line,column)
+ * 4-tuple. This offers two practical advantages:
  * <ul>
- * <li>It allows retrieving easily the underlying text of a node (just need to
- * cut a substring of the file text). Other attributes like lines and column
- * bounds can be derived as well - though this should not be done systematically
- * because it's costlier.
- * <li>It's a bit lighter. Token instances are one of the most numerous class in
- * a typical PMD run and this may reduce GC pressure.
+ * <li>It allows retrieving easily the underlying text of a node (just
+ * need to cut a substring of the file text). Other attributes like lines
+ * and column bounds can be derived as well - though this should not be
+ * done systematically because it's costlier.
+ * <li>It's a bit lighter. Token instances are one of the most numerous
+ * class in a typical PMD run and this may reduce GC pressure.
  * </ul>
  */
 public class JavaccToken implements GenericToken<JavaccToken> {
@@ -34,15 +33,16 @@ public class JavaccToken implements GenericToken<JavaccToken> {
     public static final int EOF = 0;
 
     /**
-     * Kind for implicit tokens. Negative because JavaCC only picks positive numbers
-     * for token kinds.
+     * Kind for implicit tokens. Negative because JavaCC only picks
+     * positive numbers for token kinds.
      */
     public static final int IMPLICIT_TOKEN = -1;
 
+
     /**
-     * An integer that describes the kind of this token. This numbering system is
-     * determined by JavaCCParser, and a table of these numbers is stored in the
-     * file ...Constants.java.
+     * An integer that describes the kind of this token.  This numbering
+     * system is determined by JavaCCParser, and a table of these numbers is
+     * stored in the file ...Constants.java.
      */
     public final int kind;
 
@@ -52,26 +52,29 @@ public class JavaccToken implements GenericToken<JavaccToken> {
     private final int endOffset;
 
     /**
-     * A reference to the next regular (non-special) token from the input stream. If
-     * this is the last token from the input stream, or if the token manager has not
-     * read tokens beyond this one, this field is set to null. This is true only if
-     * this token is also a regular token. Otherwise, see below for a description of
-     * the contents of this field.
+     * A reference to the next regular (non-special) token from the input
+     * stream.  If this is the last token from the input stream, or if the
+     * token manager has not read tokens beyond this one, this field is
+     * set to null.  This is true only if this token is also a regular
+     * token.  Otherwise, see below for a description of the contents of
+     * this field.
      */
     public JavaccToken next;
 
     /**
-     * This field is used to access special tokens that occur prior to this token,
-     * but after the immediately preceding regular (non-special) token. If there are
-     * no such special tokens, this field is set to null. When there are more than
-     * one such special token, this field refers to the last of these special
-     * tokens, which in turn refers to the next previous special token through its
-     * specialToken field, and so on until the first special token (whose
-     * specialToken field is null). The next fields of special tokens refer to other
-     * special tokens that immediately follow it (without an intervening regular
-     * token). If there is no such token, this field is null.
+     * This field is used to access special tokens that occur prior to this
+     * token, but after the immediately preceding regular (non-special) token.
+     * If there are no such special tokens, this field is set to null.
+     * When there are more than one such special token, this field refers
+     * to the last of these special tokens, which in turn refers to the next
+     * previous special token through its specialToken field, and so on
+     * until the first special token (whose specialToken field is null).
+     * The next fields of special tokens refer to other special tokens that
+     * immediately follow it (without an intervening regular token).  If there
+     * is no such token, this field is null.
      */
     public JavaccToken specialToken;
+
 
     // common constructor, with a CharSequence parameter
     JavaccToken(int kind, CharSequence image, int startInclusive, int endExclusive, JavaccTokenDocument document) {
@@ -89,26 +92,18 @@ public class JavaccToken implements GenericToken<JavaccToken> {
     /**
      * Builds a new token of the specified kind.
      *
-     * @param kind
-     *            Kind of token
-     * @param image
-     *            Image of the token (after translating escapes if any)
-     * @param startInclusive
-     *            Start character of the token in the text file (before translating
-     *            escapes)
-     * @param endExclusive
-     *            End of the token in the text file (before translating escapes)
-     * @param document
-     *            Document owning the token
+     * @param kind           Kind of token
+     * @param image          Image of the token (after translating escapes if any)
+     * @param startInclusive Start character of the token in the text file (before translating escapes)
+     * @param endExclusive   End of the token in the text file (before translating escapes)
+     * @param document       Document owning the token
      */
     public JavaccToken(int kind, Chars image, int startInclusive, int endExclusive, JavaccTokenDocument document) {
         this(kind, (CharSequence) image, startInclusive, endExclusive, document);
     }
 
     /**
-     * Constructor with a {@link String} image (see
-     * {@link #JavaccToken(int, Chars, int, int, JavaccTokenDocument) the other
-     * ctor}).
+     * Constructor with a {@link String} image (see {@link #JavaccToken(int, Chars, int, int, JavaccTokenDocument) the other ctor}).
      */
     public JavaccToken(int kind, String image, int startInclusive, int endExclusive, JavaccTokenDocument document) {
         this(kind, (CharSequence) image, startInclusive, endExclusive, document);
@@ -143,8 +138,7 @@ public class JavaccToken implements GenericToken<JavaccToken> {
 
     @Override
     public Chars getImageCs() {
-        // wrap it: it's zero cost (images are either Chars or String) and Chars has a
-        // nice API
+        // wrap it: it's zero cost (images are either Chars or String) and Chars has a nice API
         return Chars.wrap(image);
     }
 
@@ -154,8 +148,8 @@ public class JavaccToken implements GenericToken<JavaccToken> {
     }
 
     /**
-     * Returns the original text of the token. The image may be normalized, e.g. for
-     * case-insensitive languages.
+     * Returns the original text of the token.
+     * The image may be normalized, e.g. for case-insensitive languages.
      *
      * @since 7.3.0
      */
@@ -192,41 +186,50 @@ public class JavaccToken implements GenericToken<JavaccToken> {
     }
 
     /**
-     * Returns a new token with the same kind as this one, whose image is replaced
-     * by the one marked on the char stream.
+     * Returns a new token with the same kind as this one, whose image
+     * is replaced by the one marked on the char stream.
      *
-     * @param charStream
-     *            Char stream from which to start
+     * @param charStream Char stream from which to start
      *
      * @return A new token
      */
     public JavaccToken replaceImage(CharStream charStream) {
-        return new JavaccToken(this.kind, charStream.getTokenImageCs(), this.startOffset, charStream.getEndOffset(),
-                this.document);
+        return new JavaccToken(
+            this.kind,
+            charStream.getTokenImageCs(),
+            this.startOffset,
+            charStream.getEndOffset(),
+            this.document
+        );
     }
 
+
     /**
-     * Returns a new token with the given kind, and all other parameters identical
-     * to this one.
+     * Returns a new token with the given kind, and all other parameters
+     * identical to this one.
      *
-     * @param newKind
-     *            Char stream from which to start
+     * @param newKind Char stream from which to start
      *
      * @return A new token
      */
     public JavaccToken withKind(int newKind) {
-        JavaccToken tok = new JavaccToken(newKind, this.image, this.startOffset, this.endOffset, this.document);
+        JavaccToken tok = new JavaccToken(
+            newKind,
+            this.image,
+            this.startOffset,
+            this.endOffset,
+            this.document
+        );
         tok.specialToken = this.specialToken;
         tok.next = this.next;
         return tok;
     }
 
     /**
-     * Creates an implicit token, with zero length, that is linked to the given
-     * token as its special predecessor.
+     * Creates an implicit token, with zero length, that is linked to
+     * the given token as its special predecessor.
      *
-     * @param next
-     *            Token before which to insert the new token
+     * @param next Token before which to insert the new token
      *
      * @return A new token
      */
@@ -251,10 +254,8 @@ public class JavaccToken implements GenericToken<JavaccToken> {
     /**
      * Returns a new implicit token, positioned at the given offset.
      *
-     * @param offset
-     *            Offset of the token
-     * @param document
-     *            Document owning the token
+     * @param offset   Offset of the token
+     * @param document Document owning the token
      *
      * @return A new token
      */
@@ -262,3 +263,4 @@ public class JavaccToken implements GenericToken<JavaccToken> {
         return new JavaccToken(IMPLICIT_TOKEN, "", offset, offset, document);
     }
 }
+

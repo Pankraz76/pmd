@@ -14,10 +14,7 @@ import net.sourceforge.pmd.lang.ast.impl.antlr4.AntlrToken;
 import net.sourceforge.pmd.lang.tsql.ast.TSqlLexer;
 
 /**
- * <p>
- * Note: This class has been called TSqlTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called TSqlTokenizer in PMD 6</p>.
  */
 public class TSqlCpdLexer extends AntlrCpdLexer {
 

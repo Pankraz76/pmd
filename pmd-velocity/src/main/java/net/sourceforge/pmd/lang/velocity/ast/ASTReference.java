@@ -23,8 +23,7 @@ package net.sourceforge.pmd.lang.velocity.ast;
 /**
  * This class is responsible for handling the references in VTL ($foo).
  *
- * <p>
- * Please look at the Parser.jjt file which is what controls the generation of
+ * <p>Please look at the Parser.jjt file which is what controls the generation of
  * this class.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
@@ -57,13 +56,12 @@ public final class ASTReference extends AbstractVtlNode {
     }
 
     /**
-     * Routine to allow the literal representation to be externally overridden. Used
-     * now in the VM system to override a reference in a VM tree with the literal of
-     * the calling arg to make it work nicely when calling arg is null. It seems a
-     * bit much, but does keep things consistent.
+     * Routine to allow the literal representation to be externally overridden.
+     * Used now in the VM system to override a reference in a VM tree with the
+     * literal of the calling arg to make it work nicely when calling arg is
+     * null. It seems a bit much, but does keep things consistent.
      *
-     * <p>
-     * Note, you can only set the literal once...
+     * <p>Note, you can only set the literal once...
      *
      * @param literal
      *            String to render to when null

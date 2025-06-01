@@ -46,7 +46,7 @@ class DBTypeTest {
 
         absoluteFile = folder.resolve("dbtypetest.properties").toFile();
         try (FileOutputStream fileOutputStream = new FileOutputStream(absoluteFile);
-                PrintStream printStream = new PrintStream(fileOutputStream)) {
+             PrintStream printStream = new PrintStream(fileOutputStream)) {
             for (Entry<?, ?> entry : testProperties.entrySet()) {
                 printStream.printf("%s=%s\n", entry.getKey(), entry.getValue());
             }

@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.modelica.resolver.internal.ResolutionState;
 import net.sourceforge.pmd.lang.modelica.resolver.internal.Watchdog;
 
 /**
- * Internal base class for Modelica lexical scopes, see {@link ModelicaScope}
- * for the public API.
+ * Internal base class for Modelica lexical scopes, see {@link ModelicaScope} for the public API.
  */
 abstract class AbstractModelicaScope implements ModelicaScope {
     private AbstractModelicaScope parent;
@@ -61,8 +60,7 @@ abstract class AbstractModelicaScope implements ModelicaScope {
     abstract void resolveLexically(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException;
 
     @Override
-    public <T extends ResolvableEntity> ResolutionResult<T> safeResolveLexically(Class<T> clazz, ResolutionState state,
-            CompositeName name) {
+    public <T extends ResolvableEntity> ResolutionResult<T> safeResolveLexically(Class<T> clazz, ResolutionState state, CompositeName name) {
         ResolutionContext result = state.createContext();
         try {
             resolveLexically(result, name);

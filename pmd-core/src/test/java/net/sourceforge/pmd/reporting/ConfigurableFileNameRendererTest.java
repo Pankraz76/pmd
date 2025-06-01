@@ -31,12 +31,14 @@ class ConfigurableFileNameRendererTest {
         assertEquals(displayName, Paths.get("..", "a", "b", "c").toString());
     }
 
+
     @Test
     void testRelativizeWithRoot() {
         Path path = Paths.get("a", "b", "c");
         FileId file = FileId.fromPath(path);
         String displayName = getDisplayName(file, listOf(Paths.get("/")));
-        assertEquals(path.toAbsolutePath().toString(), displayName);
+        assertEquals(path.toAbsolutePath().toString(),
+                     displayName);
     }
 
 }

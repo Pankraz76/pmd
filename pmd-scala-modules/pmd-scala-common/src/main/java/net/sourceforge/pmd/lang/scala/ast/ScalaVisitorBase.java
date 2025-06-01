@@ -10,10 +10,8 @@ import net.sourceforge.pmd.lang.ast.Node;
 /**
  * An Adapter for the Scala Parser that implements the Visitor Pattern.
  *
- * @param <D>
- *            The type of the data input
- * @param <R>
- *            The type of the returned data
+ * @param <D> The type of the data input
+ * @param <R> The type of the returned data
  */
 public class ScalaVisitorBase<D, R> extends AstVisitorBase<D, R> implements ScalaVisitor<D, R> {
 

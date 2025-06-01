@@ -30,6 +30,7 @@ class ParameterizedMetricKeyTest {
         assertSame(key1, key2);
     }
 
+
     @Test
     void testVersioning() {
 
@@ -39,6 +40,7 @@ class ParameterizedMetricKeyTest {
         assertNotSame(key1, key2);
     }
 
+
     @Test
     void testToString() {
 
@@ -46,6 +48,7 @@ class ParameterizedMetricKeyTest {
         assertTrue(key1.toString().contains(key1.metric.displayName()));
         assertTrue(key1.toString().contains(key1.options.toString()));
     }
+
 
     @Test
     void testAdHocMetricKey() {
@@ -63,12 +66,15 @@ class ParameterizedMetricKeyTest {
     }
 
     private enum Options implements MetricOption {
-        DUMMY1, DUMMY2;
+        DUMMY1,
+        DUMMY2;
+
 
         @Override
         public String valueName() {
             return null;
         }
     }
+
 
 }

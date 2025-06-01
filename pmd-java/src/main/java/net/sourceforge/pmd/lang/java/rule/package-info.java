@@ -5,5 +5,4 @@
 /**
  * Contains the built-in rules bundled with the Java distribution.
  */
-
 package net.sourceforge.pmd.lang.java.rule;

@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.Vocabulary;
 
 import net.sourceforge.pmd.lang.ast.impl.antlr4.AntlrNameDictionary;
 
+
 final class KotlinNameDictionary extends AntlrNameDictionary {
 
     KotlinNameDictionary(Vocabulary vocab, String[] ruleNames) {

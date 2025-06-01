@@ -26,10 +26,16 @@ public class TreeIndex {
     private final Set<String> interestingNames;
     private final Map<String, List<Node>> byName;
 
-    public TreeIndex(Set<String> namesToIndex, Set<Class<? extends Node>> classesToIndex) {
 
-        byClass = new LatticeRelation<>(TopoOrder.TYPE_HIERARCHY_ORDERING, classesToIndex, Class::getSimpleName,
-                Collectors.toSet());
+    public TreeIndex(Set<String> namesToIndex,
+                     Set<Class<? extends Node>> classesToIndex) {
+
+        byClass = new LatticeRelation<>(
+            TopoOrder.TYPE_HIERARCHY_ORDERING,
+            classesToIndex,
+            Class::getSimpleName,
+            Collectors.toSet()
+        );
         this.interestingNames = namesToIndex;
         byName = new HashMap<>();
     }
@@ -53,6 +59,7 @@ public class TreeIndex {
     Iterator<Node> getByClass(Class<? extends Node> n) {
         return byClass.get(n).iterator();
     }
+
 
     public Iterator<Node> getByName(Collection<String> n) {
         return IteratorUtil.flatMap(n.iterator(), this::getByName);

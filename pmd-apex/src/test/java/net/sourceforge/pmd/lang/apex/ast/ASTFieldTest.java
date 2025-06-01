@@ -13,8 +13,8 @@ class ASTFieldTest extends ApexParserTestBase {
 
     @Test
     void testGetType() {
-        ASTField field = parse("public class Foo { private String myField = 'a'; }").descendants(ASTField.class)
-                .firstOrThrow();
+        ASTField field = parse("public class Foo { private String myField = 'a'; }")
+            .descendants(ASTField.class).firstOrThrow();
 
         assertEquals("myField", field.getImage());
         assertEquals("String", field.getType());
@@ -23,16 +23,16 @@ class ASTFieldTest extends ApexParserTestBase {
 
     @Test
     void testGetValue() {
-        ASTField field = parse("public class Foo { private String myField = 'a'; }").descendants(ASTField.class)
-                .firstOrThrow();
+        ASTField field = parse("public class Foo { private String myField = 'a'; }")
+            .descendants(ASTField.class).firstOrThrow();
 
         assertEquals("a", field.getValue());
     }
 
     @Test
     void testGetNoValue() {
-        ASTField field = parse("public class Foo { private String myField; }").descendants(ASTField.class)
-                .firstOrThrow();
+        ASTField field = parse("public class Foo { private String myField; }")
+            .descendants(ASTField.class).firstOrThrow();
 
         assertNull(field.getValue());
     }

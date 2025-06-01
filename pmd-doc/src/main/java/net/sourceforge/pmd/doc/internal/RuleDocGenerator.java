@@ -60,9 +60,7 @@ public class RuleDocGenerator {
 
     private static final String GITHUB_SOURCE_LINK = "https://github.com/pmd/pmd/blob/main/";
 
-    /**
-     * Maintains mapping from pmd terse language name to rouge highlighter language.
-     */
+    /** Maintains mapping from pmd terse language name to rouge highlighter language. */
     private static final Map<String, String> LANGUAGE_HIGHLIGHT_MAPPER = new HashMap<>();
 
     static {
@@ -79,6 +77,7 @@ public class RuleDocGenerator {
     private final Map<String, String> allRules = new HashMap<>();
     /** Caches ruleset to ruleset xml file mapping. */
     private final Map<String, String> allRulesets = new HashMap<>();
+
 
     public RuleDocGenerator(FileWriter writer, Path root) {
         this.writer = Objects.requireNonNull(writer, "A file writer must be provided");
@@ -175,8 +174,9 @@ public class RuleDocGenerator {
     }
 
     private Map<Language, List<RuleSet>> sortRulesets(List<RuleSet> rulesets) {
-        SortedMap<Language, List<RuleSet>> rulesetsByLanguage = rulesets.stream().collect(Collectors.groupingBy(
-                RuleDocGenerator::getRuleSetLanguage, TreeMap::new, Collectors.toCollection(ArrayList::new)));
+        SortedMap<Language, List<RuleSet>> rulesetsByLanguage = rulesets.stream().collect(Collectors.groupingBy(RuleDocGenerator::getRuleSetLanguage,
+                                                                                                                TreeMap::new,
+                                                                                                                Collectors.toCollection(ArrayList::new)));
 
         for (List<RuleSet> rulesetsOfOneLanguage : rulesetsByLanguage.values()) {
             rulesetsOfOneLanguage.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
@@ -185,10 +185,9 @@ public class RuleDocGenerator {
     }
 
     /**
-     * Rulesets could potentially contain rules from various languages. But for
-     * built-in rulesets, all rules within one ruleset belong to one language. So we
-     * take the language of the first rule.
-     * 
+     * Rulesets could potentially contain rules from various languages.
+     * But for built-in rulesets, all rules within one ruleset belong to
+     * one language. So we take the language of the first rule.
      * @param ruleset
      * @return the terse name of the ruleset's language
      */
@@ -203,18 +202,15 @@ public class RuleDocGenerator {
     /**
      * Writes for each language an index file, which lists the rulesets, the rules
      * and links to the ruleset pages.
-     * 
-     * @param rulesets
-     *            all registered/built-in rulesets
-     * @param sortedAdditionalRulesets
-     *            additional rulesets
+     * @param rulesets all registered/built-in rulesets
+     * @param sortedAdditionalRulesets additional rulesets
      * @throws IOException
      */
-    private void generateLanguageIndex(Map<Language, List<RuleSet>> rulesets,
-            Map<Language, List<RuleSet>> sortedAdditionalRulesets) throws IOException {
+    private void generateLanguageIndex(Map<Language, List<RuleSet>> rulesets, Map<Language, List<RuleSet>> sortedAdditionalRulesets) throws IOException {
         for (Map.Entry<Language, List<RuleSet>> entry : rulesets.entrySet()) {
             String languageTersename = entry.getKey().getId();
-            String filename = LANGUAGE_INDEX_FILENAME_PATTERN.replace("${language.tersename}", languageTersename);
+            String filename = LANGUAGE_INDEX_FILENAME_PATTERN
+                    .replace("${language.tersename}", languageTersename);
             Path path = getAbsoluteOutputPath(filename);
 
             List<String> lines = new LinkedList<>();
@@ -223,8 +219,7 @@ public class RuleDocGenerator {
             lines.add("tags: [rule_references, " + languageTersename + "]");
             lines.add("summary: Index of all built-in rules available for " + entry.getKey().getName());
             lines.add("language_name: " + entry.getKey().getName());
-            lines.add("permalink: "
-                    + LANGUAGE_INDEX_PERMALINK_PATTERN.replace("${language.tersename}", languageTersename));
+            lines.add("permalink: " + LANGUAGE_INDEX_PERMALINK_PATTERN.replace("${language.tersename}", languageTersename));
             lines.add("folder: pmd/rules");
             lines.add("editmepath: false");
             lines.add("---");
@@ -237,32 +232,32 @@ public class RuleDocGenerator {
                 lines.add("");
 
                 for (Rule rule : getSortedRules(ruleset)) {
-                    String link = RULESET_INDEX_PERMALINK_PATTERN.replace("${language.tersename}", languageTersename)
+                    String link = RULESET_INDEX_PERMALINK_PATTERN
+                            .replace("${language.tersename}", languageTersename)
                             .replace("${ruleset.name}", RuleSetUtils.getRuleSetFilename(ruleset));
                     if (rule instanceof RuleReference) {
                         RuleReference ref = (RuleReference) rule;
                         if (ruleset.getFileName().equals(ref.getRuleSetReference().getRuleSetFileName())) {
                             // rule renamed within same ruleset
-                            lines.add("*   [" + rule.getName() + "](" + link + "#"
-                                    + rule.getName().toLowerCase(Locale.ROOT) + "): " + DEPRECATION_LABEL_SMALL
-                                    + "The rule has been renamed. Use instead " + "[" + ref.getRule().getName() + "]("
-                                    + link + "#" + ref.getRule().getName().toLowerCase(Locale.ROOT) + ").");
+                            lines.add("*   [" + rule.getName() + "](" + link + "#" + rule.getName().toLowerCase(Locale.ROOT) + "): "
+                                    + DEPRECATION_LABEL_SMALL
+                                    + "The rule has been renamed. Use instead "
+                                    + "[" + ref.getRule().getName() + "](" + link + "#" + ref.getRule().getName().toLowerCase(Locale.ROOT) + ").");
                         } else {
                             // rule moved to another ruleset...
                             String otherLink = RULESET_INDEX_PERMALINK_PATTERN
                                     .replace("${language.tersename}", languageTersename)
-                                    .replace("${ruleset.name}", RuleSetUtils
-                                            .getRuleSetFilename(ref.getRuleSetReference().getRuleSetFileName()));
-                            lines.add("*   [" + rule.getName() + "](" + link + "#"
-                                    + rule.getName().toLowerCase(Locale.ROOT) + "): " + DEPRECATION_LABEL_SMALL
-                                    + "The rule has been moved to another ruleset. Use instead " + "["
-                                    + ref.getRule().getName() + "](" + otherLink + "#"
-                                    + ref.getRule().getName().toLowerCase(Locale.ROOT) + ").");
+                                    .replace("${ruleset.name}", RuleSetUtils.getRuleSetFilename(ref.getRuleSetReference().getRuleSetFileName()));
+                            lines.add("*   [" + rule.getName() + "](" + link + "#" + rule.getName().toLowerCase(Locale.ROOT) + "): "
+                                    + DEPRECATION_LABEL_SMALL
+                                    + "The rule has been moved to another ruleset. Use instead "
+                                    + "[" + ref.getRule().getName() + "](" + otherLink + "#" + ref.getRule().getName().toLowerCase(Locale.ROOT) + ").");
                         }
                     } else {
                         link += "#" + rule.getName().toLowerCase(Locale.ROOT);
                         lines.add("*   [" + rule.getName() + "](" + link + "): "
-                                + (rule.isDeprecated() ? DEPRECATION_LABEL_SMALL : "") + getShortRuleDescription(rule));
+                                + (rule.isDeprecated() ? DEPRECATION_LABEL_SMALL : "")
+                                + getShortRuleDescription(rule));
                     }
                 }
                 lines.add("");
@@ -306,12 +301,10 @@ public class RuleDocGenerator {
                             RuleReference ref = (RuleReference) resolvedRule;
                             String otherLink = RULESET_INDEX_PERMALINK_PATTERN
                                     .replace("${language.tersename}", languageTersename)
-                                    .replace("${ruleset.name}", RuleSetUtils
-                                            .getRuleSetFilename(ref.getRuleSetReference().getRuleSetFileName()));
+                                    .replace("${ruleset.name}", RuleSetUtils.getRuleSetFilename(ref.getRuleSetReference().getRuleSetFileName()));
 
                             rules.append("[").append(ref.getName()).append("](");
-                            rules.append(otherLink).append("#").append(ref.getRule().getName().toLowerCase(Locale.ROOT))
-                                    .append(")");
+                            rules.append(otherLink).append("#").append(ref.getRule().getName().toLowerCase(Locale.ROOT)).append(")");
                         } else {
                             rules.append(rule.getName());
                         }
@@ -328,20 +321,21 @@ public class RuleDocGenerator {
     }
 
     /**
-     * Shortens and escapes (for markdown) some special characters. Otherwise the
-     * shortened text could contain some unfinished sequences.
-     * 
+     * Shortens and escapes (for markdown) some special characters. Otherwise the shortened text
+     * could contain some unfinished sequences.
      * @param rule
      * @return
      */
     private static String getShortRuleDescription(Rule rule) {
-        String htmlEscaped = StringEscapeUtils
-                .escapeHtml4(
-                        StringUtils
-                                .abbreviate(
-                                        StringUtils.stripToEmpty(rule.getDescription().replaceAll("\n+|\r+", " ")
-                                                .replaceAll("\\|", "\\\\|").replaceAll("`", "'").replaceAll("\\*", "")),
-                                        100));
+        String htmlEscaped = StringEscapeUtils.escapeHtml4(
+            StringUtils.abbreviate(
+                StringUtils.stripToEmpty(
+                    rule.getDescription()
+                        .replaceAll("\n+|\r+", " ")
+                        .replaceAll("\\|", "\\\\|")
+                        .replaceAll("`", "'")
+                        .replaceAll("\\*", "")),
+                100));
         return EscapeUtils.preserveRuleTagQuotes(htmlEscaped);
     }
 
@@ -358,11 +352,9 @@ public class RuleDocGenerator {
     }
 
     /**
-     * Generates for each ruleset a page. The page contains the details for each
-     * rule.
+     * Generates for each ruleset a page. The page contains the details for each rule.
      *
-     * @param rulesets
-     *            all rulesets
+     * @param rulesets all rulesets
      * @throws IOException
      */
     private void generateRuleSetIndex(Map<Language, List<RuleSet>> rulesets) throws IOException {
@@ -372,12 +364,14 @@ public class RuleDocGenerator {
             String languageName = language.getName();
             for (RuleSet ruleset : entry.getValue()) {
                 String rulesetFilename = RuleSetUtils.getRuleSetFilename(ruleset);
-                String filename = RULESET_INDEX_FILENAME_PATTERN.replace("${language.tersename}", languageTersename)
-                        .replace("${ruleset.name}", rulesetFilename);
+                String filename = RULESET_INDEX_FILENAME_PATTERN
+                    .replace("${language.tersename}", languageTersename)
+                    .replace("${ruleset.name}", rulesetFilename);
 
                 Path path = getAbsoluteOutputPath(filename);
 
-                String permalink = RULESET_INDEX_PERMALINK_PATTERN.replace("${language.tersename}", languageTersename)
+                String permalink = RULESET_INDEX_PERMALINK_PATTERN
+                        .replace("${language.tersename}", languageTersename)
                         .replace("${ruleset.name}", rulesetFilename);
                 String ruleSetSourceFilepath = "../" + allRulesets.get(ruleset.getFileName());
 
@@ -387,8 +381,7 @@ public class RuleDocGenerator {
                 lines.add("summary: " + getRuleSetDescriptionSingleLine(ruleset));
                 lines.add("permalink: " + permalink);
                 lines.add("folder: pmd/rules/" + languageTersename);
-                lines.add("sidebaractiveurl: /"
-                        + LANGUAGE_INDEX_PERMALINK_PATTERN.replace("${language.tersename}", languageTersename));
+                lines.add("sidebaractiveurl: /" + LANGUAGE_INDEX_PERMALINK_PATTERN.replace("${language.tersename}", languageTersename));
                 lines.add("editmepath: " + ruleSetSourceFilepath);
                 lines.add("keywords: " + getRuleSetKeywords(ruleset));
                 lines.add("language: " + languageName);
@@ -405,20 +398,18 @@ public class RuleDocGenerator {
                             // rule renamed within same ruleset
                             lines.add(DEPRECATION_LABEL);
                             lines.add("");
-                            lines.add("This rule has been renamed. Use instead: [" + ref.getRule().getName() + "]("
-                                    + "#" + ref.getRule().getName().toLowerCase(Locale.ROOT) + ")");
+                            lines.add("This rule has been renamed. Use instead: ["
+                                    + ref.getRule().getName() + "](" + "#" + ref.getRule().getName().toLowerCase(Locale.ROOT) + ")");
                             lines.add("");
                         } else {
                             // rule moved to another ruleset
                             String otherLink = RULESET_INDEX_PERMALINK_PATTERN
                                     .replace("${language.tersename}", languageTersename)
-                                    .replace("${ruleset.name}", RuleSetUtils
-                                            .getRuleSetFilename(ref.getRuleSetReference().getRuleSetFileName()));
+                                    .replace("${ruleset.name}", RuleSetUtils.getRuleSetFilename(ref.getRuleSetReference().getRuleSetFileName()));
                             lines.add(DEPRECATION_LABEL);
                             lines.add("");
                             lines.add("The rule has been moved to another ruleset. Use instead: ["
-                                    + ref.getRule().getName() + "](" + otherLink + "#"
-                                    + ref.getRule().getName().toLowerCase(Locale.ROOT) + ")");
+                                    + ref.getRule().getName() + "](" + otherLink + "#" + ref.getRule().getName().toLowerCase(Locale.ROOT) + ")");
                             lines.add("");
                         }
                     }
@@ -435,14 +426,14 @@ public class RuleDocGenerator {
                     lines.add("");
 
                     if (rule.getMinimumLanguageVersion() != null) {
-                        lines.add("**Minimum Language Version:** " + rule.getLanguage().getName() + " "
-                                + rule.getMinimumLanguageVersion().getVersion());
+                        lines.add("**Minimum Language Version:** "
+                                + rule.getLanguage().getName() + " " + rule.getMinimumLanguageVersion().getVersion());
                         lines.add("");
                     }
 
                     if (rule.getMaximumLanguageVersion() != null) {
-                        lines.add("**Maximum Language Version:** " + rule.getLanguage().getName() + " "
-                                + rule.getMaximumLanguageVersion().getVersion());
+                        lines.add("**Maximum Language Version:** "
+                                + rule.getLanguage().getName() + " " + rule.getMaximumLanguageVersion().getVersion());
                         lines.add("");
                     }
 
@@ -456,8 +447,10 @@ public class RuleDocGenerator {
                         lines.addAll(toLines(StringUtils.stripToEmpty(xpathRule.getXPathExpression())));
                         lines.add("```");
                     } else {
-                        lines.add("**This rule is defined by the following Java class:** " + "[" + rule.getRuleClass()
-                                + "](" + GITHUB_SOURCE_LINK + allRules.get(rule.getRuleClass()) + ")");
+                        lines.add("**This rule is defined by the following Java class:** "
+                                + "[" + rule.getRuleClass() + "]("
+                                + GITHUB_SOURCE_LINK + allRules.get(rule.getRuleClass())
+                                + ")");
                     }
                     lines.add("");
 
@@ -493,12 +486,13 @@ public class RuleDocGenerator {
                             String defaultValue = determineDefaultValueAsString(propertyDescriptor, rule, true);
 
                             lines.add("|"
-                                    + EscapeUtils
-                                            .escapeMarkdown(StringEscapeUtils.escapeHtml4(propertyDescriptor.name()))
-                                    + "|" + EscapeUtils.escapeMarkdown(defaultValue) + "|"
-                                    + EscapeUtils.escapeMarkdown((isDeprecated ? DEPRECATION_LABEL_SMALL : "")
-                                            + StringEscapeUtils.escapeHtml4(description))
-                                    + "|");
+                                    + EscapeUtils.escapeMarkdown(StringEscapeUtils.escapeHtml4(propertyDescriptor.name()))
+                                    + "|"
+                                    + EscapeUtils.escapeMarkdown(defaultValue)
+                                    + "|"
+                                    + EscapeUtils.escapeMarkdown((isDeprecated ? DEPRECATION_LABEL_SMALL : "") + StringEscapeUtils.escapeHtml4(description))
+                                    + "|"
+                            );
                         }
                         lines.add("");
                     }
@@ -509,22 +503,20 @@ public class RuleDocGenerator {
                         lines.add("**Use this rule with the default properties by just referencing it:**");
                     }
                     lines.add("``` xml");
-                    lines.add("<rule ref=\"category/" + languageTersename + "/" + rulesetFilename + ".xml/"
-                            + rule.getName() + "\" />");
+                    lines.add("<rule ref=\"category/" + languageTersename + "/" + rulesetFilename + ".xml/" + rule.getName() + "\" />");
                     lines.add("```");
                     lines.add("");
 
                     if (properties.stream().anyMatch(it -> !isDeprecated(it))) {
                         lines.add("**Use this rule and customize it:**");
                         lines.add("``` xml");
-                        lines.add("<rule ref=\"category/" + languageTersename + "/" + rulesetFilename + ".xml/"
-                                + rule.getName() + "\">");
+                        lines.add("<rule ref=\"category/" + languageTersename + "/" + rulesetFilename + ".xml/" + rule.getName() + "\">");
                         lines.add("    <properties>");
                         for (PropertyDescriptor<?> propertyDescriptor : properties) {
                             if (!isDeprecated(propertyDescriptor)) {
                                 String defaultValue = determineDefaultValueAsString(propertyDescriptor, rule, false);
                                 lines.add("        <property name=\"" + propertyDescriptor.name() + "\" value=\""
-                                        + defaultValue + "\" />");
+                                              + defaultValue + "\" />");
                             }
                         }
                         lines.add("    </properties>");
@@ -550,8 +542,8 @@ public class RuleDocGenerator {
     }
 
     private static boolean isDeprecated(PropertyDescriptor<?> propertyDescriptor) {
-        return propertyDescriptor.description() != null && propertyDescriptor.description().toLowerCase(Locale.ROOT)
-                .startsWith(DEPRECATED_RULE_PROPERTY_MARKER);
+        return propertyDescriptor.description() != null
+            && propertyDescriptor.description().toLowerCase(Locale.ROOT).startsWith(DEPRECATED_RULE_PROPERTY_MARKER);
     }
 
     private <T> String determineDefaultValueAsString(PropertyDescriptor<T> propertyDescriptor, Rule rule, boolean pad) {
@@ -607,9 +599,7 @@ public class RuleDocGenerator {
      *
      * @param languageTersename
      * @return
-     * @see <a href=
-     *      "https://github.com/jneen/rouge/wiki/List-of-supported-languages-and-lexers">List
-     *      of supported languages</a>
+     * @see <a href="https://github.com/jneen/rouge/wiki/List-of-supported-languages-and-lexers">List of supported languages</a>
      */
     private static String mapLanguageForHighlighting(String languageTersename) {
         if (LANGUAGE_HIGHLIGHT_MAPPER.containsKey(languageTersename)) {
@@ -638,17 +628,15 @@ public class RuleDocGenerator {
     }
 
     /**
-     * Walks through the root directory once to get all rule source file path names
-     * and ruleset names. This provides the information for the "editme" links.
+     * Walks through the root directory once to get all rule source file path names and ruleset names.
+     * This provides the information for the "editme" links.
      *
-     * @param sortedRulesets
-     *            all the rulesets and rules
+     * @param sortedRulesets all the rulesets and rules
      */
     private void determineRuleClassSourceFiles(Map<Language, List<RuleSet>> sortedRulesets) {
         // first collect all the classes, we need to resolve and the rulesets
         // this also provides a default fallback path, which is used in unit tests.
-        // if the actual file is found during walkFileTree, then the default fallback
-        // path
+        // if the actual file is found during walkFileTree, then the default fallback path
         // is replaced by a correct path.
         for (List<RuleSet> rulesets : sortedRulesets.values()) {
             for (RuleSet ruleset : rulesets) {
@@ -656,8 +644,8 @@ public class RuleDocGenerator {
                 allRulesets.put(ruleset.getFileName(), rulesetFilename);
                 for (Rule rule : ruleset.getRules()) {
                     String ruleClass = rule.getRuleClass();
-                    String relativeSourceFilename = ruleClass.replaceAll("\\.",
-                            Matcher.quoteReplacement(File.separator)) + ".java";
+                    String relativeSourceFilename = ruleClass.replaceAll("\\.", Matcher.quoteReplacement(File.separator))
+                            + ".java";
                     allRules.put(ruleClass, RuleSetUtils.normalizeForwardSlashes(relativeSourceFilename));
                 }
             }

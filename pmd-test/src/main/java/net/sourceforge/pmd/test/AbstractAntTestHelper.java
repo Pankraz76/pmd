@@ -33,13 +33,12 @@ import com.github.stefanbirkner.systemlambda.SystemLambda;
 /**
  * Base test class for ant tests.
  *
- * <p>
- * Usage template:
+ * <p>Usage template:
  *
  * <pre>
  * class MyPMDTaskTest extends AbstractAntTestHelper {
  *     MyPMDTaskTest() {
- *         antTestScriptFilename = "mypmdtasktest.xml";
+ *          antTestScriptFilename = "mypmdtasktest.xml";
  *     }
  *
  *     &#64;Test
@@ -80,8 +79,7 @@ public abstract class AbstractAntTestHelper {
 
         // Each test case gets one temp file name, accessible with property ${tmpfile}
         Path tmpFile = Files.createTempFile(tempFolder, "pmd-ant-tests", null);
-        // we delete the tmpfile again, since we only wanted to have a unique temp
-        // filename
+        // we delete the tmpfile again, since we only wanted to have a unique temp filename
         // the tmpfile is used for creating reports.
         Files.deleteIfExists(tmpFile);
         antProject.setProperty("tmpfile", tmpFile.toAbsolutePath().toString());
@@ -93,13 +91,14 @@ public abstract class AbstractAntTestHelper {
     }
 
     /**
-     * Returns the current temporary file. Replaced by a fresh (inexistent) file
-     * before each test.
+     * Returns the current temporary file. Replaced by a fresh (inexistent)
+     * file before each test.
      */
     public File currentTempFile() {
         String tmpname = antProject.getProperty("tmpfile");
         return tmpname == null ? null : new File(tmpname);
     }
+
 
     private void validatePostConstruct() {
         if (pathToTestScript == null || "".equals(pathToTestScript) || antTestScriptFilename == null
@@ -111,8 +110,7 @@ public abstract class AbstractAntTestHelper {
     public String executeTarget(String target) {
         try {
             restoreLocale(() -> {
-                // restoring system properties: Test might change file.encoding or might change
-                // logging properties
+                // restoring system properties: Test might change file.encoding or might change logging properties
                 // See Slf4jSimpleConfigurationForAnt and resetLogging
                 SystemLambda.restoreSystemProperties(() -> {
                     output = tapSystemOut(() -> {
@@ -134,9 +132,11 @@ public abstract class AbstractAntTestHelper {
         assertThat(output, containsString(text));
     }
 
+
     public void assertContains(String text, String toFind) {
         assertThat(text, containsString(toFind));
     }
+
 
     public void assertDoesntContain(String text, String toFind) {
         assertThat(text, not(containsString(toFind)));
@@ -153,16 +153,13 @@ public abstract class AbstractAntTestHelper {
 
     /**
      * This is similar to {@link SystemLambda#tapSystemOut(Statement)}. But this
-     * method doesn't use the platform default charset as it was when the JVM
-     * started. Instead, it uses the current system property {@code file.encoding}.
-     * This allows tests to change the encoding.
+     * method doesn't use the platform default charset as it was when the JVM started.
+     * Instead, it uses the current system property {@code file.encoding}. This allows
+     * tests to change the encoding.
      *
-     * @param statement
-     *            an arbitrary piece of code.
-     * @return text that is written to stdout. Lineendings are normalized to
-     *         {@code \n}.
-     * @throws Exception
-     *             any exception thrown by the statement
+     * @param statement an arbitrary piece of code.
+     * @return text that is written to stdout. Lineendings are normalized to {@code \n}.
+     * @throws Exception any exception thrown by the statement
      */
     private static String tapSystemOut(Statement statement) throws Exception {
         @SuppressWarnings("PMD.CloseResource") // we don't want to close System.out

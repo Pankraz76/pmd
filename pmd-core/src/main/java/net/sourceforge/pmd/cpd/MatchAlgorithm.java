@@ -31,6 +31,7 @@ class MatchAlgorithm {
         }
     }
 
+
     public TokenEntry tokenAt(int offset, TokenEntry m) {
         return code.get(offset + m.getIndex());
     }
@@ -46,12 +47,15 @@ class MatchAlgorithm {
             Map<TokenEntry, Object> markGroups = hash();
 
             cpdListener.phaseUpdate(CPDListener.MATCH);
-            markGroups.values().stream().filter(it -> it instanceof List).forEach(it -> {
-                @SuppressWarnings("unchecked")
-                List<TokenEntry> l = (List<TokenEntry>) it;
-                Collections.reverse(l);
-                matchCollector.collect(l);
-            });
+            markGroups.values()
+                      .stream()
+                      .filter(it -> it instanceof List)
+                      .forEach(it -> {
+                          @SuppressWarnings("unchecked")
+                          List<TokenEntry> l = (List<TokenEntry>) it;
+                          Collections.reverse(l);
+                          matchCollector.collect(l);
+                      });
             // put markGroups out of scope
         }
 

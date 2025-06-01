@@ -19,8 +19,7 @@ public final class PmdBanner {
 
     private static final String BANNER_RESOURCE = "/net/sourceforge/pmd/cli/internal/banner.txt";
 
-    private PmdBanner() {
-    }
+    private PmdBanner() {}
 
     public static List<String> loadBanner() {
         List<String> lines = new ArrayList<>();

@@ -47,10 +47,17 @@ public class DummyLanguageModule extends SimpleLanguageModuleBase implements Cpd
     public static final String CPD_THROW_OTHER_EXCEPTION = ":throw_other_exception:";
 
     public DummyLanguageModule() {
-        super(LanguageMetadata.withId(TERSE_NAME).name(NAME).extensions("dummy", "txt").addVersion("1.0")
-                .addVersion("1.1").addVersion("1.2").addVersion("1.3").addVersion("1.4").addVersion("1.5", "5")
-                .addVersion("1.6", "6").addDefaultVersion("1.7", "7").addVersion(PARSER_THROWS).addVersion("1.8", "8"),
-                new Handler());
+        super(LanguageMetadata.withId(TERSE_NAME).name(NAME).extensions("dummy", "txt")
+                              .addVersion("1.0")
+                              .addVersion("1.1")
+                              .addVersion("1.2")
+                              .addVersion("1.3")
+                              .addVersion("1.4")
+                              .addVersion("1.5", "5")
+                              .addVersion("1.6", "6")
+                              .addDefaultVersion("1.7", "7")
+                              .addVersion(PARSER_THROWS)
+                              .addVersion("1.8", "8"), new Handler());
     }
 
     public static DummyLanguageModule getInstance() {
@@ -116,20 +123,21 @@ public class DummyLanguageModule extends SimpleLanguageModuleBase implements Cpd
 
         @Override
         public LanguageMetricsProvider getLanguageMetricsProvider() {
-            return () -> CollectionUtil
-                    .setOf(Metric.of((node, options) -> 1, (node) -> node, "Constant value metric", "const1"));
+            return () -> CollectionUtil.setOf(
+                    Metric.of((node, options) -> 1, (node) -> node,
+                    "Constant value metric", "const1"));
         }
     }
 
     /**
-     * Creates a tree of nodes that corresponds to the nesting structures of
-     * parentheses in the text. The image of each node is also populated. This is
-     * useful to create non-trivial trees with all the relevant data (eg
-     * coordinates) set properly.
+     * Creates a tree of nodes that corresponds to the nesting structures
+     * of parentheses in the text. The image of each node is also populated.
+     * This is useful to create non-trivial trees with all the relevant
+     * data (eg coordinates) set properly.
      *
-     * Eg {@code (a(b)x(c))} will create a tree with a node "a", with two children
-     * "b" and "c". "x" is ignored. The node "a" is not the root node, it has a
-     * {@link DummyRootNode} as parent, whose image is "".
+     * Eg {@code (a(b)x(c))} will create a tree with a node "a", with two
+     * children "b" and "c". "x" is ignored. The node "a" is not the root
+     * node, it has a {@link DummyRootNode} as parent, whose image is "".
      */
     public static DummyRootNode readLispNode(ParserTask task) {
         TextDocument document = task.getTextDocument();
@@ -193,7 +201,7 @@ public class DummyLanguageModule extends SimpleLanguageModuleBase implements Cpd
         return new XPathFunctionDefinition("imageIs", DummyLanguageModule.getInstance()) {
             @Override
             public Type[] getArgumentTypes() {
-                return new Type[] { Type.SINGLE_STRING };
+                return new Type[] {Type.SINGLE_STRING};
             }
 
             @Override

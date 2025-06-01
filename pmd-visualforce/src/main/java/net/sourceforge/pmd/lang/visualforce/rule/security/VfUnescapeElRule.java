@@ -23,6 +23,7 @@ import net.sourceforge.pmd.lang.visualforce.ast.ASTText;
 import net.sourceforge.pmd.lang.visualforce.rule.AbstractVfRule;
 import net.sourceforge.pmd.lang.visualforce.rule.security.internal.ElEscapeDetector;
 
+
 /**
  * @author sergey.gorbaty February 2017
  *
@@ -45,8 +46,7 @@ public class VfUnescapeElRule extends AbstractVfRule {
     private static final String FALSE = "false";
     private static final Pattern ON_EVENT = Pattern.compile("^on(\\w)+$");
     private static final Pattern PLACEHOLDERS = Pattern.compile("\\{(\\w|,|\\.|'|:|\\s)*\\}");
-    private static final Set<ElEscapeDetector.Escaping> JSENCODE_JSINHTMLENCODE = EnumSet
-            .of(ElEscapeDetector.Escaping.JSENCODE, ElEscapeDetector.Escaping.JSINHTMLENCODE);
+    private static final Set<ElEscapeDetector.Escaping> JSENCODE_JSINHTMLENCODE = EnumSet.of(ElEscapeDetector.Escaping.JSENCODE, ElEscapeDetector.Escaping.JSINHTMLENCODE);
     private static final Set<ElEscapeDetector.Escaping> ANY_ENCODE = EnumSet.of(ElEscapeDetector.Escaping.ANY);
 
     @Override
@@ -137,8 +137,7 @@ public class VfUnescapeElRule extends AbstractVfRule {
                             break;
                         }
 
-                        if (ElEscapeDetector.doesElContainAnyUnescapedIdentifiers(el,
-                                ElEscapeDetector.Escaping.URLENCODE)) {
+                        if (ElEscapeDetector.doesElContainAnyUnescapedIdentifiers(el, ElEscapeDetector.Escaping.URLENCODE)) {
                             isEL = true;
                             toReport.add(el);
                         }
@@ -195,7 +194,8 @@ public class VfUnescapeElRule extends AbstractVfRule {
             if (literal != null && literal.getIndexInParent() == 0) {
                 String lowerCaseLiteral = literal.getImage().toLowerCase(Locale.ROOT);
                 if (lowerCaseLiteral.startsWith("'/") || lowerCaseLiteral.startsWith("\"/")
-                        || lowerCaseLiteral.startsWith("'http") || lowerCaseLiteral.startsWith("\"http")) {
+                        || lowerCaseLiteral.startsWith("'http")
+                        || lowerCaseLiteral.startsWith("\"http")) {
                     return true;
                 }
             }

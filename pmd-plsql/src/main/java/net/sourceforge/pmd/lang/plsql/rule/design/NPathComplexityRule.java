@@ -28,6 +28,7 @@ public class NPathComplexityRule extends AbstractCounterCheckRule<ExecutableCode
         return 200;
     }
 
+
     @Override
     protected int getMetric(ExecutableCode node) {
         return new NPathComplexityVisitor().compute(node);
@@ -35,21 +36,18 @@ public class NPathComplexityRule extends AbstractCounterCheckRule<ExecutableCode
 
     @Override
     protected Object[] getViolationParameters(ExecutableCode node, int metric) {
-        return new Object[] { node.getMethodName(), metric };
+        return new Object[] {node.getMethodName(), metric};
     }
 
     /**
      * Calculate the boolean complexity of the given expression. NPath boolean
-     * complexity is the sum of &amp;&amp; and || tokens. This is calculated by
-     * summing the number of children of the &amp;&amp;'s (minus one) and the
-     * children of the ||'s (minus one).
+     * complexity is the sum of &amp;&amp; and || tokens. This is calculated by summing
+     * the number of children of the &amp;&amp;'s (minus one) and the children of the
+     * ||'s (minus one).
      *
-     * <p>
-     * Note that this calculation applies to Cyclomatic Complexity as well.
-     * </p>
+     * <p>Note that this calculation applies to Cyclomatic Complexity as well.</p>
      *
-     * @param expr
-     *            control structure expression
+     * @param expr control structure expression
      *
      * @return complexity of the boolean expression
      */

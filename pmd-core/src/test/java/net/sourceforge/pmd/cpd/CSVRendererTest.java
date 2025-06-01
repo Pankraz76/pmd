@@ -27,9 +27,9 @@ class CSVRendererTest {
         StringWriter sw = new StringWriter();
         renderer.render(builder.build(), sw);
         String report = sw.toString();
-        String expectedReport = "tokens,occurrences" + System.lineSeparator() + "75,2,48,10,"
-                + CpdTestUtils.FOO_FILE_ID.getAbsolutePath() + ",73,20," + CpdTestUtils.BAR_FILE_ID.getAbsolutePath()
-                + System.lineSeparator();
+        String expectedReport = "tokens,occurrences" + System.lineSeparator()
+            + "75,2,48,10," + CpdTestUtils.FOO_FILE_ID.getAbsolutePath() + ",73,20,"
+            + CpdTestUtils.BAR_FILE_ID.getAbsolutePath() + System.lineSeparator();
 
         assertEquals(expectedReport, report);
     }
@@ -47,8 +47,9 @@ class CSVRendererTest {
         StringWriter sw = new StringWriter();
         renderer.render(builder.build(), sw);
         String report = sw.toString();
-        String expectedReport = "lines,tokens,occurrences" + System.lineSeparator() + "10,75,2,48,\""
-                + foo.getAbsolutePath() + "\",73,\"" + bar.getAbsolutePath() + "\"" + System.lineSeparator();
+        String expectedReport = "lines,tokens,occurrences" + System.lineSeparator()
+            + "10,75,2,48,\"" + foo.getAbsolutePath() + "\",73,\"" + bar.getAbsolutePath() + "\""
+            + System.lineSeparator();
         assertEquals(expectedReport, report);
     }
 

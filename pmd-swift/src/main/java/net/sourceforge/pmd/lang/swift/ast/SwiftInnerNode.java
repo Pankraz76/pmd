@@ -10,7 +10,8 @@ import net.sourceforge.pmd.lang.ast.AstVisitor;
 import net.sourceforge.pmd.lang.ast.impl.antlr4.BaseAntlrInnerNode;
 
 // package private base class
-abstract class SwiftInnerNode extends BaseAntlrInnerNode<SwiftNode> implements SwiftNode {
+abstract class SwiftInnerNode
+    extends BaseAntlrInnerNode<SwiftNode> implements SwiftNode {
 
     SwiftInnerNode() {
         super();
@@ -28,6 +29,7 @@ abstract class SwiftInnerNode extends BaseAntlrInnerNode<SwiftNode> implements S
         }
         return visitor.visitNode(this, data);
     }
+
 
     @Override // override to make visible in package
     protected PmdAsAntlrInnerNode<SwiftNode> asAntlrNode() {

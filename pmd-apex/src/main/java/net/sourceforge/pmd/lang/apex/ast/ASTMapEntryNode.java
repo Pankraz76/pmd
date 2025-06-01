@@ -19,6 +19,7 @@ public final class ASTMapEntryNode extends AbstractApexNode.Many<Expression> {
         this.value = value;
     }
 
+
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);

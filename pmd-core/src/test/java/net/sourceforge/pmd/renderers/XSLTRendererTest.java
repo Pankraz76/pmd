@@ -50,10 +50,10 @@ class XSLTRendererTest extends AbstractRendererTest {
 
     @Override
     String filter(String expected) {
-        return expected
-                .replaceAll("<h2>PMD " + PMDVersion.VERSION + " Report\\. Generated on .+</h2>",
+        return expected.replaceAll("<h2>PMD " + PMDVersion.VERSION + " Report\\. Generated on .+</h2>",
                         "<h2>PMD unknown Report. Generated on ...</h2>")
-                .replaceAll("<title>PMD " + PMDVersion.VERSION + " Report</title>", "<title>PMD unknown Report</title>")
+                .replaceAll("<title>PMD " + PMDVersion.VERSION + " Report</title>",
+                        "<title>PMD unknown Report</title>")
                 .replaceAll("\r\n", "\n"); // make the test run on Windows, too
     }
 

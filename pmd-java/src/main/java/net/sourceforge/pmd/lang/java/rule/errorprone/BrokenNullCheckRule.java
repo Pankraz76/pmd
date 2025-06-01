@@ -37,7 +37,7 @@ public class BrokenNullCheckRule extends AbstractJavaRulechainRule {
         if (op != BinaryOp.EQ && op != BinaryOp.NE) {
             return;
         } else if (op == BinaryOp.NE && enclosingConditional.getOperator() == BinaryOp.CONDITIONAL_AND
-                || op == BinaryOp.EQ && enclosingConditional.getOperator() == BinaryOp.CONDITIONAL_OR) {
+            || op == BinaryOp.EQ && enclosingConditional.getOperator() == BinaryOp.CONDITIONAL_OR) {
             return; // not problematic
         }
 
@@ -53,8 +53,9 @@ public class BrokenNullCheckRule extends AbstractJavaRulechainRule {
             return;
         }
 
-        NodeStream<ASTExpression> exprsToCheck = enclosingConditional.getRightOperand().descendantsOrSelf()
-                .filterIs(ASTExpression.class);
+        NodeStream<ASTExpression> exprsToCheck = enclosingConditional.getRightOperand()
+                                                                     .descendantsOrSelf()
+                                                                     .filterIs(ASTExpression.class);
 
         for (ASTExpression subexpr : exprsToCheck) {
             NpeReason npeReason = willNpeWithReason(subexpr, pathToNullVar);

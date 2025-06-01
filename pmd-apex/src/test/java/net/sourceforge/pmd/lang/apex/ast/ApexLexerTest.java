@@ -4,6 +4,7 @@
 
 package net.sourceforge.pmd.lang.apex.ast;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -24,8 +25,11 @@ import io.github.apexdevtools.apexparser.CaseInsensitiveInputStream;
  * This is an exploration test for {@link ApexLexer}.
  */
 class ApexLexerTest {
-    private static final String CODE = "public class Foo {\n" + "   public List<SObject> test1() {\n"
-            + "       return Database.query('Select Id from Account LIMIT 100');\n" + "   }\n" + "}\n";
+    private static final String CODE = "public class Foo {\n"
+            + "   public List<SObject> test1() {\n"
+            + "       return Database.query('Select Id from Account LIMIT 100');\n"
+            + "   }\n"
+            + "}\n";
 
     @Test
     void testLexer() {
@@ -72,8 +76,8 @@ class ApexLexerTest {
         private int errorCount = 0;
 
         @Override
-        public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine,
-                String msg, RecognitionException e) {
+        public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line,
+            int charPositionInLine, String msg, RecognitionException e) {
             ++errorCount;
         }
 

@@ -25,10 +25,7 @@ import net.sourceforge.pmd.lang.document.TextDocument;
 /**
  * The C++ tokenizer.
  *
- * <p>
- * Note: This class has been called CPPTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called CPPTokenizer in PMD 6</p>.
  */
 public class CppCpdLexer extends JavaccCpdLexer {
 
@@ -42,8 +39,7 @@ public class CppCpdLexer extends JavaccCpdLexer {
 
     public CppCpdLexer(LanguagePropertyBundle cppProperties) {
         ignoreLiteralSequences = cppProperties.getProperty(CpdLanguageProperties.CPD_IGNORE_LITERAL_SEQUENCES);
-        ignoreIdentifierAndLiteralSeqences = cppProperties
-                .getProperty(CpdLanguageProperties.CPD_IGNORE_LITERAL_AND_IDENTIFIER_SEQUENCES);
+        ignoreIdentifierAndLiteralSeqences = cppProperties.getProperty(CpdLanguageProperties.CPD_IGNORE_LITERAL_AND_IDENTIFIER_SEQUENCES);
         ignoreLiterals = cppProperties.getProperty(CpdLanguageProperties.CPD_ANONYMIZE_LITERALS);
         ignoreIdentifiers = cppProperties.getProperty(CpdLanguageProperties.CPD_ANONYMIZE_IDENTIFIERS);
         String skipBlocksPattern = cppProperties.getProperty(CppLanguageModule.CPD_SKIP_BLOCKS);
@@ -87,11 +83,7 @@ public class CppCpdLexer extends JavaccCpdLexer {
         int kind = currentToken.getKind();
         String image = currentToken.getImage();
 
-        boolean isLiteral = kind == CppTokenKinds.STRING || kind == CppTokenKinds.RSTRING
-                || kind == CppTokenKinds.CHARACTER || kind == CppTokenKinds.DECIMAL_INT_LITERAL
-                || kind == CppTokenKinds.HEXADECIMAL_INT_LITERAL || kind == CppTokenKinds.OCTAL_INT_LITERAL
-                || kind == CppTokenKinds.FLOAT_LITERAL || kind == CppTokenKinds.BINARY_INT_LITERAL
-                || kind == CppTokenKinds.ZERO;
+        boolean isLiteral = kind == CppTokenKinds.STRING || kind == CppTokenKinds.RSTRING || kind == CppTokenKinds.CHARACTER || kind == CppTokenKinds.DECIMAL_INT_LITERAL || kind == CppTokenKinds.HEXADECIMAL_INT_LITERAL || kind == CppTokenKinds.OCTAL_INT_LITERAL || kind == CppTokenKinds.FLOAT_LITERAL || kind == CppTokenKinds.BINARY_INT_LITERAL || kind == CppTokenKinds.ZERO;
         if (ignoreLiterals && isLiteral) {
             image = CppTokenKinds.describe(kind);
         }
@@ -110,8 +102,7 @@ public class CppCpdLexer extends JavaccCpdLexer {
         private JavaccToken discardingTokensUntil = null;
         private boolean discardCurrent = false;
 
-        CppTokenFilter(final TokenManager<JavaccToken> tokenManager, final boolean ignoreLiteralSequences,
-                final boolean ignoreIdentifierAndLiteralSeqences) {
+        CppTokenFilter(final TokenManager<JavaccToken> tokenManager, final boolean ignoreLiteralSequences, final boolean ignoreIdentifierAndLiteralSeqences) {
             super(tokenManager);
             this.ignoreIdentifierAndLiteralSeqences = ignoreIdentifierAndLiteralSeqences;
             this.ignoreLiteralSequences = ignoreLiteralSequences;
@@ -132,14 +123,12 @@ public class CppCpdLexer extends JavaccCpdLexer {
                         discardCurrent = true;
                     }
                 } else if (kind == CppTokenKinds.LCURLYBRACE) {
-                    discardingTokensUntil = findEndOfSequenceToDiscard(remainingTokens,
-                            ignoreIdentifierAndLiteralSeqences);
+                    discardingTokensUntil = findEndOfSequenceToDiscard(remainingTokens, ignoreIdentifierAndLiteralSeqences);
                 }
             }
         }
 
-        private static JavaccToken findEndOfSequenceToDiscard(final Iterable<JavaccToken> remainingTokens,
-                boolean ignoreIdentifierAndLiteralSeqences) {
+        private static JavaccToken findEndOfSequenceToDiscard(final Iterable<JavaccToken> remainingTokens, boolean ignoreIdentifierAndLiteralSeqences) {
             boolean seenAllowedToken = false;
             int braceCount = 0;
             for (final JavaccToken token : remainingTokens) {

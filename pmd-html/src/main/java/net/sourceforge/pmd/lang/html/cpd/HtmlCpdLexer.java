@@ -21,10 +21,7 @@ import net.sourceforge.pmd.lang.html.ast.HtmlNode;
 import net.sourceforge.pmd.lang.html.ast.HtmlParser;
 
 /**
- * <p>
- * Note: This class has been called HtmlTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called HtmlTokenizer in PMD 6</p>.
  */
 public class HtmlCpdLexer implements CpdLexer {
 
@@ -34,8 +31,11 @@ public class HtmlCpdLexer implements CpdLexer {
 
         try (LanguageProcessor processor = html.createProcessor(html.newPropertyBundle())) {
 
-            ParserTask task = new ParserTask(document, SemanticErrorReporter.noop(),
-                    LanguageProcessorRegistry.singleton(processor));
+            ParserTask task = new ParserTask(
+                document,
+                SemanticErrorReporter.noop(),
+                LanguageProcessorRegistry.singleton(processor)
+            );
 
             HtmlParser parser = new HtmlParser();
             ASTHtmlDocument root = parser.parse(task);

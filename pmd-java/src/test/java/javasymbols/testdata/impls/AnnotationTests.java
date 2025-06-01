@@ -4,6 +4,7 @@
 
 package javasymbols.testdata.impls;
 
+
 import net.sourceforge.pmd.lang.java.symbols.testdata.AnnotWithDefaults;
 
 public class AnnotationTests {
@@ -17,7 +18,7 @@ public class AnnotationTests {
     }
 
     @AnnotWithDefaults(valueNoDefault = "", stringArrayDefault = {})
-    public void someMethod(@AnnotWithDefaults(valueNoDefault = "", stringArrayDefault = { "oio" }) int formal) {
+    public void someMethod(@AnnotWithDefaults(valueNoDefault = "", stringArrayDefault = {"oio"}) int formal) {
 
     }
 }

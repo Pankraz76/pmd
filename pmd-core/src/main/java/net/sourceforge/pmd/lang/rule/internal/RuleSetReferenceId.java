@@ -19,91 +19,80 @@ import net.sourceforge.pmd.lang.rule.RuleSetLoader;
 import net.sourceforge.pmd.util.internal.ResourceLoader;
 
 /**
- * This class is used to reference either a complete ruleset with all rules or
- * to reference a single rule within a rule set.
+ * This class is used to reference either a complete ruleset with all rules or to reference a single rule
+ * within a rule set.
  *
- * <p>
- * A {@link RuleSetReferenceId} is said to be "absolute" if it knows about the
- * ruleset it references. It is "relative", if only the name of the referenced
- * rule is known. In that case, the {@link RuleSetReferenceId} needs to be
- * paired with an absolute reference.
+ * <p>A {@link RuleSetReferenceId} is said to be "absolute" if it knows about the ruleset it references.
+ * It is "relative", if only the name of the referenced rule is known. In that case, the {@link RuleSetReferenceId}
+ * needs to be paired with an absolute reference.
  *
- * <p>
- * This class can parse reference values from string. Most commonly used for
+ * <p>This class can parse reference values from string. Most commonly used for
  * specifying a RuleSet to process, or in a Rule 'ref' attribute value in the
- * RuleSet XML. The RuleSet reference can refer to either a specific RuleSet
- * file or the current RuleSet when used as a Rule 'ref' attribute value. An
- * individual Rule in the RuleSet can be selected.
+ * RuleSet XML. The RuleSet reference can refer to either a specific RuleSet file or
+ * the current RuleSet when used as a Rule 'ref' attribute value. An individual
+ * Rule in the RuleSet can be selected.
  *
- * <p>
- * For referring an entire RuleSet, the format is <i>ruleSetName</i>, where the
- * ruleSetName is a resource file path, a classpath or a URL that ends with
- * <code>'.xml'</code>.
+ * <p>For referring an entire RuleSet, the format is
+ * <i>ruleSetName</i>, where the ruleSetName is a resource file path, a classpath or a URL
+ * that ends with <code>'.xml'</code>.
  *
- * <p>
- * Referring to a single Rule, the format is <i>ruleSetName/ruleName</i>, where
- * the ruleSetName is as described above. A Rule with the <i>ruleName</i> should
- * exist in the referenced RuleSet.
+ * <p>Referring to a single Rule, the format is
+ * <i>ruleSetName/ruleName</i>, where the ruleSetName is as described above. A
+ * Rule with the <i>ruleName</i> should exist in the referenced RuleSet.
  *
- * <p>
- * For the current RuleSet, the format is <i>ruleName</i>, where the Rule name
- * is not RuleSet name (i.e. contains no path separators or '.xml' in it). A
- * Rule with the <i>ruleName</i> should exist in the current RuleSet.
+ * <p>For the current RuleSet, the format is <i>ruleName</i>, where the Rule name
+ * is not RuleSet name (i.e. contains no path separators or '.xml' in it).
+ * A Rule with the <i>ruleName</i> should exist in the current RuleSet.
  *
  * <table>
- * <caption>Examples</caption> <thead>
+ * <caption>Examples</caption>
+ * <thead>
  * <tr>
- * <th>String</th>
- * <th>RuleSet file name</th>
- * <th>Rule</th>
+ *     <th>String</th>
+ *     <th>RuleSet file name</th>
+ *     <th>Rule</th>
  * </tr>
- * </thead> <tbody>
+ * </thead>
+ * <tbody>
  * <tr>
- * <td>rulesets/java/basic.xml</td>
- * <td>rulesets/java/basic.xml</td>
- * <td>null (all rules)</td>
- * </tr>
- * <tr>
- * <td>rulesets/java/basic.xml/EmptyCatchBlock</td>
- * <td>rulesets/java/basic.xml</td>
- * <td>EmptyCatchBlock</td>
+ *     <td>rulesets/java/basic.xml</td>
+ *     <td>rulesets/java/basic.xml</td>
+ *     <td>null (all rules)</td>
  * </tr>
  * <tr>
- * <td>EmptyCatchBlock</td>
- * <td>null (current rule set)</td>
- * <td>EmptyCatchBlock</td>
+ *     <td>rulesets/java/basic.xml/EmptyCatchBlock</td>
+ *     <td>rulesets/java/basic.xml</td>
+ *     <td>EmptyCatchBlock</td>
  * </tr>
  * <tr>
- * <td>https://raw.githubusercontent.com/pmd/pmd/main/<wbr
- * />pmd-java/src/main/resources/<wbr
- * />rulesets/java/quickstart.xml/ConstantsInInterface</td>
- * <td>https://raw.githubusercontent.com/pmd/pmd/main/<wbr
- * />pmd-java/src/main/resources/<wbr />rulesets/java/quickstart.xml</td>
- * <td>ConstantsInInterface</td>
+ *     <td>EmptyCatchBlock</td>
+ *     <td>null (current rule set)</td>
+ *     <td>EmptyCatchBlock</td>
  * </tr>
  * <tr>
- * <td>https://example.org/ruleset/MyRule</td>
- * <td>https://example.org/ruleset/MyRule</td>
- * <td>null (all rules, see note below)</td>
+ *     <td>https://raw.githubusercontent.com/pmd/pmd/main/<wbr />pmd-java/src/main/resources/<wbr />rulesets/java/quickstart.xml/ConstantsInInterface</td>
+ *     <td>https://raw.githubusercontent.com/pmd/pmd/main/<wbr />pmd-java/src/main/resources/<wbr />rulesets/java/quickstart.xml</td>
+ *     <td>ConstantsInInterface</td>
  * </tr>
  * <tr>
- * <td>https://example.org/ruleset.xml/MyRule</td>
- * <td>https://example.org/ruleset.xml</td>
- * <td>MyRule (see note below)</td>
+ *     <td>https://example.org/ruleset/MyRule</td>
+ *     <td>https://example.org/ruleset/MyRule</td>
+ *     <td>null (all rules, see note below)</td>
+ * </tr>
+ * <tr>
+ *     <td>https://example.org/ruleset.xml/MyRule</td>
+ *     <td>https://example.org/ruleset.xml</td>
+ *     <td>MyRule (see note below)</td>
  * </tr>
  * </tbody>
  * </table>
  *
- * <p>
- * Note: When specifying a URL, the URL won't be checked until the ruleset is
- * actually loaded. This might result in ambiguity in the following cases: if
- * "https://example.org/ruleset/MyRule" will be interpreted as reference to a
- * rulesets and all rules are referenced. To avoid this ambiguity, rulesets
- * should always use the extension ".xml", e.g.
- * "https://example.org/ruleset.xml/MyRule".
+ * <p>Note: When specifying a URL, the URL won't be checked until the ruleset is actually loaded. This might result
+ * in ambiguity in the following cases: if "https://example.org/ruleset/MyRule" will be interpreted as reference
+ * to a rulesets and all rules are referenced. To avoid this ambiguity, rulesets should always use the extension ".xml",
+ * e.g. "https://example.org/ruleset.xml/MyRule".
  *
- * <p>
- * Note: This is part of the internals of the {@link RuleSetLoader}.
+ * <p>Note: This is part of the internals of the {@link RuleSetLoader}.
  */
 public class RuleSetReferenceId {
 
@@ -113,6 +102,7 @@ public class RuleSetReferenceId {
     private final @Nullable String ruleName;
 
     private final @NonNull String originalRef;
+
 
     // Helper constructor, that does not parse the ruleSetReference string
     private RuleSetReferenceId(final String ruleSetReference, final String ruleName) {
@@ -134,22 +124,16 @@ public class RuleSetReferenceId {
     }
 
     /**
-     * Construct a RuleSetReferenceId for the given single ID string. If an absolute
-     * RuleSetReferenceId is given, the ID must refer to a simple Rule. The rule
-     * will be resolved within the given absolute RuleSetReference.
+     * Construct a RuleSetReferenceId for the given single ID string. If an
+     * absolute RuleSetReferenceId is given, the ID must refer to a simple
+     * Rule. The rule will be resolved within the given absolute RuleSetReference.
      *
-     * @param id
-     *            The id string.
-     * @param absoluteRuleSetReferenceId
-     *            A RuleSetReferenceId to associate with this new instance.
+     * @param id                         The id string.
+     * @param absoluteRuleSetReferenceId A RuleSetReferenceId to associate with this new instance.
      *
-     * @throws IllegalArgumentException
-     *             If the ID contains a comma character.
-     * @throws IllegalArgumentException
-     *             If absolute RuleSetReferenceId is not absolute.
-     * @throws IllegalArgumentException
-     *             If the ID is not Rule reference when there is an
-     *             absoluteRuleSetReferenceId
+     * @throws IllegalArgumentException If the ID contains a comma character.
+     * @throws IllegalArgumentException If absolute RuleSetReferenceId is not absolute.
+     * @throws IllegalArgumentException If the ID is not Rule reference when there is an absoluteRuleSetReferenceId
      */
     public RuleSetReferenceId(final String id, final RuleSetReferenceId absoluteRuleSetReferenceId) {
         this.originalRef = StringUtils.trim(id);
@@ -171,7 +155,8 @@ public class RuleSetReferenceId {
 
         // try to split originalRef into ruleset and rule
         String tempRuleName = getRuleName(originalRef);
-        String tempRuleSetReference = tempRuleName == null ? null
+        String tempRuleSetReference = tempRuleName == null
+                ? null
                 : originalRef.substring(0, originalRef.length() - tempRuleName.length() - 1);
         if (isFullRuleSetName(tempRuleSetReference) && absoluteRuleSetReferenceId != null) {
             throw new IllegalArgumentException(
@@ -188,8 +173,7 @@ public class RuleSetReferenceId {
             ruleName = null;
         } else {
             if (isFullRuleSetName(tempRuleSetReference)) {
-                // only interpret last part as rule name, if the remaining part is a full
-                // ruleset name (ending in .xml)
+                // only interpret last part as rule name, if the remaining part is a full ruleset name (ending in .xml)
                 ruleSetReference = tempRuleSetReference;
                 ruleName = tempRuleName;
             } else if (originalRef.indexOf('/') == -1 && originalRef.indexOf('\\') == -1) {
@@ -212,11 +196,11 @@ public class RuleSetReferenceId {
         return new RuleSetReferenceId(ruleSetReference, (String) null);
     }
 
+
     /**
      * Extracts the rule name out of a ruleset path. E.g. for
      * "/my/ruleset.xml/MyRule" it would return "MyRule". If no single rule is
-     * specified (in other words: no separated last path name part), {@code null} is
-     * returned.
+     * specified (in other words: no separated last path name part), {@code null} is returned.
      *
      * @param rulesetName
      *            the full rule set path
@@ -240,11 +224,10 @@ public class RuleSetReferenceId {
     }
 
     /**
-     * Parse a String comma separated list of RuleSet reference IDs into a List of
-     * RuleReferenceId instances.
+     * Parse a String comma separated list of RuleSet reference IDs into a List
+     * of RuleReferenceId instances.
      *
-     * @param referenceString
-     *            A comma separated list of RuleSet reference IDs.
+     * @param referenceString A comma separated list of RuleSet reference IDs.
      *
      * @return The corresponding List of RuleSetReferenceId instances.
      */
@@ -265,12 +248,10 @@ public class RuleSetReferenceId {
     }
 
     /**
-     * Does this {@link RuleSetReferenceId} contain a reference to a ruleset. That
-     * means, it either references all rules with the ruleset or a specific rule.
-     * But in any case, the ruleset is known.
+     * Does this {@link RuleSetReferenceId} contain a reference to a ruleset. That means, it either
+     * references all rules with the ruleset or a specific rule. But in any case, the ruleset is known.
      *
-     * @return {@code true} if the ruleset is known, {@code false} when only the
-     *         rule name is known.
+     * @return {@code true} if the ruleset is known, {@code false} when only the rule name is known.
      */
     public boolean isAbsolute() {
         return ruleSetReference != null;
@@ -307,17 +288,15 @@ public class RuleSetReferenceId {
 
     /**
      * Try to load the RuleSet resource with the specified ResourceLoader. Multiple
-     * attempts to get independent InputStream instances may be made, so subclasses
-     * must ensure they support this behavior.
+     * attempts to get independent InputStream instances may be made, so
+     * subclasses must ensure they support this behavior.
      *
-     * @param rl
-     *            The {@link ResourceLoader} to use.
+     * @param rl The {@link ResourceLoader} to use.
      * @return An InputStream to that resource.
      */
     public InputStream getInputStream(final ResourceLoader rl) throws IOException {
         if (!isAbsolute()) {
-            throw new IllegalArgumentException(
-                    "Cannot resolve rule/ruleset reference '" + this + "' - reference is not absolute");
+            throw new IllegalArgumentException("Cannot resolve rule/ruleset reference '" + this + "' - reference is not absolute");
         }
         try {
             return rl.loadResourceAsStream(ruleSetReference);
@@ -327,17 +306,15 @@ public class RuleSetReferenceId {
     }
 
     private FileNotFoundException notFoundException() {
-        return new FileNotFoundException("Cannot resolve rule/ruleset reference '" + originalRef + "'"
-                + ".  Make sure the resource is a valid file or URL and is on the CLASSPATH. "
+        return new FileNotFoundException("Cannot resolve rule/ruleset reference '" + originalRef
+                + "'" + ".  Make sure the resource is a valid file or URL and is on the CLASSPATH. "
                 + "Use --debug (or a fine log level) to see the current classpath.");
     }
 
     /**
      * Return a string representation of this Rule reference.
      *
-     * <p>
-     * Warning: Do not rely on the format of this method, as it might be changed
-     * without prior notice.
+     * <p>Warning: Do not rely on the format of this method, as it might be changed without prior notice.
      *
      * @return Return the String form of this Rule reference, which is
      *         <i>ruleSetFileName</i> for all Rule absolute references,
@@ -357,8 +334,8 @@ public class RuleSetReferenceId {
     }
 
     /**
-     * String representation of this reference. Do not rely on the format of this
-     * method, instead use {@link #toNormalizedReference()}.
+     * String representation of this reference. Do not rely on the format of this method,
+     * instead use {@link #toNormalizedReference()}.
      */
     @Override
     public String toString() {

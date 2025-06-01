@@ -111,6 +111,7 @@ public class PMDTaskImpl {
         return paths;
     }
 
+
     private void doTask() {
         setupClassLoader();
 
@@ -124,7 +125,8 @@ public class PMDTaskImpl {
 
         ReportStats stats;
         try (PmdAnalysis pmd = PmdAnalysis.create(configuration)) {
-            RuleSetLoader rulesetLoader = pmd.newRuleSetLoader().loadResourcesWith(setupResourceLoader());
+            RuleSetLoader rulesetLoader =
+                pmd.newRuleSetLoader().loadResourcesWith(setupResourceLoader());
             pmd.addRuleSets(loadRuleSetsWithoutException(rulesetLoader, ruleSetPaths));
 
             for (FileSet fileset : filesets) {
@@ -133,6 +135,7 @@ public class PMDTaskImpl {
                     pmd.files().addFile(ds.getBasedir().toPath().resolve(srcFile));
                 }
             }
+
 
             @SuppressWarnings("PMD.CloseResource")
             ReportStatsListener reportStatsListener = new ReportStatsListener();
@@ -209,9 +212,9 @@ public class PMDTaskImpl {
         }
 
         /*
-         * 'basedir' is added to the path to make sure that relative paths such as
-         * "<ruleset>resources/custom_ruleset.xml</ruleset>" still work when ant is
-         * invoked from a different directory using "-f"
+         * 'basedir' is added to the path to make sure that relative paths such
+         * as "<ruleset>resources/custom_ruleset.xml</ruleset>" still work when
+         * ant is invoked from a different directory using "-f"
          */
         classpath.add(new Path(null, project.getBaseDir().toString()));
 
@@ -220,7 +223,8 @@ public class PMDTaskImpl {
         // are loaded twice
         // and exist in multiple class loaders
         final boolean parentFirst = true;
-        return new AntClassLoader(Thread.currentThread().getContextClassLoader(), project, classpath, parentFirst);
+        return new AntClassLoader(Thread.currentThread().getContextClassLoader(),
+                                  project, classpath, parentFirst);
     }
 
     private void setupClassLoader() {
@@ -243,8 +247,7 @@ public class PMDTaskImpl {
         try {
             doTask();
         } finally {
-            // only close the classloader, if it is ours. Otherwise we end up with class not
-            // found
+            // only close the classloader, if it is ours. Otherwise we end up with class not found
             // exceptions
             if (configuration.getClassLoader() instanceof ClasspathClassLoader) {
                 IOUtil.tryCloseClassLoader(configuration.getClassLoader());

@@ -58,11 +58,11 @@ public class NameFinder {
                 ASTArguments args = (ASTArguments) ((ASTPrimarySuffix) node).getChild(0);
                 occurrence.setArgumentCount(args.getArgumentCount());
             } // else if (suffix.getNumChildren() == 1
-              // && suffix.getChild(0) instanceof ASTMemberSelector)
-              // {
-              // add(new NameOccurrence((SimpleNode)suffix.getChild(0),
-              // suffix.getChild(0).getImage()));
-              // }
+            // && suffix.getChild(0) instanceof ASTMemberSelector)
+            // {
+            // add(new NameOccurrence((SimpleNode)suffix.getChild(0),
+            // suffix.getChild(0).getImage()));
+            // }
         }
     }
 

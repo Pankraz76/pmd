@@ -19,8 +19,7 @@ class HTMLRendererTest extends AbstractRendererTest {
     @Override
     protected String getSourceCodeFilename() {
         // note: the file name should still be a valid file name on both win and nix.
-        // This precludes using chars like <> to test escaping
-        // (https://stackoverflow.com/questions/1976007/what-characters-are-forbidden-in-windows-and-linux-directory-names)
+        // This precludes using chars like <> to test escaping (https://stackoverflow.com/questions/1976007/what-characters-are-forbidden-in-windows-and-linux-directory-names)
         return "someFilename\u00A0thatNeedsEscaping.ext";
     }
 
@@ -41,26 +40,30 @@ class HTMLRendererTest extends AbstractRendererTest {
     private String getExpected(String linkPrefix, String lineAnchor) {
         String filename = getEscapedFilename();
         if (linkPrefix != null) {
-            filename = "<a href=\"" + linkPrefix + filename + "#" + lineAnchor + "\">" + filename + "</a>";
+            filename = "<a href=\"" + linkPrefix + filename + "#" + lineAnchor + "\">"
+                    + filename + "</a>";
         }
-        return getHeader() + "<tr bgcolor=\"lightgrey\"> " + EOL + "<td align=\"center\">1</td>" + EOL
+        return getHeader()
+                + "<tr bgcolor=\"lightgrey\"> " + EOL + "<td align=\"center\">1</td>" + EOL
                 + "<td width=\"*%\">" + filename + "</td>" + EOL + "<td align=\"center\" width=\"5%\">1</td>" + EOL
                 + "<td width=\"*\">blah</td>" + EOL + "</tr>" + EOL + "</table></body></html>" + EOL;
     }
 
     @Override
     String getExpectedEmpty() {
-        return getHeader() + "</table></body></html>" + EOL;
+        return getHeader()
+                + "</table></body></html>" + EOL;
     }
 
     @Override
     String getExpectedMultiple() {
-        return getHeader() + "<tr bgcolor=\"lightgrey\"> " + EOL + "<td align=\"center\">1</td>" + EOL
-                + "<td width=\"*%\">" + getEscapedFilename() + "</td>" + EOL
-                + "<td align=\"center\" width=\"5%\">1</td>" + EOL + "<td width=\"*\">blah</td>" + EOL + "</tr>" + EOL
-                + "<tr> " + EOL + "<td align=\"center\">2</td>" + EOL + "<td width=\"*%\">" + getEscapedFilename()
-                + "</td>" + EOL + "<td align=\"center\" width=\"5%\">1</td>" + EOL + "<td width=\"*\">blah</td>" + EOL
-                + "</tr>" + EOL + "</table></body></html>" + EOL;
+        return getHeader()
+                + "<tr bgcolor=\"lightgrey\"> " + EOL + "<td align=\"center\">1</td>" + EOL
+                + "<td width=\"*%\">" + getEscapedFilename() + "</td>" + EOL + "<td align=\"center\" width=\"5%\">1</td>" + EOL
+                + "<td width=\"*\">blah</td>" + EOL + "</tr>" + EOL + "<tr> " + EOL
+                + "<td align=\"center\">2</td>" + EOL + "<td width=\"*%\">" + getEscapedFilename() + "</td>" + EOL
+                + "<td align=\"center\" width=\"5%\">1</td>" + EOL + "<td width=\"*\">blah</td>" + EOL + "</tr>"
+                + EOL + "</table></body></html>" + EOL;
     }
 
     @Override
@@ -68,8 +71,8 @@ class HTMLRendererTest extends AbstractRendererTest {
         return getHeader()
                 + "</table><hr/><center><h3>Processing errors</h3></center><table align=\"center\" cellspacing=\"0\" cellpadding=\"3\"><tr>"
                 + EOL + "<th>File</th><th>Problem</th></tr>" + EOL + "<tr bgcolor=\"lightgrey\"> " + EOL
-                + "<td>file</td>" + EOL + "<td><pre>" + error.getDetail() + "</pre></td>" + EOL + "</tr>" + EOL
-                + "</table></body></html>" + EOL;
+                + "<td>file</td>" + EOL + "<td><pre>" + error.getDetail() + "</pre></td>" + EOL + "</tr>" + EOL + "</table></body></html>"
+                + EOL;
     }
 
     @Override
@@ -77,8 +80,8 @@ class HTMLRendererTest extends AbstractRendererTest {
         return getHeader()
                 + "</table><hr/><center><h3>Configuration errors</h3></center><table align=\"center\" cellspacing=\"0\" cellpadding=\"3\"><tr>"
                 + EOL + "<th>Rule</th><th>Problem</th></tr>" + EOL + "<tr bgcolor=\"lightgrey\"> " + EOL
-                + "<td>Foo</td>" + EOL + "<td>a configuration error</td>" + EOL + "</tr>" + EOL
-                + "</table></body></html>" + EOL;
+                + "<td>Foo</td>" + EOL + "<td>a configuration error</td>" + EOL + "</tr>" + EOL + "</table></body></html>"
+                + EOL;
     }
 
     private String getHeader() {
@@ -105,8 +108,7 @@ class HTMLRendererTest extends AbstractRendererTest {
         final HTMLRenderer renderer = new HTMLRenderer();
         final String linkPrefix = "https://github.com/pmd/pmd/blob/main/";
         renderer.setProperty(HTMLRenderer.LINK_PREFIX, linkPrefix);
-        // dont set line prefix renderer.setProperty(HTMLRenderer.LINE_PREFIX,
-        // linePrefix);
+        // dont set line prefix renderer.setProperty(HTMLRenderer.LINE_PREFIX, linePrefix);
         renderer.setProperty(HTMLRenderer.HTML_EXTENSION, false);
 
         String actual = renderReport(renderer, reportOneViolation());

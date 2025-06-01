@@ -12,9 +12,11 @@ import net.sourceforge.pmd.test.AbstractLanguageVersionTest;
 class LanguageVersionTest extends AbstractLanguageVersionTest {
 
     static Collection<TestDescriptor> data() {
-        return Arrays.asList(new TestDescriptor(ScalaLanguageModule.getInstance(), "2.13"),
+        return Arrays.asList(
+                new TestDescriptor(ScalaLanguageModule.getInstance(), "2.13"),
                 new TestDescriptor(ScalaLanguageModule.getInstance(), "2.12"),
                 new TestDescriptor(ScalaLanguageModule.getInstance(), "2.11"),
-                new TestDescriptor(ScalaLanguageModule.getInstance(), "2.10"));
+                new TestDescriptor(ScalaLanguageModule.getInstance(), "2.10")
+        );
     }
 }

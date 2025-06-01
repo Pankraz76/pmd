@@ -11,9 +11,7 @@ import net.sourceforge.pmd.lang.document.TextDocument;
 /**
  * Tokenizes a source file into tokens consumable by CPD.
  *
- * <p>
- * Note: This interface has been called Tokenizer in PMD 6.
- * </p>
+ * <p>Note: This interface has been called Tokenizer in PMD 6.</p>
  */
 public interface CpdLexer {
 

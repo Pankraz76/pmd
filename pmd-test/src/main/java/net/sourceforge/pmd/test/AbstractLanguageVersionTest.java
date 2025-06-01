@@ -24,8 +24,7 @@ import net.sourceforge.pmd.lang.rule.RuleSetLoader;
 
 /**
  * Base test class for {@link LanguageVersion} implementations. <br>
- * Each language implementation should subclass this and provide a method called
- * {@code data}.
+ * Each language implementation should subclass this and provide a method called {@code data}.
  *
  * <pre>{@code
  *     static Collection<TestDescriptor> data() {
@@ -68,8 +67,8 @@ public abstract class AbstractLanguageVersionTest {
         }
 
         public TestDescriptor(Language language, String version) {
-            this(language, version, Objects.requireNonNull(language.getVersion(version),
-                    "language version '" + version + "' doesn't exist"));
+            this(language, version,
+                    Objects.requireNonNull(language.getVersion(version), "language version '" + version + "' doesn't exist"));
         }
 
         public static TestDescriptor versionDoesNotExist(String name, String terseName, String version) {
@@ -88,6 +87,7 @@ public abstract class AbstractLanguageVersionTest {
             this(language.getName(), language.getId(), version, expected);
         }
 
+
         public String getName() {
             return name;
         }
@@ -104,6 +104,7 @@ public abstract class AbstractLanguageVersionTest {
             return expected;
         }
     }
+
 
     protected static Language getLanguage(String name) {
         return LanguageRegistry.PMD.getLanguageByFullName(name);
@@ -196,8 +197,8 @@ public abstract class AbstractLanguageVersionTest {
             }
         }
 
-        assertEquals(1, count,
-                "Expected exactly one occurrence of " + expected + " in the language versions of its language");
+        assertEquals(1, count, "Expected exactly one occurrence of " + expected
+                + " in the language versions of its language");
     }
 
     private void assertRulesetsAndCategoriesProperties(Properties props) throws IOException {

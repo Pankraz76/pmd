@@ -14,7 +14,8 @@ class ASTReferenceExpressionTest extends ApexParserTestBase {
     @Test
     void referenceTypeMethodWithSafeNav() {
         ASTReferenceExpression reference = parse("class Foo { static void bar() { Foo?.staticMethod(); } }")
-                .descendants(ASTReferenceExpression.class).first();
+                .descendants(ASTReferenceExpression.class)
+                .first();
         assertEquals(ReferenceType.METHOD, reference.getReferenceType());
         assertTrue(reference.isSafeNav());
     }
@@ -22,7 +23,8 @@ class ASTReferenceExpressionTest extends ApexParserTestBase {
     @Test
     void referenceTypeMethodWithoutSafeNav() {
         ASTReferenceExpression reference = parse("class Foo { static void bar() { Foo.staticMethod(); } }")
-                .descendants(ASTReferenceExpression.class).first();
+                .descendants(ASTReferenceExpression.class)
+                .first();
         assertEquals(ReferenceType.METHOD, reference.getReferenceType());
         assertFalse(reference.isSafeNav());
     }
@@ -30,7 +32,8 @@ class ASTReferenceExpressionTest extends ApexParserTestBase {
     @Test
     void referenceTypeLoad() {
         ASTReferenceExpression reference = parse("class Foo { static void bar() { Foo x = Foo?.INSTANCE; } }")
-                .descendants(ASTReferenceExpression.class).first();
+                .descendants(ASTReferenceExpression.class)
+                .first();
         assertEquals(ReferenceType.LOAD, reference.getReferenceType());
         assertTrue(reference.isSafeNav());
     }
@@ -38,7 +41,8 @@ class ASTReferenceExpressionTest extends ApexParserTestBase {
     @Test
     void referenceTypeStore() {
         ASTReferenceExpression reference = parse("class Foo { static void bar() { Foo.INSTANCE = x; } }")
-                .descendants(ASTReferenceExpression.class).first();
+                .descendants(ASTReferenceExpression.class)
+                .first();
         assertEquals(ReferenceType.STORE, reference.getReferenceType());
         assertFalse(reference.isSafeNav());
     }

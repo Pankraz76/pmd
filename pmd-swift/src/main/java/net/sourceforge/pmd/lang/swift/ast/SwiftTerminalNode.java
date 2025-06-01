@@ -18,7 +18,8 @@ public final class SwiftTerminalNode extends BaseAntlrTerminalNode<SwiftNode> im
     @Override
     public @NonNull String getText() {
         String constImage = SwiftParser.DICO.getConstantImageOfToken(getFirstAntlrToken());
-        return constImage == null ? getFirstAntlrToken().getText() : constImage;
+        return constImage == null ? getFirstAntlrToken().getText()
+                                  : constImage;
     }
 
     @Override

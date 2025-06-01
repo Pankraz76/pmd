@@ -17,11 +17,10 @@ import net.sourceforge.pmd.lang.LanguagePropertyBundle;
 public abstract class CpdOnlyLanguageModuleBase extends LanguageModuleBase implements CpdCapableLanguage {
 
     /**
-     * Construct a module instance using the given metadata. The metadata must be
-     * properly constructed.
+     * Construct a module instance using the given metadata. The metadata must
+     * be properly constructed.
      *
-     * @throws IllegalStateException
-     *             If the metadata is invalid (eg missing extensions or name)
+     * @throws IllegalStateException If the metadata is invalid (eg missing extensions or name)
      */
     protected CpdOnlyLanguageModuleBase(LanguageMetadata metadata) {
         super(metadata);

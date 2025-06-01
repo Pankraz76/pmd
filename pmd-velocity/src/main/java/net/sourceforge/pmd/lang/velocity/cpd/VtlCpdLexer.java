@@ -14,10 +14,7 @@ import net.sourceforge.pmd.lang.document.TextDocument;
 import net.sourceforge.pmd.lang.velocity.ast.VtlTokenKinds;
 
 /**
- * <p>
- * Note: This class has been called VmTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called VmTokenizer in PMD 6</p>.
  */
 public class VtlCpdLexer extends JavaccCpdLexer {
     @Override

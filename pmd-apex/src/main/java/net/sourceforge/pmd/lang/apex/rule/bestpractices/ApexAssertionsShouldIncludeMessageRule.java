@@ -26,16 +26,28 @@ public class ApexAssertionsShouldIncludeMessageRule extends AbstractApexUnitTest
         String methodName = node.getFullMethodName();
 
         if (FAIL.equalsIgnoreCase(methodName) && node.getNumChildren() == 1) {
-            asCtx(data).addViolationWithMessage(node, "''{0}'' should have 1 parameters.", FAIL);
-        } else if ((ASSERT.equalsIgnoreCase(methodName) || IS_FALSE.equalsIgnoreCase(methodName)
-                || IS_NOT_NULL.equalsIgnoreCase(methodName) || IS_NULL.equalsIgnoreCase(methodName)
-                || IS_TRUE.equalsIgnoreCase(methodName)) && node.getNumChildren() == 2) {
-            asCtx(data).addViolationWithMessage(node, "''{0}'' should have 2 parameters.", methodName);
-        } else if ((ASSERT_EQUALS.equalsIgnoreCase(methodName) || ASSERT_NOT_EQUALS.equalsIgnoreCase(methodName)
-                || ARE_EQUAL.equalsIgnoreCase(methodName) || ARE_NOT_EQUAL.equalsIgnoreCase(methodName)
+            asCtx(data).addViolationWithMessage(node,
+                    "''{0}'' should have 1 parameters.",
+                    FAIL);
+        } else if ((ASSERT.equalsIgnoreCase(methodName)
+                || IS_FALSE.equalsIgnoreCase(methodName)
+                || IS_NOT_NULL.equalsIgnoreCase(methodName)
+                || IS_NULL.equalsIgnoreCase(methodName)
+                || IS_TRUE.equalsIgnoreCase(methodName))
+                && node.getNumChildren() == 2) {
+            asCtx(data).addViolationWithMessage(node,
+                    "''{0}'' should have 2 parameters.",
+                    methodName);
+        } else if ((ASSERT_EQUALS.equalsIgnoreCase(methodName)
+                || ASSERT_NOT_EQUALS.equalsIgnoreCase(methodName)
+                || ARE_EQUAL.equalsIgnoreCase(methodName)
+                || ARE_NOT_EQUAL.equalsIgnoreCase(methodName)
                 || IS_INSTANCE_OF_TYPE.equalsIgnoreCase(methodName)
-                || IS_NOT_INSTANCE_OF_TYPE.equalsIgnoreCase(methodName)) && node.getNumChildren() == 3) {
-            asCtx(data).addViolationWithMessage(node, "''{0}'' should have 3 parameters.", methodName);
+                || IS_NOT_INSTANCE_OF_TYPE.equalsIgnoreCase(methodName))
+                && node.getNumChildren() == 3) {
+            asCtx(data).addViolationWithMessage(node,
+                    "''{0}'' should have 3 parameters.",
+                    methodName);
         }
         return data;
     }

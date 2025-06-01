@@ -7,8 +7,8 @@ package net.sourceforge.pmd.properties;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Thrown when a property constraint is violated. Detected while parsing values
- * from XML.
+ * Thrown when a property constraint is violated. Detected while parsing
+ * values from XML.
  *
  * @author Clément Fournier
  */

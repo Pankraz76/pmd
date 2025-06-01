@@ -4,6 +4,7 @@
 
 package net.sourceforge.pmd.lang.ast.internal;
 
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,7 +35,7 @@ import net.sourceforge.pmd.util.IteratorUtil;
 
 public final class StreamImpl {
 
-    @SuppressWarnings({ "rawtypes", "PMD.UseDiamondOperator" })
+    @SuppressWarnings({"rawtypes", "PMD.UseDiamondOperator"})
     private static final DescendantNodeStream EMPTY = new EmptyNodeStream();
 
     private StreamImpl() {
@@ -67,6 +68,7 @@ public final class StreamImpl {
         };
     }
 
+
     @SuppressWarnings("unchecked")
     public static <T extends Node> DescendantNodeStream<T> empty() {
         return EMPTY;
@@ -82,13 +84,13 @@ public final class StreamImpl {
 
     /**
      * The optimized implementation of {@link NodeStream#children()} for
-     * {@link AbstractNode}. It is important that it returns always the same node
-     * stream type and makes no effort to pick an empty or singleton stream if
-     * possible. That allows the JVM to devirtualize calls.
+     * {@link AbstractNode}. It is important that it returns always the
+     * same node stream type and makes no effort to pick an empty or singleton
+     * stream if possible. That allows the JVM to devirtualize calls.
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <N extends GenericNode<N>> NodeStream<N> childrenArray(GenericNode<N> parent,
-            Node @NonNull [] array) {
+                                                                         Node @NonNull [] array) {
         return (NodeStream) new ChildrenStream(parent, 0, parent.getNumChildren()) {
             @Override
             public void forEach(Consumer<? super @NonNull Node> action) {
@@ -117,7 +119,7 @@ public final class StreamImpl {
 
     public static <R extends Node> DescendantNodeStream<R> descendants(@NonNull Node node, Class<? extends R> rClass) {
         return node.getNumChildren() == 0 ? empty()
-                : new FilteredDescendantStream<>(node, TreeWalker.DEFAULT, Filtermap.isInstance(rClass));
+                                          : new FilteredDescendantStream<>(node, TreeWalker.DEFAULT, Filtermap.isInstance(rClass));
     }
 
     public static DescendantNodeStream<Node> descendantsOrSelf(@NonNull Node node) {
@@ -129,8 +131,10 @@ public final class StreamImpl {
         if (parent == null || parent.getNumChildren() == 1) {
             return NodeStream.empty();
         }
-        return sliceChildren(parent, Filtermap.NODE_IDENTITY, node.getIndexInParent() + 1,
-                parent.getNumChildren() - node.getIndexInParent() - 1);
+        return sliceChildren(parent, Filtermap.NODE_IDENTITY,
+                             node.getIndexInParent() + 1,
+                             parent.getNumChildren() - node.getIndexInParent() - 1
+        );
     }
 
     public static NodeStream<Node> precedingSiblings(@NonNull Node node) {
@@ -141,8 +145,7 @@ public final class StreamImpl {
         return sliceChildren(parent, Filtermap.NODE_IDENTITY, 0, node.getIndexInParent());
     }
 
-    static <T extends Node> NodeStream<T> sliceChildren(Node parent, Filtermap<Node, ? extends T> filtermap, int from,
-            int length) {
+    static <T extends Node> NodeStream<T> sliceChildren(Node parent, Filtermap<Node, ? extends T> filtermap, int from, int length) {
         // these assertions are just for tests
         assert parent != null;
         assert from >= 0 && from <= parent.getNumChildren() : "from should be a valid index";
@@ -154,7 +157,7 @@ public final class StreamImpl {
         } else if (filtermap == Filtermap.NODE_IDENTITY) { // NOPMD CompareObjectsWithEquals
             @SuppressWarnings("unchecked")
             NodeStream<T> res = length == 1 ? (NodeStream<T>) singleton(parent.getChild(from))
-                    : (NodeStream<T>) new ChildrenStream(parent, from, length);
+                                           : (NodeStream<T>) new ChildrenStream(parent, from, length);
             return res;
         } else {
             if (length == 1) {
@@ -165,6 +168,7 @@ public final class StreamImpl {
             }
         }
     }
+
 
     public static NodeStream<Node> ancestorsOrSelf(@Nullable Node node) {
         return ancestorsOrSelf(node, Filtermap.NODE_IDENTITY);
@@ -209,8 +213,8 @@ public final class StreamImpl {
         return new GreedyKnownNStream<>(coll);
     }
 
-    private static final class EmptyNodeStream<N extends Node> extends IteratorBasedNStream<N>
-            implements DescendantNodeStream<N> {
+
+    private static final class EmptyNodeStream<N extends Node> extends IteratorBasedNStream<N> implements DescendantNodeStream<N> {
 
         @Override
         protected <R extends Node> NodeStream<R> mapIter(Function<Iterator<N>, Iterator<R>> fun) {
@@ -218,8 +222,7 @@ public final class StreamImpl {
         }
 
         @Override
-        protected @NonNull <R extends Node> DescendantNodeStream<R> flatMapDescendants(
-                Function<N, DescendantNodeStream<? extends R>> mapper) {
+        protected @NonNull <R extends Node> DescendantNodeStream<R> flatMapDescendants(Function<N, DescendantNodeStream<? extends R>> mapper) {
             return StreamImpl.empty();
         }
 

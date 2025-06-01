@@ -33,34 +33,31 @@ import net.sourceforge.pmd.util.AssertionUtil;
 import net.sourceforge.pmd.util.log.internal.SimpleMessageReporter;
 
 /**
- * This class contains the details for the runtime configuration of a PMD run.
- * Once configured, use {@link PmdAnalysis#create(PMDConfiguration)} in a
- * try-with-resources to execute the analysis (see {@link PmdAnalysis}).
+ * This class contains the details for the runtime configuration of a
+ * PMD run. Once configured, use {@link PmdAnalysis#create(PMDConfiguration)}
+ * in a try-with-resources to execute the analysis (see {@link PmdAnalysis}).
  *
  * <h2>Rulesets</h2>
  *
  * <ul>
- * <li>You can configure paths to the rulesets to use with
- * {@link #addRuleSet(String)}. These can be file paths or classpath
- * resources.</li>
- * <li>Use {@link #setMinimumPriority(RulePriority)} to control the minimum
- * priority a rule must have to be included. Defaults to the lowest priority, ie
- * all rules are loaded.</li>
+ * <li>You can configure paths to the rulesets to use with {@link #addRuleSet(String)}.
+ * These can be file paths or classpath resources.</li>
+ * <li>Use {@link #setMinimumPriority(RulePriority)} to control the minimum priority a
+ * rule must have to be included. Defaults to the lowest priority, ie all rules are loaded.</li>
  * </ul>
  *
  * <h2>Source files</h2>
  *
  * <ul>
- * <li>The default encoding of source files is the system default as returned by
- * <code>System.getProperty("file.encoding")</code>. You can set it with
- * {@link #setSourceEncoding(Charset)}.</li>
+ * <li>The default encoding of source files is the system default as
+ * returned by <code>System.getProperty("file.encoding")</code>.
+ * You can set it with {@link #setSourceEncoding(Charset)}.</li>
  * <li>The source files to analyze can be given in many ways. See
- * {@link #addInputPath(Path)} {@link #setInputFilePath(Path)},
- * {@link #setInputUri(URI)}.
- * <li>Files are assigned a language based on their name. The language version
- * of languages can be given with
- * {@link #setDefaultLanguageVersion(LanguageVersion)}. The default language
- * assignment can be overridden with
+ * {@link #addInputPath(Path)} {@link #setInputFilePath(Path)}, {@link #setInputUri(URI)}.
+ * <li>Files are assigned a language based on their name. The language
+ * version of languages can be given with
+ * {@link #setDefaultLanguageVersion(LanguageVersion)}.
+ * The default language assignment can be overridden with
  * {@link #setForceLanguageVersion(LanguageVersion)}.</li>
  * </ul>
  *
@@ -68,11 +65,9 @@ import net.sourceforge.pmd.util.log.internal.SimpleMessageReporter;
  *
  * <ul>
  * <li>The renderer format to use for Reports. {@link #getReportFormat()}</li>
- * <li>The file to which the Report should render.
- * {@link #getReportFilePath()}</li>
- * <li>Configure the root paths that are used to relativize file names in
- * reports via {@link #addRelativizeRoot(Path)}. This enables to get short names
- * in reports.</li>
+ * <li>The file to which the Report should render. {@link #getReportFilePath()}</li>
+ * <li>Configure the root paths that are used to relativize file names in reports via {@link #addRelativizeRoot(Path)}.
+ * This enables to get short names in reports.</li>
  * <li>The initialization properties to use when creating a Renderer instance.
  * {@link #getReportProperties()}</li>
  * <li>An indicator of whether to show suppressed Rule violations in Reports.
@@ -81,19 +76,16 @@ import net.sourceforge.pmd.util.log.internal.SimpleMessageReporter;
  *
  * <h2>Language configuration</h2>
  * <ul>
- * <li>Use {@link #setSuppressMarker(String)} to change the comment marker for
- * suppression comments. Defaults to {@value #DEFAULT_SUPPRESS_MARKER}.</li>
- * <li>See {@link #setClassLoader(ClassLoader)} and
- * {@link #prependAuxClasspath(String)} for information for how to configure
- * classpath for Java analysis.</li>
- * <li>You can set additional language properties with
- * {@link #getLanguageProperties(Language)}</li>
+ * <li>Use {@link #setSuppressMarker(String)} to change the comment marker for suppression comments. Defaults to {@value #DEFAULT_SUPPRESS_MARKER}.</li>
+ * <li>See {@link #setClassLoader(ClassLoader)} and {@link #prependAuxClasspath(String)} for
+ *  information for how to configure classpath for Java analysis.</li>
+ * <li>You can set additional language properties with {@link #getLanguageProperties(Language)}</li>
  * </ul>
  *
  * <h2>Miscellaneous</h2>
  * <ul>
- * <li>Use {@link #setThreads(int)} to control the parallelism of the analysis.
- * Defaults one thread per available processor. {@link #getThreads()}</li>
+ * <li>Use {@link #setThreads(int)} to control the parallelism of the analysis. Defaults
+ * one thread per available processor. {@link #getThreads()}</li>
  * </ul>
  */
 public class PMDConfiguration extends AbstractConfiguration {
@@ -129,8 +121,8 @@ public class PMDConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Get the suppress marker. This is the source level marker used to indicate a
-     * RuleViolation should be suppressed.
+     * Get the suppress marker. This is the source level marker used to indicate
+     * a RuleViolation should be suppressed.
      *
      * @return The suppress marker.
      */
@@ -178,8 +170,8 @@ public class PMDConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Set the ClassLoader being used by PMD when processing Rules. Setting a value
-     * of <code>null</code> will cause the default ClassLoader to be used.
+     * Set the ClassLoader being used by PMD when processing Rules. Setting a
+     * value of <code>null</code> will cause the default ClassLoader to be used.
      *
      * @param classLoader
      *            The ClassLoader to use
@@ -193,26 +185,21 @@ public class PMDConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Prepend the specified classpath like string to the current ClassLoader of the
-     * configuration. If no ClassLoader is currently configured, the ClassLoader
-     * used to load the {@link PMDConfiguration} class will be used as the parent
-     * ClassLoader of the created ClassLoader.
+     * Prepend the specified classpath like string to the current ClassLoader of
+     * the configuration. If no ClassLoader is currently configured, the
+     * ClassLoader used to load the {@link PMDConfiguration} class will be used
+     * as the parent ClassLoader of the created ClassLoader.
      *
-     * <p>
-     * If the classpath String looks like a URL to a file (i.e. starts with
-     * <code>file://</code>) the file will be read with each line representing an
-     * entry on the classpath.
-     * </p>
+     * <p>If the classpath String looks like a URL to a file (i.e. starts with
+     * <code>file://</code>) the file will be read with each line representing
+     * an entry on the classpath.</p>
      *
-     * <p>
-     * You can specify multiple class paths separated by `:` on Unix-systems or `;`
-     * under Windows. See {@link File#pathSeparator}.
+     * <p>You can specify multiple class paths separated by `:` on Unix-systems or `;` under Windows.
+     * See {@link File#pathSeparator}.
      *
-     * @param classpath
-     *            The prepended classpath.
+     * @param classpath The prepended classpath.
      *
-     * @throws IllegalArgumentException
-     *             if the given classpath is invalid (e.g. does not exist)
+     * @throws IllegalArgumentException if the given classpath is invalid (e.g. does not exist)
      * @see PMDConfiguration#setClassLoader(ClassLoader)
      */
     public void prependAuxClasspath(String classpath) {
@@ -242,12 +229,9 @@ public class PMDConfiguration extends AbstractConfiguration {
     /**
      * Sets the list of ruleset paths to load when starting the analysis.
      *
-     * @param ruleSetPaths
-     *            A list of ruleset paths, understandable by
-     *            {@link RuleSetLoader#loadFromResource(String)}.
+     * @param ruleSetPaths A list of ruleset paths, understandable by {@link RuleSetLoader#loadFromResource(String)}.
      *
-     * @throws NullPointerException
-     *             If the parameter is null
+     * @throws NullPointerException If the parameter is null
      */
     public void setRuleSets(@NonNull List<@NonNull String> ruleSetPaths) {
         AssertionUtil.requireParamNotNull("ruleSetPaths", ruleSetPaths);
@@ -256,15 +240,12 @@ public class PMDConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Add a new ruleset paths to load when starting the analysis. This list is
-     * initially empty.
+     * Add a new ruleset paths to load when starting the analysis.
+     * This list is initially empty.
      *
-     * @param rulesetPath
-     *            A ruleset path, understandable by
-     *            {@link RuleSetLoader#loadFromResource(String)}.
+     * @param rulesetPath A ruleset path, understandable by {@link RuleSetLoader#loadFromResource(String)}.
      *
-     * @throws NullPointerException
-     *             If the parameter is null
+     * @throws NullPointerException If the parameter is null
      */
     public void addRuleSet(@NonNull String rulesetPath) {
         AssertionUtil.requireParamNotNull("rulesetPath", rulesetPath);
@@ -290,9 +271,10 @@ public class PMDConfiguration extends AbstractConfiguration {
         this.minimumPriority = minimumPriority;
     }
 
+
     /**
-     * Create a Renderer instance based upon the configured reporting options. No
-     * writer is created.
+     * Create a Renderer instance based upon the configured reporting options.
+     * No writer is created.
      *
      * @return renderer
      */
@@ -301,9 +283,9 @@ public class PMDConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Create a Renderer instance based upon the configured reporting options. If
-     * withReportWriter then we'll configure it with a writer for the reportFile
-     * specified.
+     * Create a Renderer instance based upon the configured reporting options.
+     * If withReportWriter then we'll configure it with a writer for the
+     * reportFile specified.
      *
      * @param withReportWriter
      *            whether to configure a writer or not
@@ -397,16 +379,14 @@ public class PMDConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Sets the analysis cache to be used. Setting a value of {@code null} will
-     * cause a Noop AnalysisCache to be used. If incremental analysis was explicitly
-     * disabled ({@link #isIgnoreIncrementalAnalysis()}), then this method is a
-     * noop.
+     * Sets the analysis cache to be used. Setting a
+     * value of {@code null} will cause a Noop AnalysisCache to be used.
+     * If incremental analysis was explicitly disabled ({@link #isIgnoreIncrementalAnalysis()}),
+     * then this method is a noop.
      *
-     * @param cache
-     *            The analysis cache to be used.
+     * @param cache The analysis cache to be used.
      *
-     * @apiNote This is internal API. Use {@link #setAnalysisCacheLocation(String)}
-     *          to configure a cache.
+     * @apiNote This is internal API. Use {@link #setAnalysisCacheLocation(String)} to configure a cache.
      */
     void setAnalysisCache(final AnalysisCache cache) {
         // the doc says it's a noop if incremental analysis was disabled,
@@ -415,37 +395,38 @@ public class PMDConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Sets the location of the analysis cache to be used. This will automatically
-     * configure and appropriate AnalysisCache implementation. Setting a value of
-     * {@code null} will cause a Noop AnalysisCache to be used. If incremental
-     * analysis was explicitly disabled ({@link #isIgnoreIncrementalAnalysis()}),
+     * Sets the location of the analysis cache to be used. This will automatically configure
+     * and appropriate AnalysisCache implementation. Setting a
+     * value of {@code null} will cause a Noop AnalysisCache to be used.
+     * If incremental analysis was explicitly disabled ({@link #isIgnoreIncrementalAnalysis()}),
      * then this method is a noop.
      *
-     * @param cacheLocation
-     *            The location of the analysis cache to be used. Use {@code null} to
-     *            disable the cache.
+     * @param cacheLocation The location of the analysis cache to be used. Use {@code null}
+     *                      to disable the cache.
      */
     public void setAnalysisCacheLocation(final String cacheLocation) {
-        setAnalysisCache(
-                cacheLocation == null ? new NoopAnalysisCache() : new FileAnalysisCache(new File(cacheLocation)));
+        setAnalysisCache(cacheLocation == null
+                         ? new NoopAnalysisCache()
+                         : new FileAnalysisCache(new File(cacheLocation)));
     }
 
+
     /**
-     * Sets whether the user has explicitly disabled incremental analysis or not. If
-     * so, incremental analysis is not used, and all suggestions to use it are
+     * Sets whether the user has explicitly disabled incremental analysis or not.
+     * If so, incremental analysis is not used, and all suggestions to use it are
      * disabled. The analysis cached location is ignored, even if it's specified.
      *
-     * @param noCache
-     *            Whether to ignore incremental analysis or not
+     * @param noCache Whether to ignore incremental analysis or not
      */
     public void setIgnoreIncrementalAnalysis(boolean noCache) {
         // see #getAnalysisCache for the implementation.
         this.ignoreIncrementalAnalysis = noCache;
     }
 
+
     /**
-     * Returns whether incremental analysis was explicitly disabled by the user or
-     * not.
+     * Returns whether incremental analysis was explicitly disabled by the user
+     * or not.
      *
      * @return {@code true} if incremental analysis is explicitly disabled
      */
@@ -465,8 +446,7 @@ public class PMDConfiguration extends AbstractConfiguration {
     /**
      * Set the file to which the report should render.
      *
-     * @param reportFile
-     *            the file to set
+     * @param reportFile the file to set
      */
     public void setReportFile(Path reportFile) {
         this.reportFile = reportFile;
@@ -475,9 +455,8 @@ public class PMDConfiguration extends AbstractConfiguration {
     @Override
     protected void checkLanguageIsAcceptable(Language lang) throws UnsupportedOperationException {
         if (!(lang instanceof PmdCapableLanguage)) {
-            throw new UnsupportedOperationException("Language " + lang.getId()
-                    + " does not support analysis with PMD and cannot be used in a PMDConfiguration. "
-                    + "You may be able to use it with CPD though.");
+            throw new UnsupportedOperationException("Language " + lang.getId() + " does not support analysis with PMD and cannot be used in a PMDConfiguration. "
+                + "You may be able to use it with CPD though.");
         }
     }
 }

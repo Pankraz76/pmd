@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.FactoryConfigurationError;
@@ -185,14 +184,18 @@ public class RuleSetWriter {
                 RulePriority priority = ruleReference.getOverriddenPriority();
                 List<String> examples = ruleReference.getOverriddenExamples();
 
-                return createSingleRuleElement(null, minimumLanguageVersion, maximumLanguageVersion, deprecated, name,
-                        null, ref, message, externalInfoUrl, null, description, priority, ruleReference, examples);
+                return createSingleRuleElement(null, minimumLanguageVersion, maximumLanguageVersion, deprecated,
+                                               name, null, ref, message, externalInfoUrl, null, description, priority,
+                                               ruleReference, examples);
             }
         } else {
-            return createSingleRuleElement(rule.getLanguage(), rule.getMinimumLanguageVersion(),
-                    rule.getMaximumLanguageVersion(), rule.isDeprecated(), rule.getName(), rule.getSince(), null,
-                    rule.getMessage(), rule.getExternalInfoUrl(), rule.getRuleClass(), rule.getDescription(),
-                    rule.getPriority(), rule, rule.getExamples());
+            return createSingleRuleElement(rule.getLanguage(),
+                                           rule.getMinimumLanguageVersion(), rule.getMaximumLanguageVersion(), rule.isDeprecated(),
+                                           rule.getName(), rule.getSince(), null, rule.getMessage(), rule.getExternalInfoUrl(),
+                                           rule.getRuleClass(),
+                                           rule.getDescription(),
+                                           rule.getPriority(), rule,
+                                           rule.getExamples());
         }
     }
 
@@ -203,9 +206,9 @@ public class RuleSetWriter {
     }
 
     private Element createSingleRuleElement(Language language, LanguageVersion minimumLanguageVersion,
-            LanguageVersion maximumLanguageVersion, Boolean deprecated, String name, String since, String ref,
-            String message, String externalInfoUrl, String clazz, String description, RulePriority priority,
-            PropertySource propertySource, List<String> examples) {
+                                            LanguageVersion maximumLanguageVersion, Boolean deprecated, String name, String since, String ref,
+                                            String message, String externalInfoUrl, String clazz,
+                                            String description, RulePriority priority, PropertySource propertySource, List<String> examples) {
         Element ruleElement = createRuleElement();
         // language is now a required attribute, unless this is a rule reference
         if (clazz != null) {
@@ -291,8 +294,7 @@ public class RuleSetWriter {
     }
 
     @NonNull
-    private <T> Element propertyElementWithValueAttribute(PropertySource propertySource,
-            PropertyDescriptor<T> propertyDescriptor) {
+    private <T> Element propertyElementWithValueAttribute(PropertySource propertySource, PropertyDescriptor<T> propertyDescriptor) {
         Element element = document.createElementNS(RULESET_2_0_0_NS_URI, "property");
         SchemaConstants.NAME.setOn(element, propertyDescriptor.name());
 
@@ -315,8 +317,7 @@ public class RuleSetWriter {
         return element;
     }
 
-    private <T> Element createPropertyDefinitionElementBR(PropertyDescriptor<T> propertyDescriptor,
-            @NonNull PropertyTypeId typeId) {
+    private <T> Element createPropertyDefinitionElementBR(PropertyDescriptor<T> propertyDescriptor, @NonNull PropertyTypeId typeId) {
 
         final Element element = createPropertyValueElement(propertyDescriptor, propertyDescriptor.defaultValue());
 

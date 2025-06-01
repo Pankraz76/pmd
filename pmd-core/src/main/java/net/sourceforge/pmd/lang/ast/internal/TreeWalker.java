@@ -4,6 +4,7 @@
 
 package net.sourceforge.pmd.lang.ast.internal;
 
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -16,8 +17,8 @@ import net.sourceforge.pmd.lang.ast.Node;
 import net.sourceforge.pmd.lang.ast.NodeStream.DescendantNodeStream;
 
 /**
- * Object performing tree traversals. Configuration options can be extended
- * later on.
+ * Object performing tree traversals. Configuration options can be
+ * extended later on.
  *
  * @see DescendantNodeStream
  */
@@ -55,8 +56,9 @@ final class TreeWalker {
         return stream.crossFindBoundaries(crossFindBoundaries);
     }
 
-    <T> void findDescendantsMatching(final Node node, final Filtermap<? super Node, ? extends T> filtermap,
-            final List<T> results) {
+    <T> void findDescendantsMatching(final Node node,
+                                     final Filtermap<? super Node, ? extends T> filtermap,
+                                     final List<T> results) {
 
         for (int i = 0; i < node.getNumChildren(); i++) {
             final Node child = node.getChild(i);
@@ -94,6 +96,7 @@ final class TreeWalker {
         return results;
     }
 
+
     Iterator<Node> descendantOrSelfIterator(Node top) {
         return new DescendantOrSelfIterator(top, this);
     }
@@ -123,6 +126,7 @@ final class TreeWalker {
             return !queue.isEmpty();
         }
 
+
         @Override
         public @NonNull Node next() {
             Node node = queue.removeFirst();
@@ -130,6 +134,7 @@ final class TreeWalker {
             isFirst = false;
             return node;
         }
+
 
         private void enqueueChildren(Node n) {
             // on the first node, we must cross find boundaries anyway

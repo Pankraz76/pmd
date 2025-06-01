@@ -16,9 +16,9 @@ import net.sourceforge.pmd.lang.LanguageVersionHandler;
 import net.sourceforge.pmd.lang.PmdCapableLanguage;
 
 /**
- * The simplest implementation of a language, where only a
- * {@link LanguageVersionHandler} needs to be implemented. A default
- * {@link CpdCapableLanguage} implementation is provided.
+ * The simplest implementation of a language, where only a {@link LanguageVersionHandler}
+ * needs to be implemented. A default {@link CpdCapableLanguage} implementation
+ * is provided.
  *
  * @author Clément Fournier
  * @since 7.0.0
@@ -31,8 +31,7 @@ public class SimpleLanguageModuleBase extends LanguageModuleBase implements PmdC
         this(metadata, p -> handler);
     }
 
-    public SimpleLanguageModuleBase(LanguageMetadata metadata,
-            Function<LanguagePropertyBundle, LanguageVersionHandler> makeHandler) {
+    public SimpleLanguageModuleBase(LanguageMetadata metadata, Function<LanguagePropertyBundle, LanguageVersionHandler> makeHandler) {
         super(metadata);
         this.handler = makeHandler;
     }

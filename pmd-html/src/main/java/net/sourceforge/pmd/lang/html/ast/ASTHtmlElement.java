@@ -2,6 +2,7 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
 package net.sourceforge.pmd.lang.html.ast;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import org.jsoup.nodes.Element;
 
 import net.sourceforge.pmd.lang.rule.xpath.Attribute;
+
 
 public class ASTHtmlElement extends AbstractHtmlNode<Element> {
 
@@ -39,8 +41,12 @@ public class ASTHtmlElement extends AbstractHtmlNode<Element> {
     }
 
     public String getAttribute(String rel) {
-        return attributes.stream().filter(attribute -> rel.equalsIgnoreCase(attribute.getName())).findFirst()
-                .map(Attribute::getValue).map(String::valueOf).orElse(null);
+        return attributes.stream()
+                .filter(attribute -> rel.equalsIgnoreCase(attribute.getName()))
+                .findFirst()
+                .map(Attribute::getValue)
+                .map(String::valueOf)
+                .orElse(null);
     }
 
     @Override

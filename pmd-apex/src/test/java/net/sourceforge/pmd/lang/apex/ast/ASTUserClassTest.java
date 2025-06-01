@@ -33,15 +33,13 @@ class ASTUserClassTest extends ApexParserTestBase {
 
     @Test
     void testSuperClassName2() {
-        ASTUserClass toplevel = (ASTUserClass) parse(
-                "public class AccountTriggerHandler extends Other.TriggerHandler {}");
+        ASTUserClass toplevel = (ASTUserClass) parse("public class AccountTriggerHandler extends Other.TriggerHandler {}");
         assertEquals("Other.TriggerHandler", toplevel.getSuperClassName());
     }
 
     @Test
     void testInterfaces() {
-        ASTUserClass toplevel = (ASTUserClass) parse(
-                "public class AccountTriggerHandler implements TriggerHandler, Other.Interface2 {}");
+        ASTUserClass toplevel = (ASTUserClass) parse("public class AccountTriggerHandler implements TriggerHandler, Other.Interface2 {}");
         assertEquals(Arrays.asList("TriggerHandler", "Other.Interface2"), toplevel.getInterfaceNames());
     }
 }

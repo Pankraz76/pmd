@@ -16,7 +16,7 @@ public class AmbiguousResolutionRule extends AbstractModelicaRule {
         if (candidates.isClashed()) {
             StringBuilder sb = new StringBuilder();
             sb.append("Candidate resolutions: ");
-            for (ResolvableEntity candidate : candidates.getBestCandidates()) {
+            for (ResolvableEntity candidate: candidates.getBestCandidates()) {
                 sb.append(candidate.getDescriptiveName());
                 sb.append(", ");
             }

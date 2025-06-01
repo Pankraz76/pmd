@@ -62,7 +62,7 @@ class DeterministicOutputListenerWrapperTest {
 
         // Unless this assumption is true, the test is not testing anything
         Assumptions.assumeFalse(mockrule.fileIds.equals(fileIds),
-                "Order of application of rules was same as sorted by chance");
+                                "Order of application of rules was same as sorted by chance");
 
         // Assert that the renderer observed each file id in sorted order
         assertEquals(numFiles, myRenderer.fileIds.size());
@@ -108,5 +108,6 @@ class DeterministicOutputListenerWrapperTest {
             return "";
         }
     }
+
 
 }

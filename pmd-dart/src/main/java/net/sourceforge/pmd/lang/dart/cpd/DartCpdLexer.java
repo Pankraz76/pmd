@@ -17,10 +17,7 @@ import net.sourceforge.pmd.lang.dart.ast.DartLexer;
 /**
  * The Dart Tokenizer
  *
- * <p>
- * Note: This class has been called DartTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called DartTokenizer in PMD 6</p>.
  */
 public class DartCpdLexer extends AntlrCpdLexer {
 
@@ -38,8 +35,8 @@ public class DartCpdLexer extends AntlrCpdLexer {
      * The {@link DartTokenFilter} extends the {@link AntlrTokenFilter} to discard
      * Dart-specific tokens.
      * <p>
-     * By default, it discards package and import statements, and enables
-     * comment-based CPD suppression.
+     * By default, it discards package and import statements, and
+     * enables comment-based CPD suppression.
      * </p>
      */
     private static class DartTokenFilter extends BaseTokenFilter<AntlrToken> {

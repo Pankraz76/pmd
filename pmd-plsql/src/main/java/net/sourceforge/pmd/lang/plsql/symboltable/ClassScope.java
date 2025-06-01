@@ -44,10 +44,9 @@ public class ClassScope extends AbstractScope {
     /**
      * This is only for anonymous inner classes.
      *
-     * <p>
-     * FIXME - should have name like Foo$1, not Anonymous$1 to get this working
-     * right, the parent scope needs to be passed in when instantiating a ClassScope
-     * </p>
+     * <p>FIXME - should have name like Foo$1, not Anonymous$1 to get this working
+     * right, the parent scope needs to be passed in when instantiating a
+     * ClassScope</p>
      */
     public ClassScope() {
         // this.className = getParent().getEnclosingClassScope().getClassName()
@@ -172,8 +171,10 @@ public class ClassScope extends AbstractScope {
         images.add(occurrence.getImage());
 
         if (null == occurrence.getImage()) {
-            LOG.trace("occurrence=={} with Argument Count == {} for className={}", occurrence.toString(),
-                    occurrence.getArgumentCount(), className);
+            LOG.trace("occurrence=={} with Argument Count == {} for className={}",
+                    occurrence.toString(),
+                    occurrence.getArgumentCount(),
+                    className);
         }
 
         if (occurrence.getImage().startsWith(className)) {
@@ -200,8 +201,7 @@ public class ClassScope extends AbstractScope {
             for (MethodNameDeclaration mnd : methodNames.keySet()) {
                 res.append(mnd.toString());
                 int usages = methodNames.get(mnd).size();
-                res.append("(begins at line ").append(mnd.getNode().getBeginLine()).append(", ").append(usages)
-                        .append(" usages)");
+                res.append("(begins at line ").append(mnd.getNode().getBeginLine()).append(", ").append(usages).append(" usages)");
                 res.append(',');
             }
         }

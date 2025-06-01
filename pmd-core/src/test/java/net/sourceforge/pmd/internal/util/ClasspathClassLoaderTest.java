@@ -52,10 +52,10 @@ class ClasspathClassLoaderTest {
     }
 
     /**
-     * This test case just documents the current behavior: Eventually we load the
-     * class files from the system class loader, even if the auxclasspath is
-     * essentially empty and no parent is provided. This is an unavoidable behavior
-     * of {@link java.lang.ClassLoader#getResource(java.lang.String)}, which will
+     * This test case just documents the current behavior: Eventually we load
+     * the class files from the system class loader, even if the auxclasspath
+     * is essentially empty and no parent is provided. This is an unavoidable
+     * behavior of {@link java.lang.ClassLoader#getResource(java.lang.String)}, which will
      * search the class loader built into the VM (BootLoader).
      */
     @Test
@@ -100,8 +100,7 @@ class ClasspathClassLoaderTest {
     }
 
     /**
-     * @see <a href="https://github.com/pmd/pmd/issues/4899">[java] Parsing failed
-     *      in ParseLock#doParse() java.io.IOException: Stream closed #4899</a>
+     * @see <a href="https://github.com/pmd/pmd/issues/4899">[java] Parsing failed in ParseLock#doParse() java.io.IOException: Stream closed #4899</a>
      */
     @Test
     void loadMultithreadedFromJar() throws IOException, InterruptedException {
@@ -177,25 +176,23 @@ class ClasspathClassLoaderTest {
     }
 
     /**
-     * Verifies, that we load the class files from the runtime image of the correct
-     * java home. This tests multiple versions, in order to avoid that the test
-     * accidentally is successful when testing e.g. java17 and running the build
-     * with java17. In that case, we might load java.lang.Object from the system
-     * classloader and not from jrt-fs.jar.
+     * Verifies, that we load the class files from the runtime image of the correct java home.
+     * This tests multiple versions, in order to avoid that the test accidentally is successful when
+     * testing e.g. java17 and running the build with java17. In that case, we might load java.lang.Object
+     * from the system classloader and not from jrt-fs.jar.
      *
      * <p>
-     * This test only runs, if you have a folder ${HOME}/openjdk{javaVersion}.
+     *     This test only runs, if you have a folder ${HOME}/openjdk{javaVersion}.
      * </p>
      */
     @ParameterizedTest
-    @ValueSource(ints = { 11, 17, 21 })
+    @ValueSource(ints = {11, 17, 21})
     void loadFromJava(int javaVersion) throws IOException {
         Path javaHome = Paths.get(System.getProperty("user.home"), "openjdk" + javaVersion);
         assumeTrue(Files.isDirectory(javaHome), "Couldn't find java" + javaVersion + " installation at " + javaHome);
 
         Path jrtfsPath = javaHome.resolve("lib/jrt-fs.jar");
-        assertTrue(Files.isRegularFile(jrtfsPath),
-                "java" + javaVersion + " installation is incomplete. " + jrtfsPath + " not found!");
+        assertTrue(Files.isRegularFile(jrtfsPath), "java" + javaVersion + " installation is incomplete. " + jrtfsPath + " not found!");
         String classPath = jrtfsPath.toString();
 
         try (ClasspathClassLoader loader = new ClasspathClassLoader(classPath, null)) {
@@ -241,8 +238,7 @@ class ClasspathClassLoaderTest {
     @Test
     void findModuleInfoFromJar() throws IOException {
         try (ClasspathClassLoader loader = new ClasspathClassLoader("", ClasspathClassLoader.class.getClassLoader())) {
-            // search for module org.junit.platform.suite.api, which should be on the
-            // test-classpath in pmd-core...
+            // search for module org.junit.platform.suite.api, which should be on the test-classpath in pmd-core...
             // inside a jar
             String junitJupiterApiModule = "org.junit.platform.suite.api/module-info.class";
             URL resource = loader.getResource(junitJupiterApiModule);

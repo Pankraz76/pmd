@@ -20,6 +20,7 @@ import net.sourceforge.pmd.lang.impl.SimpleLanguageModuleBase;
  */
 class LanguageModuleBaseTest {
 
+
     @Test
     void testInvalidId() {
         assertInvalidId("");
@@ -29,8 +30,8 @@ class LanguageModuleBaseTest {
         assertInvalidId("ab-c");
         assertThrows(NullPointerException.class, () -> LanguageMetadata.withId(null));
 
-        Exception e = assertThrows(IllegalArgumentException.class,
-                () -> LanguageMetadata.withId("dummy").addVersion(""), "Empty versions should not be allowed.");
+        Exception e = assertThrows(IllegalArgumentException.class, () -> LanguageMetadata.withId("dummy").addVersion(""),
+                "Empty versions should not be allowed.");
         assertEquals("Invalid version name: ''", e.getMessage());
         assertThrows(IllegalArgumentException.class, () -> LanguageMetadata.withId("dummy").addVersion(" "),
                 "Empty versions should not be allowed.");
@@ -42,23 +43,20 @@ class LanguageModuleBaseTest {
 
     @Test
     void testVersions() {
-        LanguageModuleBase lang = makeLanguage(
-                LanguageMetadata.withId("dumdum").name("Name").extensions("o").addDefaultVersion("abc"));
+        LanguageModuleBase lang = makeLanguage(LanguageMetadata.withId("dumdum").name("Name").extensions("o").addDefaultVersion("abc"));
         assertThat(lang.getDefaultVersion(), equalTo(lang.getVersion("abc")));
     }
 
     @Test
     void testMissingVersions() {
-        Exception e = assertThrows(IllegalStateException.class,
-                () -> makeLanguage(LanguageMetadata.withId("dumdum").name("Name").extensions("o")),
+        Exception e = assertThrows(IllegalStateException.class, () -> makeLanguage(LanguageMetadata.withId("dumdum").name("Name").extensions("o")),
                 "Languages without versions should not be allowed.");
         assertEquals("No versions for 'dumdum'", e.getMessage());
     }
 
     @Test
     void testNoExtensions() {
-        Exception ex = assertThrows(IllegalStateException.class,
-                () -> makeLanguage(LanguageMetadata.withId("dumdum").name("Name").addVersion("abc")));
+        Exception ex = assertThrows(IllegalStateException.class, () -> makeLanguage(LanguageMetadata.withId("dumdum").name("Name").addVersion("abc")));
         assertThat(ex.getMessage(), containsString("extension"));
     }
 
@@ -81,6 +79,7 @@ class LanguageModuleBaseTest {
             throw new UnsupportedOperationException("fake instance");
         });
     }
+
 
     private static void assertInvalidId(String id) {
         assertThrows(IllegalArgumentException.class, () -> LanguageMetadata.withId(id));

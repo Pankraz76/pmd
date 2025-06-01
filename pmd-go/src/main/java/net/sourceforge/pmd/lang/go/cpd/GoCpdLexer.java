@@ -11,10 +11,7 @@ import net.sourceforge.pmd.cpd.impl.AntlrCpdLexer;
 import net.sourceforge.pmd.lang.go.ast.GolangLexer;
 
 /**
- * <p>
- * Note: This class has been called GoTokenizer in PMD 6
- * </p>
- * .
+ * <p>Note: This class has been called GoTokenizer in PMD 6</p>.
  */
 public class GoCpdLexer extends AntlrCpdLexer {
 

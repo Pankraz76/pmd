@@ -8,7 +8,6 @@ import scala.meta.Term;
 
 /**
  * The ASTTermCasesBlock node implementation.
- * 
  * @since 7.10.0
  */
 public final class ASTTermCasesBlock extends AbstractScalaNode<Term.CasesBlock> {

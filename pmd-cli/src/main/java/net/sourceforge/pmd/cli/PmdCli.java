@@ -10,8 +10,7 @@ import picocli.CommandLine;
 
 public final class PmdCli {
 
-    private PmdCli() {
-    }
+    private PmdCli() { }
 
     // package private for test only without calling System.exit
     static int mainWithoutExit(String[] args) {
@@ -20,7 +19,8 @@ public final class PmdCli {
         // we don't use this feature. Disabling it avoids leaving the groovy jar open
         // caused by Class.forName("groovy.lang.Closure")
         System.setProperty("picocli.disable.closures", "true");
-        final CommandLine cli = new CommandLine(new PmdRootCommand()).setCaseInsensitiveEnumValuesAllowed(true);
+        final CommandLine cli = new CommandLine(new PmdRootCommand())
+                .setCaseInsensitiveEnumValuesAllowed(true);
 
         return cli.execute(args);
     }

@@ -13,13 +13,21 @@ public final class ASTLiteralExpression extends AbstractApexNode.Single<LiteralE
         super(literalExpression);
     }
 
+
     @Override
     protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
     public enum LiteralType {
-        STRING, INTEGER, LONG, DOUBLE, DECIMAL, TRUE, FALSE, NULL
+        STRING,
+        INTEGER,
+        LONG,
+        DOUBLE,
+        DECIMAL,
+        TRUE,
+        FALSE,
+        NULL
     }
 
     public LiteralType getLiteralType() {
@@ -76,22 +84,18 @@ public final class ASTLiteralExpression extends AbstractApexNode.Single<LiteralE
     }
 
     /**
-     * Returns the name of this literal when it is labeled in an object initializer
-     * with named arguments ({@link ASTNewKeyValueObjectExpression}).
+     * Returns the name of this literal when it is labeled in an object initializer with named
+     * arguments ({@link ASTNewKeyValueObjectExpression}).
      *
-     * <p>
-     * For example, in the Apex code
-     * 
+     * <p>For example, in the Apex code
      * <pre>{@code
      * new X(a = 1, b = 2)
      * }</pre>
-     * 
-     * , the {@link ASTLiteralExpression} corresponding to {@code 2} will have the
-     * {@code name} "{@code b}".
+     * , the {@link ASTLiteralExpression} corresponding to {@code 2} will have the {@code name}
+     * "{@code b}".
      */
     public String getName() {
-        if (getParent() instanceof ASTAssignmentExpression
-                && getParent().getParent() instanceof ASTNewKeyValueObjectExpression) {
+        if (getParent() instanceof ASTAssignmentExpression && getParent().getParent() instanceof ASTNewKeyValueObjectExpression) {
             ASTAssignmentExpression parent = (ASTAssignmentExpression) getParent();
             VariableExpression target = (VariableExpression) parent.node.getTarget();
             return target.getId().getString();

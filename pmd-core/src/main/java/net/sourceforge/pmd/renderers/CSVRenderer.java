@@ -20,6 +20,7 @@ import net.sourceforge.pmd.properties.PropertySource;
 import net.sourceforge.pmd.renderers.ColumnDescriptor.Accessor;
 import net.sourceforge.pmd.reporting.RuleViolation;
 
+
 /**
  * Renderer the results to a comma-delimited text format. All available columns
  * are present by default. IDEs can enable/disable columns individually
@@ -41,19 +42,16 @@ public class CSVRenderer extends AbstractIncrementingRenderer {
     @SuppressWarnings("unchecked")
     private final ColumnDescriptor<RuleViolation>[] allColumns = new ColumnDescriptor[] {
         newColDescriptor("problem", "Problem", (idx, rv, cr) -> Integer.toString(idx)),
-        newColDescriptor("package", "Package",
-                (idx, rv, cr) -> rv.getAdditionalInfo().getOrDefault(RuleViolation.PACKAGE_NAME, "")),
+        newColDescriptor("package", "Package", (idx, rv, cr) -> rv.getAdditionalInfo().getOrDefault(RuleViolation.PACKAGE_NAME, "")),
         newColDescriptor("file", "File", (idx, rv, cr) -> determineFileName(rv.getFileId())),
-        newColDescriptor("priority", "Priority",
-                (idx, rv, cr) -> Integer.toString(rv.getRule().getPriority().getPriority())),
+        newColDescriptor("priority", "Priority", (idx, rv, cr) -> Integer.toString(rv.getRule().getPriority().getPriority())),
         newColDescriptor("line", "Line", (idx, rv, cr) -> Integer.toString(rv.getBeginLine())),
-        newColDescriptor("desc", "Description",
-                (idx, rv, cr) -> StringUtils.replaceChars(rv.getDescription(), '\"', '\'')),
+        newColDescriptor("desc", "Description", (idx, rv, cr) -> StringUtils.replaceChars(rv.getDescription(), '\"', '\'')),
         newColDescriptor("ruleSet", "Rule set", (idx, rv, cr) -> rv.getRule().getRuleSetName()),
-        newColDescriptor("rule", "Rule", (idx, rv, cr) -> rv.getRule().getName()), };
+        newColDescriptor("rule", "Rule", (idx, rv, cr) -> rv.getRule().getName()),
+    };
 
-    private static @NonNull ColumnDescriptor<RuleViolation> newColDescriptor(String id, String title,
-            Accessor<RuleViolation> accessor) {
+    private static @NonNull ColumnDescriptor<RuleViolation> newColDescriptor(String id, String title, Accessor<RuleViolation> accessor) {
         return new ColumnDescriptor<>(id, title, accessor);
     }
 

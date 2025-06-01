@@ -17,8 +17,7 @@ class ASTCompoundConditionTest extends AbstractPLSQLParserTst {
 
     @Test
     void testParseType() {
-        ASTInput input = plsql
-                .parse("BEGIN SELECT COUNT(1) INTO MY_TABLE FROM USERS_TABLE WHERE user_id = 1 AnD user_id = 2; END;");
+        ASTInput input = plsql.parse("BEGIN SELECT COUNT(1) INTO MY_TABLE FROM USERS_TABLE WHERE user_id = 1 AnD user_id = 2; END;");
         List<ASTCompoundCondition> compoundConditions = input.descendants(ASTCompoundCondition.class).toList();
         assertFalse(compoundConditions.isEmpty());
         assertEquals("AND", compoundConditions.get(0).getType());

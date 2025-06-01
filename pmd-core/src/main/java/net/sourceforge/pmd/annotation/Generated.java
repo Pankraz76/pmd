@@ -9,8 +9,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Marks a class as generated code, and therefore to be ignored for code
- * coverage purposes.
+ * Marks a class as generated code, and therefore to be ignored for code coverage purposes.
  *
  * @since 7.7.0
  */

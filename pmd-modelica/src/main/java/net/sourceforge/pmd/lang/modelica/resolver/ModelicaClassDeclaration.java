@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.modelica.resolver.internal.ResolutionState;
 import net.sourceforge.pmd.lang.modelica.resolver.internal.Watchdog;
 
 /**
- * Internal representation of a declared Modelica class, see
- * {@link ModelicaClassType} for public API.
+ * Internal representation of a declared Modelica class, see {@link ModelicaClassType} for public API.
  */
 class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements ModelicaClassType {
     private ModelicaClassScope ownScope;
@@ -68,7 +67,7 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
                 ctx.markTtlExceeded();
             }
             resolvedExtends = new ArrayList<>();
-            for (ModelicaType decl : ctx.getTypes().getBestCandidates()) {
+            for (ModelicaType decl: ctx.getTypes().getBestCandidates()) {
                 if (decl instanceof ModelicaClassDeclaration) {
                     resolvedExtends.add(((ModelicaClassDeclaration) decl).getClassScope());
                 }
@@ -78,8 +77,7 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
     }
 
     @Override
-    public <T extends ResolvableEntity> ResolutionResult<T> safeResolveComponent(Class<T> clazz, ResolutionState state,
-            CompositeName name) {
+    public <T extends ResolvableEntity> ResolutionResult<T> safeResolveComponent(Class<T> clazz, ResolutionState state, CompositeName name) {
         ResolutionContext result = state.createContext();
         try {
             lookupInInstanceScope(result, name);
@@ -90,25 +88,19 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
     }
 
     /**
-     * Looks up the first part of composite name in imported classes (either
-     * qualified or unqualified)
+     * Looks up the first part of composite name in imported classes (either qualified or unqualified)
      *
-     * @param state
-     *            resolution parameters
-     * @param firstName
-     *            a name to resolve
-     * @param qualified
-     *            whether we are looking at qualified imports or unqualified ones
+     * @param state     resolution parameters
+     * @param firstName a name to resolve
+     * @param qualified whether we are looking at qualified imports or unqualified ones
      * @return List of candidate resolutions
-     * @throws Watchdog.CountdownException
-     *             if too many lookup steps were performed
+     * @throws Watchdog.CountdownException if too many lookup steps were performed
      */
-    private ResolutionResult<ModelicaDeclaration> lookupImported(ResolutionState state, String firstName,
-            boolean qualified) throws Watchdog.CountdownException {
+    private ResolutionResult<ModelicaDeclaration> lookupImported(ResolutionState state, String firstName, boolean qualified) throws Watchdog.CountdownException {
         state.tick();
 
         ResolutionContext result = state.createContext();
-        for (final ModelicaImportClause importClause : imports) {
+        for (final ModelicaImportClause importClause: imports) {
             ResolutionContext subResult = state.createContext();
             if (InternalApiBridge.isQualifiedImport(importClause) == qualified) {
                 InternalApiBridge.resolveImportedSimpleName(importClause, subResult, firstName);
@@ -119,16 +111,12 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
     }
 
     /**
-     * Look up composite name inside this instance scope (and not above). This
-     * method itself implements corresponding part of "5.3.1 Simple Name Lookup" of
-     * MLS 3.4.
+     * Look up composite name inside this instance scope (and not above).
+     * This method itself implements corresponding part of "5.3.1 Simple Name Lookup" of MLS 3.4.
      *
-     * @param result
-     *            an object to place results to
-     * @param name
-     *            a name to look up
-     * @throws Watchdog.CountdownException
-     *             in too many lookup steps were performed
+     * @param result an object to place results to
+     * @param name   a name to look up
+     * @throws Watchdog.CountdownException in too many lookup steps were performed
      */
     void lookupInInstanceScope(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
         if (name.isEmpty()) {
@@ -143,34 +131,34 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
 
         // Otherwise, lookup...
         // ... among declared names of the class
-        for (ModelicaDeclaration decl : ownScope.getDirectlyDeclared(firstName)) {
+        for (ModelicaDeclaration decl: ownScope.getDirectlyDeclared(firstName)) {
             lookupInInstanceScopeFurtherParts(result, decl, furtherParts);
         }
         result.markHidingPoint();
         // ... and from inherited, too
-        for (ModelicaClassScope extendedClass : getResolvedExtends(result.getState())) {
-            for (ModelicaDeclaration inheritedDecl : extendedClass.getDirectlyDeclared(firstName)) {
+        for (ModelicaClassScope extendedClass: getResolvedExtends(result.getState())) {
+            for (ModelicaDeclaration inheritedDecl: extendedClass.getDirectlyDeclared(firstName)) {
                 lookupInInstanceScopeFurtherParts(result, inheritedDecl, furtherParts);
             }
         }
         result.markHidingPoint();
         // ... using qualified imports
         ResolutionResult<ModelicaDeclaration> qualifiedImports = lookupImported(result.getState(), firstName, true);
-        for (ModelicaDeclaration importedDecl : qualifiedImports.getBestCandidates()) {
+        for (ModelicaDeclaration importedDecl: qualifiedImports.getBestCandidates()) {
             lookupInInstanceScopeFurtherParts(result, importedDecl, furtherParts);
         }
         result.markHidingPoint();
-        for (ModelicaDeclaration importedDecl : qualifiedImports.getHiddenCandidates()) {
+        for (ModelicaDeclaration importedDecl: qualifiedImports.getHiddenCandidates()) {
             lookupInInstanceScopeFurtherParts(result, importedDecl, furtherParts);
         }
         result.markHidingPoint();
         // ... then using unqualified imports
         ResolutionResult<ModelicaDeclaration> unqualifiedImports = lookupImported(result.getState(), firstName, false);
-        for (ModelicaDeclaration importedDecl : unqualifiedImports.getBestCandidates()) {
+        for (ModelicaDeclaration importedDecl: unqualifiedImports.getBestCandidates()) {
             lookupInInstanceScopeFurtherParts(result, importedDecl, furtherParts);
         }
         result.markHidingPoint();
-        for (ModelicaDeclaration importedDecl : unqualifiedImports.getHiddenCandidates()) {
+        for (ModelicaDeclaration importedDecl: unqualifiedImports.getHiddenCandidates()) {
             lookupInInstanceScopeFurtherParts(result, importedDecl, furtherParts);
         }
     }
@@ -178,21 +166,15 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
     /**
      * Recurse into the first resolved element of composite name
      *
-     * This method itself implements the "5.3.2 Composite Name Lookup" of MLS 3.4
-     * with the first step being made by `lookupInInstanceScope`.
+     * This method itself implements the "5.3.2 Composite Name Lookup" of MLS 3.4 with the first step
+     * being made by `lookupInInstanceScope`.
      *
-     * @param result
-     *            an object to place results to
-     * @param resolvedSimpleName
-     *            a declaration found when resolving the very first part of
-     *            composite name
-     * @param furtherParts
-     *            an unresolved "tail" of a composite name
-     * @throws Watchdog.CountdownException
-     *             if too many resolution steps were performed
+     * @param result             an object to place results to
+     * @param resolvedSimpleName a declaration found when resolving the very first part of composite name
+     * @param furtherParts       an unresolved "tail" of a composite name
+     * @throws Watchdog.CountdownException if too many resolution steps were performed
      */
-    private void lookupInInstanceScopeFurtherParts(ResolutionContext result, ModelicaDeclaration resolvedSimpleName,
-            CompositeName furtherParts) throws Watchdog.CountdownException {
+    private void lookupInInstanceScopeFurtherParts(ResolutionContext result, ModelicaDeclaration resolvedSimpleName, CompositeName furtherParts) throws Watchdog.CountdownException {
         result.watchdogTick();
 
         if (furtherParts.isEmpty()) {
@@ -235,8 +217,7 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
 
     @Override
     public boolean isConnectorLike() {
-        return specialization == ModelicaClassSpecialization.CONNECTOR
-                || specialization == ModelicaClassSpecialization.EXPANDABLE_CONNECTOR;
+        return specialization == ModelicaClassSpecialization.CONNECTOR || specialization == ModelicaClassSpecialization.EXPANDABLE_CONNECTOR;
     }
 
     @Override

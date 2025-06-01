@@ -15,15 +15,13 @@ import net.sourceforge.pmd.lang.apex.rule.AbstractApexRule;
 import net.sourceforge.pmd.lang.ast.Node;
 
 /**
- * Base class for any rules that detect operations contained within a loop that
- * could be more efficiently executed by refactoring the code into a batched
- * execution.
+ * Base class for any rules that detect operations contained within a loop that could be more efficiently executed by
+ * refactoring the code into a batched execution.
  */
 abstract class AbstractAvoidNodeInLoopsRule extends AbstractApexRule {
     /**
-     * Adds a violation if any parent of {@code node} is a looping construct that
-     * would cause {@code node} to execute multiple times and {@code node} is not
-     * part of a return statement that short circuits the loop.
+     * Adds a violation if any parent of {@code node} is a looping construct that would cause {@code node} to execute
+     * multiple times and {@code node} is not part of a return statement that short circuits the loop.
      */
     protected Object checkForViolation(ApexNode<?> node, Object data) {
         if (insideLoop(node) && parentNotReturn(node)) {
@@ -33,17 +31,16 @@ abstract class AbstractAvoidNodeInLoopsRule extends AbstractApexRule {
     }
 
     /**
-     * @return false if {@code node} is a direct child of a return statement.
-     *         Children of return statements should not result in a violation
-     *         because the return short circuits the loop's execution.
+     * @return false if {@code node} is a direct child of a return statement. Children of return statements should not
+     * result in a violation because the return short circuits the loop's execution.
      */
     private boolean parentNotReturn(ApexNode<?> node) {
         return !(node.getParent() instanceof ASTReturnStatement);
     }
 
     /**
-     * @return true if any parent of {@code node} is a construct that would cause
-     *         {@code node} to execute multiple times.
+     * @return true if any parent of {@code node} is a construct that would cause {@code node} to execute multiple
+     * times.
      */
     private boolean insideLoop(Node node) {
         Node n = node.getParent();

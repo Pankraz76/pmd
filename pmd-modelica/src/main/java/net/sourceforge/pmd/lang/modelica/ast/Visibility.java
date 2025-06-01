@@ -5,5 +5,8 @@
 package net.sourceforge.pmd.lang.modelica.ast;
 
 public enum Visibility {
-    UNSPEC(), PRIVATE(), PROTECTED(), PUBLIC()
+    UNSPEC(),
+    PRIVATE(),
+    PROTECTED(),
+    PUBLIC()
 }

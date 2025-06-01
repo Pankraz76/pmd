@@ -35,8 +35,7 @@ class LanguageVersionDiscovererTest extends AbstractVfTest {
 
     @Test
     void testComponentFile() {
-        LanguageVersionDiscoverer discoverer = new LanguageVersionDiscoverer(
-                new LanguageRegistry(singleton(vf.getLanguage())));
+        LanguageVersionDiscoverer discoverer = new LanguageVersionDiscoverer(new LanguageRegistry(singleton(vf.getLanguage())));
         File vfFile = new File("/path/to/MyPage.component");
         LanguageVersion languageVersion = discoverer.getDefaultLanguageVersionForFile(vfFile);
         assertEquals(vf.getLanguage().getDefaultVersion(), languageVersion, "LanguageVersion must be VF!");

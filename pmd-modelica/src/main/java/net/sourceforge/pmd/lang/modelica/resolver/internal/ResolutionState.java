@@ -28,8 +28,7 @@ public final class ResolutionState {
     }
 
     public boolean needRecurseInto(ModelicaComponentDeclaration component) {
-        return !constantsOnly
-                || component.getVariability() == ModelicaComponentDeclaration.ComponentVariability.CONSTANT;
+        return !constantsOnly || component.getVariability() == ModelicaComponentDeclaration.ComponentVariability.CONSTANT;
     }
 
     public ResolutionContext createContext() {

@@ -19,7 +19,8 @@ class UpdateStatementTest extends AbstractPLSQLParserTst {
         ASTInput input = plsql.parseResource("UpdateStatementExample.pls");
         List<ASTUpdateStatement> updateStatements = input.descendants(ASTUpdateStatement.class).toList();
         assertEquals(2, updateStatements.size());
-        assertEquals(2, updateStatements.get(1).firstChild(ASTUpdateSetClause.class).children(ASTColumn.class).count());
+        assertEquals(2, updateStatements.get(1).firstChild(ASTUpdateSetClause.class)
+                .children(ASTColumn.class).count());
     }
 
     @Test
