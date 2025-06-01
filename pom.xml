@@ -714,7 +714,7 @@
                         <formats>
                             <format>
                                 <trimTrailingWhitespace/>
-                                <!-- <endWithNewline/> -->
+                                 <endWithNewline/>
                                 <indent>
                                     <spaces>true</spaces>
                                     <spacesPerTab>2</spacesPerTab>
@@ -725,9 +725,6 @@
                                 <excludes>
                                     <exclude>**gradlew**</exclude>
                                     <exclude>**mvnw**</exclude>
-                                    <exclude>extensions/panache/**/pom.xml</exclude>
-                                    <exclude>test-framework/junit5/pom.xml</exclude>
-                                    <exclude>test-framework/security/pom.xml</exclude>
                                 </excludes>
                             </format>
                         </formats>
@@ -739,12 +736,9 @@
                                 <file>${maven.multiModuleProjectDirectory}/.config/pmd-eclipse-imports.importorder</file>
                             </importOrder>
                              <removeUnusedImports />
-                            <excludes>
-                                <!-- https://github.com/diffplug/spotless/issues/2491 -->
-                                <exclude>**/src/main/java/io/quarkus/rest/client/reactive/deployment/ClientContextResolverHandler.java</exclude>
-                                <exclude>**/src/main/java/io/quarkus/rest/client/reactive/deployment/ClientExceptionMapperHandler.java</exclude>
-                                <exclude>**/src/main/java/io/quarkus/rest/client/reactive/deployment/ClientRedirectHandler.java</exclude>
-                            </excludes>
+                            <includes>
+                                <include>.gitignore</include>
+                            </includes>
                         </java>
                         <kotlin>
                             <ktfmt>
