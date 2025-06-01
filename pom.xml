@@ -729,12 +729,7 @@
                             </format>
                         </formats>
                         <java>
-                            <eclipse>
-                                <file>${maven.multiModuleProjectDirectory}/.config/pmd-eclipse-code-formatter.xml</file>
-                            </eclipse>
-                            <importOrder>
-                                <file>${maven.multiModuleProjectDirectory}/.config/pmd-eclipse-imports.importorder</file>
-                            </importOrder>
+                            <palantirJavaFormat/>
                              <removeUnusedImports />
                             <includes>
                                 <include>.gitignore</include>
