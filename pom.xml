@@ -733,10 +733,10 @@
                         </formats>
                         <java>
                             <eclipse>
-                                <file>${maven.multiModuleProjectDirectory}/independent-projects/ide-config/src/main/resources/eclipse-format.xml</file>
+                                <file>${maven.multiModuleProjectDirectory}/.config/pmd-eclipse-code-formatter.xml</file>
                             </eclipse>
                             <importOrder>
-                                <file>${maven.multiModuleProjectDirectory}/independent-projects/ide-config/src/main/resources/eclipse.importorder</file>
+                                <file>${maven.multiModuleProjectDirectory}/.config/pmd-eclipse-imports.importorder</file>
                             </importOrder>
                             <!-- <removeUnusedImports /> -->
                             <excludes>
