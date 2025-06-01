@@ -711,26 +711,26 @@
                     <artifactId>spotless-maven-plugin</artifactId>
                     <version>2.44.4</version>
                     <configuration>
-                        <formats>
-                            <format>
-                                <trimTrailingWhitespace/>
-                                <!-- <endWithNewline/> -->
-                                <indent>
-                                    <spaces>true</spaces>
-                                    <spacesPerTab>2</spacesPerTab>
-                                </indent>
-                                <includes>
-                                    <include>.gitignore</include>
-                                </includes>
-                                <excludes>
-                                    <exclude>**gradlew**</exclude>
-                                    <exclude>**mvnw**</exclude>
-                                    <exclude>extensions/panache/**/pom.xml</exclude>
-                                    <exclude>test-framework/junit5/pom.xml</exclude>
-                                    <exclude>test-framework/security/pom.xml</exclude>
-                                </excludes>
-                            </format>
-                        </formats>
+<!--                        <formats>-->
+<!--                            <format>-->
+<!--                                <trimTrailingWhitespace/>-->
+<!--                                &lt;!&ndash; <endWithNewline/> &ndash;&gt;-->
+<!--                                <indent>-->
+<!--                                    <spaces>true</spaces>-->
+<!--                                    <spacesPerTab>2</spacesPerTab>-->
+<!--                                </indent>-->
+<!--                                <includes>-->
+<!--                                    <include>.gitignore</include>-->
+<!--                                </includes>-->
+<!--                                <excludes>-->
+<!--                                    <exclude>**gradlew**</exclude>-->
+<!--                                    <exclude>**mvnw**</exclude>-->
+<!--                                    <exclude>extensions/panache/**/pom.xml</exclude>-->
+<!--                                    <exclude>test-framework/junit5/pom.xml</exclude>-->
+<!--                                    <exclude>test-framework/security/pom.xml</exclude>-->
+<!--                                </excludes>-->
+<!--                            </format>-->
+<!--                        </formats>-->
                         <java>
                             <eclipse>
                                 <file>${maven.multiModuleProjectDirectory}/.config/pmd-eclipse-code-formatter.xml</file>
@@ -738,7 +738,7 @@
                             <importOrder>
                                 <file>${maven.multiModuleProjectDirectory}/.config/pmd-eclipse-imports.importorder</file>
                             </importOrder>
-                            <!-- <removeUnusedImports /> -->
+                             <removeUnusedImports />
                             <excludes>
                                 <!-- https://github.com/diffplug/spotless/issues/2491 -->
                                 <exclude>**/src/main/java/io/quarkus/rest/client/reactive/deployment/ClientContextResolverHandler.java</exclude>
