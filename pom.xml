@@ -706,6 +706,54 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>2.44.4</version>
+                    <configuration>
+                        <formats>
+                            <format>
+                                <trimTrailingWhitespace/>
+                                <!-- <endWithNewline/> -->
+                                <indent>
+                                    <spaces>true</spaces>
+                                    <spacesPerTab>2</spacesPerTab>
+                                </indent>
+                                <includes>
+                                    <include>.gitignore</include>
+                                </includes>
+                                <excludes>
+                                    <exclude>**gradlew**</exclude>
+                                    <exclude>**mvnw**</exclude>
+                                    <exclude>extensions/panache/**/pom.xml</exclude>
+                                    <exclude>test-framework/junit5/pom.xml</exclude>
+                                    <exclude>test-framework/security/pom.xml</exclude>
+                                </excludes>
+                            </format>
+                        </formats>
+                        <java>
+                            <eclipse>
+                                <file>${maven.multiModuleProjectDirectory}/independent-projects/ide-config/src/main/resources/eclipse-format.xml</file>
+                            </eclipse>
+                            <importOrder>
+                                <file>${maven.multiModuleProjectDirectory}/independent-projects/ide-config/src/main/resources/eclipse.importorder</file>
+                            </importOrder>
+                            <!-- <removeUnusedImports /> -->
+                            <excludes>
+                                <!-- https://github.com/diffplug/spotless/issues/2491 -->
+                                <exclude>**/src/main/java/io/quarkus/rest/client/reactive/deployment/ClientContextResolverHandler.java</exclude>
+                                <exclude>**/src/main/java/io/quarkus/rest/client/reactive/deployment/ClientExceptionMapperHandler.java</exclude>
+                                <exclude>**/src/main/java/io/quarkus/rest/client/reactive/deployment/ClientRedirectHandler.java</exclude>
+                            </excludes>
+                        </java>
+                        <kotlin>
+                            <ktfmt>
+                                <style>KOTLINLANG</style>
+                            </ktfmt>
+                        </kotlin>
+                    </configuration>
+                </plugin>
+
             </plugins>
         </pluginManagement>
         <plugins>
