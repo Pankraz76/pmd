@@ -1087,7 +1087,7 @@
                         <pom>
                           <licenseHeader>
                             <file>${maven.multiModuleProjectDirectory}/.spotless/copyright.txt</file>
-                            <delimiter>${maven.multiModuleProjectDirectory}/.spotless/copyright.txt</delimiter>
+                            <delimiter><?xml version="1.0" encoding="UTF-8"?></delimiter>
                           </licenseHeader>
                             <sortPom>
                                 <expandEmptyElements>false</expandEmptyElements>
