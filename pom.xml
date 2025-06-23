@@ -1057,33 +1057,6 @@
                     <version>2.44.5</version>
                     <configuration>
                         <skip>${spot.skip}</skip>
-                        <formats>
-                            <format>
-                                <excludes>
-                                    <exclude>**/testdata/**</exclude>
-                                    <exclude>**gradlew**</exclude>
-                                    <exclude>**mvnw**</exclude>
-                                </excludes>
-                                <includes>
-                                    <include>.gitignore</include>
-                                </includes>
-                                <trimTrailingWhitespace/>
-                            </format>
-                        </formats>
-                        <java>
-                            <excludes>
-                                <exclude>**/src/main/java/net/sourceforge/pmd/lang/java/types/package-info.java</exclude>
-                                <exclude>**/testdata/**</exclude>
-                                <exclude>**/unnecessaryimport/package1/U.java</exclude>
-                            </excludes>
-                            <removeUnusedImports/>
-                            <importOrder>
-                                <file>${maven.multiModuleProjectDirectory}/.spotless/eclipse.importorder</file>
-                            </importOrder>
-                            <licenseHeader>
-                                <file>${maven.multiModuleProjectDirectory}/.spotless/.copyright/java</file>
-                            </licenseHeader>
-                        </java>
                         <pom>
                           <licenseHeader>
                             <file>${maven.multiModuleProjectDirectory}/.spotless/.copyright/xml</file>
