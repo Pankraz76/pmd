@@ -1081,12 +1081,12 @@
                                 <file>${maven.multiModuleProjectDirectory}/.spotless/eclipse.importorder</file>
                             </importOrder>
                             <licenseHeader>
-                                <file>${maven.multiModuleProjectDirectory}/.spotless/copyright.txt</file>
+                                <file>${maven.multiModuleProjectDirectory}/.spotless/.copyright/java</file>
                             </licenseHeader>
                         </java>
                         <pom>
                           <licenseHeader>
-                            <file>${maven.multiModuleProjectDirectory}/.spotless/copyright.txt</file>
+                            <file>${maven.multiModuleProjectDirectory}/.spotless/.copyright/xml</file>
                             <delimiter><?xml version="1.0" encoding="UTF-8"?></delimiter>
                           </licenseHeader>
                             <sortPom>
