@@ -1060,7 +1060,7 @@
                         <pom>
                           <licenseHeader>
                             <file>${maven.multiModuleProjectDirectory}/.spotless/.copyright/xml</file>
-                            <delimiter><?xml version="1.0" encoding="UTF-8"?></delimiter>
+                            <delimiter>"<?xml version="1.0" encoding="UTF-8"?>"</delimiter>
                           </licenseHeader>
                             <sortPom>
                                 <expandEmptyElements>false</expandEmptyElements>
