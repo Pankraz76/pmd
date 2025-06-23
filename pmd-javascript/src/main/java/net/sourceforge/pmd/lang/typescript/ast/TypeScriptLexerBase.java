@@ -1,13 +1,16 @@
 /**
- * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
+ * Source: https://github.com/antlr/grammars-v4/tree/master/javascript/typescript
+ * License: MIT
+ *
+ * Slightly modified to adapt to pmd's style.
  */
 
 package net.sourceforge.pmd.lang.typescript.ast;
 
+import org.antlr.v4.runtime.*;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
-
-import org.antlr.v4.runtime.*;
 
 /**
  * All lexer methods that used in grammar (IsStrictMode)

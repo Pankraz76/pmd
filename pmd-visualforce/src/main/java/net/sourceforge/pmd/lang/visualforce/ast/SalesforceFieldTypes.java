@@ -1,4 +1,4 @@
-/**
+/*
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
@@ -100,3 +100,4 @@ abstract class SalesforceFieldTypes {
      */
     protected abstract void findDataType(String expression, List<Path> metadataDirectories);
 }
+

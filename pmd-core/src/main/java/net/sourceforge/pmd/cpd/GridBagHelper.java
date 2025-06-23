@@ -1,6 +1,7 @@
-/**
+/*
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
+// stolen from XPath Explorer (http://www.xpathexplorer.com)
 
 package net.sourceforge.pmd.cpd;
 
