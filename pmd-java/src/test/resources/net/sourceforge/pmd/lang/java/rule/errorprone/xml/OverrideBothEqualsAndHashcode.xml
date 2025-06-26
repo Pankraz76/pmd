@@ -88,7 +88,8 @@ public class Foo {
 
     <test-code>
         <description>skip Comparable implementations</description>
-        <expected-problems>0</expected-problems>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>2</expected-linenumbers>
         <code><![CDATA[
 public class Foo implements Comparable {
     public boolean equals(Object other) { return false; }
@@ -184,6 +185,7 @@ public class Foo implements Runnable {
     <test-code>
         <description>[java] OverrideBothEqualsAndHashcode: false negative with anonymous classes #4457</description>
         <expected-problems>2</expected-problems>
+        <expected-linenumbers>4,8</expected-linenumbers>
         <code><![CDATA[
 public class Foo {
   public class B {
@@ -202,6 +204,7 @@ public class Foo {
     <test-code>
         <description>[java] OverrideBothEqualsAndHashCode ignores records #4546</description>
         <expected-problems>1</expected-problems>
+        <expected-linenumbers>2</expected-linenumbers>
         <code><![CDATA[
             public record Foo(int x) {
                     public int hashCode() {
@@ -209,5 +212,141 @@ public class Foo {
                     }
             }
             ]]></code>
+    </test-code>
+    <test-code>
+        <description>[java] OverrideBothEqualsAndHashCode ignores records #4546</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>2</expected-linenumbers>
+        <code><![CDATA[
+            public record Foo(int x) {
+                    public int hashCode() {
+                        return 1;
+                    }
+            }
+            ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>Comparable without equals - violation</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>1</expected-linenumbers>
+        <code><![CDATA[
+class Foo implements Comparable<Foo> {
+    @Override
+    public int compareTo(Foo o) {
+        return 0;
+    }
+}
+        ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>Comparable with equals - correct</description>
+            <expected-problems>1</expected-problems>
+            <expected-linenumbers>8</expected-linenumbers>
+        <code><![CDATA[
+class Foo implements Comparable<Foo> {
+    @Override
+    public int compareTo(Foo o) {
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Foo && compareTo((Foo) o) == 0;
+    }
+}
+        ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>Comparable with equals and hashCode - correct</description>
+        <expected-problems>0</expected-problems>
+        <code><![CDATA[
+class Foo implements Comparable<Foo> {
+    @Override
+    public int compareTo(Foo o) {
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Foo && compareTo((Foo) o) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+}
+        ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>Class doesn't implement Comparable - correct</description>
+        <expected-problems>0</expected-problems>
+        <code><![CDATA[
+class Foo {
+    // no Comparable implementation
+}
+        ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>Interface extending Comparable - correct</description>
+        <expected-problems>0</expected-problems>
+        <code><![CDATA[
+interface Foo extends Comparable<Foo> {
+    // interfaces don't need equals implementation
+}
+        ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>Comparable with wrong equals signature - still violation</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>1</expected-linenumbers>
+        <code><![CDATA[
+class Foo implements Comparable<Foo> {
+    @Override
+    public int compareTo(Foo o) {
+        return 0;
+    }
+
+    public boolean equals(Foo o) {  // wrong signature - should take Object
+        return compareTo(o) == 0;
+    }
+}
+        ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>Raw Comparable implementation - violation</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>1</expected-linenumbers>
+        <code><![CDATA[
+class Foo implements Comparable {
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
+}
+        ]]></code>
+    </test-code>
+
+    <test-code>
+        <description>Comparable implementation in anonymous class - violation</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>2</expected-linenumbers>
+        <code><![CDATA[
+class Test {
+    Comparable<Object> anonymous = new Comparable<Object>() {
+        @Override
+        public int compareTo(Object o) {
+            return 0;
+        }
+    };
+}
+        ]]></code>
     </test-code>
 </test-data>

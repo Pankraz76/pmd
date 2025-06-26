@@ -17,34 +17,42 @@ public class OverrideBothEqualsAndHashcodeRule extends AbstractJavaRulechainRule
 
     public OverrideBothEqualsAndHashcodeRule() {
         super(ASTClassDeclaration.class,
-              ASTRecordDeclaration.class,
-              ASTAnonymousClassDeclaration.class);
+                ASTRecordDeclaration.class,
+                ASTAnonymousClassDeclaration.class);
     }
 
     private void visitTypeDecl(ASTTypeDeclaration node, Object data) {
-        if (TypeTestUtil.isA(Comparable.class, node)) {
-            return;
-        }
+        boolean isComparable = TypeTestUtil.isA(Comparable.class, node);
         ASTMethodDeclaration equalsMethod = null;
         ASTMethodDeclaration hashCodeMethod = null;
+
         for (ASTMethodDeclaration m : node.getDeclarations(ASTMethodDeclaration.class)) {
             if (JavaAstUtils.isEqualsMethod(m)) {
                 equalsMethod = m;
-                if (hashCodeMethod != null) {
-                    break; // shortcut
+                if (hashCodeMethod != null && !isComparable) {
+                    break; // shortcut for non-Comparable types
                 }
             } else if (JavaAstUtils.isHashCodeMethod(m)) {
                 hashCodeMethod = m;
-                if (equalsMethod != null) {
-                    break; // shortcut
+                if (equalsMethod != null && !isComparable) {
+                    break; // shortcut for non-Comparable types
                 }
             }
         }
 
-        if (hashCodeMethod != null ^ equalsMethod != null) {
-            ASTMethodDeclaration nonNullNode =
-                equalsMethod == null ? hashCodeMethod : equalsMethod;
-            asCtx(data).addViolation(nonNullNode);
+        if (isComparable) {
+            // For Comparable types, we need both equals and hashCode
+            if (equalsMethod == null) {
+                // Report violation on the class/record declaration
+                asCtx(data).addViolation(node);
+            } else if (hashCodeMethod == null) {
+                asCtx(data).addViolation(equalsMethod);
+            }
+        } else {
+            // Original behavior for non-Comparable types
+            if (hashCodeMethod != null ^ equalsMethod != null) {
+                asCtx(data).addViolation(equalsMethod == null ? hashCodeMethod : equalsMethod);
+            }
         }
     }
 
