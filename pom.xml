@@ -709,6 +709,7 @@
 <!--                            <recipe>org.openrewrite.staticanalysis.MissingOverrideAnnotation</recipe>-->
                         </activeRecipes>
 <!--                        <checkstyleConfigFile>/net/sourceforge/pmd/pmd-checkstyle-config.xml</checkstyleConfigFile>-->
+                        <checkstyleConfigFile>https://github.com/pmd/build-tools/blob/main/src/main/resources/net/sourceforge/pmd/pmd-checkstyle-config.xml</checkstyleConfigFile>
                     </configuration>
                     <executions>
                         <execution>
