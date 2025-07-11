@@ -58,11 +58,11 @@ class Jep441_PatternMatchingForSwitch {
                 System.out.println("Shame");
             }
             case String s
-                    when "YES".equalsIgnoreCase(s) -> {
+                    when s.equalsIgnoreCase("YES") -> {
                 System.out.println("You got it");
             }
             case String s
-                    when "NO".equalsIgnoreCase(s) -> {
+                    when s.equalsIgnoreCase("NO") -> {
                 System.out.println("Shame");
             }
             case String s -> {
