@@ -714,7 +714,7 @@
                     </configuration>
                     <executions>
                         <execution>
-                            <phase>process-sources</phase>
+                            <phase>verify</phase>
                             <goals>
                                 <goal>dryRun</goal>
                             </goals>
