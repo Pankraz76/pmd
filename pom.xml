@@ -485,6 +485,7 @@
                             <exclusion>**testdata**</exclusion>
                             <!-- // @SuppressWarnings("PMD.MissingOverride") -->
                             <exclusion>**Chars.java**</exclusion>
+                            <exclusion>**Jep441_PatternMatchingForSwitch.java**</exclusion>
                         </exclusions>
                         <activeRecipes>
 <!--                            <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>-->
