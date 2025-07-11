@@ -1029,6 +1029,7 @@
      <configuration>
       <exclusions>
        <exclusion>**testdata**</exclusion>
+       <!-- // @SuppressWarnings("PMD.MissingOverride") -->
        <exclusion>**Chars.java**</exclusion>
       </exclusions>
       <activeRecipes>
