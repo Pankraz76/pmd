@@ -1046,7 +1046,7 @@
        <recipe>org.openrewrite.maven.OrderPomElements</recipe>
        <!--                            <recipe>org.openrewrite.staticanalysis.CodeCleanup</recipe>-->
        <!--                            <recipe>org.openrewrite.staticanalysis.CommonStaticAnalysis</recipe>-->
-       <!--                            <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>-->
+                                   <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>
        <!--                            <recipe>org.openrewrite.staticanalysis.FinalizeLocalVariables</recipe>-->
        <!--                            <recipe>org.openrewrite.staticanalysis.MissingOverrideAnnotation</recipe>-->
        <!--                            <recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>-->
