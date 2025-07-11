@@ -32,138 +32,111 @@ class FakeIntersectionSymbol implements JClassSymbol {
         this.superItfs = superItfs;
     }
 
-    @Override
-    public boolean isInterface() {
+    @Override public boolean isInterface() {
         return superClass.isTop();
     }
 
-    @Override
-    public @NonNull String getBinaryName() {
+    @Override public @NonNull String getBinaryName() {
         return name;
     }
 
-    @Override
-    public @Nullable String getCanonicalName() {
+    @Override public @Nullable String getCanonicalName() {
         return null;
     }
 
-    @Override
-    public @Nullable JExecutableSymbol getEnclosingMethod() {
+    @Override public @Nullable JExecutableSymbol getEnclosingMethod() {
         return null;
     }
 
-    @Override
-    public List<JClassSymbol> getDeclaredClasses() {
+    @Override public List<JClassSymbol> getDeclaredClasses() {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<JMethodSymbol> getDeclaredMethods() {
+    @Override public List<JMethodSymbol> getDeclaredMethods() {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<JConstructorSymbol> getConstructors() {
+    @Override public List<JConstructorSymbol> getConstructors() {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<JFieldSymbol> getDeclaredFields() {
+    @Override public List<JFieldSymbol> getDeclaredFields() {
         return Collections.emptyList();
     }
 
-    @Override
-    public @NonNull List<JFieldSymbol> getEnumConstants() {
+    @Override public @NonNull List<JFieldSymbol> getEnumConstants() {
         return superClass.getSymbol().getEnumConstants();
     }
 
-    @Override
-    public List<JClassType> getSuperInterfaceTypes(Substitution substitution) {
+    @Override public List<JClassType> getSuperInterfaceTypes(Substitution substitution) {
         return TypeOps.substClasses(superItfs, substitution);
     }
 
-    @Override
-    public @Nullable JClassType getSuperclassType(Substitution substitution) {
+    @Override public @Nullable JClassType getSuperclassType(Substitution substitution) {
         return superClass.subst(substitution);
     }
 
-    @Override
-    public @Nullable JClassSymbol getSuperclass() {
+    @Override public @Nullable JClassSymbol getSuperclass() {
         return superClass.getSymbol();
     }
 
-    @Override
-    public List<JClassSymbol> getSuperInterfaces() {
+    @Override public List<JClassSymbol> getSuperInterfaces() {
         return CollectionUtil.map(superItfs, JClassType::getSymbol);
     }
 
-    @Override
-    public @Nullable JTypeDeclSymbol getArrayComponent() {
+    @Override public @Nullable JTypeDeclSymbol getArrayComponent() {
         return null;
     }
 
-    @Override
-    public boolean isArray() {
+    @Override public boolean isArray() {
         return false;
     }
 
-    @Override
-    public boolean isPrimitive() {
+    @Override public boolean isPrimitive() {
         return false;
     }
 
-    @Override
-    public boolean isEnum() {
+    @Override public boolean isEnum() {
         return false;
     }
 
-    @Override
-    public boolean isAnnotation() {
+    @Override public boolean isAnnotation() {
         return false;
     }
 
-    @Override
-    public boolean isLocalClass() {
+    @Override public boolean isLocalClass() {
         return false;
     }
 
-    @Override
-    public boolean isRecord() {
+    @Override public boolean isRecord() {
         return false;
     }
 
-    @Override
-    public boolean isAnonymousClass() {
+    @Override public boolean isAnonymousClass() {
         return false;
     }
 
-    @Override
-    public @NonNull String getSimpleName() {
+    @Override public @NonNull String getSimpleName() {
         return "";
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return superClass.getTypeSystem();
     }
 
-    @Override
-    public List<JTypeVar> getTypeParameters() {
+    @Override public List<JTypeVar> getTypeParameters() {
         return Collections.emptyList();
     }
 
-    @Override
-    public int getModifiers() {
+    @Override public int getModifiers() {
         return Modifier.PUBLIC;
     }
 
-    @Override
-    public @Nullable JClassSymbol getEnclosingClass() {
+    @Override public @Nullable JClassSymbol getEnclosingClass() {
         return null;
     }
 
-    @Override
-    public @NonNull String getPackageName() {
+    @Override public @NonNull String getPackageName() {
         return "";
     }
 }

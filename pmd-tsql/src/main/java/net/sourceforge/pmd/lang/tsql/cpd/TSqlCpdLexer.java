@@ -18,13 +18,11 @@ import net.sourceforge.pmd.lang.tsql.ast.TSqlLexer;
  */
 public class TSqlCpdLexer extends AntlrCpdLexer {
 
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new TSqlLexer(new CaseChangingCharStream(charStream, true));
     }
 
-    @Override
-    protected String getImage(AntlrToken token) {
+    @Override protected String getImage(AntlrToken token) {
         if (token.getKind() == TSqlLexer.STRING) {
             // This path is for case-sensitive tokens
             return token.getImage();

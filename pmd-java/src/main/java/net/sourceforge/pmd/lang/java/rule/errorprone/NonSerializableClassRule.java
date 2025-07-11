@@ -46,8 +46,8 @@ public class NonSerializableClassRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<Boolean> CHECK_ABSTRACT_TYPES = booleanProperty("checkAbstractTypes")
             .desc("Enable to verify fields with abstract types like abstract classes, interfaces, generic types "
-                + "or java.lang.Object. Enabling this might lead to more false positives, since the concrete "
-                + "runtime type can actually be serializable.")
+                    + "or java.lang.Object. Enabling this might lead to more false positives, since the concrete "
+                    + "runtime type can actually be serializable.")
             .defaultValue(false)
             .build();
 
@@ -62,25 +62,21 @@ public class NonSerializableClassRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(CHECK_ABSTRACT_TYPES);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         cachedPersistentFieldNames = new HashMap<>();
     }
 
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
         checkSerialPersistentFieldsField(node, data);
         return null;
     }
 
-    @Override
-    public Object visit(ASTEnumDeclaration node, Object data) {
+    @Override public Object visit(ASTEnumDeclaration node, Object data) {
         checkSerialPersistentFieldsField(node, data);
         return null;
     }
 
-    @Override
-    public Object visit(ASTRecordDeclaration node, Object data) {
+    @Override public Object visit(ASTRecordDeclaration node, Object data) {
         checkSerialPersistentFieldsField(node, data);
         return null;
     }
@@ -101,8 +97,7 @@ public class NonSerializableClassRule extends AbstractJavaRulechainRule {
         }
     }
 
-    @Override
-    public Object visit(ASTVariableId node, Object data) {
+    @Override public Object visit(ASTVariableId node, Object data) {
         ASTTypeDeclaration typeDeclaration = node.ancestors(ASTTypeDeclaration.class).first();
 
         if (typeDeclaration == null
@@ -184,10 +179,10 @@ public class NonSerializableClassRule extends AbstractJavaRulechainRule {
         ASTVariableDeclarator persistentFieldsDecl = null;
         for (ASTFieldDeclaration field : typeDeclaration.descendants(ASTFieldDeclaration.class)) {
             if (field.getVisibility() == ModifierOwner.Visibility.V_PRIVATE
-                && field.hasModifiers(JModifier.STATIC, JModifier.FINAL)) {
+                    && field.hasModifiers(JModifier.STATIC, JModifier.FINAL)) {
                 for (ASTVariableId varId : field) {
                     if (TypeTestUtil.isA(SERIAL_PERSISTENT_FIELDS_TYPE, varId)
-                        && SERIAL_PERSISTENT_FIELDS_NAME.equals(varId.getName())) {
+                            && SERIAL_PERSISTENT_FIELDS_NAME.equals(varId.getName())) {
                         persistentFieldsDecl = varId.ancestors(ASTVariableDeclarator.class).first();
                     }
                 }
@@ -196,8 +191,8 @@ public class NonSerializableClassRule extends AbstractJavaRulechainRule {
         Set<String> fields = null;
         if (persistentFieldsDecl != null) {
             fields = persistentFieldsDecl.descendants(ASTStringLiteral.class).toStream()
-                        .map(ASTStringLiteral::getConstValue)
-                        .collect(Collectors.toSet());
+                    .map(ASTStringLiteral::getConstValue)
+                    .collect(Collectors.toSet());
             if (fields.isEmpty()) {
                 // field initializer might be a reference to a constant
                 ASTExpression initializer = persistentFieldsDecl.getInitializer();

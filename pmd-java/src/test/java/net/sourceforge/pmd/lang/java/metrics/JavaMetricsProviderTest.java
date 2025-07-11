@@ -24,8 +24,7 @@ class JavaMetricsProviderTest {
 
     private final JavaParsingHelper java8 = JavaParsingHelper.DEFAULT.withDefaultVersion("1.8");
 
-    @Test
-    void testComputeAllMetrics() {
+    @Test void testComputeAllMetrics() {
 
 
         ASTCompilationUnit acu = java8.parse("class Foo { void bar() { System.out.println(1); } }");
@@ -39,19 +38,18 @@ class JavaMetricsProviderTest {
     }
 
 
-    @Test
-    void testThereIsNoMemoisation() {
+    @Test void testThereIsNoMemoisation() {
 
 
         ASTTypeDeclaration tdecl1 = java8.parse("class Foo { void bar() { System.out.println(1); } }")
-                                            .getTypeDeclarations().firstOrThrow();
+                .getTypeDeclarations().firstOrThrow();
 
         LanguageMetricsProvider provider = tdecl1.getAstInfo().getLanguageProcessor().services().getLanguageMetricsProvider();
         Map<Metric<?, ?>, Number> reference = provider.computeAllMetricsFor(tdecl1);
 
         // same name, different characteristics
         ASTTypeDeclaration tdecl2 = java8.parse("class Foo { void bar(){} \npublic void hey() { System.out.println(1); } }")
-                                            .getTypeDeclarations().firstOrThrow();
+                .getTypeDeclarations().firstOrThrow();
 
         Map<Metric<?, ?>, Number> secondTest = provider.computeAllMetricsFor(tdecl2);
 

@@ -25,14 +25,13 @@ import net.sourceforge.pmd.lang.java.types.TypingContext;
  * </pre>
  */
 public final class ASTFormalParameter extends AbstractJavaNode
-    implements ModifierOwner, TypeNode, VariableIdOwner {
+        implements ModifierOwner, TypeNode, VariableIdOwner {
 
     ASTFormalParameter(int id) {
         super(id);
     }
 
-    @Override
-    public Visibility getVisibility() {
+    @Override public Visibility getVisibility() {
         return Visibility.V_LOCAL;
     }
 
@@ -52,12 +51,11 @@ public final class ASTFormalParameter extends AbstractJavaNode
     public boolean isVarargs() {
         ASTType tn = getTypeNode();
         return tn instanceof ASTArrayType
-            && ((ASTArrayType) tn).getDimensions().getLastChild().isVarargs();
+                && ((ASTArrayType) tn).getDimensions().getLastChild().isVarargs();
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -65,8 +63,7 @@ public final class ASTFormalParameter extends AbstractJavaNode
     /**
      * Returns the declarator ID of this formal parameter.
      */
-    @Override
-    public @NonNull ASTVariableId getVarId() {
+    @Override public @NonNull ASTVariableId getVarId() {
         return firstChild(ASTVariableId.class);
     }
 
@@ -83,8 +80,7 @@ public final class ASTFormalParameter extends AbstractJavaNode
     // Honestly FormalParameter shouldn't be a TypeNode.
     // The node that represents the variable is the variable ID.
 
-    @Override
-    public @NonNull JTypeMirror getTypeMirror(TypingContext ctx) {
+    @Override public @NonNull JTypeMirror getTypeMirror(TypingContext ctx) {
         return getVarId().getTypeMirror(ctx);
     }
 

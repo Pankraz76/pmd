@@ -18,8 +18,7 @@ class FragmentedTextDocumentTest {
 
     LanguageVersion dummyVersion = DummyLanguageModule.getInstance().getDefaultVersion();
 
-    @Test
-    void testSimple() throws IOException {
+    @Test void testSimple() throws IOException {
 
         try (TextDocument base = TextDocument.readOnlyString("abc", dummyVersion)) {
             FragmentedDocBuilder builder = new FragmentedDocBuilder(base);
@@ -41,8 +40,7 @@ class FragmentedTextDocumentTest {
 
     }
 
-    @Test
-    void testToLocationWithCaret() throws IOException {
+    @Test void testToLocationWithCaret() throws IOException {
 
         try (TextDocument base = TextDocument.readOnlyString("abc", dummyVersion)) {
             FragmentedDocBuilder builder = new FragmentedDocBuilder(base);
@@ -57,8 +55,7 @@ class FragmentedTextDocumentTest {
         }
     }
 
-    @Test
-    void testToLocationWithCaretBetweenEscapes() throws IOException {
+    @Test void testToLocationWithCaretBetweenEscapes() throws IOException {
 
         try (TextDocument base = TextDocument.readOnlyString("aBBCCd", dummyVersion)) {
             FragmentedDocBuilder builder = new FragmentedDocBuilder(base);
@@ -74,8 +71,7 @@ class FragmentedTextDocumentTest {
         }
     }
 
-    @Test
-    void offsetAtLineColumn() throws IOException {
+    @Test void offsetAtLineColumn() throws IOException {
         try (TextDocument base = TextDocument.readOnlyString("ABC\n123\n", dummyVersion)) {
             FragmentedDocBuilder builder = new FragmentedDocBuilder(base);
             builder.recordDelta(3, 3, Chars.wrap("X"));

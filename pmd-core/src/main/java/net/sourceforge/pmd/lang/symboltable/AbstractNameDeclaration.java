@@ -15,23 +15,19 @@ public abstract class AbstractNameDeclaration implements NameDeclaration {
         this.node = node;
     }
 
-    @Override
-    public ScopedNode getNode() {
+    @Override public ScopedNode getNode() {
         return node;
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return node.getImage();
     }
 
-    @Override
-    public Scope getScope() {
+    @Override public Scope getScope() {
         return node.getScope();
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return getImage();
     }
 }

@@ -22,8 +22,7 @@ public final class ASTCharLiteral extends AbstractLiteral implements ASTLiteral 
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -31,13 +30,11 @@ public final class ASTCharLiteral extends AbstractLiteral implements ASTLiteral 
     /**
      * Gets the char value of this literal.
      */
-    @Override
-    public @NonNull Character getConstValue() {
+    @Override public @NonNull Character getConstValue() {
         return (Character) super.getConstValue();
     }
 
-    @Override
-    public Chars getLiteralText() {
+    @Override public Chars getLiteralText() {
         return super.getLiteralText();
     }
 }

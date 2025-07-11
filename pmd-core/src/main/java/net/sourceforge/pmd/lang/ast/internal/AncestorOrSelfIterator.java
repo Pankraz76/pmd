@@ -21,14 +21,12 @@ class AncestorOrSelfIterator implements Iterator<@NonNull Node> {
         next = top;
     }
 
-    @Override
-    public boolean hasNext() {
+    @Override public boolean hasNext() {
         return next != null;
     }
 
 
-    @Override
-    public Node next() {
+    @Override public Node next() {
         Node n = next;
         if (n == null) {
             throw new NoSuchElementException();

@@ -73,8 +73,7 @@ final class PhaseOverloadSet extends OverloadSet<MethodCtDecl> {
      *
      * <p>https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.12.2.5
      */
-    @Override
-    void add(MethodCtDecl sig) { // NOPMD UselessOverridingMethod
+    @Override void add(MethodCtDecl sig) { // NOPMD UselessOverridingMethod
         super.add(sig);
     }
 
@@ -89,10 +88,9 @@ final class PhaseOverloadSet extends OverloadSet<MethodCtDecl> {
         return main;
     }
 
-    @Override
-    protected OptionalBool shouldTakePrecedence(MethodCtDecl m1, MethodCtDecl m2) {
+    @Override protected OptionalBool shouldTakePrecedence(MethodCtDecl m1, MethodCtDecl m2) {
         return isMoreSpecific(cast(m1.getMethodType()).adaptedMethod(),
-                              cast(m2.getMethodType()).adaptedMethod());
+                cast(m2.getMethodType()).adaptedMethod());
     }
 
 
@@ -169,9 +167,9 @@ final class PhaseOverloadSet extends OverloadSet<MethodCtDecl> {
                 if (phase.canBox()) {
                     JTypeMirror stdExprTy = ei.getStandaloneType();
                     if (stdExprTy != null
-                        // there is a boxing or unboxing conversion happening
-                        && stdExprTy.isPrimitive() != si.isPrimitive()
-                        && stdExprTy.isPrimitive() != ti.isPrimitive()) {
+                            // there is a boxing or unboxing conversion happening
+                            && stdExprTy.isPrimitive() != si.isPrimitive()
+                            && stdExprTy.isPrimitive() != ti.isPrimitive()) {
                         // si or ti is more specific if it only involves
                         // the boxing/unboxing conversion, without widening
                         // afterwards.
@@ -196,10 +194,10 @@ final class PhaseOverloadSet extends OverloadSet<MethodCtDecl> {
         if (phase.requiresVarargs() && m2p.getArity() == k + 1) {
             // that is, the invocation has no arguments for the varargs, eg Stream.of()
             infer.checkConvertibleOrDefer(ctx,
-                                          m1.ithFormalParam(k, true),
-                                          m2p.ithFormalParam(k, true),
-                                          // m2Formals.get(k),
-                                          site.getExpr(), phase, site);
+                    m1.ithFormalParam(k, true),
+                    m2p.ithFormalParam(k, true),
+                    // m2Formals.get(k),
+                    site.getExpr(), phase, site);
         }
 
         ctx.solve();
@@ -222,12 +220,12 @@ final class PhaseOverloadSet extends OverloadSet<MethodCtDecl> {
     }
 
     private boolean isFunctionTypeMoreSpecific(InferenceContext ctx,
-                                               JTypeMirror si,
-                                               JMethodSig sfun,
-                                               JMethodSig tfun,
-                                               ExprMirror ei, MethodCallSite site) {
+            JTypeMirror si,
+            JMethodSig sfun,
+            JMethodSig tfun,
+            ExprMirror ei, MethodCallSite site) {
         if (sfun.getArity() != tfun.getArity()
-            || sfun.getTypeParameters().size() != tfun.getTypeParameters().size()) {
+                || sfun.getTypeParameters().size() != tfun.getTypeParameters().size()) {
             return false;
         }
 
@@ -264,7 +262,7 @@ final class PhaseOverloadSet extends OverloadSet<MethodCtDecl> {
         JTypeMirror rs = sfun.getReturnType();
         JTypeMirror rt = tfun.getReturnType();
         return (!TypeOps.mentionsAny(rs, sparams) || ctx.isGround(rt))
-            && addGenericExprConstraintsRecursive(ctx, ei, rs, rt, tToS, site);
+                && addGenericExprConstraintsRecursive(ctx, ei, rs, rt, tToS, site);
     }
 
     private boolean addGenericExprConstraintsRecursive(InferenceContext ctx, ExprMirror ei, JTypeMirror rs, JTypeMirror rt, Substitution tToS, MethodCallSite site) {
@@ -319,7 +317,7 @@ final class PhaseOverloadSet extends OverloadSet<MethodCtDecl> {
             }
 
             if (getSpecies(rs) != getSpecies(rt)
-                && getSpecies(exact.getReturnType()) == getSpecies(rs)) {
+                    && getSpecies(exact.getReturnType()) == getSpecies(rs)) {
                 return true;
             }
 

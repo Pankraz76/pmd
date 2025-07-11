@@ -48,8 +48,7 @@ class MatchAlgorithmTest {
                 + "];";
     }
 
-    @Test
-    void testSimple() throws IOException {
+    @Test void testSimple() throws IOException {
         DummyLanguageModule dummy = DummyLanguageModule.getInstance();
         CpdLexer cpdLexer = dummy.createCpdLexer(dummy.newPropertyBundle());
         FileId fileName = FileId.fromPathLikeString("Foo.dummy");
@@ -79,8 +78,7 @@ class MatchAlgorithmTest {
         assertEquals(LINE_4 + "\n", sourceManager.getSlice(mark2).toString());
     }
 
-    @Test
-    void testMultipleMatches() throws IOException {
+    @Test void testMultipleMatches() throws IOException {
         DummyLanguageModule dummy = DummyLanguageModule.getInstance();
         CpdLexer cpdLexer = dummy.createCpdLexer(dummy.newPropertyBundle());
         FileId fileName = FileId.fromPathLikeString("Foo.dummy");

@@ -83,11 +83,7 @@ There are various channels, on which you can ask questions:
 
 ## Code Style
 
-PMD uses [Checkstyle](https://checkstyle.org/) to enforce a common code style.
-
-See [pmd-checkstyle-config.xml](https://github.com/pmd/build-tools/blob/main/src/main/resources/net/sourceforge/pmd/pmd-checkstyle-config.xml) for the configuration and
-[the eclipse configuration files](https://github.com/pmd/build-tools/tree/main/eclipse) that can
-be imported into a fresh workspace.
+PMD uses Rewrite.
 
 ## Add yourself as contributor
 

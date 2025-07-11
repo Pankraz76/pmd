@@ -25,8 +25,7 @@ import net.sourceforge.pmd.util.AssertionUtil;
  */
 final class MostlySingularMultimap<K, V> {
 
-    @SuppressWarnings("rawtypes")
-    private static final MostlySingularMultimap EMPTY = new MostlySingularMultimap<>(Collections.emptyMap());
+    @SuppressWarnings("rawtypes") private static final MostlySingularMultimap EMPTY = new MostlySingularMultimap<>(Collections.emptyMap());
 
     private final Map<K, Object> map;
 
@@ -58,8 +57,7 @@ final class MostlySingularMultimap<K, V> {
         return map.containsKey(v);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return map.toString();
     }
 
@@ -77,9 +75,7 @@ final class MostlySingularMultimap<K, V> {
         }
     }
 
-    @NonNull
-    @SuppressWarnings("unchecked")
-    private static <V> List<V> interpretValue(Object vs) {
+    @NonNull @SuppressWarnings("unchecked") private static <V> List<V> interpretValue(Object vs) {
         if (vs == null) {
             return Collections.emptyList();
         } else if (vs instanceof VList) {
@@ -89,8 +85,7 @@ final class MostlySingularMultimap<K, V> {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static <K, V> MostlySingularMultimap<K, V> empty() {
+    @SuppressWarnings("unchecked") public static <K, V> MostlySingularMultimap<K, V> empty() {
         return EMPTY;
     }
 
@@ -161,15 +156,15 @@ final class MostlySingularMultimap<K, V> {
         }
 
         public Builder<K, V> groupBy(Iterable<? extends V> values,
-                                     Function<? super V, ? extends K> keyExtractor) {
+                Function<? super V, ? extends K> keyExtractor) {
             ensureOpen();
             return groupBy(values, keyExtractor, Function.identity());
         }
 
 
         public <I> Builder<K, V> groupBy(Iterable<? extends I> values,
-                                         Function<? super I, ? extends K> keyExtractor,
-                                         Function<? super I, ? extends V> valueExtractor) {
+                Function<? super I, ? extends K> keyExtractor,
+                Function<? super I, ? extends V> valueExtractor) {
             ensureOpen();
             for (I i : values) {
                 appendValue(keyExtractor.apply(i), valueExtractor.apply(i));

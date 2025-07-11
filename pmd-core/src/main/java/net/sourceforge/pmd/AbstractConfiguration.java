@@ -93,7 +93,7 @@ public abstract class AbstractConfiguration {
     void checkLanguageIsRegistered(Language language) {
         if (!langRegistry.getLanguages().contains(language)) {
             throw new IllegalArgumentException(
-                "Language '" + language.getId() + "' is not registered in " + getLanguageRegistry());
+                    "Language '" + language.getId() + "' is not registered in " + getLanguageRegistry());
         }
         checkLanguageIsAcceptable(language);
     }

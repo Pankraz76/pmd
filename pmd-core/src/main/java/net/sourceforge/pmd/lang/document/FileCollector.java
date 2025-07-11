@@ -119,8 +119,7 @@ public final class FileCollector implements AutoCloseable {
     /**
      * Close registered resources like zip files.
      */
-    @Override
-    public void close() {
+    @Override public void close() {
         if (closed) {
             return;
         }
@@ -149,9 +148,9 @@ public final class FileCollector implements AutoCloseable {
         }
         LanguageVersion languageVersion = discoverLanguage(file.toString());
         return languageVersion != null
-            && addFileImpl(TextFile.builderForPath(file, charset, languageVersion)
-                                   .setParentFsPath(outerFsPath)
-                                   .build());
+                && addFileImpl(TextFile.builderForPath(file, charset, languageVersion)
+                .setParentFsPath(outerFsPath)
+                .build());
     }
 
     /**
@@ -173,8 +172,8 @@ public final class FileCollector implements AutoCloseable {
         LanguageVersion lv = discoverer.getDefaultLanguageVersion(language);
         Objects.requireNonNull(lv);
         return addFileImpl(TextFile.builderForPath(file, charset, lv)
-                                   .setParentFsPath(outerFsPath)
-                                   .build());
+                .setParentFsPath(outerFsPath)
+                .build());
     }
 
     /**
@@ -201,9 +200,9 @@ public final class FileCollector implements AutoCloseable {
 
         LanguageVersion version = discoverLanguage(fileId.getFileName());
         return version != null
-            && addFileImpl(TextFile.builderForCharSeq(sourceContents, fileId, version)
-                                   .setParentFsPath(outerFsPath)
-                                   .build());
+                && addFileImpl(TextFile.builderForCharSeq(sourceContents, fileId, version)
+                .setParentFsPath(outerFsPath)
+                .build());
     }
 
     private boolean addFileImpl(TextFile textFile) {
@@ -249,10 +248,10 @@ public final class FileCollector implements AutoCloseable {
         LanguageVersion contextVersion = discoverer.getDefaultLanguageVersion(language);
         if (!fileVersion.equals(contextVersion)) {
             reporter.error(
-                "Cannot add file {0}: version ''{1}'' does not match ''{2}''",
-                textFile.getFileId(),
-                fileVersion,
-                contextVersion
+                    "Cannot add file {0}: version ''{1}'' does not match ''{2}''",
+                    textFile.getFileId(),
+                    fileVersion,
+                    contextVersion
             );
             return false;
         }
@@ -279,8 +278,7 @@ public final class FileCollector implements AutoCloseable {
         }
         int maxDepth = recurse ? Integer.MAX_VALUE : 1;
         Files.walkFileTree(dir, EnumSet.of(FileVisitOption.FOLLOW_LINKS), maxDepth, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 if (attrs.isRegularFile()) {
                     FileCollector.this.addFile(file);
                 }
@@ -404,7 +402,7 @@ public final class FileCollector implements AutoCloseable {
      */
     public void exclude(FileCollector excludeCollector) {
         Set<TextFile> toExclude = new HashSet<>(excludeCollector.allFilesToProcess);
-        for (Iterator<TextFile> iterator = allFilesToProcess.iterator(); iterator.hasNext();) {
+        for (Iterator<TextFile> iterator = allFilesToProcess.iterator(); iterator.hasNext(); ) {
             TextFile file = iterator.next();
             if (toExclude.contains(file)) {
                 LOG.trace("Excluding file {}", file.getFileId().getAbsolutePath());
@@ -429,7 +427,7 @@ public final class FileCollector implements AutoCloseable {
      * collection.
      */
     public void filterLanguages(Set<Language> languages) {
-        for (Iterator<TextFile> iterator = allFilesToProcess.iterator(); iterator.hasNext();) {
+        for (Iterator<TextFile> iterator = allFilesToProcess.iterator(); iterator.hasNext(); ) {
             TextFile file = iterator.next();
             Language lang = file.getLanguageVersion().getLanguage();
             if (!languages.contains(lang)) {
@@ -440,8 +438,7 @@ public final class FileCollector implements AutoCloseable {
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "FileCollector{filesToProcess=" + allFilesToProcess + '}';
     }
 }

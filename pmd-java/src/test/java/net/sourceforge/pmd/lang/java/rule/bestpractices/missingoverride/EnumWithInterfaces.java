@@ -11,14 +11,12 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride;
  */
 public enum EnumWithInterfaces implements InterfaceWithBound<int[]> {
     Foo {
-        @Override
-        public void handle(int[] ints) {
+        @Override public void handle(int[] ints) {
             super.handle(ints);
         }
     };
 
-    @Override
-    public void handle(int[] ints) {
+    @Override public void handle(int[] ints) {
 
     }
 }

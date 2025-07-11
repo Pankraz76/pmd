@@ -34,10 +34,10 @@ public class UselessOverridingMethodRule extends AbstractJavaRulechainRule {
     // TODO extend AbstractIgnoredAnnotationRule node
     // TODO ignore if there is javadoc
     private static final PropertyDescriptor<Boolean> IGNORE_ANNOTATIONS_DESCRIPTOR =
-        booleanProperty("ignoreAnnotations")
-            .defaultValue(false)
-            .desc("Ignore methods that have annotations (except @Override)")
-            .build();
+            booleanProperty("ignoreAnnotations")
+                    .defaultValue(false)
+                    .desc("Ignore methods that have annotations (except @Override)")
+                    .build();
 
 
     public UselessOverridingMethodRule() {
@@ -45,22 +45,21 @@ public class UselessOverridingMethodRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(IGNORE_ANNOTATIONS_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         if (!node.isOverridden()
-            || node.getBody() == null
-            // Can skip methods which are final or have new behavior (synchronized, native)
-            || node.getModifiers().hasAny(FINAL, NATIVE, SYNCHRONIZED)
-            // We can also skip the 'clone' method as they are generally
-            // 'useless' but as it is considered a 'good practice' to
-            // implement them anyway ( see bug 1522517)
-            || JavaAstUtils.isCloneMethod(node)) {
+                || node.getBody() == null
+                // Can skip methods which are final or have new behavior (synchronized, native)
+                || node.getModifiers().hasAny(FINAL, NATIVE, SYNCHRONIZED)
+                // We can also skip the 'clone' method as they are generally
+                // 'useless' but as it is considered a 'good practice' to
+                // implement them anyway ( see bug 1522517)
+                || JavaAstUtils.isCloneMethod(node)) {
             return null;
         }
 
         // skip annotated methods
         if (!getProperty(IGNORE_ANNOTATIONS_DESCRIPTOR)
-            && node.getDeclaredAnnotations()
+                && node.getDeclaredAnnotations()
                 .filter(it -> !TypeTestUtil.isA(SuppressWarnings.class, it))
                 .filter(it -> !TypeTestUtil.isA(Override.class, it))
                 .nonEmpty()) {
@@ -74,22 +73,22 @@ public class UselessOverridingMethodRule extends AbstractJavaRulechainRule {
         }
 
         if ((statement instanceof ASTExpressionStatement || statement instanceof ASTReturnStatement)
-            && statement.getNumChildren() == 1
-            && statement.getChild(0) instanceof ASTMethodCall) {
+                && statement.getNumChildren() == 1
+                && statement.getChild(0) instanceof ASTMethodCall) {
 
             // merely calling super.foo() or returning super.foo()
             ASTMethodCall methodCall = (ASTMethodCall) statement.getChild(0);
             if (methodCall.getQualifier() instanceof ASTSuperExpression
-                && methodCall.getArguments().size() == node.getArity()
-                // might be disambiguating: Interface.super.foo()
-                && JavaAstUtils.isUnqualifiedSuper(methodCall.getQualifier())) {
+                    && methodCall.getArguments().size() == node.getArity()
+                    // might be disambiguating: Interface.super.foo()
+                    && JavaAstUtils.isUnqualifiedSuper(methodCall.getQualifier())) {
 
                 OverloadSelectionResult overload = methodCall.getOverloadSelectionInfo();
                 if (!overload.isFailed()
-                    // note: don't compare symbols, as the equals method for method symbols is broken for now
-                    && overload.getMethodType().equals(node.getOverriddenMethod())
-                    && sameModifiers(node.getOverriddenMethod().getSymbol(), node.getSymbol())
-                    && argumentsAreUnchanged(node, methodCall)) {
+                        // note: don't compare symbols, as the equals method for method symbols is broken for now
+                        && overload.getMethodType().equals(node.getOverriddenMethod())
+                        && sameModifiers(node.getOverriddenMethod().getSymbol(), node.getSymbol())
+                        && argumentsAreUnchanged(node, methodCall)) {
                     asCtx(data).addViolation(node);
                 }
             }
@@ -112,13 +111,13 @@ public class UselessOverridingMethodRule extends AbstractJavaRulechainRule {
     private boolean sameModifiers(JExecutableSymbol superMethod, JMethodSymbol subMethod) {
         int visibilityMask = Modifier.PUBLIC | Modifier.PRIVATE | Modifier.PROTECTED;
         return (visibilityMask & subMethod.getModifiers()) == (visibilityMask & superMethod.getModifiers())
-            // making visible in another package
-            && !isProtectedElevatingVisibility(superMethod, subMethod);
+                // making visible in another package
+                && !isProtectedElevatingVisibility(superMethod, subMethod);
     }
 
     private boolean isProtectedElevatingVisibility(JExecutableSymbol superMethod, JMethodSymbol subMethod) {
         return Modifier.isProtected(subMethod.getModifiers())
-            && !subMethod.getPackageName().equals(superMethod.getPackageName());
+                && !subMethod.getPackageName().equals(superMethod.getPackageName());
     }
 
 }

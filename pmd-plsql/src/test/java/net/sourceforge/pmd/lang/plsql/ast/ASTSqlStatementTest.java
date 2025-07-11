@@ -14,24 +14,21 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class ASTSqlStatementTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void testCommit() {
+    @Test void testCommit() {
         ASTInput input = plsql.parseResource("CommitStatement.pls");
         List<ASTSqlStatement> sqlStatements = input.descendants(ASTSqlStatement.class).toList();
         assertEquals(1, sqlStatements.size());
         assertType(sqlStatements, 0, ASTSqlStatement.Type.COMMIT);
     }
 
-    @Test
-    void testRollback() {
+    @Test void testRollback() {
         ASTInput input = plsql.parseResource("RollbackStatement.pls");
         List<ASTSqlStatement> sqlStatements = input.descendants(ASTSqlStatement.class).toList();
         assertEquals(1, sqlStatements.size());
         assertType(sqlStatements, 0, ASTSqlStatement.Type.ROLLBACK);
     }
 
-    @Test
-    void testSavepoint() {
+    @Test void testSavepoint() {
         ASTInput input = plsql.parseResource("SavepointStatement.pls");
         List<ASTSqlStatement> sqlStatements = input.descendants(ASTSqlStatement.class).toList();
         assertEquals(2, sqlStatements.size());
@@ -39,8 +36,7 @@ class ASTSqlStatementTest extends AbstractPLSQLParserTst {
         assertType(sqlStatements, 1, ASTSqlStatement.Type.ROLLBACK);
     }
 
-    @Test
-    void testSetTransaction() {
+    @Test void testSetTransaction() {
         ASTInput input = plsql.parseResource("SetTransactionStatement.pls");
         List<ASTSqlStatement> sqlStatements = input.descendants(ASTSqlStatement.class).toList();
         assertEquals(3, sqlStatements.size());

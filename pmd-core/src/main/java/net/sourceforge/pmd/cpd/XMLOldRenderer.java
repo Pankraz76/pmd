@@ -27,8 +27,7 @@ public class XMLOldRenderer implements CPDReportRenderer {
         this.xmlRenderer = new XMLRenderer(encoding, false);
     }
 
-    @Override
-    public void render(CPDReport report, Writer writer) throws IOException {
+    @Override public void render(CPDReport report, Writer writer) throws IOException {
         xmlRenderer.render(report, writer);
     }
 }

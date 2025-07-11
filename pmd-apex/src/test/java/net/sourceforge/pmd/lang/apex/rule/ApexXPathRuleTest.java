@@ -23,19 +23,17 @@ class ApexXPathRuleTest extends ApexParserTestBase {
     }
 
 
-    @Test
-    void testFileNameInXpath() {
+    @Test void testFileNameInXpath() {
         Report report = apex.executeRule(makeXPath("/UserClass[pmd:fileName() = 'Foo.cls']"),
-                                         "class Foo {}",
-                                         FileId.fromPathLikeString("src/Foo.cls"));
+                "class Foo {}",
+                FileId.fromPathLikeString("src/Foo.cls"));
 
         assertSize(report, 1);
     }
 
-    @Test
-    void testBooleanExpressions() {
+    @Test void testBooleanExpressions() {
         Report report = apex.executeRuleOnResource(makeXPath("//BooleanExpression[@Op='&&']"),
-                                                   "BooleanExpressions.cls");
+                "BooleanExpressions.cls");
         assertSize(report, 1);
     }
 }

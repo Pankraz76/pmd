@@ -15,8 +15,7 @@ class VfCpdLexerTest extends CpdTextComparisonTest {
         super("visualforce", ".page");
     }
 
-    @Test
-    void testTokenize() {
+    @Test void testTokenize() {
         doTest("SampleUnescapeElWithTab");
     }
 }

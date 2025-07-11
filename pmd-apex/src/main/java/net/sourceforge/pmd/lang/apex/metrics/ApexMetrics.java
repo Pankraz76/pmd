@@ -26,9 +26,8 @@ import net.sourceforge.pmd.lang.metrics.MetricsUtil;
  * for usage doc.
  */
 public final class ApexMetrics {
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    private static final Class<ApexNode<?>> GENERIC_APEX_NODE_CLASS =
-        (Class) ApexNode.class; // this is a Class<ApexNode>, the raw type
+    @SuppressWarnings({"unchecked", "rawtypes"}) private static final Class<ApexNode<?>> GENERIC_APEX_NODE_CLASS =
+            (Class) ApexNode.class; // this is a Class<ApexNode>, the raw type
 
 
     /**
@@ -80,8 +79,8 @@ public final class ApexMetrics {
      * }</pre>
      */
     public static final Metric<ApexNode<?>, Integer> CYCLO =
-        Metric.of(ApexMetrics::computeCyclo, isRegularApexNode(),
-                  "Cyclomatic Complexity", "Cyclo");
+            Metric.of(ApexMetrics::computeCyclo, isRegularApexNode(),
+                    "Cyclomatic Complexity", "Cyclo");
 
     /**
      * See the corresponding Cognitive Complexity in pmd-java ({@code net.sourceforge.pmd.lang.java.metrics.JavaMetrics#COGNITIVE_COMPLEXITY})
@@ -93,8 +92,8 @@ public final class ApexMetrics {
      * These reported methods should be broken down into less complex components.
      */
     public static final Metric<ApexNode<?>, Integer> COGNITIVE_COMPLEXITY =
-        Metric.of(ApexMetrics::computeCognitiveComp, isRegularApexNode(),
-                  "Cognitive Complexity");
+            Metric.of(ApexMetrics::computeCognitiveComp, isRegularApexNode(),
+                    "Cognitive Complexity");
 
 
     /**
@@ -103,13 +102,12 @@ public final class ApexMetrics {
      *
      */
     public static final Metric<ASTUserClassOrInterface<?>, Integer> WEIGHED_METHOD_COUNT =
-        Metric.of(ApexMetrics::computeWmc, filterMapNode(ASTUserClass.class, PredicateUtil.always()),
-                  "Weighed Method Count", "WMC");
+            Metric.of(ApexMetrics::computeWmc, filterMapNode(ASTUserClass.class, PredicateUtil.always()),
+                    "Weighed Method Count", "WMC");
 
     private ApexMetrics() {
         // utility class
     }
-
 
 
     private static Function<Node, ApexNode<?>> isRegularApexNode() {
@@ -132,7 +130,6 @@ public final class ApexMetrics {
         node.acceptVisitor(CognitiveComplexityVisitor.INSTANCE, state);
         return state.getComplexity();
     }
-
 
 
     private static int computeWmc(ASTUserClassOrInterface<?> node, MetricOptions options) {

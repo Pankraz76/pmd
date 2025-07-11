@@ -12,19 +12,17 @@ import org.junit.jupiter.api.Test;
 class ApexCommentTest extends ApexParserTestBase {
     private static final String FORMAL_COMMENT_CONTENT = "/** formal comment */";
 
-    @Test
-    void testContainsComment1() {
+    @Test void testContainsComment1() {
         ASTApexFile file = apex.parse("class Foo {void foo(){try {\n"
-                                          + "} catch (Exception e) {\n"
-                                          + "  /* OK: block comment inside of empty catch block; should not be reported */\n"
-                                          + "}}}");
+                + "} catch (Exception e) {\n"
+                + "  /* OK: block comment inside of empty catch block; should not be reported */\n"
+                + "}}}");
 
         ASTCatchBlockStatement catchBlock = file.descendants(ASTCatchBlockStatement.class).crossFindBoundaries().firstOrThrow();
         assertTrue(catchBlock.getContainsComment());
     }
 
-    @Test
-    void fieldDeclarationHasFormalComment() {
+    @Test void fieldDeclarationHasFormalComment() {
         ASTApexFile file = apex.parse("class MyClass {\n"
                 + "  " + FORMAL_COMMENT_CONTENT + "\n"
                 + "  Integer field;\n"
@@ -36,19 +34,17 @@ class ApexCommentTest extends ApexParserTestBase {
         assertEquals(FORMAL_COMMENT_CONTENT, comment.getImage());
     }
 
-    @Test
-    void methodHasFormalComment() {
+    @Test void methodHasFormalComment() {
         ASTApexFile file = apex.parse(FORMAL_COMMENT_CONTENT + "\n"
-            + "class MyClass {\n"
-            + "  " + FORMAL_COMMENT_CONTENT + "\n"
-            + "  public void bar() {}\n"
-            + "}");
+                + "class MyClass {\n"
+                + "  " + FORMAL_COMMENT_CONTENT + "\n"
+                + "  public void bar() {}\n"
+                + "}");
         ASTFormalComment comment = file.descendants(ASTUserClass.class).children(ASTMethod.class).children(ASTFormalComment.class).first();
         assertEquals(FORMAL_COMMENT_CONTENT, comment.getImage());
     }
 
-    @Test
-    void methodHasFormalCommentAnnotatedClass() {
+    @Test void methodHasFormalCommentAnnotatedClass() {
         ASTApexFile file = apex.parse(FORMAL_COMMENT_CONTENT + "\n"
                 + "@RestResource(urlMapping='/api/v1/get/*')\n"
                 + "class MyClass {\n"
@@ -59,16 +55,14 @@ class ApexCommentTest extends ApexParserTestBase {
         assertEquals(FORMAL_COMMENT_CONTENT, comment.getImage());
     }
 
-    @Test
-    void classHasFormalComment() {
+    @Test void classHasFormalComment() {
         ASTApexFile file = apex.parse(FORMAL_COMMENT_CONTENT + "\n"
                 + "class MyClass {}");
         ASTFormalComment comment = file.descendants(ASTUserClass.class).children(ASTFormalComment.class).first();
         assertEquals(FORMAL_COMMENT_CONTENT, comment.getImage());
     }
 
-    @Test
-    void fileWithUnicodeEscapes() {
+    @Test void fileWithUnicodeEscapes() {
         ASTApexFile file = apex.parse(FORMAL_COMMENT_CONTENT + "\n"
                 + "class MyClass { String s = 'Fran\\u00E7ois'; }");
         ASTFormalComment comment = file.descendants(ASTUserClass.class).children(ASTFormalComment.class).first();

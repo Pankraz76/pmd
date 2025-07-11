@@ -21,14 +21,12 @@ class ReportTest {
 
     private final JavaParsingHelper java = JavaParsingHelper.DEFAULT;
 
-    @Test
-    void testBasic() {
+    @Test void testBasic() {
         Report r = java.executeRule(new FooRule(), TEST1);
         assertFalse(r.getViolations().isEmpty());
     }
 
-    @Test
-    void testExclusionsInReportWithRuleViolationSuppressRegex() {
+    @Test void testExclusionsInReportWithRuleViolationSuppressRegex() {
         Rule rule = new FooRule();
         rule.setProperty(Rule.VIOLATION_SUPPRESS_REGEX_DESCRIPTOR, Optional.of(Pattern.compile(".*No Foo.*")));
         Report rpt = java.executeRule(rule, TEST1);
@@ -36,8 +34,7 @@ class ReportTest {
         assertSuppressed(rpt, 1);
     }
 
-    @Test
-    void testExclusionsInReportWithRuleViolationSuppressXPath() {
+    @Test void testExclusionsInReportWithRuleViolationSuppressXPath() {
         Rule rule = new FooRule();
         rule.setProperty(Rule.VIOLATION_SUPPRESS_XPATH_DESCRIPTOR, Optional.of(".[@SimpleName = 'Foo']"));
         Report rpt = java.executeRule(rule, TEST1);
@@ -45,23 +42,20 @@ class ReportTest {
         assertSuppressed(rpt, 1);
     }
 
-    @Test
-    void testExclusionsInReportWithAnnotations() {
+    @Test void testExclusionsInReportWithAnnotations() {
         Report rpt =
-            java.executeRule(new FooRule(), TEST2);
+                java.executeRule(new FooRule(), TEST2);
         assertSize(rpt, 0);
         assertSuppressed(rpt, 1);
     }
 
-    @Test
-    void testExclusionsInReportWithAnnotationsFullName() {
+    @Test void testExclusionsInReportWithAnnotationsFullName() {
         Report rpt = java.executeRule(new FooRule(), TEST2_FULL);
         assertSize(rpt, 0);
         assertSuppressed(rpt, 1);
     }
 
-    @Test
-    void testExclusionsInReportWithNOPMD() {
+    @Test void testExclusionsInReportWithNOPMD() {
         Report rpt = java.executeRule(new FooRule(), TEST3);
         assertSize(rpt, 0);
         assertSuppressed(rpt, 1);

@@ -12,8 +12,7 @@ import net.sourceforge.pmd.lang.css.ast.CssLexer;
 
 public class CssCpdLexer extends AntlrCpdLexer {
 
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new CssLexer(charStream);
     }
 }

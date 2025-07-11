@@ -11,39 +11,34 @@ import org.junit.jupiter.api.Test;
 
 class ASTFieldDeclarationStatementsTest extends ApexParserTestBase {
 
-    @Test
-    void getSimpleTypeName() {
+    @Test void getSimpleTypeName() {
         ASTFieldDeclarationStatements fields = parse("class Foo { String field; }").descendants(ASTFieldDeclarationStatements.class).first();
         assertEquals("String", fields.getTypeName());
         assertTrue(fields.getTypeArguments().isEmpty());
     }
 
-    @Test
-    void getListTypeName() {
+    @Test void getListTypeName() {
         ASTFieldDeclarationStatements fields = parse("class Foo { List<String> field; }").descendants(ASTFieldDeclarationStatements.class).first();
         assertEquals("List<String>", fields.getTypeName());
         assertEquals(1, fields.getTypeArguments().size());
         assertEquals("String", fields.getTypeArguments().get(0));
     }
 
-    @Test
-    void getListTypeNameComponents() {
+    @Test void getListTypeNameComponents() {
         ASTFieldDeclarationStatements fields = parse("class Foo { my.List<my.String> field; }").descendants(ASTFieldDeclarationStatements.class).first();
         assertEquals("my.List<my.String>", fields.getTypeName());
         assertEquals(1, fields.getTypeArguments().size());
         assertEquals("my.String", fields.getTypeArguments().get(0));
     }
 
-    @Test
-    void getNestedListTypeName() {
+    @Test void getNestedListTypeName() {
         ASTFieldDeclarationStatements fields = parse("class Foo { List<List<String>> field; }").descendants(ASTFieldDeclarationStatements.class).first();
         assertEquals("List<List<String>>", fields.getTypeName());
         assertEquals(1, fields.getTypeArguments().size());
         assertEquals("List<String>", fields.getTypeArguments().get(0));
     }
 
-    @Test
-    void getMapTypeName() {
+    @Test void getMapTypeName() {
         ASTFieldDeclarationStatements fields = parse("class Foo { Map<String,Integer> field; }").descendants(ASTFieldDeclarationStatements.class).first();
         assertEquals("Map<String, Integer>", fields.getTypeName());
         assertEquals(2, fields.getTypeArguments().size());

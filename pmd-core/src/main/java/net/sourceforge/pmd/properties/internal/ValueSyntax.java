@@ -38,25 +38,22 @@ class ValueSyntax<T> extends InternalApiBridge.InternalPropertySerializer<T> {
     private final List<PropertyConstraint<? super T>> docConstraints;
 
     ValueSyntax(Function<? super T, String> toString,
-                Function<@NonNull String, ? extends T> fromString,
-                List<PropertyConstraint<? super T>> docConstraints) {
+            Function<@NonNull String, ? extends T> fromString,
+            List<PropertyConstraint<? super T>> docConstraints) {
         this.toString = toString;
         this.fromString = fromString;
         this.docConstraints = docConstraints;
     }
 
-    @Override
-    public List<PropertyConstraint<? super T>> getConstraints() {
+    @Override public List<PropertyConstraint<? super T>> getConstraints() {
         return docConstraints;
     }
 
-    @Override
-    public T fromString(@NonNull String attributeData) {
+    @Override public T fromString(@NonNull String attributeData) {
         return fromString.apply(attributeData);
     }
 
-    @Override
-    public @NonNull String toString(T data) {
+    @Override public @NonNull String toString(T data) {
         return toString.apply(data);
     }
 
@@ -67,20 +64,20 @@ class ValueSyntax<T> extends InternalApiBridge.InternalPropertySerializer<T> {
      * is documented as a constraint on the returned XML mapper.
      */
     static <T> ValueSyntax<T> partialFunction(Function<? super T, @NonNull String> toString,
-                                              Function<@NonNull String, ? extends T> fromString,
-                                              PropertyConstraint<? super @NonNull String> checker) {
+            Function<@NonNull String, ? extends T> fromString,
+            PropertyConstraint<? super @NonNull String> checker) {
         PropertyConstraint<T> docConstraint = PropertyConstraint.fromPredicate(
-            PredicateUtil.always(),
-            checker.getConstraintDescription()
+                PredicateUtil.always(),
+                checker.getConstraintDescription()
         );
 
         return new ValueSyntax<>(
-            toString,
-            s -> {
-                checker.validate(s);
-                return fromString.apply(s);
-            },
-            listOf(docConstraint)
+                toString,
+                s -> {
+                    checker.validate(s);
+                    return fromString.apply(s);
+                },
+                listOf(docConstraint)
         );
     }
 
@@ -89,7 +86,7 @@ class ValueSyntax<T> extends InternalApiBridge.InternalPropertySerializer<T> {
     }
 
     static <T> ValueSyntax<T> create(Function<? super T, String> toString,
-                                     Function<String, ? extends T> fromString) {
+            Function<String, ? extends T> fromString) {
         return new ValueSyntax<>(toString, fromString, Collections.emptyList());
     }
 }

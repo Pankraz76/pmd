@@ -21,8 +21,7 @@ import net.sourceforge.pmd.lang.apex.ast.ApexNode;
  */
 public class ApexUnitTestShouldNotUseSeeAllDataTrueRule extends AbstractApexUnitTestRule {
 
-    @Override
-    public Object visit(final ASTUserClass node, final Object data) {
+    @Override public Object visit(final ASTUserClass node, final Object data) {
         if (!isTestMethodOrClass(node)) {
             return data;
         }
@@ -31,8 +30,7 @@ public class ApexUnitTestShouldNotUseSeeAllDataTrueRule extends AbstractApexUnit
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTMethod node, Object data) {
+    @Override public Object visit(ASTMethod node, Object data) {
         if (!isTestMethodOrClass(node)) {
             return data;
         }

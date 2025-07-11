@@ -32,17 +32,14 @@ class HtmlJavaRuleTest {
             + "    </div>\n"
             + "</template>";
 
-    @Test
-    void findAllAttributesWithInvalidExpression() {
+    @Test void findAllAttributesWithInvalidExpression() {
         // "Don’t add spaces around the property, for example, { data } is not valid HTML."
         Rule rule = new AbstractHtmlRule() {
-            @Override
-            public String getMessage() {
+            @Override public String getMessage() {
                 return "Invalid expression";
             }
 
-            @Override
-            public Object visit(ASTHtmlElement node, Object data) {
+            @Override public Object visit(ASTHtmlElement node, Object data) {
                 for (Attribute attribute : node.getAttributes()) {
                     if ("{".equals(attribute.getValue())) {
                         RuleContext ctx = (RuleContext) data;

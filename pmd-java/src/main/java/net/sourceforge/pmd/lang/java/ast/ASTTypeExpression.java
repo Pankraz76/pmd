@@ -40,8 +40,7 @@ public final class ASTTypeExpression extends AbstractJavaNode implements ASTPrim
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -52,19 +51,16 @@ public final class ASTTypeExpression extends AbstractJavaNode implements ASTPrim
 
 
     /** Returns 0, type expressions can never be parenthesized. */
-    @Override
-    public int getParenthesisDepth() {
+    @Override public int getParenthesisDepth() {
         return 0;
     }
 
     /** Returns false, type expressions can never be parenthesized. */
-    @Override
-    public boolean isParenthesized() {
+    @Override public boolean isParenthesized() {
         return false;
     }
 
-    @Override
-    public @NonNull JTypeMirror getTypeMirror(TypingContext ctx) {
+    @Override public @NonNull JTypeMirror getTypeMirror(TypingContext ctx) {
         return getTypeNode().getTypeMirror(ctx);
     }
 

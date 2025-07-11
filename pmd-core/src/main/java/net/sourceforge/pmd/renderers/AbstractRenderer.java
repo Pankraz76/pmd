@@ -30,43 +30,35 @@ public abstract class AbstractRenderer extends AbstractPropertySource implements
         this.description = description;
     }
 
-    @Override
-    protected String getPropertySourceType() {
+    @Override protected String getPropertySourceType() {
         return "renderer";
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return name;
     }
 
-    @Override
-    public void setName(String name) {
+    @Override public void setName(String name) {
         this.name = name;
     }
 
-    @Override
-    public String getDescription() {
+    @Override public String getDescription() {
         return description;
     }
 
-    @Override
-    public void setDescription(String description) {
+    @Override public void setDescription(String description) {
         this.description = description;
     }
 
-    @Override
-    public boolean isShowSuppressedViolations() {
+    @Override public boolean isShowSuppressedViolations() {
         return showSuppressedViolations;
     }
 
-    @Override
-    public void setShowSuppressedViolations(boolean showSuppressedViolations) {
+    @Override public void setShowSuppressedViolations(boolean showSuppressedViolations) {
         this.showSuppressedViolations = showSuppressedViolations;
     }
 
-    @Override
-    public void setFileNameRenderer(FileNameRenderer fileNameRenderer) {
+    @Override public void setFileNameRenderer(FileNameRenderer fileNameRenderer) {
         this.fileNameRenderer = Objects.requireNonNull(fileNameRenderer);
     }
 
@@ -84,13 +76,11 @@ public abstract class AbstractRenderer extends AbstractPropertySource implements
         return fileNameRenderer.getDisplayName(fileId);
     }
 
-    @Override
-    public void setWriter(Writer writer) {
+    @Override public void setWriter(Writer writer) {
         this.writer = new PrintWriter(writer);
     }
 
-    @Override
-    public Writer getWriter() {
+    @Override public Writer getWriter() {
         return writer;
     }
 
@@ -115,8 +105,7 @@ public abstract class AbstractRenderer extends AbstractPropertySource implements
      * <p>This default implementation always uses the system default charset for the writer.
      * Overwrite in specific renderers to support other charsets.
      */
-    @Override
-    public void setReportFile(String reportFilename) {
+    @Override public void setReportFile(String reportFilename) {
         this.setWriter(IOUtil.createWriter(reportFilename));
     }
 }

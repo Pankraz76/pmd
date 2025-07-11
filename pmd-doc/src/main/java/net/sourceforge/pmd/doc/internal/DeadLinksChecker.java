@@ -63,7 +63,7 @@ public class DeadLinksChecker {
 
     // list of link targets, where the link detection doesn't work
     private static final Pattern EXCLUDED_LINK_TARGETS = Pattern.compile(
-        "^pmd_userdocs_cli_reference\\.html.*" // anchors in the CLI reference are a plain HTML include
+            "^pmd_userdocs_cli_reference\\.html.*" // anchors in the CLI reference are a plain HTML include
     );
 
     // the link is actually pointing to a file in the pmd project
@@ -71,11 +71,11 @@ public class DeadLinksChecker {
 
     // don't check links to PMD bugs/issues/pull-requests and some other sites (performance optimization)
     private static final List<String> IGNORED_URL_PREFIXES = Collections.unmodifiableList(Arrays.asList(
-        "https://github.com/pmd/pmd/issues/",
-        "https://github.com/pmd/pmd/pull/",
-        "https://sourceforge.net/p/pmd/bugs/",
-        "https://pmd.github.io/",
-        "https://openjdk.org/jeps" // very slow...
+            "https://github.com/pmd/pmd/issues/",
+            "https://github.com/pmd/pmd/pull/",
+            "https://sourceforge.net/p/pmd/bugs/",
+            "https://pmd.github.io/",
+            "https://openjdk.org/jeps" // very slow...
     ));
 
     // prevent checking the same link multiple times
@@ -160,8 +160,8 @@ public class DeadLinksChecker {
                         linkOk = true;
 
                         Future<String> futureMessage =
-                            getCachedFutureResponse(linkTarget)
-                                .thenApply(errorMessage -> errorMessage != null ? String.format("%8d: %s (%s)", lineNo, linkText, errorMessage) : null);
+                                getCachedFutureResponse(linkTarget)
+                                        .thenApply(errorMessage -> errorMessage != null ? String.format("%8d: %s (%s)", lineNo, linkText, errorMessage) : null);
 
                         addDeadLink(fileToDeadLinks, mdFile, futureMessage);
 
@@ -231,17 +231,17 @@ public class DeadLinksChecker {
         for (Path p : map.keySet()) {
 
             List<String> evaluatedResult = map.get(p).stream()
-                                              .map(f -> {
-                                                  try {
-                                                      return f.get();
-                                                  } catch (InterruptedException | ExecutionException e) {
-                                                      e.printStackTrace();
-                                                      return null;
-                                                  }
-                                              })
-                                              .filter(Objects::nonNull)
-                                              .sorted(Comparator.naturalOrder())
-                                              .collect(Collectors.toList());
+                    .map(f -> {
+                        try {
+                            return f.get();
+                        } catch (InterruptedException | ExecutionException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .sorted(Comparator.naturalOrder())
+                    .collect(Collectors.toList());
 
             if (!evaluatedResult.isEmpty()) {
                 joined.put(p, evaluatedResult);
@@ -268,7 +268,7 @@ public class DeadLinksChecker {
             }
 
             final String pageUrl = permalinkMatcher.group(1)
-                                                   .replaceAll("^/+", ""); // remove the leading "/"
+                    .replaceAll("^/+", ""); // remove the leading "/"
 
             // add the root page
             htmlPages.add(pageUrl);
@@ -277,9 +277,9 @@ public class DeadLinksChecker {
             final Matcher captionMatcher = MD_CAPTION.matcher(pageContent);
             while (captionMatcher.find()) {
                 final String anchor = captionMatcher.group(1)
-                                                    .toLowerCase(Locale.ROOT)
-                                                    .replaceAll("'|\\.", "") // remove all apostrophes and dots
-                                                    .replaceAll("[^a-z0-9_]+", "-"); // replace all non-alphanumeric characters with dashes
+                        .toLowerCase(Locale.ROOT)
+                        .replaceAll("'|\\.", "") // remove all apostrophes and dots
+                        .replaceAll("[^a-z0-9_]+", "-"); // replace all non-alphanumeric characters with dashes
 
                 htmlPages.add(pageUrl + "#" + anchor);
             }
@@ -291,9 +291,9 @@ public class DeadLinksChecker {
     private List<Path> listMdFiles(Path pagesDirectory) {
         try (Stream<Path> stream = Files.walk(pagesDirectory)) {
             return stream
-                 .filter(Files::isRegularFile)
-                 .filter(path -> path.toString().endsWith(".md"))
-                 .collect(Collectors.toList());
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.toString().endsWith(".md"))
+                    .collect(Collectors.toList());
         } catch (IOException ex) {
             throw new RuntimeException("error listing files in " + pagesDirectory, ex);
         }
@@ -384,7 +384,6 @@ public class DeadLinksChecker {
         DeadLinksChecker deadLinksChecker = new DeadLinksChecker();
         deadLinksChecker.checkDeadLinks(rootDirectory);
     }
-
 
 
 }

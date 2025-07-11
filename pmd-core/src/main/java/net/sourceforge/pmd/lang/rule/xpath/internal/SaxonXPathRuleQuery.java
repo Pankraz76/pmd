@@ -83,10 +83,10 @@ public class SaxonXPathRuleQuery {
 
 
     public SaxonXPathRuleQuery(String xpathExpr,
-                               XPathVersion version,
-                               Map<PropertyDescriptor<?>, Object> properties,
-                               XPathHandler xPathHandler,
-                               DeprecatedAttrLogger logger) throws PmdXPathException {
+            XPathVersion version,
+            Map<PropertyDescriptor<?>, Object> properties,
+            XPathHandler xPathHandler,
+            DeprecatedAttrLogger logger) throws PmdXPathException {
         this.xpathExpr = xpathExpr;
         this.version = version;
         this.properties = properties;
@@ -122,8 +122,7 @@ public class SaxonXPathRuleQuery {
             final Set<Node> results = new LinkedHashSet<>();
             List<Expression> expressions = getExpressionsForLocalNameOrDefault(node.getXPathNodeName());
             for (Expression expression : expressions) {
-                @SuppressWarnings("PMD.CloseResource")
-                SequenceIterator iterator = expression.iterate(xpathDynamicContext.getXPathContextObject());
+                @SuppressWarnings("PMD.CloseResource") SequenceIterator iterator = expression.iterate(xpathDynamicContext.getXPathContextObject());
                 Item current = iterator.next();
                 while (current != null) {
                     if (current instanceof AstNodeOwner) {
@@ -224,7 +223,7 @@ public class SaxonXPathRuleQuery {
         Iterable<Expression> subexpressions = SaxonExprTransformations.splitUnions(expr);
 
         // Second step: Analyze each expression separately
-        for (final Expression subexpression : subexpressions) { // final because of checkstyle
+        for (Expression subexpression : subexpressions) {
             Expression modified = subexpression;
             modified = SaxonExprTransformations.hoistFilters(modified);
             modified = SaxonExprTransformations.reduceRoot(modified);
@@ -272,8 +271,7 @@ public class SaxonXPathRuleQuery {
             propertiesByName.put(var.getVariableQName(), prop);
         }
 
-        @Override
-        public Expression bindVariable(StructuredQName qName) throws XPathException {
+        @Override public Expression bindVariable(StructuredQName qName) throws XPathException {
             LocalVariableReference local = (LocalVariableReference) super.bindVariable(qName);
             PropertyDescriptor<?> prop = propertiesByName.get(qName);
             if (prop == null || prop.defaultValue() == null) {

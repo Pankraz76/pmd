@@ -13,9 +13,8 @@ import picocli.CommandLine.Option;
  */
 public class EncodingMixin {
 
-    @Option(names = { "--encoding", "-e" }, description = "Specifies the character set encoding of the source code files",
-            defaultValue = "UTF-8")
-    private Charset encoding;
+    @Option(names = {"--encoding", "-e"}, description = "Specifies the character set encoding of the source code files",
+            defaultValue = "UTF-8") private Charset encoding;
 
     public Charset getEncoding() {
         return encoding;

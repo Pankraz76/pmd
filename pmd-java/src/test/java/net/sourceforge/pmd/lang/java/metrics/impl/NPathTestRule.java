@@ -17,18 +17,15 @@ public class NPathTestRule extends AbstractMetricTestRule<Long> {
         super(JavaMetrics.NPATH_COMP);
     }
 
-    @Override
-    protected String violationMessage(Node node, Long result) {
+    @Override protected String violationMessage(Node node, Long result) {
         return AllMetricsTest.formatJavaMessage(node, result);
     }
 
-    @Override
-    protected Long parseReportLevel(String value) {
+    @Override protected Long parseReportLevel(String value) {
         return Long.parseLong(value);
     }
 
-    @Override
-    protected Long defaultReportLevel() {
+    @Override protected Long defaultReportLevel() {
         return 0L;
     }
 }

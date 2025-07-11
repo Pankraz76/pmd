@@ -26,8 +26,7 @@ class SwitchMirror extends BasePolyMirror<ASTSwitchExpression> implements Branch
         branches = myNode.getYieldExpressions().toList(it -> factory.getBranchMirrorSubexpression(it, isStandalone, this, subexprMaker));
     }
 
-    @Override
-    public boolean branchesMatch(Predicate<? super ExprMirror> condition) {
+    @Override public boolean branchesMatch(Predicate<? super ExprMirror> condition) {
         return CollectionUtil.all(branches, condition);
     }
 }

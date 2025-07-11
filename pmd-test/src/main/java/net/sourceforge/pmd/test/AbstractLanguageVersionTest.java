@@ -114,9 +114,7 @@ public abstract class AbstractLanguageVersionTest {
      * Checks that the expected {@link LanguageVersion} can be found via
      * {@link TestDescriptor#name} and {@link TestDescriptor#version}.
      */
-    @ParameterizedTest
-    @MethodSource("data")
-    void testFindVersionsForLanguageNameAndVersion(TestDescriptor testDescriptor) {
+    @ParameterizedTest @MethodSource("data") void testFindVersionsForLanguageNameAndVersion(TestDescriptor testDescriptor) {
         SourceLanguage sourceLanguage = new SourceLanguage();
         sourceLanguage.setName(testDescriptor.getName());
         sourceLanguage.setVersion(testDescriptor.getVersion());
@@ -136,9 +134,7 @@ public abstract class AbstractLanguageVersionTest {
      * @throws Exception
      *             any error
      */
-    @ParameterizedTest
-    @MethodSource("data")
-    void testRegisteredRulesets(TestDescriptor testDescriptor) throws Exception {
+    @ParameterizedTest @MethodSource("data") void testRegisteredRulesets(TestDescriptor testDescriptor) throws Exception {
         if (testDescriptor.getExpected() == null) {
             return;
         }
@@ -160,9 +156,7 @@ public abstract class AbstractLanguageVersionTest {
      * @throws Exception
      *             any error
      */
-    @ParameterizedTest
-    @MethodSource("data")
-    void testOldRegisteredRulesets(TestDescriptor testDescriptor) throws Exception {
+    @ParameterizedTest @MethodSource("data") void testOldRegisteredRulesets(TestDescriptor testDescriptor) throws Exception {
         // only check for languages, that support rules
         if (testDescriptor.getExpected() == null) {
             return;
@@ -180,9 +174,7 @@ public abstract class AbstractLanguageVersionTest {
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("data")
-    void testVersionsAreDistinct(TestDescriptor testDescriptor) {
+    @ParameterizedTest @MethodSource("data") void testVersionsAreDistinct(TestDescriptor testDescriptor) {
         LanguageVersion expected = testDescriptor.getExpected();
         if (expected == null) {
             return;

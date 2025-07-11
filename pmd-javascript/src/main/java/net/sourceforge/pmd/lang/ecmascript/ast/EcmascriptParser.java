@@ -60,14 +60,13 @@ public final class EcmascriptParser implements net.sourceforge.pmd.lang.ast.Pars
 
     private static int determineRhinoLanguageVersion(LanguageVersion version) {
         switch (version.getVersion()) {
-        case "3": return Context.VERSION_1_5;
-        case "5": return Context.VERSION_1_8;
-        default: return Context.VERSION_ES6;
+            case "3": return Context.VERSION_1_5;
+            case "5": return Context.VERSION_1_8;
+            default: return Context.VERSION_ES6;
         }
     }
 
-    @Override
-    public RootNode parse(ParserTask task) throws FileAnalysisException {
+    @Override public RootNode parse(ParserTask task) throws FileAnalysisException {
         final LanguageVersion version = task.getLanguageVersion();
         final List<ParseProblem> parseProblems = new ArrayList<>();
         final AstRoot astRoot = parseEcmascript(task.getFileId(), task.getSourceText(), version, parseProblems);

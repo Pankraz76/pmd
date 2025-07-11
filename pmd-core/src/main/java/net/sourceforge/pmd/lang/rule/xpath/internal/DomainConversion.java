@@ -38,24 +38,23 @@ public final class DomainConversion {
 
     public static SchemaType buildType(java.lang.reflect.Type type) {
         switch (type.getTypeName()) {
-        case "java.lang.Integer":
-        case "java.lang.Long":
-            return BuiltInAtomicType.INTEGER;
-        case "java.lang.Double":
-        case "java.lang.Float":
-            return BuiltInAtomicType.DOUBLE;
-        case "java.lang.String":
-        case "java.lang.Character":
-        case "java.lang.Class":
-        case "java.util.regex.Pattern":
-            return BuiltInAtomicType.STRING;
-        default:
-            return BuiltInAtomicType.UNTYPED_ATOMIC;
+            case "java.lang.Integer":
+            case "java.lang.Long":
+                return BuiltInAtomicType.INTEGER;
+            case "java.lang.Double":
+            case "java.lang.Float":
+                return BuiltInAtomicType.DOUBLE;
+            case "java.lang.String":
+            case "java.lang.Character":
+            case "java.lang.Class":
+            case "java.util.regex.Pattern":
+                return BuiltInAtomicType.STRING;
+            default:
+                return BuiltInAtomicType.UNTYPED_ATOMIC;
         }
     }
 
-    @NonNull
-    public static AtomicSequence convert(Object obj) {
+    @NonNull public static AtomicSequence convert(Object obj) {
         if (obj instanceof Collection) {
             return getSequenceRepresentation((Collection<?>) obj);
         }
@@ -122,8 +121,7 @@ public final class DomainConversion {
      *
      * @return The converted AtomicValue
      */
-    @NonNull
-    public static AtomicValue getAtomicRepresentation(final Object value) {
+    @NonNull public static AtomicValue getAtomicRepresentation(final Object value) {
 
         /*
         FUTURE When supported, we should consider refactor this implementation to use Pattern Matching

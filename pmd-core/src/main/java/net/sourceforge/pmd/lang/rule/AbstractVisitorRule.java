@@ -9,8 +9,7 @@ import net.sourceforge.pmd.lang.ast.Node;
 import net.sourceforge.pmd.reporting.RuleContext;
 
 public abstract class AbstractVisitorRule extends AbstractRule {
-    @Override
-    public void apply(Node target, RuleContext ctx) {
+    @Override public void apply(Node target, RuleContext ctx) {
         AstVisitor<RuleContext, ?> visitor = buildVisitor();
         assert visitor != null : "Rule should provide a non-null visitor";
 

@@ -32,8 +32,8 @@ final class FlexibleUnresolvedClassImpl extends UnresolvedClassImpl {
     private List<UnresolvedClassImpl> childClasses = Collections.emptyList();
 
     FlexibleUnresolvedClassImpl(TypeSystem ts,
-                                @Nullable JClassSymbol enclosing,
-                                String canonicalName) {
+            @Nullable JClassSymbol enclosing,
+            String canonicalName) {
         super(ts, enclosing, canonicalName);
     }
 
@@ -45,8 +45,7 @@ final class FlexibleUnresolvedClassImpl extends UnresolvedClassImpl {
      *
      * @param newArity New number of type parameters
      */
-    @Override
-    void setTypeParameterCount(int newArity) {
+    @Override void setTypeParameterCount(int newArity) {
         if (arity == UNKNOWN_ARITY) {
             this.arity = newArity;
             List<JTypeVar> newParams = new ArrayList<>(newArity);
@@ -57,8 +56,7 @@ final class FlexibleUnresolvedClassImpl extends UnresolvedClassImpl {
         }
     }
 
-    @Override
-    UnresolvedClassImpl getOrCreateUnresolvedChildClass(String simpleName) {
+    @Override UnresolvedClassImpl getOrCreateUnresolvedChildClass(String simpleName) {
         if (childClasses.isEmpty()) {
             childClasses = new ArrayList<>(); // make it mutable
         }
@@ -68,18 +66,16 @@ final class FlexibleUnresolvedClassImpl extends UnresolvedClassImpl {
             }
         }
         FlexibleUnresolvedClassImpl newChild =
-            new FlexibleUnresolvedClassImpl(getTypeSystem(), this, getCanonicalName() + '.' + simpleName);
+                new FlexibleUnresolvedClassImpl(getTypeSystem(), this, getCanonicalName() + '.' + simpleName);
         childClasses.add(newChild);
         return newChild;
     }
 
-    @Override
-    public List<JClassSymbol> getDeclaredClasses() {
+    @Override public List<JClassSymbol> getDeclaredClasses() {
         return Collections.unmodifiableList(childClasses);
     }
 
-    @Override
-    public List<JTypeVar> getTypeParameters() {
+    @Override public List<JTypeVar> getTypeParameters() {
         return tparams;
     }
 
@@ -95,28 +91,23 @@ final class FlexibleUnresolvedClassImpl extends UnresolvedClassImpl {
             this.tvar = ts.newTypeVar(this);
         }
 
-        @Override
-        public TypeSystem getTypeSystem() {
+        @Override public TypeSystem getTypeSystem() {
             return tvar.getTypeSystem();
         }
 
-        @Override
-        public JTypeVar getTypeMirror() {
+        @Override public JTypeVar getTypeMirror() {
             return tvar;
         }
 
-        @Override
-        public JTypeMirror computeUpperBound() {
+        @Override public JTypeMirror computeUpperBound() {
             return getTypeSystem().OBJECT;
         }
 
-        @Override
-        public @NonNull String getSimpleName() {
+        @Override public @NonNull String getSimpleName() {
             return name;
         }
 
-        @Override
-        public JTypeParameterOwnerSymbol getDeclaringSymbol() {
+        @Override public JTypeParameterOwnerSymbol getDeclaringSymbol() {
             return owner;
         }
 

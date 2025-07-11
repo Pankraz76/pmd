@@ -69,13 +69,11 @@ public interface PropertyConstraint<T> {
      */
     default PropertyConstraint<Optional<? extends T>> toOptionalConstraint() {
         return new PropertyConstraint<Optional<? extends T>>() {
-            @Override
-            public void validate(Optional<? extends T> value) {
+            @Override public void validate(Optional<? extends T> value) {
                 value.ifPresent(PropertyConstraint.this::validate);
             }
 
-            @Override
-            public String getConstraintDescription() {
+            @Override public String getConstraintDescription() {
                 return PropertyConstraint.this.getConstraintDescription();
             }
         };
@@ -90,15 +88,13 @@ public interface PropertyConstraint<T> {
      */
     default PropertyConstraint<Iterable<? extends T>> toCollectionConstraint() {
         return new PropertyConstraint<Iterable<? extends T>>() {
-            @Override
-            public void validate(Iterable<? extends T> value) {
+            @Override public void validate(Iterable<? extends T> value) {
                 for (T t : value) {
                     PropertyConstraint.this.validate(t);
                 }
             }
 
-            @Override
-            public String getConstraintDescription() {
+            @Override public String getConstraintDescription() {
                 return "Components " + StringUtils.uncapitalize(PropertyConstraint.this.getConstraintDescription());
             }
         };
@@ -129,28 +125,24 @@ public interface PropertyConstraint<T> {
      * @see #fromPredicate(Predicate, String)
      */
     static <U> PropertyConstraint<U> fromPredicate(final Predicate<? super U> pred, final String constraintDescription,
-                                                   final Map<String, String> xmlConstraint) {
+            final Map<String, String> xmlConstraint) {
         return new PropertyConstraint<U>() {
 
-            @Override
-            public void validate(U value) {
+            @Override public void validate(U value) {
                 if (!pred.test(value)) {
                     throw new ConstraintViolatedException(this, value);
                 }
             }
 
-            @Override
-            public String getConstraintDescription() {
+            @Override public String getConstraintDescription() {
                 return StringUtils.capitalize(constraintDescription);
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "PropertyConstraint(" + constraintDescription + ")";
             }
 
-            @Override
-            public Map<String, String> getXmlConstraint() {
+            @Override public Map<String, String> getXmlConstraint() {
                 return xmlConstraint;
             }
         };

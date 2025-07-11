@@ -15,25 +15,21 @@ class ScalaCpdLexerTest extends CpdTextComparisonTest {
         super(ScalaLanguageModule.getInstance(), ".scala");
     }
 
-    @Test
-    void testSample() {
+    @Test void testSample() {
         doTest("sample-LiftActor");
     }
 
-    @Test
-    void testSuppressionComments() {
+    @Test void testSuppressionComments() {
         doTest("special_comments");
     }
 
-    @Test
-    void unclosedLiteral() {
+    @Test void unclosedLiteral() {
         // note: this failed before PMD 7.10.0 with a LexException, but now the string literal is just
         // expanded to the end of the line
         doTest("unclosed_literal");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 }

@@ -12,8 +12,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class CursorWithWithTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseCursorWithWith() {
+    @Test void parseCursorWithWith() {
         ASTInput input = plsql.parseResource("CursorWithWith.pls");
         ASTCursorUnit cursor = input.descendants(ASTCursorUnit.class).first();
         ASTSelectStatement select = (ASTSelectStatement) cursor.getChild(1);

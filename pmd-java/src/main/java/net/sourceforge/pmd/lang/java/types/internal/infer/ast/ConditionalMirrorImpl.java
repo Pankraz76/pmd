@@ -35,20 +35,17 @@ class ConditionalMirrorImpl extends BasePolyMirror<ASTConditionalExpression> imp
     }
 
 
-    @Override
-    public boolean branchesMatch(Predicate<? super ExprMirror> condition) {
+    @Override public boolean branchesMatch(Predicate<? super ExprMirror> condition) {
         return condition.test(thenBranch) && condition.test(elseBranch);
     }
 
-    @Override
-    public void setStandalone() {
+    @Override public void setStandalone() {
         if (mayMutateAst()) {
             InternalApiBridge.setStandaloneTernary(myNode);
         }
     }
 
-    @Override
-    public @Nullable JTypeMirror getStandaloneType() {
+    @Override public @Nullable JTypeMirror getStandaloneType() {
         // may have been set by an earlier call
         JTypeMirror current = InternalApiBridge.getTypeMirrorInternal(myNode);
         if (current != null && (current.unbox().isPrimitive() || !mayBePoly)) {

@@ -59,13 +59,11 @@ public class XSLTRenderer extends XMLRenderer {
         definePropertyDescriptor(XSLT_FILENAME);
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "xsl";
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         String xsltFilenameProperty = getProperty(XSLT_FILENAME);
         if (StringUtils.isNotBlank(xsltFilenameProperty)) {
             File file = new File(xsltFilenameProperty);
@@ -117,8 +115,7 @@ public class XSLTRenderer extends XMLRenderer {
         }
     }
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         // First we finish the XML report
         super.end();
         // Now we transform it using XSLT

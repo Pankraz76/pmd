@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class OrderByExpressionsTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseOrderByExpression() {
+    @Test void parseOrderByExpression() {
         plsql.parseResource("OrderByExpression.pls");
     }
 }

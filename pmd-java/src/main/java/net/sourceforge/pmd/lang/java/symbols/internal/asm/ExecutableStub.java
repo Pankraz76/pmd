@@ -39,12 +39,12 @@ abstract class ExecutableStub extends MemberStubBase implements JExecutableSymbo
     private PMap<Integer, PSet<SymAnnot>> parameterAnnotations = IntTreePMap.empty();
 
     protected ExecutableStub(ClassStub owner,
-                             String simpleName,
-                             int accessFlags,
-                             String descriptor,
-                             @Nullable String signature,
-                             @Nullable String[] exceptions,
-                             boolean skipFirstParam) {
+            String simpleName,
+            int accessFlags,
+            String descriptor,
+            @Nullable String signature,
+            @Nullable String[] exceptions,
+            boolean skipFirstParam) {
         super(owner, simpleName, accessFlags);
         this.descriptor = descriptor;
         this.type = new LazyMethodType(this, descriptor, signature, exceptions, skipFirstParam);
@@ -55,13 +55,11 @@ abstract class ExecutableStub extends MemberStubBase implements JExecutableSymbo
     }
 
 
-    @Override
-    public List<JTypeVar> getTypeParameters() {
+    @Override public List<JTypeVar> getTypeParameters() {
         return type.getTypeParams();
     }
 
-    @Override
-    public List<JFormalParamSymbol> getFormalParameters() {
+    @Override public List<JFormalParamSymbol> getFormalParameters() {
         if (params == null) {
             List<JTypeMirror> ptypes = type.getParameterTypes();
             List<JFormalParamSymbol> newParams = new ArrayList<>(ptypes.size());
@@ -73,18 +71,15 @@ abstract class ExecutableStub extends MemberStubBase implements JExecutableSymbo
         return params;
     }
 
-    @Override
-    public JTypeMirror getReturnType(Substitution subst) {
+    @Override public JTypeMirror getReturnType(Substitution subst) {
         return type.getReturnType().subst(subst);
     }
 
-    @Override
-    public boolean isVarargs() {
+    @Override public boolean isVarargs() {
         return (getModifiers() & Opcodes.ACC_VARARGS) != 0;
     }
 
-    @Override
-    public int getArity() {
+    @Override public int getArity() {
         return type.getParameterTypes().size();
     }
 
@@ -92,8 +87,7 @@ abstract class ExecutableStub extends MemberStubBase implements JExecutableSymbo
         return parameterAnnotations.getOrDefault(parameterIndex, HashTreePSet.empty());
     }
 
-    @Override
-    public @Nullable JTypeMirror getAnnotatedReceiverType(Substitution subst) {
+    @Override public @Nullable JTypeMirror getAnnotatedReceiverType(Substitution subst) {
         if (!this.hasReceiver()) {
             return null;
         }
@@ -101,13 +95,11 @@ abstract class ExecutableStub extends MemberStubBase implements JExecutableSymbo
         return type.applyReceiverAnnotations(receiver);
     }
 
-    @Override
-    public List<JTypeMirror> getFormalParameterTypes(Substitution subst) {
+    @Override public List<JTypeMirror> getFormalParameterTypes(Substitution subst) {
         return TypeOps.subst(type.getParameterTypes(), subst);
     }
 
-    @Override
-    public List<JTypeMirror> getThrownExceptionTypes(Substitution subst) {
+    @Override public List<JTypeMirror> getThrownExceptionTypes(Substitution subst) {
         return TypeOps.subst(type.getExceptionTypes(), subst);
     }
 
@@ -115,8 +107,7 @@ abstract class ExecutableStub extends MemberStubBase implements JExecutableSymbo
         // overridden by MethodStub
     }
 
-    @Override
-    public void acceptTypeAnnotation(int typeRef, @Nullable TypePath path, SymAnnot annot) {
+    @Override public void acceptTypeAnnotation(int typeRef, @Nullable TypePath path, SymAnnot annot) {
         type.acceptTypeAnnotation(typeRef, path, annot);
     }
 
@@ -140,33 +131,27 @@ abstract class ExecutableStub extends MemberStubBase implements JExecutableSymbo
             this.index = index;
         }
 
-        @Override
-        public JExecutableSymbol getDeclaringSymbol() {
+        @Override public JExecutableSymbol getDeclaringSymbol() {
             return ExecutableStub.this;
         }
 
-        @Override
-        public boolean isFinal() {
+        @Override public boolean isFinal() {
             return false;
         }
 
-        @Override
-        public JTypeMirror getTypeMirror(Substitution subst) {
+        @Override public JTypeMirror getTypeMirror(Substitution subst) {
             return type.subst(subst);
         }
 
-        @Override
-        public String getSimpleName() {
+        @Override public String getSimpleName() {
             return "";
         }
 
-        @Override
-        public TypeSystem getTypeSystem() {
+        @Override public TypeSystem getTypeSystem() {
             return ExecutableStub.this.getTypeSystem();
         }
 
-        @Override
-        public PSet<SymAnnot> getDeclaredAnnotations() {
+        @Override public PSet<SymAnnot> getDeclaredAnnotations() {
             return ExecutableStub.this.getFormalParameterAnnotations(index);
         }
     }
@@ -186,41 +171,35 @@ abstract class ExecutableStub extends MemberStubBase implements JExecutableSymbo
         private @Nullable SymbolicValue defaultAnnotValue;
 
         protected MethodStub(ClassStub owner,
-                             String simpleName,
-                             int accessFlags,
-                             String descriptor,
-                             @Nullable String signature,
-                             @Nullable String[] exceptions) {
+                String simpleName,
+                int accessFlags,
+                String descriptor,
+                @Nullable String signature,
+                @Nullable String[] exceptions) {
             super(owner, simpleName, accessFlags, descriptor, signature, exceptions, false);
         }
 
-        @Override
-        public boolean isBridge() {
+        @Override public boolean isBridge() {
             return (getModifiers() & Opcodes.ACC_BRIDGE) != 0;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return SymbolToStrings.ASM.toString(this);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return SymbolEquality.METHOD.hash(this);
         }
 
-        @Override
-        public boolean equals(Object obj) {
+        @Override public boolean equals(Object obj) {
             return SymbolEquality.METHOD.equals(this, obj);
         }
 
-        @Override
-        public @Nullable SymbolicValue getDefaultAnnotationValue() {
+        @Override public @Nullable SymbolicValue getDefaultAnnotationValue() {
             return defaultAnnotValue;
         }
 
-        @Override
-        void setDefaultAnnotValue(@Nullable SymbolicValue defaultAnnotValue) {
+        @Override void setDefaultAnnotValue(@Nullable SymbolicValue defaultAnnotValue) {
             this.defaultAnnotValue = defaultAnnotValue;
         }
     }
@@ -228,26 +207,23 @@ abstract class ExecutableStub extends MemberStubBase implements JExecutableSymbo
     static class CtorStub extends ExecutableStub implements JConstructorSymbol {
 
         protected CtorStub(ClassStub owner,
-                           int accessFlags,
-                           String descriptor,
-                           @Nullable String signature,
-                           @Nullable String[] exceptions,
-                           boolean isInnerNonStaticClass) {
+                int accessFlags,
+                String descriptor,
+                @Nullable String signature,
+                @Nullable String[] exceptions,
+                boolean isInnerNonStaticClass) {
             super(owner, JConstructorSymbol.CTOR_NAME, accessFlags, descriptor, signature, exceptions, isInnerNonStaticClass);
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return SymbolToStrings.ASM.toString(this);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return SymbolEquality.CONSTRUCTOR.hash(this);
         }
 
-        @Override
-        public boolean equals(Object obj) {
+        @Override public boolean equals(Object obj) {
             return SymbolEquality.CONSTRUCTOR.equals(this, obj);
         }
 

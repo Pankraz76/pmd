@@ -33,18 +33,15 @@ class SemanticErrorReporterTest {
     PmdReporter mockReporter;
     Logger mockLogger;
 
-    @RegisterExtension
-    private final DummyParsingHelper helper = new DummyParsingHelper();
+    @RegisterExtension private final DummyParsingHelper helper = new DummyParsingHelper();
 
-    @BeforeEach
-    void setup() {
+    @BeforeEach void setup() {
         mockReporter = mock(PmdReporter.class);
         when(mockReporter.isLoggable(Level.ERROR)).thenReturn(true);
         mockLogger = spy(NOPLogger.class);
     }
 
-    @Test
-    void testErrorLogging() {
+    @Test void testErrorLogging() {
         SemanticErrorReporter reporter = SemanticErrorReporter.reportToLogger(mockReporter);
         RootNode node = parseMockNode();
 
@@ -59,8 +56,7 @@ class SemanticErrorReporterTest {
         assertNotNull(reporter.getFirstError());
     }
 
-    @Test
-    void testEscaping() {
+    @Test void testEscaping() {
         SemanticErrorReporter reporter = SemanticErrorReporter.reportToLogger(mockReporter);
         RootNode node = parseMockNode();
 

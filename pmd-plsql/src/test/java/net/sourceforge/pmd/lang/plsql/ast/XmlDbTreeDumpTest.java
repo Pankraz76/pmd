@@ -16,36 +16,30 @@ class XmlDbTreeDumpTest extends BaseTreeDumpTest {
         super(new RelevantAttributePrinter(), ".pls");
     }
 
-    @Override
-    public BaseParsingHelper<?, ?> getParser() {
+    @Override public BaseParsingHelper<?, ?> getParser() {
         return PlsqlParsingHelper.DEFAULT.withResourceContext(getClass());
     }
 
-    @Test
-    void xmlElement() {
+    @Test void xmlElement() {
         doTest("XMLElement");
     }
 
-    @Test
-    void xmlTable() {
+    @Test void xmlTable() {
         doTest("XMLTable");
     }
 
-    @Test
-    void xmlFunctions() {
+    @Test void xmlFunctions() {
         doTest("XMLFunctions");
     }
 
     /**
      * @see <a href="https://github.com/pmd/pmd/issues/4441">[plsql] Parsing exception with XMLTYPE and XMLQUERY function in SELECT</a>
      */
-    @Test
-    void xmlQuery() {
+    @Test void xmlQuery() {
         doTest("XMLQuery");
     }
 
-    @Test
-    void xmlType() {
+    @Test void xmlType() {
         doTest("XMLType");
     }
 }

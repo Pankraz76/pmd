@@ -23,13 +23,11 @@ public class ExcessiveImportsRule extends AbstractJavaCounterCheckRule<ASTCompil
         super(ASTCompilationUnit.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 30;
     }
 
-    @Override
-    protected boolean isViolation(ASTCompilationUnit node, int reportLevel) {
+    @Override protected boolean isViolation(ASTCompilationUnit node, int reportLevel) {
         return node.children(ASTImportDeclaration.class).count() >= reportLevel;
     }
 }

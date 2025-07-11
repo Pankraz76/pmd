@@ -12,18 +12,15 @@ import org.junit.jupiter.api.Test;
 
 class TrailingCommaTest extends EcmascriptParserTestBase {
 
-    @Test
-    void testTrailingCommaDefaultLocale() {
+    @Test void testTrailingCommaDefaultLocale() {
         testTrailingComma();
     }
 
-    @Test
-    void testTrailingCommaFrFr() {
+    @Test void testTrailingCommaFrFr() {
         runWithLocale(Locale.FRANCE, () -> testTrailingComma());
     }
 
-    @Test
-    void testTrailingCommaRootLocale() {
+    @Test void testTrailingCommaRootLocale() {
         runWithLocale(Locale.ROOT, () -> testTrailingComma());
     }
 

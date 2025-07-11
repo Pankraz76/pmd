@@ -36,66 +36,54 @@ public interface FileId extends Comparable<FileId> {
      * relevant for unit tests.
      */
     FileId UNKNOWN = new FileId() {
-        @Override
-        public String getFileName() {
+        @Override public String getFileName() {
             return "(unknown)";
         }
 
-        @Override
-        public String getOriginalPath() {
+        @Override public String getOriginalPath() {
             return "(unknown)";
         }
 
-        @Override
-        public String getAbsolutePath() {
+        @Override public String getAbsolutePath() {
             return getOriginalPath();
         }
 
-        @Override
-        public String getUriString() {
+        @Override public String getUriString() {
             return "file://" + getOriginalPath();
         }
 
-        @Override
-        public @Nullable FileId getParentFsPath() {
+        @Override public @Nullable FileId getParentFsPath() {
             return null;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "FileId(unknown)";
         }
     };
 
     /** The virtual file ID for standard input. */
     FileId STDIN = new FileId() {
-        @Override
-        public String getAbsolutePath() {
+        @Override public String getAbsolutePath() {
             return "stdin";
         }
 
-        @Override
-        public String getUriString() {
+        @Override public String getUriString() {
             return "stdin";
         }
 
-        @Override
-        public String getFileName() {
+        @Override public String getFileName() {
             return "stdin";
         }
 
-        @Override
-        public String getOriginalPath() {
+        @Override public String getOriginalPath() {
             return "stdin";
         }
 
-        @Override
-        public @Nullable FileId getParentFsPath() {
+        @Override public @Nullable FileId getParentFsPath() {
             return null;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "FileId(STDIN)";
         }
     };
@@ -138,12 +126,10 @@ public interface FileId extends Comparable<FileId> {
      *
      * @param o Object
      */
-    @Override
-    boolean equals(Object o);
+    @Override boolean equals(Object o);
 
 
-    @Override
-    default int compareTo(FileId o) {
+    @Override default int compareTo(FileId o) {
         return this.getAbsolutePath().compareTo(o.getAbsolutePath());
     }
 
@@ -152,8 +138,7 @@ public interface FileId extends Comparable<FileId> {
      * is unspecified. Code that needs a string representation should use one
      * of the named string conversion methods.
      */
-    @Override
-    String toString();
+    @Override String toString();
 
     /**
      * Return a path ID for the given string. The string is interpreted
@@ -175,46 +160,38 @@ public interface FileId extends Comparable<FileId> {
             final String absPathStr = absPath.toString();
 
 
-            @Override
-            public String getAbsolutePath() {
+            @Override public String getAbsolutePath() {
                 return absPathStr;
             }
 
 
-            @Override
-            public String getUriString() {
+            @Override public String getUriString() {
                 // pretend...
                 return "file://" + str;
             }
 
-            @Override
-            public String getFileName() {
+            @Override public String getFileName() {
                 return fileName;
             }
 
-            @Override
-            public String getOriginalPath() {
+            @Override public String getOriginalPath() {
                 return str;
             }
 
-            @Override
-            public boolean equals(Object obj) {
+            @Override public boolean equals(Object obj) {
                 return obj instanceof FileId
-                    && ((FileId) obj).getUriString().equals(this.getUriString());
+                        && ((FileId) obj).getUriString().equals(this.getUriString());
             }
 
-            @Override
-            public int hashCode() {
+            @Override public int hashCode() {
                 return getUriString().hashCode();
             }
 
-            @Override
-            public @Nullable FileId getParentFsPath() {
+            @Override public @Nullable FileId getParentFsPath() {
                 return null;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "FileId(fromPathLike=" + str + ")";
             }
         };
@@ -239,44 +216,36 @@ public interface FileId extends Comparable<FileId> {
             final String fileName = path.getFileName().toString();
             final String origPath = path.toString();
 
-            @Override
-            public String getAbsolutePath() {
+            @Override public String getAbsolutePath() {
                 return absPath;
             }
 
-            @Override
-            public String getUriString() {
+            @Override public String getUriString() {
                 return uriString;
             }
 
-            @Override
-            public String getFileName() {
+            @Override public String getFileName() {
                 return fileName;
             }
 
-            @Override
-            public String getOriginalPath() {
+            @Override public String getOriginalPath() {
                 return origPath;
             }
 
-            @Override
-            public @Nullable FileId getParentFsPath() {
+            @Override public @Nullable FileId getParentFsPath() {
                 return fsPath;
             }
 
-            @Override
-            public boolean equals(Object obj) {
+            @Override public boolean equals(Object obj) {
                 return obj instanceof FileId
-                    && ((FileId) obj).getUriString().equals(this.getUriString());
+                        && ((FileId) obj).getUriString().equals(this.getUriString());
             }
 
-            @Override
-            public int hashCode() {
+            @Override public int hashCode() {
                 return getUriString().hashCode();
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "FileId(fromPath=" + path + ")";
             }
         };
@@ -303,44 +272,36 @@ public interface FileId extends Comparable<FileId> {
             return self;
         }
         return new FileId() {
-            @Override
-            public @Nullable FileId getParentFsPath() {
+            @Override public @Nullable FileId getParentFsPath() {
                 return parentFsPath;
             }
 
-            @Override
-            public String getUriString() {
+            @Override public String getUriString() {
                 return self.getUriString();
             }
 
-            @Override
-            public String getFileName() {
+            @Override public String getFileName() {
                 return self.getFileName();
             }
 
-            @Override
-            public String getOriginalPath() {
+            @Override public String getOriginalPath() {
                 return self.getOriginalPath();
             }
 
-            @Override
-            public String getAbsolutePath() {
+            @Override public String getAbsolutePath() {
                 return self.getAbsolutePath();
             }
 
-            @Override
-            public boolean equals(Object obj) {
+            @Override public boolean equals(Object obj) {
                 return obj instanceof FileId
-                    && getUriString().equals(((FileId) obj).getUriString());
+                        && getUriString().equals(((FileId) obj).getUriString());
             }
 
-            @Override
-            public int hashCode() {
+            @Override public int hashCode() {
                 return getUriString().hashCode();
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "FileId(" + self + ",asChildOf=" + parentFsPath + ")";
             }
         };
@@ -363,46 +324,38 @@ public interface FileId extends Comparable<FileId> {
         // we know this one uses / (for URIs)
         String uriAbsPath = platformAbsPath.replace(File.separatorChar, '/');
         String uriStr = outer != null ? "jar:" + outer.getUriString() + "!" + uriAbsPath
-                                      : "file://" + uriAbsPath;
+                : "file://" + uriAbsPath;
         // zip file
         return new FileId() {
-            @Override
-            public String getFileName() {
+            @Override public String getFileName() {
                 return fileName.toString();
             }
 
-            @Override
-            public String getOriginalPath() {
+            @Override public String getOriginalPath() {
                 return absPath;
             }
 
-            @Override
-            public String getAbsolutePath() {
+            @Override public String getAbsolutePath() {
                 return platformAbsPath;
             }
 
-            @Override
-            public String getUriString() {
+            @Override public String getUriString() {
                 return uriStr;
             }
 
-            @Override
-            public @Nullable FileId getParentFsPath() {
+            @Override public @Nullable FileId getParentFsPath() {
                 return outer;
             }
 
-            @Override
-            public boolean equals(Object obj) {
+            @Override public boolean equals(Object obj) {
                 return obj instanceof FileId && getUriString().equals(((FileId) obj).getUriString());
             }
 
-            @Override
-            public int hashCode() {
+            @Override public int hashCode() {
                 return getUriString().hashCode();
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "FileId(fromAbsolutePath=" + absPath + ",outer=" + outer + ")";
             }
         };

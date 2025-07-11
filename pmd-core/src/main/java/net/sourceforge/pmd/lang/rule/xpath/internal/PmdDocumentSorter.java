@@ -21,8 +21,7 @@ final class PmdDocumentSorter implements Comparator<Node> {
 
     }
 
-    @Override
-    public int compare(Node node1, Node node2) {
+    @Override public int compare(Node node1, Node node2) {
         if (node1 == node2) {
             return 0;
         } else if (node1 == null) {

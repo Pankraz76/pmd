@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.velocity.rule.AbstractVtlRule;
 
 public class EmptyForeachStmtRule extends AbstractVtlRule {
 
-    @Override
-    public Object visit(final ASTForeachStatement node, final Object data) {
+    @Override public Object visit(final ASTForeachStatement node, final Object data) {
         if (node.firstChild(ASTBlock.class).isEmpty()) {
             asCtx(data).addViolation(node);
         }

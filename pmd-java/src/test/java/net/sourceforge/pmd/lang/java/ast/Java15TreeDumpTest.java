@@ -16,31 +16,26 @@ import net.sourceforge.pmd.lang.test.ast.BaseParsingHelper;
 class Java15TreeDumpTest extends BaseJavaTreeDumpTest {
     private final JavaParsingHelper java15 =
             JavaParsingHelper.DEFAULT.withDefaultVersion("15")
-                                     .withResourceContext(Java15TreeDumpTest.class, "jdkversiontests/java15/");
+                    .withResourceContext(Java15TreeDumpTest.class, "jdkversiontests/java15/");
     private final JavaParsingHelper java14 = java15.withDefaultVersion("14");
 
-    @Override
-    public BaseParsingHelper<?, ?> getParser() {
+    @Override public BaseParsingHelper<?, ?> getParser() {
         return java15;
     }
 
-    @Test
-    void textBlocks() {
+    @Test void textBlocks() {
         doTest("TextBlocks");
     }
 
-    @Test
-    void textBlocksBeforeJava15ShouldFail() {
+    @Test void textBlocksBeforeJava15ShouldFail() {
         assertThrows(ParseException.class, () -> java14.parseResource("TextBlocks.java"));
     }
 
-    @Test
-    void stringEscapeSequenceShouldFail() {
+    @Test void stringEscapeSequenceShouldFail() {
         assertThrows(ParseException.class, () -> java14.parse("class Foo { String s =\"a\\sb\"; }"));
     }
 
-    @Test
-    void sealedAndNonSealedIdentifiers() {
+    @Test void sealedAndNonSealedIdentifiers() {
         doTest("NonSealedIdentifier");
     }
 }

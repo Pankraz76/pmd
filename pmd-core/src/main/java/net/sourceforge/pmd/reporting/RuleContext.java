@@ -45,8 +45,8 @@ public final class RuleContext {
 
     private static final Object[] NO_ARGS = new Object[0];
     static final List<ViolationSuppressor> DEFAULT_SUPPRESSORS = listOf(ViolationSuppressor.NOPMD_COMMENT_SUPPRESSOR,
-                                                                        ViolationSuppressor.REGEX_SUPPRESSOR,
-                                                                        ViolationSuppressor.XPATH_SUPPRESSOR);
+            ViolationSuppressor.REGEX_SUPPRESSOR,
+            ViolationSuppressor.XPATH_SUPPRESSOR);
 
     private final FileAnalysisListener listener;
     private final Rule rule;
@@ -138,7 +138,7 @@ public final class RuleContext {
         FileLocation location;
         if (beginLine != -1 && endLine != -1) {
             location = FileLocation.range(node.getTextDocument().getFileId(),
-                                          TextRange2d.range2d(beginLine, 1, endLine, 1));
+                    TextRange2d.range2d(beginLine, 1, endLine, 1));
         } else {
             location = node.getReportLocation();
         }
@@ -161,9 +161,8 @@ public final class RuleContext {
      *      replaced by a fluent API or something to report violations. Do not use
      *      this outside of the PMD codebase. See <a href="https://github.com/pmd/pmd/issues/5039">[core] Add fluent API to report violations #5039</a>.
      */
-    @Experimental
-    public void addViolationWithPosition(Reportable reportable, AstInfo<?> astInfo, FileLocation location,
-                                         String message, Object... formatArgs) {
+    @Experimental public void addViolationWithPosition(Reportable reportable, AstInfo<?> astInfo, FileLocation location,
+            String message, Object... formatArgs) {
         Objects.requireNonNull(reportable, "Node was null");
         Objects.requireNonNull(message, "Message was null");
         Objects.requireNonNull(formatArgs, "Format arguments were null, use an empty array");
@@ -182,9 +181,8 @@ public final class RuleContext {
     /**
      * @experimental Since 7.14.0. See <a href="https://github.com/pmd/pmd/pull/5609">[core] Add rule to report unnecessary suppression comments/annotations #5609</a>
      */
-    @Experimental
-    public void addViolationNoSuppress(Reportable reportable, AstInfo<?> astInfo,
-                                String message, Object... formatArgs) {
+    @Experimental public void addViolationNoSuppress(Reportable reportable, AstInfo<?> astInfo,
+            String message, Object... formatArgs) {
         Objects.requireNonNull(reportable, "Node was null");
         Objects.requireNonNull(message, "Message was null");
         Objects.requireNonNull(formatArgs, "Format arguments were null, use an empty array");

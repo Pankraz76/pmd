@@ -28,8 +28,7 @@ import picocli.CommandLine.Parameters;
 
 public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfiguration> extends AbstractPmdSubcommand {
 
-    @CommandLine.Spec
-    protected CommandSpec spec; // injected by PicoCli, needed for validations
+    @CommandLine.Spec protected CommandSpec spec; // injected by PicoCli, needed for validations
 
     protected static final String FILE_COLLECTION_OPTION_HEADER = "Input files specification";
 
@@ -37,49 +36,41 @@ public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfigurat
     protected static class FileCollectionOptions<C extends AbstractConfiguration> {
 
         @Option(names = {"--encoding", "-e"}, description = "Specifies the character set encoding of the source code files",
-                defaultValue = "UTF-8")
-        private Charset encoding;
+                defaultValue = "UTF-8") private Charset encoding;
 
 
         @Option(names = "--file-list",
                 description =
                         "Path to a file containing a list of files to analyze, one path per line. "
-                        + "One of --dir, --file-list or --uri must be provided.")
-        private Path fileListPath;
+                                + "One of --dir, --file-list or --uri must be provided.") private Path fileListPath;
 
         @Option(names = {"--uri", "-u"},
                 description = "Database URI for sources. "
-                              + "One of --dir, --file-list or --uri must be provided.")
-        private URI uri;
+                        + "One of --dir, --file-list or --uri must be provided.") private URI uri;
 
 
         boolean usesDeprecatedIgnoreListOption = false;
 
         @Option(names = "--ignore-list",
                 description = "(DEPRECATED: use --exclude-file-list) Path to a file containing a list of files to exclude from the analysis, one path per line. "
-                              + "This option can be combined with --dir, --file-list and --uri.")
-        @Deprecated
-        protected void setExcludeFileList(Path path) {
+                        + "This option can be combined with --dir, --file-list and --uri.") @Deprecated protected void setExcludeFileList(Path path) {
             this.excludeFileListPath = path;
             this.usesDeprecatedIgnoreListOption = true;
         }
 
-        @Option(names = "--exclude", arity = "1..*", description = "Files to be excluded from the analysis")
-        private List<Path> excludeFiles = new ArrayList<>();
+        @Option(names = "--exclude", arity = "1..*", description = "Files to be excluded from the analysis") private List<Path> excludeFiles = new ArrayList<>();
 
         @Option(names = "--exclude-file-list",
                 description = "Path to a file containing a list of files to exclude from the analysis, one path per line. "
-                              + "This option can be combined with --dir, --file-list and --uri.")
-        private Path excludeFileListPath;
+                        + "This option can be combined with --dir, --file-list and --uri.") private Path excludeFileListPath;
 
 
         @Option(names = {"--relativize-paths-with", "-z"}, description = "Path relative to which directories are rendered in the report. "
-                                                                         + "This option allows shortening directories in the report; "
-                                                                         + "without it, paths are rendered as mentioned in the source directory (option \"--dir\"). "
-                                                                         + "The option can be repeated, in which case the shortest relative path will be used. "
-                                                                         + "If the root path is mentioned (e.g. \"/\" or \"C:\\\"), then the paths will be rendered as absolute.",
-                arity = "1..*", split = ",")
-        private List<Path> relativizeRootPaths;
+                + "This option allows shortening directories in the report; "
+                + "without it, paths are rendered as mentioned in the source directory (option \"--dir\"). "
+                + "The option can be repeated, in which case the shortest relative path will be used. "
+                + "If the root path is mentioned (e.g. \"/\" or \"C:\\\"), then the paths will be rendered as absolute.",
+                arity = "1..*", split = ",") private List<Path> relativizeRootPaths;
 
         // see the setters #setInputPaths and setPositionalInputPaths for @Option and @Parameters annotations
         // Note: can't use annotations on the fields here, as otherwise the complete list would be replaced
@@ -88,12 +79,11 @@ public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfigurat
 
         @Option(names = {"--dir", "-d"},
                 description = "Path to a source file, or directory containing source files to analyze. "
-                              + "Zip and Jar files are also supported, if they are specified directly "
-                              + "(archive files found while exploring a directory are not recursively expanded). "
-                              + "This option can be repeated, and multiple arguments can be provided to a single occurrence of the option. "
-                              + "One of --dir, --file-list or --uri must be provided.",
-                arity = "1..*", split = ",")
-        protected void setInputPaths(final List<Path> inputPaths) {
+                        + "Zip and Jar files are also supported, if they are specified directly "
+                        + "(archive files found while exploring a directory are not recursively expanded). "
+                        + "This option can be repeated, and multiple arguments can be provided to a single occurrence of the option. "
+                        + "One of --dir, --file-list or --uri must be provided.",
+                arity = "1..*", split = ",") protected void setInputPaths(final List<Path> inputPaths) {
             if (this.inputPaths == null) {
                 this.inputPaths = new LinkedHashSet<>(); // linked hashSet in order to maintain order
             }
@@ -101,13 +91,11 @@ public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfigurat
             this.inputPaths.addAll(inputPaths);
         }
 
-        @Option(names = "--non-recursive", description = "Don't scan subdirectiories when using the --d (-dir) option.")
-        private boolean nonRecursive;
+        @Option(names = "--non-recursive", description = "Don't scan subdirectiories when using the --d (-dir) option.") private boolean nonRecursive;
 
 
         @Parameters(arity = "*", description = "Path to a source file, or directory containing source files to analyze. "
-                                               + "Equivalent to using --dir.")
-        protected void setPositionalInputPaths(final List<Path> inputPaths) {
+                + "Equivalent to using --dir.") protected void setPositionalInputPaths(final List<Path> inputPaths) {
             this.setInputPaths(inputPaths);
         }
 
@@ -138,7 +126,7 @@ public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfigurat
             if ((inputPaths == null || inputPaths.isEmpty()) && uri == null && fileListPath == null) {
                 throw new ParameterException(spec.commandLine(),
                         "Please provide a parameter for source root directory (--dir or -d), "
-                        + "database URI (--uri or -u), or file list path (--file-list)");
+                                + "database URI (--uri or -u), or file list path (--file-list)");
             }
 
             if (relativizeRootPaths != null) {
@@ -156,22 +144,18 @@ public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfigurat
     @Option(names = "--no-fail-on-violation",
             description = "By default PMD exits with status 4 if violations or duplications are found. "
                     + "Disable this option with '--no-fail-on-violation' to exit with 0 instead. In any case a report with the found violations or duplications will be written.",
-            defaultValue = "true", negatable = true)
-    private boolean failOnViolation;
+            defaultValue = "true", negatable = true) private boolean failOnViolation;
 
     @Option(names = "--no-fail-on-error",
             description = "By default PMD exits with status 5 if recoverable errors occurred (whether or not there are violations or duplications). "
                     + "Disable this option with '--no-fail-on-error' to exit with 0 instead. In any case, a report with the found violations or duplications will be written.",
-            defaultValue = "true", negatable = true)
-    private boolean failOnError;
+            defaultValue = "true", negatable = true) private boolean failOnError;
 
 
-    @Option(names = { "--report-file", "-r" },
+    @Option(names = {"--report-file", "-r"},
             description = "Path to a file to which report output is written. "
-                          + "The file is created if it does not exist. "
-                          + "If this option is not specified, the report is rendered to standard output.")
-    private Path reportFile;
-
+                    + "The file is created if it does not exist. "
+                    + "If this option is not specified, the report is rendered to standard output.") private Path reportFile;
 
 
     protected abstract C toConfiguration();
@@ -179,18 +163,16 @@ public abstract class AbstractAnalysisPmdSubcommand<C extends AbstractConfigurat
     protected abstract CliExitCode doExecute(C conf);
 
 
-    @Override
-    protected CliExitCode execute() {
+    @Override protected CliExitCode execute() {
         final C configuration = toConfiguration();
         return PmdRootLogger.executeInLoggingContext(configuration,
-                                                     debug,
-                                                     this::doExecute);
+                debug,
+                this::doExecute);
     }
 
     protected abstract FileCollectionOptions<C> getFileCollectionOptions();
 
-    @Override
-    protected void validate() throws ParameterException {
+    @Override protected void validate() throws ParameterException {
         super.validate();
         getFileCollectionOptions().validate(spec);
     }

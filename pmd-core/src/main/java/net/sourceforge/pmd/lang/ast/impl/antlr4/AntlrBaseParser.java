@@ -20,12 +20,11 @@ import net.sourceforge.pmd.lang.ast.RootNode;
  * @param <R> Type of the root node
  */
 public abstract class AntlrBaseParser<
-    N extends AntlrNode<N>,
-    R extends BaseAntlrInnerNode<N> & RootNode
-    > implements Parser {
+        N extends AntlrNode<N>,
+        R extends BaseAntlrInnerNode<N> & RootNode
+> implements Parser {
 
-    @Override
-    public R parse(ParserTask task) throws ParseException {
+    @Override public R parse(ParserTask task) throws ParseException {
         CharStream cs = CharStreams.fromString(task.getSourceText(), task.getTextDocument().getFileId().getAbsolutePath());
         return parse(getLexer(cs), task);
     }

@@ -42,8 +42,7 @@ public final class ASTReceiverParameter extends AbstractJavaNode {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -57,8 +56,7 @@ public final class ASTReceiverParameter extends AbstractJavaNode {
      * declaration of the inner class, call it C, and the name of the parameter
      * must be {@code Identifier.this} where {@code Identifier} is the simple name of C.
      */
-    @NonNull
-    public ASTClassType getReceiverType() {
+    @NonNull public ASTClassType getReceiverType() {
         return (ASTClassType) getChild(0);
     }
 

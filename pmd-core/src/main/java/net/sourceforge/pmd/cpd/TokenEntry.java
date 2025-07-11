@@ -84,8 +84,7 @@ public class TokenEntry implements Comparable<TokenEntry> {
         return this.index;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return hashCode;
     }
 
@@ -93,8 +92,7 @@ public class TokenEntry implements Comparable<TokenEntry> {
         this.hashCode = hashCode;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         } else if (!(o instanceof TokenEntry)) {
@@ -109,8 +107,7 @@ public class TokenEntry implements Comparable<TokenEntry> {
         return other.hashCode == hashCode;
     }
 
-    @Override
-    public int compareTo(TokenEntry other) {
+    @Override public int compareTo(TokenEntry other) {
         return getIndex() - other.getIndex();
     }
 
@@ -126,8 +123,7 @@ public class TokenEntry implements Comparable<TokenEntry> {
         return image == null ? "--unknown--" : image;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         if (this.isEof()) {
             return "EOF";
         }

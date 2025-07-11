@@ -20,8 +20,7 @@ import picocli.CommandLine.TypeConversionException;
  */
 public class PmdLanguageVersionTypeSupport implements ITypeConverter<LanguageVersion>, Iterable<String> {
 
-    @Override
-    public Iterator<String> iterator() {
+    @Override public Iterator<String> iterator() {
         // Explicit language-version pairs, such as "java-18" or "apex-54".
         // We build these directly to retain aliases. "java-8" works, but the canonical name for the LanguageVersion is java-1.8
         return LanguageRegistry.PMD.getLanguages().stream()
@@ -29,13 +28,12 @@ public class PmdLanguageVersionTypeSupport implements ITypeConverter<LanguageVer
                 .collect(Collectors.toCollection(TreeSet::new)).iterator();
     }
 
-    @Override
-    public LanguageVersion convert(final String value) throws Exception {
+    @Override public LanguageVersion convert(final String value) throws Exception {
         return LanguageRegistry.PMD.getLanguages().stream()
-            .filter(l -> value.startsWith(l.getId() + "-"))
-            .map(l -> l.getVersion(value.substring(l.getId().length() + 1)))
-            .filter(Objects::nonNull)
-            .findFirst()
-            .orElseThrow(() -> new TypeConversionException("Unknown language version: " + value));
+                .filter(l -> value.startsWith(l.getId() + "-"))
+                .map(l -> l.getVersion(value.substring(l.getId().length() + 1)))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElseThrow(() -> new TypeConversionException("Unknown language version: " + value));
     }
 }

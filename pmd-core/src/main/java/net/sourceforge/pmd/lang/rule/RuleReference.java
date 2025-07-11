@@ -80,8 +80,7 @@ public class RuleReference implements Rule {
         return minimumLanguageVersion;
     }
 
-    @Override
-    public void setMinimumLanguageVersion(LanguageVersion minimumLanguageVersion) {
+    @Override public void setMinimumLanguageVersion(LanguageVersion minimumLanguageVersion) {
         // Only override if different than current value, or if already
         // overridden.
         if (!Objects.equals(minimumLanguageVersion, rule.getMinimumLanguageVersion()) || this.minimumLanguageVersion != null) {
@@ -94,8 +93,7 @@ public class RuleReference implements Rule {
         return maximumLanguageVersion;
     }
 
-    @Override
-    public void setMaximumLanguageVersion(LanguageVersion maximumLanguageVersion) {
+    @Override public void setMaximumLanguageVersion(LanguageVersion maximumLanguageVersion) {
         // Only override if different than current value, or if already
         // overridden.
         if (!Objects.equals(maximumLanguageVersion, rule.getMaximumLanguageVersion()) || this.maximumLanguageVersion != null) {
@@ -108,13 +106,11 @@ public class RuleReference implements Rule {
         return deprecated;
     }
 
-    @Override
-    public boolean isDeprecated() {
+    @Override public boolean isDeprecated() {
         return deprecated != null && deprecated;
     }
 
-    @Override
-    public void setDeprecated(boolean deprecated) {
+    @Override public void setDeprecated(boolean deprecated) {
         // Deprecation does not propagate to the underlying Rule. It is the
         // Rule reference itself which is being deprecated.
         this.deprecated = deprecated ? deprecated : null;
@@ -128,8 +124,7 @@ public class RuleReference implements Rule {
         return rule.getName();
     }
 
-    @Override
-    public void setName(String name) {
+    @Override public void setName(String name) {
         // Only override if different than current value, or if already
         // overridden.
         if (!isSame(name, rule.getName()) || this.name != null) {
@@ -137,8 +132,7 @@ public class RuleReference implements Rule {
         }
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         if (this.name != null) {
             return this.name;
         }
@@ -149,8 +143,7 @@ public class RuleReference implements Rule {
         return message;
     }
 
-    @Override
-    public void setMessage(String message) {
+    @Override public void setMessage(String message) {
         // Only override if different than current value, or if already
         // overridden.
         if (!isSame(message, rule.getMessage()) || this.message != null) {
@@ -163,8 +156,7 @@ public class RuleReference implements Rule {
         return description;
     }
 
-    @Override
-    public void setDescription(String description) {
+    @Override public void setDescription(String description) {
         // Only override if different than current value, or if already
         // overridden.
         if (!isSame(description, rule.getDescription()) || this.description != null) {
@@ -177,8 +169,7 @@ public class RuleReference implements Rule {
         return examples;
     }
 
-    @Override
-    public void addExample(String example) {
+    @Override public void addExample(String example) {
         // TODO Intuitively, if some examples are overridden (even with empty value), then
         // I think we should discard the previous ones. If the rule needs new examples,
         // then the previous ones are not relevant.
@@ -209,8 +200,7 @@ public class RuleReference implements Rule {
         return externalInfoUrl;
     }
 
-    @Override
-    public void setExternalInfoUrl(String externalInfoUrl) {
+    @Override public void setExternalInfoUrl(String externalInfoUrl) {
         // Only override if different than current value, or if already
         // overridden.
         if (!isSame(externalInfoUrl, rule.getExternalInfoUrl()) || this.externalInfoUrl != null) {
@@ -223,8 +213,7 @@ public class RuleReference implements Rule {
         return priority;
     }
 
-    @Override
-    public void setPriority(RulePriority priority) {
+    @Override public void setPriority(RulePriority priority) {
         // Only override if different than current value, or if already
         // overridden.
         if (priority != rule.getPriority() || this.priority != null) {
@@ -234,13 +223,11 @@ public class RuleReference implements Rule {
     }
 
 
-    @Override
-    public List<PropertyDescriptor<?>> getOverriddenPropertyDescriptors() {
+    @Override public List<PropertyDescriptor<?>> getOverriddenPropertyDescriptors() {
         return new ArrayList<>(getOverriddenPropertiesByPropertyDescriptor().keySet());
     }
 
-    @Override
-    public void definePropertyDescriptor(PropertyDescriptor<?> propertyDescriptor) throws IllegalArgumentException {
+    @Override public void definePropertyDescriptor(PropertyDescriptor<?> propertyDescriptor) throws IllegalArgumentException {
         // Define on the underlying Rule, where it is impossible to have two
         // property descriptors with the same name. Therefore, there is no need
         // to check if the property is already overridden at this level.
@@ -252,13 +239,11 @@ public class RuleReference implements Rule {
     }
 
 
-    @Override
-    public Map<PropertyDescriptor<?>, Object> getOverriddenPropertiesByPropertyDescriptor() {
+    @Override public Map<PropertyDescriptor<?>, Object> getOverriddenPropertiesByPropertyDescriptor() {
         return propertyValues == null ? new HashMap<>() : new HashMap<>(propertyValues);
     }
 
-    @Override
-    public <T> void setProperty(PropertyDescriptor<T> propertyDescriptor, T value) {
+    @Override public <T> void setProperty(PropertyDescriptor<T> propertyDescriptor, T value) {
         // Only override if different than current value.
         if (!Objects.equals(rule.getProperty(propertyDescriptor), value)) {
             if (propertyValues == null) {
@@ -289,19 +274,16 @@ public class RuleReference implements Rule {
         return false;
     }
 
-    @Override
-    public boolean hasDescriptor(PropertyDescriptor<?> descriptor) {
+    @Override public boolean hasDescriptor(PropertyDescriptor<?> descriptor) {
         return propertyDescriptors != null && propertyDescriptors.contains(descriptor)
                 || rule.hasDescriptor(descriptor);
     }
 
-    @Override
-    public boolean isPropertyOverridden(PropertyDescriptor<?> descriptor) {
+    @Override public boolean isPropertyOverridden(PropertyDescriptor<?> descriptor) {
         return propertyValues != null && propertyValues.containsKey(descriptor);
     }
 
-    @Override
-    public Rule deepCopy() {
+    @Override public Rule deepCopy() {
         return new RuleReference(this);
     }
 
@@ -318,128 +300,103 @@ public class RuleReference implements Rule {
                 || propertyDescriptors != null || propertyValues != null;
     }
 
-    @Override
-    public Language getLanguage() {
+    @Override public Language getLanguage() {
         return rule.getLanguage();
     }
 
-    @Override
-    public void setLanguage(Language language) {
+    @Override public void setLanguage(Language language) {
         rule.setLanguage(language);
     }
 
-    @Override
-    public LanguageVersion getMinimumLanguageVersion() {
+    @Override public LanguageVersion getMinimumLanguageVersion() {
         return rule.getMinimumLanguageVersion();
     }
 
-    @Override
-    public LanguageVersion getMaximumLanguageVersion() {
+    @Override public LanguageVersion getMaximumLanguageVersion() {
         return rule.getMaximumLanguageVersion();
     }
 
-    @Override
-    public String getSince() {
+    @Override public String getSince() {
         return rule.getSince();
     }
 
-    @Override
-    public void setSince(String since) {
+    @Override public void setSince(String since) {
         rule.setSince(since);
     }
 
-    @Override
-    public String getRuleClass() {
+    @Override public String getRuleClass() {
         return rule.getRuleClass();
     }
 
-    @Override
-    public void setRuleClass(String ruleClass) {
+    @Override public void setRuleClass(String ruleClass) {
         rule.setRuleClass(ruleClass);
     }
 
-    @Override
-    public String getRuleSetName() {
+    @Override public String getRuleSetName() {
         return rule.getRuleSetName();
     }
 
-    @Override
-    public void setRuleSetName(String name) {
+    @Override public void setRuleSetName(String name) {
         rule.setRuleSetName(name);
     }
 
-    @Override
-    public String getMessage() {
+    @Override public String getMessage() {
         return rule.getMessage();
     }
 
-    @Override
-    public String getDescription() {
+    @Override public String getDescription() {
         return rule.getDescription();
     }
 
-    @Override
-    public List<String> getExamples() {
+    @Override public List<String> getExamples() {
         return rule.getExamples();
     }
 
-    @Override
-    public String getExternalInfoUrl() {
+    @Override public String getExternalInfoUrl() {
         return rule.getExternalInfoUrl();
     }
 
-    @Override
-    public RulePriority getPriority() {
+    @Override public RulePriority getPriority() {
         return rule.getPriority();
     }
 
-    @Override
-    public RuleTargetSelector getTargetSelector() {
+    @Override public RuleTargetSelector getTargetSelector() {
         return rule.getTargetSelector();
     }
 
-    @Override
-    public void initialize(LanguageProcessor languageProcessor) {
+    @Override public void initialize(LanguageProcessor languageProcessor) {
         rule.initialize(languageProcessor);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         rule.start(ctx);
     }
 
-    @Override
-    public void apply(Node target, RuleContext ctx) {
+    @Override public void apply(Node target, RuleContext ctx) {
         rule.apply(target, ctx);
     }
 
-    @Override
-    public void end(RuleContext ctx) {
+    @Override public void end(RuleContext ctx) {
         rule.end(ctx);
     }
 
-    @Override
-    public PropertyDescriptor<?> getPropertyDescriptor(String name) {
+    @Override public PropertyDescriptor<?> getPropertyDescriptor(String name) {
         return rule.getPropertyDescriptor(name);
     }
 
-    @Override
-    public List<PropertyDescriptor<?>> getPropertyDescriptors() {
+    @Override public List<PropertyDescriptor<?>> getPropertyDescriptors() {
         return rule.getPropertyDescriptors();
     }
 
-    @Override
-    public <T> T getProperty(PropertyDescriptor<T> propertyDescriptor) {
+    @Override public <T> T getProperty(PropertyDescriptor<T> propertyDescriptor) {
         return rule.getProperty(propertyDescriptor);
     }
 
-    @Override
-    public Map<PropertyDescriptor<?>, Object> getPropertiesByPropertyDescriptor() {
+    @Override public Map<PropertyDescriptor<?>, Object> getPropertiesByPropertyDescriptor() {
         return rule.getPropertiesByPropertyDescriptor();
     }
 
-    @Override
-    public String dysfunctionReason() {
+    @Override public String dysfunctionReason() {
         return rule.dysfunctionReason();
     }
 }

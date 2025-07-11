@@ -30,16 +30,14 @@ import com.github.stefanbirkner.systemlambda.SystemLambda;
 
 class PMDCoverageTest {
 
-    @TempDir
-    private Path tempFolder;
+    @TempDir private Path tempFolder;
 
-    @Test
-    void runAllJavaPmdOnSourceTree() {
-        runPmd("src/main/java", conf -> {});
+    @Test void runAllJavaPmdOnSourceTree() {
+        runPmd("src/main/java", conf -> {
+        });
     }
 
-    @Test
-    void runAllJavaPmdOnTestResourcesWithLatestJavaVersion() {
+    @Test void runAllJavaPmdOnTestResourcesWithLatestJavaVersion() {
         LanguageVersion latest = JavaLanguageModule.getInstance().getLatestVersion();
 
         runPmd("src/test/resources", conf -> conf.setDefaultLanguageVersion(latest));

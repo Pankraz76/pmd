@@ -9,11 +9,10 @@ public abstract class AbstractThing implements Thing {
         setName(original.getName());
     }
 
-    @Override
-    public void setName(String name) { }
+    @Override public void setName(String name) {
+    }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return "";
     }
 }

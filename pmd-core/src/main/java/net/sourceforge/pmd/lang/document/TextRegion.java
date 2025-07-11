@@ -40,8 +40,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public final class TextRegion implements Comparable<TextRegion> {
 
     private static final Comparator<TextRegion> COMPARATOR =
-        Comparator.comparingInt(TextRegion::getStartOffset)
-                  .thenComparingInt(TextRegion::getLength);
+            Comparator.comparingInt(TextRegion::getStartOffset)
+                    .thenComparingInt(TextRegion::getLength);
 
     private final int startOffset;
     private final int length;
@@ -100,7 +100,7 @@ public final class TextRegion implements Comparable<TextRegion> {
      */
     public boolean contains(TextRegion other) {
         return this.getStartOffset() <= other.getStartOffset()
-            && other.getEndOffset() <= this.getEndOffset();
+                && other.getEndOffset() <= this.getEndOffset();
     }
 
     /**
@@ -152,7 +152,7 @@ public final class TextRegion implements Comparable<TextRegion> {
         int end = Math.min(r1.getEndOffset(), r2.getEndOffset());
 
         return start <= end ? fromBothOffsets(start, end)
-                            : null;
+                : null;
     }
 
     /**
@@ -223,18 +223,15 @@ public final class TextRegion implements Comparable<TextRegion> {
 
 
     /** Compares the start offset, then the length of a region. */
-    @Override
-    public int compareTo(@NonNull TextRegion o) {
+    @Override public int compareTo(@NonNull TextRegion o) {
         return COMPARATOR.compare(this, o);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Region(start=" + startOffset + ", len=" + length + ", end=" + getEndOffset() + ")";
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -243,11 +240,10 @@ public final class TextRegion implements Comparable<TextRegion> {
         }
         TextRegion that = (TextRegion) o;
         return startOffset == that.getStartOffset()
-            && length == that.getLength();
+                && length == that.getLength();
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return startOffset * 31 + length;
     }
 }

@@ -15,8 +15,7 @@ public final class HtmlParsingHelper extends BaseParsingHelper<HtmlParsingHelper
         super(HtmlLanguageModule.getInstance(), ASTHtmlDocument.class, params);
     }
 
-    @Override
-    protected HtmlParsingHelper clone(Params params) {
+    @Override protected HtmlParsingHelper clone(Params params) {
         return new HtmlParsingHelper(params);
     }
 }

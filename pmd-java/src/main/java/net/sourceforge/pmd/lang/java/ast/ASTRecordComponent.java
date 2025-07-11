@@ -37,14 +37,13 @@ import net.sourceforge.pmd.lang.java.symbols.JRecordComponentSymbol;
  * </pre>
  */
 public final class ASTRecordComponent extends AbstractTypedSymbolDeclarator<JRecordComponentSymbol>
-    implements ModifierOwner, VariableIdOwner, SymbolDeclaratorNode {
+        implements ModifierOwner, VariableIdOwner, SymbolDeclaratorNode {
 
     ASTRecordComponent(int id) {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -61,8 +60,7 @@ public final class ASTRecordComponent extends AbstractTypedSymbolDeclarator<JRec
         return firstChild(ASTType.class);
     }
 
-    @Override
-    public ASTVariableId getVarId() {
+    @Override public ASTVariableId getVarId() {
         return firstChild(ASTVariableId.class);
     }
 }

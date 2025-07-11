@@ -24,8 +24,7 @@ import groovyjarjarantlr4.v4.runtime.CharStreams;
  */
 public class GroovyCpdLexer extends CpdLexerBase<GroovyToken> {
 
-    @Override
-    protected final TokenManager<GroovyToken> makeLexerImpl(TextDocument doc) throws IOException {
+    @Override protected final TokenManager<GroovyToken> makeLexerImpl(TextDocument doc) throws IOException {
         CharStream charStream = CharStreams.fromReader(doc.newReader(), doc.getFileId().getAbsolutePath());
         return new GroovyTokenManager(new GroovyLexer(charStream), doc);
     }

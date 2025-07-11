@@ -54,13 +54,11 @@ public class Match implements Comparable<Match>, Iterable<Mark> {
         return Collections.unmodifiableSet(markSet);
     }
 
-    @Override
-    public Iterator<Mark> iterator() {
+    @Override public Iterator<Mark> iterator() {
         return markSet.iterator();
     }
 
-    @Override
-    public int compareTo(Match other) {
+    @Override public int compareTo(Match other) {
         int diff = other.getTokenCount() - getTokenCount();
         if (diff != 0) {
             return diff;
@@ -76,8 +74,7 @@ public class Match implements Comparable<Match>, Iterable<Mark> {
         return getMark(1);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Match: \ntokenCount = " + tokenCount + "\nmarks = " + markSet.size();
     }
 

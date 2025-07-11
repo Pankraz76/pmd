@@ -81,7 +81,7 @@ final class Lub {
         List<JClassType> list = new ArrayList<>();
         for (JTypeMirror it : stunion) {
             if (it instanceof JClassType
-                && it.getErasure().equals(g) && !it.isRaw()) {
+                    && it.getErasure().equals(g) && !it.isRaw()) {
                 list.add((JClassType) it);
             }
         }
@@ -276,8 +276,7 @@ final class Lub {
         }
 
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             if (this == o) {
                 return true;
             }
@@ -286,16 +285,14 @@ final class Lub {
             }
             TypePair pair = (TypePair) o;
             return Objects.equals(left, pair.left)
-                && Objects.equals(right, pair.right);
+                    && Objects.equals(right, pair.right);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return Objects.hash(left, right);
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "Pair(" + left + " - " + right + ")";
         }
     }
@@ -342,7 +339,7 @@ final class Lub {
                     // then A & B cannot exist and so (A & B)[] similarly does not exist.
 
                     JTypeMirror componentGlb = glb(ts, setOf(((JArrayType) ci).getComponentType(),
-                                                             ((JArrayType) primaryBound).getComponentType()));
+                            ((JArrayType) primaryBound).getComponentType()));
                     primaryBound = ts.arrayType(componentGlb);
 
                 } else {
@@ -354,7 +351,7 @@ final class Lub {
                     int cmp = compareRelatedness(ci.getErasure(), primaryBound.getErasure());
                     if (cmp == 0) {
                         throw new IllegalArgumentException(
-                            "Bad intersection, unrelated class types " + ci + " and " + primaryBound + " in " + types
+                                "Bad intersection, unrelated class types " + ci + " and " + primaryBound + " in " + types
                         );
                     } else if (cmp < 0) {
                         primaryBound = ci;
@@ -417,8 +414,8 @@ final class Lub {
 
     static boolean isExclusiveIntersectionBound(JTypeMirror ci) {
         return !ci.isInterface()
-            && !(ci instanceof InferenceVar)
-            && (ci.getSymbol() == null || !ci.getSymbol().isUnresolved());
+                && !(ci instanceof InferenceVar)
+                && (ci.getSymbol() == null || !ci.getSymbol().isUnresolved());
     }
 
 

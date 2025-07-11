@@ -51,10 +51,10 @@ public final class AstElementNode extends BaseNodeInfo implements SiblingCountin
 
 
     AstElementNode(AstTreeInfo document,
-                   MutableInt idGenerator,
-                   BaseNodeInfo parent,
-                   Node wrappedNode,
-                   Configuration configuration) {
+            MutableInt idGenerator,
+            BaseNodeInfo parent,
+            Node wrappedNode,
+            Configuration configuration) {
         super(determineType(wrappedNode), configuration.getNamePool(), wrappedNode.getXPathNodeName(), parent);
 
         this.treeInfo = document;
@@ -102,40 +102,34 @@ public final class AstElementNode extends BaseNodeInfo implements SiblingCountin
         if (lightAttributes == null) {
             lightAttributes = new HashMap<>();
             getUnderlyingNode().getXPathAttributesIterator()
-                               .forEachRemaining(it -> lightAttributes.put(it.getName(), it));
+                    .forEachRemaining(it -> lightAttributes.put(it.getName(), it));
         }
         return lightAttributes;
     }
 
-    @Override
-    public boolean hasChildNodes() {
+    @Override public boolean hasChildNodes() {
         return !children.isEmpty();
     }
 
-    @Override
-    List<AstElementNode> getChildren() {
+    @Override List<AstElementNode> getChildren() {
         return children;
     }
 
-    @Override
-    public Node getUnderlyingNode() {
+    @Override public Node getUnderlyingNode() {
         return wrappedNode;
     }
 
-    @Override
-    public int getColumnNumber() {
+    @Override public int getColumnNumber() {
         return wrappedNode.getBeginColumn();
     }
 
-    @Override
-    public int getSiblingPosition() {
+    @Override public int getSiblingPosition() {
         BaseNodeInfo parent = getParent();
         return !(parent instanceof AstElementNode) ? 0
-                                                   : id - ((AstElementNode) parent).id;
+                : id - ((AstElementNode) parent).id;
     }
 
-    @Override
-    public int compareOrder(NodeInfo other) {
+    @Override public int compareOrder(NodeInfo other) {
         if (other instanceof AstElementNode) {
             return Integer.compare(this.id, ((AstElementNode) other).id);
         } else if (other instanceof SiblingCountingNode) {
@@ -144,8 +138,7 @@ public final class AstElementNode extends BaseNodeInfo implements SiblingCountin
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    protected AxisIterator iterateAttributes(NodeTest predicate) {
+    @Override protected AxisIterator iterateAttributes(NodeTest predicate) {
         if (predicate instanceof NameTest) {
             String local = ((NameTest) predicate).getLocalPart();
             return SingleNodeIterator.makeIterator(getAttributes().get(local));
@@ -154,8 +147,7 @@ public final class AstElementNode extends BaseNodeInfo implements SiblingCountin
         return filter(predicate, new IteratorAdapter(getAttributes().values().iterator()));
     }
 
-    @Override
-    protected AxisIterator iterateChildren(NodeTest nodeTest) {
+    @Override protected AxisIterator iterateChildren(NodeTest nodeTest) {
         return filter(nodeTest, iterateList(children));
     }
 
@@ -166,14 +158,13 @@ public final class AstElementNode extends BaseNodeInfo implements SiblingCountin
         }
 
         List<? extends NodeInfo> siblingsList =
-            forwards ? CollectionUtil.drop(parent.getChildren(), wrappedNode.getIndexInParent() + 1)
-                     : CollectionUtil.take(parent.getChildren(), wrappedNode.getIndexInParent());
+                forwards ? CollectionUtil.drop(parent.getChildren(), wrappedNode.getIndexInParent() + 1)
+                        : CollectionUtil.take(parent.getChildren(), wrappedNode.getIndexInParent());
 
         return filter(nodeTest, iterateList(siblingsList, forwards));
     }
 
-    @Override
-    public String getAttributeValue(NamespaceUri uri, String local) {
+    @Override public String getAttributeValue(NamespaceUri uri, String local) {
         Attribute attribute = getLightAttributes().get(local);
         if (attribute != null) {
             getTreeInfo().getLogger().recordUsageOf(attribute);
@@ -183,30 +174,25 @@ public final class AstElementNode extends BaseNodeInfo implements SiblingCountin
     }
 
 
-    @Override
-    public int getLineNumber() {
+    @Override public int getLineNumber() {
         return wrappedNode.getBeginLine();
     }
 
 
-    @Override
-    public NodeInfo getRoot() {
+    @Override public NodeInfo getRoot() {
         return getTreeInfo().getRootNode();
     }
 
 
-    @Override
-    public void generateId(StringBuilder buffer) {
+    @Override public void generateId(StringBuilder buffer) {
         buffer.append(id);
     }
 
-    @Override
-    public String getLocalPart() {
+    @Override public String getLocalPart() {
         return wrappedNode.getXPathNodeName();
     }
 
-    @Override
-    public String getStringValue() {
+    @Override public String getStringValue() {
         Node node = getUnderlyingNode();
         if (node instanceof TextNode) {
             return ((TextNode) node).getText();
@@ -229,11 +215,9 @@ public final class AstElementNode extends BaseNodeInfo implements SiblingCountin
                 .collect(Collectors.joining(""));
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Wrapper[" + getLocalPart() + "]@" + hashCode();
     }
-
 
 
     private static class IteratorAdapter implements AxisIterator, LookaheadIterator {
@@ -244,23 +228,19 @@ public final class AstElementNode extends BaseNodeInfo implements SiblingCountin
             this.it = it;
         }
 
-        @Override
-        public boolean hasNext() {
+        @Override public boolean hasNext() {
             return it.hasNext();
         }
 
-        @Override
-        public NodeInfo next() {
+        @Override public NodeInfo next() {
             return it.hasNext() ? it.next() : null;
         }
 
-        @Override
-        public void close() {
+        @Override public void close() {
             // nothing to do
         }
 
-        @Override
-        public boolean supportsHasNext() {
+        @Override public boolean supportsHasNext() {
             return true;
         }
     }

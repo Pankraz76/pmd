@@ -32,20 +32,20 @@ public final class UselessParenthesesRule extends AbstractJavaRulechainRule {
     // todo rename to UnnecessaryParentheses
 
     private static final PropertyDescriptor<Boolean> IGNORE_CLARIFYING =
-        PropertyFactory.booleanProperty("ignoreClarifying")
-                       .defaultValue(true)
-                       .desc("Ignore parentheses that separate expressions of difference precedence,"
-                                 + " like in `(a % 2 == 0) ? x : -x`")
-                       .build();
+            PropertyFactory.booleanProperty("ignoreClarifying")
+                    .defaultValue(true)
+                    .desc("Ignore parentheses that separate expressions of difference precedence,"
+                            + " like in `(a % 2 == 0) ? x : -x`")
+                    .build();
 
     private static final PropertyDescriptor<Boolean> IGNORE_BALANCING =
-        PropertyFactory.booleanProperty("ignoreBalancing")
-                       .defaultValue(true)
-                       .desc("Ignore unnecessary parentheses that appear balanced around an equality "
-                                 + "operator, because the other operand requires parentheses."
-                                 + "For example, in `(a == null) == (b == null)`, only the second pair "
-                                 + "of parentheses is necessary, but the expression is clearer that way.")
-                       .build();
+            PropertyFactory.booleanProperty("ignoreBalancing")
+                    .defaultValue(true)
+                    .desc("Ignore unnecessary parentheses that appear balanced around an equality "
+                            + "operator, because the other operand requires parentheses."
+                            + "For example, in `(a == null) == (b == null)`, only the second pair "
+                            + "of parentheses is necessary, but the expression is clearer that way.")
+                    .build();
 
     public UselessParenthesesRule() {
         super(ASTExpression.class);
@@ -62,8 +62,7 @@ public final class UselessParenthesesRule extends AbstractJavaRulechainRule {
     }
 
 
-    @Override
-    public Object visitJavaNode(JavaNode node, Object data) {
+    @Override public Object visitJavaNode(JavaNode node, Object data) {
         if (node instanceof ASTExpression) {
             checkExpr((ASTExpression) node, data);
         } else {
@@ -80,8 +79,8 @@ public final class UselessParenthesesRule extends AbstractJavaRulechainRule {
         Necessity necessity = needsParentheses(e, e.getParent());
 
         if (necessity == NEVER
-            || reportClarifying() && necessity == CLARIFYING
-            || reportBalancing() && necessity == BALANCING) {
+                || reportClarifying() && necessity == CLARIFYING
+                || reportBalancing() && necessity == BALANCING) {
             asCtx(data).addViolation(e);
         }
 
@@ -95,7 +94,7 @@ public final class UselessParenthesesRule extends AbstractJavaRulechainRule {
 
 
         if (inner.getParenthesisDepth() > 1
-            || !(outer instanceof ASTExpression)) {
+                || !(outer instanceof ASTExpression)) {
             // ((a + b))        unnecessary
             // new int[(2)]     unnecessary
             // return (1 + 2);
@@ -103,7 +102,7 @@ public final class UselessParenthesesRule extends AbstractJavaRulechainRule {
         }
 
         if (inner instanceof ASTPrimaryExpression
-            || inner instanceof ASTSwitchExpression) {
+                || inner instanceof ASTSwitchExpression) {
             return NEVER;
         }
 
@@ -132,7 +131,7 @@ public final class UselessParenthesesRule extends AbstractJavaRulechainRule {
             // (a ? b : c) ? d : e    necessary
             if (outer instanceof ASTConditionalExpression) {
                 return inner.getIndexInParent() == 2 ? NEVER  // last child
-                                                     : ALWAYS;
+                        : ALWAYS;
             } else {
                 return necessaryIf(!(outer instanceof ASTAssignmentExpression));
             }
@@ -142,7 +141,7 @@ public final class UselessParenthesesRule extends AbstractJavaRulechainRule {
             // a ? (() -> b) + c : d     invalid, but necessary
             // a ? (() -> b) : d         clarifying
             return outer instanceof ASTConditionalExpression ? CLARIFYING
-                                                             : definitely(!(outer instanceof ASTAssignmentExpression));
+                    : definitely(!(outer instanceof ASTAssignmentExpression));
         }
 
         if (inner instanceof ASTInfixExpression) {
@@ -183,12 +182,12 @@ public final class UselessParenthesesRule extends AbstractJavaRulechainRule {
                     // parentheses are on the left
                     // eg (a + b) + c
                     if (outop.hasSamePrecedenceAs(BinaryOp.EQ) // EQ or NE
-                        && ((ASTInfixExpression) outer).getRightOperand().isParenthesized()) {
+                            && ((ASTInfixExpression) outer).getRightOperand().isParenthesized()) {
                         // (a == null) == (b == null)
                         return BALANCING;
                     } else if (outop == BinaryOp.ADD
-                        && inop.hasSamePrecedenceAs(BinaryOp.ADD) && inner.getTypeMirror().isNumeric()
-                        && !((ASTInfixExpression) outer).getTypeMirror().isNumeric()) {
+                            && inop.hasSamePrecedenceAs(BinaryOp.ADD) && inner.getTypeMirror().isNumeric()
+                            && !((ASTInfixExpression) outer).getTypeMirror().isNumeric()) {
                         return CLARIFYING;
                     }
 
@@ -230,38 +229,38 @@ public final class UselessParenthesesRule extends AbstractJavaRulechainRule {
          */
 
         switch (inop) {
-        case AND:
-        case OR:
-        case XOR:
-        case CONDITIONAL_AND:
-        case CONDITIONAL_OR:
-            return true;
-        case MUL:
-            // a * (b * c)      -- yes
-            // a * (b / c)      -- no, could change semantics
-            // a * (b % c)      -- no
+            case AND:
+            case OR:
+            case XOR:
+            case CONDITIONAL_AND:
+            case CONDITIONAL_OR:
+                return true;
+            case MUL:
+                // a * (b * c)      -- yes
+                // a * (b / c)      -- no, could change semantics
+                // a * (b % c)      -- no
 
-            // a / (b * c)      -- no
-            // a / (b / c)      -- no
-            // a / (b % c)      -- no
+                // a / (b * c)      -- no
+                // a / (b / c)      -- no
+                // a / (b % c)      -- no
 
-            // a % (b * c)      -- no
-            // a % (b / c)      -- no
-            // a % (b % c)      -- no
+                // a % (b * c)      -- no
+                // a % (b / c)      -- no
+                // a % (b % c)      -- no
 
-            return inop == outop; // == MUL
-        case SUB:
-        case ADD:
-            // a + (b + c)      -- yes, unless outop is concatenation and inop is addition, or operands are floats
-            // a + (b - c)      -- yes
+                return inop == outop; // == MUL
+            case SUB:
+            case ADD:
+                // a + (b + c)      -- yes, unless outop is concatenation and inop is addition, or operands are floats
+                // a + (b - c)      -- yes
 
-            // a - (b + c)      -- no
-            // a - (b - c)      -- no
-            return outop == BinaryOp.ADD
-                && outer.getTypeMirror().isPrimitive() == inner.getTypeMirror().isPrimitive()
-                && !inner.getTypeMirror().isFloatingPoint();
-        default:
-            return false;
+                // a - (b + c)      -- no
+                // a - (b - c)      -- no
+                return outop == BinaryOp.ADD
+                        && outer.getTypeMirror().isPrimitive() == inner.getTypeMirror().isPrimitive()
+                        && !inner.getTypeMirror().isFloatingPoint();
+            default:
+                return false;
         }
     }
 

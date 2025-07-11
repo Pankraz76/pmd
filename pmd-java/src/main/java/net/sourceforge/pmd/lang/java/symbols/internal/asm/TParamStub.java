@@ -47,16 +47,14 @@ class TParamStub implements JTypeParameterSymbol {
     }
 
 
-    @Override
-    public @NonNull String getSimpleName() {
+    @Override public @NonNull String getSimpleName() {
         return name;
     }
 
-    @Override
-    public JTypeMirror computeUpperBound() {
+    @Override public JTypeMirror computeUpperBound() {
         if (!canComputeBound) {
             throw new IllegalStateException(
-                "Can't compute upper bound of " + name + " in " + owner.getEnclosingTypeParameterOwner());
+                    "Can't compute upper bound of " + name + " in " + owner.getEnclosingTypeParameterOwner());
         }
         JTypeMirror bound = sigParser.parseTypeVarBound(owner.getLexicalScope(), boundSignature);
         if (typeAnnotationsOnBound == null) {
@@ -64,12 +62,12 @@ class TParamStub implements JTypeParameterSymbol {
         }
         // apply all type annotations.
         return typeAnnotationsOnBound.reduce(
-            bound,
-            (tyRef, path, annot, acc) -> {
-                int boundIdx = tyRef.getTypeParameterBoundIndex();
+                bound,
+                (tyRef, path, annot, acc) -> {
+                    int boundIdx = tyRef.getTypeParameterBoundIndex();
 
-                return applyTypeAnnotationToBound(path, annot, boundIdx, acc);
-            });
+                    return applyTypeAnnotationToBound(path, annot, boundIdx, acc);
+                });
     }
 
     private static JTypeMirror applyTypeAnnotationToBound(@Nullable TypePath path, SymAnnot annot, int boundIdx, JTypeMirror ub) {
@@ -98,13 +96,11 @@ class TParamStub implements JTypeParameterSymbol {
         this.canComputeBound = true;
     }
 
-    @Override
-    public JTypeParameterOwnerSymbol getDeclaringSymbol() {
+    @Override public JTypeParameterOwnerSymbol getDeclaringSymbol() {
         return owner;
     }
 
-    @Override
-    public PSet<SymAnnot> getDeclaredAnnotations() {
+    @Override public PSet<SymAnnot> getDeclaredAnnotations() {
         return annotations;
     }
 
@@ -112,34 +108,29 @@ class TParamStub implements JTypeParameterSymbol {
         annotations = annotations.plus(annot);
     }
 
-    @Override
-    public JTypeVar getTypeMirror() {
+    @Override public JTypeVar getTypeMirror() {
         return typeVar;
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return owner.getTypeSystem();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return SymbolToStrings.ASM.toString(this);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.TYPE_PARAM.hash(this);
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         return SymbolEquality.TYPE_PARAM.equals(this, obj);
     }
 
     void addAnnotationOnBound(TypeReference tyRef, @Nullable TypePath path, SymAnnot annot) {
         assert tyRef.getSort() == TypeReference.CLASS_TYPE_PARAMETER_BOUND
-            || tyRef.getSort() == TypeReference.METHOD_TYPE_PARAMETER_BOUND;
+                || tyRef.getSort() == TypeReference.METHOD_TYPE_PARAMETER_BOUND;
 
         if (typeAnnotationsOnBound == null) {
             typeAnnotationsOnBound = new TypeAnnotationSetWithReferences();

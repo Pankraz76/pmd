@@ -25,22 +25,19 @@ public class AssignmentToNonFinalStaticRule extends AbstractJavaRulechainRule {
         super(ASTFieldAccess.class, ASTVariableAccess.class);
     }
 
-    @Override
-    public Object visit(ASTVariableAccess node, Object data) {
+    @Override public Object visit(ASTVariableAccess node, Object data) {
         checkAccess(node, data);
         return null;
     }
 
-    @Override
-    public Object visit(ASTFieldAccess node, Object data) {
+    @Override public Object visit(ASTFieldAccess node, Object data) {
         checkAccess(node, data);
         return null;
     }
 
     private void checkAccess(ASTNamedReferenceExpr node, Object data) {
         if (isInsideConstructor(node) && node.getAccessType() == AccessType.WRITE) {
-            @Nullable
-            JVariableSymbol symbol = node.getReferencedSym();
+            @Nullable JVariableSymbol symbol = node.getReferencedSym();
             if (symbol != null && symbol.isField()) {
                 JFieldSymbol field = (JFieldSymbol) symbol;
                 if (field.isStatic() && !field.isFinal()) {

@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 class StringLiteralsTest extends AbstractPLSQLParserTst {
 
 
-    @Test
-    void parseStringLiterals() throws Exception {
+    @Test void parseStringLiterals() throws Exception {
         ASTInput input = plsql.parseResource("StringLiterals.pls");
         List<ASTStringLiteral> strings = input.descendants(ASTStringLiteral.class).toList();
         assertEquals(20, strings.size());
@@ -32,8 +31,7 @@ class StringLiteralsTest extends AbstractPLSQLParserTst {
                 "\n" + "    also multiple\n" + "    lines\n" + "  ", 15, strings);
     }
 
-    @Test
-    void parseMultilineVarchar() throws Exception {
+    @Test void parseMultilineVarchar() throws Exception {
         ASTInput input = plsql.parseResource("MultilineVarchar.pls");
         List<ASTStringLiteral> strings = input.descendants(ASTStringLiteral.class).toList();
         assertEquals(1, strings.size());

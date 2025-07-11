@@ -32,10 +32,17 @@ public class ExhaustiveSwitch {
 
     // As of Java 21
     // Exhaustiveness and sealed classes
-    sealed interface S permits A, B, C {}
-    final static class A implements S {}
-    final static class B implements S {}
-    record C(int i) implements S {}    // Implicitly final
+    sealed interface S permits A, B, C {
+    }
+
+    final static class A implements S {
+    }
+
+    final static class B implements S {
+    }
+
+    record C(int i) implements S {
+    }    // Implicitly final
 
     static int testSealedExhaustive(S s) {
         return switch (s) {
@@ -56,14 +63,20 @@ public class ExhaustiveSwitch {
             default:
                 System.out.println("default case, should be B");
                 break;
-        };
+        }
+        ;
     }
 
     // As of Java 21
     // Exhaustiveness and sealed classes
-    sealed interface I<T> permits E, F {}
-    final static class E<X> implements I<String> {}
-    final static class F<Y> implements I<Y> {}
+    sealed interface I<T> permits E, F {
+    }
+
+    final static class E<X> implements I<String> {
+    }
+
+    final static class F<Y> implements I<Y> {
+    }
 
     static int testGenericSealedExhaustive(I<Integer> i) {
         return switch (i) {

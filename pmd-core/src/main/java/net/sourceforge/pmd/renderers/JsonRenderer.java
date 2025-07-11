@@ -42,13 +42,11 @@ public class JsonRenderer extends AbstractIncrementingRenderer {
         super(NAME, "JSON format.");
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "json";
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         jsonWriter = new JsonWriter(writer);
         jsonWriter.setHtmlSafe(true);
         jsonWriter.setIndent("  ");
@@ -60,8 +58,7 @@ public class JsonRenderer extends AbstractIncrementingRenderer {
         jsonWriter.name("files").beginArray();
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         String filename = null;
 
         while (violations.hasNext()) {
@@ -116,8 +113,7 @@ public class JsonRenderer extends AbstractIncrementingRenderer {
         return SUPPRESSION_TYPE_FORMAT_0.getOrDefault(suppressor.getId(), suppressor.getId());
     }
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         jsonWriter.endArray(); // files
 
         jsonWriter.name("suppressedViolations").beginArray();

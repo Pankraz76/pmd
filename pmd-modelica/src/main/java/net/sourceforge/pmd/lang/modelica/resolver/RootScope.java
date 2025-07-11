@@ -26,7 +26,7 @@ public final class RootScope extends AbstractModelicaScope {
     void resolveBuiltin(ResolutionContext result, CompositeName name) {
         if (!name.isEmpty() && name.getTail().isEmpty()) {
             String simpleName = name.getHead();
-            for (ModelicaBuiltinType.BaseType tpe: ModelicaBuiltinType.BaseType.values()) {
+            for (ModelicaBuiltinType.BaseType tpe : ModelicaBuiltinType.BaseType.values()) {
                 if (tpe.getName().equals(simpleName)) {
                     result.addCandidate(new ModelicaBuiltinType(tpe));
                 }
@@ -34,11 +34,10 @@ public final class RootScope extends AbstractModelicaScope {
         }
     }
 
-    @Override
-    public void resolveLexically(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
+    @Override public void resolveLexically(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
         CompositeName nameToLookup = CompositeName.ROOT_PSEUDO_NAME.equals(name.getHead()) ? name.getTail() : name;
         resolveBuiltin(result, name);
-        for (ModelicaSourceFileScope sourceFile: sourceFiles) {
+        for (ModelicaSourceFileScope sourceFile : sourceFiles) {
             ResolutionContext tmpContext = result.getState().createContext();
             sourceFile.lookupGlobally(tmpContext, nameToLookup);
             // According to "5.2 Enclosing classes" from MLS 3.4, the order of definitions inside the unnamed
@@ -47,18 +46,15 @@ public final class RootScope extends AbstractModelicaScope {
         }
     }
 
-    @Override
-    public RootScope getRoot() {
+    @Override public RootScope getRoot() {
         return this;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "<implicit root scope>";
     }
 
-    @Override
-    public String getRepresentation() {
+    @Override public String getRepresentation() {
         return "ROOT";
     }
 }

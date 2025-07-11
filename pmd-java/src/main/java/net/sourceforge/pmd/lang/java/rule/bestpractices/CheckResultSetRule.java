@@ -24,23 +24,19 @@ public class CheckResultSetRule extends AbstractJavaRule {
 
     private static final Set<String> METHODS = setOf("next", "previous", "last", "first");
 
-    @Override
-    public Object visit(ASTWhileStatement node, Object data) {
+    @Override public Object visit(ASTWhileStatement node, Object data) {
         return data;
     }
 
-    @Override
-    public Object visit(ASTReturnStatement node, Object data) {
+    @Override public Object visit(ASTReturnStatement node, Object data) {
         return data;
     }
 
-    @Override
-    public Object visit(ASTIfStatement node, Object data) {
+    @Override public Object visit(ASTIfStatement node, Object data) {
         return data;
     }
 
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         if (isResultSetMethod(node)) {
             asCtx(data).addViolation(node);
         }
@@ -49,6 +45,6 @@ public class CheckResultSetRule extends AbstractJavaRule {
 
     private boolean isResultSetMethod(ASTMethodCall node) {
         return METHODS.contains(node.getMethodName())
-            && TypeTestUtil.isDeclaredInClass(ResultSet.class, node.getMethodType());
+                && TypeTestUtil.isDeclaredInClass(ResultSet.class, node.getMethodType());
     }
 }

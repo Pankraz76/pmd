@@ -2,6 +2,8 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.Certificate;
@@ -33,7 +35,8 @@ class Jep482_FlexibleConstructorBodies {
 
     // Example: Preparing superclass constructor arguments
     public static class Super {
-        public Super(byte[] bytes) {}
+        public Super(byte[] bytes) {
+        }
     }
 
     public class Sub extends Super {
@@ -51,10 +54,14 @@ class Jep482_FlexibleConstructorBodies {
     }
 
     // Example: Sharing superclass constructor arguments
-    public static class F {}
-    public static class Super2 {
-        public Super2(F f1, F f2) {}
+    public static class F {
     }
+
+    public static class Super2 {
+        public Super2(F f1, F f2) {
+        }
+    }
+
     public class Sub2 extends Super2 {
         public Sub2(int i) {
             var f = new F();
@@ -77,19 +84,26 @@ class Jep482_FlexibleConstructorBodies {
     // Example with enum
     public enum Color {
         BLUE(1);
+
         private Color() {
         }
+
         private Color(int a) {
             if (a < 0) throw new IllegalArgumentException();
             this();
-        };
+        }
+        ;
     }
 
     // Example for Early assignment to fields (new with Java 23 preview)
     public static class EarlyAssignmentToFieldsSuper {
-        EarlyAssignmentToFieldsSuper() { overriddenMethod(); }
+        EarlyAssignmentToFieldsSuper() {
+            overriddenMethod();
+        }
 
-        void overriddenMethod() { System.out.println("hello"); }
+        void overriddenMethod() {
+            System.out.println("hello");
+        }
     }
 
     public static class EarlyAssignmentToFieldsSub extends EarlyAssignmentToFieldsSuper {
@@ -100,7 +114,8 @@ class Jep482_FlexibleConstructorBodies {
             super();       // Then invoke the Super constructor explicitly
         }
 
-        @Override
-        void overriddenMethod() { System.out.println(x); }
+        @Override void overriddenMethod() {
+            System.out.println(x);
+        }
     }
 }

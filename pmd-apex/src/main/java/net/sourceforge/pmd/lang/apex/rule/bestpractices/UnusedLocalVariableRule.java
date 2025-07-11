@@ -39,13 +39,11 @@ public class UnusedLocalVariableRule extends AbstractApexRule {
 
     private static final Pattern BINDING_VARIABLE = Pattern.compile("(?i):\\s*+([_a-z0-9]+)");
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTVariableDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTVariableDeclaration node, Object data) {
+    @Override public Object visit(ASTVariableDeclaration node, Object data) {
         String variableName = node.getImage();
 
         ASTBlockStatement variableContext = node.ancestors(ASTBlockStatement.class).first();
@@ -96,8 +94,8 @@ public class UnusedLocalVariableRule extends AbstractApexRule {
 
     private List<String> findBindingsInSOQLStringLiterals(ASTBlockStatement variableContext) {
         List<ASTMethodCallExpression> methodCalls = variableContext.descendants(ASTMethodCallExpression.class)
-            .filter(m -> DATABASE_QUERY_METHODS.contains(m.getFullMethodName().toLowerCase(Locale.ROOT)))
-            .collect(Collectors.toList());
+                .filter(m -> DATABASE_QUERY_METHODS.contains(m.getFullMethodName().toLowerCase(Locale.ROOT)))
+                .collect(Collectors.toList());
 
         List<String> stringLiterals = new ArrayList<>();
 

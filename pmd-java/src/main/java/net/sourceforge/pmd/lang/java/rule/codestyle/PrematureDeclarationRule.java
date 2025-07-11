@@ -39,19 +39,18 @@ import net.sourceforge.pmd.lang.java.types.InvocationMatcher.CompoundInvocationM
 public class PrematureDeclarationRule extends AbstractJavaRulechainRule {
 
     private static final CompoundInvocationMatcher TIME_METHODS =
-        InvocationMatcher.parseAll(
-            "java.lang.System#nanoTime()",
-            "java.lang.System#currentTimeMillis()"
-        );
+            InvocationMatcher.parseAll(
+                    "java.lang.System#nanoTime()",
+                    "java.lang.System#currentTimeMillis()"
+            );
 
     public PrematureDeclarationRule() {
         super(ASTLocalVariableDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTLocalVariableDeclaration node, Object data) {
+    @Override public Object visit(ASTLocalVariableDeclaration node, Object data) {
         if (node.getParent() instanceof ASTForInit
-            || node.getParent() instanceof ASTResource) {
+                || node.getParent() instanceof ASTResource) {
             // those don't count
             return null;
         }
@@ -60,8 +59,8 @@ public class PrematureDeclarationRule extends AbstractJavaRulechainRule {
             ASTExpression initializer = id.getInitializer();
 
             if (JavaAstUtils.isNeverUsed(id) // avoid the duplicate with unused variables
-                || cannotBeMoved(initializer)
-                || JavaRuleUtil.hasSideEffect(initializer, emptySet())) {
+                    || cannotBeMoved(initializer)
+                    || JavaRuleUtil.hasSideEffect(initializer, emptySet())) {
                 continue;
             }
 
@@ -71,7 +70,7 @@ public class PrematureDeclarationRule extends AbstractJavaRulechainRule {
             boolean hasStatefulInitializer = !refsInInitializer.isEmpty() || JavaRuleUtil.hasSideEffect(initializer, emptySet());
             for (ASTStatement stmt : statementsAfter(node)) {
                 if (hasReferencesIn(stmt, id)
-                    || hasStatefulInitializer && JavaRuleUtil.hasSideEffect(stmt, refsInInitializer)) {
+                        || hasStatefulInitializer && JavaRuleUtil.hasSideEffect(stmt, refsInInitializer)) {
                     break;
                 }
 
@@ -90,10 +89,10 @@ public class PrematureDeclarationRule extends AbstractJavaRulechainRule {
      */
     private static Set<JVariableSymbol> getReferencedVars(ASTExpression term) {
         return term == null ? emptySet()
-                            : term.descendantsOrSelf()
-                                  .filterIs(ASTNamedReferenceExpr.class)
-                                  .filter(it -> it.getReferencedSym() != null)
-                                  .collect(Collectors.mapping(ASTNamedReferenceExpr::getReferencedSym, Collectors.toSet()));
+                : term.descendantsOrSelf()
+                .filterIs(ASTNamedReferenceExpr.class)
+                .filter(it -> it.getReferencedSym() != null)
+                .collect(Collectors.mapping(ASTNamedReferenceExpr::getReferencedSym, Collectors.toSet()));
     }
 
     /**
@@ -111,8 +110,8 @@ public class PrematureDeclarationRule extends AbstractJavaRulechainRule {
      */
     private static boolean hasExit(ASTStatement block) {
         return block.descendants()
-                    .map(asInstanceOf(ASTThrowStatement.class, ASTReturnStatement.class))
-                    .nonEmpty();
+                .map(asInstanceOf(ASTThrowStatement.class, ASTReturnStatement.class))
+                .nonEmpty();
     }
 
 
@@ -121,9 +120,9 @@ public class PrematureDeclarationRule extends AbstractJavaRulechainRule {
      */
     private static boolean hasReferencesIn(ASTStatement stmt, ASTVariableId var) {
         return stmt.descendants(ASTVariableAccess.class)
-                   .crossFindBoundaries()
-                   .filterMatching(ASTNamedReferenceExpr::getReferencedSym, var.getSymbol())
-                   .nonEmpty();
+                .crossFindBoundaries()
+                .filterMatching(ASTNamedReferenceExpr::getReferencedSym, var.getSymbol())
+                .nonEmpty();
     }
 
     /** Returns all the statements following the given local var declaration. */

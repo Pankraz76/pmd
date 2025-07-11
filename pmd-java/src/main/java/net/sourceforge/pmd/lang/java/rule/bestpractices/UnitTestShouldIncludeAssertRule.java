@@ -24,18 +24,17 @@ public class UnitTestShouldIncludeAssertRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<Set<String>> EXTRA_ASSERT_METHOD_NAMES =
             PropertyFactory.stringProperty("extraAssertMethodNames")
-                           .desc("Extra valid assertion methods names")
-                           .map(Collectors.toSet())
-                           .emptyDefaultValue()
-                           .build();
+                    .desc("Extra valid assertion methods names")
+                    .map(Collectors.toSet())
+                    .emptyDefaultValue()
+                    .build();
 
     public UnitTestShouldIncludeAssertRule() {
         super(ASTMethodDeclaration.class);
         definePropertyDescriptor(EXTRA_ASSERT_METHOD_NAMES);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration method, Object data) {
+    @Override public Object visit(ASTMethodDeclaration method, Object data) {
         boolean usesSoftAssertExtension = usesSoftAssertExtension(method.getEnclosingType());
         Set<String> extraAsserts = getProperty(EXTRA_ASSERT_METHOD_NAMES);
         Predicate<ASTMethodCall> isAssertCall = TestFrameworksUtil::isProbableAssertCall;
@@ -45,9 +44,9 @@ public class UnitTestShouldIncludeAssertRule extends AbstractJavaRulechainRule {
 
         ASTBlock body = method.getBody();
         if (body != null
-            && TestFrameworksUtil.isTestMethod(method)
-            && !TestFrameworksUtil.isExpectAnnotated(method)
-            && body.descendants(ASTMethodCall.class)
+                && TestFrameworksUtil.isTestMethod(method)
+                && !TestFrameworksUtil.isExpectAnnotated(method)
+                && body.descendants(ASTMethodCall.class)
                 .none(isAssertCall
                         .or(call -> extraAsserts.contains(call.getMethodName())))) {
             asCtx(data).addViolation(method);

@@ -122,11 +122,11 @@ public final class JavaccTokenDocument extends TokenDocument<JavaccToken> {
          */
         public JavaccToken createToken(JavaccTokenDocument self, int kind, CharStream cs, @Nullable String image) {
             return new JavaccToken(
-                kind,
-                image == null ? cs.getTokenImageCs() : image,
-                cs.getStartOffset(),
-                cs.getEndOffset(),
-                self
+                    kind,
+                    image == null ? cs.getTokenImageCs() : image,
+                    cs.getStartOffset(),
+                    cs.getEndOffset(),
+                    self
             );
         }
     }
@@ -155,8 +155,7 @@ public final class JavaccTokenDocument extends TokenDocument<JavaccToken> {
     }
 
 
-    @Override
-    public JavaccToken getFirstToken() {
+    @Override public JavaccToken getFirstToken() {
         if (first == null || first.next == null) {
             throw new IllegalStateException("Document has not been opened");
         }

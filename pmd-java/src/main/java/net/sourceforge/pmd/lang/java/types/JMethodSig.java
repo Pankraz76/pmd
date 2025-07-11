@@ -190,12 +190,10 @@ public interface JMethodSig extends JTypeVisitable {
     }
 
 
-    @Override
-    JMethodSig subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst);
+    @Override JMethodSig subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst);
 
 
-    @Override
-    default <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
+    @Override default <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
         return visitor.visitMethodType(this, p);
     }
 }

@@ -16,8 +16,7 @@ public class VfHandler implements LanguageVersionHandler {
         this.properties = properties;
     }
 
-    @Override
-    public Parser getParser() {
+    @Override public Parser getParser() {
         return new VfParser(properties);
     }
 }

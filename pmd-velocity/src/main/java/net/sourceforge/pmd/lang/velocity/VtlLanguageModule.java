@@ -19,11 +19,11 @@ public class VtlLanguageModule extends SimpleLanguageModuleBase {
 
     public VtlLanguageModule() {
         super(LanguageMetadata.withId(ID).name(NAME)
-                              .extensions("vm")
-                              .addVersion("2.0")
-                              .addVersion("2.1")
-                              .addVersion("2.2")
-                              .addDefaultVersion("2.3"),
+                        .extensions("vm")
+                        .addVersion("2.0")
+                        .addVersion("2.1")
+                        .addVersion("2.2")
+                        .addDefaultVersion("2.3"),
                 new VtlHandler());
     }
 
@@ -31,8 +31,7 @@ public class VtlLanguageModule extends SimpleLanguageModuleBase {
         return (VtlLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new VtlCpdLexer();
     }
 }

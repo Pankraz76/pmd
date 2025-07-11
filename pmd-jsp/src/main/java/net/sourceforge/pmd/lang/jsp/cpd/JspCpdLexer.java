@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.jsp.ast.JspTokenKinds;
  */
 public class JspCpdLexer extends JavaccCpdLexer {
 
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
         return JspTokenKinds.newTokenManager(CharStream.create(doc, InternalApiBridge.getJspTokenBehavior()));
     }
 

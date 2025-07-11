@@ -10,13 +10,11 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class SelectForUpdateTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseSelectForUpdateWait() {
+    @Test void parseSelectForUpdateWait() {
         doTest("SelectForUpdateWait");
     }
 
-    @Test
-    void parseSelectForUpdate() {
+    @Test void parseSelectForUpdate() {
         doTest("SelectForUpdate");
     }
 }

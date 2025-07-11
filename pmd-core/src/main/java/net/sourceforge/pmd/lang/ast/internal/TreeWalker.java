@@ -57,8 +57,8 @@ final class TreeWalker {
     }
 
     <T> void findDescendantsMatching(final Node node,
-                                     final Filtermap<? super Node, ? extends T> filtermap,
-                                     final List<T> results) {
+            final Filtermap<? super Node, ? extends T> filtermap,
+            final List<T> results) {
 
         for (int i = 0; i < node.getNumChildren(); i++) {
             final Node child = node.getChild(i);
@@ -121,14 +121,12 @@ final class TreeWalker {
             queue.addFirst(top);
         }
 
-        @Override
-        public boolean hasNext() {
+        @Override public boolean hasNext() {
             return !queue.isEmpty();
         }
 
 
-        @Override
-        public @NonNull Node next() {
+        @Override public @NonNull Node next() {
             Node node = queue.removeFirst();
             enqueueChildren(node);
             isFirst = false;

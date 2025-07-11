@@ -116,34 +116,28 @@ public class JavaccToken implements GenericToken<JavaccToken> {
         return document;
     }
 
-    @Override
-    public boolean isEof() {
+    @Override public boolean isEof() {
         return kind == EOF;
     }
 
-    @Override
-    public int getKind() {
+    @Override public int getKind() {
         return kind;
     }
 
-    @Override
-    public JavaccToken getNext() {
+    @Override public JavaccToken getNext() {
         return next;
     }
 
-    @Override
-    public JavaccToken getPreviousComment() {
+    @Override public JavaccToken getPreviousComment() {
         return specialToken;
     }
 
-    @Override
-    public Chars getImageCs() {
+    @Override public Chars getImageCs() {
         // wrap it: it's zero cost (images are either Chars or String) and Chars has a nice API
         return Chars.wrap(image);
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return image.toString();
     }
 
@@ -157,8 +151,7 @@ public class JavaccToken implements GenericToken<JavaccToken> {
         return document.getTextDocument().sliceOriginalText(getRegion());
     }
 
-    @Override
-    public final TextRegion getRegion() {
+    @Override public final TextRegion getRegion() {
         return TextRegion.fromBothOffsets(startOffset, endOffset);
     }
 
@@ -170,18 +163,15 @@ public class JavaccToken implements GenericToken<JavaccToken> {
         return endOffset;
     }
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         return document.getTextDocument().toLocation(getRegion());
     }
 
-    @Override
-    public boolean isImplicit() {
+    @Override public boolean isImplicit() {
         return kind == IMPLICIT_TOKEN;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return document.describeKind(kind) + ": " + getImage();
     }
 
@@ -195,11 +185,11 @@ public class JavaccToken implements GenericToken<JavaccToken> {
      */
     public JavaccToken replaceImage(CharStream charStream) {
         return new JavaccToken(
-            this.kind,
-            charStream.getTokenImageCs(),
-            this.startOffset,
-            charStream.getEndOffset(),
-            this.document
+                this.kind,
+                charStream.getTokenImageCs(),
+                this.startOffset,
+                charStream.getEndOffset(),
+                this.document
         );
     }
 
@@ -214,11 +204,11 @@ public class JavaccToken implements GenericToken<JavaccToken> {
      */
     public JavaccToken withKind(int newKind) {
         JavaccToken tok = new JavaccToken(
-            newKind,
-            this.image,
-            this.startOffset,
-            this.endOffset,
-            this.document
+                newKind,
+                this.image,
+                this.startOffset,
+                this.endOffset,
+                this.document
         );
         tok.specialToken = this.specialToken;
         tok.next = this.next;

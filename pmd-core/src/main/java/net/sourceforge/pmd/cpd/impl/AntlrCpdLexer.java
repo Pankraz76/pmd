@@ -20,8 +20,7 @@ import net.sourceforge.pmd.lang.document.TextDocument;
  * Generic implementation of a {@link CpdLexer} useful to any Antlr grammar.
  */
 public abstract class AntlrCpdLexer extends CpdLexerBase<AntlrToken> {
-    @Override
-    protected final TokenManager<AntlrToken> makeLexerImpl(TextDocument doc) throws IOException {
+    @Override protected final TokenManager<AntlrToken> makeLexerImpl(TextDocument doc) throws IOException {
         CharStream charStream = CharStreams.fromReader(doc.newReader(), doc.getFileId().getAbsolutePath());
         return new AntlrTokenManager(getLexerForSource(charStream), doc);
     }

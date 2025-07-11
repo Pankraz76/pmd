@@ -54,8 +54,7 @@ import com.github.stefanbirkner.systemlambda.SystemLambda;
  */
 public abstract class AbstractAntTestHelper {
 
-    @TempDir
-    private Path tempFolder;
+    @TempDir private Path tempFolder;
 
     protected String pathToTestScript;
     protected String antTestScriptFilename;
@@ -68,8 +67,7 @@ public abstract class AbstractAntTestHelper {
         pathToTestScript = "target/test-classes/net/sourceforge/pmd/ant/xml";
     }
 
-    @BeforeEach
-    public void setUp() throws IOException {
+    @BeforeEach public void setUp() throws IOException {
         validatePostConstruct();
         // initialize Ant
         antProject = new Project();
@@ -85,8 +83,7 @@ public abstract class AbstractAntTestHelper {
         antProject.setProperty("tmpfile", tmpFile.toAbsolutePath().toString());
     }
 
-    @AfterAll
-    static void resetLogging() {
+    @AfterAll static void resetLogging() {
         Slf4jSimpleConfiguration.reconfigureDefaultLogLevel(null);
     }
 
@@ -182,13 +179,11 @@ public abstract class AbstractAntTestHelper {
             msgOutputLevel = Project.MSG_INFO;
         }
 
-        @Override
-        protected void printMessage(String message, PrintStream stream, int priority) {
+        @Override protected void printMessage(String message, PrintStream stream, int priority) {
             log.append(message);
         }
 
-        @Override
-        public void messageLogged(BuildEvent buildEvent) {
+        @Override public void messageLogged(BuildEvent buildEvent) {
             if (buildEvent.getPriority() <= Project.MSG_INFO) {
                 log.append(buildEvent.getMessage());
             }

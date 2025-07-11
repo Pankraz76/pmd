@@ -55,8 +55,7 @@ public class PLSQLNameOccurrence implements NameOccurrence {
         return qualifiedName != null;
     }
 
-    @Override
-    public PLSQLNode getLocation() {
+    @Override public PLSQLNode getLocation() {
         return location;
     }
 
@@ -182,8 +181,7 @@ public class PLSQLNameOccurrence implements NameOccurrence {
      * return image.startsWith(THIS_DOT) || image.startsWith(SUPER_DOT); }
      */
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (o instanceof PLSQLNameOccurrence) {
             PLSQLNameOccurrence n = (PLSQLNameOccurrence) o;
             return n.getImage().equals(getImage());
@@ -191,18 +189,15 @@ public class PLSQLNameOccurrence implements NameOccurrence {
         return false;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return getImage().hashCode();
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return image;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getImage() + ":" + location.getReportLocation().startPosToString() + ":" + location.getClass()
                 + (this.isMethodOrConstructorInvocation() ? "(method call)" : "");
     }

@@ -19,20 +19,17 @@ import net.sourceforge.pmd.lang.document.TextDocument;
 
 class AnyCpdLexerTest {
 
-    @Test
-    void testMultiLineMacros() throws IOException {
+    @Test void testMultiLineMacros() throws IOException {
         AnyCpdLexer tokenizer = new AnyCpdLexer("//");
         compareResult(tokenizer, TEST1, EXPECTED);
     }
 
-    @Test
-    void testStringEscape() throws IOException {
+    @Test void testStringEscape() throws IOException {
         AnyCpdLexer tokenizer = new AnyCpdLexer("//");
         compareResult(tokenizer, "a = \"oo\\n\"", listOf("a", "=", "\"oo\\n\"", "EOF"));
     }
 
-    @Test
-    void testMultilineString() throws IOException {
+    @Test void testMultilineString() throws IOException {
         AnyCpdLexer tokenizer = new AnyCpdLexer("//");
         Tokens tokens = compareResult(tokenizer, "a = \"oo\n\";", listOf("a", "=", "\"oo\n\"", ";", "EOF"));
         TokenEntry string = tokens.getTokens().get(2);
@@ -51,8 +48,7 @@ class AnyCpdLexerTest {
     /**
      * Tests that [core][cpd] AnyTokenizer doesn't count columns correctly #2760 is actually fixed.
      */
-    @Test
-    void testTokenPosition() throws IOException {
+    @Test void testTokenPosition() throws IOException {
         AnyCpdLexer tokenizer = new AnyCpdLexer();
         TextDocument code = TextDocument.readOnlyString("a;\nbbbb\n;", FileId.UNKNOWN, DummyLanguageModule.getInstance().getDefaultVersion());
         Tokens tokens = new Tokens();
@@ -79,25 +75,25 @@ class AnyCpdLexerTest {
     }
 
     private static final List<String> EXPECTED = listOf(
-        "using", "System", ";",
-        "namespace", "HelloNameSpace", "{",
-        "public", "class", "HelloWorld", "{", // note: comment is excluded
-        "static", "void", "Main", "(", "string", "[", "]", "args", ")", "{",
-        "Console", ".", "WriteLine", "(", "\"Hello World!\"", ")", ";",
-        "}", "}", "}", "EOF"
+            "using", "System", ";",
+            "namespace", "HelloNameSpace", "{",
+            "public", "class", "HelloWorld", "{", // note: comment is excluded
+            "static", "void", "Main", "(", "string", "[", "]", "args", ")", "{",
+            "Console", ".", "WriteLine", "(", "\"Hello World!\"", ")", ";",
+            "}", "}", "}", "EOF"
     );
 
     private static final String TEST1 =
-        "using System;\n"
-            + "namespace HelloNameSpace {\n"
-            + "\n"
-            + "    public class HelloWorld { // A comment\n"
-            + "        static void Main(string[] args) {\n"
-            + "\n"
-            + "            Console.WriteLine(\"Hello World!\");\n"
-            + "        }\n"
-            + "    }\n"
-            + "\n"
-            + "}\n";
+            "using System;\n"
+                    + "namespace HelloNameSpace {\n"
+                    + "\n"
+                    + "    public class HelloWorld { // A comment\n"
+                    + "        static void Main(string[] args) {\n"
+                    + "\n"
+                    + "            Console.WriteLine(\"Hello World!\");\n"
+                    + "        }\n"
+                    + "    }\n"
+                    + "\n"
+                    + "}\n";
 
 }

@@ -21,8 +21,7 @@ public class ProperCloneImplementationRule extends AbstractJavaRulechainRule {
         super(ASTMethodDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration method, Object data) {
+    @Override public Object visit(ASTMethodDeclaration method, Object data) {
         if (JavaAstUtils.isCloneMethod(method) && !method.isAbstract()) {
             ASTTypeDeclaration enclosingType = method.getEnclosingType();
             if (isNotFinal(enclosingType) && hasAnyAllocationOfClass(method, enclosingType)) {
@@ -37,10 +36,9 @@ public class ProperCloneImplementationRule extends AbstractJavaRulechainRule {
     }
 
     private boolean hasAnyAllocationOfClass(ASTMethodDeclaration method, ASTTypeDeclaration enclosingType) {
-        @NonNull
-        JClassSymbol typeSymbol = enclosingType.getTypeMirror().getSymbol();
+        @NonNull JClassSymbol typeSymbol = enclosingType.getTypeMirror().getSymbol();
         return method.descendants(ASTConstructorCall.class)
-            .filter(ctor -> ctor.getTypeMirror().getSymbol().equals(typeSymbol))
-            .nonEmpty();
+                .filter(ctor -> ctor.getTypeMirror().getSymbol().equals(typeSymbol))
+                .nonEmpty();
     }
 }

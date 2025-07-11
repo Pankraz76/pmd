@@ -79,40 +79,35 @@ public class TestSchemaParser {
     }
 
     private static class PmdXmlReporterImpl
-        extends XmlMessageReporterBase<Reporter>
-        implements PmdXmlReporter {
+            extends XmlMessageReporterBase<Reporter>
+            implements PmdXmlReporter {
 
         private boolean hasError;
 
         protected PmdXmlReporterImpl(OoxmlFacade ooxml,
-                                     XmlPositioner positioner) {
+                XmlPositioner positioner) {
             super(ooxml, positioner);
         }
 
-        @Override
-        protected Reporter create2ndStage(XmlPosition position, XmlPositioner positioner) {
+        @Override protected Reporter create2ndStage(XmlPosition position, XmlPositioner positioner) {
             return new Reporter(position, positioner, ooxml, this::handleEx);
         }
 
-        @Override
-        protected void handleEx(XmlException e) {
+        @Override protected void handleEx(XmlException e) {
             super.handleEx(e);
             hasError |= e.getSeverity() == XmlSeverity.ERROR;
         }
 
-        @Override
-        public PmdXmlReporter newScope() {
+        @Override public PmdXmlReporter newScope() {
             return new PmdXmlReporterImpl(ooxml, positioner) {
-                @Override
-                protected void handleEx(XmlException e) {
+                @Override protected void handleEx(XmlException e) {
                     super.handleEx(e);
                     PmdXmlReporterImpl.this.hasError |= this.hasError();
                 }
             };
         }
 
-        @Override
-        public boolean hasError() {
+        @Override public boolean hasError() {
             return hasError;
         }
 
@@ -157,8 +152,8 @@ public class TestSchemaParser {
 
         private void reportImpl(XmlSeverity severity, String formattedMessage) {
             NiceXmlMessageSpec spec =
-                new NiceXmlMessageSpec(position, formattedMessage)
-                    .withSeverity(severity);
+                    new NiceXmlMessageSpec(position, formattedMessage)
+                            .withSeverity(severity);
             String fullMessage = ooxml.getFormatter().formatSpec(ooxml, spec, positioner);
             XmlException ex = new XmlException(spec, fullMessage);
             handler.accept(ex);

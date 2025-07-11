@@ -13,7 +13,7 @@ class LanguageVersionTest extends AbstractLanguageVersionTest {
 
     static Collection<TestDescriptor> data() {
         return Arrays.asList(
-            new TestDescriptor(SwiftLanguageModule.getInstance(), "5.7")
+                new TestDescriptor(SwiftLanguageModule.getInstance(), "5.7")
         );
     }
 }

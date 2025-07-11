@@ -13,13 +13,11 @@ public final class ASTUserEnum extends BaseApexClass<EnumDeclaration> {
         super(enumDeclaration);
     }
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public ApexQualifiedName getQualifiedName() {
+    @Override public ApexQualifiedName getQualifiedName() {
         if (qname == null) {
 
             ASTUserClass parent = ancestors(ASTUserClass.class).first();

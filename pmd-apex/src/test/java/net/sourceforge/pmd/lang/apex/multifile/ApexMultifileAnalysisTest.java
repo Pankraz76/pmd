@@ -27,11 +27,9 @@ import com.github.stefanbirkner.systemlambda.SystemLambda;
 
 class ApexMultifileAnalysisTest {
 
-    @TempDir
-    private Path tempFolder;
+    @TempDir private Path tempFolder;
 
-    @Test
-    void testNoSfdxProjectJsonProducesFailedAnalysis() throws Exception {
+    @Test void testNoSfdxProjectJsonProducesFailedAnalysis() throws Exception {
         String log = SystemLambda.tapSystemErr(() -> {
             ApexMultifileAnalysis analysisInstance = getAnalysisForTempFolder();
 
@@ -41,8 +39,7 @@ class ApexMultifileAnalysisTest {
         assertThat(log, containsStringIgnoringCase("Missing project file"));
     }
 
-    @Test
-    void testMalformedSfdxProjectJsonProducesFailedAnalysis() throws Exception {
+    @Test void testMalformedSfdxProjectJsonProducesFailedAnalysis() throws Exception {
         copyResource("malformedSfdxFile.json", "sfdx-project.json");
 
         String log = SystemLambda.tapSystemErr(() -> {
@@ -55,8 +52,7 @@ class ApexMultifileAnalysisTest {
                 containsStringIgnoringCase("Error: line 3 at 4: 'path' is required"));
     }
 
-    @Test
-    void testWellFormedSfdxProjectJsonProducesFunctionalAnalysis() throws Exception {
+    @Test void testWellFormedSfdxProjectJsonProducesFunctionalAnalysis() throws Exception {
         copyResource("correctSfdxFile.json", "sfdx-project.json");
 
         String log = SystemLambda.tapSystemErr(() -> {

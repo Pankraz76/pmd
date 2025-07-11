@@ -37,8 +37,7 @@ class ClassLoadingChildFirstTest {
      * for the custom class {@code java.lang.Void}.
      * </p>
      */
-    @Test
-    void testClassLoading() {
+    @Test void testClassLoading() {
         Path file = Paths.get("src/test/resources",
                 getClass().getPackage().getName().replace('.', '/'),
                 "custom_java_lang.jar");

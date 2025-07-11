@@ -93,8 +93,7 @@ class DBURITest {
     /**
      * Test of dump method, of class DBURI.
      */
-    @Test
-    void testDump() throws URISyntaxException, Exception {
+    @Test void testDump() throws URISyntaxException, Exception {
         System.out.println("dump");
         String description = "";
         DBURI dburi = new DBURI(C_TEST_URI);
@@ -107,8 +106,7 @@ class DBURITest {
     /**
      * Test of getUri method, of class DBURI.
      */
-    @Test
-    void testGetUri() throws URISyntaxException, Exception {
+    @Test void testGetUri() throws URISyntaxException, Exception {
         System.out.println("getUri");
         DBURI instance = new DBURI(C_ORACLE_OCI_1);
         URI expResult = new URI(C_ORACLE_OCI_1);
@@ -122,8 +120,7 @@ class DBURITest {
     /**
      * Test of setUri method, of class DBURI.
      */
-    @Test
-    void testSetUri() throws URISyntaxException, Exception {
+    @Test void testSetUri() throws URISyntaxException, Exception {
         System.out.println("setUri");
         URI uri = new URI(C_ORACLE_OCI_1);
         DBURI instance = new DBURI(C_TEST_URI);
@@ -137,8 +134,7 @@ class DBURITest {
     /**
      * Test of getDbType method, of class DBURI.
      */
-    @Test
-    void testGetDbType() throws URISyntaxException, Exception {
+    @Test void testGetDbType() throws URISyntaxException, Exception {
         System.out.println("getDbType");
         DBURI instance = new DBURI(C_POSTGRES_1);
         DBType expResult = new DBType("postgresql");
@@ -152,8 +148,7 @@ class DBURITest {
     /**
      * Test of getDbType method, of class DBURI.
      */
-    @Test
-    void testGetDbType2() throws URISyntaxException, Exception {
+    @Test void testGetDbType2() throws URISyntaxException, Exception {
         System.out.println("getDbType");
         DBURI instance = new DBURI(C_ORACLE_OCI_1);
         DBType expResult = new DBType("oci");
@@ -167,8 +162,7 @@ class DBURITest {
     /**
      * Test of setDbType method, of class DBURI.
      */
-    @Test
-    void testSetDbType() throws URISyntaxException, Exception {
+    @Test void testSetDbType() throws URISyntaxException, Exception {
         System.out.println("setDbType");
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
         DBType dbType = new DBType("postgresql");
@@ -182,8 +176,7 @@ class DBURITest {
     /**
      * Test of getSchemasList method, of class DBURI.
      */
-    @Test
-    void testGetSchemasList() throws URISyntaxException, Exception {
+    @Test void testGetSchemasList() throws URISyntaxException, Exception {
         System.out.println("getSchemasList");
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
         List<String> expResult;
@@ -198,8 +191,7 @@ class DBURITest {
     /**
      * Test of setSchemasList method, of class DBURI.
      */
-    @Test
-    void testSetSchemasList() throws URISyntaxException, Exception {
+    @Test void testSetSchemasList() throws URISyntaxException, Exception {
         System.out.println("setSchemasList");
         List<String> schemasList = Arrays.asList("scott,hr,sh,system".split(","));
         DBURI instance = new DBURI(C_ORACLE_OCI_1);
@@ -212,8 +204,7 @@ class DBURITest {
     /**
      * Test of getSourceCodeTypesList method, of class DBURI.
      */
-    @Test
-    void testGetSourceCodeTypesList() throws URISyntaxException, Exception {
+    @Test void testGetSourceCodeTypesList() throws URISyntaxException, Exception {
         System.out.println("getSourceCodeTypesList");
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
         List<String> expResult = Arrays.asList("procedures,functions,triggers,package,types".split(","));
@@ -227,8 +218,7 @@ class DBURITest {
     /**
      * Test of setSourceCodeTypesList method, of class DBURI.
      */
-    @Test
-    void testSetSourceCodeTypesList() throws URISyntaxException, Exception {
+    @Test void testSetSourceCodeTypesList() throws URISyntaxException, Exception {
         System.out.println("setSourceCodeTypesList");
         List<String> sourcecodetypesList = Arrays.asList("procedures,functions,triggers,package,types".split(","));
         DBURI instance = new DBURI(C_ORACLE_OCI_1);
@@ -241,8 +231,7 @@ class DBURITest {
     /**
      * Test of getSourceCodeNamesList method, of class DBURI.
      */
-    @Test
-    void testGetSourceCodeNamesList() throws URISyntaxException, Exception {
+    @Test void testGetSourceCodeNamesList() throws URISyntaxException, Exception {
         System.out.println("getSourceCodeNamesList");
         DBURI instance = new DBURI(C_ORACLE_OCI_3);
         List<String> expResult = Arrays.asList("PKG_%%,PRC_%%".split(","));
@@ -256,8 +245,7 @@ class DBURITest {
     /**
      * Test of setSourceCodeNamesList method, of class DBURI.
      */
-    @Test
-    void testSetSourceCodeNamesList() throws URISyntaxException, Exception {
+    @Test void testSetSourceCodeNamesList() throws URISyntaxException, Exception {
         System.out.println("setSourceCodeNamesList");
         List<String> sourceCodeNamesList = Arrays.asList("PKG_%%,TRG_%%".split(","));
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
@@ -270,8 +258,7 @@ class DBURITest {
     /**
      * Test of getLanguagesList method, of class DBURI.
      */
-    @Test
-    void testGetLanguagesList() throws URISyntaxException, Exception {
+    @Test void testGetLanguagesList() throws URISyntaxException, Exception {
         System.out.println("getLanguagesList");
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
         List<String> expResult = Arrays.asList("plsql,java".split(","));
@@ -285,8 +272,7 @@ class DBURITest {
     /**
      * Test of setLanguagesList method, of class DBURI.
      */
-    @Test
-    void testSetLanguagesList() throws URISyntaxException, Exception {
+    @Test void testSetLanguagesList() throws URISyntaxException, Exception {
         System.out.println("setLanguagesList");
         List<String> languagesList = Arrays.asList("plsql,java".split(","));
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
@@ -299,8 +285,7 @@ class DBURITest {
     /**
      * Test of getDriverClass method, of class DBURI.
      */
-    @Test
-    void testGetDriverClass() throws URISyntaxException, Exception {
+    @Test void testGetDriverClass() throws URISyntaxException, Exception {
         System.out.println("getDriverClass");
         DBURI instance = new DBURI(C_ORACLE_OCI_1);
         String expResult = "oracle.jdbc.OracleDriver";
@@ -315,8 +300,7 @@ class DBURITest {
     /**
      * Test of getDriverClass method, of class DBURI.
      */
-    @Test
-    void testGetThinDriverClass() throws URISyntaxException, Exception {
+    @Test void testGetThinDriverClass() throws URISyntaxException, Exception {
         System.out.println("getThinDriverClass");
         DBURI instance = new DBURI(C_ORACLE_THIN_1);
         String expResult = "oracle.jdbc.OracleDriver";
@@ -334,8 +318,7 @@ class DBURITest {
     /**
      * Test of setDriverClass method, of class DBURI.
      */
-    @Test
-    void testSetDriverClass() throws URISyntaxException, Exception {
+    @Test void testSetDriverClass() throws URISyntaxException, Exception {
         System.out.println("setDriverClass");
         String driverClass = "oracle.jdbc.driver.OracleDriver";
         DBURI instance = new DBURI(C_ORACLE_OCI_1);
@@ -348,8 +331,7 @@ class DBURITest {
     /**
      * Test of getCharacterSet method, of class DBURI.
      */
-    @Test
-    void testGetCharacterSet() throws URISyntaxException, Exception {
+    @Test void testGetCharacterSet() throws URISyntaxException, Exception {
         System.out.println("getCharacterSet");
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
         String expResult = "utf8";
@@ -363,8 +345,7 @@ class DBURITest {
     /**
      * Test of setCharacterSet method, of class DBURI.
      */
-    @Test
-    void testSetCharacterSet() throws URISyntaxException, Exception {
+    @Test void testSetCharacterSet() throws URISyntaxException, Exception {
         System.out.println("setCharacterSet");
         String characterSet = "utf8";
         DBURI instance = new DBURI(C_POSTGRES_1);
@@ -377,8 +358,7 @@ class DBURITest {
     /**
      * Test of getSourceCodeType method, of class DBURI.
      */
-    @Test
-    void testGetSourceCodeType() throws URISyntaxException, Exception {
+    @Test void testGetSourceCodeType() throws URISyntaxException, Exception {
         System.out.println("getSourceCodeType");
         DBURI instance = new DBURI(C_ORACLE_OCI_1);
         int expResult = 2005; // CLOB
@@ -392,8 +372,7 @@ class DBURITest {
     /**
      * Test of setSourceCodeType method, of class DBURI.
      */
-    @Test
-    void testSetSourceCodeType() throws URISyntaxException, Exception {
+    @Test void testSetSourceCodeType() throws URISyntaxException, Exception {
         System.out.println("setSourceCodeType");
         int sourceCodeType = 5;
         DBURI instance = new DBURI(C_ORACLE_OCI_1);
@@ -406,8 +385,7 @@ class DBURITest {
     /**
      * Test of getSubprotocol method, of class DBURI.
      */
-    @Test
-    void testGetSubprotocol() throws URISyntaxException, Exception {
+    @Test void testGetSubprotocol() throws URISyntaxException, Exception {
         System.out.println("getSubprotocol");
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
         String expResult = "oracle";
@@ -421,8 +399,7 @@ class DBURITest {
     /**
      * Test of setSubprotocol method, of class DBURI.
      */
-    @Test
-    void testSetSubprotocol() throws URISyntaxException, Exception {
+    @Test void testSetSubprotocol() throws URISyntaxException, Exception {
         System.out.println("setSubprotocol");
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
         String subprotocol = "oracle";
@@ -437,8 +414,7 @@ class DBURITest {
     /**
      * Test of getSubnamePrefix method, of class DBURI.
      */
-    @Test
-    void testGetSubnamePrefix() throws URISyntaxException, Exception {
+    @Test void testGetSubnamePrefix() throws URISyntaxException, Exception {
         System.out.println("getSubnamePrefix");
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
         String expResult = "oci";
@@ -452,8 +428,7 @@ class DBURITest {
     /**
      * Test of setSubnamePrefix method, of class DBURI.
      */
-    @Test
-    void testSetSubnamePrefix() throws URISyntaxException, Exception {
+    @Test void testSetSubnamePrefix() throws URISyntaxException, Exception {
         System.out.println("setSubnamePrefix");
         String subnamePrefix = "oci8";
         DBURI instance = new DBURI(C_ORACLE_OCI_2);
@@ -468,8 +443,7 @@ class DBURITest {
     /**
      * Test of getParameters method, of class DBURI.
      */
-    @Test
-    void testGetParameters() throws URISyntaxException, Exception {
+    @Test void testGetParameters() throws URISyntaxException, Exception {
         System.out.println("getParameters");
         DBURI instance = new DBURI(C_TEST_URI);
         Map<String, String> expResult = new HashMap<>();
@@ -486,8 +460,7 @@ class DBURITest {
     /**
      * Test of setParameters method, of class DBURI.
      */
-    @Test
-    void testSetParameters() throws URISyntaxException, Exception {
+    @Test void testSetParameters() throws URISyntaxException, Exception {
         System.out.println("setParameters");
         Map<String, String> parameters = new HashMap<>();
         parameters.put("param1", "x%FFF");
@@ -504,8 +477,7 @@ class DBURITest {
      * Verify that default languages are returned if non are provided in the
      * DBURI.
      */
-    @Test
-    void testDefaultLanguagesList() throws URISyntaxException, Exception {
+    @Test void testDefaultLanguagesList() throws URISyntaxException, Exception {
         System.out.println("testDefaultLanguagesList");
 
         List<String> defaultLanguagesList = Arrays.asList(C_DEFAULT_LANGUAGES.split(","));
@@ -522,8 +494,7 @@ class DBURITest {
      * Verify that default CharacterSet are returned if non are provided in the
      * DBURI.
      */
-    @Test
-    void testDefaultCharacterSet() throws URISyntaxException, Exception {
+    @Test void testDefaultCharacterSet() throws URISyntaxException, Exception {
         System.out.println("testDefaultCharacterSet");
 
         DBURI instance = new DBURI(C_TEST_DEFAULTS);
@@ -538,8 +509,7 @@ class DBURITest {
      * Verify that default languages are returned if non are provided in the
      * DBURI.
      */
-    @Test
-    void testDefaultSchemasList() throws URISyntaxException, Exception {
+    @Test void testDefaultSchemasList() throws URISyntaxException, Exception {
         System.out.println("testDefaultSchemasList");
 
         List<String> defaultSchemasList = Arrays.asList(C_DEFAULT_SCHEMAS.split(","));
@@ -556,8 +526,7 @@ class DBURITest {
      * Verify that default Source Code Types are returned if non are provided in
      * the DBURI.
      */
-    @Test
-    void testDefaultSourceCodeTypesList() throws URISyntaxException, Exception {
+    @Test void testDefaultSourceCodeTypesList() throws URISyntaxException, Exception {
         System.out.println("testDefaultSourceCodeTypesList");
 
         List<String> defaultSourceCodeTypesList = Arrays.asList(C_DEFAULT_SOURCE_CODE_TYPES.split(","));
@@ -574,8 +543,7 @@ class DBURITest {
      * Verify that default languages are returned if non are provided in the
      * DBURI.
      */
-    @Test
-    void testDefaultSourceCodeNamesList() throws URISyntaxException, Exception {
+    @Test void testDefaultSourceCodeNamesList() throws URISyntaxException, Exception {
         System.out.println("testDefaultSourceCodeNamesList");
 
         List<String> defaultSourceCodeNamesList = Arrays.asList(C_DEFAULT_SOURCE_CODE_NAMES.split(","));
@@ -591,8 +559,7 @@ class DBURITest {
     /**
      * Verify that languages are returned if provided in the DBURI.
      */
-    @Test
-    void testExplicitLanguagesList() throws URISyntaxException, Exception {
+    @Test void testExplicitLanguagesList() throws URISyntaxException, Exception {
         System.out.println("testExplicitLanguagesList");
 
         List<String> defaultLanguagesList = Arrays.asList(C_EXPLICIT_LANGUAGES.split(","));
@@ -607,8 +574,7 @@ class DBURITest {
     /**
      * Verify that CharacterSet are returned if provided in the DBURI.
      */
-    @Test
-    void testExplicitCharacterSet() throws URISyntaxException, Exception {
+    @Test void testExplicitCharacterSet() throws URISyntaxException, Exception {
         System.out.println("testExplicitCharacterSet");
 
         DBURI instance = new DBURI(C_TEST_EXPLICIT);
@@ -621,8 +587,7 @@ class DBURITest {
     /**
      * Verify that languages are returned if provided in the DBURI.
      */
-    @Test
-    void testExplicitSchemasList() throws URISyntaxException, Exception {
+    @Test void testExplicitSchemasList() throws URISyntaxException, Exception {
         System.out.println("testExplicitSchemasList");
 
         List<String> defaultSchemasList = Arrays.asList(C_EXPLICIT_SCHEMAS.split(","));
@@ -637,8 +602,7 @@ class DBURITest {
     /**
      * Verify that Source Code Types are returned if provided in the DBURI.
      */
-    @Test
-    void testExplicitSourceCodeTypesList() throws URISyntaxException, Exception {
+    @Test void testExplicitSourceCodeTypesList() throws URISyntaxException, Exception {
         System.out.println("testExplicitSourceCodeTypesList");
 
         List<String> defaultSourceCodeTypesList = Arrays.asList(C_EXPLICIT_SOURCE_CODE_TYPES.split(","));
@@ -653,8 +617,7 @@ class DBURITest {
     /**
      * Verify that languages are returned if provided in the DBURI.
      */
-    @Test
-    void testExplicitSourceCodeNamesList() throws URISyntaxException, Exception {
+    @Test void testExplicitSourceCodeNamesList() throws URISyntaxException, Exception {
         System.out.println("testExplicitSourceCodeNamesList");
 
         List<String> defaultSourceCodeNamesList = Arrays.asList(C_EXPLICIT_SOURCE_CODE_NAMES.split(","));

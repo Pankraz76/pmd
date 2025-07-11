@@ -12,13 +12,11 @@ final class NoopFileListener implements FileAnalysisListener {
         // singleton
     }
 
-    @Override
-    public void onRuleViolation(RuleViolation violation) {
+    @Override public void onRuleViolation(RuleViolation violation) {
         // do nothing
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Noop";
     }
 }

@@ -31,8 +31,7 @@ public final class ASTPatternExpression extends AbstractJavaTypeNode implements 
         copyTextCoordinates((AbstractJavaNode) wrapped);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -43,14 +42,12 @@ public final class ASTPatternExpression extends AbstractJavaTypeNode implements 
 
 
     /** Returns 0, patterns can never be parenthesized. */
-    @Override
-    public int getParenthesisDepth() {
+    @Override public int getParenthesisDepth() {
         return 0;
     }
 
     /** Returns false, patterns can never be parenthesized. */
-    @Override
-    public boolean isParenthesized() {
+    @Override public boolean isParenthesized() {
         return false;
     }
 

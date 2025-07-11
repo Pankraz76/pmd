@@ -25,8 +25,7 @@ public final class ASTArrayAllocation extends AbstractJavaExpr implements ASTPri
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -39,8 +38,7 @@ public final class ASTArrayAllocation extends AbstractJavaExpr implements ASTPri
     }
 
     /** Returns the initializer, if present. */
-    @Nullable
-    public ASTArrayInitializer getArrayInitializer() {
+    @Nullable public ASTArrayInitializer getArrayInitializer() {
         return AstImplUtil.getChildAs(this, getNumChildren() - 1, ASTArrayInitializer.class);
     }
 

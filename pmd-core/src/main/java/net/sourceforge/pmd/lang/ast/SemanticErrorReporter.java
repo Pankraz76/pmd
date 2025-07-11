@@ -69,13 +69,11 @@ public interface SemanticErrorReporter {
 
             private SemanticException exception;
 
-            @Override
-            public void warning(Node location, String message, Object... formatArgs) {
+            @Override public void warning(Node location, String message, Object... formatArgs) {
                 // noop
             }
 
-            @Override
-            public SemanticException error(Node location, String message, Object... formatArgs) {
+            @Override public SemanticException error(Node location, String message, Object... formatArgs) {
                 SemanticException ex = new SemanticException(MessageFormat.format(message, formatArgs));
                 ex.setReported();
                 if (this.exception == null) {
@@ -86,8 +84,7 @@ public interface SemanticErrorReporter {
                 return ex;
             }
 
-            @Override
-            public @Nullable SemanticException getFirstError() {
+            @Override public @Nullable SemanticException getFirstError() {
                 return exception;
             }
         };
@@ -105,7 +102,7 @@ public interface SemanticErrorReporter {
 
             private String locPrefix(Node loc) {
                 return "at " + loc.getReportLocation().startPosToStringWithFile()
-                    + ": ";
+                        + ": ";
             }
 
             private String makeMessage(Node location, String message, Object[] args) {
@@ -118,13 +115,11 @@ public interface SemanticErrorReporter {
                 return fullMessage;
             }
 
-            @Override
-            public void warning(Node location, String message, Object... args) {
+            @Override public void warning(Node location, String message, Object... args) {
                 logMessage(Level.DEBUG, location, message, args);
             }
 
-            @Override
-            public SemanticException error(Node location, String message, Object... args) {
+            @Override public SemanticException error(Node location, String message, Object... args) {
                 String fullMessage = logMessage(Level.ERROR, location, message, args);
                 SemanticException ex = new SemanticException(fullMessage);
                 ex.setReported();
@@ -140,8 +135,7 @@ public interface SemanticErrorReporter {
                 }
             }
 
-            @Override
-            public void acceptError(SemanticException e) {
+            @Override public void acceptError(SemanticException e) {
                 if (!e.wasReported()) {
                     e.setReported();
                     reporter.log(Level.ERROR, StringUtil.quoteMessageFormat(e.getMessage()));
@@ -149,8 +143,7 @@ public interface SemanticErrorReporter {
                 }
             }
 
-            @Override
-            public @Nullable SemanticException getFirstError() {
+            @Override public @Nullable SemanticException getFirstError() {
                 return exception;
             }
         };

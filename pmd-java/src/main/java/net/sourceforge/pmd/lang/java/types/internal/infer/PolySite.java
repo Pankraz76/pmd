@@ -24,8 +24,7 @@ public class PolySite<E extends PolyExprMirror> {
         this.expr = expr;
     }
 
-    @Nullable
-    JTypeMirror getExpectedType() {
+    @Nullable JTypeMirror getExpectedType() {
         return expectedType;
     }
 
@@ -33,8 +32,7 @@ public class PolySite<E extends PolyExprMirror> {
         return expr;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "PolySite:" + expr;
     }
 

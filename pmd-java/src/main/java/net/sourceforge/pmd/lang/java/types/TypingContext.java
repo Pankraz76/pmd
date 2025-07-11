@@ -32,8 +32,7 @@ public final class TypingContext extends MapFunction<JVariableSymbol, @Nullable 
         this.parent = parent;
     }
 
-    @Override
-    public @Nullable JTypeMirror apply(JVariableSymbol var) {
+    @Override public @Nullable JTypeMirror apply(JVariableSymbol var) {
         JTypeMirror t = getMap().get(var);
         if (t == null && parent != null) {
             // try with parent

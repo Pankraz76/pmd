@@ -20,8 +20,7 @@ abstract class SwiftRootNode extends SwiftInnerNode implements RootNode {
         super(parent, invokingStateNumber);
     }
 
-    @Override
-    public AstInfo<SwTopLevel> getAstInfo() {
+    @Override public AstInfo<SwTopLevel> getAstInfo() {
         return astInfo;
     }
 

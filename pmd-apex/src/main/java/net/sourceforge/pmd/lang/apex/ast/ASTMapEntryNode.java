@@ -20,13 +20,11 @@ public final class ASTMapEntryNode extends AbstractApexNode.Many<Expression> {
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return String.format("%s: %s", key, value);
     }
 }

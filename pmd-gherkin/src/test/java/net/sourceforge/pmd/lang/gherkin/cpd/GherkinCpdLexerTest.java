@@ -13,13 +13,11 @@ class GherkinCpdLexerTest extends CpdTextComparisonTest {
         super("gherkin", ".feature");
     }
 
-    @Test
-    void testAnnotatedSource() {
+    @Test void testAnnotatedSource() {
         doTest("annotatedSource");
     }
 
-    @Test
-    void testDocstring() {
+    @Test void testDocstring() {
         doTest("docstring");
     }
 }

@@ -32,8 +32,7 @@ final class JavaViolationDecorator implements ViolationDecorator {
 
     static final ViolationDecorator INSTANCE = new JavaViolationDecorator();
 
-    @Override
-    public void decorate(Node violationNode, Map<String, String> additionalInfo) {
+    @Override public void decorate(Node violationNode, Map<String, String> additionalInfo) {
         JavaNode javaNode = (JavaNode) violationNode;
 
         setIfNonNull(RuleViolation.VARIABLE_NAME, getVariableNameIfExists(javaNode), additionalInfo);
@@ -70,9 +69,9 @@ final class JavaViolationDecorator implements ViolationDecorator {
 
     private static @Nullable String getMethodName(@NonNull JavaNode javaNode) {
         @Nullable ASTBodyDeclaration enclosingDecl =
-            javaNode.ancestorsOrSelf()
-                    .filterIs(ASTBodyDeclaration.class)
-                    .first();
+                javaNode.ancestorsOrSelf()
+                        .filterIs(ASTBodyDeclaration.class)
+                        .first();
 
         if (enclosingDecl instanceof ASTExecutableDeclaration) {
             return ((ASTExecutableDeclaration) enclosingDecl).getName();
@@ -84,8 +83,8 @@ final class JavaViolationDecorator implements ViolationDecorator {
 
     private static String getVariableNames(Iterable<ASTVariableId> iterable) {
         return IteratorUtil.toStream(iterable.iterator())
-                           .map(ASTVariableId::getName)
-                           .collect(Collectors.joining(", "));
+                .map(ASTVariableId::getName)
+                .collect(Collectors.joining(", "));
     }
 
     private static @Nullable String getVariableNameIfExists(JavaNode node) {

@@ -42,13 +42,11 @@ import net.sourceforge.pmd.lang.java.types.TypeSystem;
  */
 public enum SymImplementation {
     ASM {
-        @Override
-        public Fixture findClass(String binaryName) {
+        @Override public Fixture findClass(String binaryName) {
             int idx = binaryName.lastIndexOf('.');
             String packageName = idx == -1 ? "" : binaryName.substring(0, idx);
             return new Fixture(packageName) {
-                @Override
-                public @NotNull JClassSymbol getByBinaryName(String binaryName) {
+                @Override public @NotNull JClassSymbol getByBinaryName(String binaryName) {
                     JClassSymbol sym = JavaParsingHelper.TEST_TYPE_SYSTEM.getClassSymbol(binaryName);
                     return Objects.requireNonNull(sym, binaryName);
                 }
@@ -56,22 +54,19 @@ public enum SymImplementation {
         }
     },
     AST {
-        @Override
-        public Fixture findClass(String binaryName) {
+        @Override public Fixture findClass(String binaryName) {
             ASTCompilationUnit ast = JavaParsingHelper.DEFAULT.parseClass(binaryName);
             return new Fixture(ast.getPackageName()) {
-                @Override
-                public @NotNull JClassSymbol getByBinaryName(String binaryName) {
+                @Override public @NotNull JClassSymbol getByBinaryName(String binaryName) {
                     return ast.descendants(ASTTypeDeclaration.class).crossFindBoundaries()
-                              .filter(it -> it.getBinaryName().equals(binaryName))
-                              .firstOrThrow().getSymbol();
+                            .filter(it -> it.getBinaryName().equals(binaryName))
+                            .firstOrThrow().getSymbol();
                 }
 
             };
         }
 
-        @Override
-        public boolean supportsDebugSymbols() {
+        @Override public boolean supportsDebugSymbols() {
             return true;
         }
     };
@@ -101,7 +96,7 @@ public enum SymImplementation {
 
         for (final Field f : actualFields) {
             JFieldSymbol fSym = fs.stream().filter(it -> it.getSimpleName().equals(f.getName()))
-                                  .findFirst().orElseThrow(AssertionError::new);
+                    .findFirst().orElseThrow(AssertionError::new);
 
             // Type matches
             final JTypeMirror expectedType = typeMirrorOf(sym.getTypeSystem(), f.getType());
@@ -122,7 +117,7 @@ public enum SymImplementation {
 
         for (final Method m : actualMethods) {
             JMethodSymbol mSym = ms.stream().filter(it -> it.getSimpleName().equals(m.getName()))
-                                   .findFirst().orElseThrow(AssertionError::new);
+                    .findFirst().orElseThrow(AssertionError::new);
 
             assertMethodMatch(m, mSym);
         }

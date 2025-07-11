@@ -40,8 +40,7 @@ public final class Substitution extends MapFunction<@NonNull SubstVar, @NonNull 
     }
 
     /** Returns the type with which the given variable should be replaced. */
-    @Override
-    public @NonNull JTypeMirror apply(@NonNull SubstVar var) {
+    @Override public @NonNull JTypeMirror apply(@NonNull SubstVar var) {
         return getMap().getOrDefault(var, var);
     }
 

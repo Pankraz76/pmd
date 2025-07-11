@@ -57,8 +57,7 @@ public class InvalidJavaBeanRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(PACKAGES_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
         String packageName = "";
         ASTPackageDeclaration packageDeclaration = node.getRoot().getPackageDeclaration();
         if (packageDeclaration != null) {
@@ -93,7 +92,7 @@ public class InvalidJavaBeanRule extends AbstractJavaRulechainRule {
 
         for (PropertyInfo propertyInfo : properties.values()) {
             if (!hasLombokGetterAnnotation(node) && !hasLombokSetterAnnotation(node)
-                && propertyInfo.hasMissingGetter() && propertyInfo.hasMissingSetter()) {
+                    && propertyInfo.hasMissingGetter() && propertyInfo.hasMissingSetter()) {
                 asCtx(data).addViolationWithMessage(propertyInfo.getDeclaratorId(),
                         "The bean ''{0}'' is missing a getter and a setter for property ''{1}''.",
                         beanName, propertyInfo.getName());

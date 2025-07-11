@@ -82,8 +82,7 @@ final class AstDisambiguationPass {
         public static final DisambigVisitor INSTANCE = new DisambigVisitor();
 
 
-        @Override
-        protected Void visitChildren(Node node, ReferenceCtx data) {
+        @Override protected Void visitChildren(Node node, ReferenceCtx data) {
             // note that this differs from the default impl, because
             // the default declares last = node.getNumChildren()
             // at the beginning of the loop, but in this visitor the
@@ -94,15 +93,13 @@ final class AstDisambiguationPass {
             return null;
         }
 
-        @Override
-        public Void visitTypeDecl(ASTTypeDeclaration node, ReferenceCtx data) {
+        @Override public Void visitTypeDecl(ASTTypeDeclaration node, ReferenceCtx data) {
             // since type headers are disambiguated early it doesn't matter
             // if the context is inaccurate in type headers
             return visitChildren(node, data.scopeDownToNested(node.getSymbol()));
         }
 
-        @Override
-        public Void visit(ASTAmbiguousName name, ReferenceCtx processor) {
+        @Override public Void visit(ASTAmbiguousName name, ReferenceCtx processor) {
             if (name.wasProcessed()) {
                 // don't redo analysis
                 return null;
@@ -125,9 +122,9 @@ final class AstDisambiguationPass {
 
             // finish
             assert !isPackageOrTypeOnly
-                || resolved instanceof ASTTypeExpression
-                || resolved instanceof ASTAmbiguousName
-                : "Unexpected result " + resolved + " for PackageOrTypeName resolution";
+                    || resolved instanceof ASTTypeExpression
+                    || resolved instanceof ASTAmbiguousName
+                    : "Unexpected result " + resolved + " for PackageOrTypeName resolution";
 
             if (isPackageOrTypeOnly && resolved instanceof ASTTypeExpression) {
                 // unambiguous, we just have to check that the parent is a member of the enclosing type
@@ -146,8 +143,7 @@ final class AstDisambiguationPass {
             return null;
         }
 
-        @Override
-        public Void visit(ASTClassType type, ReferenceCtx ctx) {
+        @Override public Void visit(ASTClassType type, ReferenceCtx ctx) {
 
             if (type.getReferencedSym() != null) {
                 return null;
@@ -172,7 +168,7 @@ final class AstDisambiguationPass {
                 checkParentIsMember(ctx, lhsType, type);
             } else {
                 if (type.getParent() instanceof ASTConstructorCall
-                    && ((ASTConstructorCall) type.getParent()).isQualifiedInstanceCreation()) {
+                        && ((ASTConstructorCall) type.getParent()).isQualifiedInstanceCreation()) {
                     // Leave the reference null, this is handled lazily,
                     // because the interaction it depends on the type of
                     // the qualifier
@@ -293,10 +289,10 @@ final class AstDisambiguationPass {
          *  Also must filter by visibility
          */
         private static ASTExpression resolveExpr(@Nullable ASTExpression qualifier, // lhs
-                                                 @Nullable JVariableSig varSym,     // signature, only set if this is the leftmost access
-                                                 JavaccToken identifier,            // identifier for the field/var name
-                                                 Iterator<JavaccToken> remaining,   // rest of tokens, starting with following '.'
-                                                 ReferenceCtx ctx) {
+                @Nullable JVariableSig varSym,     // signature, only set if this is the leftmost access
+                JavaccToken identifier,            // identifier for the field/var name
+                Iterator<JavaccToken> remaining,   // rest of tokens, starting with following '.'
+                ReferenceCtx ctx) {
 
             TokenUtils.expectKind(identifier, JavaTokenKinds.IDENTIFIER);
 
@@ -342,14 +338,14 @@ final class AstDisambiguationPass {
          * @param isPackageOrTypeOnly If true, expressions are disallowed by the context, so we don't check fields
          */
         private static ASTExpression resolveType(final @Nullable ASTClassType qualifier, // lhs
-                                                 final @Nullable JClassType implicitEnclosing,      // enclosing type, if it is implicitly inherited
-                                                 final JTypeDeclSymbol sym,                         // symbol for the type
-                                                 final boolean isFqcn,                              // whether this is a fully-qualified name
-                                                 final JavaccToken identifier,                      // ident of the simple name of the symbol
-                                                 final Iterator<JavaccToken> remaining,             // rest of tokens, starting with following '.'
-                                                 final ASTAmbiguousName ambig,                      // original ambiguous name
-                                                 final boolean isPackageOrTypeOnly,
-                                                 final ReferenceCtx ctx) {
+                final @Nullable JClassType implicitEnclosing,      // enclosing type, if it is implicitly inherited
+                final JTypeDeclSymbol sym,                         // symbol for the type
+                final boolean isFqcn,                              // whether this is a fully-qualified name
+                final JavaccToken identifier,                      // ident of the simple name of the symbol
+                final Iterator<JavaccToken> remaining,             // rest of tokens, starting with following '.'
+                final ASTAmbiguousName ambig,                      // original ambiguous name
+                final boolean isPackageOrTypeOnly,
+                final ReferenceCtx ctx) {
 
             TokenUtils.expectKind(identifier, JavaTokenKinds.IDENTIFIER);
 
@@ -408,11 +404,11 @@ final class AstDisambiguationPass {
          * class, then we report it and return the original ambiguous name.
          */
         private static ASTExpression resolvePackage(JavaccToken identifier,
-                                                    StringBuilder packageImage,
-                                                    Iterator<JavaccToken> remaining,
-                                                    ASTAmbiguousName ambig,
-                                                    boolean isPackageOrTypeOnly,
-                                                    ReferenceCtx ctx) {
+                StringBuilder packageImage,
+                Iterator<JavaccToken> remaining,
+                ASTAmbiguousName ambig,
+                boolean isPackageOrTypeOnly,
+                ReferenceCtx ctx) {
 
             TokenUtils.expectKind(identifier, JavaTokenKinds.IDENTIFIER);
 

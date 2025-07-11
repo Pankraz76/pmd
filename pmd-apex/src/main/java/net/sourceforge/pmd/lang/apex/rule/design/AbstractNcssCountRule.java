@@ -46,8 +46,7 @@ abstract class AbstractNcssCountRule<T extends ApexNode<?>> extends AbstractCoun
     }
 
 
-    @Override
-    protected int getMetric(T node) {
+    @Override protected int getMetric(T node) {
         return node.acceptVisitor(NcssVisitor.INSTANCE, null) + 1;
     }
 
@@ -56,13 +55,11 @@ abstract class AbstractNcssCountRule<T extends ApexNode<?>> extends AbstractCoun
 
         static final NcssVisitor INSTANCE = new NcssVisitor();
 
-        @Override
-        public Integer visitApexNode(ApexNode<?> node, Void data) {
+        @Override public Integer visitApexNode(ApexNode<?> node, Void data) {
             return countNodeChildren(node, data);
         }
 
-        @Override
-        protected Integer visitChildren(Node node, Void data) {
+        @Override protected Integer visitChildren(Node node, Void data) {
             int v = 0;
             for (Node child : node.children()) {
                 v += child.acceptVisitor(this, data);
@@ -83,93 +80,75 @@ abstract class AbstractNcssCountRule<T extends ApexNode<?>> extends AbstractCoun
             return visitChildren(node, data);
         }
 
-        @Override
-        public Integer visit(ASTForLoopStatement node, Void data) {
+        @Override public Integer visit(ASTForLoopStatement node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTForEachStatement node, Void data) {
+        @Override public Integer visit(ASTForEachStatement node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTDoLoopStatement node, Void data) {
+        @Override public Integer visit(ASTDoLoopStatement node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTIfBlockStatement node, Void data) {
+        @Override public Integer visit(ASTIfBlockStatement node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTIfElseBlockStatement node, Void data) {
+        @Override public Integer visit(ASTIfElseBlockStatement node, Void data) {
             return countNodeChildren(node, data) + 2;
         }
 
-        @Override
-        public Integer visit(ASTWhileLoopStatement node, Void data) {
+        @Override public Integer visit(ASTWhileLoopStatement node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTBreakStatement node, Void data) {
+        @Override public Integer visit(ASTBreakStatement node, Void data) {
             return 1;
         }
 
-        @Override
-        public Integer visit(ASTTryCatchFinallyBlockStatement node, Void data) {
+        @Override public Integer visit(ASTTryCatchFinallyBlockStatement node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTContinueStatement node, Void data) {
+        @Override public Integer visit(ASTContinueStatement node, Void data) {
             return 1;
         }
 
-        @Override
-        public Integer visit(ASTReturnStatement node, Void data) {
+        @Override public Integer visit(ASTReturnStatement node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTThrowStatement node, Void data) {
+        @Override public Integer visit(ASTThrowStatement node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTStatement node, Void data) {
+        @Override public Integer visit(ASTStatement node, Void data) {
             return 1;
         }
 
-        @Override
-        public Integer visit(ASTMethodCallExpression node, Void data) {
+        @Override public Integer visit(ASTMethodCallExpression node, Void data) {
             return 1;
         }
 
-        @Override
-        public Integer visit(ASTMethod node, Void data) {
+        @Override public Integer visit(ASTMethod node, Void data) {
             return countNodeChildren(node, data);
         }
 
-        @Override
-        public Integer visit(ASTUserClass node, Void data) {
+        @Override public Integer visit(ASTUserClass node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTUserEnum node, Void data) {
+        @Override public Integer visit(ASTUserEnum node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTUserInterface node, Void data) {
+        @Override public Integer visit(ASTUserInterface node, Void data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Integer visit(ASTFieldDeclaration node, Void data) {
+        @Override public Integer visit(ASTFieldDeclaration node, Void data) {
             return 1;
         }
     }

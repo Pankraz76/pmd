@@ -17,13 +17,11 @@ public final class ASTAstRoot extends AbstractEcmascriptNode<AstRoot> implements
         super(astRoot);
     }
 
-    @Override
-    public AstInfo<ASTAstRoot> getAstInfo() {
+    @Override public AstInfo<ASTAstRoot> getAstInfo() {
         return astInfo;
     }
 
-    @Override
-    protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

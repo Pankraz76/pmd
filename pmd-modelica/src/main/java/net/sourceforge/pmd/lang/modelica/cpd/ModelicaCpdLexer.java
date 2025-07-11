@@ -18,13 +18,11 @@ import net.sourceforge.pmd.lang.modelica.ast.ModelicaTokenKinds;
  */
 public class ModelicaCpdLexer extends JavaccCpdLexer {
 
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
         return ModelicaTokenKinds.newTokenManager(CharStream.create(doc));
     }
 
-    @Override
-    protected TokenManager<JavaccToken> filterTokenStream(TokenManager<JavaccToken> tokenManager) {
+    @Override protected TokenManager<JavaccToken> filterTokenStream(TokenManager<JavaccToken> tokenManager) {
         return new ModelicaTokenFilter(tokenManager);
     }
 
@@ -54,14 +52,12 @@ public class ModelicaCpdLexer extends JavaccCpdLexer {
             }
         }
 
-        @Override
-        protected void analyzeToken(JavaccToken currentToken) {
+        @Override protected void analyzeToken(JavaccToken currentToken) {
             skipWithinAndImport(currentToken);
             skipAnnotation(currentToken);
         }
 
-        @Override
-        protected boolean isLanguageSpecificDiscarding() {
+        @Override protected boolean isLanguageSpecificDiscarding() {
             return discardingWithinAndImport || discardingAnnotation;
         }
     }

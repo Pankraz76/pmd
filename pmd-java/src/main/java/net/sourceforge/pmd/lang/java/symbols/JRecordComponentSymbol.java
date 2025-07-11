@@ -37,25 +37,20 @@ public interface JRecordComponentSymbol extends JAccessibleElementSymbol, BoundT
     JTypeMirror getTypeMirror(Substitution substitution);
 
 
-    @Override
-    default int getModifiers() {
+    @Override default int getModifiers() {
         return RECORD_COMPONENT_MODIFIERS;
     }
 
 
-    @Override
-    @NonNull
-    JClassSymbol getEnclosingClass();
+    @Override @NonNull JClassSymbol getEnclosingClass();
 
 
-    @Override
-    default @NonNull String getPackageName() {
+    @Override default @NonNull String getPackageName() {
         return getEnclosingClass().getPackageName();
     }
 
 
-    @Override
-    default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitRecordComponent(this, param);
     }
 }

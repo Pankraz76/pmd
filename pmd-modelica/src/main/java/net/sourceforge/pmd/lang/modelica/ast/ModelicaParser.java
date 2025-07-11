@@ -16,13 +16,11 @@ public class ModelicaParser extends JjtreeParserAdapter<ASTStoredDefinition> {
 
     private static final TokenDocumentBehavior TOKEN_BEHAVIOR = new TokenDocumentBehavior(ModelicaTokenKinds.TOKEN_NAMES);
 
-    @Override
-    protected TokenDocumentBehavior tokenBehavior() {
+    @Override protected TokenDocumentBehavior tokenBehavior() {
         return TOKEN_BEHAVIOR;
     }
 
-    @Override
-    protected ASTStoredDefinition parseImpl(CharStream cs, ParserTask task) throws ParseException {
+    @Override protected ASTStoredDefinition parseImpl(CharStream cs, ParserTask task) throws ParseException {
         ASTStoredDefinition root = new ModelicaParserImpl(cs).StoredDefinition().makeTaskInfo(task);
         TimeTracker.bench("Modelica symbols", () -> InternalApiBridge.ModelicaSymbolFacade.process(root));
         return root;

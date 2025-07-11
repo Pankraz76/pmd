@@ -58,8 +58,7 @@ public final class ASTModifierList extends AbstractJavaNode {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -90,9 +89,9 @@ public final class ASTModifierList extends AbstractJavaNode {
         if (effectiveModifiers == null) {
 
             Set<JModifier> mods =
-                explicitModifiers.isEmpty()
-                ? EnumSet.noneOf(JModifier.class)
-                : EnumSet.copyOf(explicitModifiers);
+                    explicitModifiers.isEmpty()
+                            ? EnumSet.noneOf(JModifier.class)
+                            : EnumSet.copyOf(explicitModifiers);
 
             getOwner().acceptVisitor(EffectiveModifierVisitor.INSTANCE, mods);
 
@@ -170,13 +169,11 @@ public final class ASTModifierList extends AbstractJavaNode {
         // TODO final modifier is implicitly given to direct subclasses of sealed interface/class
 
 
-        @Override
-        public Void visitJavaNode(JavaNode node, Set<JModifier> data) {
+        @Override public Void visitJavaNode(JavaNode node, Set<JModifier> data) {
             return null; // default, don't recurse, no special modifiers.
         }
 
-        @Override
-        public Void visitTypeDecl(ASTTypeDeclaration node, Set<JModifier> effective) {
+        @Override public Void visitTypeDecl(ASTTypeDeclaration node, Set<JModifier> effective) {
 
             ASTTypeDeclaration enclosing = node.getEnclosingType();
             if (enclosing != null && enclosing.isInterface()) {
@@ -190,13 +187,13 @@ public final class ASTModifierList extends AbstractJavaNode {
                     effective.add(STATIC);
                 }
             } else if (!node.isTopLevel()
-                && (node instanceof ASTEnumDeclaration || node instanceof ASTRecordDeclaration)) {
+                    && (node instanceof ASTEnumDeclaration || node instanceof ASTRecordDeclaration)) {
                 effective.add(STATIC);
             }
 
             if (node instanceof ASTEnumDeclaration
-                && node.getEnumConstants().none(ASTEnumConstant::isAnonymousClass)
-                || node instanceof ASTRecordDeclaration) {
+                    && node.getEnumConstants().none(ASTEnumConstant::isAnonymousClass)
+                    || node instanceof ASTRecordDeclaration) {
                 effective.add(FINAL);
             }
 
@@ -204,8 +201,7 @@ public final class ASTModifierList extends AbstractJavaNode {
         }
 
 
-        @Override
-        public Void visit(ASTFieldDeclaration node, Set<JModifier> effective) {
+        @Override public Void visit(ASTFieldDeclaration node, Set<JModifier> effective) {
             ASTTypeDeclaration enclosingType = node.getEnclosingType();
             if (enclosingType != null && enclosingType.isInterface()) {
                 effective.add(PUBLIC);
@@ -215,8 +211,7 @@ public final class ASTModifierList extends AbstractJavaNode {
             return null;
         }
 
-        @Override
-        public Void visit(ASTLocalVariableDeclaration node, Set<JModifier> effective) {
+        @Override public Void visit(ASTLocalVariableDeclaration node, Set<JModifier> effective) {
             // resources are implicitly final
             if (node.getParent() instanceof ASTResource) {
                 effective.add(FINAL);
@@ -224,49 +219,44 @@ public final class ASTModifierList extends AbstractJavaNode {
             return null;
         }
 
-        @Override
-        public Void visit(ASTEnumConstant node, Set<JModifier> effective) {
+        @Override public Void visit(ASTEnumConstant node, Set<JModifier> effective) {
             effective.add(PUBLIC);
             effective.add(STATIC);
             effective.add(FINAL);
             return null;
         }
 
-        @Override
-        public Void visit(ASTRecordComponent node, Set<JModifier> effective) {
+        @Override public Void visit(ASTRecordComponent node, Set<JModifier> effective) {
             effective.add(PRIVATE); // field is private, an accessor method is generated
             effective.add(FINAL);
             return null;
         }
 
-        @Override
-        public Void visit(ASTAnonymousClassDeclaration node, Set<JModifier> effective) {
+        @Override public Void visit(ASTAnonymousClassDeclaration node, Set<JModifier> effective) {
             ASTBodyDeclaration enclosing = node.ancestors(ASTBodyDeclaration.class).first();
 
             assert enclosing != null && !(enclosing instanceof ASTTypeDeclaration)
-                : "Weird position for an anonymous class " + enclosing;
+                    : "Weird position for an anonymous class " + enclosing;
 
             if (enclosing instanceof ASTEnumConstant) {
                 effective.add(STATIC);
             } else {
                 if (enclosing instanceof ModifierOwner && ((ModifierOwner) enclosing).hasModifiers(STATIC)
-                    || enclosing instanceof ASTInitializer && ((ASTInitializer) enclosing).isStatic()) {
+                        || enclosing instanceof ASTInitializer && ((ASTInitializer) enclosing).isStatic()) {
                     effective.add(STATIC);
                 }
             }
             return null;
         }
 
-        @Override
-        public Void visit(ASTConstructorDeclaration node, Set<JModifier> effective) {
+        @Override public Void visit(ASTConstructorDeclaration node, Set<JModifier> effective) {
             if (node.getEnclosingType().isEnum()) {
                 effective.add(PRIVATE);
             }
             return null;
         }
 
-        @Override
-        public Void visit(ASTMethodDeclaration node, Set<JModifier> effective) {
+        @Override public Void visit(ASTMethodDeclaration node, Set<JModifier> effective) {
             ASTTypeDeclaration enclosingType = node.getEnclosingType();
             if (enclosingType != null && enclosingType.isInterface()) {
 

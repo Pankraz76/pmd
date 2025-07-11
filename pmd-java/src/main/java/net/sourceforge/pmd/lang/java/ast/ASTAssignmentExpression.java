@@ -30,9 +30,7 @@ public final class ASTAssignmentExpression extends AbstractJavaExpr implements I
     }
 
     /** Returns the left-hand side, ie the expression being assigned to. */
-    @Override
-    @NonNull
-    public ASTAssignableExpr getLeftOperand() {
+    @Override @NonNull public ASTAssignableExpr getLeftOperand() {
         return (ASTAssignableExpr) getChild(0);
     }
 
@@ -45,14 +43,11 @@ public final class ASTAssignmentExpression extends AbstractJavaExpr implements I
     }
 
 
-    @Override
-    @NonNull
-    public AssignmentOp getOperator() {
+    @Override @NonNull public AssignmentOp getOperator() {
         return operator;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -6,23 +6,19 @@ package net.sourceforge.pmd.renderers;
 
 class EmacsRendererTest extends AbstractRendererTest {
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         return new EmacsRenderer();
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return getSourceCodeFilename() + ":1: blah" + EOL;
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return "";
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return getSourceCodeFilename() + ":1: blah" + EOL + getSourceCodeFilename() + ":1: blah" + EOL;
     }
 }

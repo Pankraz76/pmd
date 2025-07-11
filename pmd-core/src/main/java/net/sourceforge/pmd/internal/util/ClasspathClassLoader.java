@@ -165,7 +165,7 @@ public class ClasspathClassLoader extends URLClassLoader {
                 throw new IllegalArgumentException("Can't determine java home from " + filePath + " - please provide a complete path.");
             }
 
-            try (URLClassLoader loader = new URLClassLoader(new URL[] { filePath.toUri().toURL() })) {
+            try (URLClassLoader loader = new URLClassLoader(new URL[]{filePath.toUri().toURL()})) {
                 Map<String, String> env = new HashMap<>();
                 // note: providing java.home here is crucial, so that the correct runtime image is loaded.
                 // the class loader is only used to provide an implementation of JrtFileSystemProvider, if the current
@@ -197,12 +197,11 @@ public class ClasspathClassLoader extends URLClassLoader {
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getClass().getSimpleName()
-            + "[["
-            + StringUtils.join(getURLs(), ":")
-            + "] jrt-fs: " + javaHome + " parent: " + getParent() + ']';
+                + "[["
+                + StringUtils.join(getURLs(), ":")
+                + "] jrt-fs: " + javaHome + " parent: " + getParent() + ']';
     }
 
     private static final String MODULE_INFO_SUFFIX = "module-info.class";
@@ -210,16 +209,14 @@ public class ClasspathClassLoader extends URLClassLoader {
     // this is lazily initialized on first query of a module-info.class
     private Map<String, URL> moduleNameToModuleInfoUrls;
 
-    @Nullable
-    private static String extractModuleName(String name) {
+    @Nullable private static String extractModuleName(String name) {
         if (!name.endsWith(MODULE_INFO_SUFFIX_SLASH)) {
             return null;
         }
         return name.substring(0, name.length() - MODULE_INFO_SUFFIX_SLASH.length());
     }
 
-    @Override
-    public InputStream getResourceAsStream(String name) {
+    @Override public InputStream getResourceAsStream(String name) {
         // always first search in jrt-fs, if available
         // note: we can't override just getResource(String) and return a jrt:/-URL, because the URL itself
         // won't be connected to the correct JrtFileSystem and would just load using the system classloader.
@@ -273,8 +270,7 @@ public class ClasspathClassLoader extends URLClassLoader {
             super(Opcodes.ASM9);
         }
 
-        @Override
-        public ModuleVisitor visitModule(String name, int access, String version) {
+        @Override public ModuleVisitor visitModule(String name, int access, String version) {
             moduleName = name;
             return null;
         }
@@ -319,8 +315,7 @@ public class ClasspathClassLoader extends URLClassLoader {
         }
     }
 
-    @Override
-    public URL getResource(String name) {
+    @Override public URL getResource(String name) {
         // Override to make it child-first. This is the method used by
         // pmd-java's type resolution to fetch classes, instead of loadClass.
         Objects.requireNonNull(name);
@@ -342,13 +337,11 @@ public class ClasspathClassLoader extends URLClassLoader {
         return url;
     }
 
-    @Override
-    protected Class<?> loadClass(final String name, final boolean resolve) throws ClassNotFoundException {
+    @Override protected Class<?> loadClass(final String name, final boolean resolve) throws ClassNotFoundException {
         throw new IllegalStateException("This class loader shouldn't be used to load classes");
     }
 
-    @Override
-    public void close() throws IOException {
+    @Override public void close() throws IOException {
         if (fileSystem != null) {
             fileSystem.close();
             // jrt created an own classloader to load the JrtFileSystemProvider class out of the

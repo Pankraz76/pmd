@@ -17,19 +17,16 @@ public final class ASTFormalComment extends AbstractApexNode.Empty {
         this.token = token;
     }
 
-    
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return token.getText();
     }
 
-    @Override
-    protected void calculateTextRegion(TextDocument sourceCode) {
+    @Override protected void calculateTextRegion(TextDocument sourceCode) {
         setRegion(TextRegion.fromBothOffsets(token.getStartIndex(), token.getStopIndex() + 1));
     }
 }

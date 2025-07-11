@@ -15,18 +15,17 @@ public class ModelicaLanguageModule extends SimpleLanguageModuleBase {
 
     public ModelicaLanguageModule() {
         super(LanguageMetadata.withId(ID).name("Modelica")
-                              .extensions("mo")
-                              .addVersion("3.4")
-                              .addDefaultVersion("3.5"),
-              new ModelicaHandler());
+                        .extensions("mo")
+                        .addVersion("3.4")
+                        .addDefaultVersion("3.5"),
+                new ModelicaHandler());
     }
 
     public static ModelicaLanguageModule getInstance() {
         return (ModelicaLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new ModelicaCpdLexer();
     }
 }

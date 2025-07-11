@@ -49,8 +49,8 @@ final class PatternBindingsUtil {
         if (e instanceof ASTUnaryExpression) {
             ASTUnaryExpression unary = (ASTUnaryExpression) e;
             return unary.getOperator() == UnaryOp.NEGATION
-                   ? bindersOfExpr(unary.getOperand()).negate()
-                   : BindSet.EMPTY;
+                    ? bindersOfExpr(unary.getOperand()).negate()
+                    : BindSet.EMPTY;
 
         } else if (e instanceof ASTInfixExpression) {
             BinaryOp op = ((ASTInfixExpression) e).getOperator();
@@ -67,7 +67,7 @@ final class PatternBindingsUtil {
                 // (ii) it is introduced by b when true.
 
                 return BindSet.whenTrue(
-                    bindersOfExpr(left).trueBindings.plusAll(bindersOfExpr(right).trueBindings)
+                        bindersOfExpr(left).trueBindings.plusAll(bindersOfExpr(right).trueBindings)
                 );
 
             } else if (op == BinaryOp.CONDITIONAL_OR) { // ||
@@ -76,7 +76,7 @@ final class PatternBindingsUtil {
                 // (ii) it is introduced by b when false.
 
                 return BindSet.whenFalse(
-                    bindersOfExpr(left).falseBindings.plusAll(bindersOfExpr(right).falseBindings)
+                        bindersOfExpr(left).falseBindings.plusAll(bindersOfExpr(right).falseBindings)
                 );
 
             } else {
@@ -96,8 +96,8 @@ final class PatternBindingsUtil {
             return BindSet.EMPTY;
         } else if (pattern instanceof ASTRecordPattern) {
             return ((ASTRecordPattern) pattern)
-                .getComponentPatterns().toStream()
-                .reduce(BindSet.EMPTY, (bs, pat) -> bs.union(bindersOfPattern(pat)));
+                    .getComponentPatterns().toStream()
+                    .reduce(BindSet.EMPTY, (bs, pat) -> bs.union(bindersOfPattern(pat)));
         } else if (pattern instanceof ASTUnnamedPattern) {
             return BindSet.EMPTY;
         } else {
@@ -113,7 +113,7 @@ final class PatternBindingsUtil {
     static final class BindSet {
 
         static final BindSet EMPTY = new BindSet(HashTreePSet.empty(),
-                                                 HashTreePSet.empty());
+                HashTreePSet.empty());
 
         private final PSet<ASTVariableId> trueBindings;
         private final PSet<ASTVariableId> falseBindings;
@@ -125,8 +125,8 @@ final class PatternBindingsUtil {
                 return this;
             }
             return new BindSet(
-                trueBindings.plusAll(bindSet.trueBindings),
-                falseBindings.plusAll(bindSet.falseBindings)
+                    trueBindings.plusAll(bindSet.trueBindings),
+                    falseBindings.plusAll(bindSet.falseBindings)
             );
         }
 

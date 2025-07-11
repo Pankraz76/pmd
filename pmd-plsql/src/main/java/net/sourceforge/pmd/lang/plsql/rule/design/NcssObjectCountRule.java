@@ -22,21 +22,18 @@ public class NcssObjectCountRule extends AbstractNcssCountRule<OracleObject> {
         super(OracleObject.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 1500;
     }
 
-    @Override
-    protected boolean isIgnored(OracleObject node) {
+    @Override protected boolean isIgnored(OracleObject node) {
         // Treat Schema-level ProgramUnits as Oracle Objects, otherwise as
         // subprograms
         return node instanceof ASTProgramUnit && !(node.getParent() instanceof ASTGlobal);
     }
 
-    @Override
-    protected Object[] getViolationParameters(OracleObject node, int metric) {
+    @Override protected Object[] getViolationParameters(OracleObject node, int metric) {
         String name = node.getObjectName();
-        return new Object[] {name == null ? "(unnamed)" : name, metric};
+        return new Object[]{name == null ? "(unnamed)" : name, metric};
     }
 }

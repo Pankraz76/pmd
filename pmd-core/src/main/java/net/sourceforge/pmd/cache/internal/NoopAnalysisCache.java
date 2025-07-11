@@ -19,33 +19,27 @@ import net.sourceforge.pmd.reporting.RuleViolation;
  */
 public class NoopAnalysisCache implements AnalysisCache {
 
-    @Override
-    public void persist() {
+    @Override public void persist() {
         // noop
     }
 
-    @Override
-    public boolean isUpToDate(final TextDocument document) {
+    @Override public boolean isUpToDate(final TextDocument document) {
         return false;
     }
 
-    @Override
-    public void analysisFailed(final TextDocument sourceFile) {
+    @Override public void analysisFailed(final TextDocument sourceFile) {
         // noop
     }
 
-    @Override
-    public void checkValidity(RuleSets ruleSets, ClassLoader auxclassPathClassLoader, Collection<? extends TextFile> files) {
+    @Override public void checkValidity(RuleSets ruleSets, ClassLoader auxclassPathClassLoader, Collection<? extends TextFile> files) {
         // noop
     }
 
-    @Override
-    public List<RuleViolation> getCachedViolations(TextDocument sourceFile) {
+    @Override public List<RuleViolation> getCachedViolations(TextDocument sourceFile) {
         return Collections.emptyList();
     }
 
-    @Override
-    public FileAnalysisListener startFileAnalysis(TextDocument filename) {
+    @Override public FileAnalysisListener startFileAnalysis(TextDocument filename) {
         return FileAnalysisListener.noop();
     }
 

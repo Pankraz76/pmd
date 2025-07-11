@@ -86,17 +86,17 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
     private static final String ACCESS_LEVEL = "AccessLevel";
 
     // ESAPI.accessController().isAuthorizedToView(Lead.sObject, fields)
-    private static final String[] ESAPI_ISAUTHORIZED_TO_VIEW = new String[] { "ESAPI", "accessController",
-        "isAuthorizedToView", };
-    private static final String[] ESAPI_ISAUTHORIZED_TO_CREATE = new String[] { "ESAPI", "accessController",
-        "isAuthorizedToCreate", };
-    private static final String[] ESAPI_ISAUTHORIZED_TO_UPDATE = new String[] { "ESAPI", "accessController",
-        "isAuthorizedToUpdate", };
-    private static final String[] ESAPI_ISAUTHORIZED_TO_DELETE = new String[] { "ESAPI", "accessController",
-        "isAuthorizedToDelete", };
+    private static final String[] ESAPI_ISAUTHORIZED_TO_VIEW = new String[]{"ESAPI", "accessController",
+            "isAuthorizedToView", };
+    private static final String[] ESAPI_ISAUTHORIZED_TO_CREATE = new String[]{"ESAPI", "accessController",
+            "isAuthorizedToCreate", };
+    private static final String[] ESAPI_ISAUTHORIZED_TO_UPDATE = new String[]{"ESAPI", "accessController",
+            "isAuthorizedToUpdate", };
+    private static final String[] ESAPI_ISAUTHORIZED_TO_DELETE = new String[]{"ESAPI", "accessController",
+            "isAuthorizedToDelete", };
     // ESAPI doesn't provide support for undelete or merge
 
-    private static final String[] RESERVED_KEYS_FLS = new String[] { "Schema", S_OBJECT_TYPE, };
+    private static final String[] RESERVED_KEYS_FLS = new String[]{"Schema", S_OBJECT_TYPE, };
 
     private static final Pattern WITH_SECURITY_ENFORCED = Pattern.compile("(?is).*[^']\\s*WITH\\s+SECURITY_ENFORCED\\s*[^']*");
 
@@ -163,8 +163,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         }
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         // At the start of each rule execution, these member variables need to be fresh. So they're initialized in the
         // .start() method instead of the constructor, since .start() is called before every execution.
         varToTypeMapping = new HashMap<>();
@@ -175,8 +174,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         super.start(ctx);
     }
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         if (Helper.isTestMethodOrClass(node) || Helper.isSystemLevelClass(node)) {
             return data; // stops all the rules
         }
@@ -191,8 +189,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTMethodCallExpression node, Object data) {
+    @Override public Object visit(ASTMethodCallExpression node, Object data) {
         if (Helper.isAnyDatabaseMethodCall(node)) {
 
             if (hasAccessLevelArgument(node)) {
@@ -200,33 +197,33 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
             }
 
             switch (node.getMethodName().toLowerCase(Locale.ROOT)) {
-            case "insert":
-            case "insertasync":
-            case "insertimmediate":
-                checkForCRUD(node, data, IS_CREATEABLE);
-                break;
-            case "update":
-            case "updateasync":
-            case "updateimmediate":
-                checkForCRUD(node, data, IS_UPDATEABLE);
-                break;
-            case "delete":
-            case "deleteasync":
-            case "deleteimmediate":
-                checkForCRUD(node, data, IS_DELETABLE);
-                break;
-            case "undelete":
-                checkForCRUD(node, data, IS_UNDELETABLE);
-                break;
-            case "upsert":
-                checkForCRUD(node, data, IS_CREATEABLE);
-                checkForCRUD(node, data, IS_UPDATEABLE);
-                break;
-            case "merge":
-                checkForCRUD(node, data, IS_MERGEABLE);
-                break;
-            default:
-                break;
+                case "insert":
+                case "insertasync":
+                case "insertimmediate":
+                    checkForCRUD(node, data, IS_CREATEABLE);
+                    break;
+                case "update":
+                case "updateasync":
+                case "updateimmediate":
+                    checkForCRUD(node, data, IS_UPDATEABLE);
+                    break;
+                case "delete":
+                case "deleteasync":
+                case "deleteimmediate":
+                    checkForCRUD(node, data, IS_DELETABLE);
+                    break;
+                case "undelete":
+                    checkForCRUD(node, data, IS_UNDELETABLE);
+                    break;
+                case "upsert":
+                    checkForCRUD(node, data, IS_CREATEABLE);
+                    checkForCRUD(node, data, IS_UPDATEABLE);
+                    break;
+                case "merge":
+                    checkForCRUD(node, data, IS_MERGEABLE);
+                    break;
+                default:
+                    break;
             }
 
         } else {
@@ -264,8 +261,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return node.getRunAsMode().isPresent();
     }
 
-    @Override
-    public Object visit(ASTDmlInsertStatement node, Object data) {
+    @Override public Object visit(ASTDmlInsertStatement node, Object data) {
         if (hasRunAsMode(node)) {
             return data;
         }
@@ -274,8 +270,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlDeleteStatement node, Object data) {
+    @Override public Object visit(ASTDmlDeleteStatement node, Object data) {
         if (hasRunAsMode(node)) {
             return data;
         }
@@ -284,8 +279,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlUndeleteStatement node, Object data) {
+    @Override public Object visit(ASTDmlUndeleteStatement node, Object data) {
         if (hasRunAsMode(node)) {
             return data;
         }
@@ -294,8 +288,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlUpdateStatement node, Object data) {
+    @Override public Object visit(ASTDmlUpdateStatement node, Object data) {
         if (hasRunAsMode(node)) {
             return data;
         }
@@ -304,8 +297,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlUpsertStatement node, Object data) {
+    @Override public Object visit(ASTDmlUpsertStatement node, Object data) {
         if (hasRunAsMode(node)) {
             return data;
         }
@@ -315,8 +307,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlMergeStatement node, Object data) {
+    @Override public Object visit(ASTDmlMergeStatement node, Object data) {
         if (hasRunAsMode(node)) {
             return data;
         }
@@ -325,8 +316,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(final ASTAssignmentExpression node, Object data) {
+    @Override public Object visit(final ASTAssignmentExpression node, Object data) {
         final ASTSoqlExpression soql = node.descendants(ASTSoqlExpression.class).first();
         if (soql != null) {
             checkForAccessibility(soql, data);
@@ -335,8 +325,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(final ASTVariableDeclaration node, Object data) {
+    @Override public Object visit(final ASTVariableDeclaration node, Object data) {
         String type = node.getType();
         addVariableToMapping(Helper.getFQVariableName(node), type);
 
@@ -349,15 +338,13 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
 
     }
 
-    @Override
-    public Object visit(ASTParameter node, Object data) {
+    @Override public Object visit(ASTParameter node, Object data) {
         String type = node.getType();
         addVariableToMapping(Helper.getFQVariableName(node), type);
         return data;
     }
 
-    @Override
-    public Object visit(final ASTFieldDeclaration node, Object data) {
+    @Override public Object visit(final ASTFieldDeclaration node, Object data) {
         ASTFieldDeclarationStatements field = node.ancestors(ASTFieldDeclarationStatements.class).first();
         if (field != null) {
             String namesString = field.getTypeName();
@@ -371,8 +358,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(final ASTReturnStatement node, Object data) {
+    @Override public Object visit(final ASTReturnStatement node, Object data) {
         final ASTSoqlExpression soql = node.descendants(ASTSoqlExpression.class).first();
         if (soql != null) {
             checkForAccessibility(soql, data);
@@ -381,8 +367,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(final ASTForEachStatement node, Object data) {
+    @Override public Object visit(final ASTForEachStatement node, Object data) {
         final ASTSoqlExpression soql = node.firstChild(ASTSoqlExpression.class);
         if (soql != null) {
             checkForAccessibility(soql, data);
@@ -411,8 +396,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         return typeToUse;
     }
 
-    @Override
-    public Object visit(final ASTProperty node, Object data) {
+    @Override public Object visit(final ASTProperty node, Object data) {
         ASTField field = node.firstChild(ASTField.class);
         if (field != null) {
             String fieldType = field.getType();
@@ -493,13 +477,13 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
     //For USER_MODE
     private boolean isWithUserMode(final ApexNode<?> node) {
         return node instanceof ASTSoqlExpression
-            && WITH_USER_MODE.matcher(((ASTSoqlExpression) node).getQuery()).matches();
+                && WITH_USER_MODE.matcher(((ASTSoqlExpression) node).getQuery()).matches();
     }
 
     //For System Mode
     private boolean isWithSystemMode(final ApexNode<?> node) {
         return node instanceof ASTSoqlExpression
-            && WITH_SYSTEM_MODE.matcher(((ASTSoqlExpression) node).getQuery()).matches();
+                && WITH_SYSTEM_MODE.matcher(((ASTSoqlExpression) node).getQuery()).matches();
     }
 
     private String getType(final ASTMethodCallExpression methodNode) {
@@ -743,7 +727,7 @@ public class ApexCRUDViolationRule extends AbstractApexRule {
         final ASTUserClass wrappingClass = node.ancestors(ASTUserClass.class).first();
 
         if (wrappingClass != null && Helper.isTestMethodOrClass(wrappingClass)
-            || wrappingMethod != null && Helper.isTestMethodOrClass(wrappingMethod)) {
+                || wrappingMethod != null && Helper.isTestMethodOrClass(wrappingMethod)) {
             return;
         }
 

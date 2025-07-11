@@ -14,8 +14,7 @@ import net.sourceforge.pmd.lang.velocity.rule.AbstractVtlRule;
 
 public class AvoidReassigningParametersRule extends AbstractVtlRule {
 
-    @Override
-    public Object visit(final ASTDirective node, final Object data) {
+    @Override public Object visit(final ASTDirective node, final Object data) {
         if ("macro".equals(node.getDirectiveName())) {
             final Set<String> paramNames = new HashSet<>();
             for (final ASTReference param : node.children(ASTReference.class)) {

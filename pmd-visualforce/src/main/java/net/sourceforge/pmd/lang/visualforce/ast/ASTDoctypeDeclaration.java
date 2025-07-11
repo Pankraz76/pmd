@@ -23,8 +23,7 @@ public final class ASTDoctypeDeclaration extends AbstractVfNode {
         this.name = name;
     }
 
-    @Override
-    protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

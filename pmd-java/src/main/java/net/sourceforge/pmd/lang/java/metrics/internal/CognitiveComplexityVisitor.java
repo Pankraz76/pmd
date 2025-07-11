@@ -43,7 +43,8 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
     /** Instance. */
     public static final CognitiveComplexityVisitor INSTANCE = new CognitiveComplexityVisitor();
 
-    public enum BooleanOp { AND, OR }
+    public enum BooleanOp { AND, OR
+    }
 
     public static class State {
 
@@ -59,8 +60,8 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
             // push enclosing methods on the stack
             // so that the stack is independent of where we started the visitor;
             topNode.ancestors()
-                   .filterIs(ASTMethodDeclaration.class)
-                   .forEach(methodStack::addLast);
+                    .filterIs(ASTMethodDeclaration.class)
+                    .forEach(methodStack::addLast);
 
         }
 
@@ -138,16 +139,14 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
             }
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "State{complexity=" + complexity
-                + ", nestingLevel=" + nestingLevel
-                + ", currentBooleanOperation=" + currentBooleanOperation + '}';
+                    + ", nestingLevel=" + nestingLevel
+                    + ", currentBooleanOperation=" + currentBooleanOperation + '}';
         }
     }
 
-    @Override
-    public Void visit(ASTIfStatement node, State state) {
+    @Override public Void visit(ASTIfStatement node, State state) {
         boolean isNotElseIf = !(node.getParent() instanceof ASTIfStatement);
 
         node.getCondition().acceptVisitor(this, state);
@@ -169,8 +168,7 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
         return null;
     }
 
-    @Override
-    public Void visit(ASTContinueStatement node, State state) {
+    @Override public Void visit(ASTContinueStatement node, State state) {
 
         // hack to detect if there is a label
         boolean hasLabel = node.getImage() != null;
@@ -181,8 +179,7 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
         return visitChildren(node, state);
     }
 
-    @Override
-    public Void visit(ASTBreakStatement node, State state) {
+    @Override public Void visit(ASTBreakStatement node, State state) {
 
         // hack to detect if there is a label
         boolean hasLabel = node.getImage() != null;
@@ -194,8 +191,7 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
         return visitChildren(node, state);
     }
 
-    @Override
-    public Void visit(ASTInfixExpression node, State state) {
+    @Override public Void visit(ASTInfixExpression node, State state) {
         BinaryOp op = node.getOperator();
         if (op == BinaryOp.CONDITIONAL_AND) {
             state.booleanOperation(BooleanOp.AND);
@@ -205,8 +201,7 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
         return visitChildren(node, state);
     }
 
-    @Override
-    public Void visit(ASTUnaryExpression node, State state) {
+    @Override public Void visit(ASTUnaryExpression node, State state) {
 
         if (node.getOperator() == UnaryOp.NEGATION) {
             state.booleanOperation(null);
@@ -215,8 +210,7 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
         return visitChildren(node, state);
     }
 
-    @Override
-    public Void visit(ASTBlock node, State state) {
+    @Override public Void visit(ASTBlock node, State state) {
 
         for (JavaNode child : node.children()) {
             // This needs to happen because the current 'run' of boolean operations is terminated
@@ -229,8 +223,7 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
         return null;
     }
 
-    @Override
-    public Void visit(ASTMethodDeclaration node, State state) {
+    @Override public Void visit(ASTMethodDeclaration node, State state) {
 
         state.pushMethod(node);
         visitChildren(node, state);
@@ -239,8 +232,7 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
         return null;
     }
 
-    @Override
-    public Void visit(ASTMethodCall node, State state) {
+    @Override public Void visit(ASTMethodCall node, State state) {
 
         JExecutableSymbol calledSymbol = node.getOverloadSelectionInfo().getMethodType().getSymbol();
         if (calledSymbol instanceof JMethodSymbol) {
@@ -249,49 +241,40 @@ public class CognitiveComplexityVisitor extends JavaVisitorBase<CognitiveComplex
         return visitChildren(node, state);
     }
 
-    @Override
-    public Void visit(ASTForStatement node, State state) {
+    @Override public Void visit(ASTForStatement node, State state) {
         return structural(node, state);
     }
 
-    @Override
-    public Void visit(ASTForeachStatement node, State state) {
+    @Override public Void visit(ASTForeachStatement node, State state) {
         return structural(node, state);
     }
 
-    @Override
-    public Void visit(ASTSwitchStatement node, State state) {
+    @Override public Void visit(ASTSwitchStatement node, State state) {
         return structural(node, state);
     }
 
-    @Override
-    public Void visit(ASTLambdaExpression node, State state) {
+    @Override public Void visit(ASTLambdaExpression node, State state) {
         return nonStructural(node, state);
     }
 
-    @Override
-    public Void visit(ASTClassBody node, State state) {
+    @Override public Void visit(ASTClassBody node, State state) {
         return nonStructural(node, state);
     }
 
 
-    @Override
-    public Void visit(ASTWhileStatement node, State state) {
+    @Override public Void visit(ASTWhileStatement node, State state) {
         return structural(node, state);
     }
 
-    @Override
-    public Void visit(ASTCatchClause node, State state) {
+    @Override public Void visit(ASTCatchClause node, State state) {
         return structural(node, state);
     }
 
-    @Override
-    public Void visit(ASTDoStatement node, State state) {
+    @Override public Void visit(ASTDoStatement node, State state) {
         return structural(node, state);
     }
 
-    @Override
-    public Void visit(ASTConditionalExpression node, State state) {
+    @Override public Void visit(ASTConditionalExpression node, State state) {
         return structural(node, state);
     }
 

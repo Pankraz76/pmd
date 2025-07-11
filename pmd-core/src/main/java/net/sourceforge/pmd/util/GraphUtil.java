@@ -33,10 +33,10 @@ public final class GraphUtil {
      * @param <V>          Type of vertex, must be usable as map key (equals/hash)
      */
     public static <V> String toDot(
-        Collection<? extends V> vertices,
-        Function<? super V, ? extends Collection<? extends V>> successorFun,
-        Function<? super V, DotColor> colorFun,
-        Function<? super V, String> labelFun
+            Collection<? extends V> vertices,
+            Function<? super V, ? extends Collection<? extends V>> successorFun,
+            Function<? super V, DotColor> colorFun,
+            Function<? super V, String> labelFun
     ) {
         // generates a DOT representation of the lattice
         // Visualize eg at http://webgraphviz.com/
@@ -49,11 +49,11 @@ public final class GraphUtil {
             String id = "n" + i++;
             ids.put(node, id);
             sb.append(id)
-              .append(" [ shape=box, color=")
-              .append(colorFun.apply(node).toDot())
-              .append(", label=\"")
-              .append(escapeDotString(labelFun.apply(node)))
-                .append("\" ];\n");
+                    .append(" [ shape=box, color=")
+                    .append(colorFun.apply(node).toDot())
+                    .append(", label=\"")
+                    .append(escapeDotString(labelFun.apply(node)))
+                    .append("\" ];\n");
         }
 
         List<String> edges = new ArrayList<>();
@@ -74,10 +74,9 @@ public final class GraphUtil {
     }
 
 
-    @NonNull
-    private static String escapeDotString(String string) {
+    @NonNull private static String escapeDotString(String string) {
         return string.replaceAll("\\R", "\\\n")
-                     .replaceAll("\"", "\\\"");
+                .replaceAll("\"", "\\\"");
     }
 
     public enum DotColor {

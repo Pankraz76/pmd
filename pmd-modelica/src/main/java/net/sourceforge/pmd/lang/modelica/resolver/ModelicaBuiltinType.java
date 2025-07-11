@@ -26,8 +26,7 @@ public class ModelicaBuiltinType implements ModelicaType {
             return name;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return name;
         }
     }
@@ -42,18 +41,15 @@ public class ModelicaBuiltinType implements ModelicaType {
         return baseType;
     }
 
-    @Override
-    public String getSimpleTypeName() {
+    @Override public String getSimpleTypeName() {
         return baseType.toString();
     }
 
-    @Override
-    public String getFullTypeName() {
+    @Override public String getFullTypeName() {
         return baseType.toString();
     }
 
-    @Override
-    public String getDescriptiveName() {
+    @Override public String getDescriptiveName() {
         return getFullTypeName();
     }
 }

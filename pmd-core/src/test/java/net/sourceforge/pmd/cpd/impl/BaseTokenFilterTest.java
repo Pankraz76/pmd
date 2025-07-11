@@ -34,43 +34,35 @@ class BaseTokenFilterTest {
             this.text = text;
         }
 
-        @Override
-        public StringToken getNext() {
+        @Override public StringToken getNext() {
             return null;
         }
 
-        @Override
-        public StringToken getPreviousComment() {
+        @Override public StringToken getPreviousComment() {
             return null;
         }
 
-        @Override
-        public TextRegion getRegion() {
+        @Override public TextRegion getRegion() {
             return TextRegion.fromBothOffsets(0, text.length());
         }
 
-        @Override
-        public boolean isEof() {
+        @Override public boolean isEof() {
             return text == null;
         }
 
-        @Override
-        public String getImageCs() {
+        @Override public String getImageCs() {
             return text;
         }
 
-        @Override
-        public FileLocation getReportLocation() {
+        @Override public FileLocation getReportLocation() {
             return FileLocation.range(FileId.UNKNOWN, TextRange2d.range2d(1, 1, 1, 1));
         }
 
-        @Override
-        public int compareTo(StringToken o) {
+        @Override public int compareTo(StringToken o) {
             return text.compareTo(o.text);
         }
 
-        @Override
-        public int getKind() {
+        @Override public int getKind() {
             return 0;
         }
     }
@@ -79,8 +71,7 @@ class BaseTokenFilterTest {
 
         Iterator<String> iterator = Collections.unmodifiableList(Arrays.asList("a", "b", "c")).iterator();
 
-        @Override
-        public StringToken getNextToken() {
+        @Override public StringToken getNextToken() {
             if (iterator.hasNext()) {
                 return new StringToken(iterator.next());
             } else {
@@ -98,13 +89,11 @@ class BaseTokenFilterTest {
             super(tokenManager);
         }
 
-        @Override
-        protected boolean shouldStopProcessing(final T currentToken) {
+        @Override protected boolean shouldStopProcessing(final T currentToken) {
             return currentToken == null;
         }
 
-        @Override
-        protected void analyzeTokens(final T currentToken, final Iterable<T> remainingTokens) {
+        @Override protected void analyzeTokens(final T currentToken, final Iterable<T> remainingTokens) {
             this.remainingTokens = remainingTokens;
         }
 
@@ -113,8 +102,7 @@ class BaseTokenFilterTest {
         }
     }
 
-    @Test
-    void testRemainingTokensFunctionality1() {
+    @Test void testRemainingTokensFunctionality1() {
         final TokenManager<StringToken> tokenManager = new StringTokenManager();
         final DummyTokenFilter<StringToken> tokenFilter = new DummyTokenFilter<>(tokenManager);
         final StringToken firstToken = tokenFilter.getNextToken();
@@ -139,8 +127,7 @@ class BaseTokenFilterTest {
         assertEquals("c", secondValSecondIt.getImage());
     }
 
-    @Test
-    void testRemainingTokensFunctionality2() {
+    @Test void testRemainingTokensFunctionality2() {
         final TokenManager<StringToken> tokenManager = new StringTokenManager();
         final DummyTokenFilter<StringToken> tokenFilter = new DummyTokenFilter<>(tokenManager);
         final StringToken firstToken = tokenFilter.getNextToken();
@@ -165,8 +152,7 @@ class BaseTokenFilterTest {
         assertEquals("c", secondValSecondIt.getImage());
     }
 
-    @Test
-    void testRemainingTokensFunctionality3() {
+    @Test void testRemainingTokensFunctionality3() {
         final TokenManager<StringToken> tokenManager = new StringTokenManager();
         final DummyTokenFilter<StringToken> tokenFilter = new DummyTokenFilter<>(tokenManager);
         final StringToken firstToken = tokenFilter.getNextToken();
@@ -181,8 +167,7 @@ class BaseTokenFilterTest {
         assertThrows(NoSuchElementException.class, () -> it1.next());
     }
 
-    @Test
-    void testRemainingTokensFunctionality4() {
+    @Test void testRemainingTokensFunctionality4() {
         final TokenManager<StringToken> tokenManager = new StringTokenManager();
         final DummyTokenFilter<StringToken> tokenFilter = new DummyTokenFilter<>(tokenManager);
         final StringToken firstToken = tokenFilter.getNextToken();

@@ -17,13 +17,11 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 public class UselessStringValueOfRule extends AbstractJavaRule {
 
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTMethodCall.class);
     }
 
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         if (JavaAstUtils.isStringConcatExpr(node.getParent())) {
             ASTExpression valueOfArg = getValueOfArg(node);
             if (valueOfArg == null) {
@@ -35,10 +33,10 @@ public class UselessStringValueOfRule extends AbstractJavaRule {
 
             ASTExpression sibling = JavaAstUtils.getOtherOperandIfInInfixExpr(node);
             if (TypeTestUtil.isExactlyA(String.class, sibling)
-                && !valueOfArg.getTypeMirror().isArray()
-                // In `String.valueOf(a) + String.valueOf(b)`,
-                // only report the second call
-                && (getValueOfArg(sibling) == null || node.getIndexInParent() == 1)) {
+                    && !valueOfArg.getTypeMirror().isArray()
+                    // In `String.valueOf(a) + String.valueOf(b)`,
+                    // only report the second call
+                    && (getValueOfArg(sibling) == null || node.getIndexInParent() == 1)) {
                 asCtx(data).addViolation(node);
             }
         }
@@ -49,8 +47,8 @@ public class UselessStringValueOfRule extends AbstractJavaRule {
         if (expr instanceof ASTMethodCall) {
             ASTMethodCall call = (ASTMethodCall) expr;
             if (call.getArguments().size() == 1
-                && "valueOf".equals(call.getMethodName())
-                && TypeTestUtil.isDeclaredInClass(String.class, call.getMethodType())) {
+                    && "valueOf".equals(call.getMethodName())
+                    && TypeTestUtil.isDeclaredInClass(String.class, call.getMethodType())) {
                 return call.getArguments().get(0);
             }
         }

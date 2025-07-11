@@ -28,9 +28,9 @@ public abstract class BaseParserTest {
      */
     protected ASTExpression parseExpr(String expr) {
         ASTCompilationUnit ast = java.parse("class Foo {{ "
-                                                + "String s1,s2,s3; "
-                                                + "int i,j,k; "
-                                                + "Object o = (" + expr + "); }}");
+                + "String s1,s2,s3; "
+                + "int i,j,k; "
+                + "Object o = (" + expr + "); }}");
         return ast.descendants(ASTExpression.class).crossFindBoundaries().firstOrThrow();
     }
 }

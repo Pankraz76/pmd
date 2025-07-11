@@ -15,8 +15,7 @@ class PMDTaskTest extends AbstractAntTestHelper {
         super.antTestScriptFilename = "pmdtasktest.xml";
     }
 
-    @Test
-    void testXML() {
+    @Test void testXML() {
         executeTarget("testXML");
         assertOutputContaining("Potentially mistyped CDATA section with extra [ at beginning or ] at the end.");
     }

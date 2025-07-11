@@ -28,18 +28,15 @@ abstract class BaseRewrittenFunction<S, N extends Node> extends BaseJavaXPathFun
         this.contextNodeType = contextNodeType;
     }
 
-    @Override
-    public Type[] getArgumentTypes() {
+    @Override public Type[] getArgumentTypes() {
         return SINGLE_STRING_SEQ;
     }
 
-    @Override
-    public Type getResultType() {
+    @Override public Type getResultType() {
         return Type.SINGLE_BOOLEAN;
     }
 
-    @Override
-    public boolean dependsOnContext() {
+    @Override public boolean dependsOnContext() {
         return true;
     }
 
@@ -64,15 +61,13 @@ abstract class BaseRewrittenFunction<S, N extends Node> extends BaseJavaXPathFun
     protected abstract boolean matches(N contextNode, String arg, S parsedArg, boolean isConstant) throws XPathFunctionException;
 
 
-    @Override
-    public FunctionCall makeCallExpression() {
+    @Override public FunctionCall makeCallExpression() {
         return new FunctionCall() {
 
             private S constantState;
             private boolean isConstant;
 
-            @Override
-            public void staticInit(Object[] arguments) throws XPathFunctionException {
+            @Override public void staticInit(Object[] arguments) throws XPathFunctionException {
                 if (arguments[0] instanceof String) {
                     // If the argument was a string literal then we can preload
                     // the class, and check that it's valid at expression build time
@@ -83,8 +78,7 @@ abstract class BaseRewrittenFunction<S, N extends Node> extends BaseJavaXPathFun
                 }
             }
 
-            @Override
-            public Boolean call(Node node, Object[] arguments) throws XPathFunctionException {
+            @Override public Boolean call(Node node, Object[] arguments) throws XPathFunctionException {
                 if (!contextNodeType.isInstance(node)) {
                     // we could report that as an error
                     return false;
@@ -92,7 +86,7 @@ abstract class BaseRewrittenFunction<S, N extends Node> extends BaseJavaXPathFun
 
                 String arg = arguments[0].toString();
                 S parsedArg = isConstant ? constantState
-                                         : parseArgument(arg);
+                        : parseArgument(arg);
 
                 return matches((N) node, arg, parsedArg, isConstant);
             }

@@ -18,8 +18,7 @@ import com.github.stefanbirkner.systemlambda.SystemLambda;
 class QuickstartRulesetTest {
     private static final String QUICKSTART_RULESET = "rulesets/apex/quickstart.xml";
 
-    @Test
-    void loadQuickstartRuleset() throws Exception {
+    @Test void loadQuickstartRuleset() throws Exception {
         String log = SystemLambda.tapSystemErr(() -> {
             RuleSet ruleset = rulesetLoader().loadFromResource(QUICKSTART_RULESET);
             assertNotNull(ruleset);
@@ -27,8 +26,7 @@ class QuickstartRulesetTest {
         assertTrue(log.isEmpty(), "No Logging expected");
     }
 
-    @Test
-    void correctEncoding() throws Exception {
+    @Test void correctEncoding() throws Exception {
         assertTrue(AbstractRuleSetFactoryTest.hasCorrectEncoding(QUICKSTART_RULESET));
     }
 

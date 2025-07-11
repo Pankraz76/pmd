@@ -27,8 +27,7 @@ public class GroovyLanguageModule extends CpdOnlyLanguageModuleBase {
         return (GroovyLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new GroovyCpdLexer();
     }
 }

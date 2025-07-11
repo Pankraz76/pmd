@@ -19,8 +19,7 @@ public enum PostfixOperator {
         this.symbol = symbol;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return this.symbol;
     }
 
@@ -30,12 +29,12 @@ public enum PostfixOperator {
      */
     public static PostfixOperator valueOf(UnaryExpression.Operator op) {
         switch (op) {
-        case POST_INCREMENT:
-            return INCREMENT;
-        case POST_DECREMENT:
-            return DECREMENT;
-        default:
-            throw new IllegalArgumentException("Invalid postfix operator " + op);
+            case POST_INCREMENT:
+                return INCREMENT;
+            case POST_DECREMENT:
+                return DECREMENT;
+            default:
+                throw new IllegalArgumentException("Invalid postfix operator " + op);
         }
     }
 }

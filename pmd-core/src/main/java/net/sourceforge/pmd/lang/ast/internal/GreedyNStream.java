@@ -25,61 +25,51 @@ import net.sourceforge.pmd.util.IteratorUtil;
  */
 abstract class GreedyNStream<T extends Node> extends IteratorBasedNStream<T> {
 
-    @Override
-    protected <R extends Node> NodeStream<R> mapIter(Function<Iterator<T>, Iterator<R>> fun) {
+    @Override protected <R extends Node> NodeStream<R> mapIter(Function<Iterator<T>, Iterator<R>> fun) {
         return StreamImpl.fromNonNullList(IteratorUtil.toNonNullList(fun.apply(iterator())));
     }
 
-    @Override
-    public T first() {
+    @Override public T first() {
         return toList().get(0);
     }
 
-    @Override
-    public @Nullable T get(int n) {
+    @Override public @Nullable T get(int n) {
         AssertionUtil.requireNonNegative("n", n);
         List<T> tList = toList();
         return n < tList.size() ? tList.get(n) : null;
     }
 
-    @Override
-    public Iterator<T> iterator() {
+    @Override public Iterator<T> iterator() {
         return toList().iterator();
     }
 
-    @Override
-    public int count() {
+    @Override public int count() {
         return toList().size();
     }
 
-    @Override
-    public NodeStream<T> drop(int n) {
+    @Override public NodeStream<T> drop(int n) {
         if (n == 0) {
             return this;
         }
         return StreamImpl.fromNonNullList(CollectionUtil.drop(toList(), n));
     }
 
-    @Override
-    public NodeStream<T> take(int maxSize) {
+    @Override public NodeStream<T> take(int maxSize) {
         if (maxSize >= count()) {
             return this;
         }
         return StreamImpl.fromNonNullList(CollectionUtil.take(toList(), maxSize));
     }
 
-    @Override
-    public abstract List<T> toList();
+    @Override public abstract List<T> toList();
 
-    @Override
-    public Spliterator<T> spliterator() {
+    @Override public Spliterator<T> spliterator() {
         Spliterator<T> spliter = toList().spliterator();
         return Spliterators.spliterator(iterator(), spliter.estimateSize(),
-                                        spliter.characteristics() | Spliterator.NONNULL);
+                spliter.characteristics() | Spliterator.NONNULL);
     }
 
-    @Override
-    public NodeStream<T> cached() {
+    @Override public NodeStream<T> cached() {
         return this;
     }
 
@@ -91,8 +81,7 @@ abstract class GreedyNStream<T extends Node> extends IteratorBasedNStream<T> {
             this.coll = coll;
         }
 
-        @Override
-        public List<T> toList() {
+        @Override public List<T> toList() {
             return coll;
         }
     }

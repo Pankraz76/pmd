@@ -98,13 +98,12 @@ public final class LanguageVersion implements Comparable<LanguageVersion> {
         LanguageVersion otherVersion = language.getVersion(versionString);
         if (otherVersion == null) {
             throw new IllegalArgumentException(
-                "No such version '" + versionString + "' for language " + language.getName());
+                    "No such version '" + versionString + "' for language " + language.getName());
         }
         return this.compareTo(otherVersion);
     }
 
-    @Override
-    public int compareTo(LanguageVersion o) {
+    @Override public int compareTo(LanguageVersion o) {
         int cmp = language.compareTo(o.getLanguage());
         if (cmp != 0) {
             return cmp;
@@ -113,8 +112,7 @@ public final class LanguageVersion implements Comparable<LanguageVersion> {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -125,13 +123,11 @@ public final class LanguageVersion implements Comparable<LanguageVersion> {
         return language.equals(that.language) && version.equals(that.version);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hash(language, version);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return language.toString() + "+version:" + version;
     }
 }

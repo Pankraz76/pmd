@@ -47,8 +47,7 @@ public final class TextPos2d implements Comparable<TextPos2d> {
 
 
     /** Compares the start offset, then the length of a region. */
-    @Override
-    public int compareTo(@NonNull TextPos2d that) {
+    @Override public int compareTo(@NonNull TextPos2d that) {
         int cmp = Integer.compare(this.getLine(), that.getLine());
         if (cmp != 0) {
             return cmp;
@@ -77,13 +76,11 @@ public final class TextPos2d implements Comparable<TextPos2d> {
         return line + ":" + column;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "!debug only! Pos2d(line=" + line + ", column=" + column + ")";
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -92,11 +89,10 @@ public final class TextPos2d implements Comparable<TextPos2d> {
         }
         TextPos2d that = (TextPos2d) o;
         return line == that.getLine()
-            && column == that.getColumn();
+                && column == that.getColumn();
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return line * 31 + column;
     }
 }

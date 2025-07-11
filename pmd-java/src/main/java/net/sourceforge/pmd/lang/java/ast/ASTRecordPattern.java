@@ -23,8 +23,7 @@ public final class ASTRecordPattern extends AbstractJavaPattern {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -53,8 +52,7 @@ public final class ASTRecordPattern extends AbstractJavaPattern {
      * for the whole pattern, but rather for individual record components, which can be accessed via
      * {@link #getComponentPatterns()}.
      */
-    @Deprecated
-    public ASTVariableId getVarId() {
+    @Deprecated public ASTVariableId getVarId() {
         return firstChild(ASTVariableId.class);
     }
 }

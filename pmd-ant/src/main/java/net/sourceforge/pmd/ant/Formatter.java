@@ -130,8 +130,7 @@ public class Formatter {
         return toFile == null && !toConsole;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "file = " + toFile + "; renderer = " + type;
     }
 
@@ -272,23 +271,19 @@ public class Formatter {
         return new GlobalAnalysisListener() {
             final GlobalAnalysisListener listener = renderer.newListener();
 
-            @Override
-            public ListenerInitializer initializer() {
+            @Override public ListenerInitializer initializer() {
                 return new ListenerInitializer() {
-                    @Override
-                    public void setFileNameRenderer(FileNameRenderer fileNameRenderer) {
+                    @Override public void setFileNameRenderer(FileNameRenderer fileNameRenderer) {
                         renderer.setFileNameRenderer(fileNameRenderer);
                     }
                 };
             }
 
-            @Override
-            public FileAnalysisListener startFileAnalysis(TextFile file) {
+            @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
                 return listener.startFileAnalysis(file);
             }
 
-            @Override
-            public void close() throws Exception {
+            @Override public void close() throws Exception {
                 listener.close();
                 if (!toConsole) {
                     writer.close();

@@ -14,13 +14,11 @@ class TSqlCpdLexerTest extends CpdTextComparisonTest {
         super("tsql", ".sql");
     }
 
-    @Test
-    void simpleTest() {
+    @Test void simpleTest() {
         doTest("simple");
     }
 
-    @Test
-    void mailJobTimeLineTest() {
+    @Test void mailJobTimeLineTest() {
         doTest("MailJobTimeLine");
     }
 }

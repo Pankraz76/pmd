@@ -19,8 +19,7 @@ import net.sourceforge.pmd.util.StringUtil.CaseConvention;
 
 class StringUtilTest {
 
-    @Test
-    void testColumnNumber() {
+    @Test void testColumnNumber() {
         assertEquals(-1, StringUtil.columnNumberAt("f\rah\nb", -1));
         assertEquals(1, StringUtil.columnNumberAt("f\rah\nb", 0));
         assertEquals(2, StringUtil.columnNumberAt("f\rah\nb", 1));
@@ -32,8 +31,7 @@ class StringUtilTest {
         assertEquals(-1, StringUtil.columnNumberAt("f\rah\nb", 7));
     }
 
-    @Test
-    void testColumnNumberCrLf() {
+    @Test void testColumnNumberCrLf() {
         assertEquals(-1, StringUtil.columnNumberAt("f\r\nb", -1));
         assertEquals(1, StringUtil.columnNumberAt("f\r\nb", 0));
         assertEquals(2, StringUtil.columnNumberAt("f\r\nb", 1));
@@ -43,37 +41,33 @@ class StringUtilTest {
         assertEquals(-1, StringUtil.columnNumberAt("f\r\nb", 5));
     }
 
-    @Test
-    void testColumnNumberTrailing() {
+    @Test void testColumnNumberTrailing() {
         assertEquals(1, StringUtil.columnNumberAt("\n", 0));
         assertEquals(2, StringUtil.columnNumberAt("\n", 1));
         assertEquals(-1, StringUtil.columnNumberAt("\n", 2));
     }
 
-    @Test
-    void testColumnNumberEmpty() {
+    @Test void testColumnNumberEmpty() {
         assertEquals(1, StringUtil.columnNumberAt("", 0));
         assertEquals(-1, StringUtil.columnNumberAt("", 1));
     }
 
-    @Test
-    void testRemoveSurrounding() {
+    @Test void testRemoveSurrounding() {
         assertThat(StringUtil.removeSurrounding("", 'q'), equalTo(""));
         assertThat(StringUtil.removeSurrounding("q", 'q'), equalTo("q"));
         assertThat(StringUtil.removeSurrounding("qq", 'q'), equalTo(""));
         assertThat(StringUtil.removeSurrounding("qqq", 'q'), equalTo("q"));
     }
 
-    @Test
-    void testTrimIndent() {
+    @Test void testTrimIndent() {
         assertTrimIndent(" \n b \n c",
-                         "\nb\nc");
+                "\nb\nc");
 
         assertTrimIndent(" \nb \n c",
-                         "\nb\n c");
+                "\nb\n c");
 
         assertTrimIndent(" \n b \n c\n  ",
-                         "\nb\nc\n");
+                "\nb\nc\n");
         assertTrimIndent("", "");
     }
 
@@ -82,29 +76,24 @@ class StringUtilTest {
         assertThat(actual, equalTo(output));
     }
 
-    @Test
-    void testElide() {
+    @Test void testElide() {
         assertThat(StringUtil.elide("abc", 2, ""), equalTo("ab"));
         assertThat(StringUtil.elide("abc", 2, "."), equalTo("a."));
         assertThat(StringUtil.elide("abc", 2, ".."), equalTo(".."));
         assertThat(StringUtil.elide("abc", 3, ".."), equalTo("abc"));
     }
 
-    @Test
-    void substringAfterLast() {
+    @Test void substringAfterLast() {
         assertEquals("abc", StringUtil.substringAfterLast("a.abc", '.'));
         assertEquals("abc", StringUtil.substringAfterLast("abc", '.'));
     }
 
-    @Test
-    void caseConventionCamelCaseToScreamingSnake() {
+    @Test void caseConventionCamelCaseToScreamingSnake() {
         assertEquals("rootDirectory", CaseConvention.SCREAMING_SNAKE_CASE.convertTo(CaseConvention.CAMEL_CASE, "ROOT_DIRECTORY"));
         assertEquals("ROOT_DIRECTORY", CaseConvention.CAMEL_CASE.convertTo(CaseConvention.SCREAMING_SNAKE_CASE, "rootDirectory"));
     }
 
-    @ParameterizedTest
-    @MethodSource
-    void caseConventionConvertTo(CaseConventionConversionTestData data) {
+    @ParameterizedTest @MethodSource void caseConventionConvertTo(CaseConventionConversionTestData data) {
         assertEquals(data.expected, data.from.convertTo(data.to, data.source));
     }
 
@@ -189,8 +178,7 @@ class StringUtilTest {
             this.expected = expected;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return source + "(" + from.name() + "->" + to.name() + ")=" + expected;
         }
     }

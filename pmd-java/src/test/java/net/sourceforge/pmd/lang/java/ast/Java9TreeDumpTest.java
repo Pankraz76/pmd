@@ -14,21 +14,18 @@ import net.sourceforge.pmd.lang.test.ast.BaseParsingHelper;
 class Java9TreeDumpTest extends BaseJavaTreeDumpTest {
 
     private final JavaParsingHelper java9 = JavaParsingHelper.DEFAULT
-        .withDefaultVersion("9")
-        .withResourceContext(Java9TreeDumpTest.class, "jdkversiontests/java9");
+            .withDefaultVersion("9")
+            .withResourceContext(Java9TreeDumpTest.class, "jdkversiontests/java9");
 
-    @Test
-    void testModule() {
+    @Test void testModule() {
         doTest("jdk9_module_info");
     }
 
-    @Test
-    void testAnnotatedModule() {
+    @Test void testAnnotatedModule() {
         doTest("jdk9_module_info_with_annot");
     }
 
-    @Override
-    public @NonNull BaseParsingHelper<?, ?> getParser() {
+    @Override public @NonNull BaseParsingHelper<?, ?> getParser() {
         return java9;
     }
 }

@@ -13,14 +13,12 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 
 public class MethodWithSameNameAsEnclosingClassRule extends AbstractApexRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         String className = node.getSimpleName();
 
         for (ASTMethod m : node.descendants(ASTMethod.class)) {

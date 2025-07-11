@@ -27,38 +27,31 @@ abstract class MemberStubBase implements JAccessibleElementSymbol, AsmStub, Anno
         this.accessFlags = accessFlags;
     }
 
-    @Override
-    public String getSimpleName() {
+    @Override public String getSimpleName() {
         return simpleName;
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return classStub.getTypeSystem();
     }
 
-    @Override
-    public AsmSymbolResolver getResolver() {
+    @Override public AsmSymbolResolver getResolver() {
         return classStub.getResolver();
     }
 
-    @Override
-    public int getModifiers() {
+    @Override public int getModifiers() {
         return accessFlags;
     }
 
-    @Override
-    public @NonNull ClassStub getEnclosingClass() {
+    @Override public @NonNull ClassStub getEnclosingClass() {
         return classStub;
     }
 
-    @Override
-    public void addAnnotation(SymAnnot annot) {
+    @Override public void addAnnotation(SymAnnot annot) {
         annotations = annotations.plus(annot);
     }
 
-    @Override
-    public PSet<SymAnnot> getDeclaredAnnotations() {
+    @Override public PSet<SymAnnot> getDeclaredAnnotations() {
         return annotations;
     }
 }

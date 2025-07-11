@@ -28,8 +28,7 @@ public class ObjectiveCLanguageModule extends CpdOnlyLanguageModuleBase {
         return (ObjectiveCLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new ObjectiveCCpdLexer();
     }
 }

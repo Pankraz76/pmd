@@ -70,13 +70,11 @@ public class TextColorRenderer extends AbstractAccumulatingRenderer {
         super(NAME, "Text format, with color support (requires ANSI console support, e.g. xterm, rxvt, etc.).");
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "txt";
     }
 
-    @Override
-    public void outputReport(Report report) throws IOException {
+    @Override public void outputReport(Report report) throws IOException {
         StringBuilder buf = new StringBuilder(500);
         buf.append(System.lineSeparator());
         String lastFile = null;

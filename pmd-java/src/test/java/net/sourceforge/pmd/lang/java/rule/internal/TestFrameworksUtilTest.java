@@ -16,8 +16,7 @@ class TestFrameworksUtilTest {
 
     protected final JavaParsingHelper java = JavaParsingHelper.DEFAULT.withResourceContext(getClass());
 
-    @Test
-    void testIsProbableAssertCallWithoutExtraMethodNames() {
+    @Test void testIsProbableAssertCallWithoutExtraMethodNames() {
         ASTCompilationUnit root = java.parse("class A { { assertThat(1); } }");
         ASTMethodCall m = root.descendants(ASTMethodCall.class).toList().get(0);
         assertThat(TestFrameworksUtil.isProbableAssertCall(m)).isTrue();

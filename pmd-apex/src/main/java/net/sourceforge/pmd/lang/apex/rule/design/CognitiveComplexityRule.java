@@ -44,8 +44,7 @@ public class CognitiveComplexityRule extends AbstractApexRule {
     }
 
 
-    @Override
-    public Object visit(ASTUserTrigger node, Object data) {
+    @Override public Object visit(ASTUserTrigger node, Object data) {
         inTrigger = true;
         super.visit(node, data);
         inTrigger = false;
@@ -53,8 +52,7 @@ public class CognitiveComplexityRule extends AbstractApexRule {
     }
 
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
 
         classNames.push(node.getSimpleName());
         super.visit(node, data);
@@ -68,11 +66,11 @@ public class CognitiveComplexityRule extends AbstractApexRule {
                 int classHighest = (int) MetricsUtil.computeStatistics(ApexMetrics.COGNITIVE_COMPLEXITY, node.getMethods()).getMax();
 
                 String[] messageParams = {
-                    "class",
-                    node.getSimpleName(),
-                    " total",
-                    classCognitive + " (highest " + classHighest + ")",
-                    String.valueOf(classLevelThreshold),
+                        "class",
+                        node.getSimpleName(),
+                        " total",
+                        classCognitive + " (highest " + classHighest + ")",
+                        String.valueOf(classLevelThreshold),
                 };
 
                 asCtx(data).addViolation(node, (Object[]) messageParams);
@@ -82,8 +80,7 @@ public class CognitiveComplexityRule extends AbstractApexRule {
     }
 
 
-    @Override
-    public final Object visit(ASTMethod node, Object data) {
+    @Override public final Object visit(ASTMethod node, Object data) {
 
         if (ApexMetrics.COGNITIVE_COMPLEXITY.supports(node)) {
             int cognitive = MetricsUtil.computeMetric(ApexMetrics.COGNITIVE_COMPLEXITY, node);

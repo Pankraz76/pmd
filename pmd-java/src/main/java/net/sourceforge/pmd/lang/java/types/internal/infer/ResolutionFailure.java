@@ -45,8 +45,8 @@ public class ResolutionFailure {
      */
     public @Nullable JavaNode getLocation() {
         return location != null ? location
-                                : callSite != null ? callSite.getExpr().getLocation()
-                                                   : null;
+                : callSite != null ? callSite.getExpr().getLocation()
+                : null;
     }
 
     /**
@@ -74,15 +74,14 @@ public class ResolutionFailure {
         return callSite;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ResolutionFailure{"
-            + "failedMethod=" + failedMethod
-            + ", callSite=" + callSite
-            + ", phase=" + phase
-            + ", reason='" + reason + '\''
-            + ", location=" + location
-            + '}';
+                + "failedMethod=" + failedMethod
+                + ", callSite=" + callSite
+                + ", phase=" + phase
+                + ", reason='" + reason + '\''
+                + ", location=" + location
+                + '}';
     }
 
 }

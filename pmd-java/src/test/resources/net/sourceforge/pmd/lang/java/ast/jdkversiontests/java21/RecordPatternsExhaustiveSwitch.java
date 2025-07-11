@@ -6,12 +6,23 @@
  * @see <a href="https://openjdk.org/jeps/440">JEP 440: Record Patterns</a>
  */
 public class RecordPatternsExhaustiveSwitch {
-    class A {}
-    class B extends A {}
-    sealed interface I permits C, D {}
-    final class C implements I {}
-    final class D implements I {}
-    record Pair<T>(T x, T y) {}
+    class A {
+    }
+
+    class B extends A {
+    }
+
+    sealed interface I permits C, D {
+    }
+
+    final class C implements I {
+    }
+
+    final class D implements I {
+    }
+
+    record Pair<T>(T x, T y) {
+    }
 
     static void test() {
         Pair<A> p1 = null;

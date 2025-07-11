@@ -69,8 +69,7 @@ abstract class IncorporationAction {
             return myKind.complementSet(true);
         }
 
-        @Override
-        public void apply(InferenceContext ctx) {
+        @Override public void apply(InferenceContext ctx) {
             for (BoundKind k : boundsToCheck()) {
                 for (JTypeMirror b : ivar.getBounds(k)) {
                     if (!checkBound(b, k, ctx)) {
@@ -87,7 +86,7 @@ abstract class IncorporationAction {
                         // Since we are testing both directions we cannot let those tests add bounds on the ivars,
                         // because they could be contradictory.
                         boolean areRelated = TypeOps.isConvertiblePure(myBound, otherBound).somehow()
-                            || TypeOps.isConvertiblePure(otherBound, myBound).somehow();
+                                || TypeOps.isConvertiblePure(otherBound, myBound).somehow();
 
                         if (!areRelated) {
                             throw ResolutionFailedException.incompatibleBound(ctx.logger, ivar, myKind, myBound, BoundKind.UPPER, otherBound);
@@ -126,7 +125,7 @@ abstract class IncorporationAction {
         static boolean checkBound(boolean eq, JTypeMirror t, JTypeMirror s, InferenceContext ctx) {
             // eq bounds are so rare we shouldn't care if they're cached
             return eq ? InternalApiBridge.isSameTypeInInference(t, s)
-                      : checkSubtype(t, s, ctx);
+                    : checkSubtype(t, s, ctx);
         }
 
         private static boolean checkSubtype(JTypeMirror t, JTypeMirror s, InferenceContext ctx) {
@@ -150,8 +149,7 @@ abstract class IncorporationAction {
             return result;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "Check " + myKind.format(ivar, myBound);
         }
 
@@ -171,8 +169,7 @@ abstract class IncorporationAction {
             this.inst = inst;
         }
 
-        @Override
-        public void apply(InferenceContext ctx) {
+        @Override public void apply(InferenceContext ctx) {
             if (inst != null) {
                 for (InferenceVar freeVar : ctx.getFreeVars()) {
                     freeVar.substBounds(it -> ivar.isEquivalentTo(it) ? inst : it);
@@ -182,8 +179,7 @@ abstract class IncorporationAction {
             }
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "Substitute " + ivar + " with " + inst;
         }
     }
@@ -195,8 +191,7 @@ abstract class IncorporationAction {
             super(ivar);
         }
 
-        @Override
-        void apply(InferenceContext ctx) {
+        @Override void apply(InferenceContext ctx) {
             for (BoundKind kind : BoundKind.values()) {
                 for (JTypeMirror bound : new ArrayList<>(ivar.getBounds(kind))) { //copy to avoid comodification
                     new PropagateBounds(ivar, kind, bound).apply(ctx);
@@ -205,8 +200,7 @@ abstract class IncorporationAction {
         }
 
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "Propagate all bounds of " + ivar;
         }
     }
@@ -227,8 +221,7 @@ abstract class IncorporationAction {
             this.bound = bound;
         }
 
-        @Override
-        public void apply(InferenceContext ctx) {
+        @Override public void apply(InferenceContext ctx) {
             InferenceVar alpha = ivar;
 
             // forward propagation
@@ -276,8 +269,7 @@ abstract class IncorporationAction {
             }
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "Propagate bound " + kind.format(ivar, bound);
         }
     }

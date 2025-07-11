@@ -26,11 +26,11 @@ public class IDEAJRenderer extends AbstractIncrementingRenderer {
     public static final String NAME = "ideaj";
 
     public static final PropertyDescriptor<String> FILE_NAME =
-        PropertyFactory.stringProperty("fileName").desc("File name.").defaultValue("").build();
+            PropertyFactory.stringProperty("fileName").desc("File name.").defaultValue("").build();
     public static final PropertyDescriptor<String> SOURCE_PATH =
-        PropertyFactory.stringProperty("sourcePath").desc("Source path.").defaultValue("").build();
+            PropertyFactory.stringProperty("sourcePath").desc("Source path.").defaultValue("").build();
     public static final PropertyDescriptor<String> CLASS_AND_METHOD_NAME =
-        PropertyFactory.stringProperty("classAndMethodName").desc("Class and Method name, pass '.method' when processing a directory.").defaultValue("").build();
+            PropertyFactory.stringProperty("classAndMethodName").desc("Class and Method name, pass '.method' when processing a directory.").defaultValue("").build();
 
     private static final String FILE_SEPARATOR = System.getProperty("file.separator");
     private static final String PATH_SEPARATOR = System.getProperty("path.separator");
@@ -42,13 +42,11 @@ public class IDEAJRenderer extends AbstractIncrementingRenderer {
         definePropertyDescriptor(CLASS_AND_METHOD_NAME);
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "txt";
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         classAndMethodName = getProperty(CLASS_AND_METHOD_NAME);
         fileName = getProperty(FILE_NAME);
 
@@ -98,7 +96,7 @@ public class IDEAJRenderer extends AbstractIncrementingRenderer {
         private Set<String> paths = new HashSet<>();
 
         SourcePath(String sourcePathString) {
-            for (StringTokenizer st = new StringTokenizer(sourcePathString, PATH_SEPARATOR); st.hasMoreTokens();) {
+            for (StringTokenizer st = new StringTokenizer(sourcePathString, PATH_SEPARATOR); st.hasMoreTokens(); ) {
                 paths.add(st.nextToken());
             }
         }

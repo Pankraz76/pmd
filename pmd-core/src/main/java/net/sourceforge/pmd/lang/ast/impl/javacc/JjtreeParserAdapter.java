@@ -24,8 +24,7 @@ public abstract class JjtreeParserAdapter<R extends RootNode> implements Parser 
 
     protected abstract JavaccTokenDocument.TokenDocumentBehavior tokenBehavior();
 
-    @Override
-    public final R parse(ParserTask task) throws ParseException {
+    @Override public final R parse(ParserTask task) throws ParseException {
         try {
             // First read the source file and interpret escapes
             CharStream charStream = CharStream.create(task.getTextDocument(), tokenBehavior());
@@ -42,8 +41,7 @@ public abstract class JjtreeParserAdapter<R extends RootNode> implements Parser 
     protected abstract R parseImpl(CharStream cs, ParserTask task) throws ParseException;
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getClass().getSimpleName();
     }
 }

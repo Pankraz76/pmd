@@ -20,7 +20,8 @@ import net.sourceforge.pmd.lang.visualforce.DataType;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static void setDataType(VfTypedNode node, DataType dataType) {
         ((AbstractVFDataNode) node).setDataType(dataType);

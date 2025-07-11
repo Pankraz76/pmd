@@ -20,19 +20,17 @@ public class AnalysisCacheListener implements GlobalAnalysisListener {
     private final AnalysisCache cache;
 
     public AnalysisCacheListener(AnalysisCache cache, RuleSets ruleSets, ClassLoader classLoader,
-                                 Collection<? extends TextFile> textFiles) {
+            Collection<? extends TextFile> textFiles) {
         this.cache = cache;
         cache.checkValidity(ruleSets, classLoader, textFiles);
     }
 
-    @Override
-    public FileAnalysisListener startFileAnalysis(TextFile file) {
+    @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
         // AnalysisCache instances are handled specially in PmdRunnable
         return FileAnalysisListener.noop();
     }
 
-    @Override
-    public void close() throws IOException {
+    @Override public void close() throws IOException {
         cache.persist();
     }
 

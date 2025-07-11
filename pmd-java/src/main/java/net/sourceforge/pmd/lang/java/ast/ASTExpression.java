@@ -91,8 +91,7 @@ public interface ASTExpression extends TypeNode, ASTMemberValue, ASTSwitchArrowR
      *
      * @see #getConstFoldingResult() for more precise results.
      */
-    @Override
-    default @Nullable Object getConstValue() {
+    @Override default @Nullable Object getConstValue() {
         ConstResult res = getConstFoldingResult();
         return res.isCompileTimeConstant() ? res.getValue() : null;
     }

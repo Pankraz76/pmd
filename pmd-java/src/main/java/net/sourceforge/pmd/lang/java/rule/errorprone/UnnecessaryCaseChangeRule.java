@@ -21,8 +21,7 @@ public class UnnecessaryCaseChangeRule extends AbstractJavaRulechainRule {
         super(ASTMethodCall.class);
     }
 
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         if (EQUALITY_METHODS.contains(node.getMethodName()) && node.getArguments().size() == 1) {
             if (isCaseChangingMethodCall(node.getQualifier())
                     || isCaseChangingMethodCall(node.getArguments().get(0))) {

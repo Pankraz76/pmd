@@ -16,15 +16,13 @@ import org.junit.jupiter.api.Test;
  */
 class TextRange2dTest {
 
-    @Test
-    void testCtors() {
+    @Test void testCtors() {
         TextRange2d pos = TextRange2d.range2d(1, 2, 3, 4);
         TextRange2d pos2 = TextRange2d.range2d(TextPos2d.pos2d(1, 2), TextPos2d.pos2d(3, 4));
         assertEquals(pos, pos2);
     }
 
-    @Test
-    void testEquals() {
+    @Test void testEquals() {
         TextRange2d pos = TextRange2d.range2d(1, 1, 1, 1);
         TextRange2d pos2 = TextRange2d.range2d(1, 1, 1, 2);
         assertNotEquals(pos, pos2);
@@ -32,8 +30,7 @@ class TextRange2dTest {
         assertEquals(pos2, pos2);
     }
 
-    @Test
-    void testCompareTo() {
+    @Test void testCompareTo() {
         TextRange2d pos = TextRange2d.range2d(1, 1, 1, 1);
         TextRange2d pos2 = TextRange2d.range2d(1, 1, 1, 2);
 
@@ -42,12 +39,11 @@ class TextRange2dTest {
         assertEquals(0, pos.compareTo(pos));
     }
 
-    @Test
-    void testToString() {
+    @Test void testToString() {
         TextRange2d range = TextRange2d.range2d(1, 2, 3, 4);
         assertEquals(
-            "1:2-3:4",
-            range.toDisplayStringWithColon()
+                "1:2-3:4",
+                range.toDisplayStringWithColon()
         );
         assertThat(range.toString(), containsString("!debug only!"));
     }

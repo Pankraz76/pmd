@@ -21,8 +21,7 @@ public class CycloTestRule extends JavaIntMetricTestRule {
         super(JavaMetrics.CYCLO);
     }
 
-    @Override
-    protected Map<String, MetricOption> optionMappings() {
+    @Override protected Map<String, MetricOption> optionMappings() {
         Map<String, MetricOption> mappings = super.optionMappings();
         mappings.put(CycloOption.IGNORE_BOOLEAN_PATHS.valueName(), CycloOption.IGNORE_BOOLEAN_PATHS);
         mappings.put(CycloOption.CONSIDER_ASSERT.valueName(), CycloOption.CONSIDER_ASSERT);

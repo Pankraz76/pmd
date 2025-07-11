@@ -20,8 +20,7 @@ import io.github.apexdevtools.apexparser.ApexLexer;
 import io.github.apexdevtools.apexparser.CaseInsensitiveInputStream;
 
 public class ApexCpdLexer implements CpdLexer {
-    @Override
-    public void tokenize(TextDocument document, TokenFactory tokenEntries) throws IOException {
+    @Override public void tokenize(TextDocument document, TokenFactory tokenEntries) throws IOException {
 
         CharStream charStream = CharStreams.fromReader(document.newReader());
         CaseInsensitiveInputStream caseInsensitiveInputStream = new CaseInsensitiveInputStream(charStream);

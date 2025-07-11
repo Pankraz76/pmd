@@ -7,4 +7,5 @@ package com.example.expression;
  * @see <a href="https://openjdk.java.net/jeps/409">JEP 409: Sealed Classes</a>
  */
 public sealed interface Expr
-    permits ConstantExpr, PlusExpr, TimesExpr, NegExpr { }
+permits ConstantExpr, PlusExpr, TimesExpr, NegExpr {
+}

@@ -23,13 +23,11 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 public class ApexXSSFromEscapeFalseRule extends AbstractApexRule {
     private static final String ADD_ERROR = "addError";
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         if (Helper.isTestMethodOrClass(node) || Helper.isSystemLevelClass(node)) {
             return data; // stops all the rules
         }

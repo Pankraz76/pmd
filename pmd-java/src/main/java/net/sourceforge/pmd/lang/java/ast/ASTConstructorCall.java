@@ -29,8 +29,7 @@ public final class ASTConstructorCall extends AbstractInvocationExpr implements 
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -52,19 +51,16 @@ public final class ASTConstructorCall extends AbstractInvocationExpr implements 
      * {@linkplain ASTTypeExpression type expression}, and is never
      * {@linkplain ASTAmbiguousName ambiguous}.
      */
-    @Override
-    public @Nullable ASTExpression getQualifier() {
+    @Override public @Nullable ASTExpression getQualifier() {
         return QualifiableExpression.super.getQualifier();
     }
 
-    @Override
-    public @Nullable ASTTypeArguments getExplicitTypeArguments() {
+    @Override public @Nullable ASTTypeArguments getExplicitTypeArguments() {
         return firstChild(ASTTypeArguments.class);
     }
 
 
-    @Override
-    public @NonNull ASTArgumentList getArguments() {
+    @Override public @NonNull ASTArgumentList getArguments() {
         JavaNode child = getLastChild();
         if (child instanceof ASTAnonymousClassDeclaration) {
             return (ASTArgumentList) getChild(getNumChildren() - 2);
@@ -97,10 +93,9 @@ public final class ASTConstructorCall extends AbstractInvocationExpr implements 
     }
 
 
-    @Nullable
-    public ASTAnonymousClassDeclaration getAnonymousClassDeclaration() {
+    @Nullable public ASTAnonymousClassDeclaration getAnonymousClassDeclaration() {
         return isAnonymousClass()
-               ? (ASTAnonymousClassDeclaration) getLastChild()
-               : null;
+                ? (ASTAnonymousClassDeclaration) getLastChild()
+                : null;
     }
 }

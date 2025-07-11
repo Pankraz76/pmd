@@ -22,20 +22,18 @@ final class AstFieldSym extends AbstractAstVariableSym implements JFieldSymbol {
     private final int modifiers;
 
     AstFieldSym(ASTVariableId node,
-                AstSymFactory factory,
-                JClassSymbol owner) {
+            AstSymFactory factory,
+            JClassSymbol owner) {
         super(node, factory);
         this.owner = owner;
         this.modifiers = JModifier.toReflect(node.getModifiers().getEffectiveModifiers());
     }
 
-    @Override
-    public int getModifiers() {
+    @Override public int getModifiers() {
         return modifiers;
     }
 
-    @Override
-    public @Nullable Object getConstValue() {
+    @Override public @Nullable Object getConstValue() {
         if (node.hasModifiers(JModifier.STATIC, JModifier.FINAL)) {
             ASTExpression init = node.getInitializer();
             return init == null ? null : init.getConstValue();
@@ -43,19 +41,16 @@ final class AstFieldSym extends AbstractAstVariableSym implements JFieldSymbol {
         return null;
     }
 
-    @Override
-    public boolean isEnumConstant() {
+    @Override public boolean isEnumConstant() {
         return node.isEnumConstant();
     }
 
 
-    @Override
-    public @NonNull JClassSymbol getEnclosingClass() {
+    @Override public @NonNull JClassSymbol getEnclosingClass() {
         return owner;
     }
 
-    @Override
-    public JTypeMirror getTypeMirror(Substitution subst) {
+    @Override public JTypeMirror getTypeMirror(Substitution subst) {
         // enum constants ha
         return TypeOps.subst(node.getTypeMirror(), subst);
     }

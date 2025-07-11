@@ -26,13 +26,12 @@ class MethodInvocMirror extends BaseInvocMirror<ASTMethodCall> {
 
 
     MethodInvocMirror(JavaExprMirrors mirrors, ASTMethodCall call,
-                      boolean isStandalone,
-                      @Nullable ExprMirror parent, MirrorMaker subexprMaker) {
+            boolean isStandalone,
+            @Nullable ExprMirror parent, MirrorMaker subexprMaker) {
         super(mirrors, call, isStandalone, parent, subexprMaker);
     }
 
-    @Override
-    public @Nullable JTypeMirror getStandaloneType() {
+    @Override public @Nullable JTypeMirror getStandaloneType() {
         JMethodSig ctdecl = getStandaloneCtdecl().getMethodType();
         return mayBePoly && isContextDependent(ctdecl) ? null : ctdecl.getReturnType();
     }
@@ -42,13 +41,11 @@ class MethodInvocMirror extends BaseInvocMirror<ASTMethodCall> {
         return m.isGeneric() && TypeOps.mentionsAny(m.getReturnType(), m.getTypeParameters());
     }
 
-    @Override
-    public @NonNull TypeSpecies getStandaloneSpecies() {
+    @Override public @NonNull TypeSpecies getStandaloneSpecies() {
         return TypeSpecies.getSpecies(getStandaloneCtdecl().getMethodType().getReturnType());
     }
 
-    @Override
-    public List<JMethodSig> getAccessibleCandidates() {
+    @Override public List<JMethodSig> getAccessibleCandidates() {
         ASTExpression lhs = myNode.getQualifier();
         if (lhs == null) {
             // already filters accessibility
@@ -62,7 +59,7 @@ class MethodInvocMirror extends BaseInvocMirror<ASTMethodCall> {
                 ASTAnonymousClassDeclaration anon = ctor.getAnonymousClassDeclaration();
                 // put methods declared in the anonymous class in scope
                 lhsType = anon != null ? anon.getTypeMirror(getTypingContext())
-                                       : ctor.getTypeMirror(getTypingContext()); // may resolve diamonds
+                        : ctor.getTypeMirror(getTypingContext()); // may resolve diamonds
             } else {
                 lhsType = lhs.getTypeMirror(getTypingContext());
             }
@@ -74,13 +71,11 @@ class MethodInvocMirror extends BaseInvocMirror<ASTMethodCall> {
     }
 
 
-    @Override
-    public JTypeMirror getErasedReceiverType() {
+    @Override public JTypeMirror getErasedReceiverType() {
         return getReceiverType().getErasure();
     }
 
-    @Override
-    public @NonNull JTypeMirror getReceiverType() {
+    @Override public @NonNull JTypeMirror getReceiverType() {
         ASTExpression qualifier = myNode.getQualifier();
         if (qualifier != null) {
             return qualifier.getTypeMirror(getTypingContext());
@@ -89,8 +84,7 @@ class MethodInvocMirror extends BaseInvocMirror<ASTMethodCall> {
         }
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return myNode.getMethodName();
     }
 

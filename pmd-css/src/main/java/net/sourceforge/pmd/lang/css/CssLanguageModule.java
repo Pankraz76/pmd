@@ -21,8 +21,7 @@ public class CssLanguageModule extends CpdOnlyLanguageModuleBase {
         return (CssLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new CssCpdLexer();
     }
 }

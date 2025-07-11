@@ -30,8 +30,7 @@ public final class LexicalScope extends MapFunction<String, @Nullable JTypeVar> 
     /**
      * Returns the type var with the given name, or null.
      */
-    @Override
-    public @Nullable JTypeVar apply(@NonNull String var) {
+    @Override public @Nullable JTypeVar apply(@NonNull String var) {
         return getMap().get(var);
     }
 

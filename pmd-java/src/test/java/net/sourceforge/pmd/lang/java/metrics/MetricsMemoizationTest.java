@@ -36,8 +36,7 @@ class MetricsMemoizationTest extends BaseParserTest {
         return Metric.of((t, opts) -> capturedRandom.nextInt(), t -> t, "randomMetric");
     }
 
-    @Test
-    void memoizationTest() {
+    @Test void memoizationTest() {
         ASTCompilationUnit acu = java.parseClass(MetricsVisitorTestData.class);
 
         List<Integer> expected = visitWith(acu, true);
@@ -47,8 +46,7 @@ class MetricsMemoizationTest extends BaseParserTest {
     }
 
 
-    @Test
-    void forceMemoizationTest() {
+    @Test void forceMemoizationTest() {
 
         ASTCompilationUnit acu = java.parseClass(MetricsVisitorTestData.class);
 
@@ -68,8 +66,7 @@ class MetricsMemoizationTest extends BaseParserTest {
         final List<Integer> result = new ArrayList<>();
 
         acu.acceptVisitor(new JavaVisitorBase<Object, Object>() {
-            @Override
-            public Object visitMethodOrCtor(ASTExecutableDeclaration node, Object data) {
+            @Override public Object visitMethodOrCtor(ASTExecutableDeclaration node, Object data) {
                 Integer value = MetricsUtil.computeMetric(randomMetric, node, MetricOptions.emptyOptions(), force);
                 if (value != null) {
                     result.add(value);
@@ -78,8 +75,7 @@ class MetricsMemoizationTest extends BaseParserTest {
             }
 
 
-            @Override
-            public Object visitTypeDecl(ASTTypeDeclaration node, Object data) {
+            @Override public Object visitTypeDecl(ASTTypeDeclaration node, Object data) {
                 Integer value = MetricsUtil.computeMetric(randomMetric, node, MetricOptions.emptyOptions(), force);
                 if (value != null) {
                     result.add(value);

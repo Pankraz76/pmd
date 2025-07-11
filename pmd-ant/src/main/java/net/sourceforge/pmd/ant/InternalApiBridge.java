@@ -24,7 +24,8 @@ import net.sourceforge.pmd.reporting.GlobalAnalysisListener;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static GlobalAnalysisListener newListener(Formatter formatter, Project project) throws IOException {
         return formatter.newListener(project);

@@ -68,13 +68,11 @@ public abstract class XPathFunctionDefinition {
      */
     public abstract FunctionCall makeCallExpression();
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hashCode(qname);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }

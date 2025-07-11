@@ -72,8 +72,7 @@ public abstract class RuleTargetSelector extends TargetSelectorInternal {
      *
      * @throws NullPointerException if any of the arguments is null
      */
-    @SafeVarargs
-    public static RuleTargetSelector forTypes(Class<? extends Node> first, Class<? extends Node>... types) {
+    @SafeVarargs public static RuleTargetSelector forTypes(Class<? extends Node> first, Class<? extends Node>... types) {
         return forTypes(CollectionUtil.listOf(first, types));
     }
 
@@ -92,18 +91,15 @@ public abstract class RuleTargetSelector extends TargetSelectorInternal {
             this.visits = new HashSet<>(visits);
         }
 
-        @Override
-        protected void prepare(ApplicatorBuilder builder) {
+        @Override protected void prepare(ApplicatorBuilder builder) {
             builder.registerXPathNames(visits);
         }
 
-        @Override
-        protected Iterator<? extends Node> getVisitedNodes(TreeIndex index) {
+        @Override protected Iterator<? extends Node> getVisitedNodes(TreeIndex index) {
             return index.getByName(visits);
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "XPathNameVisits" + visits;
         }
     }
@@ -121,18 +117,15 @@ public abstract class RuleTargetSelector extends TargetSelectorInternal {
             this.visits = new LinkedHashSet<>(visits);
         }
 
-        @Override
-        protected void prepare(ApplicatorBuilder builder) {
+        @Override protected void prepare(ApplicatorBuilder builder) {
             builder.registerClasses(visits);
         }
 
-        @Override
-        protected Iterator<? extends Node> getVisitedNodes(TreeIndex index) {
+        @Override protected Iterator<? extends Node> getVisitedNodes(TreeIndex index) {
             return index.getByClass(visits);
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "ClassVisits" + visits;
         }
     }

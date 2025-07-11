@@ -19,8 +19,7 @@ class ResourceLoaderTest {
     /**
      * Test of getResourceStream method, of class ResourceLoader.
      */
-    @Test
-    void testGetResourceStream() throws Exception {
+    @Test void testGetResourceStream() throws Exception {
         System.out.println("getResourceStream");
         String path = "";
         ResourceLoader instance = new ResourceLoader();

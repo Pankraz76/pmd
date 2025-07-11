@@ -27,31 +27,29 @@ import net.sourceforge.pmd.reporting.RuleContext;
 public class ArrayIsStoredDirectlyRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<Boolean> ALLOW_PRIVATE =
-        PropertyFactory.booleanProperty("allowPrivate")
-                       .defaultValue(true)
-                       .desc("If true, allow private methods/constructors to store arrays directly")
-                       .build();
+            PropertyFactory.booleanProperty("allowPrivate")
+                    .defaultValue(true)
+                    .desc("If true, allow private methods/constructors to store arrays directly")
+                    .build();
 
     public ArrayIsStoredDirectlyRule() {
         super(ASTMethodDeclaration.class, ASTConstructorDeclaration.class);
         definePropertyDescriptor(ALLOW_PRIVATE);
     }
 
-    @Override
-    public Object visit(ASTConstructorDeclaration node, Object data) {
+    @Override public Object visit(ASTConstructorDeclaration node, Object data) {
         checkAssignments((RuleContext) data, node);
         return data;
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         checkAssignments((RuleContext) data, node);
         return data;
     }
 
     private void checkAssignments(RuleContext context, ASTExecutableDeclaration method) {
         if (method.getVisibility() == Visibility.V_PRIVATE && getProperty(ALLOW_PRIVATE)
-            || method.getBody() == null) {
+                || method.getBody() == null) {
             return;
         }
 

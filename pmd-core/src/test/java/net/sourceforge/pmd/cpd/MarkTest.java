@@ -13,8 +13,7 @@ import net.sourceforge.pmd.lang.document.FileLocation;
 
 class MarkTest {
 
-    @Test
-    void testSimple() {
+    @Test void testSimple() {
         final FileId filename = CpdTestUtils.FOO_FILE_ID;
         Tokens tokens = new Tokens();
         TokenEntry token = tokens.addToken("public", filename, 1, 2, 3, 4);
@@ -30,8 +29,7 @@ class MarkTest {
         assertEquals(4, loc.getEndColumn());
     }
 
-    @Test
-    void testColumns() {
+    @Test void testColumns() {
         final FileId filename = CpdTestUtils.FOO_FILE_ID;
         Tokens tokens = new Tokens();
         final int beginLine = 1;
@@ -39,9 +37,9 @@ class MarkTest {
         final int endColumn = 2;
         final int lineCount = 10;
         TokenEntry token = tokens.addToken("public", filename, beginLine, beginColumn, beginLine,
-                                           beginColumn + "public".length());
+                beginColumn + "public".length());
         TokenEntry endToken = tokens.addToken("}", filename,
-                                              beginLine + lineCount, 1, beginLine + lineCount - 1, endColumn);
+                beginLine + lineCount, 1, beginLine + lineCount - 1, endColumn);
 
         final Mark mark = new Mark(token);
         mark.setEndToken(endToken);

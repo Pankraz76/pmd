@@ -34,16 +34,16 @@ final class CpdTestUtils {
         Set<TextFile> textFiles = new HashSet<>();
         for (Match match : matches) {
             match.iterator().forEachRemaining(
-                mark -> textFiles.add(
-                    TextFile.forCharSeq(DUMMY_FILE_CONTENT,
-                                        mark.getLocation().getFileId(),
-                                        DummyLanguageModule.getInstance().getDefaultVersion())));
+                    mark -> textFiles.add(
+                            TextFile.forCharSeq(DUMMY_FILE_CONTENT,
+                                    mark.getLocation().getFileId(),
+                                    DummyLanguageModule.getInstance().getDefaultVersion())));
         }
         return new CPDReport(
-            new SourceManager(new ArrayList<>(textFiles)),
-            matches,
-            numTokensPerFile,
-            processingErrors
+                new SourceManager(new ArrayList<>(textFiles)),
+                matches,
+                numTokensPerFile,
+                processingErrors
         );
     }
 
@@ -73,10 +73,10 @@ final class CpdTestUtils {
             Set<TextFile> textFiles = new HashSet<>();
             fileContents.forEach((fname, contents) -> textFiles.add(TextFile.forCharSeq(contents, fname, DummyLanguageModule.getInstance().getDefaultVersion())));
             return new CPDReport(
-                new SourceManager(new ArrayList<>(textFiles)),
-                matches,
-                numTokensPerFile,
-                Collections.emptyList()
+                    new SourceManager(new ArrayList<>(textFiles)),
+                    matches,
+                    numTokensPerFile,
+                    Collections.emptyList()
             );
 
         }
@@ -95,10 +95,10 @@ final class CpdTestUtils {
         Mark createMark(String image, FileId fileId, int beginLine, int lineCount, int beginColumn, int endColumn) {
             fileContents.putIfAbsent(fileId, DUMMY_FILE_CONTENT);
             final TokenEntry beginToken = tokens.addToken(image, fileId, beginLine, beginColumn, beginLine,
-                                                          beginColumn + image.length());
+                    beginColumn + image.length());
             final TokenEntry endToken = tokens.addToken(image, fileId,
-                                                        beginLine + lineCount - 1, beginColumn,
-                                                        beginLine + lineCount - 1, endColumn);
+                    beginLine + lineCount - 1, beginColumn,
+                    beginLine + lineCount - 1, endColumn);
             final Mark result = new Mark(beginToken);
 
             result.setEndToken(endToken);

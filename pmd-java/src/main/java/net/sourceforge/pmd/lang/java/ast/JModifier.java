@@ -89,8 +89,7 @@ public enum JModifier {
         return token;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getToken();
     }
 

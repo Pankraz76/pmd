@@ -32,16 +32,14 @@ public class SourceFileScope extends AbstractScope {
      * @throws IllegalArgumentException
      *             if declaration is not a {@link ClassNameDeclaration}
      */
-    @Override
-    public void addDeclaration(NameDeclaration declaration) {
+    @Override public void addDeclaration(NameDeclaration declaration) {
         if (!(declaration instanceof ClassNameDeclaration)) {
             throw new IllegalArgumentException("A SourceFileScope can only contain classes.");
         }
         super.addDeclaration(declaration);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "SourceFileScope: " + getDeclarations().keySet();
     }
 

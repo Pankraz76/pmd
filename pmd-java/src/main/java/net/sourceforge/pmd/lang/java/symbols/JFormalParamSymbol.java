@@ -16,8 +16,7 @@ public interface JFormalParamSymbol extends JLocalVariableSymbol {
     JExecutableSymbol getDeclaringSymbol();
 
 
-    @Override
-    default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitFormal(this, param);
     }
 }

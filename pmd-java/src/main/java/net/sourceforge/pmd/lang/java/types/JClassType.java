@@ -53,16 +53,12 @@ import net.sourceforge.pmd.lang.java.symbols.SymbolicValue.SymAnnot;
  */
 public interface JClassType extends JTypeMirror {
 
-    @Override
-    @NonNull
-    JClassSymbol getSymbol();
+    @Override @NonNull JClassSymbol getSymbol();
 
 
-    @Override
-    JClassType withAnnotations(PSet<SymAnnot> newTypeAnnots);
+    @Override JClassType withAnnotations(PSet<SymAnnot> newTypeAnnots);
 
-    @Override
-    default JClassType subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> fun) {
+    @Override default JClassType subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> fun) {
         if (Substitution.isEmptySubst(fun)) {
             return this;
         }
@@ -80,7 +76,7 @@ public interface JClassType extends JTypeMirror {
             return this;
         }
         return encl != null ? encl.selectInner(getSymbol(), newArgs, getTypeAnnotations())
-                            : withTypeArguments(newArgs);
+                : withTypeArguments(newArgs);
     }
 
 
@@ -102,12 +98,10 @@ public interface JClassType extends JTypeMirror {
      * <p>Raw types are convertible to any parameterized type of the
      * same family via unchecked conversion.
      */
-    @Override
-    boolean isRaw();
+    @Override boolean isRaw();
 
 
-    @Override
-    boolean isGenericTypeDeclaration();
+    @Override boolean isGenericTypeDeclaration();
 
 
     /**
@@ -126,16 +120,14 @@ public interface JClassType extends JTypeMirror {
      * <p>For example, {@code List}, {@code List<T>}, and {@code List<String>}
      * are generic, but {@code String} is not.
      */
-    @Override
-    boolean isGeneric();
+    @Override boolean isGeneric();
 
 
     /**
      * Returns the type immediately enclosing this type. This may be null
      * if this is a top-level type.
      */
-    @Nullable
-    JClassType getEnclosingType();
+    @Nullable JClassType getEnclosingType();
 
 
     /**
@@ -240,8 +232,7 @@ public interface JClassType extends JTypeMirror {
     @Nullable JClassType getSuperClass();
 
 
-    @Override
-    default @Nullable JClassType getAsSuper(@NonNull JClassSymbol symbol) {
+    @Override default @Nullable JClassType getAsSuper(@NonNull JClassSymbol symbol) {
         return (JClassType) JTypeMirror.super.getAsSuper(symbol);
     }
 
@@ -282,8 +273,7 @@ public interface JClassType extends JTypeMirror {
     @Nullable JClassType getDeclaredClass(String simpleName);
 
 
-    @Override
-    JClassType getErasure();
+    @Override JClassType getErasure();
 
 
     /** Return the list of interface types directly implemented by this type. */
@@ -307,8 +297,7 @@ public interface JClassType extends JTypeMirror {
     JClassType withTypeArguments(List<? extends JTypeMirror> args);
 
 
-    @Override
-    default <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
+    @Override default <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
         return visitor.visitClass(this, p);
     }
 

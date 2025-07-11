@@ -2,6 +2,8 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
+
 import java.util.Locale;
 
 ///
@@ -32,8 +34,7 @@ public class Jep467_MarkdownDocumentationComments {
     }
 
     /// {@inheritDoc}
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return super.toString();
     }
 }

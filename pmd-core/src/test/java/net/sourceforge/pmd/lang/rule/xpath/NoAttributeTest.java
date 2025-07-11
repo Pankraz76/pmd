@@ -25,8 +25,7 @@ import net.sourceforge.pmd.util.IteratorUtil;
 class NoAttributeTest {
 
 
-    @Test
-    void testNoAttrInherited() {
+    @Test void testNoAttrInherited() {
         Node child = new NodeNoInherited();
 
         Set<String> attrNames = IteratorUtil.toList(child.getXPathAttributesIterator()).stream().map(Attribute::getName).collect(Collectors.toSet());
@@ -42,8 +41,7 @@ class NoAttributeTest {
     }
 
 
-    @Test
-    void testNoAttrAll() {
+    @Test void testNoAttrAll() {
 
         assertTrue(0 < IteratorUtil.count(new NodeAllAttr(12).getXPathAttributesIterator()));
 
@@ -56,8 +54,7 @@ class NoAttributeTest {
 
     }
 
-    @Test
-    void testNoAttrAllIsNotInherited() {
+    @Test void testNoAttrAllIsNotInherited() {
 
         NodeNoAttrAllChild child = new NodeNoAttrAllChild();
 
@@ -93,8 +90,7 @@ class NoAttributeTest {
         }
 
 
-        @Override
-        public Iterator<Attribute> getXPathAttributesIterator() {
+        @Override public Iterator<Attribute> getXPathAttributesIterator() {
             return new AttributeAxisIterator(this);
         }
     }
@@ -110,21 +106,17 @@ class NoAttributeTest {
         // isChild overrides nothing so with INHERITED it's not filtered out
 
 
-        @Override
-        public int getSomeInt() {
+        @Override public int getSomeInt() {
             return 43;
         }
 
         @NoAttribute // Notice
-        @Override
-        public long getSomeLong() {
+        @Override public long getSomeLong() {
             return 43;
         }
 
 
-        @NoAttribute(scope = NoAttrScope.INHERITED)
-        @Override
-        public String getImage() {
+        @NoAttribute(scope = NoAttrScope.INHERITED) @Override public String getImage() {
             return super.getImage();
         }
 

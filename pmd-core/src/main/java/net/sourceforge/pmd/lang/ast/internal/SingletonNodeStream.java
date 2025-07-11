@@ -42,107 +42,86 @@ final class SingletonNodeStream<T extends Node> extends IteratorBasedNStream<T> 
         this.node = node;
     }
 
-    @Override
-    public Stream<T> toStream() {
+    @Override public Stream<T> toStream() {
         return Stream.of(node);
     }
 
-    @Override
-    public List<T> toList() {
+    @Override public List<T> toList() {
         return Collections.singletonList(node);
     }
 
-    @Override
-    public <R> List<R> toList(Function<? super T, ? extends R> mapper) {
+    @Override public <R> List<R> toList(Function<? super T, ? extends R> mapper) {
         return Collections.singletonList(mapper.apply(node));
     }
 
-    @Override
-    public int count() {
+    @Override public int count() {
         return 1;
     }
 
-    @Override
-    public T first() {
+    @Override public T first() {
         return node;
     }
 
-    @Override
-    public T last() {
+    @Override public T last() {
         return node;
     }
 
-    @Override
-    public boolean nonEmpty() {
+    @Override public boolean nonEmpty() {
         return true;
     }
 
-    @Override
-    public Iterator<T> iterator() {
+    @Override public Iterator<T> iterator() {
         return IteratorUtil.singletonIterator(node);
     }
 
-    @Override
-    public void forEach(Consumer<? super T> action) {
+    @Override public void forEach(Consumer<? super T> action) {
         action.accept(node);
     }
 
-    @Override
-    public NodeStream<T> filter(Predicate<? super T> predicate) {
+    @Override public NodeStream<T> filter(Predicate<? super T> predicate) {
         return predicate.test(node) ? this : NodeStream.empty();
     }
 
-    @Override
-    public NodeStream<T> drop(int n) {
+    @Override public NodeStream<T> drop(int n) {
         AssertionUtil.requireNonNegative("n", n);
         return n == 0 ? this : NodeStream.empty();
     }
 
-    @Override
-    public NodeStream<T> take(int maxSize) {
+    @Override public NodeStream<T> take(int maxSize) {
         AssertionUtil.requireNonNegative("maxSize", maxSize);
         return maxSize >= 1 ? this : NodeStream.empty();
     }
 
-    @Override
-    public NodeStream<T> cached() {
+    @Override public NodeStream<T> cached() {
         return this;
     }
 
-    @Override
-    public NodeStream<T> distinct() {
+    @Override public NodeStream<T> distinct() {
         return this;
     }
 
 
-    @Override
-    public NodeStream<T> takeWhile(Predicate<? super T> predicate) {
+    @Override public NodeStream<T> takeWhile(Predicate<? super T> predicate) {
         return filter(predicate);
     }
 
-    @Override
-    public <R extends Node> NodeStream<@NonNull R> map(Function<? super T, ? extends @Nullable R> mapper) {
+    @Override public <R extends Node> NodeStream<@NonNull R> map(Function<? super T, ? extends @Nullable R> mapper) {
         return NodeStream.of(mapper.apply(node));
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <R extends Node> NodeStream<R> flatMap(Function<? super T, ? extends NodeStream<? extends R>> mapper) {
+    @Override @SuppressWarnings("unchecked") public <R extends Node> NodeStream<R> flatMap(Function<? super T, ? extends NodeStream<? extends R>> mapper) {
         return (NodeStream<R>) mapper.apply(node);
     }
 
-    @Override
-    public boolean any(Predicate<? super T> predicate) {
+    @Override public boolean any(Predicate<? super T> predicate) {
         return predicate.test(node);
     }
 
-    @Override
-    public boolean all(Predicate<? super T> predicate) {
+    @Override public boolean all(Predicate<? super T> predicate) {
         return predicate.test(node);
     }
 
-    @Override
-    public boolean none(Predicate<? super T> predicate) {
+    @Override public boolean none(Predicate<? super T> predicate) {
         return !predicate.test(node);
     }
 
@@ -150,68 +129,55 @@ final class SingletonNodeStream<T extends Node> extends IteratorBasedNStream<T> 
         tree navigation
      */
 
-    @Override
-    public NodeStream<Node> children() {
+    @Override public NodeStream<Node> children() {
         return StreamImpl.children(node);
     }
 
-    @Override
-    public <R extends Node> NodeStream<R> children(Class<? extends R> rClass) {
+    @Override public <R extends Node> NodeStream<R> children(Class<? extends R> rClass) {
         return StreamImpl.children(node, rClass);
     }
 
-    @Override
-    public <R extends Node> NodeStream<R> firstChild(Class<? extends R> rClass) {
+    @Override public <R extends Node> NodeStream<R> firstChild(Class<? extends R> rClass) {
         return NodeStream.of(node.firstChild(rClass));
     }
 
-    @Override
-    public NodeStream<Node> parents() {
+    @Override public NodeStream<Node> parents() {
         return NodeStream.of(node.getParent());
     }
 
-    @Override
-    public NodeStream<Node> ancestors() {
+    @Override public NodeStream<Node> ancestors() {
         return StreamImpl.ancestors(node);
     }
 
-    @Override
-    public <R extends Node> NodeStream<R> ancestors(Class<? extends R> rClass) {
+    @Override public <R extends Node> NodeStream<R> ancestors(Class<? extends R> rClass) {
         return StreamImpl.ancestors(node, rClass);
     }
 
-    @Override
-    public NodeStream<Node> ancestorsOrSelf() {
+    @Override public NodeStream<Node> ancestorsOrSelf() {
         return StreamImpl.ancestorsOrSelf(node);
     }
 
-    @Override
-    public DescendantNodeStream<Node> descendants() {
+    @Override public DescendantNodeStream<Node> descendants() {
         return StreamImpl.descendants(node);
     }
 
-    @Override
-    public <R extends Node> DescendantNodeStream<R> descendants(Class<? extends R> rClass) {
+    @Override public <R extends Node> DescendantNodeStream<R> descendants(Class<? extends R> rClass) {
         return StreamImpl.descendants(node, rClass);
     }
 
-    @Override
-    public DescendantNodeStream<Node> descendantsOrSelf() {
+    @Override public DescendantNodeStream<Node> descendantsOrSelf() {
         return StreamImpl.descendantsOrSelf(node);
     }
 
-    @Override
-    public NodeStream<Node> followingSiblings() {
+    @Override public NodeStream<Node> followingSiblings() {
         return StreamImpl.followingSiblings(node);
     }
 
-    @Override
-    public NodeStream<Node> precedingSiblings() {
+    @Override public NodeStream<Node> precedingSiblings() {
         return StreamImpl.precedingSiblings(node);
     }
 
-    @Override
-    public DescendantNodeStream<T> crossFindBoundaries(boolean cross) {
+    @Override public DescendantNodeStream<T> crossFindBoundaries(boolean cross) {
         return this; // doesn't mean anything
     }
 }

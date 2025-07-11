@@ -42,14 +42,12 @@ public class ApexDangerousMethodsRule extends AbstractApexRule {
 
     private final Set<String> whiteListedVariables = new HashSet<>();
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         if (Helper.isTestMethodOrClass(node)) {
             return data;
         }

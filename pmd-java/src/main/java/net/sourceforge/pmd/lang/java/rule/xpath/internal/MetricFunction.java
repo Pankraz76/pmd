@@ -31,26 +31,22 @@ public final class MetricFunction extends BaseJavaXPathFunction {
         super("metric");
     }
 
-    @Override
-    public Type[] getArgumentTypes() {
-        return new Type[] {Type.SINGLE_STRING};
+    @Override public Type[] getArgumentTypes() {
+        return new Type[]{Type.SINGLE_STRING};
     }
 
 
-    @Override
-    public Type getResultType() {
+    @Override public Type getResultType() {
         return Type.OPTIONAL_DECIMAL;
     }
 
 
-    @Override
-    public boolean dependsOnContext() {
+    @Override public boolean dependsOnContext() {
         return true;
     }
 
 
-    @Override
-    public FunctionCall makeCallExpression() {
+    @Override public FunctionCall makeCallExpression() {
         return (contextNode, arguments) -> {
             String metricKey = arguments[0].toString();
             return getMetric(contextNode, metricKey);
@@ -65,7 +61,7 @@ public final class MetricFunction extends BaseJavaXPathFunction {
 
     private static Optional<Double> getMetric(Node n, String metricKeyName) throws XPathFunctionException {
         LanguageMetricsProvider provider =
-            n.getAstInfo().getLanguageProcessor().services().getLanguageMetricsProvider();
+                n.getAstInfo().getLanguageProcessor().services().getLanguageMetricsProvider();
         Metric<?, ?> metric = provider.getMetricWithName(metricKeyName);
         if (metric == null) {
             throw new XPathFunctionException(badMetricKeyMessage(metricKeyName));

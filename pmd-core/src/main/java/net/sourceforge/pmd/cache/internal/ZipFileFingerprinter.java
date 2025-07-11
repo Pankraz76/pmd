@@ -37,8 +37,7 @@ public class ZipFileFingerprinter implements ClasspathEntryFingerprinter {
 
     private static final Comparator<ZipEntry> FILE_NAME_COMPARATOR = new Comparator<ZipEntry>() {
 
-        @Override
-        public int compare(ZipEntry o1, ZipEntry o2) {
+        @Override public int compare(ZipEntry o1, ZipEntry o2) {
             return o1.getName().compareTo(o2.getName());
         }
     };
@@ -54,13 +53,11 @@ public class ZipFileFingerprinter implements ClasspathEntryFingerprinter {
         SUPPORTED_ENTRY_EXTENSIONS = Collections.unmodifiableSet(entryExtensions);
     }
 
-    @Override
-    public boolean appliesTo(String fileExtension) {
+    @Override public boolean appliesTo(String fileExtension) {
         return SUPPORTED_EXTENSIONS.contains(fileExtension);
     }
 
-    @Override
-    public void fingerprint(URL entry, Checksum checksum) throws IOException {
+    @Override public void fingerprint(URL entry, Checksum checksum) throws IOException {
         try (ZipFile zip = new ZipFile(new File(entry.toURI()))) {
             final List<ZipEntry> meaningfulEntries = getMeaningfulEntries(zip);
 

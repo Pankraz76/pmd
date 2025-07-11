@@ -30,26 +30,22 @@ public class ExpressionPrinter extends SaxonExprVisitor {
         System.out.println(s);
     }
 
-    @Override
-    public Expression visit(AxisExpression e) {
+    @Override public Expression visit(AxisExpression e) {
         print("axis=" + AxisInfo.axisName[e.getAxis()] + "(test=" + e.getNodeTest() + ")");
         return super.visit(e);
     }
 
-    @Override
-    public Expression visit(RootExpression e) {
+    @Override public Expression visit(RootExpression e) {
         print("/");
         return super.visit(e);
     }
 
-    @Override
-    public Expression visit(VennExpression e) {
+    @Override public Expression visit(VennExpression e) {
         print("venn=" + Token.tokens[e.getOperator()]);
         return super.visit(e);
     }
 
-    @Override
-    public Expression visit(Expression expr) {
+    @Override public Expression visit(Expression expr) {
         depth++;
         print(expr.getClass().getSimpleName());
         Expression result = super.visit(expr);

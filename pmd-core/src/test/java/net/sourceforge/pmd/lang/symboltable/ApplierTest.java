@@ -22,8 +22,7 @@ class ApplierTest {
             this.maxCallbacks = maxCallbacks;
         }
 
-        @Override
-        public boolean test(Object o) {
+        @Override public boolean test(Object o) {
             this.numCallbacks++;
             return numCallbacks < maxCallbacks;
         }
@@ -33,8 +32,7 @@ class ApplierTest {
         }
     }
 
-    @Test
-    void testSimple() {
+    @Test void testSimple() {
         MyFunction f = new MyFunction(Integer.MAX_VALUE);
         List<Object> l = new ArrayList<>();
         l.add(new Object());
@@ -44,8 +42,7 @@ class ApplierTest {
         assertEquals(l.size(), f.getNumCallbacks());
     }
 
-    @Test
-    void testLimit() {
+    @Test void testLimit() {
         MyFunction f = new MyFunction(2);
         List<Object> l = new ArrayList<>();
         l.add(new Object());

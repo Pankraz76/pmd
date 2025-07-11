@@ -33,16 +33,14 @@ import net.sourceforge.pmd.lang.java.types.JClassType;
  * node around type declarations. This node has been removed in PMD 7 and the name has been reused.
  */
 public interface ASTTypeDeclaration
-    extends TypeNode,
+        extends TypeNode,
         ModifierOwner,
-            TypeParamOwnerNode,
-            ASTBodyDeclaration,
-            ASTTopLevelDeclaration,
-            JavadocCommentOwner {
+        TypeParamOwnerNode,
+        ASTBodyDeclaration,
+        ASTTopLevelDeclaration,
+        JavadocCommentOwner {
 
-    @Override
-    @NonNull
-    JClassSymbol getSymbol();
+    @Override @NonNull JClassSymbol getSymbol();
 
 
     /**
@@ -54,16 +52,14 @@ public interface ASTTypeDeclaration
      * The {@link ASTConstructorCall} would have type {@code Runnable}
      * though, not the anonymous class.
      */
-    @Override
-    @NonNull JClassType getTypeMirror();
+    @Override @NonNull JClassType getTypeMirror();
 
 
     /**
      * Returns the simple name of this type declaration. Returns the
      * empty string if this is an anonymous class declaration.
      */
-    @NonNull
-    String getSimpleName();
+    @NonNull String getSimpleName();
 
     /**
      * Returns the name of the package in which this class is declared.
@@ -77,8 +73,7 @@ public interface ASTTypeDeclaration
      * Returns the binary name of this type declaration. This
      * is like {@link Class#getName()}.
      */
-    @NonNull
-    String getBinaryName();
+    @NonNull String getBinaryName();
 
 
     /**
@@ -112,8 +107,7 @@ public interface ASTTypeDeclaration
      * So non-local/anonymous classes declared
      * somewhere in a local/anonymous class also have no loc
      */
-    @Nullable
-    String getCanonicalName();
+    @Nullable String getCanonicalName();
 
 
     /**
@@ -207,7 +201,6 @@ public interface ASTTypeDeclaration
     }
 
 
-
     /**
      * Returns true if this type is declared at the top-level of a file.
      */
@@ -284,7 +277,7 @@ public interface ASTTypeDeclaration
      */
     default @NonNull NodeStream<ASTClassType> getSuperInterfaceTypeNodes() {
         return ASTList.orEmptyStream(isInterface() ? firstChild(ASTExtendsList.class)
-                                                   : firstChild(ASTImplementsList.class));
+                : firstChild(ASTImplementsList.class));
     }
 
     /**

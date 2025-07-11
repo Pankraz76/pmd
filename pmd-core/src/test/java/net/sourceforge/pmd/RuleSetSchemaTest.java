@@ -36,14 +36,12 @@ class RuleSetSchemaTest {
 
     private ErrorHandler errorHandler;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeEach void setUp() {
         Locale.setDefault(Locale.ROOT);
         errorHandler = mock(ErrorHandler.class);
     }
 
-    @Test
-    void verifyVersion2() throws Exception {
+    @Test void verifyVersion2() throws Exception {
         String ruleset = generateRuleSet("2.0.0");
         Document doc = parseWithVersion2(ruleset);
         assertNotNull(doc);
@@ -53,8 +51,7 @@ class RuleSetSchemaTest {
         assertEquals("Custom ruleset", ((Attr) doc.getElementsByTagName("ruleset").item(0).getAttributes().getNamedItem("name")).getValue());
     }
 
-    @Test
-    void validateOnly() throws Exception {
+    @Test void validateOnly() throws Exception {
         Validator validator = PMDRuleSetEntityResolver.getSchemaVersion2().newValidator();
         validator.setErrorHandler(errorHandler);
         validator.validate(new StreamSource(new ByteArrayInputStream(generateRuleSet("2.0.0").getBytes(StandardCharsets.UTF_8))));
@@ -75,38 +72,37 @@ class RuleSetSchemaTest {
     private String generateRuleSet(String version) {
         String versionUnderscore = version.replaceAll("\\.", "_");
         return "<?xml version=\"1.0\"?>\n"
-            + "<ruleset \n"
-            + "    xmlns=\"http://pmd.sourceforge.net/ruleset/" + version + "\"\n"
-            + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-            + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/" + version
-            + " https://pmd.sourceforge.io/ruleset_" + versionUnderscore + ".xsd\"\n"
-            + "    name=\"Custom ruleset\" >\n"
-            + "  <description>\n"
-            + "  This ruleset checks my code for bad stuff\n"
-            + "  </description>\n"
-            + "  <rule name=\"DummyBasicMockRule\" language=\"dummy\" since=\"1.0\" message=\"Test Rule 1\"\n"
-            + "        class=\"net.sourceforge.pmd.lang.rule.MockRule\"\n"
-            + "        externalInfoUrl=\"${pmd.website.baseurl}/rules/dummy/basic.xml#DummyBasicMockRule\"\n"
-            + "  >\n"
-            + "        <description>\n"
-            + "           Just for test\n"
-            + "     </description>\n"
-            + "        <priority>3</priority>\n"
-            + "        <example>\n"
-            + " <![CDATA[\n"
-            + " ]]>\n"
-            + "     </example>\n"
-            + "    </rule>\n"
-            + "  <rule ref=\"rulesets/dummy/basic.xml#DummyBasicMockRule\"/>\n"
-            + "</ruleset>\n";
+                + "<ruleset \n"
+                + "    xmlns=\"http://pmd.sourceforge.net/ruleset/" + version + "\"\n"
+                + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+                + "    xsi:schemaLocation=\"http://pmd.sourceforge.net/ruleset/" + version
+                + " https://pmd.sourceforge.io/ruleset_" + versionUnderscore + ".xsd\"\n"
+                + "    name=\"Custom ruleset\" >\n"
+                + "  <description>\n"
+                + "  This ruleset checks my code for bad stuff\n"
+                + "  </description>\n"
+                + "  <rule name=\"DummyBasicMockRule\" language=\"dummy\" since=\"1.0\" message=\"Test Rule 1\"\n"
+                + "        class=\"net.sourceforge.pmd.lang.rule.MockRule\"\n"
+                + "        externalInfoUrl=\"${pmd.website.baseurl}/rules/dummy/basic.xml#DummyBasicMockRule\"\n"
+                + "  >\n"
+                + "        <description>\n"
+                + "           Just for test\n"
+                + "     </description>\n"
+                + "        <priority>3</priority>\n"
+                + "        <example>\n"
+                + " <![CDATA[\n"
+                + " ]]>\n"
+                + "     </example>\n"
+                + "    </rule>\n"
+                + "  <rule ref=\"rulesets/dummy/basic.xml#DummyBasicMockRule\"/>\n"
+                + "</ruleset>\n";
     }
 
     public static class PMDRuleSetEntityResolver implements EntityResolver {
         private static URL schema2 = PMDRuleSetEntityResolver.class.getResource("/ruleset_2_0_0.xsd");
         private static SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
-        @Override
-        public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+        @Override public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
             if ("https://pmd.sourceforge.io/ruleset_2_0_0.xsd".equals(systemId)) {
                 return new InputSource(schema2.toExternalForm());
             }

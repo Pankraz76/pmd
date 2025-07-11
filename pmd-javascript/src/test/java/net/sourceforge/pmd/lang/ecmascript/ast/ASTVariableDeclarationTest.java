@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class ASTVariableDeclarationTest extends EcmascriptParserTestBase {
 
-    @Test
-    void testLet() {
+    @Test void testLet() {
         ASTAstRoot node = js.parse("let x = 1;");
         ASTVariableDeclaration varDecl = (ASTVariableDeclaration) node.getChild(0);
         assertTrue(varDecl.isLet());

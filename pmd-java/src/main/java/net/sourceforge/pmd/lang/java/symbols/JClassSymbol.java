@@ -46,8 +46,8 @@ import net.sourceforge.pmd.lang.java.types.Substitution;
  * @since 7.0.0
  */
 public interface JClassSymbol extends JTypeDeclSymbol,
-                                      JTypeParameterOwnerSymbol,
-                                      BoundToNode<ASTTypeDeclaration> {
+        JTypeParameterOwnerSymbol,
+        BoundToNode<ASTTypeDeclaration> {
 
 
     /**
@@ -72,16 +72,14 @@ public interface JClassSymbol extends JTypeDeclSymbol,
      * symbolOf(String[].class).getBinaryName() == "java.lang.String[]"
      * }</pre>
      */
-    @NonNull
-    String getBinaryName();
+    @NonNull String getBinaryName();
 
 
     /**
      * Returns the simple name of this class, as specified by
      * {@link Class#getCanonicalName()}.
      */
-    @Nullable
-    String getCanonicalName();
+    @Nullable String getCanonicalName();
 
 
     /**
@@ -97,8 +95,7 @@ public interface JClassSymbol extends JTypeDeclSymbol,
      */
     @Nullable JExecutableSymbol getEnclosingMethod();
 
-    @Override
-    default JTypeParameterOwnerSymbol getEnclosingTypeParameterOwner() {
+    @Override default JTypeParameterOwnerSymbol getEnclosingTypeParameterOwner() {
         JExecutableSymbol enclosingMethod = getEnclosingMethod();
         return enclosingMethod != null ? enclosingMethod : getEnclosingClass();
     }
@@ -113,8 +110,7 @@ public interface JClassSymbol extends JTypeDeclSymbol,
 
 
     /** Returns a class with the given name defined in this class. */
-    @Nullable
-    default JClassSymbol getDeclaredClass(String name) {
+    @Nullable default JClassSymbol getDeclaredClass(String name) {
         for (JClassSymbol klass : getDeclaredClasses()) {
             if (klass.nameEquals(name)) {
                 return klass;
@@ -165,8 +161,7 @@ public interface JClassSymbol extends JTypeDeclSymbol,
 
 
     /** Returns a field with the given name defined in this class. */
-    @Nullable
-    default JFieldSymbol getDeclaredField(String name) {
+    @Nullable default JFieldSymbol getDeclaredField(String name) {
         for (JFieldSymbol field : getDeclaredFields()) {
             if (field.nameEquals(name)) {
                 return field;
@@ -209,8 +204,7 @@ public interface JClassSymbol extends JTypeDeclSymbol,
      * class represents the class {@link Object}, or a primitive type.
      * If this symbol is an interface, returns the symbol for {@link Object}.
      */
-    @Nullable
-    JClassSymbol getSuperclass();
+    @Nullable JClassSymbol getSuperclass();
 
 
     /** Returns the direct super-interfaces of this class or interface symbol. */
@@ -223,8 +217,7 @@ public interface JClassSymbol extends JTypeDeclSymbol,
 
 
     /** Returns the component symbol, returns null if this is not an array. */
-    @Nullable
-    JTypeDeclSymbol getArrayComponent();
+    @Nullable JTypeDeclSymbol getArrayComponent();
 
 
     boolean isArray();
@@ -323,10 +316,10 @@ public interface JClassSymbol extends JTypeDeclSymbol,
             return null;
         }
         return Optional.ofNullable(getDeclaredAnnotation(Retention.class))
-                       .map(annot -> annot.getAttribute("value"))
-                       .filter(value -> value instanceof SymEnum)
-                       .map(value -> ((SymEnum) value).toEnum(RetentionPolicy.class))
-                       .orElse(RetentionPolicy.CLASS);
+                .map(annot -> annot.getAttribute("value"))
+                .filter(value -> value instanceof SymEnum)
+                .map(value -> ((SymEnum) value).toEnum(RetentionPolicy.class))
+                .orElse(RetentionPolicy.CLASS);
     }
 
     /**
@@ -370,8 +363,7 @@ public interface JClassSymbol extends JTypeDeclSymbol,
     }
 
 
-    @Override
-    default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitClass(this, param);
     }
 }

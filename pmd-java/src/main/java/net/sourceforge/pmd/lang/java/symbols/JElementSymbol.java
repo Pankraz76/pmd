@@ -114,8 +114,7 @@ public interface JElementSymbol {
      *
      * @return True if the other is a symbol for the same program element
      */
-    @Override
-    boolean equals(Object o);
+    @Override boolean equals(Object o);
 
 
     /**

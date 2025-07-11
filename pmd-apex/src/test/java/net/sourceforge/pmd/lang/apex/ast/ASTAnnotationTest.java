@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 import net.sourceforge.pmd.lang.document.Chars;
 
 class ASTAnnotationTest extends ApexParserTestBase {
-    @Test
-    void caseSensitiveName() {
+    @Test void caseSensitiveName() {
         ASTUserClassOrInterface<?> parsed = parse("public with sharing class Example {\n"
                 + "\n"
                 + "  @istest\n"

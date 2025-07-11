@@ -24,8 +24,7 @@ class FileSelectorTest {
     /**
      * Test wanted selection of a source file.
      */
-    @Test
-    void testWantedFile() {
+    @Test void testWantedFile() {
         LanguageFilenameFilter fileSelector = new LanguageFilenameFilter(DummyLanguageModule.getInstance());
 
         File javaFile = new File("/path/to/myFile.dummy");
@@ -37,8 +36,7 @@ class FileSelectorTest {
     /**
      * Test unwanted selection of a non source file.
      */
-    @Test
-    void testUnwantedFile() {
+    @Test void testUnwantedFile() {
         LanguageFilenameFilter fileSelector = new LanguageFilenameFilter(DummyLanguageModule.getInstance());
 
         File javaFile = new File("/path/to/myFile.notdummy");
@@ -50,8 +48,7 @@ class FileSelectorTest {
     /**
      * Test unwanted selection of a java file.
      */
-    @Test
-    void testUnwantedJavaFile() {
+    @Test void testUnwantedJavaFile() {
         LanguageFilenameFilter fileSelector = new LanguageFilenameFilter(DummyLanguageModule.getInstance());
 
         File javaFile = new File("/path/to/MyClass.java");

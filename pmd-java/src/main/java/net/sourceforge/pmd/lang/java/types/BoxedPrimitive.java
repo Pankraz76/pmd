@@ -28,26 +28,23 @@ final class BoxedPrimitive extends ClassTypeImpl {
         this.unboxed = unboxed;
     }
 
-    @Override
-    public JClassType withAnnotations(PSet<SymAnnot> newTypeAnnots) {
+    @Override public JClassType withAnnotations(PSet<SymAnnot> newTypeAnnots) {
         if (newTypeAnnots.isEmpty() && this.getTypeAnnotations().isEmpty()) {
             return this;
         }
         return new BoxedPrimitive(
-            getTypeSystem(),
-            this.getSymbol(),
-            this.unboxed,
-            newTypeAnnots
+                getTypeSystem(),
+                this.getSymbol(),
+                this.unboxed,
+                newTypeAnnots
         );
     }
 
-    @Override
-    public JTypeMirror unbox() {
+    @Override public JTypeMirror unbox() {
         return unboxed.withAnnotations(this.getTypeAnnotations());
     }
 
-    @Override
-    public JClassType getErasure() {
+    @Override public JClassType getErasure() {
         return this;
     }
 }

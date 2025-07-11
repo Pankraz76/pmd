@@ -8,23 +8,19 @@ import org.junit.jupiter.api.Test;
 
 class SwiftParserTests extends BaseSwiftTreeDumpTest {
 
-    @Test
-    void testSimpleSwift() {
+    @Test void testSimpleSwift() {
         doTest("Simple");
     }
 
-    @Test
-    void testBtree() {
+    @Test void testBtree() {
         doTest("BTree");
     }
 
-    @Test
-    void swift59() {
+    @Test void swift59() {
         doTest("Swift5.9");
     }
 
-    @Test
-    void macroExpansions() {
+    @Test void macroExpansions() {
         doTest("MacroExpansionExpressions");
     }
 }

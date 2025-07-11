@@ -13,9 +13,7 @@ abstract class AbstractJspNode extends AbstractJjtreeNode<AbstractJspNode, JspNo
         super(id);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override @SuppressWarnings("unchecked") public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof JspVisitor) {
             return this.acceptVisitor((JspVisitor<? super P, ? extends R>) visitor, data);
         }
@@ -24,8 +22,7 @@ abstract class AbstractJspNode extends AbstractJjtreeNode<AbstractJspNode, JspNo
 
     protected abstract <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data);
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return JspParserImplTreeConstants.jjtNodeName[id];
     }
 }

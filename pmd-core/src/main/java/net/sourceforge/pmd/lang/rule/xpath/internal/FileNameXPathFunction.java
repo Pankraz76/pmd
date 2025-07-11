@@ -23,23 +23,20 @@ public final class FileNameXPathFunction extends XPathFunctionDefinition {
         super("fileName");
     }
 
-    @Override
-    public Type getResultType() {
+    @Override public Type getResultType() {
         return Type.SINGLE_STRING;
     }
 
-    @Override
-    public boolean dependsOnContext() {
+    @Override public boolean dependsOnContext() {
         return true;
     }
 
-    @Override
-    public FunctionCall makeCallExpression() {
+    @Override public FunctionCall makeCallExpression() {
         return (node, arguments) -> {
             if (node == null) {
                 throw new XPathFunctionException(
-                    "Cannot call function '" + getQName().getLocalPart()
-                        + "' without context item"
+                        "Cannot call function '" + getQName().getLocalPart()
+                                + "' without context item"
                 );
             }
             RootNode root = node.getRoot();

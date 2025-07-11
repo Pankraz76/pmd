@@ -40,18 +40,15 @@ public interface ReportingStrategy<T> {
      */
     static ReportingStrategy<Void> reporterThatThrows() {
         return new ReportingStrategy<Void>() {
-            @Override
-            public Void createAccumulator() {
+            @Override public Void createAccumulator() {
                 return null;
             }
 
-            @Override
-            public void done(Void accumulator) {
+            @Override public void done(Void accumulator) {
                 // do nothing
             }
 
-            @Override
-            public void report(Node node, String message, Void acc) {
+            @Override public void report(Node node, String message, Void acc) {
                 throw new ParseException(message).withLocation(node);
             }
         };

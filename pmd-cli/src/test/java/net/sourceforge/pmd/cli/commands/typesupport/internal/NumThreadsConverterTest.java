@@ -15,9 +15,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class NumThreadsConverterTest {
-    @ParameterizedTest
-    @MethodSource
-    void convertToThreadCount(String parameter, int expectedThreadCount) {
+    @ParameterizedTest @MethodSource void convertToThreadCount(String parameter, int expectedThreadCount) {
         NumThreadsConverter converter = new NumThreadsConverter();
         int actualThreadCount = converter.convert(parameter);
         assertEquals(expectedThreadCount, actualThreadCount);
@@ -31,6 +29,6 @@ class NumThreadsConverterTest {
                 of("1C", Runtime.getRuntime().availableProcessors()),
                 of("2C", 2 * Runtime.getRuntime().availableProcessors()),
                 of("0.5C", (int) (0.5 * Runtime.getRuntime().availableProcessors()))
-                );
+        );
     }
 }

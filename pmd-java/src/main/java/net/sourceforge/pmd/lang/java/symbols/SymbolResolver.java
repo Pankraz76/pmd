@@ -27,22 +27,19 @@ public interface SymbolResolver {
      * the AST implementation or by the type system. Looking up such symbols
      * is undefined behaviour.
      */
-    @Nullable
-    JClassSymbol resolveClassFromBinaryName(@NonNull String binaryName);
+    @Nullable JClassSymbol resolveClassFromBinaryName(@NonNull String binaryName);
 
     /**
      * @since 7.5.0
      */
-    @Nullable
-    JModuleSymbol resolveModule(@NonNull String moduleName);
+    @Nullable JModuleSymbol resolveModule(@NonNull String moduleName);
 
     /**
      * Resolves a class symbol from its canonical name. Periods ('.') may
      * be interpreted as nested-class separators, so for n segments, this
      * performs at most n classloader lookups.
      */
-    @Nullable
-    default JClassSymbol resolveClassFromCanonicalName(@NonNull String canonicalName) {
+    @Nullable default JClassSymbol resolveClassFromCanonicalName(@NonNull String canonicalName) {
         JClassSymbol symbol = resolveClassFromBinaryName(canonicalName);
         if (symbol != null) {
             return symbol;
@@ -76,8 +73,7 @@ public interface SymbolResolver {
         return new SymbolResolver() {
             private final List<SymbolResolver> stack = listOf(first, others);
 
-            @Override
-            public @Nullable JClassSymbol resolveClassFromBinaryName(@NonNull String binaryName) {
+            @Override public @Nullable JClassSymbol resolveClassFromBinaryName(@NonNull String binaryName) {
                 for (SymbolResolver resolver : stack) {
                     JClassSymbol sym = resolver.resolveClassFromBinaryName(binaryName);
                     if (sym != null) {
@@ -87,8 +83,7 @@ public interface SymbolResolver {
                 return null;
             }
 
-            @Override
-            public @Nullable JModuleSymbol resolveModule(@NonNull String moduleName) {
+            @Override public @Nullable JModuleSymbol resolveModule(@NonNull String moduleName) {
                 for (SymbolResolver resolver : stack) {
                     JModuleSymbol symbol = resolver.resolveModule(moduleName);
                     if (symbol != null) {
@@ -98,8 +93,7 @@ public interface SymbolResolver {
                 return null;
             }
 
-            @Override
-            public void logStats() {
+            @Override public void logStats() {
                 stack.forEach(SymbolResolver::logStats);
             }
         };

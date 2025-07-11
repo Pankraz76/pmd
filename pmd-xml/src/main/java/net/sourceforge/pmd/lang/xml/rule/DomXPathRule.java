@@ -112,17 +112,17 @@ public class DomXPathRule extends AbstractRule {
     SaxonDomXPathQuery query;
 
     private static final PropertyDescriptor<String> XPATH_EXPR
-        = PropertyFactory.stringProperty("xpath")
-                         .desc("An XPath 2.0 expression that will be evaluated against the root DOM")
-                         .defaultValue("") // no default value
-                         .build();
+            = PropertyFactory.stringProperty("xpath")
+            .desc("An XPath 2.0 expression that will be evaluated against the root DOM")
+            .defaultValue("") // no default value
+            .build();
 
     private static final PropertyDescriptor<String> DEFAULT_NS_URI
-        = PropertyFactory.stringProperty("defaultNsUri")
-                         .desc("A URI for the default namespace of node tests in the XPath expression."
-                               + "This is provided to match documents based on their declared schema.")
-                         .defaultValue("")
-                         .build();
+            = PropertyFactory.stringProperty("defaultNsUri")
+            .desc("A URI for the default namespace of node tests in the XPath expression."
+                    + "This is provided to match documents based on their declared schema.")
+            .defaultValue("")
+            .build();
 
 
     public DomXPathRule() {
@@ -141,8 +141,7 @@ public class DomXPathRule extends AbstractRule {
         setProperty(DEFAULT_NS_URI, defaultNsUri);
     }
 
-    @Override
-    public void apply(Node node, RuleContext ctx) {
+    @Override public void apply(Node node, RuleContext ctx) {
         RootXmlNode root = (RootXmlNode) node;
         SaxonDomXPathQuery query = getXPathQuery();
         for (Node foundNode : query.evaluate(root, this)) {
@@ -150,12 +149,11 @@ public class DomXPathRule extends AbstractRule {
         }
     }
 
-    @Override
-    public void initialize(LanguageProcessor languageProcessor) {
+    @Override public void initialize(LanguageProcessor languageProcessor) {
         query = new SaxonDomXPathQuery(getProperty(XPATH_EXPR),
-                                       getProperty(DEFAULT_NS_URI),
-                                       getPropertyDescriptors(),
-                                       languageProcessor.services().getXPathHandler());
+                getProperty(DEFAULT_NS_URI),
+                getPropertyDescriptors(),
+                languageProcessor.services().getXPathHandler());
 
     }
 

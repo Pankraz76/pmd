@@ -16,20 +16,20 @@ public class SimpleSwitchExpressions {
         int day = FRIDAY;
 
         var numLetters = switch (day) {
-                    case MONDAY, FRIDAY, SUNDAY -> 6;
-                    case TUESDAY                -> 7;
-                    case THURSDAY, SATURDAY     -> 8;
-                    case WEDNESDAY              -> 9;
-                    default                     -> {
-                        int k = day * 2;
-                        int result = f(k);
-                        yield result;
-                    }
-                };
+            case MONDAY, FRIDAY, SUNDAY -> 6;
+            case TUESDAY                -> 7;
+            case THURSDAY, SATURDAY     -> 8;
+            case WEDNESDAY              -> 9;
+            default                     -> {
+                int k = day * 2;
+                int result = f(k);
+                yield result;
+            }
+        };
         System.out.printf("NumLetters: %d%n", numLetters);
     }
 
     private static int f(int k) {
-        return k*3;
+        return k * 3;
     }
 }

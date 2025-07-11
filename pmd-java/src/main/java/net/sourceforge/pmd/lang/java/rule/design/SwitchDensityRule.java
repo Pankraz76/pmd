@@ -40,13 +40,11 @@ public class SwitchDensityRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(REPORT_LEVEL);
     }
 
-    @Override
-    public Object visit(ASTSwitchStatement node, Object data) {
+    @Override public Object visit(ASTSwitchStatement node, Object data) {
         return visitSwitchLike(node, data);
     }
 
-    @Override
-    public Object visit(ASTSwitchExpression node, Object data) {
+    @Override public Object visit(ASTSwitchExpression node, Object data) {
         return visitSwitchLike(node, data);
     }
 

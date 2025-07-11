@@ -14,13 +14,11 @@ class GroovyCpdLexerTest extends CpdTextComparisonTest {
         super("groovy", ".groovy");
     }
 
-    @Test
-    void testSample() {
+    @Test void testSample() {
         doTest("sample");
     }
-    
-    @Test
-    void testCpdOffAndOn() {
+
+    @Test void testCpdOffAndOn() {
         doTest("cpdoff");
     }
 }

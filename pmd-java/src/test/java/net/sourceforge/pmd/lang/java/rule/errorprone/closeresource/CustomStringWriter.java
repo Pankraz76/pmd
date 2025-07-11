@@ -9,8 +9,7 @@ import java.io.StringWriter;
 
 public class CustomStringWriter extends StringWriter {
 
-    @Override
-    public void close() throws IOException {
+    @Override public void close() throws IOException {
         getBuffer().setLength(0);
         getBuffer().trimToSize();
         super.close();

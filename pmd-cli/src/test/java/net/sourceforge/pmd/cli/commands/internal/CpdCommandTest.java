@@ -17,40 +17,35 @@ import net.sourceforge.pmd.util.CollectionUtil;
 
 class CpdCommandTest extends BaseCommandTest<CpdCommand> {
 
-    @Test
-    void testMultipleDirs() {
+    @Test void testMultipleDirs() {
         final CpdCommand cmd = setupAndParse(
-            "-d", "a", "b"
+                "-d", "a", "b"
         );
         assertMultipleDirs(cmd);
     }
 
-    @Test
-    void testMultipleDirsWithCommas() {
+    @Test void testMultipleDirsWithCommas() {
         final CpdCommand cmd = setupAndParse(
-            "-d", "a,b"
+                "-d", "a,b"
         );
         assertMultipleDirs(cmd);
     }
 
-    @Test
-    void testMultipleDirsWithRepeatedOption() {
+    @Test void testMultipleDirsWithRepeatedOption() {
         final CpdCommand cmd = setupAndParse(
-            "-d", "a", "-d", "b"
+                "-d", "a", "-d", "b"
         );
         assertMultipleDirs(cmd);
     }
 
-    @Test
-    void testNoPositionalParametersAllowed() {
+    @Test void testNoPositionalParametersAllowed() {
         final CpdCommand cmd = setupAndParse(
-            "-d", "a", "--", "b"
+                "-d", "a", "--", "b"
         );
         assertMultipleDirs(cmd);
     }
 
-    @Test
-    void testEmptyDirOption() {
+    @Test void testEmptyDirOption() {
         assertError("-d", "-f", "text");
     }
 
@@ -59,13 +54,11 @@ class CpdCommandTest extends BaseCommandTest<CpdCommand> {
         assertEquals(listOf("a", "b"), CollectionUtil.map(config.getInputPathList(), Path::toString));
     }
 
-    @Override
-    protected CpdCommand createCommand() {
+    @Override protected CpdCommand createCommand() {
         return new CpdCommand();
     }
 
-    @Override
-    protected void addStandardParams(final List<String> argList) {
+    @Override protected void addStandardParams(final List<String> argList) {
         // If no minimum tokens provided, set default value
         if (!argList.contains("--minimum-tokens")) {
             argList.add(0, "--minimum-tokens");

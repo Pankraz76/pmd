@@ -155,13 +155,12 @@ class Graph<T> {
         successors.values().forEach(it -> it.remove(toMerge));
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return GraphUtil.toDot(
-            vertices,
-            this::successorsOf,
-            v -> DotColor.BLACK,
-            v -> v.data.toString()
+                vertices,
+                this::successorsOf,
+                v -> DotColor.BLACK,
+                v -> v.data.toString()
         );
     }
 
@@ -201,8 +200,7 @@ class Graph<T> {
             owner.onAbsorb(this, toMerge);
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return data.toString();
         }
     }
@@ -213,8 +211,7 @@ class Graph<T> {
 
         private final Map<T, Vertex<T>> vertexMap = new HashMap<>();
 
-        @Override
-        Vertex<T> addLeaf(T data) {
+        @Override Vertex<T> addLeaf(T data) {
             if (vertexMap.containsKey(data)) {
                 return vertexMap.get(data);
             }
@@ -223,8 +220,7 @@ class Graph<T> {
             return v;
         }
 
-        @Override
-        void onAbsorb(Vertex<T> vertex, Vertex<T> toMerge) {
+        @Override void onAbsorb(Vertex<T> vertex, Vertex<T> toMerge) {
             super.onAbsorb(vertex, toMerge);
             for (T ivar : toMerge.getData()) {
                 vertexMap.put(ivar, vertex);

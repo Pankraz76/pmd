@@ -79,12 +79,12 @@ public class SchemaConstant {
 
     public List<Element> getChildrenIn(Element elt) {
         return XmlUtil.getElementChildrenNamed(elt, name)
-                      .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
     public List<Element> getElementChildrenNamedReportOthers(Element elt, PmdXmlReporter err) {
         return XmlUtil.getElementChildrenNamedReportOthers(elt, setOf(this), err)
-                      .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
     public @NonNull Element getSingleChildIn(Element elt, PmdXmlReporter err) {
@@ -109,8 +109,7 @@ public class SchemaConstant {
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return xmlName();
     }
 
@@ -119,8 +118,7 @@ public class SchemaConstant {
         return node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals(name);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -131,8 +129,7 @@ public class SchemaConstant {
         return Objects.equals(name, that.name);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hash(name);
     }
 

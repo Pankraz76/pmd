@@ -16,23 +16,19 @@ class HtmlTreeDumpTest extends BaseTreeDumpTest {
         super(new RelevantAttributePrinter(), ".html");
     }
 
-    @Override
-    public BaseParsingHelper<HtmlParsingHelper, ASTHtmlDocument> getParser() {
+    @Override public BaseParsingHelper<HtmlParsingHelper, ASTHtmlDocument> getParser() {
         return HtmlParsingHelper.DEFAULT.withResourceContext(HtmlTreeDumpTest.class, "testdata");
     }
 
-    @Test
-    void simpleHtmlFile() {
+    @Test void simpleHtmlFile() {
         doTest("SimpleHtmlFile");
     }
 
-    @Test
-    void templateFragment() {
+    @Test void templateFragment() {
         doTest("TemplateFragment");
     }
 
-    @Test
-    void simpleXmlFile() {
+    @Test void simpleXmlFile() {
         doTest("SimpleXmlFile");
     }
 }

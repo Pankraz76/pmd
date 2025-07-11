@@ -55,13 +55,11 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
         }
     }
 
-    @Override
-    public void addChild(DummyNode child, int index) {
+    @Override public void addChild(DummyNode child, int index) {
         super.addChild(child, index);
     }
 
-    @Override
-    public void setParent(DummyNode node) {
+    @Override public void setParent(DummyNode node) {
         super.setParent(node);
     }
 
@@ -72,8 +70,7 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
         }
     }
 
-    @Override
-    public TextRegion getTextRegion() {
+    @Override public TextRegion getTextRegion() {
         return region;
     }
 
@@ -92,23 +89,19 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
         }
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return image;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getXPathNodeName() + "[@Image=" + getImage() + "]";
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return xpathName;
     }
 
-    @Override
-    public boolean isFindBoundary() {
+    @Override public boolean isFindBoundary() {
         return findBoundary;
     }
 
@@ -121,8 +114,7 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
         attributes.clear();
     }
 
-    @Override
-    public Iterator<Attribute> getXPathAttributesIterator() {
+    @Override public Iterator<Attribute> getXPathAttributesIterator() {
         return attributes.iterator();
     }
 
@@ -135,21 +127,21 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
 
         // FIXME remove this
         private static final LanguageProcessor STATIC_PROCESSOR =
-            DummyLanguageModule.getInstance().createProcessor(DummyLanguageModule.getInstance().newPropertyBundle());
+                DummyLanguageModule.getInstance().createProcessor(DummyLanguageModule.getInstance().newPropertyBundle());
         private AstInfo<DummyRootNode> astInfo;
 
         public DummyRootNode() {
             TextDocument document = TextDocument.readOnlyString(
-                "dummy text",
-                FileId.UNKNOWN,
-                DummyLanguageModule.getInstance().getDefaultVersion()
+                    "dummy text",
+                    FileId.UNKNOWN,
+                    DummyLanguageModule.getInstance().getDefaultVersion()
             );
             astInfo = new AstInfo<>(
-                new ParserTask(
-                    document,
-                    SemanticErrorReporter.noop(),
-                    LanguageProcessorRegistry.singleton(STATIC_PROCESSOR)),
-                this);
+                    new ParserTask(
+                            document,
+                            SemanticErrorReporter.noop(),
+                            LanguageProcessorRegistry.singleton(STATIC_PROCESSOR)),
+                    this);
         }
 
         public DummyRootNode withTaskInfo(ParserTask task) {
@@ -162,13 +154,11 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
             return this;
         }
 
-        @Override
-        public AstInfo<DummyRootNode> getAstInfo() {
+        @Override public AstInfo<DummyRootNode> getAstInfo() {
             return Objects.requireNonNull(astInfo, "no ast info");
         }
 
-        @Override
-        public String getXPathNodeName() {
+        @Override public String getXPathNodeName() {
             return "dummyRootNode";
         }
     }
@@ -181,25 +171,21 @@ public class DummyNode extends AbstractNode<DummyNode, DummyNode> {
     }
 
     public static class DummyTextNode extends DummyNode implements TextNode {
-        @Override
-        public String getText() {
+        @Override public String getText() {
             return getImage();
         }
 
-        @Override
-        public String getXPathNodeName() {
+        @Override public String getXPathNodeName() {
             return TextNode.super.getXPathNodeName();
         }
     }
 
     public static class DummyCommentNode extends DummyNode implements CommentNode {
-        @Override
-        public String getData() {
+        @Override public String getData() {
             return getImage();
         }
 
-        @Override
-        public String getXPathNodeName() {
+        @Override public String getXPathNodeName() {
             return CommentNode.super.getXPathNodeName();
         }
     }

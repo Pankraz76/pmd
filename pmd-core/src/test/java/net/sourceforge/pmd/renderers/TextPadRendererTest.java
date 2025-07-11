@@ -6,23 +6,19 @@ package net.sourceforge.pmd.renderers;
 
 class TextPadRendererTest extends AbstractRendererTest {
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         return new TextPadRenderer();
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return getSourceCodeFilename() + "(1,  Foo):  blah" + EOL;
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return "";
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return getSourceCodeFilename() + "(1,  Foo):  blah" + EOL + getSourceCodeFilename() + "(1,  Boo):  blah" + EOL;
     }
 }

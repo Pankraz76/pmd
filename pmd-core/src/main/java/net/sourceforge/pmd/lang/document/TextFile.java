@@ -41,8 +41,7 @@ public interface TextFile extends Closeable {
      *
      * @return A language version
      */
-    @NonNull
-    LanguageVersion getLanguageVersion();
+    @NonNull LanguageVersion getLanguageVersion();
 
 
     /**
@@ -97,8 +96,7 @@ public interface TextFile extends Closeable {
      *
      * @throws IOException If an IO exception occurs
      */
-    @Override
-    void close() throws IOException;
+    @Override void close() throws IOException;
 
 
     /**
@@ -109,8 +107,7 @@ public interface TextFile extends Closeable {
     // currently:
     // - Path-based TextFiles compare their path for equality, where the path is not normalized.
     // - Reader- and String-based TextFiles use identity semantics.
-    @Override
-    boolean equals(Object o);
+    @Override boolean equals(Object o);
 
     // factory methods
 

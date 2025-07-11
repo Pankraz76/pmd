@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.apex.ast.ApexNode;
  */
 public class ApexUnitTestClassShouldHaveRunAsRule extends AbstractApexUnitTestRule {
 
-    @Override
-    public Object visit(ASTMethod node, Object data) {
+    @Override public Object visit(ASTMethod node, Object data) {
         if (!isTestMethodOrClass(node)) {
             return data;
         }

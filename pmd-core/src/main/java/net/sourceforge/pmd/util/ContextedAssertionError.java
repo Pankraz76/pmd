@@ -25,21 +25,18 @@ public final class ContextedAssertionError extends AssertionError implements Exc
 
     public static ContextedAssertionError wrap(AssertionError e) {
         return e instanceof ContextedAssertionError ? (ContextedAssertionError) e
-                                                    : new ContextedAssertionError(e);
+                : new ContextedAssertionError(e);
     }
 
-    @Override
-    public String getMessage() {
+    @Override public String getMessage() {
         return getFormattedExceptionMessage(super.getMessage());
     }
 
-    @Override
-    public DefaultExceptionContext getExceptionContext() {
+    @Override public DefaultExceptionContext getExceptionContext() {
         return exceptionContext;
     }
 
-    @Override
-    public ContextedAssertionError getThrowable() {
+    @Override public ContextedAssertionError getThrowable() {
         return this;
     }
 }

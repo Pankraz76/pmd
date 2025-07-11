@@ -35,8 +35,7 @@ class AttributeAxisIteratorTest {
     /**
      * Test hasNext and next.
      */
-    @Test
-    void testAttributeAxisIterator() {
+    @Test void testAttributeAxisIterator() {
         DummyNode dummyNode = new DummyNode();
 
         AttributeAxisIterator it = new AttributeAxisIterator(dummyNode);
@@ -46,8 +45,7 @@ class AttributeAxisIteratorTest {
         assertEquals(expected, toMap(it).keySet());
     }
 
-    @Test
-    void testAttributeAxisIteratorWithEnum() {
+    @Test void testAttributeAxisIteratorWithEnum() {
         DummyNodeWithEnum dummyNode = new DummyNodeWithEnum();
 
         AttributeAxisIterator it = new AttributeAxisIterator(dummyNode);
@@ -57,8 +55,7 @@ class AttributeAxisIteratorTest {
         assertEquals(expected, toMap(it).keySet());
     }
 
-    @Test
-    void testAttributeAxisIteratorWithList() {
+    @Test void testAttributeAxisIteratorWithList() {
         // list attributes are not supported anymore
         DummyNodeWithList dummyNode = new DummyNodeWithList();
 
@@ -73,8 +70,7 @@ class AttributeAxisIteratorTest {
      * Exercises the case described in
      * <a href="https://github.com/pmd/pmd/issues/4885">[java] AssertionError: Method should be accessible #4885</a>.
      */
-    @Test
-    void accessPublicMethodWithAPackagePrivateImplementationInSuperclass() {
+    @Test void accessPublicMethodWithAPackagePrivateImplementationInSuperclass() {
         final String ATTRIBUTE_NAME = "Value";
         ConcreteNode node = new ConcreteNode();
         AttributeAxisIterator it = new AttributeAxisIterator(node);

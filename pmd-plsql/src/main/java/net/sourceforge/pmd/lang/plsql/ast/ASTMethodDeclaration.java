@@ -10,8 +10,7 @@ public final class ASTMethodDeclaration extends AbstractPLSQLNode implements Exe
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -20,8 +19,7 @@ public final class ASTMethodDeclaration extends AbstractPLSQLNode implements Exe
      *
      * @return a String representing the name of the method
      */
-    @Override
-    public String getMethodName() {
+    @Override public String getMethodName() {
         ASTMethodDeclarator md = descendants(ASTMethodDeclarator.class).first();
         if (md != null) {
             return md.getImage();

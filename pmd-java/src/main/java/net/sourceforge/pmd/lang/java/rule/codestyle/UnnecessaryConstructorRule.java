@@ -28,28 +28,24 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
  */
 public class UnnecessaryConstructorRule extends AbstractIgnoredAnnotationRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTEnumDeclaration.class, ASTClassDeclaration.class);
     }
 
-    @Override
-    protected Collection<String> defaultSuppressionAnnotations() {
+    @Override protected Collection<String> defaultSuppressionAnnotations() {
         return Arrays.asList("javax.inject.Inject",
                 "com.google.inject.Inject",
                 "org.springframework.beans.factory.annotation.Autowired");
     }
 
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
         if (node.isRegularClass()) {
             checkClassOrEnum(node, data);
         }
         return data;
     }
 
-    @Override
-    public Object visit(ASTEnumDeclaration node, Object data) {
+    @Override public Object visit(ASTEnumDeclaration node, Object data) {
         checkClassOrEnum(node, data);
         return data;
     }
@@ -64,10 +60,10 @@ public class UnnecessaryConstructorRule extends AbstractIgnoredAnnotationRule {
 
     private boolean isExplicitDefaultConstructor(ASTTypeDeclaration declarator, ASTConstructorDeclaration ctor) {
         return ctor.getArity() == 0
-            && !hasIgnoredAnnotation(ctor)
-            && hasDefaultCtorVisibility(declarator, ctor)
-            && isEmptyBlock(ctor.getBody())
-            && ctor.getThrowsList() == null;
+                && !hasIgnoredAnnotation(ctor)
+                && hasDefaultCtorVisibility(declarator, ctor)
+                && isEmptyBlock(ctor.getBody())
+                && ctor.getThrowsList() == null;
     }
 
     private boolean isEmptyBlock(ASTBlock body) {

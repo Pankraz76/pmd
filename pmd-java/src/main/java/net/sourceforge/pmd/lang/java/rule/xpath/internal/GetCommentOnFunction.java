@@ -28,20 +28,17 @@ public class GetCommentOnFunction extends BaseJavaXPathFunction {
         super("getCommentOn");
     }
 
-    @Override
-    public Type getResultType() {
+    @Override public Type getResultType() {
         return Type.OPTIONAL_STRING;
     }
 
 
-    @Override
-    public boolean dependsOnContext() {
+    @Override public boolean dependsOnContext() {
         return true;
     }
 
 
-    @Override
-    public FunctionCall makeCallExpression() {
+    @Override public FunctionCall makeCallExpression() {
         return (contextNode, arguments) -> {
             int codeBeginLine = contextNode.getBeginLine();
             int codeEndLine = contextNode.getEndLine();

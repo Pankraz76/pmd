@@ -1,5 +1,5 @@
 public class Test {
-  List<String> test() {
-   return Collections.<String>emptyList();
-  }
+    List<String> test() {
+        return Collections.<String>emptyList();
+    }
 }

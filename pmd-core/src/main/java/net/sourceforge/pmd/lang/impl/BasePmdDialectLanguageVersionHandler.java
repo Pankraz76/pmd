@@ -19,8 +19,7 @@ import net.sourceforge.pmd.lang.ast.Parser;
 @Experimental
 public class BasePmdDialectLanguageVersionHandler extends AbstractPmdLanguageVersionHandler {
 
-    @Override
-    public final Parser getParser() {
+    @Override public final Parser getParser() {
         return null;
     }
 }

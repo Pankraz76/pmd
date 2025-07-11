@@ -55,8 +55,8 @@ class BaseXPathFunctionTest extends BaseParserTest {
 
 
     protected void testWithExpectedException(String xpath,
-                                             String code,
-                                             Consumer<? super PmdXPathException> exceptionSpec) {
+            String code,
+            Consumer<? super PmdXPathException> exceptionSpec) {
 
         Rule rule = makeXpathRuleFromXPath(xpath);
         FileAnalysisException thrown = assertThrows(FileAnalysisException.class, () -> executeRule(rule, code));
@@ -70,7 +70,7 @@ class BaseXPathFunctionTest extends BaseParserTest {
 
 
     protected void testWithExpectedStaticException(String xpath,
-                                                   Consumer<? super PmdXPathException> exceptionSpec) {
+            Consumer<? super PmdXPathException> exceptionSpec) {
 
         Rule rule = makeXpathRuleFromXPath(xpath);
         try (LanguageProcessor proc = java.newProcessor()) {

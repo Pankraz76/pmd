@@ -53,20 +53,18 @@ class ApexClassPropertyTypesTest {
         EXPECTED_DATA_TYPES.put("ApexController.ConflictingProp", DataType.Unknown);
     }
 
-    @Test
-    void testApexClassIsProperlyParsed() {
+    @Test void testApexClassIsProperlyParsed() {
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
-                                     .resolve("SomePage.page");
+                .resolve("SomePage.page");
         try (LanguageProcessorRegistry lpReg = VFTestUtils.fakeLpRegistry()) {
             ApexClassPropertyTypes apexClassPropertyTypes = new ApexClassPropertyTypes(lpReg);
             ObjectFieldTypesTest.validateDataTypes(EXPECTED_DATA_TYPES, apexClassPropertyTypes, vfPagePath,
-                                                   VfLanguageProperties.APEX_DIRECTORIES_DESCRIPTOR.defaultValue());
+                    VfLanguageProperties.APEX_DIRECTORIES_DESCRIPTOR.defaultValue());
         }
 
     }
 
-    @Test
-    void testInvalidDirectoryDoesNotCauseAnException() {
+    @Test void testInvalidDirectoryDoesNotCauseAnException() {
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
                 .resolve("SomePage.page");
         FileId vfFileName = FileId.fromPath(vfPagePath);

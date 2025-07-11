@@ -14,23 +14,19 @@ class KotlinCpdLexerTest extends CpdTextComparisonTest {
         super("kotlin", ".kt");
     }
 
-    @Test
-    void testComments() {
+    @Test void testComments() {
         doTest("comment");
     }
 
-    @Test
-    void testIncrement() {
+    @Test void testIncrement() {
         doTest("increment");
     }
 
-    @Test
-    void testImportsIgnored() {
+    @Test void testImportsIgnored() {
         doTest("imports");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 }

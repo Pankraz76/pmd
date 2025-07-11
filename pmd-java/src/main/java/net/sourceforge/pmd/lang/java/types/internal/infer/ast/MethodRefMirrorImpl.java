@@ -44,8 +44,7 @@ final class MethodRefMirrorImpl extends BaseFunctionalMirror<ASTMethodReference>
         // setInferredType(mirrors.ts.UNKNOWN);
     }
 
-    @Override
-    public void finishFailedInference(@Nullable JTypeMirror targetType) {
+    @Override public void finishFailedInference(@Nullable JTypeMirror targetType) {
         super.finishFailedInference(targetType);
         MethodCtDecl noCtDecl = factory.infer.getMissingCtDecl().withExpr(this);
         if (!TypeOps.isUnresolved(getTypeToSearch())) {
@@ -60,60 +59,51 @@ final class MethodRefMirrorImpl extends BaseFunctionalMirror<ASTMethodReference>
         setCompileTimeDecl(noCtDecl);
     }
 
-    @Override
-    public boolean isEquivalentToUnderlyingAst() {
+    @Override public boolean isEquivalentToUnderlyingAst() {
         AssertionUtil.validateState(ctdecl != null, "overload resolution is not complete");
 
         // must bind to the same ctdecl.
         return myNode.getReferencedMethod().equals(ctdecl.getMethodType());
     }
 
-    @Override
-    public boolean isConstructorRef() {
+    @Override public boolean isConstructorRef() {
         return myNode.isConstructorReference();
     }
 
-    @Override
-    public JTypeMirror getLhsIfType() {
+    @Override public JTypeMirror getLhsIfType() {
         ASTExpression lhsType = myNode.getQualifier();
         return lhsType instanceof ASTTypeExpression
-               ? lhsType.getTypeMirror()
-               : null;
+                ? lhsType.getTypeMirror()
+                : null;
     }
 
-    @Override
-    public JTypeMirror getTypeToSearch() {
+    @Override public JTypeMirror getTypeToSearch() {
         return myNode.getLhs().getTypeMirror();
     }
 
-    @Override
-    public String getMethodName() {
+    @Override public String getMethodName() {
         return myNode.getMethodName();
     }
 
-    @Override
-    public void setCompileTimeDecl(MethodCtDecl methodType) {
+    @Override public void setCompileTimeDecl(MethodCtDecl methodType) {
         this.ctdecl = methodType;
         if (mayMutateAst()) {
             InternalApiBridge.setCompileTimeDecl(myNode, methodType);
         }
     }
 
-    @Override
-    public @NonNull List<JTypeMirror> getExplicitTypeArguments() {
+    @Override public @NonNull List<JTypeMirror> getExplicitTypeArguments() {
         return CollectionUtil.map(
-            ASTList.orEmpty(myNode.getExplicitTypeArguments()),
-            TypeNode::getTypeMirror
+                ASTList.orEmpty(myNode.getExplicitTypeArguments()),
+                TypeNode::getTypeMirror
         );
     }
 
-    @Override
-    public JMethodSig getCachedExactMethod() {
+    @Override public JMethodSig getCachedExactMethod() {
         return exactMethod;
     }
 
-    @Override
-    public void setCachedExactMethod(@Nullable JMethodSig sig) {
+    @Override public void setCachedExactMethod(@Nullable JMethodSig sig) {
         exactMethod = sig;
     }
 }

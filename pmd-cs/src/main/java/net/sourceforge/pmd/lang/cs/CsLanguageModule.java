@@ -19,17 +19,16 @@ public class CsLanguageModule extends CpdOnlyLanguageModuleBase {
 
     public CsLanguageModule() {
         super(LanguageMetadata.withId(ID)
-                              .name("C#")
-                              .addDefaultVersion("any")
-                              .extensions("cs"));
+                .name("C#")
+                .addDefaultVersion("any")
+                .extensions("cs"));
     }
 
     public static CsLanguageModule getInstance() {
         return (CsLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public LanguagePropertyBundle newPropertyBundle() {
+    @Override public LanguagePropertyBundle newPropertyBundle() {
         LanguagePropertyBundle bundle = super.newPropertyBundle();
         bundle.definePropertyDescriptor(CpdLanguageProperties.CPD_IGNORE_LITERAL_SEQUENCES);
         bundle.definePropertyDescriptor(CpdLanguageProperties.CPD_IGNORE_IMPORTS);
@@ -37,8 +36,7 @@ public class CsLanguageModule extends CpdOnlyLanguageModuleBase {
         return bundle;
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new CsCpdLexer(bundle);
     }
 }

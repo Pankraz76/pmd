@@ -29,8 +29,7 @@ import net.sourceforge.pmd.renderers.XMLRenderer;
 class ReportTest {
 
     // Files are grouped together now.
-    @Test
-    void testSortedReportFile() {
+    @Test void testSortedReportFile() {
         Renderer rend = new XMLRenderer();
         String result = render(rend, r -> {
             FileLocation s = getNode(10, 5, "foo");
@@ -45,8 +44,7 @@ class ReportTest {
         assertTrue(result.indexOf("bar") < result.indexOf("foo"), "sort order wrong");
     }
 
-    @Test
-    void testSortedReportLine() {
+    @Test void testSortedReportLine() {
         Renderer rend = new XMLRenderer();
         String result = render(rend, r -> {
             FileLocation node1 = getNode(20, 5, "foo1"); // line 20: after rule2 violation
@@ -60,8 +58,7 @@ class ReportTest {
         assertTrue(result.indexOf("rule2") < result.indexOf("rule1"), "sort order wrong");
     }
 
-    @Test
-    void testIterator() {
+    @Test void testIterator() {
         Rule rule = new MockRule("name", "desc", "msg", "rulesetname");
         FileLocation loc1 = getNode(5, 5, "file1");
         FileLocation loc2 = getNode(5, 6, "file1");
@@ -73,8 +70,7 @@ class ReportTest {
         assertEquals(2, r.getViolations().size());
     }
 
-    @Test
-    void testFilterViolations() {
+    @Test void testFilterViolations() {
         Rule rule = new MockRule("name", "desc", "msg", "rulesetname");
         FileLocation loc1 = getNode(5, 5, "file1");
         FileLocation loc2 = getNode(5, 6, "file1");
@@ -89,8 +85,7 @@ class ReportTest {
         assertEquals("msg", filtered.getViolations().get(0).getDescription());
     }
 
-    @Test
-    void testUnion() {
+    @Test void testUnion() {
         Rule rule = new MockRule("name", "desc", "msg", "rulesetname");
         FileLocation loc1 = getNode(1, 2, "file1");
         Report report1 = Report.buildReport(it -> it.onRuleViolation(violation(rule, loc1)));

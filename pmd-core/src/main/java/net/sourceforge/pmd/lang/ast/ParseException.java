@@ -40,7 +40,7 @@ public class ParseException extends FileAnalysisException {
      * This constructor is called by Javacc.
      */
     public ParseException(@NonNull JavaccToken currentTokenVal,
-                          int[][] expectedTokenSequencesVal) {
+            int[][] expectedTokenSequencesVal) {
         super(makeMessage(currentTokenVal, expectedTokenSequencesVal));
         location = currentTokenVal.getNext().getReportLocation();
     }
@@ -56,13 +56,11 @@ public class ParseException extends FileAnalysisException {
     }
 
 
-    @Override
-    protected String errorKind() {
+    @Override protected String errorKind() {
         return "Parse exception";
     }
 
-    @Override
-    protected @Nullable FileLocation location() {
+    @Override protected @Nullable FileLocation location() {
         return location;
     }
 
@@ -74,7 +72,7 @@ public class ParseException extends FileAnalysisException {
      * gets displayed.
      */
     private static String makeMessage(@NonNull JavaccToken currentToken,
-                                      int[][] expectedTokenSequences) {
+            int[][] expectedTokenSequences) {
 
         JavaccTokenDocument document = currentToken.getDocument();
         String eol = System.lineSeparator();

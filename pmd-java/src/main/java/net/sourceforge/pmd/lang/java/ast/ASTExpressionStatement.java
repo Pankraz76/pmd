@@ -22,15 +22,13 @@ public final class ASTExpressionStatement extends AbstractStatement {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
 
     /** Returns the contained expression. */
-    @NonNull
-    public ASTExpression getExpr() {
+    @NonNull public ASTExpression getExpr() {
         return (ASTExpression) getChild(0);
     }
 }

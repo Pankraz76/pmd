@@ -27,8 +27,7 @@ import net.sourceforge.pmd.util.IteratorUtil.AbstractIterator;
  */
 public enum SuperTypesEnumerator {
     JUST_SELF {
-        @Override
-        public Iterator<JClassType> iterator(JClassType t) {
+        @Override public Iterator<JClassType> iterator(JClassType t) {
             return IteratorUtil.singletonIterator(t);
         }
     },
@@ -38,8 +37,7 @@ public enum SuperTypesEnumerator {
      * is an interface, contains t, and Object.
      */
     SUPERCLASSES_AND_SELF {
-        @Override
-        public Iterator<JClassType> iterator(JClassType t) {
+        @Override public Iterator<JClassType> iterator(JClassType t) {
             return IteratorUtil.generate(t, JClassType::getSuperClass);
         }
     },
@@ -49,13 +47,11 @@ public enum SuperTypesEnumerator {
      * it exists. This includes Object if the search starts on an interface.
      */
     DIRECT_STRICT_SUPERTYPES {
-        @Override
-        public Iterator<JClassType> iterator(JClassType t) {
+        @Override public Iterator<JClassType> iterator(JClassType t) {
             return iterable(t).iterator();
         }
 
-        @Override
-        public Iterable<JClassType> iterable(JClassType t) {
+        @Override public Iterable<JClassType> iterable(JClassType t) {
             @Nullable JClassType sup = t.getSuperClass();
             List<JClassType> superItfs = t.getSuperInterfaces();
 
@@ -83,8 +79,7 @@ public enum SuperTypesEnumerator {
      * on an interface.
      */
     ALL_STRICT_SUPERTYPES {
-        @Override
-        public Iterator<JClassType> iterator(JClassType t) {
+        @Override public Iterator<JClassType> iterator(JClassType t) {
             Iterator<JClassType> iter = ALL_SUPERTYPES_INCLUDING_SELF.iterator(t);
             IteratorUtil.advance(iter, 1);
             return iter;
@@ -108,8 +103,7 @@ public enum SuperTypesEnumerator {
      * }</pre>
      */
     ALL_SUPERTYPES_INCLUDING_SELF {
-        @Override
-        public Iterator<JClassType> iterator(JClassType t) {
+        @Override public Iterator<JClassType> iterator(JClassType t) {
             return new SuperTypeWalker(t);
         }
     };
@@ -134,8 +128,7 @@ public enum SuperTypesEnumerator {
             todo.push(start);
         }
 
-        @Override
-        protected void computeNext() {
+        @Override protected void computeNext() {
             if (todo.isEmpty()) {
                 done();
             } else {

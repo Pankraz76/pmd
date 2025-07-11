@@ -21,18 +21,15 @@ public abstract class AbstractScope implements Scope {
     /** Stores the name declaration already sorted by class. */
     private Map<Class<? extends NameDeclaration>, Map<NameDeclaration, List<NameOccurrence>>> nameDeclarations = new LinkedHashMap<>();
 
-    @Override
-    public Scope getParent() {
+    @Override public Scope getParent() {
         return parent;
     }
 
-    @Override
-    public void setParent(Scope parent) {
+    @Override public void setParent(Scope parent) {
         this.parent = parent;
     }
 
-    @Override
-    public Map<NameDeclaration, List<NameOccurrence>> getDeclarations() {
+    @Override public Map<NameDeclaration, List<NameOccurrence>> getDeclarations() {
         Map<NameDeclaration, List<NameOccurrence>> result = new LinkedHashMap<>();
         for (Map<NameDeclaration, List<NameOccurrence>> e : nameDeclarations.values()) {
             result.putAll(e);
@@ -40,18 +37,15 @@ public abstract class AbstractScope implements Scope {
         return result;
     }
 
-    @Override
-    public <T extends NameDeclaration> Map<T, List<NameOccurrence>> getDeclarations(Class<T> clazz) {
-        @SuppressWarnings("unchecked")
-        Map<T, List<NameOccurrence>> result = (Map<T, List<NameOccurrence>>) nameDeclarations.get(clazz);
+    @Override public <T extends NameDeclaration> Map<T, List<NameOccurrence>> getDeclarations(Class<T> clazz) {
+        @SuppressWarnings("unchecked") Map<T, List<NameOccurrence>> result = (Map<T, List<NameOccurrence>>) nameDeclarations.get(clazz);
         if (result == null) {
             result = Collections.emptyMap();
         }
         return result;
     }
 
-    @Override
-    public boolean contains(NameOccurrence occ) {
+    @Override public boolean contains(NameOccurrence occ) {
         for (NameDeclaration d : getDeclarations().keySet()) {
             if (d.getImage().equals(occ.getImage())) {
                 return true;
@@ -60,8 +54,7 @@ public abstract class AbstractScope implements Scope {
         return false;
     }
 
-    @Override
-    public void addDeclaration(NameDeclaration declaration) {
+    @Override public void addDeclaration(NameDeclaration declaration) {
         Map<NameDeclaration, List<NameOccurrence>> declarationsPerClass = nameDeclarations.get(declaration.getClass());
         if (declarationsPerClass == null) {
             declarationsPerClass = new LinkedHashMap<>();
@@ -70,9 +63,7 @@ public abstract class AbstractScope implements Scope {
         declarationsPerClass.put(declaration, new ArrayList<>());
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T extends Scope> T getEnclosingScope(Class<T> clazz) {
+    @SuppressWarnings("unchecked") @Override public <T extends Scope> T getEnclosingScope(Class<T> clazz) {
         Scope current = this;
         while (current != null) {
             if (clazz.isAssignableFrom(current.getClass())) {
@@ -83,8 +74,7 @@ public abstract class AbstractScope implements Scope {
         return null;
     }
 
-    @Override
-    public Set<NameDeclaration> addNameOccurrence(NameOccurrence occurrence) {
+    @Override public Set<NameDeclaration> addNameOccurrence(NameOccurrence occurrence) {
         Set<NameDeclaration> result = new HashSet<>();
         for (Map.Entry<NameDeclaration, List<NameOccurrence>> e : getDeclarations().entrySet()) {
             if (e.getKey().getImage().equals(occurrence.getImage())) {

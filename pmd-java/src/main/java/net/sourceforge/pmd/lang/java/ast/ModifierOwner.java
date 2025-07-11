@@ -29,8 +29,7 @@ import net.sourceforge.pmd.lang.ast.NodeStream;
  */
 public interface ModifierOwner extends Annotatable {
 
-    @Override
-    default NodeStream<ASTAnnotation> getDeclaredAnnotations() {
+    @Override default NodeStream<ASTAnnotation> getDeclaredAnnotations() {
         return getModifiers().children(ASTAnnotation.class);
     }
 
@@ -146,8 +145,7 @@ public interface ModifierOwner extends Annotatable {
             this.myName = name;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return myName;
         }
 

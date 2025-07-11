@@ -13,13 +13,11 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 
 public class ConsistentReturnRule extends AbstractEcmascriptRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTFunctionNode.class);
     }
 
-    @Override
-    public Object visit(ASTFunctionNode functionNode, Object data) {
+    @Override public Object visit(ASTFunctionNode functionNode, Object data) {
         Boolean hasResult = null;
         for (ASTReturnStatement returnStatement : functionNode.descendants(ASTReturnStatement.class)) {
             // Return for this function?

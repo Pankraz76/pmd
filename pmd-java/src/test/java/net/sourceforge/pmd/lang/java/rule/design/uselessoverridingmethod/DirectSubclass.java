@@ -8,18 +8,15 @@ public class DirectSubclass extends BaseClass {
 
     // overrides to make the methods public
 
-    @Override
-    public void doBase() {
+    @Override public void doBase() {
         super.doBase();
     }
 
-    @Override
-    public void doBaseWithArg(String foo) {
+    @Override public void doBaseWithArg(String foo) {
         super.doBaseWithArg(foo);
     }
 
-    @Override
-    public void doBaseWithArgs(String foo, int bar) {
+    @Override public void doBaseWithArgs(String foo, int bar) {
         super.doBaseWithArgs(foo, bar);
     }
 }

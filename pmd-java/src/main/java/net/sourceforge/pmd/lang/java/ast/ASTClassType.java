@@ -112,16 +112,14 @@ public final class ASTClassType extends AbstractJavaTypeNode implements ASTRefer
      *
      * @return A type, or null if this is a base type
      */
-    @Nullable
-    public ASTClassType getQualifier() {
+    @Nullable public ASTClassType getQualifier() {
         return firstChild(ASTClassType.class);
     }
 
     /**
      * Returns the type arguments of this segment if some are specified.
      */
-    @Nullable
-    public ASTTypeArguments getTypeArguments() {
+    @Nullable public ASTTypeArguments getTypeArguments() {
         return firstChild(ASTTypeArguments.class);
     }
 
@@ -152,8 +150,7 @@ public final class ASTClassType extends AbstractJavaTypeNode implements ASTRefer
         return null;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

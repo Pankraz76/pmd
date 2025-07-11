@@ -112,8 +112,7 @@ public class RuleDocGenerator {
 
         System.out.println("Deleting old rule docs in " + directory);
         Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 if (file.toString().endsWith("scala.md")) {
                     // don't delete scala.md, since we don't have any rules yet...
                     return FileVisitResult.CONTINUE;
@@ -122,8 +121,7 @@ public class RuleDocGenerator {
                 return FileVisitResult.CONTINUE;
             }
 
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+            @Override public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
                 if (dir.equals(directory)) {
                     // don't delete the whole directory, keep it empty
                     // or almost empty (scala.md is still present)
@@ -175,8 +173,8 @@ public class RuleDocGenerator {
 
     private Map<Language, List<RuleSet>> sortRulesets(List<RuleSet> rulesets) {
         SortedMap<Language, List<RuleSet>> rulesetsByLanguage = rulesets.stream().collect(Collectors.groupingBy(RuleDocGenerator::getRuleSetLanguage,
-                                                                                                                TreeMap::new,
-                                                                                                                Collectors.toCollection(ArrayList::new)));
+                TreeMap::new,
+                Collectors.toCollection(ArrayList::new)));
 
         for (List<RuleSet> rulesetsOfOneLanguage : rulesetsByLanguage.values()) {
             rulesetsOfOneLanguage.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
@@ -328,14 +326,14 @@ public class RuleDocGenerator {
      */
     private static String getShortRuleDescription(Rule rule) {
         String htmlEscaped = StringEscapeUtils.escapeHtml4(
-            StringUtils.abbreviate(
-                StringUtils.stripToEmpty(
-                    rule.getDescription()
-                        .replaceAll("\n+|\r+", " ")
-                        .replaceAll("\\|", "\\\\|")
-                        .replaceAll("`", "'")
-                        .replaceAll("\\*", "")),
-                100));
+                StringUtils.abbreviate(
+                        StringUtils.stripToEmpty(
+                                rule.getDescription()
+                                        .replaceAll("\n+|\r+", " ")
+                                        .replaceAll("\\|", "\\\\|")
+                                        .replaceAll("`", "'")
+                                        .replaceAll("\\*", "")),
+                        100));
         return EscapeUtils.preserveRuleTagQuotes(htmlEscaped);
     }
 
@@ -365,8 +363,8 @@ public class RuleDocGenerator {
             for (RuleSet ruleset : entry.getValue()) {
                 String rulesetFilename = RuleSetUtils.getRuleSetFilename(ruleset);
                 String filename = RULESET_INDEX_FILENAME_PATTERN
-                    .replace("${language.tersename}", languageTersename)
-                    .replace("${ruleset.name}", rulesetFilename);
+                        .replace("${language.tersename}", languageTersename)
+                        .replace("${ruleset.name}", rulesetFilename);
 
                 Path path = getAbsoluteOutputPath(filename);
 
@@ -516,7 +514,7 @@ public class RuleDocGenerator {
                             if (!isDeprecated(propertyDescriptor)) {
                                 String defaultValue = determineDefaultValueAsString(propertyDescriptor, rule, false);
                                 lines.add("        <property name=\"" + propertyDescriptor.name() + "\" value=\""
-                                              + defaultValue + "\" />");
+                                        + defaultValue + "\" />");
                             }
                         }
                         lines.add("    </properties>");
@@ -543,7 +541,7 @@ public class RuleDocGenerator {
 
     private static boolean isDeprecated(PropertyDescriptor<?> propertyDescriptor) {
         return propertyDescriptor.description() != null
-            && propertyDescriptor.description().toLowerCase(Locale.ROOT).startsWith(DEPRECATED_RULE_PROPERTY_MARKER);
+                && propertyDescriptor.description().toLowerCase(Locale.ROOT).startsWith(DEPRECATED_RULE_PROPERTY_MARKER);
     }
 
     private <T> String determineDefaultValueAsString(PropertyDescriptor<T> propertyDescriptor, Rule rule, boolean pad) {
@@ -619,8 +617,7 @@ public class RuleDocGenerator {
     private List<Rule> getSortedRules(RuleSet ruleset) {
         List<Rule> sortedRules = new ArrayList<>(ruleset.getRules());
         Collections.sort(sortedRules, new Comparator<Rule>() {
-            @Override
-            public int compare(Rule o1, Rule o2) {
+            @Override public int compare(Rule o1, Rule o2) {
                 return o1.getName().compareToIgnoreCase(o2.getName());
             }
         });
@@ -654,8 +651,7 @@ public class RuleDocGenerator {
         // then go and search the actual files
         try {
             Files.walkFileTree(root, new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
                     String path = RuleSetUtils.normalizeForwardSlashes(file.toString());
 
                     if (path.contains("src")) {

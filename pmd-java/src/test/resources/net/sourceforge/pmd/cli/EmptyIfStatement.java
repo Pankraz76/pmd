@@ -8,6 +8,7 @@
  */
 public class EmptyIfStatement {
     public void foo() {
-        if (1 == 2) { }
+        if (1 == 2) {
+        }
     }
 }

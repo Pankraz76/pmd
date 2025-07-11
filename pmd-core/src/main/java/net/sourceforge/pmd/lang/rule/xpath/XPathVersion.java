@@ -45,8 +45,7 @@ public enum XPathVersion {
         return version;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getXmlName();
     }
 

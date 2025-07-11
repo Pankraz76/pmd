@@ -33,13 +33,11 @@ public class SuppressionCommentImpl<T extends Reportable> implements Suppression
         this(token, t -> message);
     }
 
-    @Override
-    public String getUserMessage() {
+    @Override public String getUserMessage() {
         return messageGetter.apply(token);
     }
 
-    @Override
-    public Reportable getLocation() {
+    @Override public Reportable getLocation() {
         return token;
     }
 }

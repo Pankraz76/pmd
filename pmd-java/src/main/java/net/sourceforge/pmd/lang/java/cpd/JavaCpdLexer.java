@@ -41,18 +41,15 @@ public class JavaCpdLexer extends JavaccCpdLexer {
         constructorDetector = new ConstructorDetector(ignoreIdentifiers);
     }
 
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
         return JavaTokenKinds.newTokenManager(CharStream.create(doc, InternalApiBridge.javaTokenDoc()));
     }
 
-    @Override
-    protected TokenManager<JavaccToken> filterTokenStream(TokenManager<JavaccToken> tokenManager) {
+    @Override protected TokenManager<JavaccToken> filterTokenStream(TokenManager<JavaccToken> tokenManager) {
         return new JavaTokenFilter(tokenManager, ignoreAnnotations);
     }
 
-    @Override
-    protected void processToken(TokenFactory tokenEntries, JavaccToken javaToken) {
+    @Override protected void processToken(TokenFactory tokenEntries, JavaccToken javaToken) {
         String image = javaToken.getImage();
 
         constructorDetector.restoreConstructorToken(tokenEntries, javaToken);
@@ -96,8 +93,7 @@ public class JavaCpdLexer extends JavaccCpdLexer {
             this.ignoreAnnotations = ignoreAnnotations;
         }
 
-        @Override
-        protected void analyzeToken(final JavaccToken token) {
+        @Override protected void analyzeToken(final JavaccToken token) {
             detectAnnotations(token);
 
             skipSemicolon(token);
@@ -145,8 +141,7 @@ public class JavaCpdLexer extends JavaccCpdLexer {
             }
         }
 
-        @Override
-        protected boolean isLanguageSpecificDiscarding() {
+        @Override protected boolean isLanguageSpecificDiscarding() {
             return discardingSemicolon || discardingKeywords || discardingAnnotations
                     || discardingSuppressing;
         }
@@ -202,51 +197,51 @@ public class JavaCpdLexer extends JavaccCpdLexer {
             }
 
             switch (currentToken.kind) {
-            case JavaTokenKinds.IDENTIFIER:
-                if ("enum".equals(currentToken.getImage())) {
-                    // If declaring an enum, add a new block nesting level at
-                    // which constructors may exist
+                case JavaTokenKinds.IDENTIFIER:
+                    if ("enum".equals(currentToken.getImage())) {
+                        // If declaring an enum, add a new block nesting level at
+                        // which constructors may exist
+                        pushTypeDeclaration();
+                    } else if (storeNextIdentifier) {
+                        classMembersIndentations.peek().name = currentToken.getImage();
+                        storeNextIdentifier = false;
+                    }
+
+                    // Store this token
+                    prevIdentifier = currentToken.getImage();
+                    break;
+
+                case JavaTokenKinds.CLASS:
+                    // If declaring a class, add a new block nesting level at which
+                    // constructors may exist
                     pushTypeDeclaration();
-                } else if (storeNextIdentifier) {
-                    classMembersIndentations.peek().name = currentToken.getImage();
-                    storeNextIdentifier = false;
-                }
+                    break;
 
-                // Store this token
-                prevIdentifier = currentToken.getImage();
-                break;
+                case JavaTokenKinds.LBRACE:
+                    currentNestingLevel++;
+                    break;
 
-            case JavaTokenKinds.CLASS:
-                // If declaring a class, add a new block nesting level at which
-                // constructors may exist
-                pushTypeDeclaration();
-                break;
+                case JavaTokenKinds.RBRACE:
+                    // Discard completed blocks
+                    if (!classMembersIndentations.isEmpty()
+                            && classMembersIndentations.peek().indentationLevel == currentNestingLevel) {
+                        classMembersIndentations.pop();
+                    }
+                    currentNestingLevel--;
+                    break;
 
-            case JavaTokenKinds.LBRACE:
-                currentNestingLevel++;
-                break;
-
-            case JavaTokenKinds.RBRACE:
-                // Discard completed blocks
-                if (!classMembersIndentations.isEmpty()
-                        && classMembersIndentations.peek().indentationLevel == currentNestingLevel) {
-                    classMembersIndentations.pop();
-                }
-                currentNestingLevel--;
-                break;
-
-            default:
-                /*
-                 * Did we find a "class" token not followed by an identifier? i.e:
-                 * expectThrows(IllegalStateException.class, () -> {
-                 *  newSearcher(r).search(parentQuery.build(), c);
-                 * });
-                 */
-                if (storeNextIdentifier) {
-                    classMembersIndentations.pop();
-                    storeNextIdentifier = false;
-                }
-                break;
+                default:
+                    /*
+                     * Did we find a "class" token not followed by an identifier? i.e:
+                     * expectThrows(IllegalStateException.class, () -> {
+                     *  newSearcher(r).search(parentQuery.build(), c);
+                     * });
+                     */
+                    if (storeNextIdentifier) {
+                        classMembersIndentations.pop();
+                        storeNextIdentifier = false;
+                    }
+                    break;
             }
         }
 

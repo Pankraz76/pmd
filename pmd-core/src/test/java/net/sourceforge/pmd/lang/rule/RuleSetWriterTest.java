@@ -35,8 +35,7 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
     /**
      * Prepare the output stream.
      */
-    @BeforeEach
-    void setupOutputStream() {
+    @BeforeEach void setupOutputStream() {
         out = new ByteArrayOutputStream();
         writer = new RuleSetWriter(out);
     }
@@ -44,8 +43,7 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
     /**
      * Closes the output stream at the end.
      */
-    @AfterEach
-    void cleanupStream() {
+    @AfterEach void cleanupStream() {
         if (writer != null) {
             writer.close();
         }
@@ -57,8 +55,7 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
      * @throws Exception
      *             any error
      */
-    @Test
-    void testWrite() throws Exception {
+    @Test void testWrite() throws Exception {
         RuleSet braces = new RuleSetLoader().loadFromResource("net/sourceforge/pmd/lang/rule/TestRuleset1.xml");
         RuleSet ruleSet = new RuleSetBuilder(new Random().nextLong())
                 .withName("ruleset")
@@ -78,8 +75,7 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
      * @throws Exception
      *             any error
      */
-    @Test
-    void testRuleReferenceOverriddenName() throws Exception {
+    @Test void testRuleReferenceOverriddenName() throws Exception {
         RuleSet rs = new RuleSetLoader().loadFromResource("rulesets/dummy/basic.xml");
 
         RuleReference ruleRef = new RuleReference(
@@ -95,8 +91,7 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
         assertTrue(written.contains("ref=\"rulesets/dummy/basic.xml/DummyBasicMockRule\""));
     }
 
-    @Test
-    void testPropertyConstraintRange() throws Exception {
+    @Test void testPropertyConstraintRange() throws Exception {
         RuleSet ruleSet = loadRuleSet("created-on-the-fly.xml",
                 rulesetXml(
                         dummyRule(
@@ -116,8 +111,7 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
         assertThat(written, containsString("max=\"10\""));
     }
 
-    @Test
-    void testPropertyConstraintAbove() throws Exception {
+    @Test void testPropertyConstraintAbove() throws Exception {
         RuleSet ruleSet = loadRuleSet("created-on-the-fly.xml",
                 rulesetXml(
                         dummyRule(
@@ -137,8 +131,7 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
         assertThat(written, not(containsString("max=\"")));
     }
 
-    @Test
-    void testPropertyConstraintBelow() throws Exception {
+    @Test void testPropertyConstraintBelow() throws Exception {
         RuleSet ruleSet = loadRuleSet("created-on-the-fly.xml",
                 rulesetXml(
                         dummyRule(
@@ -158,15 +151,14 @@ class RuleSetWriterTest extends RulesetFactoryTestBase {
         assertThat(written, containsString("max=\"10\""));
     }
 
-    @Test
-    void overridingDefaultValueOfPropertyInReference() throws Exception {
+    @Test void overridingDefaultValueOfPropertyInReference() throws Exception {
         RuleSet ruleSet = loadRuleSet("created-on-the-fly.xml",
                 rulesetXml(
-                    ruleRef("net/sourceforge/pmd/lang/rule/rulesetwriter-test.xml/SampleXPathRuleWithProperty",
-                            properties(
-                                propertyWithValueAttr("minimum", "42")
-                            )
-                    )
+                        ruleRef("net/sourceforge/pmd/lang/rule/rulesetwriter-test.xml/SampleXPathRuleWithProperty",
+                                properties(
+                                        propertyWithValueAttr("minimum", "42")
+                                )
+                        )
                 )
         );
         writer.write(ruleSet);

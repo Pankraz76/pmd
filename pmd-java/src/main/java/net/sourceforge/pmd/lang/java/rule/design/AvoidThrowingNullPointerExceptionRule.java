@@ -28,8 +28,7 @@ public class AvoidThrowingNullPointerExceptionRule extends AbstractJavaRulechain
         super(ASTThrowStatement.class);
     }
 
-    @Override
-    public Object visit(ASTThrowStatement throwStmt, Object data) {
+    @Override public Object visit(ASTThrowStatement throwStmt, Object data) {
         ASTExpression thrown = throwStmt.getExpr();
         if (TypeTestUtil.isA(NullPointerException.class, thrown)) {
             asCtx(data).addViolation(throwStmt);

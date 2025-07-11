@@ -20,8 +20,7 @@ abstract class AbstractApexUnitTestRule extends AbstractApexRule {
      * Don't bother visiting this class if it's not a class with @isTest and
      * newer than API v24 (V176 internal).
      */
-    @Override
-    public Object visit(final ASTUserClass node, final Object data) {
+    @Override public Object visit(final ASTUserClass node, final Object data) {
         if (!isTestMethodOrClass(node)) {
             return data;
         }

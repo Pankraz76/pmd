@@ -19,16 +19,16 @@ public class ApexLanguageModule extends LanguageModuleBase implements PmdCapable
 
     public ApexLanguageModule() {
         super(LanguageMetadata.withId(ID).name("Apex")
-                              .extensions("cls", "trigger")
-                              .addVersion("52")
-                              .addVersion("53")
-                              .addVersion("54")
-                              .addVersion("55")
-                              .addVersion("56")
-                              .addVersion("57")
-                              .addVersion("58")
-                              .addVersion("59")
-                              .addDefaultVersion("60"));
+                .extensions("cls", "trigger")
+                .addVersion("52")
+                .addVersion("53")
+                .addVersion("54")
+                .addVersion("55")
+                .addVersion("56")
+                .addVersion("57")
+                .addVersion("58")
+                .addVersion("59")
+                .addDefaultVersion("60"));
     }
 
     public static ApexLanguageModule getInstance() {
@@ -37,18 +37,15 @@ public class ApexLanguageModule extends LanguageModuleBase implements PmdCapable
         return INSTANCE;
     }
 
-    @Override
-    public ApexLanguageProperties newPropertyBundle() {
+    @Override public ApexLanguageProperties newPropertyBundle() {
         return new ApexLanguageProperties();
     }
 
-    @Override
-    public LanguageProcessor createProcessor(LanguagePropertyBundle bundle) {
+    @Override public LanguageProcessor createProcessor(LanguagePropertyBundle bundle) {
         return new ApexLanguageProcessor((ApexLanguageProperties) bundle);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new ApexCpdLexer();
     }
 }

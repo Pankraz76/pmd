@@ -24,16 +24,14 @@ import net.sourceforge.pmd.lang.java.symbols.JFieldSymbol;
  */
 public class AtfdBaseVisitor extends JavaVisitorBase<MutableInt, Void> {
 
-    @Override
-    public Void visit(ASTMethodCall node, MutableInt data) {
+    @Override public Void visit(ASTMethodCall node, MutableInt data) {
         if (isForeignMethod(node)) {
             data.increment();
         }
         return visitChildren(node, data);
     }
 
-    @Override
-    public Void visit(ASTFieldAccess node, MutableInt data) {
+    @Override public Void visit(ASTFieldAccess node, MutableInt data) {
         if (isForeignField(node)) {
             data.increment();
         }
@@ -47,15 +45,15 @@ public class AtfdBaseVisitor extends JavaVisitorBase<MutableInt, Void> {
         }
         ASTExpression qualifier = node.getQualifier();
         return !(qualifier instanceof ASTThisExpression
-            || qualifier instanceof ASTSuperExpression
-            || sym.getEnclosingClass().equals(node.getEnclosingType().getSymbol())
-            );
+                || qualifier instanceof ASTSuperExpression
+                || sym.getEnclosingClass().equals(node.getEnclosingType().getSymbol())
+        );
     }
 
     private boolean isForeignMethod(ASTMethodCall node) {
         return JavaRuleUtil.isGetterOrSetterCall(node)
-                  && node.getQualifier() != null
-                  && !(node.getQualifier() instanceof ASTThisExpression);
+                && node.getQualifier() != null
+                && !(node.getQualifier() instanceof ASTThisExpression);
     }
 
 }

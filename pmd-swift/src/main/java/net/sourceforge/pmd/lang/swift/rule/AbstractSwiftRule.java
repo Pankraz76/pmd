@@ -14,6 +14,5 @@ public abstract class AbstractSwiftRule extends AbstractVisitorRule {
         // inheritance constructor
     }
 
-    @Override
-    public abstract SwiftVisitor<RuleContext, ?> buildVisitor();
+    @Override public abstract SwiftVisitor<RuleContext, ?> buildVisitor();
 }

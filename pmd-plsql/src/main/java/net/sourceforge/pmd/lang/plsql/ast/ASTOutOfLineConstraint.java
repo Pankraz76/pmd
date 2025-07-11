@@ -35,8 +35,7 @@ public final class ASTOutOfLineConstraint extends AbstractPLSQLNode {
         return type == ConstraintType.CHECK;
     }
 
-    @Override
-    protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -22,7 +22,8 @@ import net.sourceforge.pmd.properties.internal.PropertyTypeId;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static <B extends PropertyBuilder<B, ?>> B withTypeId(PropertyBuilder<B, ?> builder, PropertyTypeId typeId) {
         return builder.typeId(typeId);

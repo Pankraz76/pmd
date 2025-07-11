@@ -12,86 +12,78 @@ import org.junit.jupiter.api.Test;
 import net.sourceforge.pmd.lang.java.BaseParserTest;
 
 class CommentTest extends BaseParserTest {
-    @Test
-    void testMultiLinesInSingleLine() {
+    @Test void testMultiLinesInSingleLine() {
         String comment = "/* single line. */";
         String filtered = filter(comment);
         assertEquals(1, lineCount(filtered));
         assertEquals("single line.", filtered);
     }
 
-    @Test
-    void testMultiLinesInSingleLineSimple() {
+    @Test void testMultiLinesInSingleLineSimple() {
         String comment = "// single line.";
         String filtered = filter(comment);
         assertEquals(1, lineCount(filtered));
         assertEquals("single line.", filtered);
     }
 
-    @Test
-    void testMultiLinesInSingleLineFormal() {
+    @Test void testMultiLinesInSingleLineFormal() {
         String comment = "/** single line. */";
         String filtered = filter(comment);
         assertEquals(1, lineCount(filtered));
         assertEquals("single line.", filtered);
     }
 
-    @Test
-    void testMultiLinesInMultiLine() {
+    @Test void testMultiLinesInMultiLine() {
         String comment =
-                  "/*\n"
-                + " * line 1\n"
-                + " * line 2\n"
-                + " */\n";
+                "/*\n"
+                        + " * line 1\n"
+                        + " * line 2\n"
+                        + " */\n";
         String filtered = filter(comment);
         assertEquals(2, lineCount(filtered));
         assertEquals("line 1\nline 2", filtered);
     }
 
-    @Test
-    void testMultiLinesInMultiLineCrLf() {
+    @Test void testMultiLinesInMultiLineCrLf() {
         String comment =
-                  "/*\r\n"
-                + " * line 1\r\n"
-                + " * line 2\r\n"
-                + " */\r\n";
+                "/*\r\n"
+                        + " * line 1\r\n"
+                        + " * line 2\r\n"
+                        + " */\r\n";
         String filtered = filter(comment);
         assertEquals(2, lineCount(filtered));
         assertEquals("line 1\nline 2", filtered);
     }
 
-    @Test
-    void testMultiLinesInMultiLineFormal() {
+    @Test void testMultiLinesInMultiLineFormal() {
         String comment =
-                  "/**\n"
-                + " * line 1\n"
-                + " * line 2\n"
-                + " */\n";
+                "/**\n"
+                        + " * line 1\n"
+                        + " * line 2\n"
+                        + " */\n";
         String filtered = filter(comment);
         assertEquals(2, lineCount(filtered));
         assertEquals("line 1\nline 2", filtered);
     }
 
-    @Test
-    void testMultiLinesInMultiLineFormalCrLf() {
+    @Test void testMultiLinesInMultiLineFormalCrLf() {
         String comment =
-                  "/**\r\n"
-                + " * line 1\r\n"
-                + " * line 2\r\n"
-                + " */\r\n";
+                "/**\r\n"
+                        + " * line 1\r\n"
+                        + " * line 2\r\n"
+                        + " */\r\n";
         String filtered = filter(comment);
         assertEquals(2, lineCount(filtered));
         assertEquals("line 1\nline 2", filtered);
     }
 
-    @Test
-    void testMultiLinesInMultiLineNoAsteriskEmpty() {
+    @Test void testMultiLinesInMultiLineNoAsteriskEmpty() {
         String comment =
-                  "/**\n"
-                + " * line 1\n"
-                + "line 2\n"
-                + "\n"
-                + " */\n";
+                "/**\n"
+                        + " * line 1\n"
+                        + "line 2\n"
+                        + "\n"
+                        + " */\n";
         String filtered = filter(comment);
         assertEquals(2, lineCount(filtered));
         assertEquals("line 1\nline 2", filtered);

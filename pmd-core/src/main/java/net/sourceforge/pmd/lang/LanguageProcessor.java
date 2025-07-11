@@ -75,12 +75,12 @@ public interface LanguageProcessor extends AutoCloseable {
          * @apiNote Internal API
          */
         AnalysisTask(RuleSets rulesets,
-                            List<TextFile> files,
-                            GlobalAnalysisListener listener,
-                            int threadCount,
-                            AnalysisCache analysisCache,
-                            PmdReporter messageReporter,
-                            LanguageProcessorRegistry lpRegistry) {
+                List<TextFile> files,
+                GlobalAnalysisListener listener,
+                int threadCount,
+                AnalysisCache analysisCache,
+                PmdReporter messageReporter,
+                LanguageProcessorRegistry lpRegistry) {
             this.rulesets = rulesets;
             this.files = files;
             this.listener = listener;
@@ -125,13 +125,13 @@ public interface LanguageProcessor extends AutoCloseable {
          */
         AnalysisTask withFiles(List<TextFile> newFiles) {
             return new AnalysisTask(
-                rulesets,
-                newFiles,
-                listener,
-                threadCount,
-                analysisCache,
-                messageReporter,
-                lpRegistry
+                    rulesets,
+                    newFiles,
+                    listener,
+                    threadCount,
+                    analysisCache,
+                    messageReporter,
+                    lpRegistry
             );
         }
     }

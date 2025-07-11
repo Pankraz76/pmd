@@ -21,11 +21,9 @@ import net.sourceforge.pmd.PmdAnalysis;
 
 class NioTextFileTest {
 
-    @TempDir
-    private Path tempDir;
+    @TempDir private Path tempDir;
 
-    @Test
-    void zipFileDisplayName() throws Exception {
+    @Test void zipFileDisplayName() throws Exception {
         Path zipArchive = tempDir.resolve("sources.zip");
         try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipArchive.toFile()))) {
             ZipEntry zipEntry = new ZipEntry("path/inside/someSource.dummy");

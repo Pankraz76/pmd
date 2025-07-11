@@ -13,8 +13,7 @@ public class SuspiciousOctalEscapeRule extends AbstractJavaRulechainRule {
         super(ASTStringLiteral.class);
     }
 
-    @Override
-    public Object visit(ASTStringLiteral node, Object data) {
+    @Override public Object visit(ASTStringLiteral node, Object data) {
         String image = node.getImage();
         // trim quotes
         String s = image.substring(1, image.length() - 1);

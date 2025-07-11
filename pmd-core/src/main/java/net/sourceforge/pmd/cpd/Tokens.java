@@ -104,31 +104,26 @@ public class Tokens {
             final FileId fileId = file.getFileId();
             final int firstToken = tokens.size();
 
-            @Override
-            public void recordToken(@NonNull String image, int startLine, int startCol, int endLine, int endCol) {
+            @Override public void recordToken(@NonNull String image, int startLine, int startCol, int endLine, int endCol) {
                 tokens.addToken(image, fileId, startLine, startCol, endLine, endCol);
             }
 
-            @Override
-            public void setImage(TokenEntry entry, @NonNull String newImage) {
+            @Override public void setImage(TokenEntry entry, @NonNull String newImage) {
                 tokens.setImage(entry, newImage);
             }
 
-            @Override
-            public LexException makeLexException(int line, int column, String message, @Nullable Throwable cause) {
+            @Override public LexException makeLexException(int line, int column, String message, @Nullable Throwable cause) {
                 return new LexException(line, column, fileId, message, cause);
             }
 
-            @Override
-            public @Nullable TokenEntry peekLastToken() {
+            @Override public @Nullable TokenEntry peekLastToken() {
                 if (tokens.size() <= firstToken) {
                     return null; // no token has been added yet in this file
                 }
                 return tokens.peekLastToken();
             }
 
-            @Override
-            public void close() {
+            @Override public void close() {
                 TokenEntry tok = peekLastToken();
                 if (tok == null) {
                     tokens.addEof(fileId, 1, 1);

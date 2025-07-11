@@ -54,8 +54,7 @@ class VfExpressionTypeVisitor extends VfVisitorBase<Void, Void> {
         this.objectFieldTypes = new ObjectFieldTypes();
     }
 
-    @Override
-    public Void visit(ASTCompilationUnit node, Void data) {
+    @Override public Void visit(ASTCompilationUnit node, Void data) {
         if (apexDirectories.isEmpty() && objectsDirectories.isEmpty()) {
             // Skip visiting if there aren't any directories to look in
             return data;
@@ -67,8 +66,7 @@ class VfExpressionTypeVisitor extends VfVisitorBase<Void, Void> {
      * Gather names of Controller, Extensions, and StandardController. Each of these may contain the identifier
      * referenced from the Visualforce page.
      */
-    @Override
-    public Void visit(ASTElement node, Void data) {
+    @Override public Void visit(ASTElement node, Void data) {
         if (APEX_PAGE.equalsIgnoreCase(node.getName())) {
 
             for (ASTAttribute attr : node.children(ASTAttribute.class)) {
@@ -91,16 +89,15 @@ class VfExpressionTypeVisitor extends VfVisitorBase<Void, Void> {
 
     private static String getAttrValue(ASTAttribute attr) {
         return attr.firstChild(ASTAttributeValue.class)
-                   .firstChild(ASTText.class)
-                   .getImage();
+                .firstChild(ASTText.class)
+                .getImage();
     }
 
     /**
      * Invoke {@link ASTExpression#getDataNodes()} on all children of {@code node} and attempt to determine the
      * {@link DataType} by looking at Apex or CustomField metadata.
      */
-    @Override
-    public Void visit(ASTElExpression node, Void data) {
+    @Override public Void visit(ASTElExpression node, Void data) {
         for (Map.Entry<VfTypedNode, String> entry : getDataNodeNames(node).entrySet()) {
             String name = entry.getValue();
             DataType type = null;

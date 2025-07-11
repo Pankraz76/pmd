@@ -27,12 +27,10 @@ public final class SyntacticJavaTokenizerFactory {
         // factory class
     }
 
-    @Deprecated
-    public static TokenManager<JavaccToken> createTokenizer(CharStream cs) {
+    @Deprecated public static TokenManager<JavaccToken> createTokenizer(CharStream cs) {
         final List<JavaccToken> tokenList = new ArrayList<>();
         JavaParserImplTokenManager tokenManager = new JavaParserImplTokenManager(cs) {
-            @Override
-            public JavaccToken getNextToken() {
+            @Override public JavaccToken getNextToken() {
                 JavaccToken token = super.getNextToken();
                 tokenList.add(token);
                 return token;
@@ -50,8 +48,7 @@ public final class SyntacticJavaTokenizerFactory {
         return new TokenManager<JavaccToken>() {
             Iterator<JavaccToken> iterator = tokenList.iterator();
 
-            @Override
-            public JavaccToken getNextToken() {
+            @Override public JavaccToken getNextToken() {
                 return iterator.next();
             }
         };

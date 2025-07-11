@@ -20,14 +20,12 @@ import net.sourceforge.pmd.lang.java.types.testdata.GenericMethodReference;
 
 class GenericMethodReferenceTest {
 
-    @Test
-    void typeResolveVariable() {
+    @Test void typeResolveVariable() {
         ASTCompilationUnit root = JavaParsingHelper.DEFAULT.parseClass(GenericMethodReference.class);
 
         root.descendants(ASTVariableId.class).forEach(variable -> {
             assertTrue(variable.getName().startsWith("supplier"));
-            @Nullable
-            JTypeDeclSymbol symbol = variable.getInitializer().getTypeMirror().getSymbol();
+            @Nullable JTypeDeclSymbol symbol = variable.getInitializer().getTypeMirror().getSymbol();
             assertEquals(Supplier.class.getSimpleName(), symbol.getSimpleName());
         });
     }

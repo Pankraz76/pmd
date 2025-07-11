@@ -33,14 +33,14 @@ public class FieldNamingConventionsRule extends AbstractNamingConventionRule<AST
     // We could define a new property, but specifying property values as a single string doesn't scale
     private static final PropertyDescriptor<List<String>> EXCLUDED_NAMES =
             PropertyFactory.stringListProperty("exclusions")
-                           .desc("Names of fields to whitelist.")
-                           .defaultValues("serialVersionUID", "serialPersistentFields")
-                           .build();
+                    .desc("Names of fields to whitelist.")
+                    .defaultValues("serialVersionUID", "serialPersistentFields")
+                    .build();
 
     private static final Set<String> MAKE_FIELD_STATIC_CLASS_ANNOT =
-        setOf(
-            "lombok.experimental.UtilityClass"
-        );
+            setOf(
+                    "lombok.experimental.UtilityClass"
+            );
 
 
     private final PropertyDescriptor<Pattern> publicConstantFieldRegex = defaultProp("public constant").defaultValue("[A-Z][A-Z_0-9]*").build();
@@ -62,8 +62,7 @@ public class FieldNamingConventionsRule extends AbstractNamingConventionRule<AST
         definePropertyDescriptor(EXCLUDED_NAMES);
     }
 
-    @Override
-    public Object visit(ASTFieldDeclaration node, Object data) {
+    @Override public Object visit(ASTFieldDeclaration node, Object data) {
         for (ASTVariableId id : node) {
             if (getProperty(EXCLUDED_NAMES).contains(id.getName())) {
                 continue;
@@ -85,32 +84,28 @@ public class FieldNamingConventionsRule extends AbstractNamingConventionRule<AST
     }
 
 
-    @Override
-    public Object visit(ASTEnumConstant node, Object data) {
+    @Override public Object visit(ASTEnumConstant node, Object data) {
         // This inlines checkMatches because there's no variable declarator id
 
         if (!getProperty(enumConstantRegex).matcher(node.getImage()).matches()) {
             asCtx(data).addViolation(node, "enum constant",
-                                     node.getImage(),
-                                     getProperty(enumConstantRegex).toString());
+                    node.getImage(),
+                    getProperty(enumConstantRegex).toString());
         }
 
         return data;
     }
 
 
-    @Override
-    String defaultConvention() {
+    @Override String defaultConvention() {
         return CAMEL_CASE;
     }
 
-    @Override
-    String nameExtractor(ASTVariableId node) {
+    @Override String nameExtractor(ASTVariableId node) {
         return node.getName();
     }
 
-    @Override
-    String kindDisplayName(ASTVariableId node, PropertyDescriptor<Pattern> descriptor) {
+    @Override String kindDisplayName(ASTVariableId node, PropertyDescriptor<Pattern> descriptor) {
 
         boolean isFinal = node.hasModifiers(FINAL);
         boolean isStatic = node.hasModifiers(STATIC);

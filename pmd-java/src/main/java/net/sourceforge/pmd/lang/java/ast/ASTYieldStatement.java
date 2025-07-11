@@ -24,9 +24,7 @@ public class ASTYieldStatement extends AbstractStatement {
     }
 
 
-
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -41,10 +39,9 @@ public class ASTYieldStatement extends AbstractStatement {
      * Returns the switch expression to which this statement yields a
      * value.
      */
-    @NonNull
-    public ASTSwitchExpression getYieldTarget() {
+    @NonNull public ASTSwitchExpression getYieldTarget() {
         return Objects.requireNonNull(ancestors(ASTSwitchExpression.class).first(),
-                                      "Yield statements should only be parsable inside switch expressions");
+                "Yield statements should only be parsable inside switch expressions");
     }
 
 

@@ -18,16 +18,13 @@ abstract class AbstractVfNode extends AbstractJjtreeNode<AbstractVfNode, VfNode>
         super.setImage(image);
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return VfParserImplTreeConstants.jjtNodeName[id];
     }
 
     protected abstract <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data);
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override @SuppressWarnings("unchecked") public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof VfVisitor) {
             return acceptVfVisitor((VfVisitor<? super P, ? extends R>) visitor, data);
         }

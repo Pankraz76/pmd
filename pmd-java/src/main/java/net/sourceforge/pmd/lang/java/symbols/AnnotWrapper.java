@@ -40,44 +40,38 @@ final class AnnotWrapper implements SymAnnot {
         return new AnnotWrapper(sym, annotation);
     }
 
-    @Override
-    public @NonNull JClassSymbol getAnnotationSymbol() {
+    @Override public @NonNull JClassSymbol getAnnotationSymbol() {
         return annotationClassSymbol;
     }
 
-    @Override
-    public @Nullable SymbolicValue getAttribute(String attrName) {
+    @Override public @Nullable SymbolicValue getAttribute(String attrName) {
         return Arrays.stream(annotationClass.getDeclaredMethods())
-                     .filter(it -> it.getName().equals(attrName) && it.getParameterCount() == 0)
-                     .map(it -> {
-                         try {
-                             Object result = it.invoke(annotation);
-                             return SymbolicValue.of(annotationClassSymbol.getTypeSystem(), result);
-                         } catch (Exception ignored) {
-                             return null;
-                         }
-                     })
-                     .filter(Objects::nonNull)
-                     .findAny().orElse(null);
+                .filter(it -> it.getName().equals(attrName) && it.getParameterCount() == 0)
+                .map(it -> {
+                    try {
+                        Object result = it.invoke(annotation);
+                        return SymbolicValue.of(annotationClassSymbol.getTypeSystem(), result);
+                    } catch (Exception ignored) {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .findAny().orElse(null);
     }
 
-    @Override
-    public boolean valueEquals(Object o) {
+    @Override public boolean valueEquals(Object o) {
         return annotation.equals(o);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return SymbolEquality.ANNOTATION.equals(this, o);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.ANNOTATION.hash(this);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return SymbolToStrings.FAKE.toString(this);
     }
 }

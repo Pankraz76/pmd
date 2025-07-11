@@ -57,8 +57,7 @@ class PmdRunnableTest {
     private Rule rule;
 
 
-    @BeforeEach
-    void prepare() {
+    @BeforeEach void prepare() {
         // reset data
         rule = spy(new RuleThatThrows());
         configuration = new PMDConfiguration(LanguageRegistry.singleton(ThrowingLanguageModule.INSTANCE));
@@ -80,8 +79,7 @@ class PmdRunnableTest {
         }
     }
 
-    @Test
-    void inErrorRecoveryModeErrorsShouldBeLoggedByParser() throws Exception {
+    @Test void inErrorRecoveryModeErrorsShouldBeLoggedByParser() throws Exception {
         SystemLambda.restoreSystemProperties(() -> {
             System.setProperty(SystemProps.PMD_ERROR_RECOVERY, "");
 
@@ -91,8 +89,7 @@ class PmdRunnableTest {
         });
     }
 
-    @Test
-    void inErrorRecoveryModeErrorsShouldBeLoggedByRule() throws Exception {
+    @Test void inErrorRecoveryModeErrorsShouldBeLoggedByRule() throws Exception {
         SystemLambda.restoreSystemProperties(() -> {
             System.setProperty(SystemProps.PMD_ERROR_RECOVERY, "");
 
@@ -105,16 +102,14 @@ class PmdRunnableTest {
 
     }
 
-    @Test
-    void withoutErrorRecoveryModeProcessingShouldBeAbortedByParser() throws Exception {
+    @Test void withoutErrorRecoveryModeProcessingShouldBeAbortedByParser() throws Exception {
         SystemLambda.restoreSystemProperties(() -> {
             System.clearProperty(SystemProps.PMD_ERROR_RECOVERY);
             assertThrows(AssertionError.class, () -> process(versionWithParserThatThrowsAssertionError()));
         });
     }
 
-    @Test
-    void withoutErrorRecoveryModeProcessingShouldBeAbortedByRule() throws Exception {
+    @Test void withoutErrorRecoveryModeProcessingShouldBeAbortedByRule() throws Exception {
         SystemLambda.restoreSystemProperties(() -> {
             System.clearProperty(SystemProps.PMD_ERROR_RECOVERY);
             assertThrows(AssertionError.class, () -> process(ThrowingLanguageModule.INSTANCE.getDefaultVersion()));
@@ -122,19 +117,17 @@ class PmdRunnableTest {
     }
 
 
-    @Test
-    void semanticErrorShouldAbortTheRun() {
+    @Test void semanticErrorShouldAbortTheRun() {
         Report report = process(versionWithParserThatReportsSemanticError());
 
         verify(reporter, times(1))
-            .log(eq(Level.ERROR), eq("at test.dummy:1:1: " + TEST_MESSAGE_SEMANTIC_ERROR));
+                .log(eq(Level.ERROR), eq("at test.dummy:1:1: " + TEST_MESSAGE_SEMANTIC_ERROR));
         verify(rule, never()).apply(Mockito.any(), Mockito.any());
 
         assertEquals(1, report.getProcessingErrors().size());
     }
 
-    @Test
-    void semanticErrorThrownShouldAbortTheRun() {
+    @Test void semanticErrorThrownShouldAbortTheRun() {
         Report report = process(getVersionWithParserThatThrowsSemanticError());
 
         verify(reporter, times(1)).log(eq(Level.ERROR), contains(TEST_MESSAGE_SEMANTIC_ERROR));
@@ -161,29 +154,29 @@ class PmdRunnableTest {
 
         ThrowingLanguageModule() {
             super(LanguageMetadata.withId("foo").name("Foo").extensions("foo")
-                                  .addVersion(THROWS_ASSERTION_ERROR)
-                                  .addVersion(THROWS_SEMANTIC_ERROR)
-                                  .addVersion(PARSER_REPORTS_SEMANTIC_ERROR)
-                                  .addDefaultVersion("defalt"),
-                  ThrowingLanguageModule::makeParser);
+                            .addVersion(THROWS_ASSERTION_ERROR)
+                            .addVersion(THROWS_SEMANTIC_ERROR)
+                            .addVersion(PARSER_REPORTS_SEMANTIC_ERROR)
+                            .addDefaultVersion("defalt"),
+                    ThrowingLanguageModule::makeParser);
         }
 
         private static Parser makeParser() {
             return task -> {
                 switch (task.getLanguageVersion().getVersion()) {
-                case THROWS_ASSERTION_ERROR:
-                    throw new AssertionError("test error while parsing");
-                case PARSER_REPORTS_SEMANTIC_ERROR: {
-                    RootNode root = DummyLanguageModule.readLispNode(task);
-                    task.getReporter().error(root, TEST_MESSAGE_SEMANTIC_ERROR);
-                    return root;
-                }
-                case THROWS_SEMANTIC_ERROR: {
-                    RootNode root = DummyLanguageModule.readLispNode(task);
-                    throw task.getReporter().error(root, TEST_MESSAGE_SEMANTIC_ERROR);
-                }
-                default:
-                    return DummyLanguageModule.readLispNode(task);
+                    case THROWS_ASSERTION_ERROR:
+                        throw new AssertionError("test error while parsing");
+                    case PARSER_REPORTS_SEMANTIC_ERROR: {
+                        RootNode root = DummyLanguageModule.readLispNode(task);
+                        task.getReporter().error(root, TEST_MESSAGE_SEMANTIC_ERROR);
+                        return root;
+                    }
+                    case THROWS_SEMANTIC_ERROR: {
+                        RootNode root = DummyLanguageModule.readLispNode(task);
+                        throw task.getReporter().error(root, TEST_MESSAGE_SEMANTIC_ERROR);
+                    }
+                    default:
+                        return DummyLanguageModule.readLispNode(task);
                 }
             };
         }
@@ -195,8 +188,7 @@ class PmdRunnableTest {
             setLanguage(ThrowingLanguageModule.INSTANCE);
         }
 
-        @Override
-        public void apply(Node target, RuleContext ctx) {
+        @Override public void apply(Node target, RuleContext ctx) {
             throw new AssertionError("test");
         }
     }

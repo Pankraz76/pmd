@@ -33,12 +33,11 @@ public class FinalFieldCouldBeStaticRule extends AbstractJavaRulechainRule {
         super(ASTFieldDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTFieldDeclaration node, Object data) {
+    @Override public Object visit(ASTFieldDeclaration node, Object data) {
         if (node.hasModifiers(JModifier.FINAL)
-            && !node.isStatic()
-            && !node.getEnclosingType().isAnnotationPresent("lombok.experimental.UtilityClass")
-            && !node.isAnnotationPresent("lombok.Builder.Default")) {
+                && !node.isStatic()
+                && !node.getEnclosingType().isAnnotationPresent("lombok.experimental.UtilityClass")
+                && !node.isAnnotationPresent("lombok.Builder.Default")) {
 
             for (ASTVariableId field : node) {
                 ASTExpression init = field.getInitializer();
@@ -76,11 +75,11 @@ public class FinalFieldCouldBeStaticRule extends AbstractJavaRulechainRule {
                 return init.length() == 0;
             }
             return ((ASTArrayAllocation) e).getTypeNode().getDimensions().toStream()
-                                           .filterIs(ASTArrayDimExpr.class)
-                                           .all(it -> JavaAstUtils.isLiteralInt(it.getLengthExpression(), 0));
+                    .filterIs(ASTArrayDimExpr.class)
+                    .all(it -> JavaAstUtils.isLiteralInt(it.getLengthExpression(), 0));
         } else if (e instanceof ASTInfixExpression) {
             return isAllowedExpression(((ASTInfixExpression) e).getLeftOperand())
-                && isAllowedExpression(((ASTInfixExpression) e).getRightOperand());
+                    && isAllowedExpression(((ASTInfixExpression) e).getRightOperand());
         }
 
         return false;
@@ -92,8 +91,8 @@ public class FinalFieldCouldBeStaticRule extends AbstractJavaRulechainRule {
 
     private boolean isUsedForSynchronization(ASTVariableId field) {
         return field.getLocalUsages().stream().anyMatch(
-            it -> it.getParent() instanceof ASTSynchronizedStatement
-                && it.ancestors(ASTBodyDeclaration.class).take(1).any(d -> !isStatic(d)));
+                it -> it.getParent() instanceof ASTSynchronizedStatement
+                        && it.ancestors(ASTBodyDeclaration.class).take(1).any(d -> !isStatic(d)));
     }
 
     private boolean isStatic(ASTBodyDeclaration decl) {

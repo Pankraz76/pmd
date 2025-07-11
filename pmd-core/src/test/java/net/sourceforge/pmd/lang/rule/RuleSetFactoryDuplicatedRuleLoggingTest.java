@@ -18,8 +18,7 @@ class RuleSetFactoryDuplicatedRuleLoggingTest extends RulesetFactoryTestBase {
 
     private static final String DIR = "net/sourceforge/pmd/rulesets/duplicatedRuleLoggingTest";
 
-    @Test
-    void duplicatedRuleReferenceShouldWarn() throws Exception {
+    @Test void duplicatedRuleReferenceShouldWarn() throws Exception {
         String log = SystemLambda.tapSystemErr(() -> {
             RuleSet ruleset = loadRuleSetInDir(DIR, "duplicatedRuleReference.xml");
 
@@ -29,12 +28,11 @@ class RuleSetFactoryDuplicatedRuleLoggingTest extends RulesetFactoryTestBase {
             assertEquals(RulePriority.MEDIUM, mockRule.getPriority());
         });
         assertThat(log, containsString(
-            "The rule DummyBasicMockRule is referenced multiple times in ruleset 'Custom Rules'. "
-                + "Only the last rule configuration is used"));
+                "The rule DummyBasicMockRule is referenced multiple times in ruleset 'Custom Rules'. "
+                        + "Only the last rule configuration is used"));
     }
 
-    @Test
-    void duplicatedRuleReferenceWithOverrideShouldNotWarn() throws Exception {
+    @Test void duplicatedRuleReferenceWithOverrideShouldNotWarn() throws Exception {
         String log = SystemLambda.tapSystemErr(() -> {
             RuleSet ruleset = loadRuleSetInDir(DIR, "duplicatedRuleReferenceWithOverride.xml");
 
@@ -47,8 +45,7 @@ class RuleSetFactoryDuplicatedRuleLoggingTest extends RulesetFactoryTestBase {
         assertTrue(log.isEmpty());
     }
 
-    @Test
-    void duplicatedRuleReferenceWithOverrideBeforeShouldNotWarn() throws Exception {
+    @Test void duplicatedRuleReferenceWithOverrideBeforeShouldNotWarn() throws Exception {
         String log = SystemLambda.tapSystemErr(() -> {
             RuleSet ruleset = loadRuleSetInDir(DIR, "duplicatedRuleReferenceWithOverrideBefore.xml");
             assertEquals(2, ruleset.getRules().size());
@@ -60,8 +57,7 @@ class RuleSetFactoryDuplicatedRuleLoggingTest extends RulesetFactoryTestBase {
         assertTrue(log.isEmpty());
     }
 
-    @Test
-    void multipleDuplicates() throws Exception {
+    @Test void multipleDuplicates() throws Exception {
         String log = SystemLambda.tapSystemErr(() -> {
             RuleSet ruleset = loadRuleSetInDir(DIR, "multipleDuplicates.xml");
 

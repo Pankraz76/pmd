@@ -157,8 +157,7 @@ public interface ASTSwitchLike extends JavaNode, Iterable<ASTSwitchBranch> {
         return isExhaustiveEnumSwitch();
     }
 
-    @Override
-    default Iterator<ASTSwitchBranch> iterator() {
+    @Override default Iterator<ASTSwitchBranch> iterator() {
         return children(ASTSwitchBranch.class).iterator();
     }
 

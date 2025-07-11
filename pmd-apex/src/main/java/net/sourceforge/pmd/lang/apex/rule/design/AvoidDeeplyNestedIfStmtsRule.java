@@ -20,21 +20,19 @@ public class AvoidDeeplyNestedIfStmtsRule extends AbstractApexRule {
 
     private static final PropertyDescriptor<Integer> PROBLEM_DEPTH_DESCRIPTOR
             = PropertyFactory.intProperty("problemDepth")
-                             .desc("The if statement depth reporting threshold")
-                             .require(positive()).defaultValue(3).build();
+            .desc("The if statement depth reporting threshold")
+            .require(positive()).defaultValue(3).build();
 
     public AvoidDeeplyNestedIfStmtsRule() {
         definePropertyDescriptor(PROBLEM_DEPTH_DESCRIPTOR);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         depth = 0;
         depthLimit = getProperty(PROBLEM_DEPTH_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTIfBlockStatement node, Object data) {
+    @Override public Object visit(ASTIfBlockStatement node, Object data) {
         depth++;
 
         super.visit(node, data);

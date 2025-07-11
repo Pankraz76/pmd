@@ -15,8 +15,7 @@ public class ExcessiveObjectLengthRule extends AbstractCounterCheckRule.Abstract
         super(OracleObject.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 1000;
     }
 }

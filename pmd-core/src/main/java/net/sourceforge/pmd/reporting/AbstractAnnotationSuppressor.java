@@ -42,21 +42,18 @@ public abstract class AbstractAnnotationSuppressor<A extends Node> implements Vi
         this.annotationNodeType = annotationClass;
     }
 
-    @Override
-    public String getId() {
+    @Override public String getId() {
         return "@SuppressWarnings";
     }
 
-    @Override
-    public Report.SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node) {
+    @Override public Report.SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node) {
         if (contextSuppresses(node, rv.getRule())) {
             return new SuppressedViolation(rv, this, null);
         }
         return null;
     }
 
-    @Override
-    public Set<UnusedSuppressorNode> getUnusedSuppressors(RootNode tree) {
+    @Override public Set<UnusedSuppressorNode> getUnusedSuppressors(RootNode tree) {
         return tree.descendants(annotationNodeType).crossFindBoundaries().toStream().map(this::getUnusedSuppressorNodes).flatMap(Set::stream).collect(Collectors.toSet());
     }
 
@@ -249,13 +246,11 @@ public abstract class AbstractAnnotationSuppressor<A extends Node> implements Vi
             this.message = message;
         }
 
-        @Override
-        public Reportable getLocation() {
+        @Override public Reportable getLocation() {
             return location;
         }
 
-        @Override
-        public String unusedReason() {
+        @Override public String unusedReason() {
             return message;
         }
     }

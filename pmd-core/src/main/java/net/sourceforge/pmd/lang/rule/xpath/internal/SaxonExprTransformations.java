@@ -28,8 +28,7 @@ final class SaxonExprTransformations {
 
     private static final SaxonExprVisitor FILTER_HOISTER = new SaxonExprVisitor() {
 
-        @Override
-        public Expression visit(SlashExpression e) {
+        @Override public Expression visit(SlashExpression e) {
             Expression left = super.visit(e.getLhsExpression());
             Expression right = super.visit(e.getRhsExpression());
             if (right instanceof FilterExpression) {
@@ -43,21 +42,20 @@ final class SaxonExprTransformations {
 
     private static final SaxonExprVisitor ROOT_REDUCER = new SaxonExprVisitor() {
 
-        @Override
-        public Expression visit(SlashExpression e) {
+        @Override public Expression visit(SlashExpression e) {
             Expression left = super.visit(e.getLhsExpression());
             Expression right = super.visit(e.getRhsExpression());
 
             if (right instanceof AxisExpression
-                && ((AxisExpression) right).getAxis() == AxisInfo.CHILD
-                && left instanceof SlashExpression) {
+                    && ((AxisExpression) right).getAxis() == AxisInfo.CHILD
+                    && left instanceof SlashExpression) {
 
                 Expression leftLeft = ((SlashExpression) left).getLhsExpression();
                 Expression leftRight = ((SlashExpression) left).getRhsExpression();
 
                 if (leftLeft instanceof RootExpression && leftRight instanceof AxisExpression) {
                     if (((AxisExpression) leftRight).getAxis() == AxisInfo.DESCENDANT_OR_SELF
-                        && isAnyNode(((AxisExpression) leftRight).getNodeTest())) {
+                            && isAnyNode(((AxisExpression) leftRight).getNodeTest())) {
                         // ok!
                         left = leftLeft; // the root expression
                         right = new AxisExpression(AxisInfo.DESCENDANT, ((AxisExpression) right).getNodeTest());
@@ -131,16 +129,15 @@ final class SaxonExprTransformations {
                 return subexpr;
             }
         }
-        
+
         final SaxonExprVisitor topLevelLetCopier = new SaxonExprVisitor() {
-            
-            @Override
-            public Expression visit(LetExpression e) {
+
+            @Override public Expression visit(LetExpression e) {
                 // keep copying
                 if (e.getAction() instanceof LetExpression) {
                     return super.visit(e);
                 }
-                
+
                 // Manually craft the inner-most LetExpression
                 Expression sequence = visit(e.getSequence());
                 LetExpression result = new LetExpression();
@@ -152,11 +149,11 @@ final class SaxonExprTransformations {
                 return result;
             }
         };
-        
+
         if (original instanceof LetExpression) {
             return topLevelLetCopier.visit(original);
         }
-        
+
         return subexpr;
     }
 }

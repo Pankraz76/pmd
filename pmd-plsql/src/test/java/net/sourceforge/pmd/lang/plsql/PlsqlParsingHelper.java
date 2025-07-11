@@ -16,8 +16,7 @@ public class PlsqlParsingHelper extends BaseParsingHelper<PlsqlParsingHelper, AS
         super(PLSQLLanguageModule.getInstance(), ASTInput.class, params);
     }
 
-    @Override
-    protected PlsqlParsingHelper clone(Params params) {
+    @Override protected PlsqlParsingHelper clone(Params params) {
         return new PlsqlParsingHelper(params);
     }
 

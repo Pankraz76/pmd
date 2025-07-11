@@ -42,13 +42,11 @@ public class TextPadRenderer extends AbstractIncrementingRenderer {
         super(NAME, "TextPad integration.");
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "txt";
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         StringBuilder buf = new StringBuilder();
         while (violations.hasNext()) {
             RuleViolation rv = violations.next();

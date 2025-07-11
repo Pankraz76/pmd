@@ -37,13 +37,11 @@ class ParserCornersTest extends BaseJavaTreeDumpTest {
     private final JavaParsingHelper java9 = java.withDefaultVersion("9");
     private final JavaParsingHelper java15 = java.withDefaultVersion("15");
 
-    @Override
-    public @NonNull BaseParsingHelper<?, ?> getParser() {
+    @Override public @NonNull BaseParsingHelper<?, ?> getParser() {
         return java4;
     }
 
-    @Test
-    void testInvalidUnicodeEscape() {
+    @Test void testInvalidUnicodeEscape() {
         MalformedSourceException thrown = assertThrows(MalformedSourceException.class, // previously Error
                 () -> java.parse("\\u00k0", null, FileId.fromPathLikeString("x/filename.java")));
         assertThat(thrown.getMessage(), startsWith("Source format error in file 'x/filename.java' at line 1, column 1: Invalid unicode escape"));
@@ -53,125 +51,115 @@ class ParserCornersTest extends BaseJavaTreeDumpTest {
      * #1107 PMD 5.0.4 couldn't parse call of parent outer java class method
      * from inner class.
      */
-    @Test
-    void testInnerOuterClass() {
+    @Test void testInnerOuterClass() {
         java7.parse("/**\n" + " * @author azagorulko\n" + " *\n" + " */\n"
-                        + "public class TestInnerClassCallsOuterParent {\n" + "\n" + "    public void test() {\n"
-                        + "        new Runnable() {\n" + "            @Override\n" + "            public void run() {\n"
-                        + "                TestInnerClassCallsOuterParent.super.toString();\n" + "            }\n"
-                        + "        };\n" + "    }\n" + "}\n");
+                + "public class TestInnerClassCallsOuterParent {\n" + "\n" + "    public void test() {\n"
+                + "        new Runnable() {\n" + "            @Override\n" + "            public void run() {\n"
+                + "                TestInnerClassCallsOuterParent.super.toString();\n" + "            }\n"
+                + "        };\n" + "    }\n" + "}\n");
     }
 
     /**
      * #888 PMD 6.0.0 can't parse valid <> under 1.8.
      */
-    @Test
-    void testDiamondUsageJava8() {
+    @Test void testDiamondUsageJava8() {
         java8.parse("public class PMDExceptionTest {\n"
-                        + "  private Component makeUI() {\n"
-                        + "    String[] model = {\"123456\", \"7890\"};\n"
-                        + "    JComboBox<String> comboBox = new JComboBox<>(model);\n"
-                        + "    comboBox.setEditable(true);\n"
-                        + "    comboBox.setEditor(new BasicComboBoxEditor() {\n"
-                        + "      private Component editorComponent;\n"
-                        + "      @Override public Component getEditorComponent() {\n"
-                        + "        if (editorComponent == null) {\n"
-                        + "          JTextField tc = (JTextField) super.getEditorComponent();\n"
-                        + "          editorComponent = new JLayer<>(tc, new ValidationLayerUI<>());\n"
-                        + "        }\n"
-                        + "        return editorComponent;\n"
-                        + "      }\n"
-                        + "    });\n"
-                        + "    JPanel p = new JPanel();\n"
-                        + "    p.add(comboBox);\n"
-                        + "    return p;\n"
-                        + "  }\n"
-                        + "}");
+                + "  private Component makeUI() {\n"
+                + "    String[] model = {\"123456\", \"7890\"};\n"
+                + "    JComboBox<String> comboBox = new JComboBox<>(model);\n"
+                + "    comboBox.setEditable(true);\n"
+                + "    comboBox.setEditor(new BasicComboBoxEditor() {\n"
+                + "      private Component editorComponent;\n"
+                + "      @Override public Component getEditorComponent() {\n"
+                + "        if (editorComponent == null) {\n"
+                + "          JTextField tc = (JTextField) super.getEditorComponent();\n"
+                + "          editorComponent = new JLayer<>(tc, new ValidationLayerUI<>());\n"
+                + "        }\n"
+                + "        return editorComponent;\n"
+                + "      }\n"
+                + "    });\n"
+                + "    JPanel p = new JPanel();\n"
+                + "    p.add(comboBox);\n"
+                + "    return p;\n"
+                + "  }\n"
+                + "}");
     }
 
-    @Test
-    void testUnicodeEscapes() {
+    @Test void testUnicodeEscapes() {
         // todo i'd like to test the coordinates of the literals, but this has to wait for java-grammar to be merged
         java8.parse("public class Foo { String[] s = { \"Ven\\u00E4j\\u00E4\" }; }");
     }
 
-    @Test
-    void testUnicodeEscapes2() {
+    @Test void testUnicodeEscapes2() {
         java.parse("\n"
-                       + "public final class TimeZoneNames_zh_TW extends TimeZoneNamesBundle {\n"
-                       + "\n"
-                       + "        String ACT[] = new String[] {\"Acre \\u6642\\u9593\", \"ACT\",\n"
-                       + "                                     \"Acre \\u590f\\u4ee4\\u6642\\u9593\", \"ACST\",\n"
-                       + "                                     \"Acre \\u6642\\u9593\", \"ACT\"};"
-                       + "}");
+                + "public final class TimeZoneNames_zh_TW extends TimeZoneNamesBundle {\n"
+                + "\n"
+                + "        String ACT[] = new String[] {\"Acre \\u6642\\u9593\", \"ACT\",\n"
+                + "                                     \"Acre \\u590f\\u4ee4\\u6642\\u9593\", \"ACST\",\n"
+                + "                                     \"Acre \\u6642\\u9593\", \"ACT\"};"
+                + "}");
     }
 
-    @Test
-    void testUnicodeEscapesInComment() {
+    @Test void testUnicodeEscapesInComment() {
         java.parse("class Foo {"
-                       + "\n"
-                       + "    /**\n"
-                       + "     * The constant value of this field is the smallest value of type\n"
-                       + "     * {@code char}, {@code '\\u005Cu0000'}.\n"
-                       + "     *\n"
-                       + "     * @since   1.0.2\n"
-                       + "     */\n"
-                       + "    public static final char MIN_VALUE = '\\u0000';\n"
-                       + "\n"
-                       + "    /**\n"
-                       + "     * The constant value of this field is the largest value of type\n"
-                       + "     * {@code char}, {@code '\\u005C\\uFFFF'}.\n"
-                       + "     *\n"
-                       + "     * @since   1.0.2\n"
-                       + "     */\n"
-                       + "    public static final char MAX_VALUE = '\\uFFFF';"
-                       + "}");
+                + "\n"
+                + "    /**\n"
+                + "     * The constant value of this field is the smallest value of type\n"
+                + "     * {@code char}, {@code '\\u005Cu0000'}.\n"
+                + "     *\n"
+                + "     * @since   1.0.2\n"
+                + "     */\n"
+                + "    public static final char MIN_VALUE = '\\u0000';\n"
+                + "\n"
+                + "    /**\n"
+                + "     * The constant value of this field is the largest value of type\n"
+                + "     * {@code char}, {@code '\\u005C\\uFFFF'}.\n"
+                + "     *\n"
+                + "     * @since   1.0.2\n"
+                + "     */\n"
+                + "    public static final char MAX_VALUE = '\\uFFFF';"
+                + "}");
     }
 
-    @Test
-    final void testGetFirstASTNameImageNull() {
+    @Test final void testGetFirstASTNameImageNull() {
         java4.parse("public class Test {\n"
-            + "  void bar() {\n"
-            + "   abstract class X { public abstract void f(); }\n"
-            + "   class Y extends X { public void f() { new Y().f(); } }\n"
-            + "  }\n"
-            + "}");
+                + "  void bar() {\n"
+                + "   abstract class X { public abstract void f(); }\n"
+                + "   class Y extends X { public void f() { new Y().f(); } }\n"
+                + "  }\n"
+                + "}");
     }
 
-    @Test
-    void testCastLookaheadProblem() {
+    @Test void testCastLookaheadProblem() {
         java4.parse("public class BadClass {\n  public Class foo() {\n    return (byte[].class);\n  }\n}");
     }
 
-    @Test
-    void testTryWithResourcesConcise() {
+    @Test void testTryWithResourcesConcise() {
         // https://github.com/pmd/pmd/issues/3697
         java9.parse("import java.io.InputStream;\n"
-                        + "public class Foo {\n"
-                        + "    public InputStream in;\n"
-                        + "    public void bar() {\n"
-                        + "        Foo f = this;\n"
-                        + "        try (f.in) {\n"
-                        + "        }\n"
-                        + "    }\n"
-                        + "}");
+                + "public class Foo {\n"
+                + "    public InputStream in;\n"
+                + "    public void bar() {\n"
+                + "        Foo f = this;\n"
+                + "        try (f.in) {\n"
+                + "        }\n"
+                + "    }\n"
+                + "}");
     }
 
-    @Test
-    void testTryWithResourcesThis() {
+    @Test void testTryWithResourcesThis() {
         // https://github.com/pmd/pmd/issues/3697
         java9.parse("import java.io.InputStream;\n"
-                        + "public class Foo {\n"
-                        + "    public InputStream in;\n"
-                        + "    public void bar() {\n"
-                        + "        try (this.in) {\n"
-                        + "        }\n"
-                        + "    }\n"
-                        + "}");
+                + "public class Foo {\n"
+                + "    public InputStream in;\n"
+                + "    public void bar() {\n"
+                + "        try (this.in) {\n"
+                + "        }\n"
+                + "    }\n"
+                + "}");
     }
 
-    @Test
-    void testTextBlockWithQuotes() {
+    @Test void testTextBlockWithQuotes() {
         // https://github.com/pmd/pmd/issues/4364
         java15.parse("public class Foo {\n"
                 + "  private String content = \"\"\"\n"
@@ -179,123 +167,104 @@ class ParserCornersTest extends BaseJavaTreeDumpTest {
                 + "  \"\"\";\n"
                 + "}");
     }
-    
+
     /**
      * Tests a specific generic notation for calling methods. See:
      * https://jira.codehaus.org/browse/MPMD-139
      */
-    @Test
-    void testGenericsProblem() {
+    @Test void testGenericsProblem() {
         String code = "public class Test {\n"
-            + " public void test() {\n"
-            + "   String o = super.<String> doStuff(\"\");\n"
-            + " }\n"
-            + "}";
+                + " public void test() {\n"
+                + "   String o = super.<String> doStuff(\"\");\n"
+                + " }\n"
+                + "}";
         java5.parse(code);
         java7.parse(code);
     }
 
-    @Test
-    void testUnicodeIndent() {
+    @Test void testUnicodeIndent() {
         // https://github.com/pmd/pmd/issues/3423
         java7.parseResource("UnicodeIdentifier.java");
     }
 
-    @Test
-    void testParsersCases15() {
+    @Test void testParsersCases15() {
         doTest("ParserCornerCases", java5);
     }
 
-    @Test
-    void testParsersCases17() {
+    @Test void testParsersCases17() {
         doTest("ParserCornerCases17", java7);
     }
 
-    @Test
-    void testParsersCases18() {
+    @Test void testParsersCases18() {
         doTest("ParserCornerCases18", java8);
     }
 
     /**
      * Test for https://sourceforge.net/p/pmd/bugs/1333/
      */
-    @Test
-    void testLambdaBug1333() {
+    @Test void testLambdaBug1333() {
         doTest("LambdaBug1333", java8);
     }
 
-    @Test
-    void testLambdaBug1470() {
+    @Test void testLambdaBug1470() {
         doTest("LambdaBug1470", java8);
     }
 
     /**
      * Test for https://sourceforge.net/p/pmd/bugs/1355/
      */
-    @Test
-    void emptyFileJustComment() {
+    @Test void emptyFileJustComment() {
         getParser().parse("// just a comment");
     }
 
 
-    @Test
-    void testBug1429ParseError() {
+    @Test void testBug1429ParseError() {
         doTest("Bug1429", java8);
     }
 
-    @Test
-    void testBug1530ParseError() {
+    @Test void testBug1530ParseError() {
         doTest("Bug1530", java8);
     }
 
-    @Test
-    void testGitHubBug207() {
+    @Test void testGitHubBug207() {
         doTest("GitHubBug207", java8);
     }
 
-    @Test
-    void testLambda2783() {
+    @Test void testLambda2783() {
         java8.parseResource("LambdaBug2783.java");
     }
 
-    @Test
-    void testGitHubBug2767() {
+    @Test void testGitHubBug2767() {
         // PMD fails to parse an initializer block.
         // PMD 6.26.0 parses this code just fine.
         java.withDefaultVersion("16")
-            .parse("class Foo {\n"
-                       + "    {final int I;}\n"
-                       + "}\n");
+                .parse("class Foo {\n"
+                        + "    {final int I;}\n"
+                        + "}\n");
     }
 
-    @Test
-    void testBug206() {
+    @Test void testBug206() {
         doTest("LambdaBug206", java8);
     }
 
-    @Test
-    void testGitHubBug208ParseError() {
+    @Test void testGitHubBug208ParseError() {
         doTest("GitHubBug208", java5);
     }
 
-    @Test
-    void testGitHubBug309() {
+    @Test void testGitHubBug309() {
         doTest("GitHubBug309", java8);
     }
 
-    @Test
-    @Timeout(value = 30, unit = TimeUnit.SECONDS)
-    void testInfiniteLoopInLookahead() {
+    @Test @Timeout(value = 30, unit = TimeUnit.SECONDS) void testInfiniteLoopInLookahead() {
         assertThrows(ParseException.class, () ->
-            // https://github.com/pmd/pmd/issues/3117
-            java8.parseResource("InfiniteLoopInLookahead.java"));
+                // https://github.com/pmd/pmd/issues/3117
+                java8.parseResource("InfiniteLoopInLookahead.java"));
     }
 
-    @Test
-    void stringConcatentationShouldNotBeCast() {
+    @Test void stringConcatentationShouldNotBeCast() {
         // https://github.com/pmd/pmd/issues/1484
         String code = "public class Test {\n" + "    public static void main(String[] args) {\n"
-            + "        System.out.println(\"X\" + (args) + \"Y\");\n" + "    }\n" + "}";
+                + "        System.out.println(\"X\" + (args) + \"Y\");\n" + "    }\n" + "}";
         assertEquals(0, java8.parse(code).descendants(ASTCastExpression.class).count());
     }
 
@@ -305,23 +274,19 @@ class ParserCornersTest extends BaseJavaTreeDumpTest {
      *
      * @see <a href="https://github.com/pmd/pmd/issues/378">github issue 378</a>
      */
-    @Test
-    void testEmptyStatements1() {
+    @Test void testEmptyStatements1() {
         doTest("EmptyStmts1");
     }
 
-    @Test
-    void testEmptyStatements2() {
+    @Test void testEmptyStatements2() {
         doTest("EmptyStmts2");
     }
 
-    @Test
-    void testEmptyStatements3() {
+    @Test void testEmptyStatements3() {
         doTest("EmptyStmts3");
     }
 
-    @Test
-    void testMethodReferenceConfused() {
+    @Test void testMethodReferenceConfused() {
         ASTCompilationUnit ast = java.parseResource("MethodReferenceConfused.java", "10");
         ASTVariableId varWithMethodName = AstTestUtil.varId(ast, "method");
         ASTVariableId someObject = AstTestUtil.varId(ast, "someObject");
@@ -332,39 +297,32 @@ class ParserCornersTest extends BaseJavaTreeDumpTest {
         assertThat(usage.getParent(), instanceOf(ASTCastExpression.class));
     }
 
-    @Test
-    void testSwitchWithFallthrough() {
+    @Test void testSwitchWithFallthrough() {
         doTest("SwitchWithFallthrough");
     }
 
-    @Test
-    void testSwitchStatements() {
+    @Test void testSwitchStatements() {
         doTest("SwitchStatements");
     }
 
-    @Test
-    void testSynchronizedStatements() {
+    @Test void testSynchronizedStatements() {
         doTest("SynchronizedStmts");
     }
 
 
-    @Test
-    void testGithubBug3101UnresolvedTypeParams() {
+    @Test void testGithubBug3101UnresolvedTypeParams() {
         java.parseResource("GitHubBug3101.java");
     }
 
-    @Test
-    void testGitHubBug3642() {
+    @Test void testGitHubBug3642() {
         doTest("GitHubBug3642");
     }
 
-    @Test
-    void testGitHubBug1780() {
+    @Test void testGitHubBug1780() {
         doTest("GitHubBug1780OuterClass");
     }
 
-    @Test
-    void testGithubBug4947() {
+    @Test void testGithubBug4947() {
         java15.parseResource("testdata/Issue4947TextBlock.java");
     }
 }

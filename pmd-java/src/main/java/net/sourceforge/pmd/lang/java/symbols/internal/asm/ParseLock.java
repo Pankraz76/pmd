@@ -37,7 +37,7 @@ abstract class ParseLock {
     }
 
     void checkWeAreNotParsingAnother() {
-       // by default do nothing, overridden by CheckedParseLock
+        // by default do nothing, overridden by CheckedParseLock
     }
 
 
@@ -108,8 +108,7 @@ abstract class ParseLock {
         return true;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ParseLock{name=" + name + ",status=" + status + '}';
     }
 
@@ -139,8 +138,7 @@ abstract class ParseLock {
             super(name);
         }
 
-        @Override
-        final void checkWeAreNotParsingAnother() {
+        @Override final void checkWeAreNotParsingAnother() {
             if (isAssertEnabled()) {
                 ParseLock lock = CURRENT_LOCK.get();
                 if (lock != null) {
@@ -151,8 +149,7 @@ abstract class ParseLock {
         }
 
 
-        @Override
-        final void releaseLock() {
+        @Override final void releaseLock() {
             if (isAssertEnabled()) {
                 ParseLock lock = CURRENT_LOCK.get();
                 assert lock == this : "Tried to release different parse lock " + lock + " from " + this; // NOPMD CompareObjectsWithEquals

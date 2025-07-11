@@ -92,13 +92,13 @@ public class RuleSets {
     public void initializeRules(LanguageProcessorRegistry lpReg, PmdReporter reporter) {
         // this is abusing the mutability of RuleSet, will go away eventually.
         for (RuleSet rset : ruleSets) {
-            for (Iterator<Rule> iterator = rset.getRules().iterator(); iterator.hasNext();) {
+            for (Iterator<Rule> iterator = rset.getRules().iterator(); iterator.hasNext(); ) {
                 Rule rule = iterator.next();
                 try {
                     rule.initialize(lpReg.getProcessor(rule.getLanguage()));
                 } catch (Exception e) {
                     reporter.errorEx(
-                        "Exception while initializing rule " + rule.getName() + ", the rule will not be run", e);
+                            "Exception while initializing rule " + rule.getName() + ", the rule will not be run", e);
                     iterator.remove();
                 }
             }
@@ -197,7 +197,7 @@ public class RuleSets {
      */
     public Rule getRuleByName(String ruleName) {
         Rule rule = null;
-        for (Iterator<RuleSet> i = ruleSets.iterator(); i.hasNext() && rule == null;) {
+        for (Iterator<RuleSet> i = ruleSets.iterator(); i.hasNext() && rule == null; ) {
             RuleSet ruleSet = i.next();
             rule = ruleSet.getRuleByName(ruleName);
         }

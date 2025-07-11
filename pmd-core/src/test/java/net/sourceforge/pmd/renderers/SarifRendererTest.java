@@ -22,36 +22,30 @@ import com.google.gson.JsonObject;
 
 class SarifRendererTest extends AbstractRendererTest {
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         return new SarifRenderer();
     }
 
-    @Test
-    void testRendererWithASCII() throws Exception {
+    @Test void testRendererWithASCII() throws Exception {
         SystemLambda.restoreSystemProperties(() -> {
             System.setProperty("file.encoding", StandardCharsets.US_ASCII.name());
             testRenderer(StandardCharsets.UTF_8);
         });
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return readFile("expected.sarif.json");
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return readFile("empty.sarif.json");
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return readFile("expected-multiple.sarif.json");
     }
 
-    @Override
-    String getExpectedError(Report.ProcessingError error) {
+    @Override String getExpectedError(Report.ProcessingError error) {
         String expected = readFile("expected-error.sarif.json");
         expected = expected.replace("###REPLACE_ME###", error.getDetail()
                 .replaceAll("\r", "\\\\r")
@@ -60,13 +54,11 @@ class SarifRendererTest extends AbstractRendererTest {
         return expected;
     }
 
-    @Override
-    String getExpectedError(Report.ConfigurationError error) {
+    @Override String getExpectedError(Report.ConfigurationError error) {
         return readFile("expected-configerror.sarif.json");
     }
 
-    @Override
-    String getExpectedErrorWithoutMessage(Report.ProcessingError error) {
+    @Override String getExpectedErrorWithoutMessage(Report.ProcessingError error) {
         String expected = readFile("expected-error-nomessage.sarif.json");
         expected = expected.replace("###REPLACE_ME###", error.getDetail()
                 .replaceAll("\r", "\\\\r")
@@ -75,8 +67,7 @@ class SarifRendererTest extends AbstractRendererTest {
         return expected;
     }
 
-    @Override
-    String filter(String expected) {
+    @Override String filter(String expected) {
         return expected.replaceAll("\r\n", "\n") // make the test run on Windows, too
                 .replaceAll("\"version\": \".+\",", "\"version\": \"unknown\",");
     }
@@ -87,8 +78,7 @@ class SarifRendererTest extends AbstractRendererTest {
      * @see <a href="https://github.com/pmd/pmd/issues/3768"> [core] SARIF formatter reports multiple locations
      *      when it should report multiple results #3768</a>
      */
-    @Test
-    void testRendererMultipleLocations() throws Exception {
+    @Test void testRendererMultipleLocations() throws Exception {
         String actual = renderReport(getRenderer(), reportThreeViolationsTwoRules());
 
         Gson gson = new Gson();

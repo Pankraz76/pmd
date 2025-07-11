@@ -51,24 +51,24 @@ public class AttributeAxisIterator implements Iterator<Attribute> {
     /* Constants used to determine which methods are accessors */
     private static final Set<Class<?>> CONSIDERED_RETURN_TYPES
             = setOf(Integer.TYPE, Boolean.TYPE, Double.TYPE, String.class,
-                    Long.TYPE, Character.TYPE, Float.TYPE, Chars.class);
+            Long.TYPE, Character.TYPE, Float.TYPE, Chars.class);
 
     private static final Set<String> FILTERED_OUT_NAMES
-        = setOf("toString",
-                "getNumChildren",
-                "getIndexInParent",
-                "getParent",
-                "getClass",
-                "getSourceCodeFile",
-                "isFindBoundary",
-                "getRuleIndex",
-                "getXPathNodeName",
-                "altNumber",
-                "toStringTree",
-                "getTypeNameNode",
-                "hashCode",
-                "getImportedNameNode",
-                "getScope");
+            = setOf("toString",
+            "getNumChildren",
+            "getIndexInParent",
+            "getParent",
+            "getClass",
+            "getSourceCodeFile",
+            "isFindBoundary",
+            "getRuleIndex",
+            "getXPathNodeName",
+            "altNumber",
+            "toStringTree",
+            "getTypeNameNode",
+            "hashCode",
+            "getImportedNameNode",
+            "getScope");
 
     /* Iteration variables */
     private final Iterator<MethodWrapper> iterator;
@@ -87,15 +87,15 @@ public class AttributeAxisIterator implements Iterator<Attribute> {
 
     private List<MethodWrapper> getWrappersForClass(Class<?> nodeClass) {
         return Arrays.stream(nodeClass.getMethods())
-                     .filter(m -> isAttributeAccessor(nodeClass, m))
-                     .map(m -> {
-                         try {
-                             return new MethodWrapper(m);
-                         } catch (ReflectiveOperationException e) {
-                             throw AssertionUtil.shouldNotReachHere("Method '" + m + "' should be accessible, but: " + e, e);
-                         }
-                     })
-                     .collect(Collectors.toList());
+                .filter(m -> isAttributeAccessor(nodeClass, m))
+                .map(m -> {
+                    try {
+                        return new MethodWrapper(m);
+                    } catch (ReflectiveOperationException e) {
+                        throw AssertionUtil.shouldNotReachHere("Method '" + m + "' should be accessible, but: " + e, e);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     /**
@@ -109,15 +109,15 @@ public class AttributeAxisIterator implements Iterator<Attribute> {
         String methodName = method.getName();
 
         return !methodName.startsWith("jjt")
-            && !FILTERED_OUT_NAMES.contains(methodName)
-            && method.getParameterTypes().length == 0
-            && isConsideredReturnType(method)
-            // filter out methods declared in supertypes like the
-            // Antlr ones, unless they're opted-in
-            && Node.class.isAssignableFrom(method.getDeclaringClass())
-            // Methods of package-private classes are not accessible.
-            && Modifier.isPublic(method.getModifiers())
-            && !isIgnored(nodeClass, method);
+                && !FILTERED_OUT_NAMES.contains(methodName)
+                && method.getParameterTypes().length == 0
+                && isConsideredReturnType(method)
+                // filter out methods declared in supertypes like the
+                // Antlr ones, unless they're opted-in
+                && Node.class.isAssignableFrom(method.getDeclaringClass())
+                // Methods of package-private classes are not accessible.
+                && Modifier.isPublic(method.getModifiers())
+                && !isIgnored(nodeClass, method);
     }
 
     private boolean isConsideredReturnType(Method method) {
@@ -182,15 +182,13 @@ public class AttributeAxisIterator implements Iterator<Attribute> {
     }
 
 
-    @Override
-    public Attribute next() {
+    @Override public Attribute next() {
         MethodWrapper m = iterator.next();
         return new Attribute(node, m.name, m.methodHandle, m.method);
     }
 
 
-    @Override
-    public boolean hasNext() {
+    @Override public boolean hasNext() {
         return iterator.hasNext();
     }
 

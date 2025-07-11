@@ -1,3 +1,3 @@
 public class Test {
-  private Foo bar;
+    private Foo bar;
 }

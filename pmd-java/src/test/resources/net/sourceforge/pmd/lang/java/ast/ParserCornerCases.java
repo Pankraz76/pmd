@@ -9,68 +9,69 @@
 
 class Superclass {
 
-	public Superclass() {
-	}
+    public Superclass() {
+    }
 
-	public <V> Superclass(Class<V> clazz) {
-	}
+    public <V> Superclass(Class<V> clazz) {
+    }
 
-	<T> T doStuff(T s) {
-		return s;
-	}
+    <T> T doStuff(T s) {
+        return s;
+    }
 }
 
 class Outer {
-	Outer() {
-		System.out.println("Outer constructor");
-	}
+    Outer() {
+        System.out.println("Outer constructor");
+    }
 
-	class Inner {
-		Inner() {
-			System.out.println("Inner constructor");
-		}
-	}
+    class Inner {
+        Inner() {
+            System.out.println("Inner constructor");
+        }
+    }
 }
+
 class Child extends Outer.Inner {
-	Child(Outer o) {
-		o.super();
-		System.out.println("Child constructor");
-	}
+    Child(Outer o) {
+        o.super();
+        System.out.println("Child constructor");
+    }
 }
 
 public class ParserCornerCases extends Superclass {
 
-	public ParserCornerCases() {
-		super();
-	}
+    public ParserCornerCases() {
+        super();
+    }
 
-	public ParserCornerCases(int a) {
-		<Integer> this(a, 2);
-	}
+    public ParserCornerCases(int a) {
+        <Integer>this(a, 2);
+    }
 
-	public <W> ParserCornerCases(int a, int b) {
-		<String> super(String.class);
-	}
+    public <W> ParserCornerCases(int a, int b) {
+        <String>super(String.class);
+    }
 
-	public ParserCornerCases(String title) {
-		this();
-	}
+    public ParserCornerCases(String title) {
+        this();
+    }
 
-	public strictfp void testGeneric() {
-		String o = super.<String> doStuff("foo");
-		String v = this.<String> thisGeneric("bar");
-	}
+    public strictfp void testGeneric() {
+        String o = super.<String>doStuff("foo");
+        String v = this.<String>thisGeneric("bar");
+    }
 
-	<X> X thisGeneric(X x) {
-		return x;
-	}
+    <X> X thisGeneric(X x) {
+        return x;
+    }
 
-	Class getByteArrayClass() {
-		return (byte[].class);
-	}
+    Class getByteArrayClass() {
+        return (byte[].class);
+    }
 
     public void bitwiseOperator() {
-        if ((modifiers & InputEvent.SHIFT_DOWN_MASK) != 0 ) {
+        if ((modifiers & InputEvent.SHIFT_DOWN_MASK) != 0) {
             buf.append("shift ");
         }
     }
@@ -80,27 +81,28 @@ public class ParserCornerCases extends Superclass {
  * Test case from http://jira.codehaus.org/browse/MPMD-126
  */
 class PmdTestParent {
-	public PmdTestParent(Object obj) {}
+    public PmdTestParent(Object obj) {
+    }
 }
 
 class PmdTestChild extends PmdTestParent {
 
-	public PmdTestChild() {
-		// the following line produced a parsing problem
-		super(new Object() {
+    public PmdTestChild() {
+        // the following line produced a parsing problem
+        super(new Object() {
 
-			public Object create() {
+            public Object create() {
 
-				Object memoryMonitor = null;
+                Object memoryMonitor = null;
 
-				if (memoryMonitor == null) {
-					memoryMonitor = new Object();
-				}
+                if (memoryMonitor == null) {
+                    memoryMonitor = new Object();
+                }
 
-				return memoryMonitor;
-			}
-		});
-	}
+                return memoryMonitor;
+            }
+        });
+    }
 }
 
 /*
@@ -116,17 +118,21 @@ class SimpleBeanUser {
     }
 
     SimpleBeanUser() {
-        this(new SimpleBean() {{
-            name = "test";
-        }});
+        this(new SimpleBean() {
+            {
+                name = "test";
+            }
+        });
     }
 }
 
 class SimpleBeanUser2 extends SimpleBeanUser {
     SimpleBeanUser2() {
-        super(new SimpleBean(){{
-            name = "test2";
-        }});
+        super(new SimpleBean(){
+            {
+                name = "test2";
+            }
+        });
     }
 }
 
@@ -137,7 +143,7 @@ class TestParseAnnototation {
     void parse() {
         for (@SuppressWarnings("unchecked") int i = 0; i < 10; i++) {
         }
-        for (@SuppressWarnings("unchecked") Iterator it = Fachabteilung.values().iterator(); it.hasNext();) {
+        for (@SuppressWarnings("unchecked") Iterator it = Fachabteilung.values().iterator(); it.hasNext(); ) {
         }
         List<String> l = new ArrayList<String>();
         for (@SuppressWarnings("unchecked") String s : l) {
@@ -148,11 +154,14 @@ class TestParseAnnototation {
 /*
  * Test case for bug #956 PMD Parse Exception
  */
-class FooBlock {}
+class FooBlock {
+}
+
 class MyFoo {
     MyFoo(FooBlock b) {
     }
 }
+
 class Foo extends MyFoo {
     public Foo() {
         super(new FooBlock() {

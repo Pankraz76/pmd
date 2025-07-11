@@ -24,8 +24,7 @@ public class PythonLanguageModule extends CpdOnlyLanguageModuleBase {
         return (PythonLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new PythonCpdLexer();
     }
 }

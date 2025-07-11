@@ -32,11 +32,9 @@ import com.nawforce.runtime.platform.Environment;
 import scala.Option;
 
 class UnusedMethodTest {
-    @TempDir
-    private Path tempDir;
+    @TempDir private Path tempDir;
 
-    @Test
-    void findUnusedMethodsWithSfdxProject() throws Exception {
+    @Test void findUnusedMethodsWithSfdxProject() throws Exception {
         Path testProjectDir = Paths.get("src/test/resources/net/sourceforge/pmd/lang/apex/rule/design/UnusedMethod/project1");
         Report report = runRule(testProjectDir);
         assertEquals(1, report.getViolations().size());

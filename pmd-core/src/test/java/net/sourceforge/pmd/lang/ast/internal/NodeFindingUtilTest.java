@@ -25,8 +25,7 @@ import net.sourceforge.pmd.lang.document.TextDocument;
 
 class NodeFindingUtilTest {
 
-    @Test
-    void testFindNode() {
+    @Test void testFindNode() {
         DummyNode.DummyRootNode root = parseLispish("(a(b)x(c))");
 
         assertFinds("a", 1, root);
@@ -57,9 +56,9 @@ class NodeFindingUtilTest {
         DummyLanguageModule lang = DummyLanguageModule.getInstance();
         try (LanguageProcessor processor = lang.createProcessor(lang.newPropertyBundle())) {
             Parser.ParserTask task = new Parser.ParserTask(
-                TextDocument.readOnlyString(source, lang.getDefaultVersion()),
-                SemanticErrorReporter.noop(),
-                LanguageProcessorRegistry.singleton(processor)
+                    TextDocument.readOnlyString(source, lang.getDefaultVersion()),
+                    SemanticErrorReporter.noop(),
+                    LanguageProcessorRegistry.singleton(processor)
             );
             RootNode root = processor.services().getParser().parse(task);
 

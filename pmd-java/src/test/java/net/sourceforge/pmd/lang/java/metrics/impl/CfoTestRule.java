@@ -19,8 +19,7 @@ public class CfoTestRule extends JavaIntMetricTestRule {
         super(JavaMetrics.FAN_OUT);
     }
 
-    @Override
-    protected Map<String, MetricOption> optionMappings() {
+    @Override protected Map<String, MetricOption> optionMappings() {
         Map<String, MetricOption> mappings = super.optionMappings();
         mappings.put(ClassFanOutOption.INCLUDE_JAVA_LANG.valueName(), ClassFanOutOption.INCLUDE_JAVA_LANG);
         return mappings;

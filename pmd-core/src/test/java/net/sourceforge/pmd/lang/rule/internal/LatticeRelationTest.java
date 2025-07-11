@@ -28,8 +28,7 @@ import net.sourceforge.pmd.internal.util.PredicateUtil;
 
 class LatticeRelationTest {
 
-    @Test
-    void testCustomTopo() {
+    @Test void testCustomTopo() {
 
         LatticeRelation<Set<Integer>, String, Set<String>> lattice = setLattice(PredicateUtil.always());
 
@@ -47,8 +46,7 @@ class LatticeRelationTest {
         assertEquals(emptySet(), lattice.get(setOf(5)));
     }
 
-    @Test
-    void testClearing() {
+    @Test void testClearing() {
 
         LatticeRelation<Set<Integer>, String, Set<String>> lattice = setLattice(PredicateUtil.always());
 
@@ -74,8 +72,7 @@ class LatticeRelationTest {
     }
 
 
-    @Test
-    void testTopoFilter() {
+    @Test void testTopoFilter() {
 
         // filter out sets with size 2
         // this cuts out one level of the graph
@@ -109,16 +106,15 @@ class LatticeRelationTest {
     }
 
 
-    @Test
-    void testInitialSetFilter() {
+    @Test void testInitialSetFilter() {
 
         LatticeRelation<Set<Integer>, String, Set<String>> lattice =
-            new LatticeRelation<>(
-                setTopoOrder(),
-                setOf(setOf(1, 2), setOf(1, 2, 3), setOf(2, 3), emptySet()),
-                Objects::toString,
-                Collectors.toSet()
-            );
+                new LatticeRelation<>(
+                        setTopoOrder(),
+                        setOf(setOf(1, 2), setOf(1, 2, 3), setOf(2, 3), emptySet()),
+                        Objects::toString,
+                        Collectors.toSet()
+                );
 
         lattice.put(setOf(1, 2, 3), "123");
         lattice.put(setOf(1, 2), "12");
@@ -141,8 +137,7 @@ class LatticeRelationTest {
     }
 
 
-    @Test
-    void testDiamond() {
+    @Test void testDiamond() {
 
         LatticeRelation<Set<Integer>, String, Set<String>> lattice = setLattice(PredicateUtil.always());
 
@@ -167,8 +162,7 @@ class LatticeRelationTest {
     }
 
 
-    @Test
-    void testFilterOnChainSetup() {
+    @Test void testFilterOnChainSetup() {
         // setup for the next test (difference here is no filter)
 
         LatticeRelation<String, String, Set<String>> lattice = stringLattice(PredicateUtil.always());
@@ -184,8 +178,7 @@ class LatticeRelationTest {
         assertEquals(emptySet(), lattice.get("d"));
     }
 
-    @Test
-    void testFilterOnChain() {
+    @Test void testFilterOnChain() {
 
         LatticeRelation<String, String, Set<String>> lattice = stringLattice(s -> s.length() != 2 && s.length() != 1);
 
@@ -203,11 +196,10 @@ class LatticeRelationTest {
         assertEquals(emptySet(), lattice.get("d"));
     }
 
-    @Test
-    void testTransitiveSucc() {
+    @Test void testTransitiveSucc() {
 
         LatticeRelation<String, String, Set<String>> lattice =
-            stringLattice(s -> "c".equals(s) || "bc".equals(s));
+                stringLattice(s -> "c".equals(s) || "bc".equals(s));
 
         lattice.put("abc", "val");
         lattice.put("bc", "v2");
@@ -230,11 +222,10 @@ class LatticeRelationTest {
         assertEquals(emptySet(), lattice.get("d"));
     }
 
-    @Test
-    void testTransitiveSuccWithHoleInTheMiddle() {
+    @Test void testTransitiveSuccWithHoleInTheMiddle() {
 
         LatticeRelation<String, String, Set<String>> lattice =
-            stringLattice(setOf("abc", "bbc", "c")::contains);
+                stringLattice(setOf("abc", "bbc", "c")::contains);
 
         lattice.put("abc", "v1");
         lattice.put("bbc", "v2");
@@ -264,8 +255,7 @@ class LatticeRelationTest {
     }
 
 
-    @Test
-    void testToString() {
+    @Test void testToString() {
         LatticeRelation<Set<Integer>, String, Set<String>> lattice = setLattice(set -> set.size() < 2);
 
         lattice.put(setOf(1, 2), "12");
@@ -279,20 +269,19 @@ class LatticeRelationTest {
         // all {1}, {2}, and { } are query nodes, not {1,2}
 
         assertEquals("strict digraph {\n"
-                         + "n0 [ shape=box, color=black, label=\"[1, 2]\" ];\n"
-                         + "n1 [ shape=box, color=green, label=\"[1]\" ];\n"
-                         + "n2 [ shape=box, color=green, label=\"[2]\" ];\n"
-                         + "n3 [ shape=box, color=green, label=\"[]\" ];\n"
-                         + "n0 -> n1;\n" // {1}   -> { }
-                         + "n0 -> n2;\n" // {2}   -> { }
-                         + "n0 -> n3;\n" // {1,2} -> { }
-                         + "n1 -> n3;\n" // {1,2} -> {1}
-                         + "n2 -> n3;\n" // {1,2} -> {2}
-                         + "}", lattice.toString());
+                + "n0 [ shape=box, color=black, label=\"[1, 2]\" ];\n"
+                + "n1 [ shape=box, color=green, label=\"[1]\" ];\n"
+                + "n2 [ shape=box, color=green, label=\"[2]\" ];\n"
+                + "n3 [ shape=box, color=green, label=\"[]\" ];\n"
+                + "n0 -> n1;\n" // {1}   -> { }
+                + "n0 -> n2;\n" // {2}   -> { }
+                + "n0 -> n3;\n" // {1,2} -> { }
+                + "n1 -> n3;\n" // {1,2} -> {1}
+                + "n2 -> n3;\n" // {1,2} -> {2}
+                + "}", lattice.toString());
     }
 
-    @Test
-    void testCycleDetection() {
+    @Test void testCycleDetection() {
         List<String> cycle = Arrays.asList("a", "b", "c", "d");
 
         TopoOrder<String> cyclicOrder = str -> {
@@ -301,7 +290,7 @@ class LatticeRelationTest {
         };
 
         LatticeRelation<String, String, Set<String>> lattice =
-            new LatticeRelation<>(cyclicOrder, PredicateUtil.always(), Objects::toString, Collectors.toSet());
+                new LatticeRelation<>(cyclicOrder, PredicateUtil.always(), Objects::toString, Collectors.toSet());
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
             lattice.put("a", "1");
@@ -310,14 +299,12 @@ class LatticeRelationTest {
 
     }
 
-    @NonNull
-    private LatticeRelation<String, String, Set<String>> stringLattice(Predicate<String> filter) {
+    @NonNull private LatticeRelation<String, String, Set<String>> stringLattice(Predicate<String> filter) {
         return new LatticeRelation<>(stringTopoOrder(), filter, Objects::toString, Collectors.toSet());
     }
 
 
-    @NonNull
-    private LatticeRelation<Set<Integer>, String, Set<String>> setLattice(Predicate<Set<Integer>> filter) {
+    @NonNull private LatticeRelation<Set<Integer>, String, Set<String>> setLattice(Predicate<Set<Integer>> filter) {
         return new LatticeRelation<>(setTopoOrder(), filter, Objects::toString, Collectors.toSet());
     }
 
@@ -358,7 +345,7 @@ class LatticeRelationTest {
      */
     private static TopoOrder<String> stringTopoOrder() {
         return str -> str.isEmpty() ? emptyList()
-                                    : singletonList(str.substring(1));
+                : singletonList(str.substring(1));
     }
 
 

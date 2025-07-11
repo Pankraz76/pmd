@@ -6,4 +6,5 @@ package com.example.expression;
 /**
  * @see <a href="https://openjdk.java.net/jeps/409">JEP 409: Sealed Classes</a>
  */
-public final class NegExpr      implements Expr { }
+public final class NegExpr      implements Expr {
+}

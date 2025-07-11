@@ -27,8 +27,7 @@ public final class ApexParser implements Parser {
         TRANSLATE_LOGGER.setLevel(Level.WARNING);
     }
 
-    @Override
-    public ASTApexFile parse(final ParserTask task) {
+    @Override public ASTApexFile parse(final ParserTask task) {
         CompilationUnit astRoot = null;
         try {
             astRoot = SummitAST.INSTANCE.parseAndTranslate(task.getFileId().getOriginalPath(), task.getTextDocument().getText().toString(), null);

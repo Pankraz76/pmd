@@ -14,6 +14,5 @@ public abstract class AbstractKotlinRule extends AbstractVisitorRule {
         // inheritance constructor
     }
 
-    @Override
-    public abstract KotlinVisitor<RuleContext, ?> buildVisitor();
+    @Override public abstract KotlinVisitor<RuleContext, ?> buildVisitor();
 }

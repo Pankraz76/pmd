@@ -49,20 +49,17 @@ class ScopeAndDeclarationFinder extends ModelicaVisitorBase<Object, Object> {
         ((AbstractModelicaScope) node.getMostSpecificScope()).addDeclaration(declaration);
     }
 
-    @Override
-    public Object visit(ASTStoredDefinition node, Object data) {
+    @Override public Object visit(ASTStoredDefinition node, Object data) {
         createFileDeclaration(node);
         return cont(node);
     }
 
-    @Override
-    public Object visit(ASTClassDefinition node, Object data) {
+    @Override public Object visit(ASTClassDefinition node, Object data) {
         createClassDeclaration(node);
         return cont(node);
     }
 
-    @Override
-    public Object visit(ASTComponentDeclaration node, Object data) {
+    @Override public Object visit(ASTComponentDeclaration node, Object data) {
         createComponentDeclaration(node);
         return super.visit(node, data);
     }

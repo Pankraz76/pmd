@@ -27,17 +27,15 @@ import net.sourceforge.pmd.lang.test.ast.BaseParsingHelper;
 class Java16TreeDumpTest extends BaseJavaTreeDumpTest {
     private final JavaParsingHelper java16 =
             JavaParsingHelper.DEFAULT.withDefaultVersion("16")
-                                     .withResourceContext(Java16TreeDumpTest.class, "jdkversiontests/java16/");
+                    .withResourceContext(Java16TreeDumpTest.class, "jdkversiontests/java16/");
     private final JavaParsingHelper java15 = java16.withDefaultVersion("15");
 
 
-    @Override
-    public BaseParsingHelper<?, ?> getParser() {
+    @Override public BaseParsingHelper<?, ?> getParser() {
         return java16;
     }
 
-    @Test
-    void patternMatchingInstanceof() {
+    @Test void patternMatchingInstanceof() {
         doTest("PatternMatchingInstanceof");
 
         // extended tests for type resolution etc.
@@ -51,33 +49,27 @@ class Java16TreeDumpTest extends BaseJavaTreeDumpTest {
         }
     }
 
-    @Test
-    void patternMatchingInstanceofBeforeJava16ShouldFail() {
+    @Test void patternMatchingInstanceofBeforeJava16ShouldFail() {
         assertThrows(ParseException.class, () -> java15.parseResource("PatternMatchingInstanceof.java"));
     }
 
-    @Test
-    void localClassAndInterfaceDeclarations() {
+    @Test void localClassAndInterfaceDeclarations() {
         doTest("LocalClassAndInterfaceDeclarations");
     }
 
-    @Test
-    void localClassAndInterfaceDeclarationsBeforeJava16ShouldFail() {
+    @Test void localClassAndInterfaceDeclarationsBeforeJava16ShouldFail() {
         assertThrows(ParseException.class, () -> java15.parseResource("LocalClassAndInterfaceDeclarations.java"));
     }
 
-    @Test
-    void localAnnotationsAreNotAllowed() {
+    @Test void localAnnotationsAreNotAllowed() {
         assertThrows(ParseException.class, () -> java16.parse("public class Foo { { @interface MyLocalAnnotation {} } }"));
     }
 
-    @Test
-    void localRecords() {
+    @Test void localRecords() {
         doTest("LocalRecords");
     }
 
-    @Test
-    void recordPoint() {
+    @Test void recordPoint() {
         doTest("Point");
 
         // extended tests for type resolution etc.
@@ -92,35 +84,29 @@ class Java16TreeDumpTest extends BaseJavaTreeDumpTest {
         assertTrue(varId.getTypeMirror().isPrimitive(JPrimitiveType.PrimitiveTypeKind.INT));
     }
 
-    @Test
-    void recordPointBeforeJava16ShouldFail() {
+    @Test void recordPointBeforeJava16ShouldFail() {
         assertThrows(ParseException.class, () -> java15.parseResource("Point.java"));
     }
 
-    @Test
-    void recordCtorWithThrowsShouldFail() {
+    @Test void recordCtorWithThrowsShouldFail() {
         assertThrows(ParseException.class, () -> java16.parse("  record R {"
                 + "   R throws IOException {}"
                 + "  }"));
     }
 
-    @Test
-    void recordMustNotExtend() {
+    @Test void recordMustNotExtend() {
         assertThrows(ParseException.class, () -> java16.parse("record RecordEx(int x) extends Number { }"));
     }
 
-    @Test
-    void innerRecords() {
+    @Test void innerRecords() {
         doTest("Records");
     }
 
-    @Test
-    void recordIsARestrictedIdentifier() {
+    @Test void recordIsARestrictedIdentifier() {
         assertThrows(ParseException.class, () -> java16.parse("public class record {}"));
     }
 
-    @Test
-    void sealedAndNonSealedIdentifiers() {
+    @Test void sealedAndNonSealedIdentifiers() {
         doTest("NonSealedIdentifier");
     }
 }

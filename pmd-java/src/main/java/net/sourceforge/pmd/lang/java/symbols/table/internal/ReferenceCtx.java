@@ -56,9 +56,9 @@ public final class ReferenceCtx {
 
     public ReferenceCtx scopeDownToNested(JClassSymbol newEnclosing) {
         assert enclosingClass == null || enclosingClass.equals(newEnclosing.getEnclosingClass())
-            : "Not a child class of the current context (" + this + "): " + newEnclosing;
+                : "Not a child class of the current context (" + this + "): " + newEnclosing;
         assert newEnclosing.getPackageName().equals(packageName)
-            : "Mismatched package name";
+                : "Mismatched package name";
         return new ReferenceCtx(processor, packageName, newEnclosing);
     }
 
@@ -91,11 +91,11 @@ public final class ReferenceCtx {
                 return distinct.iterator().next();
             }
             processor.getLogger().warning(
-                errorLocation,
-                AMBIGUOUS_NAME_REFERENCE,
-                name,
-                canonicalNameOf(found.get(0).getSymbol()),
-                canonicalNameOf(found.get(1).getSymbol())
+                    errorLocation,
+                    AMBIGUOUS_NAME_REFERENCE,
+                    name,
+                    canonicalNameOf(found.get(0).getSymbol()),
+                    canonicalNameOf(found.get(1).getSymbol())
             );
             // fallthrough and use the first one anyway
         }
@@ -136,7 +136,7 @@ public final class ReferenceCtx {
         }
 
         String ownerName = owner instanceof JClassSymbol ? ((JClassSymbol) owner).getCanonicalName()
-                                                         : "type variable " + owner.getSimpleName();
+                : "type variable " + owner.getSimpleName();
 
         this.processor.getLogger().warning(location, CANNOT_RESOLVE_MEMBER, memberName, ownerName, fallbackStrategy);
     }
@@ -145,12 +145,11 @@ public final class ReferenceCtx {
         return processor.getLogger();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ReferenceCtx{"
-            + "packageName='" + packageName + '\''
-            + ", enclosingClass=" + enclosingClass
-            + '}';
+                + "packageName='" + packageName + '\''
+                + ", enclosingClass=" + enclosingClass
+                + '}';
     }
 
     public JTypeMirror resolveSingleTypeName(JSymbolTable symTable, String image, JavaNode errorLoc) {
@@ -181,8 +180,7 @@ public final class ReferenceCtx {
             this.displayName = displayName;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return displayName;
         }
     }

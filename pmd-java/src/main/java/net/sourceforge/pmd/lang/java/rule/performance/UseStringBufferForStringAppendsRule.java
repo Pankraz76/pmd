@@ -29,8 +29,7 @@ public class UseStringBufferForStringAppendsRule extends AbstractJavaRulechainRu
      * @param data This is the data to return.
      * @return Object This returns the data passed in. If violation happens, violation is added to data.
      */
-    @Override
-    public Object visit(ASTVariableId node, Object data) {
+    @Override public Object visit(ASTVariableId node, Object data) {
         if (!TypeTestUtil.isA(String.class, node) || node.isForeachVariable()) {
             return data;
         }
@@ -42,7 +41,7 @@ public class UseStringBufferForStringAppendsRule extends AbstractJavaRulechainRu
 
         for (ASTNamedReferenceExpr usage : node.getLocalUsages()) {
             if ((node.isField() || node.isFormalParameter())
-                && isNotWithinLoop(usage)) {
+                    && isNotWithinLoop(usage)) {
                 // ignore if the field or formal parameter is *not* used within loops
                 continue;
             }
@@ -56,7 +55,7 @@ public class UseStringBufferForStringAppendsRule extends AbstractJavaRulechainRu
                 }
 
                 int usageOnRightHandSide =
-                    JavaAstUtils.flattenOperands(assignment.getRightOperand())
+                        JavaAstUtils.flattenOperands(assignment.getRightOperand())
                                 .filterIs(ASTNamedReferenceExpr.class)
                                 .filterMatching(ASTNamedReferenceExpr::getReferencedSym, node.getSymbol())
                                 .count();

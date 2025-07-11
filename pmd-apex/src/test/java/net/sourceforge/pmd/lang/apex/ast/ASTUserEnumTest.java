@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class ASTUserEnumTest extends ApexParserTestBase {
 
-    @Test
-    void testEnumName() {
+    @Test void testEnumName() {
         ASTUserClass node = (ASTUserClass) parse("class Foo { enum Bar { } }");
         ASTUserEnum enumNode = node.descendants(ASTUserEnum.class).firstOrThrow();
         assertEquals("Bar", enumNode.getSimpleName());

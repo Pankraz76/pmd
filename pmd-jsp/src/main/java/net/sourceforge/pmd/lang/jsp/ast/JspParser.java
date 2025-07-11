@@ -16,13 +16,11 @@ public final class JspParser extends JjtreeParserAdapter<ASTCompilationUnit> {
 
     static final TokenDocumentBehavior TOKEN_BEHAVIOR = new TokenDocumentBehavior(JspTokenKinds.TOKEN_NAMES);
 
-    @Override
-    protected TokenDocumentBehavior tokenBehavior() {
+    @Override protected TokenDocumentBehavior tokenBehavior() {
         return TOKEN_BEHAVIOR;
     }
 
-    @Override
-    protected ASTCompilationUnit parseImpl(CharStream cs, ParserTask task) throws ParseException {
+    @Override protected ASTCompilationUnit parseImpl(CharStream cs, ParserTask task) throws ParseException {
         return new JspParserImpl(cs).CompilationUnit().makeTaskInfo(task);
     }
 }

@@ -51,14 +51,12 @@ public final class ASTVariableAccess extends AbstractJavaExpr implements ASTName
         super(id);
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return getImage();
     }
 
 
-    @Override
-    public @Nullable JVariableSig getSignature() {
+    @Override public @Nullable JVariableSig getSignature() {
         if (typedSym == null) {
             forceTypeResolution(); // this will do it only once, even if it fails
         }
@@ -71,8 +69,7 @@ public final class ASTVariableAccess extends AbstractJavaExpr implements ASTName
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

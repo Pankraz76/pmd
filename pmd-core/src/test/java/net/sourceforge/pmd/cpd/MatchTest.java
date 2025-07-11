@@ -20,8 +20,7 @@ import net.sourceforge.pmd.lang.document.TextFile;
 
 class MatchTest {
 
-    @Test
-    void testSimple() {
+    @Test void testSimple() {
         String codeFragment1 = "1234567890";
         FileId fileName = CpdTestUtils.FOO_FILE_ID;
         TextFile tf = TextFile.forCharSeq(codeFragment1, fileName, DummyLanguageModule.getInstance().getDefaultVersion());
@@ -52,16 +51,15 @@ class MatchTest {
         assertEquals(Chars.wrap("1234567890"), sourceManager.getSlice(mark2));
     }
 
-    @Test
-    void testCompareTo() {
+    @Test void testCompareTo() {
         Tokens tokens = new Tokens();
 
         FileId fileName = CpdTestUtils.FOO_FILE_ID;
         Match m1 = new Match(1,
-                             tokens.addToken("public", fileName, 1, 2, 3, 4),
-                             tokens.addToken("class", fileName, 1, 2, 3, 4));
+                tokens.addToken("public", fileName, 1, 2, 3, 4),
+                tokens.addToken("class", fileName, 1, 2, 3, 4));
         Match m2 = new Match(2, tokens.addToken("Foo", fileName, 1, 2, 3, 4),
-                             tokens.addToken("{", fileName, 1, 2, 3, 4));
+                tokens.addToken("{", fileName, 1, 2, 3, 4));
         assertTrue(m2.compareTo(m1) < 0);
     }
 }

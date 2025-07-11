@@ -11,8 +11,7 @@ public final class ASTVariableInitializer extends AbstractEcmascriptNode<Variabl
         super(variableInitializer);
     }
 
-    @Override
-    protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -28,8 +27,7 @@ public final class ASTVariableInitializer extends AbstractEcmascriptNode<Variabl
         }
     }
 
-    @Override
-    public boolean isDestructuring() {
+    @Override public boolean isDestructuring() {
         return node.isDestructuring();
     }
 }

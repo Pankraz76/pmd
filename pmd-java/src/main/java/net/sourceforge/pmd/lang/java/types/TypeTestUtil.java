@@ -62,7 +62,7 @@ public final class TypeTestUtil {
     public static boolean isA(final @NonNull Class<?> clazz, final @Nullable TypeNode node) {
         AssertionUtil.requireParamNotNull("class", clazz);
         return node != null && (hasNoSubtypes(clazz) ? isExactlyA(clazz, node)
-                                    : isA(clazz, node.getTypeMirror()));
+                : isA(clazz, node.getTypeMirror()));
     }
 
     /**

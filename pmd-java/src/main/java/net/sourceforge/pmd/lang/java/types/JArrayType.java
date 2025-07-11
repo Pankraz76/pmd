@@ -44,13 +44,11 @@ public final class JArrayType implements JTypeMirror {
         this.typeAnnots = typeAnnots;
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return ts;
     }
 
-    @Override
-    public @NonNull JClassSymbol getSymbol() {
+    @Override public @NonNull JClassSymbol getSymbol() {
         if (symbol == null) {
             JTypeDeclSymbol comp = getComponentType().getSymbol();
             if (comp == null) {
@@ -61,29 +59,25 @@ public final class JArrayType implements JTypeMirror {
         return symbol;
     }
 
-    @Override
-    public PSet<SymAnnot> getTypeAnnotations() {
+    @Override public PSet<SymAnnot> getTypeAnnotations() {
         return typeAnnots;
     }
 
-    @Override
-    public JArrayType withAnnotations(PSet<SymAnnot> newTypeAnnots) {
+    @Override public JArrayType withAnnotations(PSet<SymAnnot> newTypeAnnots) {
         if (newTypeAnnots.isEmpty() && this.typeAnnots.isEmpty()) {
             return this;
         }
         return new JArrayType(ts, component, symbol, newTypeAnnots);
     }
 
-    @Override
-    public boolean isInterface() {
+    @Override public boolean isInterface() {
         return false;
     }
 
-    @Override
-    public JArrayType getErasure() {
+    @Override public JArrayType getErasure() {
         JTypeMirror erasedComp = component.getErasure();
         return erasedComp == component ? this  // NOPMD CompareObjectsWithEquals
-                                       : new JArrayType(ts, erasedComp, symbol, typeAnnots);
+                : new JArrayType(ts, erasedComp, symbol, typeAnnots);
     }
 
 
@@ -119,46 +113,39 @@ public final class JArrayType implements JTypeMirror {
     }
 
 
-    @Override
-    public Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
+    @Override public Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
         return Stream.concat(
-            streamDeclaredMethods(prefilter),
-            // inherited object methods
-            ts.OBJECT.streamMethods(prefilter)
+                streamDeclaredMethods(prefilter),
+                // inherited object methods
+                ts.OBJECT.streamMethods(prefilter)
         );
     }
 
-    @Override
-    public Stream<JMethodSig> streamDeclaredMethods(Predicate<? super JMethodSymbol> prefilter) {
+    @Override public Stream<JMethodSig> streamDeclaredMethods(Predicate<? super JMethodSymbol> prefilter) {
         return getSymbol().getDeclaredMethods().stream()
-                          .filter(prefilter)
-                          .map(it -> new ArrayMethodSigImpl(this, it));
+                .filter(prefilter)
+                .map(it -> new ArrayMethodSigImpl(this, it));
     }
 
-    @Override
-    public List<JMethodSig> getConstructors() {
+    @Override public List<JMethodSig> getConstructors() {
         return CollectionUtil.map(getSymbol().getConstructors(), it -> new ArrayMethodSigImpl(this, it));
     }
 
-    @Override
-    public boolean isRaw() {
+    @Override public boolean isRaw() {
         return getElementType().isRaw();
     }
 
-    @Override
-    public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
+    @Override public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
         return visitor.visitArray(this, p);
     }
 
-    @Override
-    public JArrayType subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
+    @Override public JArrayType subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
         JTypeMirror newComp = getComponentType().subst(subst);
         return newComp == component ? this // NOPMD UseEqualsToCompareObjectReferences
-                                    : getTypeSystem().arrayType(newComp).withAnnotations(getTypeAnnotations());
+                : getTypeSystem().arrayType(newComp).withAnnotations(getTypeAnnotations());
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -169,13 +156,11 @@ public final class JArrayType implements JTypeMirror {
         return TypeOps.isSameType(this, that);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return component.hashCode() * 3;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return TypePrettyPrint.prettyPrint(this);
     }
 

@@ -81,9 +81,8 @@ public class TypeAnnotTestUtil {
      * method declaration. If there is no defined default value, the invocation
      * will fail.
      */
-    @SuppressWarnings("unchecked")
-    public static <A extends Annotation> A createAnnotationInstance(Class<A> annotationClass, Map<String, Object> attributes) {
-        return (A) Proxy.newProxyInstance(annotationClass.getClassLoader(), new Class[] { annotationClass }, (proxy, method, args) -> {
+    @SuppressWarnings("unchecked") public static <A extends Annotation> A createAnnotationInstance(Class<A> annotationClass, Map<String, Object> attributes) {
+        return (A) Proxy.newProxyInstance(annotationClass.getClassLoader(), new Class[]{annotationClass}, (proxy, method, args) -> {
             if ("annotationType".equals(method.getName()) && args == null) {
                 return annotationClass;
             } else if ("toString".equals(method.getName()) && args == null) {

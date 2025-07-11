@@ -25,33 +25,26 @@ class TextFileContentTest {
     // we use this dummy value
     private static final String LINESEP_SENTINEL = ":fallback:";
 
-    @ParameterizedTest
-    @EnumSource
-    void testMixedDelimiters(TextContentOrigin origin) throws IOException {
+    @ParameterizedTest @EnumSource void testMixedDelimiters(TextContentOrigin origin) throws IOException {
         TextFileContent content = origin.normalize("a\r\nb\n\rc");
         assertEquals(Chars.wrap("a\nb\n\nc"), content.getNormalizedText());
         assertEquals(LINESEP_SENTINEL, content.getLineTerminator());
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testFormFeedIsNotNewline(TextContentOrigin origin) throws IOException {
+    @ParameterizedTest @EnumSource void testFormFeedIsNotNewline(TextContentOrigin origin) throws IOException {
         TextFileContent content = origin.normalize("a\f\nb\nc");
         assertEquals(Chars.wrap("a\f\nb\nc"), content.getNormalizedText());
         assertEquals("\n", content.getLineTerminator());
     }
 
-    @Test
-    void testNormTextPreservation() {
+    @Test void testNormTextPreservation() {
         Chars input = Chars.wrap("a\nb\nc");
         TextFileContent content = TextFileContent.fromCharSeq(input);
         assertSame(input, content.getNormalizedText());
         assertEquals("\n", content.getLineTerminator());
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testBomElimination(TextContentOrigin origin) throws IOException {
+    @ParameterizedTest @EnumSource void testBomElimination(TextContentOrigin origin) throws IOException {
         TextFileContent content = origin.normalize("\ufeffabc");
         Chars normalizedText = content.getNormalizedText();
         assertEquals(Chars.wrap("abc"), normalizedText);
@@ -62,24 +55,19 @@ class TextFileContentTest {
         assertSame(normalizedText.toString(), normalizedText.toString());
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testNoExplicitLineMarkers(TextContentOrigin origin) throws IOException {
+    @ParameterizedTest @EnumSource void testNoExplicitLineMarkers(TextContentOrigin origin) throws IOException {
         TextFileContent content = origin.normalize("a");
         assertEquals(Chars.wrap("a"), content.getNormalizedText());
         assertEquals(LINESEP_SENTINEL, content.getLineTerminator());
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testEmptyFile(TextContentOrigin origin) throws IOException {
+    @ParameterizedTest @EnumSource void testEmptyFile(TextContentOrigin origin) throws IOException {
         TextFileContent content = origin.normalize("");
         assertEquals(Chars.wrap(""), content.getNormalizedText());
         assertEquals(LINESEP_SENTINEL, content.getLineTerminator());
     }
 
-    @Test
-    void testCrlfSplitOnBuffer() throws IOException {
+    @Test void testCrlfSplitOnBuffer() throws IOException {
         StringReader reader = new StringReader("a\r\nb");
         // now the buffer is of size 2, so we read first [a\r] then [\nb]
         // but there is a single line
@@ -88,8 +76,7 @@ class TextFileContentTest {
         assertEquals("\r\n", content.getLineTerminator());
     }
 
-    @Test
-    void testCrSplitOnBufferFp() throws IOException {
+    @Test void testCrSplitOnBufferFp() throws IOException {
         StringReader reader = new StringReader("a\rb\n");
         // the buffer is of size 2, so we read first [a\r] then [b\n]
         // the \r is a line terminator on its own
@@ -98,32 +85,25 @@ class TextFileContentTest {
         assertEquals(LINESEP_SENTINEL, content.getLineTerminator());
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testCrCr(TextContentOrigin origin) throws IOException {
+    @ParameterizedTest @EnumSource void testCrCr(TextContentOrigin origin) throws IOException {
         TextFileContent content = origin.normalize("a\r\rb");
         assertEquals(Chars.wrap("a\n\nb"), content.getNormalizedText());
         assertEquals("\r", content.getLineTerminator());
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testCrIsEol(TextContentOrigin origin) throws IOException {
+    @ParameterizedTest @EnumSource void testCrIsEol(TextContentOrigin origin) throws IOException {
         TextFileContent content = origin.normalize("a\rb\rdede");
         assertEquals(Chars.wrap("a\nb\ndede"), content.getNormalizedText());
         assertEquals("\r", content.getLineTerminator());
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testLfAtStartOfFile(TextContentOrigin origin) throws IOException {
+    @ParameterizedTest @EnumSource void testLfAtStartOfFile(TextContentOrigin origin) throws IOException {
         TextFileContent content = origin.normalize("\nohio");
         assertEquals(Chars.wrap("\nohio"), content.getNormalizedText());
         assertEquals("\n", content.getLineTerminator());
     }
 
-    @Test
-    void testCrCrSplitBuffer() throws IOException {
+    @Test void testCrCrSplitBuffer() throws IOException {
         StringReader reader = new StringReader("a\r\r");
         // the buffer is of size 2, so we read first [a\r] then [\ro]
         // the \r is not a line terminator though
@@ -134,8 +114,7 @@ class TextFileContentTest {
 
     enum TextContentOrigin {
         INPUT_STREAM {
-            @Override
-            TextFileContent normalize(String text) throws IOException {
+            @Override TextFileContent normalize(String text) throws IOException {
                 Charset charset = StandardCharsets.UTF_8;
                 byte[] input = text.getBytes(charset);
                 TextFileContent content;
@@ -146,14 +125,12 @@ class TextFileContentTest {
             }
         },
         READER {
-            @Override
-            TextFileContent normalize(String input) throws IOException {
+            @Override TextFileContent normalize(String input) throws IOException {
                 return TextFileContent.normalizingRead(new StringReader(input), 4096, LINESEP_SENTINEL);
             }
         },
         STRING {
-            @Override
-            TextFileContent normalize(String input) throws IOException {
+            @Override TextFileContent normalize(String input) throws IOException {
                 return TextFileContent.normalizeCharSeq(input, LINESEP_SENTINEL);
             }
         };

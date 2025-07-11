@@ -61,8 +61,7 @@ public class RuleChainAnalyzer extends SaxonExprVisitor {
         return Collections.emptyList();
     }
 
-    @Override
-    public Expression visit(DocumentSorter e) {
+    @Override public Expression visit(DocumentSorter e) {
         DocumentSorter result = (DocumentSorter) super.visit(e);
         // sorting of the nodes must be done after all nodes have been found
         return result.getBaseExpression();
@@ -86,8 +85,7 @@ public class RuleChainAnalyzer extends SaxonExprVisitor {
         return new SlashExpression(start, step);
     }
 
-    @Override
-    public Expression visit(SlashExpression e) {
+    @Override public Expression visit(SlashExpression e) {
         if (!insideExpensiveExpr && rootElement == null) {
             Expression result = visitSlashPreserveRootElement(e);
             if (rootElement != null && !rootElementReplaced) {
@@ -136,8 +134,7 @@ public class RuleChainAnalyzer extends SaxonExprVisitor {
         }
     }
 
-    @Override
-    public Expression visit(AxisExpression e) {
+    @Override public Expression visit(AxisExpression e) {
         if (rootElement == null && e.getNodeTest() instanceof NameTest && !foundCombinedNodeTest) {
             NameTest test = (NameTest) e.getNodeTest();
             if (test.getPrimitiveType() == Type.ELEMENT && e.getAxis() == AxisInfo.DESCENDANT) {
@@ -151,8 +148,7 @@ public class RuleChainAnalyzer extends SaxonExprVisitor {
         return super.visit(e);
     }
 
-    @Override
-    public Expression visit(LetExpression e) {
+    @Override public Expression visit(LetExpression e) {
         // lazy expressions are not a thing in saxon HE
         // instead saxon hoists expensive subexpressions into LetExpressions
         // Eg //A[//B]
@@ -174,8 +170,7 @@ public class RuleChainAnalyzer extends SaxonExprVisitor {
         }
     }
 
-    @Override
-    public Expression visit(VennExpression e) {
+    @Override public Expression visit(VennExpression e) {
         // stop visiting subtree. We assume all unions were at the root
         // and flattened, here we find one that couldn't be flattened
         return e;

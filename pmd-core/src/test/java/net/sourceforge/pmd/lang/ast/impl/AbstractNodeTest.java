@@ -55,7 +55,7 @@ class AbstractNodeTest {
         int i = 0;
         for (final int childIndex : childrenIndexes) {
             for (final int grandChildIndex : grandChildrenIndexes) {
-                indexes[i++] = new Integer[] { childIndex, grandChildIndex };
+                indexes[i++] = new Integer[]{childIndex, grandChildIndex};
             }
         }
         return indexes;
@@ -63,21 +63,20 @@ class AbstractNodeTest {
 
     private DummyRootNode rootNode;
 
-    @BeforeEach
-    void setUpSampleNodeTree() {
+    @BeforeEach void setUpSampleNodeTree() {
         rootNode = tree(
-            () -> {
-                DummyRootNode root = root();
+                () -> {
+                    DummyRootNode root = root();
 
-                for (int i = 0; i < NUM_CHILDREN; i++) {
-                    final DummyNode child = node();
-                    for (int j = 0; j < NUM_GRAND_CHILDREN; j++) {
-                        child.addChild(node(), j);
+                    for (int i = 0; i < NUM_CHILDREN; i++) {
+                        final DummyNode child = node();
+                        for (int j = 0; j < NUM_GRAND_CHILDREN; j++) {
+                            child.addChild(node(), j);
+                        }
+                        root.addChild(child, i);
                     }
-                    root.addChild(child, i);
+                    return root;
                 }
-                return root;
-            }
         );
 
     }
@@ -85,9 +84,7 @@ class AbstractNodeTest {
     /**
      * Explicitly tests the {@code remove} method, and implicitly the {@code removeChildAtIndex} method
      */
-    @ParameterizedTest
-    @MethodSource("childrenIndexes")
-    void testRemoveChildOfRootNode(final int childIndex) {
+    @ParameterizedTest @MethodSource("childrenIndexes") void testRemoveChildOfRootNode(final int childIndex) {
         final DummyNode child = rootNode.getChild(childIndex);
         final List<? extends DummyNode> grandChildren = child.children().toList();
 
@@ -104,8 +101,7 @@ class AbstractNodeTest {
         }
     }
 
-    @Test
-    void testPrevNextSiblings() {
+    @Test void testPrevNextSiblings() {
         DummyRootNode root = tree(() -> root(node(), node()));
 
         assertNull(root.getNextSibling());
@@ -124,8 +120,7 @@ class AbstractNodeTest {
      * Explicitly tests the {@code remove} method, and implicitly the {@code removeChildAtIndex} method.
      * This is a border case as the root node does not have any parent.
      */
-    @Test
-    void testRemoveRootNode() {
+    @Test void testRemoveRootNode() {
         // Check that the root node has the expected properties
         final List<? extends DummyNode> children = rootNode.children().toList();
 
@@ -145,9 +140,7 @@ class AbstractNodeTest {
      * Explicitly tests the {@code remove} method, and implicitly the {@code removeChildAtIndex} method.
      * These are border cases as grandchildren nodes do not have any child.
      */
-    @ParameterizedTest
-    @MethodSource("childrenAndGrandChildrenIndexes")
-    void testRemoveGrandChildNode(final int childIndex, final int grandChildIndex) {
+    @ParameterizedTest @MethodSource("childrenAndGrandChildrenIndexes") void testRemoveGrandChildNode(final int childIndex, final int grandChildIndex) {
         final DummyNode child = rootNode.getChild(childIndex);
         final DummyNode grandChild = child.getChild(grandChildIndex);
 
@@ -163,9 +156,7 @@ class AbstractNodeTest {
     /**
      * Explicitly tests the {@code removeChildAtIndex} method.
      */
-    @ParameterizedTest
-    @MethodSource("childrenIndexes")
-    void testRemoveRootNodeChildAtIndex(final int childIndex) {
+    @ParameterizedTest @MethodSource("childrenIndexes") void testRemoveRootNodeChildAtIndex(final int childIndex) {
         final List<? extends DummyNode> originalChildren = rootNode.children().toList();
 
         // Do the actual removal
@@ -190,8 +181,7 @@ class AbstractNodeTest {
      * Explicitly tests the {@code removeChildAtIndex} method.
      * Test that invalid indexes cases are handled without exception.
      */
-    @Test
-    void testRemoveChildAtIndexWithInvalidIndex() {
+    @Test void testRemoveChildAtIndexWithInvalidIndex() {
         try {
             rootNode.removeChildAtIndex(-1);
             rootNode.removeChildAtIndex(rootNode.getNumChildren());
@@ -204,9 +194,7 @@ class AbstractNodeTest {
      * Explicitly tests the {@code removeChildAtIndex} method.
      * This is a border case as the method invocation should do nothing.
      */
-    @ParameterizedTest
-    @MethodSource("grandChildrenIndexes")
-    void testRemoveChildAtIndexOnNodeWithNoChildren(final int grandChildIndex) {
+    @ParameterizedTest @MethodSource("grandChildrenIndexes") void testRemoveChildAtIndexOnNodeWithNoChildren(final int grandChildIndex) {
         // grandChild does not have any child
         final DummyNode grandChild = rootNode.getChild(grandChildIndex).getChild(grandChildIndex);
 

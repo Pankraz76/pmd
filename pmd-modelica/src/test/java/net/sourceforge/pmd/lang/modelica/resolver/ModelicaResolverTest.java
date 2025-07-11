@@ -51,12 +51,11 @@ class ModelicaResolverTest {
         return result;
     }
 
-    @Test
-    void verySimpleScopeTest() {
+    @Test void verySimpleScopeTest() {
         String contents =
-              "model TestPackage"
-            + "  Real x;"
-            + "end TestPackage;";
+                "model TestPackage"
+                        + "  Real x;"
+                        + "end TestPackage;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
         assertNotNull(ast);
@@ -68,18 +67,17 @@ class ModelicaResolverTest {
         assertNull(scope.getParent().getParent());
     }
 
-    @Test
-    void simpleScopeTest() {
+    @Test void simpleScopeTest() {
         String contents =
-              "package TestPackage"
-            + "  connector TestConnector"
-            + "  end TestConnector;"
-            + "  model TestModel"
-            + "    model TestSubmodel"
-            + "    end TestSubmodel;"
-            + "  end TestModel;"
-            + "  Real x;"
-            + "end TestPackage;";
+                "package TestPackage"
+                        + "  connector TestConnector"
+                        + "  end TestConnector;"
+                        + "  model TestModel"
+                        + "    model TestSubmodel"
+                        + "    end TestSubmodel;"
+                        + "  end TestModel;"
+                        + "  Real x;"
+                        + "end TestPackage;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
         ModelicaSourceFileScope sourceFileScope = (ModelicaSourceFileScope) ast.getMostSpecificScope();
@@ -100,16 +98,15 @@ class ModelicaResolverTest {
         assertEquals(3, testPackage.getContainedDeclarations().size());
     }
 
-    @Test
-    void extendsScopeTest() {
+    @Test void extendsScopeTest() {
         String contents =
-                  "package Test"
-                + "  model A"
-                + "    extends B;"
-                + "  end A;"
-                + "  model B"
-                + "  end B;"
-                + "end Test;";
+                "package Test"
+                        + "  model A"
+                        + "    extends B;"
+                        + "  end A;"
+                        + "  model B"
+                        + "  end B;"
+                        + "end Test;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
 
@@ -119,47 +116,44 @@ class ModelicaResolverTest {
         assertEquals("#ROOT#FILE#Class:Test#Class:A", ((AbstractModelicaScope) extendsB.getMostSpecificScope()).getNestingRepresentation());
     }
 
-    @Test
-    void absoluteResolutionTest() {
+    @Test void absoluteResolutionTest() {
         String contents =
-              "package TestPackage"
-            + "  model TestModel"
-            + "    model TestSubmodel"
-            + "    end TestSubmodel;"
-            + "  end TestModel;"
-            + "end TestPackage;";
+                "package TestPackage"
+                        + "  model TestModel"
+                        + "    model TestSubmodel"
+                        + "    end TestSubmodel;"
+                        + "  end TestModel;"
+                        + "end TestPackage;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
         testResolvedTypeCount(1, 0, ast.getMostSpecificScope(), true, "TestPackage", "TestModel", "TestSubmodel");
     }
 
 
-    @Test
-    void nonAbsoluteResolutionTest() {
+    @Test void nonAbsoluteResolutionTest() {
         String contents =
-              "package TestPackage"
-            + "  model TestModel"
-            + "    model TestSubmodel"
-            + "    end TestSubmodel;"
-            + "  end TestModel;"
-            + "end TestPackage;";
+                "package TestPackage"
+                        + "  model TestModel"
+                        + "    model TestSubmodel"
+                        + "    end TestSubmodel;"
+                        + "  end TestModel;"
+                        + "end TestPackage;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
         testResolvedTypeCount(1, 0, ast.getMostSpecificScope(), false, "TestPackage", "TestModel", "TestSubmodel");
     }
 
-    @Test
-    void multipleResolutionTest() {
+    @Test void multipleResolutionTest() {
         String contents =
-              "package TestPackage"
-            + "  model TestModel"
-            + "    model A"
-            + "    end A;"
-            + "  end TestModel;"
-            + "  model A"
-            + "  end A;"
-            + "  Real x;"
-            + "end TestPackage;";
+                "package TestPackage"
+                        + "  model TestModel"
+                        + "    model A"
+                        + "    end A;"
+                        + "  end TestModel;"
+                        + "  model A"
+                        + "  end A;"
+                        + "  Real x;"
+                        + "end TestPackage;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
 
@@ -179,30 +173,28 @@ class ModelicaResolverTest {
                 aHidden.getClassScope().getNestingRepresentation());
     }
 
-    @Test
-    void constantComponentResolutionTest() {
+    @Test void constantComponentResolutionTest() {
         String contents =
-              "model Test"
-            + "  model A"
-            + "    constant Real x = 1;"
-            + "  end A;"
-            + "end Test;";
+                "model Test"
+                        + "  model A"
+                        + "    constant Real x = 1;"
+                        + "  end A;"
+                        + "end Test;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
 
         List<ResolvableEntity> xs = testResolvedTypeCount(1, 0, ast.getMostSpecificScope(), false, "Test", "A", "x").getBestCandidates();
         assertEquals(
-            "#ROOT#FILE#Class:Test#Class:A",
+                "#ROOT#FILE#Class:Test#Class:A",
                 ((ModelicaComponentDeclaration) xs.get(0)).getContainingScope().getNestingRepresentation()
         );
     }
 
-    @Test
-    void nestedStoredDefinitionTest() {
+    @Test void nestedStoredDefinitionTest() {
         String contents =
-              "within TestPackage.SubPackage;\n"
-            + "model Test\n"
-            + "end Test;\n";
+                "within TestPackage.SubPackage;\n"
+                        + "model Test\n"
+                        + "end Test;\n";
 
         ASTStoredDefinition ast = modelica.parse(contents);
         RootScope rootScope = (RootScope) ast.getMostSpecificScope().getParent();
@@ -220,37 +212,35 @@ class ModelicaResolverTest {
         testResolvedTypeCount(0, 0, rootScope, false, "Test");
     }
 
-    @Test
-    void extendsTest() {
+    @Test void extendsTest() {
         String contents =
-              "model A\n"
-            + "  model X\n"
-            + "  end X;\n"
-            + "end A;\n"
-            + "model B\n"
-            + "  extends A;"
-            + "end B;";
+                "model A\n"
+                        + "  model X\n"
+                        + "  end X;\n"
+                        + "end A;\n"
+                        + "model B\n"
+                        + "  extends A;"
+                        + "end B;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
 
         testResolvedTypeCount(1, 0, ast.getMostSpecificScope(), false, "B", "X");
     }
 
-    @Test
-    void importTest() {
+    @Test void importTest() {
         String contents =
-              "model I\n"
-            + "  model Z\n"
-            + "  end Z;\n"
-            + "end I;\n"
-            + "model A\n"
-            + "  import I.Z;\n"
-            + "  model X\n"
-            + "  end X;\n"
-            + "end A;\n"
-            + "model B\n"
-            + "  extends A;"
-            + "end B;";
+                "model I\n"
+                        + "  model Z\n"
+                        + "  end Z;\n"
+                        + "end I;\n"
+                        + "model A\n"
+                        + "  import I.Z;\n"
+                        + "  model X\n"
+                        + "  end X;\n"
+                        + "end A;\n"
+                        + "model B\n"
+                        + "  extends A;"
+                        + "end B;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
 
@@ -258,14 +248,13 @@ class ModelicaResolverTest {
         testResolvedTypeCount(0, 0, ast.getMostSpecificScope(), false, "B", "Z");
     }
 
-    @Test
-    void builtinTest() {
+    @Test void builtinTest() {
         String contents =
-              "model A"
-            + "  encapsulated model B"
-            + "    Real x;"
-            + "  end B;"
-            + "end A;";
+                "model A"
+                        + "  encapsulated model B"
+                        + "    Real x;"
+                        + "  end B;"
+                        + "end A;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
 
@@ -278,16 +267,15 @@ class ModelicaResolverTest {
         assertEquals(ModelicaBuiltinType.BaseType.REAL, ((ModelicaBuiltinType) tpe).getBaseType());
     }
 
-    @Test
-    void testRepeatingNameResolution() {
+    @Test void testRepeatingNameResolution() {
         String contents =
-                  "package Test"
-                + "  model X"
-                + "    model X"
-                + "    end X;"
-                + "    Test.X.X mdl;"
-                + "  end X;"
-                + "end Test;";
+                "package Test"
+                        + "  model X"
+                        + "    model X"
+                        + "    end X;"
+                        + "    Test.X.X mdl;"
+                        + "  end X;"
+                        + "end Test;";
 
         ASTStoredDefinition ast = modelica.parse(contents);
 

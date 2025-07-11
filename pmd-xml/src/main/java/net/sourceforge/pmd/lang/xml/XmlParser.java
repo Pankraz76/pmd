@@ -14,8 +14,7 @@ import net.sourceforge.pmd.lang.xml.ast.internal.XmlParserImpl.RootXmlNode;
  */
 class XmlParser implements Parser {
 
-    @Override
-    public RootXmlNode parse(ParserTask task) throws ParseException {
+    @Override public RootXmlNode parse(ParserTask task) throws ParseException {
         return new XmlParserImpl().parse(task);
     }
 

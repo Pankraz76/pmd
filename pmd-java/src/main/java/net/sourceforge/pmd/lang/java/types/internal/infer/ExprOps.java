@@ -161,8 +161,8 @@ public final class ExprOps {
                     //  reference expression for which the corresponding target type
                     //  (as derived from the signature of m) is a type parameter of m.
                     && (!m.isGeneric()
-                        || !invoc.getExplicitTypeArguments().isEmpty()
-                        || !formalType.isTypeVariable());
+                    || !invoc.getExplicitTypeArguments().isEmpty()
+                    || !formalType.isTypeVariable());
         }
 
         if (arg instanceof BranchingMirror) {
@@ -214,7 +214,7 @@ public final class ExprOps {
                     JTypeDeclSymbol symbol = lhs.getSymbol();
 
                     assert symbol instanceof JClassSymbol && ((JClassSymbol) symbol).isArray()
-                        : "Reifiable array should present a symbol! " + lhs;
+                            : "Reifiable array should present a symbol! " + lhs;
 
                     return lhs.getConstructors().get(0);
                 } else {
@@ -227,19 +227,19 @@ public final class ExprOps {
                 }
 
                 accessible = TypeOps.filterAccessible(lhs.getConstructors(),
-                                                      mref.getEnclosingType().getSymbol());
+                        mref.getEnclosingType().getSymbol());
             }
         } else {
             JClassType enclosing = mref.getEnclosingType();
             accessible = mref.getTypeToSearch()
-                             .streamMethods(TypeOps.accessibleMethodFilter(mref.getMethodName(), enclosing.getSymbol()))
-                             .collect(OverloadSet.collectMostSpecific(enclosing));
+                    .streamMethods(TypeOps.accessibleMethodFilter(mref.getMethodName(), enclosing.getSymbol()))
+                    .collect(OverloadSet.collectMostSpecific(enclosing));
         }
 
         if (accessible.size() == 1) {
             JMethodSig candidate = accessible.get(0);
             if (candidate.isVarargs()
-                || candidate.isGeneric() && mref.getExplicitTypeArguments().isEmpty()) {
+                    || candidate.isGeneric() && mref.getExplicitTypeArguments().isEmpty()) {
                 return null;
             }
 
@@ -320,44 +320,37 @@ public final class ExprOps {
         }
 
         List<ExprMirror> arguments = CollectionUtil.map(
-            formals,
-            fi -> new ExprMirror() {
+                formals,
+                fi -> new ExprMirror() {
 
-                @Override
-                public void setInferredType(JTypeMirror mirror) {
-                    // do nothing
-                }
+                    @Override public void setInferredType(JTypeMirror mirror) {
+                        // do nothing
+                    }
 
-                @Override
-                public @Nullable JTypeMirror getInferredType() {
-                    throw new UnsupportedOperationException();
-                }
+                    @Override public @Nullable JTypeMirror getInferredType() {
+                        throw new UnsupportedOperationException();
+                    }
 
-                @Override
-                public JavaNode getLocation() {
-                    return mref.getLocation();
-                }
+                    @Override public JavaNode getLocation() {
+                        return mref.getLocation();
+                    }
 
-                @Override
-                public JTypeMirror getStandaloneType() {
-                    return fi;
-                }
+                    @Override public JTypeMirror getStandaloneType() {
+                        return fi;
+                    }
 
-                @Override
-                public String toString() {
-                    return "formal : " + fi;
-                }
+                    @Override public String toString() {
+                        return "formal : " + fi;
+                    }
 
-                @Override
-                public TypingContext getTypingContext() {
-                    return mref.getTypingContext();
-                }
+                    @Override public TypingContext getTypingContext() {
+                        return mref.getTypingContext();
+                    }
 
-                @Override
-                public boolean isEquivalentToUnderlyingAst() {
-                    throw new UnsupportedOperationException("Cannot invoque isSemanticallyEquivalent on this mirror, it doesn't have a backing AST node: " + this);
+                    @Override public boolean isEquivalentToUnderlyingAst() {
+                        throw new UnsupportedOperationException("Cannot invoque isSemanticallyEquivalent on this mirror, it doesn't have a backing AST node: " + this);
+                    }
                 }
-            }
         );
 
 
@@ -365,91 +358,74 @@ public final class ExprOps {
 
             private MethodCtDecl mt;
 
-            @Override
-            public JavaNode getLocation() {
+            @Override public JavaNode getLocation() {
                 return mref.getLocation();
             }
 
-            @Override
-            public Iterable<JMethodSig> getAccessibleCandidates() {
+            @Override public Iterable<JMethodSig> getAccessibleCandidates() {
                 return ExprOps.getAccessibleCandidates(mref, asInstanceMethod, targetType);
             }
 
-            @Override
-            public JTypeMirror getErasedReceiverType() {
+            @Override public JTypeMirror getErasedReceiverType() {
                 return mref.getTypeToSearch().getErasure();
             }
 
-            @Override
-            public @Nullable JTypeMirror getReceiverType() {
+            @Override public @Nullable JTypeMirror getReceiverType() {
                 return mref.getTypeToSearch();
             }
 
-            @Override
-            public List<JTypeMirror> getExplicitTypeArguments() {
+            @Override public List<JTypeMirror> getExplicitTypeArguments() {
                 return mref.getExplicitTypeArguments();
             }
 
-            @Override
-            public JavaNode getExplicitTargLoc(int i) {
+            @Override public JavaNode getExplicitTargLoc(int i) {
                 throw new IndexOutOfBoundsException();
             }
 
-            @Override
-            public String getName() {
+            @Override public String getName() {
                 return mref.getMethodName();
             }
 
-            @Override
-            public List<ExprMirror> getArgumentExpressions() {
+            @Override public List<ExprMirror> getArgumentExpressions() {
                 return arguments;
             }
 
-            @Override
-            public int getArgumentCount() {
+            @Override public int getArgumentCount() {
                 return arguments.size();
             }
 
-            @Override
-            public void setCompileTimeDecl(MethodCtDecl methodType) {
+            @Override public void setCompileTimeDecl(MethodCtDecl methodType) {
                 this.mt = methodType;
             }
 
-            @Override
-            public @Nullable MethodCtDecl getCtDecl() {
+            @Override public @Nullable MethodCtDecl getCtDecl() {
                 return mt;
             }
 
             JTypeMirror inferred;
 
-            @Override
-            public void setInferredType(JTypeMirror mirror) {
+            @Override public void setInferredType(JTypeMirror mirror) {
                 // todo is this useful for method refs?
                 inferred = mirror;
             }
 
-            @Override
-            public JTypeMirror getInferredType() {
+            @Override public JTypeMirror getInferredType() {
                 return inferred;
             }
 
-            @Override
-            public @NonNull JClassType getEnclosingType() {
+            @Override public @NonNull JClassType getEnclosingType() {
                 return mref.getEnclosingType();
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "Method ref adapter (for " + mref + ")";
             }
 
-            @Override
-            public TypingContext getTypingContext() {
+            @Override public TypingContext getTypingContext() {
                 return mref.getTypingContext();
             }
 
-            @Override
-            public boolean isEquivalentToUnderlyingAst() {
+            @Override public boolean isEquivalentToUnderlyingAst() {
                 throw new UnsupportedOperationException("Cannot invoque isSemanticallyEquivalent on this mirror, it doesn't have a backing AST node: " + this);
             }
         };
@@ -473,7 +449,7 @@ public final class ExprOps {
                 }
 
                 if (asInstanceMethod && typeToSearch.isRaw() && typeToSearch instanceof JClassType
-                    && targetType.getArity() > 0) {
+                        && targetType.getArity() > 0) {
                     //  In the second search, if P1, ..., Pn is not empty
                     //  and P1 is a subtype of ReferenceType, then the
                     //  method reference expression is treated as if it were
@@ -503,8 +479,8 @@ public final class ExprOps {
             boolean acceptsInstanceMethods = canUseInstanceMethods(actualTypeToSearch, targetType, mref);
 
             Predicate<JMethodSymbol> prefilter = TypeOps.accessibleMethodFilter(mref.getMethodName(), mref.getEnclosingType().getSymbol())
-                                                        .and(m -> Modifier.isStatic(m.getModifiers())
-                                                            || acceptsInstanceMethods);
+                    .and(m -> Modifier.isStatic(m.getModifiers())
+                            || acceptsInstanceMethods);
             return actualTypeToSearch.streamMethods(prefilter).collect(Collectors.toList());
         }
     }

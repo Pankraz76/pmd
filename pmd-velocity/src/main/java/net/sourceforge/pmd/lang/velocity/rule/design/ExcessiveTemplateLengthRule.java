@@ -17,23 +17,21 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 public class ExcessiveTemplateLengthRule extends AbstractVtlRule {
 
     private static final PropertyDescriptor<Integer> REPORT_LEVEL =
-        CommonPropertyDescriptors.reportLevelProperty()
-                                 .desc("Threshold above which a node is reported")
-                                 .require(positive())
-                                 .defaultValue(1000)
-                                 .build();
+            CommonPropertyDescriptors.reportLevelProperty()
+                    .desc("Threshold above which a node is reported")
+                    .require(positive())
+                    .defaultValue(1000)
+                    .build();
 
     public ExcessiveTemplateLengthRule() {
         definePropertyDescriptor(REPORT_LEVEL);
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTTemplate.class);
     }
 
-    @Override
-    public Object visit(final ASTTemplate node, final Object data) {
+    @Override public Object visit(final ASTTemplate node, final Object data) {
 
         if (node.getEndLine() - node.getBeginLine() >= getProperty(REPORT_LEVEL)) {
             asCtx(data).addViolation(node);

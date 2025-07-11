@@ -49,11 +49,11 @@ public class ApexDocRule extends AbstractApexRule {
 
     private static final PropertyDescriptor<Boolean> REPORT_MISSING_DESCRIPTION_DESCRIPTOR =
             booleanProperty("reportMissingDescription")
-                .desc("Report missing @description").defaultValue(true).build();
+                    .desc("Report missing @description").defaultValue(true).build();
 
     private static final PropertyDescriptor<Boolean> REPORT_PROPERTY_DESCRIPTOR =
             booleanProperty("reportProperty")
-                .desc("Report properties without comments").defaultValue(true).build();
+                    .desc("Report properties without comments").defaultValue(true).build();
 
     public ApexDocRule() {
         definePropertyDescriptor(REPORT_PRIVATE_DESCRIPTOR);
@@ -62,25 +62,21 @@ public class ApexDocRule extends AbstractApexRule {
         definePropertyDescriptor(REPORT_PROPERTY_DESCRIPTOR);
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class, ASTUserInterface.class, ASTMethod.class, ASTProperty.class);
     }
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         handleClassOrInterface(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTUserInterface node, Object data) {
+    @Override public Object visit(ASTUserInterface node, Object data) {
         handleClassOrInterface(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTMethod node, Object data) {
+    @Override public Object visit(ASTMethod node, Object data) {
         if (node.getParent() instanceof ASTProperty) {
             // Skip property methods, doc is required on the property itself
             return data;
@@ -118,8 +114,7 @@ public class ApexDocRule extends AbstractApexRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTProperty node, Object data) {
+    @Override public Object visit(ASTProperty node, Object data) {
         ApexDocComment comment = getApexDocComment(node);
 
         if (comment == null) {

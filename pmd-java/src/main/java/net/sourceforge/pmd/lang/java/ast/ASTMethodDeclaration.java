@@ -50,8 +50,7 @@ public final class ASTMethodDeclaration extends AbstractExecutableDeclaration<JM
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -107,8 +106,7 @@ public final class ASTMethodDeclaration extends AbstractExecutableDeclaration<JM
      * Returns the default clause, if this is an annotation method declaration
      * that features one. Otherwise returns null.
      */
-    @Nullable
-    public ASTDefaultValue getDefaultClause() {
+    @Nullable public ASTDefaultValue getDefaultClause() {
         return AstImplUtil.getChildAs(this, getNumChildren() - 1, ASTDefaultValue.class);
     }
 
@@ -123,8 +121,7 @@ public final class ASTMethodDeclaration extends AbstractExecutableDeclaration<JM
      * Returns the extra array dimensions that may be after the
      * formal parameters.
      */
-    @Nullable
-    public ASTArrayDimensions getExtraDimensions() {
+    @Nullable public ASTArrayDimensions getExtraDimensions() {
         return children(ASTArrayDimensions.class).first();
     }
 
@@ -133,11 +130,11 @@ public final class ASTMethodDeclaration extends AbstractExecutableDeclaration<JM
      */
     public boolean isMainMethod() {
         return this.hasModifiers(JModifier.PUBLIC, JModifier.STATIC)
-            && "main".equals(this.getName())
-            && this.isVoid()
-            && this.getArity() == 1
-            && TypeTestUtil.isExactlyA(String[].class, this.getFormalParameters().get(0))
-            || isLaunchableMainMethod();
+                && "main".equals(this.getName())
+                && this.isVoid()
+                && this.getArity() == 1
+                && TypeTestUtil.isExactlyA(String[].class, this.getFormalParameters().get(0))
+                || isLaunchableMainMethod();
     }
 
     /**
@@ -150,6 +147,6 @@ public final class ASTMethodDeclaration extends AbstractExecutableDeclaration<JM
                 && !this.hasModifiers(JModifier.PRIVATE)
                 && this.isVoid()
                 && (this.getArity() == 0
-                    || this.getArity() == 1 && TypeTestUtil.isExactlyA(String[].class, this.getFormalParameters().get(0)));
+                || this.getArity() == 1 && TypeTestUtil.isExactlyA(String[].class, this.getFormalParameters().get(0)));
     }
 }

@@ -24,7 +24,7 @@ import net.sourceforge.pmd.lang.java.types.OverloadSelectionResult;
  * </pre>
  */
 public final class ASTExplicitConstructorInvocation extends AbstractJavaTypeNode
-    implements InvocationNode, ASTStatement {
+        implements InvocationNode, ASTStatement {
 
     private boolean isSuper;
     private OverloadSelectionResult result;
@@ -34,15 +34,12 @@ public final class ASTExplicitConstructorInvocation extends AbstractJavaTypeNode
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
 
-    @Override
-    @NonNull
-    public ASTArgumentList getArguments() {
+    @Override @NonNull public ASTArgumentList getArguments() {
         return (ASTArgumentList) getLastChild();
     }
 
@@ -84,9 +81,7 @@ public final class ASTExplicitConstructorInvocation extends AbstractJavaTypeNode
         return getFirstChild() instanceof ASTPrimaryExpression;
     }
 
-    @Override
-    @Nullable
-    public ASTTypeArguments getExplicitTypeArguments() {
+    @Override @Nullable public ASTTypeArguments getExplicitTypeArguments() {
         return firstChild(ASTTypeArguments.class);
     }
 
@@ -94,13 +89,11 @@ public final class ASTExplicitConstructorInvocation extends AbstractJavaTypeNode
      * Returns the qualifying expression if this is a {@linkplain #isQualified() qualified superclass
      * constructor invocation}.
      */
-    @Nullable
-    public ASTExpression getQualifier() {
+    @Nullable public ASTExpression getQualifier() {
         return AstImplUtil.getChildAs(this, 0, ASTExpression.class);
     }
 
-    @Override
-    public OverloadSelectionResult getOverloadSelectionInfo() {
+    @Override public OverloadSelectionResult getOverloadSelectionInfo() {
         forceTypeResolution();
         return assertNonNullAfterTypeRes(result);
     }

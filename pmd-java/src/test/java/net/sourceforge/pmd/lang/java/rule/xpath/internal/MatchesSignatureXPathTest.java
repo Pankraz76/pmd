@@ -20,8 +20,7 @@ import net.sourceforge.pmd.lang.rule.xpath.PmdXPathException.Phase;
  */
 class MatchesSignatureXPathTest extends BaseXPathFunctionTest {
 
-    @Test
-    void testMatchSig1() {
+    @Test void testMatchSig1() {
         Rule rule = makeXpathRuleFromXPath("//MethodCall[pmd-java:matchesSig('_#equals(java.lang.Object)')]");
 
         assertFinds(rule, 1, "class O { { this.equals(\"\"); } }");
@@ -29,38 +28,33 @@ class MatchesSignatureXPathTest extends BaseXPathFunctionTest {
     }
 
 
-    @Test
-    void testMatchSigWithReceiver() {
+    @Test void testMatchSigWithReceiver() {
         Rule rule = makeXpathRuleFromXPath("//MethodCall[pmd-java:matchesSig('java.lang.Enum#equals(java.lang.Object)')]");
 
         assertFinds(rule, 1, "enum O {; { this.equals(\"\"); } }");
         assertFinds(rule, 0, "enum O {; { \"\".equals(\"\"); } }");
     }
 
-    @Test
-    void testMatchSigUnresolved() {
+    @Test void testMatchSigUnresolved() {
         Rule rule = makeXpathRuleFromXPath("//MethodCall[pmd-java:matchesSig('java.lang.String#foobar()')]");
 
         assertFinds(rule, 0, "enum O {; { \"\".foobar(); } }");
     }
 
-    @Test
-    void testMatchSigNoName() {
+    @Test void testMatchSigNoName() {
         Rule rule = makeXpathRuleFromXPath("//MethodCall[pmd-java:matchesSig('_#_(int,int)')]");
 
         assertFinds(rule, 2, "enum O {; { \"\".substring(1, 2); this.foo(1, 'c');} void foo(int a, int b) {} }");
     }
 
 
-    @Test
-    void testMatchSigWrongTypeReturnsFalse() {
+    @Test void testMatchSigWrongTypeReturnsFalse() {
         Rule rule = makeXpathRuleFromXPath("//EnumDeclaration[pmd-java:matchesSig('_#_(int,int)')]");
 
         assertFinds(rule, 0, "enum O {; { \"\".substring(1, 2); this.foo(1, 'c');} void foo(int a, int b) {} }");
     }
 
-    @Test
-    void testMatchInvalidSig() throws Exception {
+    @Test void testMatchInvalidSig() throws Exception {
         Rule rule = makeXpathRuleFromXPath("//*[pmd-java:matchesSig('_#')]");
 
         try (LanguageProcessor lp = java.newProcessor()) {

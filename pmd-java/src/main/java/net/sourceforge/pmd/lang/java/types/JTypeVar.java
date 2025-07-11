@@ -43,8 +43,7 @@ public interface JTypeVar extends SubstVar {
      * Returns the reflected type variable this instance represents,
      * or null if this is a capture variable.
      */
-    @Override
-    @Nullable JTypeParameterSymbol getSymbol();
+    @Override @Nullable JTypeParameterSymbol getSymbol();
 
 
     /**
@@ -74,8 +73,7 @@ public interface JTypeVar extends SubstVar {
      * Gets the lower bound. {@link TypeSystem#NULL_TYPE} conventionally represents
      * the bottom type (a trivial lower bound).
      */
-    @NonNull
-    JTypeMirror getLowerBound();
+    @NonNull JTypeMirror getLowerBound();
 
 
     /**
@@ -98,8 +96,7 @@ public interface JTypeVar extends SubstVar {
     @Nullable JWildcardType getCapturedOrigin();
 
 
-    @Override
-    default <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
+    @Override default <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
         return visitor.visitTypeVar(this, p);
     }
 
@@ -134,19 +131,16 @@ public interface JTypeVar extends SubstVar {
      *     Also, the bound could have been changed to really anything, which means
      *     it wasn't necessarily correct for two of those type vars to compare equals.
      */
-    @Deprecated
-    JTypeVar withUpperBound(@NonNull JTypeMirror newUB);
+    @Deprecated JTypeVar withUpperBound(@NonNull JTypeMirror newUB);
 
     @Override // refine return type
     JTypeVar withAnnotations(PSet<SymAnnot> newTypeAnnots);
 
-    @Override
-    default JTypeVar addAnnotation(@NonNull SymAnnot newAnnot) {
+    @Override default JTypeVar addAnnotation(@NonNull SymAnnot newAnnot) {
         return withAnnotations(getTypeAnnotations().plus(Objects.requireNonNull(newAnnot)));
     }
 
-    @Override
-    default Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
+    @Override default Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
         // recursively bound type vars will throw this into an infinite cycle
         //  eg <T extends X, X extends T>
         //  this is a compile-time error though

@@ -36,26 +36,22 @@ class ModuleStub implements JModuleSymbol, AsmStub, AnnotationOwner {
         this.moduleName = moduleName;
 
         this.parseLock = new ParseLock("ModuleStub:" + moduleName) {
-            @Override
-            protected boolean doParse() throws IOException {
+            @Override protected boolean doParse() throws IOException {
                 try (InputStream instream = loader.getInputStream()) {
                     if (instream != null) {
                         ClassReader classReader = new ClassReader(instream);
                         ClassVisitor classVisitor = new ClassVisitor(AsmSymbolResolver.ASM_API_V) {
-                            @Override
-                            public ModuleVisitor visitModule(String name, int access, String version) {
+                            @Override public ModuleVisitor visitModule(String name, int access, String version) {
                                 assert name.equals(moduleName) : "Expected module-info.class for " + moduleName + ", but got " + name;
 
                                 return new ModuleVisitor(AsmSymbolResolver.ASM_API_V) {
-                                    @Override
-                                    public void visitExport(String packaze, int access, String... modules) {
+                                    @Override public void visitExport(String packaze, int access, String... modules) {
                                         exportedPackages.add(packaze.replace('/', '.'));
                                     }
                                 };
                             }
 
-                            @Override
-                            public AnnotationBuilderVisitor visitAnnotation(String descriptor, boolean visible) {
+                            @Override public AnnotationBuilderVisitor visitAnnotation(String descriptor, boolean visible) {
                                 return new AnnotationBuilderVisitor(ModuleStub.this, resolver, visible, descriptor);
                             }
                         };
@@ -72,44 +68,36 @@ class ModuleStub implements JModuleSymbol, AsmStub, AnnotationOwner {
         };
     }
 
-    @Override
-    public AsmSymbolResolver getResolver() {
+    @Override public AsmSymbolResolver getResolver() {
         return resolver;
     }
 
-    @Override
-    public boolean isUnresolved() {
+    @Override public boolean isUnresolved() {
         return parseLock.isFailed();
     }
 
-    @Override
-    public <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override public <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return null;
     }
 
-    @Override
-    public Set<String> getExportedPackages() {
+    @Override public Set<String> getExportedPackages() {
         parseLock.ensureParsed();
         return exportedPackages;
     }
 
-    @Override
-    public String getSimpleName() {
+    @Override public String getSimpleName() {
         return moduleName; // TODO
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return getResolver().getTypeSystem();
     }
 
-    @Override
-    public void addAnnotation(SymbolicValue.SymAnnot annot) {
+    @Override public void addAnnotation(SymbolicValue.SymAnnot annot) {
         annotations = annotations.plus(annot);
     }
 
-    @Override
-    public PSet<SymbolicValue.SymAnnot> getDeclaredAnnotations() {
+    @Override public PSet<SymbolicValue.SymAnnot> getDeclaredAnnotations() {
         parseLock.ensureParsed();
         return annotations;
     }

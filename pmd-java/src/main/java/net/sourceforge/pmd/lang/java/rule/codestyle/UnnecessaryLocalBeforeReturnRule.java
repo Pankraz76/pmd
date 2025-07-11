@@ -24,8 +24,7 @@ public class UnnecessaryLocalBeforeReturnRule extends AbstractJavaRulechainRule 
         definePropertyDescriptor(STATEMENT_ORDER_MATTERS);
     }
 
-    @Override
-    public Object visit(ASTReturnStatement returnStmt, Object data) {
+    @Override public Object visit(ASTReturnStatement returnStmt, Object data) {
         if (!(returnStmt.getExpr() instanceof ASTVariableAccess)) {
             return null;
         }
@@ -46,7 +45,7 @@ public class UnnecessaryLocalBeforeReturnRule extends AbstractJavaRulechainRule 
         // then this is the only usage
 
         if (!getProperty(STATEMENT_ORDER_MATTERS)
-            || varDecl.ancestors(ASTLocalVariableDeclaration.class).firstOrThrow().getNextSibling() == returnStmt) {
+                || varDecl.ancestors(ASTLocalVariableDeclaration.class).firstOrThrow().getNextSibling() == returnStmt) {
             asCtx(data).addViolation(varDecl, varDecl.getName());
         }
         return null;

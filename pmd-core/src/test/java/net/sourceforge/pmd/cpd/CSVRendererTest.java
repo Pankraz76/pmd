@@ -16,8 +16,7 @@ import net.sourceforge.pmd.lang.document.FileId;
 
 class CSVRendererTest {
 
-    @Test
-    void testLineCountPerFile() throws IOException {
+    @Test void testLineCountPerFile() throws IOException {
         CPDReportRenderer renderer = new CSVRenderer(true);
         CpdReportBuilder builder = new CpdReportBuilder();
         Mark mark1 = builder.createMark("public", CpdTestUtils.FOO_FILE_ID, 48, 10);
@@ -28,14 +27,13 @@ class CSVRendererTest {
         renderer.render(builder.build(), sw);
         String report = sw.toString();
         String expectedReport = "tokens,occurrences" + System.lineSeparator()
-            + "75,2,48,10," + CpdTestUtils.FOO_FILE_ID.getAbsolutePath() + ",73,20,"
-            + CpdTestUtils.BAR_FILE_ID.getAbsolutePath() + System.lineSeparator();
+                + "75,2,48,10," + CpdTestUtils.FOO_FILE_ID.getAbsolutePath() + ",73,20,"
+                + CpdTestUtils.BAR_FILE_ID.getAbsolutePath() + System.lineSeparator();
 
         assertEquals(expectedReport, report);
     }
 
-    @Test
-    void testFilenameEscapes() throws IOException {
+    @Test void testFilenameEscapes() throws IOException {
         CPDReportRenderer renderer = new CSVRenderer();
         CpdReportBuilder builder = new CpdReportBuilder();
         FileId foo = FileId.fromPathLikeString("/var,with,commas/Foo.java");
@@ -48,8 +46,8 @@ class CSVRendererTest {
         renderer.render(builder.build(), sw);
         String report = sw.toString();
         String expectedReport = "lines,tokens,occurrences" + System.lineSeparator()
-            + "10,75,2,48,\"" + foo.getAbsolutePath() + "\",73,\"" + bar.getAbsolutePath() + "\""
-            + System.lineSeparator();
+                + "10,75,2,48,\"" + foo.getAbsolutePath() + "\",73,\"" + bar.getAbsolutePath() + "\""
+                + System.lineSeparator();
         assertEquals(expectedReport, report);
     }
 

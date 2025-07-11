@@ -32,10 +32,9 @@ public class MethodReturnsInternalArrayRule extends AbstractJavaRulechainRule {
         super(ASTMethodDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration method, Object data) {
+    @Override public Object visit(ASTMethodDeclaration method, Object data) {
         if (!method.getResultTypeNode().getTypeMirror().isArray()
-            || method.getVisibility() == Visibility.V_PRIVATE) {
+                || method.getVisibility() == Visibility.V_PRIVATE) {
             return data;
         }
 
@@ -63,15 +62,15 @@ public class MethodReturnsInternalArrayRule extends AbstractJavaRulechainRule {
 
     private static boolean isInternal(JFieldSymbol field) {
         return !Modifier.isPublic(field.getModifiers()) // not public
-            && !field.isUnresolved(); // must be resolved to avoid FPs
+                && !field.isUnresolved(); // must be resolved to avoid FPs
     }
 
     private static boolean isZeroLengthArrayConstant(JFieldSymbol sym) {
         return sym.isFinal()
                 && NodeStream.of(sym.tryGetNode())
-                         .map(ASTVariableId::getInitializer)
-                         .filter(MethodReturnsInternalArrayRule::isZeroLengthArrayExpr)
-                         .nonEmpty();
+                .map(ASTVariableId::getInitializer)
+                .filter(MethodReturnsInternalArrayRule::isZeroLengthArrayExpr)
+                .nonEmpty();
     }
 
     private static boolean isZeroLengthArrayExpr(ASTExpression expr) {

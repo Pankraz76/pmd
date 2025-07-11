@@ -27,28 +27,23 @@ abstract class AbstractAstBackedSymbol<T extends SymbolDeclaratorNode> implement
         InternalApiBridge.setSymbol(node, this);
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return node.getTypeSystem();
     }
 
-    @Override
-    public @NonNull T tryGetNode() {
+    @Override public @NonNull T tryGetNode() {
         return node;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return SymbolToStrings.AST.toString(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return SymbolEquality.equals(this, o);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.hash(this);
     }
 }

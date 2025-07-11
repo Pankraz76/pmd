@@ -29,8 +29,7 @@ public final class ASTJspDirectiveAttribute extends AbstractJspNode {
         this.value = value;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

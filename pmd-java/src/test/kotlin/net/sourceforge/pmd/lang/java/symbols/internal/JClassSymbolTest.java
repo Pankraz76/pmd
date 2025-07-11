@@ -29,40 +29,32 @@ import net.sourceforge.pmd.lang.java.symbols.testdata.TypeAnnotation;
  */
 class JClassSymbolTest {
 
-    @EnumSource
-    @ParameterizedTest
-    void testAnnotationAttributes(SymImplementation impl) {
+    @EnumSource @ParameterizedTest void testAnnotationAttributes(SymImplementation impl) {
         JClassSymbol sym = impl.getSymbol(TypeAnnotation.class);
 
         assertEquals(RetentionPolicy.RUNTIME, sym.getAnnotationRetention());
     }
 
 
-    @EnumSource
-    @ParameterizedTest
-    void testAnnotWithNoRetention(SymImplementation impl) {
+    @EnumSource @ParameterizedTest void testAnnotWithNoRetention(SymImplementation impl) {
         JClassSymbol sym = impl.getSymbol(AnnotationWithNoRetention.class);
 
         assertEquals(RetentionPolicy.CLASS, sym.getAnnotationRetention());
     }
 
 
-    @EnumSource
-    @ParameterizedTest
-    void testAnnotWithNoTarget(SymImplementation impl) {
+    @EnumSource @ParameterizedTest void testAnnotWithNoTarget(SymImplementation impl) {
         JClassSymbol sym = impl.getSymbol(AnnotationWithNoRetention.class);
 
         for (ElementType type : ElementType.values()) {
             assertEquals(type != ElementType.TYPE_PARAMETER, sym.annotationAppliesTo(type),
-                         "annot supports " + type);
+                    "annot supports " + type);
         }
     }
 
     private static final String SEALED_TESTDATA = "net.sourceforge.pmd.lang.java.symbols.testdata.sealed.";
 
-    @EnumSource
-    @ParameterizedTest
-    void testSealedInterfaces(SymImplementation impl) {
+    @EnumSource @ParameterizedTest void testSealedInterfaces(SymImplementation impl) {
         Fixture fixture = impl.findClass(SEALED_TESTDATA + "SealedTypesTestData");
 
         JClassSymbol stTestData = fixture.getSymbol("SealedTypesTestData");
@@ -84,9 +76,7 @@ class JClassSymbolTest {
     }
 
 
-    @EnumSource
-    @ParameterizedTest
-    void testImplicitPermitsClause(SymImplementation impl) {
+    @EnumSource @ParameterizedTest void testImplicitPermitsClause(SymImplementation impl) {
         Fixture fixture = impl.findClass(SEALED_TESTDATA + "ImplicitPermitsClause");
 
         JClassSymbol sealedClass = fixture.getSymbol("ImplicitPermitsClause");

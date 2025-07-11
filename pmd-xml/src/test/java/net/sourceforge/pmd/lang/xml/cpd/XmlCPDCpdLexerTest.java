@@ -15,8 +15,7 @@ class XmlCPDCpdLexerTest extends CpdTextComparisonTest {
         super(XmlLanguageModule.getInstance(), ".xml");
     }
 
-    @Test
-    void tokenizeTest() {
+    @Test void tokenizeTest() {
         doTest("simple");
     }
 }

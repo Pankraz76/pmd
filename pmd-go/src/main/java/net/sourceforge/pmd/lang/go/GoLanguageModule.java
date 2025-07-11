@@ -21,8 +21,7 @@ public class GoLanguageModule extends CpdOnlyLanguageModuleBase {
         return (GoLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new GoCpdLexer();
     }
 }

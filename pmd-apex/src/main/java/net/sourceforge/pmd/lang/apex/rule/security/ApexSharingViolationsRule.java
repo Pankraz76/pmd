@@ -39,8 +39,7 @@ public class ApexSharingViolationsRule extends AbstractApexRule {
      */
     private Map<ApexNode<?>, Object> localCacheOfReportedNodes = new WeakHashMap<>();
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(
                 ASTDmlDeleteStatement.class,
                 ASTDmlInsertStatement.class,
@@ -53,62 +52,52 @@ public class ApexSharingViolationsRule extends AbstractApexRule {
                 ASTSoslExpression.class);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         super.start(ctx);
         localCacheOfReportedNodes.clear();
     }
 
-    @Override
-    public Object visit(ASTSoqlExpression node, Object data) {
+    @Override public Object visit(ASTSoqlExpression node, Object data) {
         checkForViolation(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTSoslExpression node, Object data) {
+    @Override public Object visit(ASTSoslExpression node, Object data) {
         checkForViolation(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlUpsertStatement node, Object data) {
+    @Override public Object visit(ASTDmlUpsertStatement node, Object data) {
         checkForViolation(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlUpdateStatement node, Object data) {
+    @Override public Object visit(ASTDmlUpdateStatement node, Object data) {
         checkForViolation(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlUndeleteStatement node, Object data) {
+    @Override public Object visit(ASTDmlUndeleteStatement node, Object data) {
         checkForViolation(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlMergeStatement node, Object data) {
+    @Override public Object visit(ASTDmlMergeStatement node, Object data) {
         checkForViolation(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlInsertStatement node, Object data) {
+    @Override public Object visit(ASTDmlInsertStatement node, Object data) {
         checkForViolation(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTDmlDeleteStatement node, Object data) {
+    @Override public Object visit(ASTDmlDeleteStatement node, Object data) {
         checkForViolation(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTMethodCallExpression node, Object data) {
+    @Override public Object visit(ASTMethodCallExpression node, Object data) {
         if (Helper.isAnyDatabaseMethodCall(node)) {
             checkForViolation(node, data);
         }

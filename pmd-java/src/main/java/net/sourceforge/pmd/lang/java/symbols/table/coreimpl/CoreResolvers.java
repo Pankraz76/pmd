@@ -25,23 +25,19 @@ public final class CoreResolvers {
     public static <S> NameResolver<S> singleton(String name, S symbol) {
         final List<S> single = singletonList(symbol);
         return new SingleNameResolver<S>() {
-            @Override
-            public @NonNull List<S> resolveHere(String s) {
+            @Override public @NonNull List<S> resolveHere(String s) {
                 return name.equals(s) ? single : emptyList();
             }
 
-            @Override
-            public @Nullable S resolveFirst(String simpleName) {
+            @Override public @Nullable S resolveFirst(String simpleName) {
                 return name.equals(simpleName) ? symbol : null;
             }
 
-            @Override
-            public @NonNull OptionalBool knows(String simpleName) {
+            @Override public @NonNull OptionalBool knows(String simpleName) {
                 return OptionalBool.definitely(name.equals(simpleName));
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "Single(" + symbol + ")";
             }
         };
@@ -63,24 +59,19 @@ public final class CoreResolvers {
             this.map = map;
         }
 
-        @Nullable
-        @Override
-        public S resolveFirst(String simpleName) {
+        @Nullable @Override public S resolveFirst(String simpleName) {
             return map.get(simpleName);
         }
 
-        @Override
-        public boolean isDefinitelyEmpty() {
+        @Override public boolean isDefinitelyEmpty() {
             return map.isEmpty();
         }
 
-        @Override
-        public @NonNull OptionalBool knows(String simpleName) {
+        @Override public @NonNull OptionalBool knows(String simpleName) {
             return OptionalBool.definitely(map.containsKey(simpleName));
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "SingularMap(" + map.values() + ")";
         }
     }
@@ -93,23 +84,19 @@ public final class CoreResolvers {
             this.map = map;
         }
 
-        @Override
-        public @NonNull List<S> resolveHere(String s) {
+        @Override public @NonNull List<S> resolveHere(String s) {
             return map.get(s);
         }
 
-        @Override
-        public @NonNull OptionalBool knows(String simpleName) {
+        @Override public @NonNull OptionalBool knows(String simpleName) {
             return OptionalBool.definitely(map.containsKey(simpleName));
         }
 
-        @Override
-        public boolean isDefinitelyEmpty() {
+        @Override public boolean isDefinitelyEmpty() {
             return map.isEmpty();
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "Map(" + mapToString() + ")";
         }
 
@@ -131,29 +118,23 @@ public final class CoreResolvers {
 
         private static final EmptyResolver INSTANCE = new EmptyResolver<>();
 
-        @Nullable
-        @Override
-        public S resolveFirst(String simpleName) {
+        @Nullable @Override public S resolveFirst(String simpleName) {
             return null;
         }
 
-        @Override
-        public @NonNull List<S> resolveHere(String simpleName) {
+        @Override public @NonNull List<S> resolveHere(String simpleName) {
             return emptyList();
         }
 
-        @Override
-        public @NonNull OptionalBool knows(String simpleName) {
+        @Override public @NonNull OptionalBool knows(String simpleName) {
             return OptionalBool.NO;
         }
 
-        @Override
-        public boolean isDefinitelyEmpty() {
+        @Override public boolean isDefinitelyEmpty() {
             return true;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "Empty";
         }
     }

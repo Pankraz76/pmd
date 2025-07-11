@@ -21,9 +21,9 @@ public class WsdlLanguageModule extends SimpleLanguageModuleBase {
 
     public WsdlLanguageModule() {
         super(LanguageMetadata.withId(ID).name("WSDL")
-                              .extensions("wsdl")
-                              .addVersion("1.1")
-                              .addDefaultVersion("2.0"),
+                        .extensions("wsdl")
+                        .addVersion("1.1")
+                        .addDefaultVersion("2.0"),
                 new XmlHandler());
     }
 
@@ -31,8 +31,7 @@ public class WsdlLanguageModule extends SimpleLanguageModuleBase {
         return (WsdlLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new XmlCpdLexer();
     }
 }

@@ -30,14 +30,12 @@ public class AvoidHardcodingIdRule extends AbstractApexRule {
         CHECKSUM_LOOKUP = Collections.unmodifiableMap(lookup);
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTLiteralExpression.class);
     }
 
 
-    @Override
-    public Object visit(ASTLiteralExpression node, Object data) {
+    @Override public Object visit(ASTLiteralExpression node, Object data) {
         if (node.isString()) {
             String literal = node.getImage();
             if (PATTERN.matcher(literal).matches()) {

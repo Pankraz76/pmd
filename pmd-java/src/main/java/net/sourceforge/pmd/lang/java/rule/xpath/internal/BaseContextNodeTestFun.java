@@ -35,23 +35,19 @@ public class BaseContextNodeTestFun<T extends JavaNode> extends BaseJavaXPathFun
         this.checker = checker;
     }
 
-    @Override
-    public Type[] getArgumentTypes() {
+    @Override public Type[] getArgumentTypes() {
         return SINGLE_STRING_SEQ;
     }
 
-    @Override
-    public Type getResultType() {
+    @Override public Type getResultType() {
         return Type.SINGLE_BOOLEAN;
     }
 
-    @Override
-    public boolean dependsOnContext() {
+    @Override public boolean dependsOnContext() {
         return true;
     }
 
-    @Override
-    public FunctionCall makeCallExpression() {
+    @Override public FunctionCall makeCallExpression() {
         return (contextNode, arguments) -> {
             String fullTypeName = arguments[0].toString();
             return klass.isInstance(contextNode) && checker.test(fullTypeName, (T) contextNode);

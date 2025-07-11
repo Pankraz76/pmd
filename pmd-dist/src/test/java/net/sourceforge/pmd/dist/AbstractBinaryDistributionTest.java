@@ -21,8 +21,7 @@ abstract class AbstractBinaryDistributionTest {
         return new File(".", "target/pmd-dist-" + PMDVersion.VERSION + "-bin.zip");
     }
 
-    @TempDir
-    static Path folder;
+    @TempDir static Path folder;
 
     /**
      * The temporary directory, to which the binary distribution will be extracted.
@@ -34,8 +33,7 @@ abstract class AbstractBinaryDistributionTest {
         return Files.createTempFile(folder, null, null);
     }
 
-    @BeforeAll
-    static void setupTempDirectory() throws Exception {
+    @BeforeAll static void setupTempDirectory() throws Exception {
         tempDir = Files.createTempDirectory(folder, null);
         if (getBinaryDistribution().exists()) {
             ZipFileExtractor.extractZipFile(getBinaryDistribution().toPath(), tempDir);

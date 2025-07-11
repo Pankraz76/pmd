@@ -32,23 +32,22 @@ import net.sourceforge.pmd.util.CollectionUtil;
 @Experimental
 public class UnnecessaryPmdSuppressionRule extends AbstractRule {
 
-    @Override
-    public void apply(Node rootNode, RuleContext ctx) {
+    @Override public void apply(Node rootNode, RuleContext ctx) {
         assert rootNode instanceof RootNode;
 
         LanguageVersionHandler handler = rootNode.getAstInfo().getLanguageProcessor().services();
         List<ViolationSuppressor> suppressors = CollectionUtil.concatView(
-            handler.getExtraViolationSuppressors(),
-            InternalApiBridge.DEFAULT_SUPPRESSORS
+                handler.getExtraViolationSuppressors(),
+                InternalApiBridge.DEFAULT_SUPPRESSORS
         );
 
         for (ViolationSuppressor suppressor : suppressors) {
             Set<UnusedSuppressorNode> unusedSuppressors = suppressor.getUnusedSuppressors((RootNode) rootNode);
             for (UnusedSuppressorNode unusedSuppressor : unusedSuppressors) {
                 ctx.addViolationNoSuppress(
-                    unusedSuppressor.getLocation(),
-                    rootNode.getAstInfo(),
-                    unusedSuppressor.unusedReason()
+                        unusedSuppressor.getLocation(),
+                        rootNode.getAstInfo(),
+                        unusedSuppressor.unusedReason()
                 );
             }
         }

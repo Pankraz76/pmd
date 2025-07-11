@@ -10,18 +10,15 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class ExecuteImmediateTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseExecuteImmediate1047a() {
+    @Test void parseExecuteImmediate1047a() {
         plsql.parseResource("ExecuteImmediate1047a.pls");
     }
 
-    @Test
-    void parseExecuteImmediate1047b() {
+    @Test void parseExecuteImmediate1047b() {
         plsql.parseResource("ExecuteImmediate1047b.pls");
     }
 
-    @Test
-    void parseExecuteImmediateString() {
+    @Test void parseExecuteImmediateString() {
         plsql.parseResource("ExecuteImmediateString.pls");
     }
 }

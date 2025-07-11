@@ -1,3 +1,5 @@
 public class Test {
- enum Season { winter, spring, summer, fall };
+    enum Season { winter, spring, summer, fall
+    }
+    ;
 }

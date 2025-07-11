@@ -43,8 +43,7 @@ public class PLSQLParser extends JjtreeParserAdapter<ASTInput> {
     }
 
     static final TokenDocumentBehavior TOKEN_BEHAVIOR = new TokenDocumentBehavior(PLSQLTokenKinds.TOKEN_NAMES) {
-        @Override
-        public JavaccToken createToken(JavaccTokenDocument self, int kind, CharStream cs, @Nullable String image) {
+        @Override public JavaccToken createToken(JavaccTokenDocument self, int kind, CharStream cs, @Nullable String image) {
             if (image == null) {
                 // fetch another constant image if possible.
                 image = STRING_LITERAL_IMAGES_EXTRA[kind];
@@ -66,8 +65,8 @@ public class PLSQLParser extends JjtreeParserAdapter<ASTInput> {
                 // will be returned unchanged (they are already uppercase, see PLSQLParser),
                 // therefore creating fewer strings in memory.
                 if (kind != PLSQLTokenKinds.CHARACTER_LITERAL
-                    && kind != PLSQLTokenKinds.STRING_LITERAL
-                    && kind != PLSQLTokenKinds.QUOTED_LITERAL) {
+                        && kind != PLSQLTokenKinds.STRING_LITERAL
+                        && kind != PLSQLTokenKinds.QUOTED_LITERAL) {
                     image = image.toUpperCase(Locale.ROOT);
                 }
             }
@@ -76,13 +75,11 @@ public class PLSQLParser extends JjtreeParserAdapter<ASTInput> {
         }
     };
 
-    @Override
-    protected TokenDocumentBehavior tokenBehavior() {
+    @Override protected TokenDocumentBehavior tokenBehavior() {
         return TOKEN_BEHAVIOR;
     }
 
-    @Override
-    protected ASTInput parseImpl(CharStream cs, ParserTask task) throws ParseException {
+    @Override protected ASTInput parseImpl(CharStream cs, ParserTask task) throws ParseException {
         ASTInput root = new PLSQLParserImpl(cs).Input().addTaskInfo(task);
         TimeTracker.bench("PLSQL symbols", () -> SymbolFacade.process(root));
         return root;

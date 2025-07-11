@@ -21,8 +21,7 @@ import net.sourceforge.pmd.lang.impl.SimpleLanguageModuleBase;
 class LanguageModuleBaseTest {
 
 
-    @Test
-    void testInvalidId() {
+    @Test void testInvalidId() {
         assertInvalidId("");
         assertInvalidId("two words");
         assertInvalidId("CapitalLetters");
@@ -41,34 +40,29 @@ class LanguageModuleBaseTest {
                 "Empty versions should not be allowed.");
     }
 
-    @Test
-    void testVersions() {
+    @Test void testVersions() {
         LanguageModuleBase lang = makeLanguage(LanguageMetadata.withId("dumdum").name("Name").extensions("o").addDefaultVersion("abc"));
         assertThat(lang.getDefaultVersion(), equalTo(lang.getVersion("abc")));
     }
 
-    @Test
-    void testMissingVersions() {
+    @Test void testMissingVersions() {
         Exception e = assertThrows(IllegalStateException.class, () -> makeLanguage(LanguageMetadata.withId("dumdum").name("Name").extensions("o")),
                 "Languages without versions should not be allowed.");
         assertEquals("No versions for 'dumdum'", e.getMessage());
     }
 
-    @Test
-    void testNoExtensions() {
+    @Test void testNoExtensions() {
         Exception ex = assertThrows(IllegalStateException.class, () -> makeLanguage(LanguageMetadata.withId("dumdum").name("Name").addVersion("abc")));
         assertThat(ex.getMessage(), containsString("extension"));
     }
 
-    @Test
-    void testShortNameDefault() {
+    @Test void testShortNameDefault() {
         LanguageMetadata meta = LanguageMetadata.withId("java").name("Java");
 
         assertEquals("Java", meta.getShortName());
     }
 
-    @Test
-    void testInvalidDependency() {
+    @Test void testInvalidDependency() {
         LanguageMetadata meta = LanguageMetadata.withId("java").name("Java");
 
         assertThrows(IllegalArgumentException.class, () -> meta.dependsOnLanguage("not an id"));

@@ -35,15 +35,13 @@ class CpdXsltTest {
 </project>
      */
 
-    @Test
-    void cpdhtml() throws Exception {
+    @Test void cpdhtml() throws Exception {
         String result = runXslt("cpdhtml.xslt");
         String expected = IOUtil.readToString(CpdXsltTest.class.getResourceAsStream("ExpectedCpdHtmlReport.html"), StandardCharsets.UTF_8);
         assertEquals(expected, result);
     }
 
-    @Test
-    void cpdhtmlv2() throws Exception {
+    @Test void cpdhtmlv2() throws Exception {
         String result = runXslt("cpdhtml-v2.xslt");
         String expected = IOUtil.readToString(CpdXsltTest.class.getResourceAsStream("ExpectedCpdHtmlReport-v2.html"), StandardCharsets.UTF_8);
         assertEquals(expected, result);
@@ -72,18 +70,15 @@ class CpdXsltTest {
     private static class XSLTErrorListener implements ErrorListener {
         final List<TransformerException> errors = new ArrayList<>();
 
-        @Override
-        public void warning(TransformerException exception) throws TransformerException {
+        @Override public void warning(TransformerException exception) throws TransformerException {
             errors.add(exception);
         }
 
-        @Override
-        public void fatalError(TransformerException exception) throws TransformerException {
+        @Override public void fatalError(TransformerException exception) throws TransformerException {
             errors.add(exception);
         }
 
-        @Override
-        public void error(TransformerException exception) throws TransformerException {
+        @Override public void error(TransformerException exception) throws TransformerException {
             errors.add(exception);
         }
 
@@ -91,8 +86,7 @@ class CpdXsltTest {
             return errors.isEmpty();
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return errors.toString();
         }
     }

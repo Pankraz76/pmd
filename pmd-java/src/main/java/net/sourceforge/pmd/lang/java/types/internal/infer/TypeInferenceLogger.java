@@ -49,63 +49,89 @@ public interface TypeInferenceLogger {
     // computeCompileTimeDecl
 
 
-    default void polyResolutionFailure(JavaNode node) { }
+    default void polyResolutionFailure(JavaNode node) {
+    }
 
-    default void noApplicableCandidates(MethodCallSite site) { }
+    default void noApplicableCandidates(MethodCallSite site) {
+    }
 
-    default void noCompileTimeDeclaration(MethodCallSite site) { }
+    default void noCompileTimeDeclaration(MethodCallSite site) {
+    }
 
-    default void startInference(JMethodSig sig, MethodCallSite site, MethodResolutionPhase phase) { }
+    default void startInference(JMethodSig sig, MethodCallSite site, MethodResolutionPhase phase) {
+    }
 
-    default void endInference(@Nullable JMethodSig result) { }
+    default void endInference(@Nullable JMethodSig result) {
+    }
 
-    default void fallbackInvocation(JMethodSig ctdecl, MethodCallSite site) { }
+    default void fallbackInvocation(JMethodSig ctdecl, MethodCallSite site) {
+    }
 
-    default void skipInstantiation(JMethodSig partiallyInferred, MethodCallSite site) { }
+    default void skipInstantiation(JMethodSig partiallyInferred, MethodCallSite site) {
+    }
 
-    default void ambiguityError(MethodCallSite site, @Nullable MethodCtDecl selected, List<MethodCtDecl> m1) { }
+    default void ambiguityError(MethodCallSite site, @Nullable MethodCtDecl selected, List<MethodCtDecl> m1) {
+    }
 
     // instantiateImpl
 
 
-    default void ctxInitialization(InferenceContext ctx, JMethodSig sig) { }
+    default void ctxInitialization(InferenceContext ctx, JMethodSig sig) {
+    }
 
-    default void applicabilityTest(InferenceContext ctx) { }
+    default void applicabilityTest(InferenceContext ctx) {
+    }
 
-    default void finishApplicabilityTest() { }
+    default void finishApplicabilityTest() {
+    }
 
-    default void startArgsChecks() { }
+    default void startArgsChecks() {
+    }
 
-    default void startArg(int i, ExprMirror expr, JTypeMirror formal) { }
+    default void startArg(int i, ExprMirror expr, JTypeMirror formal) {
+    }
 
-    default void skipArgAsNonPertinent(int i, ExprMirror expr) { }
+    default void skipArgAsNonPertinent(int i, ExprMirror expr) {
+    }
 
-    default void functionalExprNeedsInvocationCtx(JTypeMirror targetT, ExprMirror expr) { }
+    default void functionalExprNeedsInvocationCtx(JTypeMirror targetT, ExprMirror expr) {
+    }
 
-    default void functionalExprHasUnresolvedTargetType(JTypeMirror targetT, FunctionalExprMirror expr) { }
+    default void functionalExprHasUnresolvedTargetType(JTypeMirror targetT, FunctionalExprMirror expr) {
+    }
 
-    default void endArg() { }
+    default void endArg() {
+    }
 
-    default void endArgsChecks() { }
+    default void endArgsChecks() {
+    }
 
-    default void startReturnChecks() { }
+    default void startReturnChecks() {
+    }
 
-    default void endReturnChecks() { }
+    default void endReturnChecks() {
+    }
 
-    default void propagateAndAbort(InferenceContext context, InferenceContext parent) { }
+    default void propagateAndAbort(InferenceContext context, InferenceContext parent) {
+    }
 
-    default void contextDependenciesChanged(InferenceContext ctx) { }
+    default void contextDependenciesChanged(InferenceContext ctx) {
+    }
 
     // ivar events
 
 
-    default void boundAdded(InferenceContext ctx, InferenceVar var, BoundKind kind, JTypeMirror bound, boolean isSubstitution) { }
+    default void boundAdded(InferenceContext ctx, InferenceVar var, BoundKind kind, JTypeMirror bound, boolean isSubstitution) {
+    }
 
-    default void ivarMerged(InferenceContext ctx, InferenceVar var, InferenceVar delegate) { }
+    default void ivarMerged(InferenceContext ctx, InferenceVar var, InferenceVar delegate) {
+    }
 
-    default void ivarInstantiated(InferenceContext ctx, InferenceVar var, JTypeMirror inst) { }
+    default void ivarInstantiated(InferenceContext ctx, InferenceVar var, JTypeMirror inst) {
+    }
 
-    default void ivarDependencyRegistered(InferenceContext ctx, InferenceVar var, Set<InferenceVar> deps) { }
+    default void ivarDependencyRegistered(InferenceContext ctx, InferenceVar var, Set<InferenceVar> deps) {
+    }
 
 
     /**
@@ -119,7 +145,8 @@ public interface TypeInferenceLogger {
      *
      * @param exception Failure record
      */
-    default void logResolutionFail(ResolutionFailure exception) { }
+    default void logResolutionFail(ResolutionFailure exception) {
+    }
 
     default boolean isNoop() {
         return false;
@@ -140,13 +167,11 @@ public interface TypeInferenceLogger {
     class SimpleLogger implements TypeInferenceLogger {
 
         static final TypeInferenceLogger NOOP = new TypeInferenceLogger() {
-            @Override
-            public boolean isNoop() {
+            @Override public boolean isNoop() {
                 return true;
             }
 
-            @Override
-            public TypeInferenceLogger newInstance() {
+            @Override public TypeInferenceLogger newInstance() {
                 return this;
             }
         };
@@ -167,10 +192,10 @@ public interface TypeInferenceLogger {
         protected static final String ANSI_YELLOW = "\u001B[33m";
 
         private static final String TO_BLUE =
-            Matcher.quoteReplacement(ANSI_BLUE) + "$0" + Matcher.quoteReplacement(ANSI_RESET);
+                Matcher.quoteReplacement(ANSI_BLUE) + "$0" + Matcher.quoteReplacement(ANSI_RESET);
 
         private static final String TO_WHITE =
-            Matcher.quoteReplacement(ANSI_GRAY) + "$0" + Matcher.quoteReplacement(ANSI_RESET);
+                Matcher.quoteReplacement(ANSI_GRAY) + "$0" + Matcher.quoteReplacement(ANSI_RESET);
 
         private static final Pattern IVAR_PATTERN = Pattern.compile("['^][α-ωa-z]\\d*");
         private static final Pattern IDENT_PATTERN = Pattern.compile("\\b(?<!['^])(?!extends|super|capture|of|)[\\w]++(?!\\.)<?|-?>++");
@@ -232,15 +257,13 @@ public interface TypeInferenceLogger {
             addIndentSegment(BASE_INDENT);
         }
 
-        @Override
-        public void logResolutionFail(ResolutionFailure exception) {
+        @Override public void logResolutionFail(ResolutionFailure exception) {
             if (exception.getCallSite() instanceof MethodCallSite && exception != ResolutionFailure.UNKNOWN) {
                 ((MethodCallSite) exception.getCallSite()).acceptFailure(exception);
             }
         }
 
-        @Override
-        public void noApplicableCandidates(MethodCallSite site) {
+        @Override public void noApplicableCandidates(MethodCallSite site) {
             if (!site.isLogEnabled()) {
                 return;
             }
@@ -254,7 +277,7 @@ public interface TypeInferenceLogger {
 
             if (site.getExpr() instanceof CtorInvocationMirror) {
                 startSection("[WARNING] No potentially applicable constructors in "
-                            + ((CtorInvocationMirror) site.getExpr()).getNewType());
+                        + ((CtorInvocationMirror) site.getExpr()).getNewType());
             } else {
                 startSection("[WARNING] No potentially applicable methods in " + receiver);
             }
@@ -271,8 +294,7 @@ public interface TypeInferenceLogger {
             endSection("");
         }
 
-        @Override
-        public void noCompileTimeDeclaration(MethodCallSite site) {
+        @Override public void noCompileTimeDeclaration(MethodCallSite site) {
             if (!site.isLogEnabled()) {
                 return;
             }
@@ -285,16 +307,15 @@ public interface TypeInferenceLogger {
         private void summarizeFailures(MethodCallSite site) {
             startSection("Summary of failures:");
             site.getResolutionFailures()
-                .forEach((phase, failures) -> {
-                    startSection(phase.toString() + ":");
-                    failures.forEach(it -> println(String.format("%-64s // while checking %s", it.getReason(), ppMethod(it.getFailedMethod()))));
-                    endSection("");
-                });
+                    .forEach((phase, failures) -> {
+                        startSection(phase.toString() + ":");
+                        failures.forEach(it -> println(String.format("%-64s // while checking %s", it.getReason(), ppMethod(it.getFailedMethod()))));
+                        endSection("");
+                    });
             endSection("");
         }
 
-        @Override
-        public void fallbackInvocation(JMethodSig ctdecl, MethodCallSite site) {
+        @Override public void fallbackInvocation(JMethodSig ctdecl, MethodCallSite site) {
             if (!site.isLogEnabled()) {
                 return;
             }
@@ -302,18 +323,16 @@ public interface TypeInferenceLogger {
             printExpr(site.getExpr());
             summarizeFailures(site);
             println("-> Falling back on " + ppHighlight(ctdecl)
-                        + " (this may cause future mistakes)");
+                    + " (this may cause future mistakes)");
             endSection("");
         }
 
-        @Override
-        public void functionalExprHasUnresolvedTargetType(JTypeMirror targetT, FunctionalExprMirror expr) {
+        @Override public void functionalExprHasUnresolvedTargetType(JTypeMirror targetT, FunctionalExprMirror expr) {
             println("[WARNING] Target type for functional expression is unresolved: " + targetT);
             println("Will treat the expression as matching (this may cause future mistakes)");
         }
 
-        @Override
-        public void ambiguityError(MethodCallSite site, @Nullable MethodCtDecl selected, List<MethodCtDecl> methods) {
+        @Override public void ambiguityError(MethodCallSite site, @Nullable MethodCtDecl selected, List<MethodCtDecl> methods) {
             println("");
             printExpr(site.getExpr());
             startSection("[WARNING] Ambiguity error: all methods are maximally specific");
@@ -356,8 +375,7 @@ public interface TypeInferenceLogger {
             return ivar + kind.getSym() + colorIvars(colorPunct(bound));
         }
 
-        @Override
-        public TypeInferenceLogger newInstance() {
+        @Override public TypeInferenceLogger newInstance() {
             return new SimpleLogger(out);
         }
     }
@@ -389,116 +407,96 @@ public interface TypeInferenceLogger {
             }
         }
 
-        @Override
-        public void startInference(JMethodSig sig, MethodCallSite site, MethodResolutionPhase phase) {
+        @Override public void startInference(JMethodSig sig, MethodCallSite site, MethodResolutionPhase phase) {
             mark();
             startSection(String.format("Phase %-17s%s", phase, ppHighlight(sig)));
         }
 
 
-        @Override
-        public void ctxInitialization(InferenceContext ctx, JMethodSig sig) {
+        @Override public void ctxInitialization(InferenceContext ctx, JMethodSig sig) {
             println(String.format("Context %-11d%s", ctx.getId(), ppHighlight(ctx.mapToIVars(sig))));
         }
 
-        @Override
-        public void applicabilityTest(InferenceContext ctx) {
+        @Override public void applicabilityTest(InferenceContext ctx) {
             println(String.format("Solving with context %d for applicability testing", ctx.getId()));
             addIndentSegment("|   ");
         }
 
-        @Override
-        public void finishApplicabilityTest() {
+        @Override public void finishApplicabilityTest() {
             removeIndentSegment("|   ");
         }
 
-        @Override
-        public void endInference(@Nullable JMethodSig result) {
+        @Override public void endInference(@Nullable JMethodSig result) {
             rollback(result != null ? "Success: " + ppHighlight(result)
-                                    : "FAILED! SAD!");
+                    : "FAILED! SAD!");
         }
 
-        @Override
-        public void skipInstantiation(JMethodSig partiallyInferred, MethodCallSite site) {
+        @Override public void skipInstantiation(JMethodSig partiallyInferred, MethodCallSite site) {
             println("Skipping instantiation of " + partiallyInferred + ", it's already complete");
         }
 
 
-        @Override
-        public void startArgsChecks() {
+        @Override public void startArgsChecks() {
             startSection("ARGUMENTS");
         }
 
-        @Override
-        public void startReturnChecks() {
+        @Override public void startReturnChecks() {
             startSection("RETURN");
         }
 
 
-        @Override
-        public void propagateAndAbort(InferenceContext context, InferenceContext parent) {
+        @Override public void propagateAndAbort(InferenceContext context, InferenceContext parent) {
             println("Ctx " + parent.getId() + " adopts " + color(context.getFreeVars(), ANSI_BLUE) + " from ctx "
-                        + context.getId());
+                    + context.getId());
         }
 
-        @Override
-        public void startArg(int i, ExprMirror expr, JTypeMirror formalType) {
+        @Override public void startArg(int i, ExprMirror expr, JTypeMirror formalType) {
             startSection("Checking arg " + i + " against " + colorIvars(formalType));
             printExpr(expr);
         }
 
-        @Override
-        public void skipArgAsNonPertinent(int i, ExprMirror expr) {
+        @Override public void skipArgAsNonPertinent(int i, ExprMirror expr) {
             startSection("Argument " + i + " is not pertinent to applicability");
             printExpr(expr);
             endSection("");
         }
 
-        @Override
-        public void functionalExprNeedsInvocationCtx(JTypeMirror targetT, ExprMirror expr) {
+        @Override public void functionalExprNeedsInvocationCtx(JTypeMirror targetT, ExprMirror expr) {
             println("Target type is not a functional interface yet: " + targetT);
             println("Will wait for invocation phase before discarding.");
         }
 
 
-        @Override
-        public void endArgsChecks() {
+        @Override public void endArgsChecks() {
             endSection("");
         }
 
-        @Override
-        public void endArg() {
+        @Override public void endArg() {
             endSection("");
         }
 
-        @Override
-        public void endReturnChecks() {
+        @Override public void endReturnChecks() {
             endSection("");
         }
 
-        @Override
-        public void boundAdded(InferenceContext ctx, InferenceVar ivar, BoundKind kind, JTypeMirror bound, boolean isSubstitution) {
+        @Override public void boundAdded(InferenceContext ctx, InferenceVar ivar, BoundKind kind, JTypeMirror bound, boolean isSubstitution) {
             String message = isSubstitution ? "Changed bound" : "New bound";
             println(addCtxInfo(ctx, message) + ppBound(ivar, kind, bound));
         }
 
-        @Override
-        public void ivarMerged(InferenceContext ctx, InferenceVar var, InferenceVar delegate) {
+        @Override public void ivarMerged(InferenceContext ctx, InferenceVar var, InferenceVar delegate) {
             println(addCtxInfo(ctx, "Ivar merged") + var + " <=> " + delegate);
         }
 
-        @Override
-        public void ivarInstantiated(InferenceContext ctx, InferenceVar var, JTypeMirror inst) {
+        @Override public void ivarInstantiated(InferenceContext ctx, InferenceVar var, JTypeMirror inst) {
             println(addCtxInfo(ctx, "Ivar instantiated") + color(var + " := ", ANSI_BLUE) + colorIvars(inst));
         }
 
-        @Override
-        public void ivarDependencyRegistered(InferenceContext ctx, InferenceVar var, Set<InferenceVar> deps) {
+        @Override public void ivarDependencyRegistered(InferenceContext ctx, InferenceVar var, Set<InferenceVar> deps) {
             println(addCtxInfo(ctx, "Ivar dependency registered: ") + color(var + " -> ", ANSI_BLUE) + colorIvars(deps));
         }
 
-        @Override
-        public void contextDependenciesChanged(InferenceContext ctx) {
+        @Override public void contextDependenciesChanged(InferenceContext ctx) {
             println("Recomputing dependency graph (ctx " + ctx.getId() + ")");
         }
 
@@ -506,14 +504,12 @@ public interface TypeInferenceLogger {
             return String.format("%-20s(ctx %d):   ", event, ctx.getId());
         }
 
-        @Override
-        public void logResolutionFail(ResolutionFailure exception) {
+        @Override public void logResolutionFail(ResolutionFailure exception) {
             super.logResolutionFail(exception);
             println("Failed: " + exception.getReason());
         }
 
-        @Override
-        public TypeInferenceLogger newInstance() {
+        @Override public TypeInferenceLogger newInstance() {
             return new VerboseLogger(out);
         }
 

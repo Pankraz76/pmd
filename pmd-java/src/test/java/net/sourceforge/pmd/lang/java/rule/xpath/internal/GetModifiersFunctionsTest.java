@@ -20,16 +20,14 @@ import net.sourceforge.pmd.lang.rule.xpath.PmdXPathException.Phase;
 class GetModifiersFunctionsTest extends BaseXPathFunctionTest {
 
 
-    @Test
-    void testEffectiveModifiers() {
+    @Test void testEffectiveModifiers() {
         Rule rule = makeXpathRuleFromXPath("//ClassDeclaration[pmd-java:modifiers() = ('public', 'abstract')]");
         String code = "interface O { class Foo { } }";
 
         assertFinds(rule, 2, code);
     }
 
-    @Test
-    void testExplicitModifiers() {
+    @Test void testExplicitModifiers() {
         Rule rule = makeXpathRuleFromXPath("//ClassDeclaration[pmd-java:explicitModifiers() = ('public', 'abstract')]");
         String code = "interface O { class Foo { } }";
 
@@ -37,8 +35,7 @@ class GetModifiersFunctionsTest extends BaseXPathFunctionTest {
     }
 
 
-    @Test
-    void testNotModifierOwnerReturnsEmptySequence() {
+    @Test void testNotModifierOwnerReturnsEmptySequence() {
         Rule rule = makeXpathRuleFromXPath("//ClassBody[pmd-java:modifiers()]");
         String code = "interface O { class Foo { } }";
 
@@ -46,14 +43,13 @@ class GetModifiersFunctionsTest extends BaseXPathFunctionTest {
     }
 
 
-    @Test
-    void testStaticTypeError() {
+    @Test void testStaticTypeError() {
         testWithExpectedStaticException(
-            "//MethodDeclaration[(., .) is pmd-java:modifiers()]",
-            e -> {
-                assertThat(e.getMessage(), containsString("Type error"));
-                assertThat(e.getPhase(), equalTo(Phase.INITIALIZATION));
-            });
+                "//MethodDeclaration[(., .) is pmd-java:modifiers()]",
+                e -> {
+                    assertThat(e.getMessage(), containsString("Type error"));
+                    assertThat(e.getPhase(), equalTo(Phase.INITIALIZATION));
+                });
 
     }
 

@@ -14,8 +14,7 @@ public class AmbiguousOverload implements Comparator<StringBuilder> {
     // so we can't choose the inherited overload
 
 
-    @Override
-    public int compare(StringBuilder o1, StringBuilder o2) {
+    @Override public int compare(StringBuilder o1, StringBuilder o2) {
         return 0;
     }
 

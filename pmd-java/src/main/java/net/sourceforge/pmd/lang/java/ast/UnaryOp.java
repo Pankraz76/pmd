@@ -90,13 +90,11 @@ public enum UnaryOp implements InternalInterfaces.OperatorLike {
     }
 
 
-    @Override
-    public String getToken() {
+    @Override public String getToken() {
         return code;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return this.code;
     }
 

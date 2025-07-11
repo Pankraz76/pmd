@@ -50,8 +50,7 @@ public final class ASTConditionalExpression extends AbstractJavaExpr {
     }
 
 
-    @Override
-    public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -63,7 +62,7 @@ public final class ASTConditionalExpression extends AbstractJavaExpr {
     // very internal
     boolean isStandalone() {
         assert getLanguageVersion().compareToVersion("8") >= 0
-            : "This method's result is undefined in pre java 8 code";
+                : "This method's result is undefined in pre java 8 code";
         return this.isStandalone;
     }
 

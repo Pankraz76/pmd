@@ -27,14 +27,12 @@ class RecordComponentStub extends MemberStubBase implements JRecordComponentSymb
     }
 
 
-    @Override
-    public JTypeMirror getTypeMirror(Substitution substitution) {
+    @Override public JTypeMirror getTypeMirror(Substitution substitution) {
         return type.get(substitution);
     }
 
 
-    @Override
-    public void acceptTypeAnnotation(int typeRef, @Nullable TypePath path, SymAnnot annot) {
+    @Override public void acceptTypeAnnotation(int typeRef, @Nullable TypePath path, SymAnnot annot) {
         assert new TypeReference(typeRef).getSort() == TypeReference.FIELD : typeRef;
         this.type.addTypeAnnotation(path, annot);
     }

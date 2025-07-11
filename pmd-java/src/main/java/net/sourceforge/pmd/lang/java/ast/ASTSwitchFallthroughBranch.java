@@ -34,14 +34,13 @@ import net.sourceforge.pmd.lang.ast.NodeStream;
  * </pre>
  */
 public final class ASTSwitchFallthroughBranch extends AbstractJavaNode
-    implements ASTSwitchBranch {
+        implements ASTSwitchBranch {
 
     ASTSwitchFallthroughBranch(int id) {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

@@ -24,7 +24,7 @@ import net.sourceforge.pmd.lang.java.types.TypeSystem;
  * </pre>
  */
 public final class ASTCatchParameter extends AbstractJavaNode
-    implements InternalInterfaces.VariableIdOwner,
+        implements InternalInterfaces.VariableIdOwner,
         ModifierOwner {
 
     ASTCatchParameter(int id) {
@@ -32,8 +32,7 @@ public final class ASTCatchParameter extends AbstractJavaNode
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -48,9 +47,7 @@ public final class ASTCatchParameter extends AbstractJavaNode
         return getTypeNode() instanceof ASTUnionType;
     }
 
-    @Override
-    @NonNull
-    public ASTVariableId getVarId() {
+    @Override @NonNull public ASTVariableId getVarId() {
         return (ASTVariableId) getLastChild();
     }
 

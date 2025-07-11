@@ -54,8 +54,7 @@ public class LoosePackageCouplingRule extends AbstractJavaRule {
         definePropertyDescriptor(CLASSES_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTCompilationUnit node, Object data) {
+    @Override public Object visit(ASTCompilationUnit node, Object data) {
         // Sort the restricted packages in reverse order. This will ensure the
         // child packages are in the list before their parent packages.
         this.restrictedPackages = new ArrayList<>(super.getProperty(PACKAGES_DESCRIPTOR));
@@ -68,8 +67,7 @@ public class LoosePackageCouplingRule extends AbstractJavaRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTImportDeclaration node, Object data) {
+    @Override public Object visit(ASTImportDeclaration node, Object data) {
 
         String importPackage = node.getPackageName();
 
@@ -129,8 +127,7 @@ public class LoosePackageCouplingRule extends AbstractJavaRule {
     /**
      * @see PropertySource#dysfunctionReason()
      */
-    @Override
-    public String dysfunctionReason() {
+    @Override public String dysfunctionReason() {
         return checksNothing() ? "No packages or classes specified" : null;
     }
 }

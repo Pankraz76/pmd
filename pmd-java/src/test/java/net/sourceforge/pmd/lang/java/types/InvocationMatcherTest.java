@@ -20,12 +20,11 @@ import net.sourceforge.pmd.lang.java.ast.InvocationNode;
 
 class InvocationMatcherTest extends BaseParserTest {
 
-    @Test
-    void testSimpleMatcher() {
+    @Test void testSimpleMatcher() {
 
         ASTMethodCall call =
-            java.parse("class Foo {{ Integer.valueOf('c'); }}")
-                .descendants(ASTMethodCall.class).firstOrThrow();
+                java.parse("class Foo {{ Integer.valueOf('c'); }}")
+                        .descendants(ASTMethodCall.class).firstOrThrow();
 
         assertMatch(call, "_#valueOf(int)");
         assertMatch(call, "java.lang.Integer#valueOf(int)");
@@ -37,12 +36,11 @@ class InvocationMatcherTest extends BaseParserTest {
         assertNoMatch(call, "java.lang.Object#valueOf(_*)");
     }
 
-    @Test
-    void testCtorMatchers() {
+    @Test void testCtorMatchers() {
 
         ASTConstructorCall call =
-            java.parse("class Foo {{ new java.util.ArrayList('c'); }}")
-                .descendants(ASTConstructorCall.class).firstOrThrow();
+                java.parse("class Foo {{ new java.util.ArrayList('c'); }}")
+                        .descendants(ASTConstructorCall.class).firstOrThrow();
 
         assertMatch(call, "_#new(int)");
         assertMatch(call, "java.util.ArrayList#new(int)");
@@ -57,12 +55,11 @@ class InvocationMatcherTest extends BaseParserTest {
         assertNoMatch(call, "java.lang.Object#new(int)");
     }
 
-    @Test
-    void testArray() {
+    @Test void testArray() {
 
         ASTMethodCall call =
-            java.parse("class Foo {{ new int[0].toString(); }}")
-                .descendants(ASTMethodCall.class).firstOrThrow();
+                java.parse("class Foo {{ new int[0].toString(); }}")
+                        .descendants(ASTMethodCall.class).firstOrThrow();
 
         assertMatch(call, "int[]#toString()");
         assertMatch(call, "_#toString()");
@@ -76,14 +73,13 @@ class InvocationMatcherTest extends BaseParserTest {
         assertNoMatch(call, "_[]#toString()");
     }
 
-    @Test
-    void testWhitespaceErrorMessage() {
+    @Test void testWhitespaceErrorMessage() {
 
         parse("_#_(int,int)"); // does not fail
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> parse("_#_(int, int)"));
         assertThat(e.getMessage(), equalTo("Expected type at index 8:\n"
-                                                 + "    \"_#_(int, int)\"\n"
-                                                 + "             ^\n"));
+                + "    \"_#_(int, int)\"\n"
+                + "             ^\n"));
     }
 
     private void assertMatch(InvocationNode call, String sig) {

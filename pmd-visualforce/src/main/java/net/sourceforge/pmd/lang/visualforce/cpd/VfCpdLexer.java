@@ -21,15 +21,13 @@ import net.sourceforge.pmd.lang.visualforce.ast.VfTokenKinds;
  */
 public class VfCpdLexer extends JavaccCpdLexer {
 
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
         return VfTokenKinds.newTokenManager(CharStream.create(doc, tokenBehavior()));
     }
 
     private TokenDocumentBehavior tokenBehavior() {
         return new JavaccTokenDocument.TokenDocumentBehavior(VfTokenKinds.TOKEN_NAMES) {
-            @Override
-            public TextDocument translate(TextDocument text) throws MalformedSourceException {
+            @Override public TextDocument translate(TextDocument text) throws MalformedSourceException {
                 return new JavaEscapeTranslator(text).translateDocument();
             }
         };

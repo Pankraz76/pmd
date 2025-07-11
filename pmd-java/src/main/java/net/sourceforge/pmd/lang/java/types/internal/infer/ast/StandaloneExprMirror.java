@@ -16,23 +16,19 @@ class StandaloneExprMirror extends BaseExprMirror<ASTExpression> {
         super(factory, myNode, parent);
     }
 
-    @Override
-    public @Nullable JTypeMirror getStandaloneType() {
+    @Override public @Nullable JTypeMirror getStandaloneType() {
         return myNode.getTypeMirror(getTypingContext());
     }
 
-    @Override
-    public void setInferredType(JTypeMirror mirror) {
+    @Override public void setInferredType(JTypeMirror mirror) {
         // do nothing
     }
 
-    @Override
-    public @Nullable JTypeMirror getInferredType() {
+    @Override public @Nullable JTypeMirror getInferredType() {
         return null;
     }
 
-    @Override
-    public boolean isEquivalentToUnderlyingAst() {
+    @Override public boolean isEquivalentToUnderlyingAst() {
         return myNode.getTypeMirror().equals(getStandaloneType());
     }
 }

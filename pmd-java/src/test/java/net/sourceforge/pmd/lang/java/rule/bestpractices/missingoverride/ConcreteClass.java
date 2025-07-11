@@ -9,8 +9,7 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride;
  * @since 6.2.0
  */
 public class ConcreteClass extends AbstractClass {
-    @Override
-    Object fun(String s) {
+    @Override Object fun(String s) {
         return null;
     }
 }

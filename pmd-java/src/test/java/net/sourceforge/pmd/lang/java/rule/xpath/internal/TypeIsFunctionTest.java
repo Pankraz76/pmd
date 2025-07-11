@@ -15,31 +15,27 @@ import net.sourceforge.pmd.lang.rule.Rule;
 class TypeIsFunctionTest extends BaseXPathFunctionTest {
 
 
-    @Test
-    void testHasAnnotation() {
+    @Test void testHasAnnotation() {
         Rule rule = makeXpathRuleFromXPath("//Annotation[pmd-java:typeIs('java.lang.Override')]");
         assertFinds(rule, 1, "interface O { @Override void foo(); }");
     }
 
 
-    @Test
-    void testHasAnnotationNonQual() {
+    @Test void testHasAnnotationNonQual() {
         Rule rule = makeXpathRuleFromXPath("//Annotation[pmd-java:typeIs('Override')]");
 
         //does not match
         assertFinds(rule, 0, "interface O { @Override void foo(); }");
     }
 
-    @Test
-    void testTypeIsArray() {
+    @Test void testTypeIsArray() {
         Rule rule = makeXpathRuleFromXPath("//*[pmd-java:typeIs('int[]')]");
 
         // ArrayType + VariableId
         assertFinds(rule, 2, "class K { int[] i; }");
     }
 
-    @Test
-    void testWrongTypeReturnsFalse() {
+    @Test void testWrongTypeReturnsFalse() {
         Rule rule = makeXpathRuleFromXPath("//ClassBody[pmd-java:typeIs('java.lang.Override')]");
 
         assertFinds(rule, 0, "interface O { @Override void foo(); }");

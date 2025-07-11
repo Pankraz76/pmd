@@ -33,8 +33,7 @@ public class SimpleRenderer implements CPDReportRenderer {
         separator = theSeparator;
     }
 
-    @Override
-    public void render(CPDReport report, Writer writer0) throws IOException {
+    @Override public void render(CPDReport report, Writer writer0) throws IOException {
         PrintWriter writer = new PrintWriter(writer0);
         Iterator<Match> matches = report.getMatches().iterator();
         if (matches.hasNext()) {
@@ -52,14 +51,14 @@ public class SimpleRenderer implements CPDReportRenderer {
     private void renderOn(CPDReport report, PrintWriter writer, Match match) throws IOException {
 
         writer.append("Found a ").append(String.valueOf(match.getLineCount())).append(" line (").append(String.valueOf(match.getTokenCount()))
-              .append(" tokens) duplication in the following files: ").println();
+                .append(" tokens) duplication in the following files: ").println();
 
         for (Mark mark : match) {
             FileLocation loc = mark.getLocation();
             writer.append("Starting at line ")
-                  .append(String.valueOf(loc.getStartLine()))
-                  .append(" of ").append(report.getDisplayName(loc.getFileId()))
-                  .println();
+                    .append(String.valueOf(loc.getStartLine()))
+                    .append(" of ").append(report.getDisplayName(loc.getFileId()))
+                    .println();
         }
 
         writer.println(); // add a line to separate the source from the desc above

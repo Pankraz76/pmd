@@ -50,25 +50,21 @@ public final class ASTFieldAccess extends AbstractJavaExpr implements ASTNamedRe
     }
 
 
-    @Override
-    public @NonNull ASTExpression getQualifier() {
+    @Override public @NonNull ASTExpression getQualifier() {
         return (ASTExpression) getChild(0);
     }
 
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return getImage();
     }
 
-    @Override
-    public @Nullable FieldSig getSignature() {
+    @Override public @Nullable FieldSig getSignature() {
         forceTypeResolution();
         return typedSym;
     }
 
-    @Override
-    public @Nullable JFieldSymbol getReferencedSym() {
+    @Override public @Nullable JFieldSymbol getReferencedSym() {
         return (JFieldSymbol) ASTNamedReferenceExpr.super.getReferencedSym();
     }
 
@@ -76,8 +72,7 @@ public final class ASTFieldAccess extends AbstractJavaExpr implements ASTNamedRe
         this.typedSym = sig;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

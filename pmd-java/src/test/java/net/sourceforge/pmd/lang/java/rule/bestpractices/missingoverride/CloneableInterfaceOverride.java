@@ -10,6 +10,5 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride;
  */
 public interface CloneableInterfaceOverride extends CloneableInterface {
 
-    @Override
-    CloneableInterface clone() throws CloneNotSupportedException;
+    @Override CloneableInterface clone() throws CloneNotSupportedException;
 }

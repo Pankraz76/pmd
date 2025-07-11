@@ -28,13 +28,13 @@ public interface RuleViolation {
      * in an unspecified order.
      */
     Comparator<RuleViolation> DEFAULT_COMPARATOR =
-        Comparator.comparing(RuleViolation::getFileId)
-                  .thenComparingInt(RuleViolation::getBeginLine)
-                  .thenComparingInt(RuleViolation::getBeginColumn)
-                  .thenComparing(RuleViolation::getDescription, Comparator.nullsLast(Comparator.naturalOrder()))
-                  .thenComparingInt(RuleViolation::getEndLine)
-                  .thenComparingInt(RuleViolation::getEndColumn)
-                  .thenComparing(rv -> rv.getRule().getName());
+            Comparator.comparing(RuleViolation::getFileId)
+                    .thenComparingInt(RuleViolation::getBeginLine)
+                    .thenComparingInt(RuleViolation::getBeginColumn)
+                    .thenComparing(RuleViolation::getDescription, Comparator.nullsLast(Comparator.naturalOrder()))
+                    .thenComparingInt(RuleViolation::getEndLine)
+                    .thenComparingInt(RuleViolation::getEndColumn)
+                    .thenComparing(rv -> rv.getRule().getName());
 
 
     /**

@@ -30,8 +30,7 @@ public class QueueableWithoutFinalizerRule extends AbstractApexRule {
     private static final String QUEUEABLE_CONTEXT = "queueablecontext";
     private static final String SYSTEM_ATTACH_FINALIZER = "system.attachfinalizer";
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
@@ -40,8 +39,7 @@ public class QueueableWithoutFinalizerRule extends AbstractApexRule {
      * `execute(QueueableContext context)` does not call the
      * `System.attachFinalizer(Finalizer f)` method, then add a violation.
      */
-    @Override
-    public Object visit(ASTUserClass theClass, Object data) {
+    @Override public Object visit(ASTUserClass theClass, Object data) {
         if (!implementsTheQueueableInterface(theClass)) {
             return data;
         }

@@ -10,13 +10,11 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class AnonymousBlockTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseCursorInsideProcAnonymousBlock() {
+    @Test void parseCursorInsideProcAnonymousBlock() {
         plsql.parseResource("AnonymousBlock1.sql");
     }
 
-    @Test
-    void parseCursorInsideAnonymousBlock() {
+    @Test void parseCursorInsideAnonymousBlock() {
         plsql.parseResource("AnonymousBlock2.sql");
     }
 }

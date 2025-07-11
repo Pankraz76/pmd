@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
  */
 class KotlinParserTests extends BaseKotlinTreeDumpTest {
 
-    @Test
-    void testSimpleKotlin() {
+    @Test void testSimpleKotlin() {
         doTest("Simple");
     }
 

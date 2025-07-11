@@ -15,8 +15,7 @@ public final class NodeIsFunction extends BaseRewrittenFunction<Class<?>, JavaNo
         super("nodeIs", JavaNode.class);
     }
 
-    @Override
-    protected Class<?> parseArgument(String arg) throws XPathFunctionException {
+    @Override protected Class<?> parseArgument(String arg) throws XPathFunctionException {
         try {
             return Class.forName("net.sourceforge.pmd.lang.java.ast.AST" + arg);
         } catch (ClassNotFoundException e) {
@@ -24,8 +23,7 @@ public final class NodeIsFunction extends BaseRewrittenFunction<Class<?>, JavaNo
         }
     }
 
-    @Override
-    protected boolean matches(JavaNode contextNode, String arg, Class<?> parsedArg, boolean isConstant) {
+    @Override protected boolean matches(JavaNode contextNode, String arg, Class<?> parsedArg, boolean isConstant) {
         return parsedArg.isInstance(contextNode);
     }
 

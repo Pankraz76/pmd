@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class SlashAsDivisionTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseSlashAsDivision() {
+    @Test void parseSlashAsDivision() {
         plsql.parseResource("SlashAsDivision.sql");
     }
 

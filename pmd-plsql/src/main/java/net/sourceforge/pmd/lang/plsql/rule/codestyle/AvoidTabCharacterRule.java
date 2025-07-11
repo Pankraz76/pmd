@@ -24,20 +24,18 @@ public class AvoidTabCharacterRule extends AbstractPLSQLRule {
         definePropertyDescriptor(EACH_LINE);
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTInput.class);
     }
 
-    @Override
-    public Object visit(ASTInput node, Object data) {
+    @Override public Object visit(ASTInput node, Object data) {
         boolean eachLine = getProperty(EACH_LINE);
 
         int lineNumber = 1;
         for (Chars line : node.getText().lines()) {
             if (line.indexOf('\t', 0) != -1) {
                 asCtx(data).addViolationWithPosition(node, lineNumber, lineNumber,
-                                        "Tab characters are not allowed. Use spaces for indentation");
+                        "Tab characters are not allowed. Use spaces for indentation");
 
                 if (!eachLine) {
                     break;

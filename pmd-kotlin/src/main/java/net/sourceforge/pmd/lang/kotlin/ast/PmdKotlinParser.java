@@ -16,14 +16,12 @@ import net.sourceforge.pmd.lang.kotlin.ast.KotlinParser.KtKotlinFile;
  */
 public final class PmdKotlinParser extends AntlrBaseParser<KotlinNode, KtKotlinFile> {
 
-    @Override
-    protected KtKotlinFile parse(final Lexer lexer, ParserTask task) {
+    @Override protected KtKotlinFile parse(final Lexer lexer, ParserTask task) {
         KotlinParser parser = new KotlinParser(new CommonTokenStream(lexer));
         return parser.kotlinFile().makeAstInfo(task);
     }
 
-    @Override
-    protected Lexer getLexer(final CharStream source) {
+    @Override protected Lexer getLexer(final CharStream source) {
         return new KotlinLexer(source);
     }
 }

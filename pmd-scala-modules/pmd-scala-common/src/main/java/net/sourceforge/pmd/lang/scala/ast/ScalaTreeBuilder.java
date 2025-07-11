@@ -194,8 +194,7 @@ class ScalaTreeBuilder {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private static <T extends Tree> AbstractScalaNode<T> createNodeAdapter(T node) {
+    @SuppressWarnings("unchecked") private static <T extends Tree> AbstractScalaNode<T> createNodeAdapter(T node) {
         try {
 
             Constructor<? extends AbstractScalaNode<T>> constructor = null;

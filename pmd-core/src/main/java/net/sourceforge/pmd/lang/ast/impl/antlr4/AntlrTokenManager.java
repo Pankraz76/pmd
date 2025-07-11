@@ -29,8 +29,7 @@ public class AntlrTokenManager implements TokenManager<AntlrToken> {
         resetListeners();
     }
 
-    @Override
-    public AntlrToken getNextToken() {
+    @Override public AntlrToken getNextToken() {
         AntlrToken nextToken = getNextTokenFromAnyChannel();
         while (!nextToken.isDefault()) {
             nextToken = getNextTokenFromAnyChannel();
@@ -56,13 +55,12 @@ public class AntlrTokenManager implements TokenManager<AntlrToken> {
 
     private final class ErrorHandler extends BaseErrorListener {
 
-        @Override
-        public void syntaxError(final Recognizer<?, ?> recognizer,
-                                final Object offendingSymbol,
-                                final int line,
-                                final int charPositionInLine,
-                                final String msg,
-                                final RecognitionException ex) {
+        @Override public void syntaxError(final Recognizer<?, ?> recognizer,
+                final Object offendingSymbol,
+                final int line,
+                final int charPositionInLine,
+                final String msg,
+                final RecognitionException ex) {
             throw new LexException(line, charPositionInLine, textDoc.getFileId(), msg, ex);
         }
     }

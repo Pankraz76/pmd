@@ -27,9 +27,9 @@ import net.sourceforge.pmd.lang.ast.NodeStream;
  * </pre>
  */
 public final class ASTIntersectionType extends AbstractJavaTypeNode
-    implements ASTReferenceType,
-               InternalInterfaces.AtLeastOneChildOfType<ASTType>,
-               Iterable<ASTType> {
+        implements ASTReferenceType,
+        InternalInterfaces.AtLeastOneChildOfType<ASTType>,
+        Iterable<ASTType> {
 
     ASTIntersectionType(int id) {
         super(id);
@@ -40,13 +40,11 @@ public final class ASTIntersectionType extends AbstractJavaTypeNode
         return children(ASTClassType.class);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public Iterator<ASTType> iterator() {
+    @Override public Iterator<ASTType> iterator() {
         return children(ASTType.class).iterator();
     }
 }

@@ -110,9 +110,9 @@ public class RuleSet implements ChecksumAware {
         }
 
         final RuleSetBuilder builder =
-            new RuleSetBuilder(checksum)
-                .withName(rule.getName())
-                .withDescription("RuleSet for " + rule.getName());
+                new RuleSetBuilder(checksum)
+                        .withName(rule.getName())
+                        .withDescription("RuleSet for " + rule.getName());
         builder.addRule(rule);
         return builder.build();
     }
@@ -141,17 +141,17 @@ public class RuleSet implements ChecksumAware {
      * @throws NullPointerException If any parameter is null, or the collections contain null elements
      */
     public static RuleSet create(String name,
-                                 String description,
-                                 String fileName,
-                                 Collection<Pattern> excludePatterns,
-                                 Collection<Pattern> includePatterns,
-                                 Iterable<? extends Rule> rules) {
+            String description,
+            String fileName,
+            Collection<Pattern> excludePatterns,
+            Collection<Pattern> includePatterns,
+            Iterable<? extends Rule> rules) {
         RuleSetBuilder builder = new RuleSetBuilder(0L); // TODO: checksum missing
         builder.withName(name)
-               .withDescription(description)
-               .withFileName(fileName)
-               .replaceFileExclusions(excludePatterns)
-               .replaceFileInclusions(includePatterns);
+                .withDescription(description)
+                .withFileName(fileName)
+                .replaceFileExclusions(excludePatterns)
+                .replaceFileInclusions(includePatterns);
         for (Rule rule : rules) {
             builder.addRule(rule);
         }
@@ -207,10 +207,10 @@ public class RuleSet implements ChecksumAware {
         /* package */ RuleSetBuilder(final RuleSet original) {
             checksum = original.getChecksum();
             this.withName(original.getName())
-                .withDescription(original.getDescription())
-                .withFileName(original.getFileName())
-                .replaceFileExclusions(original.getFileExclusions())
-                .replaceFileInclusions(original.getFileInclusions());
+                    .withDescription(original.getDescription())
+                    .withFileName(original.getFileName())
+                    .replaceFileExclusions(original.getFileExclusions())
+                    .replaceFileInclusions(original.getFileInclusions());
             addRuleSet(original);
         }
 
@@ -289,7 +289,7 @@ public class RuleSet implements ChecksumAware {
                 throw new IllegalArgumentException(MISSING_RULE);
             }
 
-            for (final Iterator<Rule> it = rules.iterator(); it.hasNext();) {
+            for (final Iterator<Rule> it = rules.iterator(); it.hasNext(); ) {
                 final Rule r = it.next();
                 if (r.getName().equals(rule.getName()) && r.getLanguage().equals(rule.getLanguage())) {
                     it.remove();
@@ -675,8 +675,7 @@ public class RuleSet implements ChecksumAware {
      * @return <code>true</code> if o is a ruleset with the same name and rules,
      *         <code>false</code> otherwise
      */
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (!(o instanceof RuleSet)) {
             return false; // Trivial
         }
@@ -689,8 +688,7 @@ public class RuleSet implements ChecksumAware {
         return getName().equals(ruleSet.getName()) && getRules().equals(ruleSet.getRules());
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return getName().hashCode() + 13 * getRules().hashCode();
     }
 
@@ -742,8 +740,7 @@ public class RuleSet implements ChecksumAware {
         }
     }
 
-    @Override
-    public long getChecksum() {
+    @Override public long getChecksum() {
         return checksum;
     }
 }

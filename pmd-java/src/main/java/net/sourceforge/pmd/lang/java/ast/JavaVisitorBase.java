@@ -34,13 +34,11 @@ public class JavaVisitorBase<P, R> extends AstVisitorBase<P, R> implements JavaV
         return visitJavaNode(node, data);
     }
 
-    @Override
-    public R visit(ASTMethodDeclaration node, P data) {
+    @Override public R visit(ASTMethodDeclaration node, P data) {
         return visitMethodOrCtor(node, data);
     }
 
-    @Override
-    public R visit(ASTConstructorDeclaration node, P data) {
+    @Override public R visit(ASTConstructorDeclaration node, P data) {
         return visitMethodOrCtor(node, data);
     }
 
@@ -52,34 +50,27 @@ public class JavaVisitorBase<P, R> extends AstVisitorBase<P, R> implements JavaV
         return visitJavaNode(node, data);
     }
 
-    @Override
-    public R visit(ASTClassDeclaration node, P data) {
+    @Override public R visit(ASTClassDeclaration node, P data) {
         return visitTypeDecl(node, data);
     }
 
-    @Override
-    public R visit(ASTAnonymousClassDeclaration node, P data) {
+    @Override public R visit(ASTAnonymousClassDeclaration node, P data) {
         return visitTypeDecl(node, data);
     }
 
-    @Override
-    public R visit(ASTRecordDeclaration node, P data) {
+    @Override public R visit(ASTRecordDeclaration node, P data) {
         return visitTypeDecl(node, data);
     }
 
-    @Override
-    public R visit(ASTEnumDeclaration node, P data) {
+    @Override public R visit(ASTEnumDeclaration node, P data) {
         return visitTypeDecl(node, data);
     }
 
-    @Override
-    public R visit(ASTAnnotationTypeDeclaration node, P data) {
+    @Override public R visit(ASTAnnotationTypeDeclaration node, P data) {
         return visitTypeDecl(node, data);
     }
 
-    @Override
-    @Experimental
-    public R visit(ASTImplicitClassDeclaration node, P data) {
+    @Override @Experimental public R visit(ASTImplicitClassDeclaration node, P data) {
         return visitTypeDecl(node, data);
     }
 
@@ -93,8 +84,7 @@ public class JavaVisitorBase<P, R> extends AstVisitorBase<P, R> implements JavaV
         return visitJavaNode(node, data);
     }
 
-    @Override
-    public R visit(ASTPrimitiveType node, P data) {
+    @Override public R visit(ASTPrimitiveType node, P data) {
         return visitType(node, data);
     }
 
@@ -103,30 +93,25 @@ public class JavaVisitorBase<P, R> extends AstVisitorBase<P, R> implements JavaV
     }
 
 
-    @Override
-    public R visit(ASTArrayType node, P data) {
+    @Override public R visit(ASTArrayType node, P data) {
         return visitReferenceType(node, data);
     }
 
 
-    @Override
-    public R visit(ASTIntersectionType node, P data) {
+    @Override public R visit(ASTIntersectionType node, P data) {
         return visitReferenceType(node, data);
     }
 
 
-    @Override
-    public R visit(ASTWildcardType node, P data) {
+    @Override public R visit(ASTWildcardType node, P data) {
         return visitReferenceType(node, data);
     }
 
-    @Override
-    public R visit(ASTUnionType node, P data) {
+    @Override public R visit(ASTUnionType node, P data) {
         return visitReferenceType(node, data);
     }
 
-    @Override
-    public R visit(ASTClassType node, P data) {
+    @Override public R visit(ASTClassType node, P data) {
         return visitReferenceType(node, data);
     }
 
@@ -139,41 +124,34 @@ public class JavaVisitorBase<P, R> extends AstVisitorBase<P, R> implements JavaV
         return visitJavaNode(node, data);
     }
 
-    @Override
-    public R visit(ASTLambdaExpression node, P data) {
+    @Override public R visit(ASTLambdaExpression node, P data) {
         return visitExpression(node, data);
     }
 
-    @Override
-    public R visit(ASTAssignmentExpression node, P data) {
+    @Override public R visit(ASTAssignmentExpression node, P data) {
         return visitExpression(node, data);
     }
 
-    @Override
-    public R visit(ASTConditionalExpression node, P data) {
-        return visitExpression(node, data);
-    }
-
-
-    @Override
-    public R visit(ASTInfixExpression node, P data) {
+    @Override public R visit(ASTConditionalExpression node, P data) {
         return visitExpression(node, data);
     }
 
 
-    @Override
-    public R visit(ASTUnaryExpression node, P data) {
-        return visitExpression(node, data);
-    }
-
-    @Override
-    public R visit(ASTCastExpression node, P data) {
+    @Override public R visit(ASTInfixExpression node, P data) {
         return visitExpression(node, data);
     }
 
 
-    @Override
-    public R visit(ASTSwitchExpression node, P data) {
+    @Override public R visit(ASTUnaryExpression node, P data) {
+        return visitExpression(node, data);
+    }
+
+    @Override public R visit(ASTCastExpression node, P data) {
+        return visitExpression(node, data);
+    }
+
+
+    @Override public R visit(ASTSwitchExpression node, P data) {
         return visitExpression(node, data);
     }
 
@@ -188,25 +166,21 @@ public class JavaVisitorBase<P, R> extends AstVisitorBase<P, R> implements JavaV
     }
 
 
-    @Override
-    public R visit(ASTMethodCall node, P data) {
+    @Override public R visit(ASTMethodCall node, P data) {
         return visitPrimaryExpr(node, data);
     }
 
-    @Override
-    public R visit(ASTConstructorCall node, P data) {
-        return visitPrimaryExpr(node, data);
-    }
-
-
-    @Override
-    public R visit(ASTArrayAllocation node, P data) {
+    @Override public R visit(ASTConstructorCall node, P data) {
         return visitPrimaryExpr(node, data);
     }
 
 
-    @Override
-    public R visit(ASTArrayAccess node, P data) {
+    @Override public R visit(ASTArrayAllocation node, P data) {
+        return visitPrimaryExpr(node, data);
+    }
+
+
+    @Override public R visit(ASTArrayAccess node, P data) {
         return visitPrimaryExpr(node, data);
     }
 
@@ -214,35 +188,29 @@ public class JavaVisitorBase<P, R> extends AstVisitorBase<P, R> implements JavaV
         return visitPrimaryExpr(node, data);
     }
 
-    @Override
-    public R visit(ASTVariableAccess node, P data) {
+    @Override public R visit(ASTVariableAccess node, P data) {
         return visitNamedExpr(node, data);
     }
 
-    @Override
-    public R visit(ASTFieldAccess node, P data) {
+    @Override public R visit(ASTFieldAccess node, P data) {
         return visitNamedExpr(node, data);
     }
 
 
-    @Override
-    public R visit(ASTMethodReference node, P data) {
+    @Override public R visit(ASTMethodReference node, P data) {
         return visitPrimaryExpr(node, data);
     }
 
 
-    @Override
-    public R visit(ASTThisExpression node, P data) {
+    @Override public R visit(ASTThisExpression node, P data) {
         return visitPrimaryExpr(node, data);
     }
 
-    @Override
-    public R visit(ASTSuperExpression node, P data) {
+    @Override public R visit(ASTSuperExpression node, P data) {
         return visitPrimaryExpr(node, data);
     }
 
-    @Override
-    public R visit(ASTClassLiteral node, P data) {
+    @Override public R visit(ASTClassLiteral node, P data) {
         return visitPrimaryExpr(node, data);
     }
 
@@ -254,28 +222,23 @@ public class JavaVisitorBase<P, R> extends AstVisitorBase<P, R> implements JavaV
         return visitPrimaryExpr(node, data);
     }
 
-    @Override
-    public R visit(ASTBooleanLiteral node, P data) {
+    @Override public R visit(ASTBooleanLiteral node, P data) {
         return visitLiteral(node, data);
     }
 
-    @Override
-    public R visit(ASTNullLiteral node, P data) {
+    @Override public R visit(ASTNullLiteral node, P data) {
         return visitLiteral(node, data);
     }
 
-    @Override
-    public R visit(ASTNumericLiteral node, P data) {
+    @Override public R visit(ASTNumericLiteral node, P data) {
         return visitLiteral(node, data);
     }
 
-    @Override
-    public R visit(ASTStringLiteral node, P data) {
+    @Override public R visit(ASTStringLiteral node, P data) {
         return visitLiteral(node, data);
     }
 
-    @Override
-    public R visit(ASTCharLiteral node, P data) {
+    @Override public R visit(ASTCharLiteral node, P data) {
         return visitLiteral(node, data);
     }
 
@@ -288,113 +251,91 @@ public class JavaVisitorBase<P, R> extends AstVisitorBase<P, R> implements JavaV
         return visitJavaNode(node, data);
     }
 
-    @Override
-    public R visit(ASTAssertStatement node, P data) {
+    @Override public R visit(ASTAssertStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTBlock node, P data) {
+    @Override public R visit(ASTBlock node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTBreakStatement node, P data) {
+    @Override public R visit(ASTBreakStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTContinueStatement node, P data) {
+    @Override public R visit(ASTContinueStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTDoStatement node, P data) {
+    @Override public R visit(ASTDoStatement node, P data) {
         return visitLoop(node, data);
     }
 
-    @Override
-    public R visit(ASTEmptyStatement node, P data) {
+    @Override public R visit(ASTEmptyStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTExplicitConstructorInvocation node, P data) {
+    @Override public R visit(ASTExplicitConstructorInvocation node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTExpressionStatement node, P data) {
+    @Override public R visit(ASTExpressionStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTForeachStatement node, P data) {
+    @Override public R visit(ASTForeachStatement node, P data) {
         return visitLoop(node, data);
     }
 
-    @Override
-    public R visit(ASTForStatement node, P data) {
+    @Override public R visit(ASTForStatement node, P data) {
         return visitLoop(node, data);
     }
 
-    @Override
-    public R visit(ASTIfStatement node, P data) {
+    @Override public R visit(ASTIfStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTLabeledStatement node, P data) {
+    @Override public R visit(ASTLabeledStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTLocalClassStatement node, P data) {
+    @Override public R visit(ASTLocalClassStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTLocalVariableDeclaration node, P data) {
+    @Override public R visit(ASTLocalVariableDeclaration node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTReturnStatement node, P data) {
+    @Override public R visit(ASTReturnStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTStatementExpressionList node, P data) {
+    @Override public R visit(ASTStatementExpressionList node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTSwitchStatement node, P data) {
+    @Override public R visit(ASTSwitchStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTSynchronizedStatement node, P data) {
+    @Override public R visit(ASTSynchronizedStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTThrowStatement node, P data) {
+    @Override public R visit(ASTThrowStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTTryStatement node, P data) {
+    @Override public R visit(ASTTryStatement node, P data) {
         return visitStatement(node, data);
     }
 
-    @Override
-    public R visit(ASTWhileStatement node, P data) {
+    @Override public R visit(ASTWhileStatement node, P data) {
         return visitLoop(node, data);
     }
 
-    @Override
-    public R visit(ASTYieldStatement node, P data) {
+    @Override public R visit(ASTYieldStatement node, P data) {
         return visitStatement(node, data);
     }
 

@@ -6,8 +6,7 @@ package net.sourceforge.pmd.renderers;
 
 class IDEAJRendererTest extends AbstractRendererTest {
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         Renderer result = new IDEAJRenderer();
         result.setProperty(IDEAJRenderer.SOURCE_PATH, "");
         result.setProperty(IDEAJRenderer.CLASS_AND_METHOD_NAME, "Foo <init>");
@@ -15,18 +14,15 @@ class IDEAJRendererTest extends AbstractRendererTest {
         return result;
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return "blah" + EOL + " at Foo <init>(Foo.java:1)" + EOL;
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return "";
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return "blah" + EOL + " at Foo <init>(Foo.java:1)" + EOL + "blah" + EOL
                 + " at Foo <init>(Foo.java:1)" + EOL;
     }

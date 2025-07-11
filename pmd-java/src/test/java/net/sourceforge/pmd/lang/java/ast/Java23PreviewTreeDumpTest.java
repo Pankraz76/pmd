@@ -31,13 +31,11 @@ class Java23PreviewTreeDumpTest extends BaseJavaTreeDumpTest {
                     .withResourceContext(Java23PreviewTreeDumpTest.class, "jdkversiontests/java23p/");
     private final JavaParsingHelper java23 = java23p.withDefaultVersion("23");
 
-    @Override
-    public BaseParsingHelper<?, ?> getParser() {
+    @Override public BaseParsingHelper<?, ?> getParser() {
         return java23p;
     }
 
-    @Test
-    void jep477ImplicitlyDeclaredClassesAndInstanceMainMethods1() {
+    @Test void jep477ImplicitlyDeclaredClassesAndInstanceMainMethods1() {
         doTest("Jep477_ImplicitlyDeclaredClassesAndInstanceMainMethods1");
         ASTCompilationUnit compilationUnit = java23p.parseResource("Jep477_ImplicitlyDeclaredClassesAndInstanceMainMethods1.java");
         assertTrue(compilationUnit.isSimpleCompilationUnit());
@@ -56,8 +54,7 @@ class Java23PreviewTreeDumpTest extends BaseJavaTreeDumpTest {
         TypeTestUtil.isA("java.util.List", qualifier.getTypeNode().getTypeMirror());
     }
 
-    @Test
-    void jep477ImplicitlyDeclaredClassesAndInstanceMainMethods1WithJava23Runtime() {
+    @Test void jep477ImplicitlyDeclaredClassesAndInstanceMainMethods1WithJava23Runtime() {
         int javaVersion = Integer.parseInt(System.getProperty("java.version").split("\\.")[0].replaceAll("-ea", ""));
         assumeTrue(javaVersion >= 23, "Java " + javaVersion + " doesn't support java.io.IO. At least Java 23 is needed for this test.");
 
@@ -69,52 +66,43 @@ class Java23PreviewTreeDumpTest extends BaseJavaTreeDumpTest {
         TypeTestUtil.isA("java.io.IO", javaIoPrintln.getMethodType().getDeclaringType());
     }
 
-    @Test
-    void jep477ImplicitlyDeclaredClassesAndInstanceMainMethods1BeforeJava23Preview() {
+    @Test void jep477ImplicitlyDeclaredClassesAndInstanceMainMethods1BeforeJava23Preview() {
         ParseException thrown = assertThrows(ParseException.class, () -> java23.parseResource("Jep477_ImplicitlyDeclaredClassesAndInstanceMainMethods1.java"));
         assertThat(thrown.getMessage(), containsString("Simple source files and instance main methods is a preview feature of JDK 23, you should select your language version accordingly"));
     }
 
-    @Test
-    void jep477ImplicitlyDeclaredClassesAndInstanceMainMethods2() {
+    @Test void jep477ImplicitlyDeclaredClassesAndInstanceMainMethods2() {
         doTest("Jep477_ImplicitlyDeclaredClassesAndInstanceMainMethods2");
     }
 
-    @Test
-    void jep482FlexibleConstructorBodies() {
+    @Test void jep482FlexibleConstructorBodies() {
         doTest("Jep482_FlexibleConstructorBodies");
     }
 
-    @Test
-    void jep482FlexibleConstructorBodiesBeforeJava23Preview() {
+    @Test void jep482FlexibleConstructorBodiesBeforeJava23Preview() {
         ParseException thrown = assertThrows(ParseException.class, () -> java23.parseResource("Jep482_FlexibleConstructorBodies.java"));
         assertThat(thrown.getMessage(), containsString("Flexible constructor bodies is a preview feature of JDK 23, you should select your language version accordingly"));
     }
 
-    @Test
-    void jep476ModuleImportDeclarations() {
+    @Test void jep476ModuleImportDeclarations() {
         doTest("Jep476_ModuleImportDeclarations");
     }
 
-    @Test
-    void jep476ModuleImportDeclarationsBeforeJava23Preview() {
+    @Test void jep476ModuleImportDeclarationsBeforeJava23Preview() {
         ParseException thrown = assertThrows(ParseException.class, () -> java23.parseResource("Jep476_ModuleImportDeclarations.java"));
         assertThat(thrown.getMessage(), containsString("Module import declarations is a preview feature of JDK 23, you should select your language version accordingly"));
     }
 
-    @Test
-    void jep455PrimitiveTypesInPatternsInstanceofAndSwitch() {
+    @Test void jep455PrimitiveTypesInPatternsInstanceofAndSwitch() {
         doTest("Jep455_PrimitiveTypesInPatternsInstanceofAndSwitch");
     }
 
-    @Test
-    void jep455PrimitiveTypesInPatternsInstanceofAndSwitchBeforeJava23Preview() {
+    @Test void jep455PrimitiveTypesInPatternsInstanceofAndSwitchBeforeJava23Preview() {
         ParseException thrown = assertThrows(ParseException.class, () -> java23.parseResource("Jep455_PrimitiveTypesInPatternsInstanceofAndSwitch.java"));
         assertThat(thrown.getMessage(), containsString("Primitive types in patterns instanceof and switch is a preview feature of JDK 23, you should select your language version accordingly"));
     }
 
-    @Test
-    void stringTemplatesAreNotSupportedAnymore() {
+    @Test void stringTemplatesAreNotSupportedAnymore() {
         LexException thrown = assertThrows(LexException.class, () -> java23p.parseResource("StringTemplatesAreNotSupportedAnymore.java"));
         assertThat(thrown.getMessage(), containsString("Lexical error in file"));
         LexException thrown2 = assertThrows(LexException.class, () -> java23.parseResource("StringTemplatesAreNotSupportedAnymore.java"));

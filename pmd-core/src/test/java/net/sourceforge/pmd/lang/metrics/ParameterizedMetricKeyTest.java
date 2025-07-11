@@ -21,8 +21,7 @@ class ParameterizedMetricKeyTest {
     private static final MetricOptions DUMMY_VERSION_2 = MetricOptions.ofOptions(Options.DUMMY2);
     private static final Metric<Node, Double> DUMMY_METRIC = Metric.of((n, opts) -> 0., t -> t, "dummy");
 
-    @Test
-    void testIdentity() {
+    @Test void testIdentity() {
 
         ParameterizedMetricKey<Node, ?> key1 = ParameterizedMetricKey.getInstance(DUMMY_METRIC, DUMMY_VERSION_1);
         ParameterizedMetricKey<Node, ?> key2 = ParameterizedMetricKey.getInstance(DUMMY_METRIC, DUMMY_VERSION_1);
@@ -31,8 +30,7 @@ class ParameterizedMetricKeyTest {
     }
 
 
-    @Test
-    void testVersioning() {
+    @Test void testVersioning() {
 
         ParameterizedMetricKey<Node, ?> key1 = ParameterizedMetricKey.getInstance(DUMMY_METRIC, DUMMY_VERSION_1);
         ParameterizedMetricKey<Node, ?> key2 = ParameterizedMetricKey.getInstance(DUMMY_METRIC, DUMMY_VERSION_2);
@@ -41,8 +39,7 @@ class ParameterizedMetricKeyTest {
     }
 
 
-    @Test
-    void testToString() {
+    @Test void testToString() {
 
         ParameterizedMetricKey<Node, ?> key1 = ParameterizedMetricKey.getInstance(DUMMY_METRIC, DUMMY_VERSION_1);
         assertTrue(key1.toString().contains(key1.metric.displayName()));
@@ -50,8 +47,7 @@ class ParameterizedMetricKeyTest {
     }
 
 
-    @Test
-    void testAdHocMetricKey() {
+    @Test void testAdHocMetricKey() {
 
         ParameterizedMetricKey<Node, ?> key1 = ParameterizedMetricKey.getInstance(DUMMY_METRIC, DUMMY_VERSION_1);
         ParameterizedMetricKey<Node, ?> key2 = ParameterizedMetricKey.getInstance(DUMMY_METRIC, DUMMY_VERSION_1);
@@ -70,8 +66,7 @@ class ParameterizedMetricKeyTest {
         DUMMY2;
 
 
-        @Override
-        public String valueName() {
+        @Override public String valueName() {
             return null;
         }
     }

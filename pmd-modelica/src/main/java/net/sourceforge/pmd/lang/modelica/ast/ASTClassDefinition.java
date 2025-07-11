@@ -59,16 +59,14 @@ public class ASTClassDefinition extends AbstractModelicaNode {
         assert specialization != null;
     }
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
         prefixes = firstChild(ASTClassPrefixes.class);
         specifier = firstChild(ASTClassSpecifier.class).firstChild(ModelicaClassSpecifierNode.class);
         detectSpecialization();
     }
 
-    @Override
-    protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

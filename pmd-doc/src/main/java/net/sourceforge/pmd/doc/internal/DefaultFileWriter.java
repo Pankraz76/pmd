@@ -11,8 +11,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class DefaultFileWriter implements FileWriter {
-    @Override
-    public void write(Path path, List<String> lines) throws IOException {
+    @Override public void write(Path path, List<String> lines) throws IOException {
         Files.createDirectories(path.getParent());
         Files.write(path, lines, StandardCharsets.UTF_8);
     }

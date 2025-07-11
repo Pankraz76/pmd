@@ -108,13 +108,11 @@ final class TraversalUtils {
 
             private int i = from;
 
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return i < to;
             }
 
-            @Override
-            public @NonNull
+            @Override public @NonNull
             Node next() {
                 return parent.getChild(i++);
             }

@@ -33,19 +33,17 @@ import net.sourceforge.pmd.internal.util.IOUtil;
  */
 class AntIT extends AbstractBinaryDistributionTest {
 
-    @Test
-    @EnabledOnOs(OS.LINUX)
-    void runAnt() throws IOException, InterruptedException {
+    @Test @EnabledOnOs(OS.LINUX) void runAnt() throws IOException, InterruptedException {
         String antBasepath = new File("target/ant").getAbsolutePath();
         String pmdHome = tempDir.resolve(PMD_BIN_PREFIX).toAbsolutePath().toString();
         File antTestProjectFolder = prepareAntTestProjectFolder();
 
         ExecutionResult result = runAnt(antBasepath, pmdHome, antTestProjectFolder);
         result.assertExitCode(0)
-              .assertStdOut(containsString("BUILD SUCCESSFUL"))
-              .assertStdOut(not(containsStringIgnoringCase("Illegal reflective access"))) // #1860
-              // the no package rule
-              .assertStdOut(containsString("NoPackage"));
+                .assertStdOut(containsString("BUILD SUCCESSFUL"))
+                .assertStdOut(not(containsStringIgnoringCase("Illegal reflective access"))) // #1860
+                // the no package rule
+                .assertStdOut(containsString("NoPackage"));
     }
 
 
@@ -53,8 +51,7 @@ class AntIT extends AbstractBinaryDistributionTest {
         final Path sourceProjectFolder = new File("src/test/resources/ant-it").toPath();
         final Path projectFolder = Files.createTempDirectory(folder, null);
         Files.walkFileTree(sourceProjectFolder, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+            @Override public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
                 assert !dir.isAbsolute();
                 Path target = projectFolder.resolve(sourceProjectFolder.relativize(dir));
                 if (!target.toFile().exists()) {
@@ -63,8 +60,7 @@ class AntIT extends AbstractBinaryDistributionTest {
                 return FileVisitResult.CONTINUE;
             }
 
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 assert !file.isAbsolute();
                 Path target = projectFolder.resolve(sourceProjectFolder.relativize(file));
                 Files.copy(file, target);
@@ -88,8 +84,7 @@ class AntIT extends AbstractBinaryDistributionTest {
         final ExecutionResult.Builder result = new ExecutionResult.Builder();
         final Process process = pb.start();
         Thread outputReader = new Thread(new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 try (InputStream in = process.getInputStream()) {
                     String output = IOUtil.readToString(process.getInputStream(), StandardCharsets.UTF_8);
                     result.withOutput(output);

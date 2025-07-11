@@ -16,8 +16,7 @@ import net.sourceforge.pmd.lang.julia.ast.JuliaLexer;
  * <p>Note: This class has been called JuliaTokenizer in PMD 6</p>.
  */
 public class JuliaCpdLexer extends AntlrCpdLexer {
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new JuliaLexer(charStream);
     }
 }

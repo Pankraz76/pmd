@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.java.symbols.JTypeParameterOwnerSymbol;
  */
 public interface TypeParamOwnerNode extends SymbolDeclaratorNode {
 
-    @Override
-    JTypeParameterOwnerSymbol getSymbol();
+    @Override JTypeParameterOwnerSymbol getSymbol();
 
     /**
      * Returns the type parameter declaration of this node, or null if

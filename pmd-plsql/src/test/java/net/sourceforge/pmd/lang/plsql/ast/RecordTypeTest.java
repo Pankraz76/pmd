@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class RecordTypeTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseRecordType() {
+    @Test void parseRecordType() {
         plsql.parseResource("RecordType.pls");
     }
 }

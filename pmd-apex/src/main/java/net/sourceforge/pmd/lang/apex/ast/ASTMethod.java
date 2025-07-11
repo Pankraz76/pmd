@@ -44,11 +44,11 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
     private final SourceLocation sourceLocation;
 
     ASTMethod(
-        String name,
-        String internalName,
-        List<String> parameterTypes,
-        String returnType,
-        SourceLocation sourceLocation) {
+            String name,
+            String internalName,
+            List<String> parameterTypes,
+            String returnType,
+            SourceLocation sourceLocation) {
 
         this.name = name;
         this.internalName = internalName;
@@ -68,23 +68,21 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
         }
 
         return new ASTMethod(
-            name,
-            internalName,
-            node.getParameterDeclarations().stream()
-                .map(p -> caseNormalizedTypeIfPrimitive(p.getType().asCodeString()))
-                .collect(Collectors.toList()),
-            caseNormalizedTypeIfPrimitive(node.getReturnType().asCodeString()),
-            node.getSourceLocation());
+                name,
+                internalName,
+                node.getParameterDeclarations().stream()
+                        .map(p -> caseNormalizedTypeIfPrimitive(p.getType().asCodeString()))
+                        .collect(Collectors.toList()),
+                caseNormalizedTypeIfPrimitive(node.getReturnType().asCodeString()),
+                node.getSourceLocation());
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    void calculateTextRegion(TextDocument sourceCode) {
+    @Override void calculateTextRegion(TextDocument sourceCode) {
         if (sourceLocation.isUnknown()) {
             return;
         }
@@ -97,13 +95,11 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
         ));
     }
 
-    @Override
-    public boolean hasRealLoc() {
+    @Override public boolean hasRealLoc() {
         return !sourceLocation.isUnknown();
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         if (isConstructor()) {
             BaseApexClass<?> baseClassNode = ancestors(BaseApexClass.class).first();
             if (baseClassNode != null) {
@@ -127,8 +123,7 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
         return name;
     }
 
-    @Override
-    public ApexQualifiedName getQualifiedName() {
+    @Override public ApexQualifiedName getQualifiedName() {
         return ApexQualifiedName.ofMethod(this);
     }
 
@@ -163,8 +158,7 @@ public final class ASTMethod extends AbstractApexNode implements ApexQualifiable
      * @return true if this method is the synthetic trigger method
      * @since 7.5.0
      */
-    @NoAttribute
-    public boolean isTriggerBlock() {
+    @NoAttribute public boolean isTriggerBlock() {
         return TRIGGER_INVOKE_ID.equals(internalName);
     }
 }

@@ -31,12 +31,10 @@ public class BigIntegerInstantiationRule extends AbstractJavaRulechainRule {
         super(ASTConstructorCall.class);
     }
 
-    @Override
-    public Object visit(ASTConstructorCall node, Object data) {
+    @Override public Object visit(ASTConstructorCall node, Object data) {
         LanguageVersion languageVersion = node.getTextDocument().getLanguageVersion();
 
-        @NonNull
-        ASTArgumentList arguments = node.getArguments();
+        @NonNull ASTArgumentList arguments = node.getArguments();
         if (arguments.size() != 1) {
             // only consider the single argument constructors
             return data;

@@ -21,13 +21,11 @@ import net.sourceforge.pmd.lang.dart.ast.DartLexer;
  */
 public class DartCpdLexer extends AntlrCpdLexer {
 
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new DartLexer(charStream);
     }
 
-    @Override
-    protected TokenManager<AntlrToken> filterTokenStream(TokenManager<AntlrToken> tokenManager) {
+    @Override protected TokenManager<AntlrToken> filterTokenStream(TokenManager<AntlrToken> tokenManager) {
         return new DartTokenFilter(tokenManager);
     }
 
@@ -48,8 +46,7 @@ public class DartCpdLexer extends AntlrCpdLexer {
             super(tokenManager);
         }
 
-        @Override
-        protected void analyzeToken(final AntlrToken currentToken) {
+        @Override protected void analyzeToken(final AntlrToken currentToken) {
             skipLibraryAndImport(currentToken);
             skipNewLines(currentToken);
             skipSemicolons(currentToken);
@@ -72,8 +69,7 @@ public class DartCpdLexer extends AntlrCpdLexer {
             discardingSemicolon = currentToken.getKind() == DartLexer.SEMICOLON;
         }
 
-        @Override
-        protected boolean isLanguageSpecificDiscarding() {
+        @Override protected boolean isLanguageSpecificDiscarding() {
             return discardingLibraryAndImport || discardingNL || discardingSemicolon;
         }
     }

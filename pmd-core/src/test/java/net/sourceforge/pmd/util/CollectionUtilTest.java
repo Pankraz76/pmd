@@ -19,18 +19,17 @@ import net.sourceforge.pmd.lang.document.Chars;
  */
 class CollectionUtilTest {
 
-    @Test
-    void testJoinOn() {
+    @Test void testJoinOn() {
         testJoinOn(listOf("a", "b", "c"), ".",
-                   "a.b.c");
+                "a.b.c");
         testJoinOn(Collections.emptyList(), ".",
-                   "");
+                "");
     }
 
     private void testJoinOn(List<String> toJoin, String delimiter, String expected) {
         String actual = CollectionUtil.joinCharsIntoStringBuilder(
-            CollectionUtil.map(toJoin, Chars::wrap),
-            delimiter
+                CollectionUtil.map(toJoin, Chars::wrap),
+                delimiter
         ).toString();
         assertEquals(expected, actual);
     }

@@ -15,8 +15,7 @@ public final class ASTDefnDef extends AbstractScalaNode<Defn.Def> {
         super(scalaNode);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

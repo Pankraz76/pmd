@@ -23,7 +23,7 @@ import scala.meta.inputs.Position;
 abstract class AbstractScalaNode<T extends Tree> extends AbstractNode<AbstractScalaNode<?>, ScalaNode<?>> implements ScalaNode<T> {
 
     private static final Comparator<Position> POS_CMP =
-        Comparator.comparingInt(Position::start).thenComparing(Position::end);
+            Comparator.comparingInt(Position::start).thenComparing(Position::end);
 
     protected final T node;
     private final Position pos;
@@ -40,9 +40,7 @@ abstract class AbstractScalaNode<T extends Tree> extends AbstractNode<AbstractSc
         pos = node.pos();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override @SuppressWarnings("unchecked") public <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof ScalaVisitor) {
             return this.acceptVisitor((ScalaVisitor<P, R>) visitor, data);
         }
@@ -52,31 +50,26 @@ abstract class AbstractScalaNode<T extends Tree> extends AbstractNode<AbstractSc
     protected abstract <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data);
 
     // overridden to make it visible
-    @Override
-    protected void addChild(AbstractScalaNode<?> child, int index) {
+    @Override protected void addChild(AbstractScalaNode<?> child, int index) {
         super.addChild(child, index);
     }
 
-    @Override
-    public boolean isImplicit() {
+    @Override public boolean isImplicit() {
         return pos.end() - pos.start() == 0;
     }
 
-    @Override
-    public TextRegion getTextRegion() {
+    @Override public TextRegion getTextRegion() {
         return TextRegion.fromBothOffsets(pos.start(), pos.end());
     }
 
-    @Override
-    public int compareLocation(Node node) {
+    @Override public int compareLocation(Node node) {
         if (node instanceof AbstractScalaNode) {
             return POS_CMP.compare(((AbstractScalaNode<?>) node).pos, pos);
         }
         return ScalaNode.super.compareLocation(node);
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return node.productPrefix().replace(".", "");
     }
 

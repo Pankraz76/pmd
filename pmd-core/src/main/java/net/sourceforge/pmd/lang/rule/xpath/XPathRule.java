@@ -36,10 +36,10 @@ public final class XPathRule extends AbstractRule {
     private static final Logger LOG = LoggerFactory.getLogger(XPathRule.class);
 
     private static final PropertyDescriptor<String> XPATH_DESCRIPTOR =
-        PropertyFactory.stringProperty("xpath")
-                       .desc("XPath expression")
-                       .defaultValue("")
-                       .build();
+            PropertyFactory.stringProperty("xpath")
+                    .desc("XPath expression")
+                    .defaultValue("")
+                    .build();
 
     /**
      * This is initialized only once when calling {@link #apply(Node, RuleContext)} or {@link #getTargetSelector()}.
@@ -77,8 +77,7 @@ public final class XPathRule extends AbstractRule {
     }
 
 
-    @Override
-    public Rule deepCopy() {
+    @Override public Rule deepCopy() {
         XPathRule rule = (XPathRule) super.deepCopy();
         rule.attrLogger = this.attrLogger;
         return rule;
@@ -92,8 +91,7 @@ public final class XPathRule extends AbstractRule {
     }
 
 
-    @Override
-    public void apply(Node target, RuleContext ctx) {
+    @Override public void apply(Node target, RuleContext ctx) {
         SaxonXPathRuleQuery query = getQueryMaybeInitialize();
 
         List<Node> nodesWithViolation;
@@ -128,17 +126,16 @@ public final class XPathRule extends AbstractRule {
         return e.addRuleName(getName());
     }
 
-    @Override
-    public void initialize(LanguageProcessor languageProcessor) {
+    @Override public void initialize(LanguageProcessor languageProcessor) {
         String xpath = getXPathExpression();
         XPathVersion version = XPathVersion.DEFAULT;
 
         try {
             xpathRuleQuery = new SaxonXPathRuleQuery(xpath,
-                                                     version,
-                                                     getPropertiesByPropertyDescriptor(),
-                                                     languageProcessor.services().getXPathHandler(),
-                                                     attrLogger);
+                    version,
+                    getPropertiesByPropertyDescriptor(),
+                    languageProcessor.services().getXPathHandler(),
+                    attrLogger);
         } catch (PmdXPathException e) {
             throw addExceptionContext(e);
         }
@@ -152,15 +149,14 @@ public final class XPathRule extends AbstractRule {
     }
 
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
 
         List<String> visits = getQueryMaybeInitialize().getRuleChainVisits();
 
         logXPathRuleChainUsage(!visits.isEmpty());
 
         return visits.isEmpty() ? RuleTargetSelector.forRootOnly()
-                                : RuleTargetSelector.forXPathNames(visits);
+                : RuleTargetSelector.forXPathNames(visits);
     }
 
 
@@ -172,8 +168,7 @@ public final class XPathRule extends AbstractRule {
     }
 
 
-    @Override
-    public String dysfunctionReason() {
+    @Override public String dysfunctionReason() {
         if (StringUtils.isBlank(getXPathExpression())) {
             return "Missing XPath expression";
         }

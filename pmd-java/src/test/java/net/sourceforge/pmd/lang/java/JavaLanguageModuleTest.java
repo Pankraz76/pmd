@@ -14,30 +14,26 @@ import net.sourceforge.pmd.lang.LanguageVersion;
 
 class JavaLanguageModuleTest {
 
-    @Test
-    void java9IsSmallerThanJava10() {
+    @Test void java9IsSmallerThanJava10() {
         LanguageVersion java9 = JavaLanguageModule.getInstance().getVersion("9");
         LanguageVersion java10 = JavaLanguageModule.getInstance().getVersion("10");
 
         assertTrue(java9.compareTo(java10) < 0, "java9 should be smaller than java10");
     }
 
-    @Test
-    void previewVersionShouldBeGreaterThanNonPreview() {
+    @Test void previewVersionShouldBeGreaterThanNonPreview() {
         LanguageVersion java = JavaLanguageModule.getInstance().getVersion("24");
         LanguageVersion javaPreview = JavaLanguageModule.getInstance().getVersion("24-preview");
 
         assertTrue(javaPreview.compareTo(java) > 0, "java-preview should be greater than java");
     }
 
-    @Test
-    void testCompareToVersion() {
+    @Test void testCompareToVersion() {
         LanguageVersion java9 = JavaLanguageModule.getInstance().getVersion("9");
         assertTrue(java9.compareToVersion("10") < 0, "java9 should be smaller than java10");
     }
 
-    @Test
-    void allVersions() {
+    @Test void allVersions() {
         List<LanguageVersion> versions = JavaLanguageModule.getInstance().getVersions();
         for (int i = 1; i < versions.size(); i++) {
             LanguageVersion previous = versions.get(i - 1);

@@ -21,8 +21,7 @@ public class MissingOverrideRule extends AbstractJavaRulechainRule {
         super(ASTMethodDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         if (node.isOverridden() && !node.isAnnotationPresent(Override.class)) {
             asCtx(data).addViolation(node, PrettyPrintingUtil.displaySignature(node));
         }

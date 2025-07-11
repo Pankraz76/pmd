@@ -18,8 +18,7 @@ import net.sourceforge.pmd.lang.matlab.ast.MatlabTokenKinds;
  */
 public class MatlabCpdLexer extends JavaccCpdLexer {
 
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
         return MatlabTokenKinds.newTokenManager(CharStream.create(doc));
     }
 }

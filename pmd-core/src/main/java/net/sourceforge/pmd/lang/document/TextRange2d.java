@@ -12,10 +12,10 @@ import java.util.Objects;
  */
 public final class TextRange2d implements Comparable<TextRange2d> {
     private static final Comparator<TextRange2d> COMPARATOR =
-        Comparator.comparingInt(TextRange2d::getStartLine)
-            .thenComparingInt(TextRange2d::getStartColumn)
-            .thenComparingInt(TextRange2d::getEndLine)
-            .thenComparingInt(TextRange2d::getEndColumn);
+            Comparator.comparingInt(TextRange2d::getStartLine)
+                    .thenComparingInt(TextRange2d::getStartColumn)
+                    .thenComparingInt(TextRange2d::getEndLine)
+                    .thenComparingInt(TextRange2d::getEndColumn);
 
     private final int startLine;
     private final int startCol;
@@ -28,7 +28,7 @@ public final class TextRange2d implements Comparable<TextRange2d> {
         this.endLine = endLine;
         this.endCol = endCol;
         assert startCol >= 1 && startLine >= 1 && endLine >= 1 && endCol >= 1
-            : "Not a valid range " + toDisplayStringWithColon();
+                : "Not a valid range " + toDisplayStringWithColon();
     }
 
 
@@ -42,7 +42,7 @@ public final class TextRange2d implements Comparable<TextRange2d> {
 
     public String toDisplayStringWithColon() {
         return getStartPos().toDisplayStringWithColon() + "-"
-            + getEndPos().toDisplayStringWithColon();
+                + getEndPos().toDisplayStringWithColon();
     }
 
     public int getStartLine() {
@@ -73,8 +73,7 @@ public final class TextRange2d implements Comparable<TextRange2d> {
         return new TextRange2d(line, 1, line, 1 + lineLength);
     }
 
-    @Override
-    public int compareTo(TextRange2d o) {
+    @Override public int compareTo(TextRange2d o) {
         return COMPARATOR.compare(this, o);
     }
 
@@ -86,8 +85,7 @@ public final class TextRange2d implements Comparable<TextRange2d> {
         return getStartPos().compareTo(pos) <= 0 && getEndPos().compareTo(pos) >= 0;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -96,18 +94,16 @@ public final class TextRange2d implements Comparable<TextRange2d> {
         }
         TextRange2d that = (TextRange2d) o;
         return this.getStartPos().equals(that.getStartPos())
-            && this.getEndPos().equals(that.getEndPos());
+                && this.getEndPos().equals(that.getEndPos());
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hash(getStartPos(), getEndPos());
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "!debug only! [" + getStartPos().toTupleString()
-            + " - " + getEndPos().toTupleString() + ']';
+                + " - " + getEndPos().toTupleString() + ']';
     }
 
 }

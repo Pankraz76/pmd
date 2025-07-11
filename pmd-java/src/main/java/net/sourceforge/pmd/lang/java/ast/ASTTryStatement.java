@@ -29,8 +29,7 @@ public final class ASTTryStatement extends AbstractStatement {
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -47,8 +46,7 @@ public final class ASTTryStatement extends AbstractStatement {
      * Returns the node for the resource list. This is null if this is
      * not a try-with-resources.
      */
-    @Nullable
-    public ASTResourceList getResources() {
+    @Nullable public ASTResourceList getResources() {
         return AstImplUtil.getChildAs(this, 0, ASTResourceList.class);
     }
 
@@ -74,8 +72,7 @@ public final class ASTTryStatement extends AbstractStatement {
      *
      * @return The finally statement, or null if there is none
      */
-    @Nullable
-    public ASTFinallyClause getFinallyClause() {
+    @Nullable public ASTFinallyClause getFinallyClause() {
         return firstChild(ASTFinallyClause.class);
     }
 

@@ -22,13 +22,11 @@ import net.sourceforge.pmd.lang.swift.ast.SwiftParser.SwTopLevel;
 public final class PmdSwiftParser extends AntlrBaseParser<SwiftNode, SwTopLevel> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PmdSwiftParser.class);
 
-    @Override
-    protected SwTopLevel parse(final Lexer lexer, ParserTask task) {
+    @Override protected SwTopLevel parse(final Lexer lexer, ParserTask task) {
         SwiftParser parser = new SwiftParser(new CommonTokenStream(lexer));
         parser.removeErrorListeners();
         parser.addErrorListener(new BaseErrorListener() {
-            @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+            @Override public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
                 LOGGER.warn("Syntax error at {}:{}:{}: {}", task.getFileId().getOriginalPath(),
                         line, charPositionInLine, msg);
                 // TODO: eventually we should throw a parse exception
@@ -38,8 +36,7 @@ public final class PmdSwiftParser extends AntlrBaseParser<SwiftNode, SwTopLevel>
         return parser.topLevel().makeAstInfo(task);
     }
 
-    @Override
-    protected Lexer getLexer(final CharStream source) {
+    @Override protected Lexer getLexer(final CharStream source) {
         return new SwiftLexer(source);
     }
 }

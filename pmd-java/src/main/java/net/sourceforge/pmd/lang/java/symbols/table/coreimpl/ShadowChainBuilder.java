@@ -79,7 +79,7 @@ public abstract class ShadowChainBuilder<S, I> {
     // prunes empty nodes if doing so will not alter results
     private boolean isPrunable(ShadowChainNode<S, I> parent, boolean shadowBarrier, boolean definitelyEmpty) {
         return definitelyEmpty && (!shadowBarrier
-            || parent.getResolver().isDefinitelyEmpty() && parent.isShadowBarrier());
+                || parent.getResolver().isDefinitelyEmpty() && parent.isShadowBarrier());
     }
 
     public ShadowChainNode<S, I> augment(ShadowChainNode<S, I> parent, boolean shadowBarrier, I scopeTag, S symbol) {
@@ -100,13 +100,13 @@ public abstract class ShadowChainBuilder<S, I> {
     }
 
     public ShadowChainNode<S, I> shadowWithCache(ShadowChainNode<S, I> parent,
-                                                 I scopeTag,
-                                                 // this map will be used as the cache without copy,
-                                                 // it may contain initial bindings, which is only
-                                                 // valid if the built group is a shadow barrier, which
-                                                 // is why this parameter is defaulted.
-                                                 Map<String, List<S>> cacheMap,
-                                                 NameResolver<S> resolver) {
+            I scopeTag,
+            // this map will be used as the cache without copy,
+            // it may contain initial bindings, which is only
+            // valid if the built group is a shadow barrier, which
+            // is why this parameter is defaulted.
+            Map<String, List<S>> cacheMap,
+            NameResolver<S> resolver) {
         return new CachingShadowChainNode<>(parent, cacheMap, resolver, true, scopeTag, ShadowChainNodeBase.defaultMerger());
     }
 

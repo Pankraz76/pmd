@@ -26,8 +26,7 @@ public final class AstTreeInfo extends GenericTreeInfo {
 
     private DeprecatedAttrLogger logger;
     private final Map<Node, AstElementNode> wrapperCache = new LinkedHashMap<Node, AstElementNode>() {
-        @Override
-        protected boolean removeEldestEntry(Entry eldest) {
+        @Override protected boolean removeEldestEntry(Entry eldest) {
             /*
             hit ratio depending on cache size:
             512: 61%
@@ -102,8 +101,7 @@ public final class AstTreeInfo extends GenericTreeInfo {
      * child of element type. Both the document and this element child have
      * the {@link RootNode} as {@link AstElementNode#getUnderlyingNode()}.
      */
-    @Override
-    public AstDocumentNode getRootNode() {
+    @Override public AstDocumentNode getRootNode() {
         return (AstDocumentNode) super.getRootNode();
     }
 

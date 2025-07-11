@@ -84,17 +84,17 @@ public class UnusedAssignmentRule extends AbstractJavaRulechainRule {
      */
 
     private static final PropertyDescriptor<Boolean> CHECK_PREFIX_INCREMENT =
-        PropertyFactory.booleanProperty("checkUnusedPrefixIncrement")
-                       .desc("Report expressions like ++i that may be replaced with (i + 1)")
-                       .defaultValue(false)
-                       .build();
+            PropertyFactory.booleanProperty("checkUnusedPrefixIncrement")
+                    .desc("Report expressions like ++i that may be replaced with (i + 1)")
+                    .defaultValue(false)
+                    .build();
 
     private static final PropertyDescriptor<Boolean> REPORT_UNUSED_VARS =
-        PropertyFactory.booleanProperty("reportUnusedVariables")
-                       .desc("Report variables that are only initialized, and never read at all. "
-                                 + "The rule UnusedVariable already cares for that, but you can enable it if needed")
-                       .defaultValue(false)
-                       .build();
+            PropertyFactory.booleanProperty("reportUnusedVariables")
+                    .desc("Report variables that are only initialized, and never read at all. "
+                            + "The rule UnusedVariable already cares for that, but you can enable it if needed")
+                    .defaultValue(false)
+                    .build();
 
     public UnusedAssignmentRule() {
         super(ASTCompilationUnit.class);
@@ -102,8 +102,7 @@ public class UnusedAssignmentRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(REPORT_UNUSED_VARS);
     }
 
-    @Override
-    public Object visit(ASTCompilationUnit node, Object data) {
+    @Override public Object visit(ASTCompilationUnit node, Object data) {
         DataflowResult result = DataflowPass.getDataflowResult(node);
         reportFinished(result, (RuleContext) data);
         return data;
@@ -182,7 +181,7 @@ public class UnusedAssignmentRule extends AbstractJavaRulechainRule {
             // than in statement position
             UnaryOp op = ((ASTUnaryExpression) assignment).getOperator();
             return !getProperty(CHECK_PREFIX_INCREMENT) && !op.isPure() && op.isPrefix()
-                && !(assignment.getParent() instanceof ASTExpressionStatement);
+                    && !(assignment.getParent() instanceof ASTExpressionStatement);
         }
         return false;
     }
@@ -193,7 +192,7 @@ public class UnusedAssignmentRule extends AbstractJavaRulechainRule {
         StringBuilder result = new StringBuilder(64);
         if (assignment.isInitializer()) {
             result.append(isField ? "the field initializer for"
-                                  : "the initializer for variable");
+                    : "the initializer for variable");
         } else if (assignment.isBlankDeclaration()) {
             if (reason != null) {
                 result.append("the initial value of ");

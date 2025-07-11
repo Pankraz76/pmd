@@ -21,13 +21,12 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 
 class SimpleDialectLanguageModuleBaseTest {
 
-    @Test
-    void baseLanguageXPathFunctionAvailable() throws Exception {
+    @Test void baseLanguageXPathFunctionAvailable() throws Exception {
         DummyLanguageModule lang = DummyLanguageModule.getInstance();
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
 
         try (LanguageProcessor baseProcessor = lang.createProcessor(lang.newPropertyBundle());
-                LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {
+             LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {
 
             Set<XPathFunctionDefinition> dialectFunctions = dialectProcessor.services().getXPathHandler().getRegisteredExtensionFunctions();
             for (XPathFunctionDefinition fn : baseProcessor.services().getXPathHandler().getRegisteredExtensionFunctions()) {
@@ -37,8 +36,7 @@ class SimpleDialectLanguageModuleBaseTest {
         }
     }
 
-    @Test
-    void dialectSpecificXPathFunctionAvailable() throws Exception {
+    @Test void dialectSpecificXPathFunctionAvailable() throws Exception {
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
 
         try (LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {
@@ -50,8 +48,7 @@ class SimpleDialectLanguageModuleBaseTest {
         }
     }
 
-    @Test
-    void baseLanguagePropertiesAreAvailable() {
+    @Test void baseLanguagePropertiesAreAvailable() {
         DummyLanguageModule lang = DummyLanguageModule.getInstance();
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
 
@@ -64,8 +61,7 @@ class SimpleDialectLanguageModuleBaseTest {
         }
     }
 
-    @Test
-    void dialectSpecificPropertiesAreAvailable() {
+    @Test void dialectSpecificPropertiesAreAvailable() {
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
 
         LanguagePropertyBundle dialectPropertyBundle = dialect.newPropertyBundle();
@@ -73,13 +69,12 @@ class SimpleDialectLanguageModuleBaseTest {
                 "The property " + DummyLanguageDialectModule.DUMMY_DIALECT_PROP.name() + " is not available in the dialect.");
     }
 
-    @Test
-    void baseLanguageMetricsAreAvailable() throws Exception {
+    @Test void baseLanguageMetricsAreAvailable() throws Exception {
         DummyLanguageModule lang = DummyLanguageModule.getInstance();
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
 
         try (LanguageProcessor baseProcessor = lang.createProcessor(lang.newPropertyBundle());
-                LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {
+             LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {
             for (Metric<?, ?> metric : baseProcessor.services().getLanguageMetricsProvider().getMetrics()) {
                 assertNotNull(dialectProcessor.services().getLanguageMetricsProvider().getMetricWithName(metric.displayName()),
                         "The metric " + metric.displayName() + " is not available in the dialect.");
@@ -87,8 +82,7 @@ class SimpleDialectLanguageModuleBaseTest {
         }
     }
 
-    @Test
-    void dialectSpecificMetricsAreAvailable() throws Exception {
+    @Test void dialectSpecificMetricsAreAvailable() throws Exception {
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
 
         try (LanguageProcessor dialectProcessor = dialect.createProcessor(dialect.newPropertyBundle())) {

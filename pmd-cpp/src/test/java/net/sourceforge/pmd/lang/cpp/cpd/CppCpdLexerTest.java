@@ -22,132 +22,107 @@ class CppCpdLexerTest extends CpdTextComparisonTest {
         super(CppLanguageModule.getInstance(), ".cpp");
     }
 
-    @Override
-    public @NonNull LanguagePropertyConfig defaultProperties() {
+    @Override public @NonNull LanguagePropertyConfig defaultProperties() {
         return dontSkipBlocks();
     }
 
-    @Test
-    void testUTFwithBOM() {
+    @Test void testUTFwithBOM() {
         CpdLexer cpdLexer = newCpdLexer(dontSkipBlocks());
         Tokens tokens = tokenize(cpdLexer, sourceCodeOf("\ufeffint start()\n{ int ret = 1;\nreturn ret;\n}\n"));
         assertEquals(15, tokens.size());
     }
 
-    @Test
-    void testContinuation() {
+    @Test void testContinuation() {
         doTest("continuation");
     }
 
-    @Test
-    void testContinuationInIdent() {
+    @Test void testContinuationInIdent() {
         doTest("continuation_intra_token");
     }
 
-    @Test
-    void testContinuationBetweenTokens() {
+    @Test void testContinuationBetweenTokens() {
         doTest("continuation_inter_token");
     }
 
-    @Test
-    void testUnicodeStringSupport() {
+    @Test void testUnicodeStringSupport() {
         doTest("unicodeStrings");
     }
 
-    @Test
-    void testIgnoreBetweenSpecialComments() {
+    @Test void testIgnoreBetweenSpecialComments() {
         doTest("specialComments");
     }
 
-    @Test
-    void testIgnoreLiterals() {
+    @Test void testIgnoreLiterals() {
         doTest("ignoreLiterals", "", ignoreLiterals());
     }
 
-    @Test
-    void testIgnoreIdents() {
+    @Test void testIgnoreIdents() {
         doTest("ignoreIdents", "", ignoreIdents());
     }
 
-    @Test
-    void testMultiLineMacros() {
+    @Test void testMultiLineMacros() {
         doTest("multilineMacros");
     }
 
-    @Test
-    void testIdentifierValidChars() {
+    @Test void testIdentifierValidChars() {
         doTest("identifierChars");
     }
 
-    @Test
-    void testWrongUnicodeInIdentifier() {
+    @Test void testWrongUnicodeInIdentifier() {
         expectLexException(" void main() { int ⚜ = __; }");
     }
 
-    @Test
-    void testTokenizerWithSkipBlocks() {
+    @Test void testTokenizerWithSkipBlocks() {
         doTest("simpleSkipBlocks", "_skipDefault", skipBlocks());
     }
 
-    @Test
-    void testTokenizerWithSkipBlocksPattern() {
+    @Test void testTokenizerWithSkipBlocksPattern() {
         doTest("simpleSkipBlocks", "_skipDebug", skipBlocks("#if debug|#endif"));
     }
 
-    @Test
-    void testTokenizerWithoutSkipBlocks() {
+    @Test void testTokenizerWithoutSkipBlocks() {
         doTest("simpleSkipBlocks", "_noSkip", dontSkipBlocks());
     }
 
-    @Test
-    void testAsm() {
+    @Test void testAsm() {
         // ASM code containing the '@' character
         doTest("asm", "", dontSkipBlocks());
     }
 
-    @Test
-    void testPreprocessingDirectives() {
+    @Test void testPreprocessingDirectives() {
         doTest("preprocessorDirectives");
     }
 
-    @Test
-    void testLiterals() {
+    @Test void testLiterals() {
         doTest("literals");
     }
 
-    @Test
-    void testLexicalErrorFilename() {
+    @Test void testLexicalErrorFilename() {
         expectLexException(sourceText("issue-1559"), dontSkipBlocks());
     }
 
 
-    @Test
-    void testRawStringLiterals() {
+    @Test void testRawStringLiterals() {
         doTest("issue-1784");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 
-    @Test
-    void testLongListsOfNumbersAreNotIgnored() {
+    @Test void testLongListsOfNumbersAreNotIgnored() {
         doTest("listOfNumbers");
     }
 
-    @Test
-    void testLongListsOfNumbersAreIgnored() {
+    @Test void testLongListsOfNumbersAreIgnored() {
         doTest("listOfNumbers", "_ignored", skipLiteralSequences());
     }
 
-    @Test
-    void testLongListsOfNumbersAndIdentifiersAreIgnored() {
+    @Test void testLongListsOfNumbersAndIdentifiersAreIgnored() {
         doTest("listOfNumbers", "_ignored_identifiers", skipIdentifierAndLiteralsSequences());
     }
 
-    @Test
-    void testLongListsOfIdentifiersAreIgnored() {
+    @Test void testLongListsOfIdentifiersAreIgnored() {
         doTest("listOfNumbers", "_ignored_identifiers", skipIdentifierSequences());
     }
 

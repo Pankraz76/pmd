@@ -25,23 +25,20 @@ public class OverrideBothEqualsAndHashcodeRule extends AbstractKotlinRule {
 
     private static final Visitor INSTANCE = new Visitor();
 
-    @Override
-    public KotlinVisitor<RuleContext, ?> buildVisitor() {
+    @Override public KotlinVisitor<RuleContext, ?> buildVisitor() {
         return INSTANCE;
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(KtClassMemberDeclarations.class);
     }
 
     private static final class Visitor extends KotlinVisitorBase<RuleContext, Void> {
-        @Override
-        public Void visitClassMemberDeclarations(KtClassMemberDeclarations node, RuleContext data) {
+        @Override public Void visitClassMemberDeclarations(KtClassMemberDeclarations node, RuleContext data) {
             List<KtFunctionDeclaration> functions = node.children(KtClassMemberDeclaration.class)
-                .children(KtDeclaration.class)
-                .children(KtFunctionDeclaration.class)
-                .toList();
+                    .children(KtDeclaration.class)
+                    .children(KtFunctionDeclaration.class)
+                    .toList();
 
             boolean hasEqualMethod = functions.stream().filter(this::isEqualsMethod).count() == 1L;
             boolean hasHashCodeMethod = functions.stream().filter(this::isHashCodeMethod).count() == 1L;

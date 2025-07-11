@@ -51,38 +51,31 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return npath;
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         return complexityMultipleOf(node, data);
     }
 
-    @Override
-    public Object visit(ASTProgramUnit node, Object data) {
+    @Override public Object visit(ASTProgramUnit node, Object data) {
         return complexityMultipleOf(node, data);
     }
 
-    @Override
-    public Object visit(ASTTypeMethod node, Object data) {
+    @Override public Object visit(ASTTypeMethod node, Object data) {
         return complexityMultipleOf(node, data);
     }
 
-    @Override
-    public Object visit(ASTTriggerUnit node, Object data) {
+    @Override public Object visit(ASTTriggerUnit node, Object data) {
         return complexityMultipleOf(node, data);
     }
 
-    @Override
-    public Object visit(ASTTriggerTimingPointSection node, Object data) {
+    @Override public Object visit(ASTTriggerTimingPointSection node, Object data) {
         return complexityMultipleOf(node, data);
     }
 
-    @Override
-    public Object visitPlsqlNode(PLSQLNode node, Object data) {
+    @Override public Object visitPlsqlNode(PLSQLNode node, Object data) {
         return complexityMultipleOf(node, data);
     }
 
-    @Override
-    public Object visit(ASTIfStatement node, Object data) {
+    @Override public Object visit(ASTIfStatement node, Object data) {
         // (npath of if + npath of else (or 1) + bool_comp of if) * npath of
         // next
 
@@ -93,8 +86,8 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         List<PLSQLNode> statementChildren = new ArrayList<>();
         for (int i = 0; i < node.getNumChildren(); i++) {
             if (node.getChild(i).getClass() == ASTStatement.class
-                || node.getChild(i).getClass() == ASTElsifClause.class
-                || node.getChild(i).getClass() == ASTElseClause.class) {
+                    || node.getChild(i).getClass() == ASTElsifClause.class
+                    || node.getChild(i).getClass() == ASTElseClause.class) {
                 statementChildren.add(node.getChild(i));
             }
         }
@@ -125,8 +118,7 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return boolCompIf + complexity;
     }
 
-    @Override
-    public Object visit(ASTElsifClause node, Object data) {
+    @Override public Object visit(ASTElsifClause node, Object data) {
         // (npath of if + npath of else (or 1) + bool_comp of if) * npath of
         // next
 
@@ -157,8 +149,7 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return boolCompIf + complexity;
     }
 
-    @Override
-    public Object visit(ASTElseClause node, Object data) {
+    @Override public Object visit(ASTElseClause node, Object data) {
         // (npath of if + npath of else (or 1) + bool_comp of if) * npath of
         // next
 
@@ -178,8 +169,7 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return complexity;
     }
 
-    @Override
-    public Object visit(ASTWhileStatement node, Object data) {
+    @Override public Object visit(ASTWhileStatement node, Object data) {
         // (npath of while + bool_comp of while + 1) * npath of next
 
         int boolCompWhile = NPathComplexityRule.sumExpressionComplexity(node.firstChild(ASTExpression.class));
@@ -189,8 +179,7 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return boolCompWhile + nPathWhile + 1;
     }
 
-    @Override
-    public Object visit(ASTLoopStatement node, Object data) {
+    @Override public Object visit(ASTLoopStatement node, Object data) {
         // (npath of do + bool_comp of do + 1) * npath of next
 
         int boolCompDo = NPathComplexityRule.sumExpressionComplexity(node.firstChild(ASTExpression.class));
@@ -200,8 +189,7 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return boolCompDo + nPathDo + 1;
     }
 
-    @Override
-    public Object visit(ASTForStatement node, Object data) {
+    @Override public Object visit(ASTForStatement node, Object data) {
         // (npath of for + bool_comp of for + 1) * npath of next
 
         int boolCompFor = NPathComplexityRule.sumExpressionComplexity(node.descendants(ASTExpression.class).first());
@@ -211,8 +199,7 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return boolCompFor + nPathFor + 1;
     }
 
-    @Override
-    public Object visit(ASTReturnStatement node, Object data) {
+    @Override public Object visit(ASTReturnStatement node, Object data) {
         // return statements are valued at 1, or the value of the boolean
         // expression
 
@@ -235,8 +222,7 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return 1;
     }
 
-    @Override
-    public Object visit(ASTCaseWhenClause node, Object data) {
+    @Override public Object visit(ASTCaseWhenClause node, Object data) {
         // bool_comp of switch + sum(npath(case_range))
 
         int boolCompSwitch = NPathComplexityRule.sumExpressionComplexity(node.firstChild(ASTExpression.class));
@@ -255,8 +241,7 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return boolCompSwitch + npath;
     }
 
-    @Override
-    public Object visit(ASTCaseStatement node, Object data) {
+    @Override public Object visit(ASTCaseStatement node, Object data) {
         // bool_comp of switch + sum(npath(case_range))
 
         int boolCompSwitch = NPathComplexityRule.sumExpressionComplexity(node.firstChild(ASTExpression.class));
@@ -275,8 +260,7 @@ class NPathComplexityVisitor extends PlsqlVisitorBase<Object, Object> {
         return boolCompSwitch + npath;
     }
 
-    @Override
-    public Object visit(ASTConditionalOrExpression node, Object data) {
+    @Override public Object visit(ASTConditionalOrExpression node, Object data) {
         return 1;
     }
 

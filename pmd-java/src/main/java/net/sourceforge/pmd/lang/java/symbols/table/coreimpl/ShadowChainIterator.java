@@ -14,8 +14,7 @@ import java.util.List;
  */
 public interface ShadowChainIterator<S, I> extends Iterator<ShadowChainNode<S, I>> {
 
-    @Override
-    boolean hasNext();
+    @Override boolean hasNext();
 
 
     /**
@@ -25,8 +24,7 @@ public interface ShadowChainIterator<S, I> extends Iterator<ShadowChainNode<S, I
      * in the previous groups that were yielded (unless they are the same
      * symbols, in which case there could be eg duplicate imports).
      */
-    @Override
-    ShadowChainNode<S, I> next();
+    @Override ShadowChainNode<S, I> next();
 
 
     /**

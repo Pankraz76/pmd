@@ -16,8 +16,7 @@ public final class ASTTemplate extends AbstractVtlNode implements RootNode {
         super(id);
     }
 
-    @Override
-    public AstInfo<ASTTemplate> getAstInfo() {
+    @Override public AstInfo<ASTTemplate> getAstInfo() {
         return astInfo;
     }
 
@@ -27,8 +26,7 @@ public final class ASTTemplate extends AbstractVtlNode implements RootNode {
     }
 
 
-    @Override
-    protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -15,13 +15,11 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 
 public class OverrideBothEqualsAndHashcodeRule extends AbstractApexRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         ApexNode<?> equalsNode = null;
         ApexNode<?> hashNode = null;
         for (ASTMethod method : node.children(ASTMethod.class)) {

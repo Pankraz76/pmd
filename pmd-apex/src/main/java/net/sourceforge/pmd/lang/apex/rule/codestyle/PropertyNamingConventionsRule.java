@@ -30,14 +30,12 @@ public class PropertyNamingConventionsRule extends AbstractNamingConventionsRule
     }
 
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTField.class);
     }
 
 
-    @Override
-    public Object visit(ASTField node, Object data) {
+    @Override public Object visit(ASTField node, Object data) {
         if (node.ancestors(ASTProperty.class).first() == null) {
             return data;
         }
@@ -51,8 +49,7 @@ public class PropertyNamingConventionsRule extends AbstractNamingConventionsRule
         return data;
     }
 
-    @Override
-    protected String displayName(String name) {
+    @Override protected String displayName(String name) {
         return DESCRIPTOR_TO_DISPLAY_NAME.get(name);
     }
 }

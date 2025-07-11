@@ -10,8 +10,7 @@ public interface CommentNode extends Node {
 
     String getData();
 
-    @Override
-    default String getXPathNodeName() {
+    @Override default String getXPathNodeName() {
         return "#comment";
     }
 }

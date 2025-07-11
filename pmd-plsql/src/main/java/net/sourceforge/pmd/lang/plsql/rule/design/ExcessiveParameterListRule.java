@@ -17,13 +17,11 @@ public class ExcessiveParameterListRule extends AbstractCounterCheckRule<ASTForm
         super(ASTFormalParameters.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 10;
     }
 
-    @Override
-    protected int getMetric(ASTFormalParameters node) {
+    @Override protected int getMetric(ASTFormalParameters node) {
         return node.children(ASTFormalParameter.class).count();
     }
 

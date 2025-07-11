@@ -24,8 +24,7 @@ public interface JMethodSymbol extends JExecutableSymbol, BoundToNode<ASTMethodD
     // symbols, and bridge methods are not reflected by the AST symbols
     boolean isBridge();
 
-    @Override
-    default boolean isStatic() {
+    @Override default boolean isStatic() {
         return Modifier.isStatic(getModifiers());
     }
 
@@ -46,8 +45,7 @@ public interface JMethodSymbol extends JExecutableSymbol, BoundToNode<ASTMethodD
     }
 
 
-    @Override
-    default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitMethod(this, param);
     }
 

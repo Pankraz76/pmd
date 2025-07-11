@@ -10,68 +10,55 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class WhereClauseTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void testFunctionCall() {
+    @Test void testFunctionCall() {
         doTest("WhereClauseFunctionCall");
     }
 
-    @Test
-    void testLikeCondition() {
+    @Test void testLikeCondition() {
         doTest("WhereClauseLike");
     }
 
-    @Test
-    void testNullCondition() {
+    @Test void testNullCondition() {
         doTest("WhereClauseIsNull");
     }
 
-    @Test
-    void testBetweenCondition() {
+    @Test void testBetweenCondition() {
         doTest("WhereClauseBetween");
     }
 
-    @Test
-    void testInCondition() {
+    @Test void testInCondition() {
         doTest("WhereClauseIn");
     }
 
-    @Test
-    void testIsOfTypeCondition() {
+    @Test void testIsOfTypeCondition() {
         doTest("WhereClauseIsOfType");
     }
 
-    @Test
-    void testConcatenationOperator() {
+    @Test void testConcatenationOperator() {
         doTest("WhereClauseConcatenation");
     }
 
-    @Test
-    void testExistsCondition() {
+    @Test void testExistsCondition() {
         doTest("WhereClauseExists");
     }
 
-    @Test
-    void testMultisetCondition() {
+    @Test void testMultisetCondition() {
         doTest("WhereClauseMultiset");
     }
 
-    @Test
-    void testRegexpLikeCondition() {
+    @Test void testRegexpLikeCondition() {
         doTest("WhereClauseRegexpLike");
     }
 
-    @Test
-    void testSubqueries() {
+    @Test void testSubqueries() {
         doTest("WhereClauseSubqueries");
     }
 
-    @Test
-    void testParentheses() {
+    @Test void testParentheses() {
         doTest("WhereClauseParens");
     }
 
-    @Test
-    void testCurrentOf() {
+    @Test void testCurrentOf() {
         doTest("WhereCurrentOf");
     }
 }

@@ -21,12 +21,10 @@ import net.sourceforge.pmd.lang.visualforce.VFTestUtils;
 
 class ApexClassPropertyTypesVisitorTest {
 
-    @Test
-    @SuppressWarnings("PMD.CloseResource")
-    void testApexClassIsProperlyParsed() {
+    @Test @SuppressWarnings("PMD.CloseResource") void testApexClassIsProperlyParsed() {
         Path apexPath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Apex)
-                                   .resolve("ApexController.cls")
-                                   .toAbsolutePath();
+                .resolve("ApexController.cls")
+                .toAbsolutePath();
 
         ApexClassPropertyTypesVisitor visitor = new ApexClassPropertyTypesVisitor();
         try (LanguageProcessorRegistry lpReg = VFTestUtils.fakeLpRegistry()) {

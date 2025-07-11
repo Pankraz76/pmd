@@ -20,8 +20,7 @@ public final class XmlParsingHelper extends BaseParsingHelper<XmlParsingHelper, 
         super(langName, RootXmlNode.class, params);
     }
 
-    @Override
-    protected XmlParsingHelper clone(Params params) {
+    @Override protected XmlParsingHelper clone(Params params) {
         return new XmlParsingHelper(this.getLanguage(), params);
     }
 }

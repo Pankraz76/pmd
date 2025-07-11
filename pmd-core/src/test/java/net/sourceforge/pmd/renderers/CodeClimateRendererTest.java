@@ -16,13 +16,11 @@ import net.sourceforge.pmd.lang.rule.xpath.XPathVersion;
 class CodeClimateRendererTest extends AbstractRendererTest {
     private static final String VERSION_PART = PMDVersion.isUnknown() || PMDVersion.isSnapshot() ? "latest" : "pmd-doc-" + PMDVersion.VERSION;
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         return new CodeClimateRenderer();
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return "{\"type\":\"issue\",\"check_name\":\"Foo\",\"description\":\"blah\","
                 + "\"content\":{\"body\":\"## Foo\\n\\nSince: PMD null\\n\\nPriority: Low\\n\\n"
                 + "[Categories](https://github.com/codeclimate/platform/blob/master/spec/analyzers/SPEC.md#categories): Style\\n\\n"
@@ -36,8 +34,7 @@ class CodeClimateRendererTest extends AbstractRendererTest {
                 + "\u0000" + EOL;
     }
 
-    @Override
-    String getExpectedWithProperties() {
+    @Override String getExpectedWithProperties() {
         return "{\"type\":\"issue\",\"check_name\":\"Foo\",\"description\":\"blah\","
                 + "\"content\":{\"body\":\"## Foo\\n\\nSince: PMD null\\n\\nPriority: Low\\n\\n"
                 + "[Categories](https://github.com/codeclimate/platform/blob/master/spec/analyzers/SPEC.md#categories): Style\\n\\n"
@@ -53,13 +50,11 @@ class CodeClimateRendererTest extends AbstractRendererTest {
                 + "\u0000" + EOL;
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return "";
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return "{\"type\":\"issue\",\"check_name\":\"Foo\",\"description\":\"blah\","
                 + "\"content\":{\"body\":\"## Foo\\n\\nSince: PMD null\\n\\nPriority: Low\\n\\n"
                 + "[Categories](https://github.com/codeclimate/platform/blob/master/spec/analyzers/SPEC.md#categories): Style\\n\\n"
@@ -83,8 +78,7 @@ class CodeClimateRendererTest extends AbstractRendererTest {
                 + "\u0000" + EOL;
     }
 
-    @Test
-    void testXPathRule() throws Exception {
+    @Test void testXPathRule() throws Exception {
         FileLocation node = createLocation(1, 1, 1, 1);
         XPathRule theRule = new XPathRule(XPathVersion.XPATH_3_1, "//dummyNode");
 

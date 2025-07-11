@@ -30,14 +30,12 @@ public class LocalVariableNamingConventionsRule extends AbstractNamingConvention
     }
 
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTVariableDeclaration.class);
     }
 
 
-    @Override
-    public Object visit(ASTVariableDeclaration node, Object data) {
+    @Override public Object visit(ASTVariableDeclaration node, Object data) {
         if (node.ancestors(ASTVariableDeclarationStatements.class).first().getModifiers().isFinal()) {
             checkMatches(FINAL_REGEX, node, data);
         } else {
@@ -47,8 +45,7 @@ public class LocalVariableNamingConventionsRule extends AbstractNamingConvention
         return data;
     }
 
-    @Override
-    protected String displayName(String name) {
+    @Override protected String displayName(String name) {
         return DESCRIPTOR_TO_DISPLAY_NAME.get(name);
     }
 }

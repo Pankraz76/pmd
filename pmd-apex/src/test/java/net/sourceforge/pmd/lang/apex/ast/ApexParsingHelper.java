@@ -16,8 +16,7 @@ public class ApexParsingHelper extends BaseParsingHelper<ApexParsingHelper, ASTA
         super(ApexLanguageModule.getInstance(), ASTApexFile.class, p);
     }
 
-    @Override
-    protected ApexParsingHelper clone(Params params) {
+    @Override protected ApexParsingHelper clone(Params params) {
         return new ApexParsingHelper(params);
     }
 

@@ -5,6 +5,5 @@
 package net.sourceforge.pmd.lang.java.rule.design.singularfield;
 
 public interface NoThrowingCloseable extends AutoCloseable {
-    @Override
-    void close();
+    @Override void close();
 }

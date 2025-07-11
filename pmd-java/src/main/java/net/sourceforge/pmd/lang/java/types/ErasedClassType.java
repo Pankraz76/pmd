@@ -17,13 +17,11 @@ final class ErasedClassType extends ClassTypeImpl {
         super(typeSystem, symbol, Collections.emptyList(), true, typeAnnots);
     }
 
-    @Override
-    public boolean hasErasedSuperTypes() {
+    @Override public boolean hasErasedSuperTypes() {
         return true;
     }
 
-    @Override
-    public JClassType getErasure() {
+    @Override public JClassType getErasure() {
         return this;
     }
 }

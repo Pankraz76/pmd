@@ -16,25 +16,22 @@ import net.sourceforge.pmd.lang.java.types.Substitution;
  * @author Clément Fournier
  */
 abstract class AbstractAstVariableSym
-    extends AbstractAstAnnotableSym<ASTVariableId>
-    implements JVariableSymbol {
-    
+        extends AbstractAstAnnotableSym<ASTVariableId>
+        implements JVariableSymbol {
+
     AbstractAstVariableSym(ASTVariableId node, AstSymFactory factory) {
         super(node, factory);
     }
 
-    @Override
-    public boolean isFinal() {
+    @Override public boolean isFinal() {
         return node.isFinal();
     }
 
-    @Override
-    public String getSimpleName() {
+    @Override public String getSimpleName() {
         return node.getName();
     }
 
-    @Override
-    public JTypeMirror getTypeMirror(Substitution subst) {
+    @Override public JTypeMirror getTypeMirror(Substitution subst) {
         ASTType typeNode = node.getTypeNode();
         /*
             Overridden on LocalVarSym.

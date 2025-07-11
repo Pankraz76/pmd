@@ -11,14 +11,12 @@ import net.sourceforge.pmd.reporting.RuleContext;
 
 public abstract class AbstractHtmlRule extends AbstractRule implements HtmlVisitor {
 
-    @Override
-    public Object visitNode(Node node, Object param) {
+    @Override public Object visitNode(Node node, Object param) {
         node.children().forEach(c -> c.acceptVisitor(this, param));
         return param;
     }
 
-    @Override
-    public void apply(Node target, RuleContext ctx) {
+    @Override public void apply(Node target, RuleContext ctx) {
         target.acceptVisitor(this, ctx);
     }
 }

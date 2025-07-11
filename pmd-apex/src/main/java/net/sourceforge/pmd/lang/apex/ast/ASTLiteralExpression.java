@@ -14,8 +14,7 @@ public final class ASTLiteralExpression extends AbstractApexNode.Single<LiteralE
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -78,8 +77,7 @@ public final class ASTLiteralExpression extends AbstractApexNode.Single<LiteralE
         return getLiteralType() == LiteralType.NULL;
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return literalToString(node);
     }
 

@@ -18,24 +18,21 @@ public class FooRule extends AbstractJavaRule {
         setMessage(message);
     }
 
-    @Override
-    public Object visit(ASTClassDeclaration c, Object ctx) {
+    @Override public Object visit(ASTClassDeclaration c, Object ctx) {
         if ("Foo".equalsIgnoreCase(c.getSimpleName())) {
             asCtx(ctx).addViolation(c);
         }
         return super.visit(c, ctx);
     }
 
-    @Override
-    public Object visit(ASTVariableId c, Object ctx) {
+    @Override public Object visit(ASTVariableId c, Object ctx) {
         if ("Foo".equalsIgnoreCase(c.getName())) {
             asCtx(ctx).addViolation(c);
         }
         return super.visit(c, ctx);
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return "NoFoo";
     }
 }

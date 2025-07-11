@@ -27,34 +27,29 @@ class ConstraintDecorator<T> extends PropertySerializer<T> {
         this.constraints = constraints;
     }
 
-    @Override
-    public List<PropertyConstraint<? super T>> getConstraints() {
+    @Override public List<PropertyConstraint<? super T>> getConstraints() {
         return constraints;
     }
 
-    @Override
-    public PropertySerializer<T> withConstraint(PropertyConstraint<? super T> t) {
+    @Override public PropertySerializer<T> withConstraint(PropertyConstraint<? super T> t) {
         return new ConstraintDecorator<>(this.propertySerializer, CollectionUtil.plus(this.constraints, t));
     }
 
-    @Override
-    public T fromString(@NonNull String attributeData) {
+    @Override public T fromString(@NonNull String attributeData) {
         T t = propertySerializer.fromString(attributeData);
         // perform constraint validation
         PropertyParsingUtil.checkConstraintsThrow(t, constraints);
         return t;
     }
 
-    @Override
-    public @NonNull String toString(T value) {
+    @Override public @NonNull String toString(T value) {
         return propertySerializer.toString(value);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ConstraintDecorator{"
-            + "propertySerializer=" + propertySerializer
-            + ", constraints=" + constraints
-            + '}';
+                + "propertySerializer=" + propertySerializer
+                + ", constraints=" + constraints
+                + '}';
     }
 }

@@ -27,17 +27,16 @@ public final class ASTApexFile extends AbstractApexNode.Single<CompilationUnit> 
     private final @NonNull ApexMultifileAnalysis multifileAnalysis;
 
     ASTApexFile(ParserTask task,
-                CompilationUnit compilationUnit,
-                Collection<? extends SuppressionCommentWrapper> suppressMap,
-                @NonNull ApexLanguageProcessor apexLang) {
+            CompilationUnit compilationUnit,
+            Collection<? extends SuppressionCommentWrapper> suppressMap,
+            @NonNull ApexLanguageProcessor apexLang) {
         super(compilationUnit);
         this.astInfo = new AstInfo<>(task, this).withSuppressionComments(suppressMap);
         this.multifileAnalysis = apexLang.getMultiFileState();
         this.setRegion(TextRegion.fromOffsetLength(0, task.getTextDocument().getLength()));
     }
 
-    @Override
-    public AstInfo<ASTApexFile> getAstInfo() {
+    @Override public AstInfo<ASTApexFile> getAstInfo() {
         return astInfo;
     }
 
@@ -45,14 +44,12 @@ public final class ASTApexFile extends AbstractApexNode.Single<CompilationUnit> 
         return (ASTUserClassOrInterface<?>) getChild(0);
     }
 
-    @Override
-    public @NonNull ASTApexFile getRoot() {
+    @Override public @NonNull ASTApexFile getRoot() {
         return this;
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -61,8 +58,7 @@ public final class ASTApexFile extends AbstractApexNode.Single<CompilationUnit> 
         return multifileAnalysis.getFileIssues(fileId.getAbsolutePath());
     }
 
-    @Override
-    public String getDefiningType() {
+    @Override public String getDefiningType() {
         // an apex file can contain only one top level type
         BaseApexClass baseApexClass = firstChild(BaseApexClass.class);
         if (baseApexClass != null) {

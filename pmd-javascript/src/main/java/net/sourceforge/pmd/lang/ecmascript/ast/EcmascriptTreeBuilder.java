@@ -177,8 +177,7 @@ final class EcmascriptTreeBuilder implements NodeVisitor {
         try {
             // the register function makes sure only AbstractEcmascriptNode<T> can be
             // added, where T is "T extends AstNode".
-            @SuppressWarnings("unchecked")
-            Constructor<? extends AbstractEcmascriptNode<T>> constructor = (Constructor<? extends AbstractEcmascriptNode<T>>) NODE_TYPE_TO_NODE_ADAPTER_TYPE.get(node.getClass());
+            @SuppressWarnings("unchecked") Constructor<? extends AbstractEcmascriptNode<T>> constructor = (Constructor<? extends AbstractEcmascriptNode<T>>) NODE_TYPE_TO_NODE_ADAPTER_TYPE.get(node.getClass());
             if (constructor == null) {
                 throw new IllegalArgumentException(
                         "There is no Node adapter class registered for the Node class: " + node.getClass());
@@ -224,8 +223,7 @@ final class EcmascriptTreeBuilder implements NodeVisitor {
         return node;
     }
 
-    @Override
-    public boolean visit(AstNode node) {
+    @Override public boolean visit(AstNode node) {
         if (node.equals(parents.peek())) {
             return true;
         } else {

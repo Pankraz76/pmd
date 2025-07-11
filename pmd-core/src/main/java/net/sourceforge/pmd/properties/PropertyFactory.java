@@ -309,8 +309,8 @@ public final class PropertyFactory {
      */
     public static <T> GenericPropertyBuilder<T> enumProperty(String name, Map<String, T> nameToValue) {
         PropertySerializer<T> parser = enumerationParser(
-            nameToValue,
-            t -> Objects.requireNonNull(CollectionUtil.getKeyOfValue(nameToValue, t))
+                nameToValue,
+                t -> Objects.requireNonNull(CollectionUtil.getKeyOfValue(nameToValue, t))
         );
         return new GenericPropertyBuilder<>(name, parser);
     }
@@ -346,12 +346,12 @@ public final class PropertyFactory {
      * @throws IllegalStateException    If the label maker maps two constants to the same label
      */
     public static <T extends Enum<T>> GenericPropertyBuilder<T> enumProperty(String name,
-                                                                             Class<T> enumClass,
-                                                                             Function<? super T, @NonNull String> labelMaker) {
+            Class<T> enumClass,
+            Function<? super T, @NonNull String> labelMaker) {
         // don't use a merge function, so that it throws if multiple
         // values have the same key
         Map<String, T> labelsToValues = Arrays.stream(enumClass.getEnumConstants())
-                                              .collect(Collectors.toMap(labelMaker, t -> t));
+                .collect(Collectors.toMap(labelMaker, t -> t));
 
         return new GenericPropertyBuilder<>(name, enumerationParser(labelsToValues, labelMaker));
     }

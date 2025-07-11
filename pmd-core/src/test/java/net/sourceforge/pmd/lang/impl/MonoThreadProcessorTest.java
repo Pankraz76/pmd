@@ -16,18 +16,15 @@ import net.sourceforge.pmd.lang.rule.RuleSet;
 
 class MonoThreadProcessorTest extends AbstractPMDProcessorTest {
 
-    @Override
-    protected int getThreads() {
+    @Override protected int getThreads() {
         return 0;
     }
 
-    @Override
-    protected Class<? extends AbstractPMDProcessor> getExpectedImplementation() {
+    @Override protected Class<? extends AbstractPMDProcessor> getExpectedImplementation() {
         return MonoThreadProcessor.class;
     }
 
-    @Test
-    void errorsShouldBeThrown() {
+    @Test void errorsShouldBeThrown() {
         try (PmdAnalysis pmd = createPmdAnalysis()) {
             pmd.addRuleSet(RuleSet.forSingleRule(new RuleThatThrowsError()));
             Error exception = assertThrows(Error.class, pmd::performAnalysis);

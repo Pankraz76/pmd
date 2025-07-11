@@ -21,8 +21,7 @@ class AllMetricsTest extends SimpleAggregatorTst {
 
     private static final String RULESET = "rulesets/java/metrics_test.xml";
 
-    @Override
-    public void setUp() {
+    @Override public void setUp() {
         addRule(RULESET, "CognitiveComplexityTest");
         addRule(RULESET, "CycloTest");
         addRule(RULESET, "NcssTest");

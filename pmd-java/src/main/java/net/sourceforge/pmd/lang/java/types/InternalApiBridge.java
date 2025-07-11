@@ -19,7 +19,8 @@ import net.sourceforge.pmd.annotation.InternalApi;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static boolean isSameTypeInInference(JTypeMirror t, JTypeMirror s) {
         return TypeOps.isSameTypeInInference(t, s);

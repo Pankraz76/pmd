@@ -33,16 +33,16 @@ public class TreeExporter {
 
     private final TreeExportConfiguration configuration;
     private final Io io;
-    
+
     public TreeExporter(final TreeExportConfiguration configuration) {
         this(configuration, Io.system());
     }
-    
+
     TreeExporter(final TreeExportConfiguration configuration, final Io io) {
         this.configuration = configuration;
         this.io = io;
     }
-    
+
     public void export() throws IOException {
         TreeRendererDescriptor descriptor = TreeRenderers.findById(configuration.getFormat());
         if (descriptor == null) {
@@ -54,20 +54,18 @@ public class TreeExporter {
 
         LanguageRegistry lang = LanguageRegistry.PMD.getDependenciesOf(configuration.getLanguage());
         try (LanguageProcessorRegistry lpRegistry = LanguageProcessorRegistry.create(lang,
-                                                                                     Collections.singletonMap(configuration.getLanguage(), langProperties),
-                                                                                     configuration.getMessageReporter())) {
+                Collections.singletonMap(configuration.getLanguage(), langProperties),
+                configuration.getMessageReporter())) {
             run(lpRegistry, descriptor.produceRenderer(bundle));
         }
     }
-    
+
     private void run(LanguageProcessorRegistry langRegistry, final TreeRenderer renderer) throws IOException {
         LanguageVersion langVersion = configuration.getLanguage().getDefaultVersion();
-        @SuppressWarnings("PMD.CloseResource")
-        LanguageProcessor processor = langRegistry.getProcessor(configuration.getLanguage());
+        @SuppressWarnings("PMD.CloseResource") LanguageProcessor processor = langRegistry.getProcessor(configuration.getLanguage());
         Parser parser = processor.services().getParser();
 
-        @SuppressWarnings("PMD.CloseResource")
-        TextFile textFile;
+        @SuppressWarnings("PMD.CloseResource") TextFile textFile;
         if (configuration.isReadStdin()) {
             io.stderr.println("Reading from stdin...");
             textFile = TextFile.forReader(readFromSystemIn(), FileId.STDIN, langVersion);
@@ -103,11 +101,11 @@ public class TreeExporter {
         }
         return bundle;
     }
-    
+
     private <T> void setProperty(PropertyDescriptor<T> descriptor, PropertySource bundle, String value) {
         bundle.setProperty(descriptor, descriptor.serializer().fromString(value));
     }
-    
+
     private AbortedException bail(String message) {
         io.stderr.println(message);
         io.stderr.println("Use --help for usage information");

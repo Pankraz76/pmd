@@ -22,10 +22,10 @@ class ShadowChainNodeBase<S, I> implements ShadowChain<S, I>, ShadowChainNode<S,
 
     @SuppressWarnings("unchecked") // NameResolver is covariant in S
     ShadowChainNodeBase(@NonNull ShadowChainNode<S, I> parent,
-                        boolean shadowBarrier,
-                        I scopeTag,
-                        NameResolver<? extends S> resolver,
-                        BinaryOperator<List<S>> merger) {
+            boolean shadowBarrier,
+            I scopeTag,
+            NameResolver<? extends S> resolver,
+            BinaryOperator<List<S>> merger) {
         this.parent = parent;
         this.scopeTag = scopeTag;
         this.shadowBarrier = shadowBarrier;
@@ -37,28 +37,23 @@ class ShadowChainNodeBase<S, I> implements ShadowChain<S, I>, ShadowChainNode<S,
         this(parent, shadowBarrier, scopeTag, resolver, defaultMerger());
     }
 
-    @Override
-    public ShadowChainNode<S, I> asNode() {
+    @Override public ShadowChainNode<S, I> asNode() {
         return this;
     }
 
-    @Override
-    public ShadowChain<S, I> asChain() {
+    @Override public ShadowChain<S, I> asChain() {
         return this;
     }
 
-    @Override
-    public NameResolver<S> getResolver() {
+    @Override public NameResolver<S> getResolver() {
         return resolver;
     }
 
-    @Override
-    public final boolean isShadowBarrier() {
+    @Override public final boolean isShadowBarrier() {
         return shadowBarrier;
     }
 
-    @Override
-    public @NonNull ShadowChainNode<S, I> getParent() {
+    @Override public @NonNull ShadowChainNode<S, I> getParent() {
         return parent;
     }
 
@@ -73,14 +68,12 @@ class ShadowChainNodeBase<S, I> implements ShadowChain<S, I>, ShadowChainNode<S,
     }
 
     /** Doesn't ask the parents. */
-    @Override
-    public OptionalBool knowsSymbol(String simpleName) {
+    @Override public OptionalBool knowsSymbol(String simpleName) {
         return resolver.knows(simpleName);
     }
 
 
-    @Override
-    public @NonNull List<S> resolve(String name) {
+    @Override public @NonNull List<S> resolve(String name) {
         List<S> res = this.resolveHere(name);
         if (res.isEmpty()) {
             // failed, continue
@@ -101,8 +94,7 @@ class ShadowChainNodeBase<S, I> implements ShadowChain<S, I>, ShadowChainNode<S,
         return res;
     }
 
-    @Override
-    public List<S> resolveHere(String simpleName) {
+    @Override public List<S> resolveHere(String simpleName) {
         List<S> res = resolver.resolveHere(simpleName);
         handleResolverKnows(simpleName, !res.isEmpty());
         return res;
@@ -112,15 +104,13 @@ class ShadowChainNodeBase<S, I> implements ShadowChain<S, I>, ShadowChainNode<S,
         // to be overridden
     }
 
-    @Override
-    public S resolveFirst(String name) {
+    @Override public S resolveFirst(String name) {
         S sym = resolver.resolveFirst(name);
         handleResolverKnows(name, sym != null);
         return sym != null ? sym : getParent().asChain().resolveFirst(name);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return scopeTag + "  " + resolver.toString();
     }
 

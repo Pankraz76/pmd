@@ -67,7 +67,7 @@ public class GuardLogStatementRule extends AbstractJavaRulechainRule {
             stringListProperty("logLevels")
                     .desc("LogLevels to guard")
                     .defaultValues("trace", "debug", "info", "warn", "error",
-                                   "log", "finest", "finer", "fine", "info", "warning", "severe")
+                            "log", "finest", "finer", "fine", "info", "warning", "severe")
                     .build();
 
     private static final PropertyDescriptor<List<String>> GUARD_METHODS =
@@ -91,13 +91,11 @@ public class GuardLogStatementRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(GUARD_METHODS);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         extractProperties();
     }
 
-    @Override
-    public Object visit(ASTExpressionStatement node, Object data) {
+    @Override public Object visit(ASTExpressionStatement node, Object data) {
         ASTExpression expr = node.getExpr();
         if (!(expr instanceof ASTMethodCall)) {
             return null;
@@ -113,8 +111,7 @@ public class GuardLogStatementRule extends AbstractJavaRulechainRule {
         return null;
     }
 
-    @SuppressWarnings("PMD.SimplifyBooleanReturns")
-    private boolean needsGuard(ASTMethodCall node) {
+    @SuppressWarnings("PMD.SimplifyBooleanReturns") private boolean needsGuard(ASTMethodCall node) {
         if (node.getArguments().isEmpty()) {
             return false;
         }
@@ -199,8 +196,8 @@ public class GuardLogStatementRule extends AbstractJavaRulechainRule {
         // return true if the statement has limited overhead even if unguarded,
         // so that we can ignore it
         return call.getArguments().toStream()
-                   .drop(messageArgIndex) // remove the level argument if needed
-                   .all(GuardLogStatementRule::isDirectAccess);
+                .drop(messageArgIndex) // remove the level argument if needed
+                .all(GuardLogStatementRule::isDirectAccess);
     }
 
     private static boolean isDirectAccess(ASTExpression it) {

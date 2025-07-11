@@ -13,8 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class ASTUserTriggerTest extends ApexParserTestBase {
 
-    @Test
-    void testTriggerName() {
+    @Test void testTriggerName() {
         ApexNode<?> node = parse("trigger HelloWorldTrigger on Book__c (before insert, after update) {\n"
                 + "   Book__c[] books = Trigger.new;\n" + "   MyHelloWorld.applyDiscount(books);\n" + "}\n");
         assertSame(ASTUserTrigger.class, node.getClass());

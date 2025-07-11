@@ -1,3 +1,3 @@
 public class InputJava7Diamond {
- HashMap<String> map = new HashMap<>();
+    HashMap<String> map = new HashMap<>();
 }

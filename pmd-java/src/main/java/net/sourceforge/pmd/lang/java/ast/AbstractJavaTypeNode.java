@@ -34,13 +34,11 @@ abstract class AbstractJavaTypeNode extends AbstractJavaNode implements TypeNode
         return value;
     }
 
-    @Override
-    public @NonNull JTypeMirror getTypeMirror() {
+    @Override public @NonNull JTypeMirror getTypeMirror() {
         return getTypeMirror(TypingContext.DEFAULT);
     }
 
-    @Override
-    public @NonNull JTypeMirror getTypeMirror(TypingContext context) {
+    @Override public @NonNull JTypeMirror getTypeMirror(TypingContext context) {
         if (context.isEmpty() && typeMirror != null) {
             return typeMirror;
         }
@@ -52,12 +50,12 @@ abstract class AbstractJavaTypeNode extends AbstractJavaNode implements TypeNode
             assert result != null : "LazyTypeResolver returned null";
         } catch (RuntimeException e) {
             throw AssertionUtil.contexted(e)
-                               .addContextValue("Resolving type of", this)
-                               .addContextValue("Location", this.getReportLocation());
+                    .addContextValue("Resolving type of", this)
+                    .addContextValue("Location", this.getReportLocation());
         } catch (AssertionError e) {
             throw AssertionUtil.contexted(e)
-                               .addContextValue("Resolving type of", this)
-                               .addContextValue("Location", this.getReportLocation());
+                    .addContextValue("Resolving type of", this)
+                    .addContextValue("Location", this.getReportLocation());
         } finally {
             if (context.isEmpty() && typeMirror == null) {
                 typeMirror = result; // cache it

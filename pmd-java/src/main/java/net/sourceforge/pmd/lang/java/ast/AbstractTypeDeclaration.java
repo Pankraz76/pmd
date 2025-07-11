@@ -27,8 +27,7 @@ abstract class AbstractTypeDeclaration extends AbstractTypedSymbolDeclarator<JCl
         super(i);
     }
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         if (isAnonymous()) {
             return super.getReportLocation();
         } else {
@@ -37,9 +36,7 @@ abstract class AbstractTypeDeclaration extends AbstractTypedSymbolDeclarator<JCl
         }
     }
 
-    @NonNull
-    @Override
-    public String getSimpleName() {
+    @NonNull @Override public String getSimpleName() {
         assert simpleName != null : "Null simple name";
         return simpleName;
     }
@@ -48,20 +45,17 @@ abstract class AbstractTypeDeclaration extends AbstractTypedSymbolDeclarator<JCl
         this.simpleName = simpleName;
     }
 
-    @Override
-    public @NonNull String getBinaryName() {
+    @Override public @NonNull String getBinaryName() {
         assert binaryName != null : "Null binary name";
         return binaryName;
     }
 
-    @Override
-    public @Nullable String getCanonicalName() {
+    @Override public @Nullable String getCanonicalName() {
         assert binaryName != null : "Canonical name wasn't set";
         return canonicalName;
     }
 
-    @Override
-    public Visibility getVisibility() {
+    @Override public Visibility getVisibility() {
         return isLocal() ? Visibility.V_LOCAL : ASTTypeDeclaration.super.getVisibility();
     }
 
@@ -71,13 +65,11 @@ abstract class AbstractTypeDeclaration extends AbstractTypedSymbolDeclarator<JCl
         this.canonicalName = canon;
     }
 
-    @Override
-    public @NonNull JClassType getTypeMirror() {
+    @Override public @NonNull JClassType getTypeMirror() {
         return (JClassType) super.getTypeMirror();
     }
 
-    @Override
-    public boolean isFindBoundary() {
+    @Override public boolean isFindBoundary() {
         return isNested();
     }
 }

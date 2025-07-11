@@ -22,32 +22,28 @@ import net.sourceforge.pmd.properties.PropertySource;
  */
 class TreeRenderersTest {
 
-    @RegisterExtension
-    private final DummyParsingHelper helper = new DummyParsingHelper();
+    @RegisterExtension private final DummyParsingHelper helper = new DummyParsingHelper();
 
-    @Test
-    void testStandardRenderersAreRegistered() {
+    @Test void testStandardRenderersAreRegistered() {
 
         assertEquals(TreeRenderers.XML, TreeRenderers.findById(TreeRenderers.XML.id()));
 
     }
 
-    @Test
-    void testXmlPropertiesAvailable() {
+    @Test void testXmlPropertiesAvailable() {
 
 
         PropertySource properties = TreeRenderers.XML.newPropertyBundle();
 
         assertThat(properties.getPropertyDescriptors(),
-                          containsInAnyOrder(TreeRenderers.XML_LINE_SEPARATOR,
-                                                                             TreeRenderers.XML_RENDER_COMMON_ATTRIBUTES,
-                                                                             TreeRenderers.XML_RENDER_PROLOG,
-                                                                             TreeRenderers.XML_USE_SINGLE_QUOTES));
+                containsInAnyOrder(TreeRenderers.XML_LINE_SEPARATOR,
+                        TreeRenderers.XML_RENDER_COMMON_ATTRIBUTES,
+                        TreeRenderers.XML_RENDER_PROLOG,
+                        TreeRenderers.XML_USE_SINGLE_QUOTES));
 
     }
 
-    @Test
-    void testXmlDescriptorDump() throws IOException {
+    @Test void testXmlDescriptorDump() throws IOException {
 
         PropertySource bundle = TreeRenderers.XML.newPropertyBundle();
 
@@ -61,9 +57,9 @@ class TreeRenderersTest {
 
         renderer.renderSubtree(dummyTree1(helper), out);
         assertEquals("<dummyNode foo=\"bar\" ohio=\"4\">\n"
-                                + "    <dummyNode o=\"ha\" />\n"
-                                + "    <dummyNode />\n"
-                                + "</dummyNode>\n", out.toString());
+                + "    <dummyNode o=\"ha\" />\n"
+                + "    <dummyNode />\n"
+                + "</dummyNode>\n", out.toString());
 
     }
 

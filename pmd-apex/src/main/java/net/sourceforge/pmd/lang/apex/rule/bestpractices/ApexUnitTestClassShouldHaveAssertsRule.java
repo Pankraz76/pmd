@@ -75,8 +75,7 @@ public class ApexUnitTestClassShouldHaveAssertsRule extends AbstractApexUnitTest
         definePropertyDescriptor(ADDITIONAL_ASSERT_METHOD_PATTERN_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTMethod node, Object data) {
+    @Override public Object visit(ASTMethod node, Object data) {
         if (!isTestMethodOrClass(node)) {
             return data;
         }

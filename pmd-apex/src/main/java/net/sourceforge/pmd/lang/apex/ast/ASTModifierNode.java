@@ -30,13 +30,11 @@ public final class ASTModifierNode extends AbstractApexNode.Many<Modifier> imple
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public int getModifiers() {
+    @Override public int getModifiers() {
         int modifiers = nodes
                 .stream()
                 .filter(mod -> mod instanceof KeywordModifier)
@@ -63,38 +61,31 @@ public final class ASTModifierNode extends AbstractApexNode.Many<Modifier> imple
         return modifiers;
     }
 
-    @Override
-    public boolean isPublic() {
+    @Override public boolean isPublic() {
         return (getModifiers() & PUBLIC) == PUBLIC;
     }
 
-    @Override
-    public boolean isProtected() {
+    @Override public boolean isProtected() {
         return (getModifiers() & PROTECTED) == PROTECTED;
     }
 
-    @Override
-    public boolean isPrivate() {
+    @Override public boolean isPrivate() {
         return (getModifiers() & PRIVATE) == PRIVATE;
     }
 
-    @Override
-    public boolean isAbstract() {
+    @Override public boolean isAbstract() {
         return (getModifiers() & ABSTRACT) == ABSTRACT;
     }
 
-    @Override
-    public boolean isStatic() {
+    @Override public boolean isStatic() {
         return (getModifiers() & STATIC) == STATIC;
     }
 
-    @Override
-    public boolean isFinal() {
+    @Override public boolean isFinal() {
         return (getModifiers() & FINAL) == FINAL;
     }
 
-    @Override
-    public boolean isTransient() {
+    @Override public boolean isTransient() {
         return (getModifiers() & TRANSIENT) == TRANSIENT;
     }
 

@@ -21,8 +21,7 @@ public class PerlLanguageModule extends CpdOnlyLanguageModuleBase {
         return (PerlLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new AnyCpdLexer("#");
     }
 }

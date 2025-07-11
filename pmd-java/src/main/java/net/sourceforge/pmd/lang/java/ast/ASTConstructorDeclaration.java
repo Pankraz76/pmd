@@ -29,14 +29,12 @@ public final class ASTConstructorDeclaration extends AbstractExecutableDeclarati
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return getName();
     }
 
@@ -45,8 +43,7 @@ public final class ASTConstructorDeclaration extends AbstractExecutableDeclarati
         return getBody().containsComment();
     }
 
-    @Override
-    public @NonNull ASTBlock getBody() {
+    @Override public @NonNull ASTBlock getBody() {
         return (ASTBlock) getLastChild();
     }
 

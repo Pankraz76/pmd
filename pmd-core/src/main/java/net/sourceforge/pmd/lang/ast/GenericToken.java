@@ -94,8 +94,7 @@ public interface GenericToken<T extends GenericToken<T>> extends Comparable<T>, 
      * If they start at the same index, then the smaller token comes before
      * the other.
      */
-    @Override
-    default int compareTo(T o) {
+    @Override default int compareTo(T o) {
         return getRegion().compareTo(o.getRegion());
     }
 

@@ -60,13 +60,11 @@ public final class LexException extends FileAnalysisException {
         return column;
     }
 
-    @Override
-    protected @NonNull FileLocation location() {
+    @Override protected @NonNull FileLocation location() {
         return FileLocation.caret(getFileId(), line, column);
     }
 
-    @Override
-    protected String errorKind() {
+    @Override protected String errorKind() {
         return "Lexical error";
     }
 
@@ -77,8 +75,7 @@ public final class LexException extends FileAnalysisException {
      *
      * @return A new exception
      */
-    @Override
-    public LexException setFileId(FileId fileId) {
+    @Override public LexException setFileId(FileId fileId) {
         super.setFileId(fileId);
         return this;
     }

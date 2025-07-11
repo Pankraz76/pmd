@@ -28,8 +28,7 @@ public enum AssignmentOperator {
         this.symbol = symbol;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return this.symbol;
     }
 
@@ -42,28 +41,28 @@ public enum AssignmentOperator {
             return EQUALS;
         }
         switch (op) {
-        case ADDITION:
-            return ADDITION_EQUALS;
-        case SUBTRACTION:
-            return SUBTRACTION_EQUALS;
-        case MULTIPLICATION:
-            return MULTIPLICATION_EQUALS;
-        case DIVISION:
-            return DIVISION_EQUALS;
-        case LEFT_SHIFT:
-            return LEFT_SHIFT_EQUALS;
-        case RIGHT_SHIFT_SIGNED:
-            return RIGHT_SHIFT_SIGNED_EQUALS;
-        case RIGHT_SHIFT_UNSIGNED:
-            return RIGHT_SHIFT_UNSIGNED_EQUALS;
-        case BITWISE_AND:
-            return BITWISE_AND_EQUALS;
-        case BITWISE_OR:
-            return BITWISE_OR_EQUALS;
-        case BITWISE_XOR:
-            return BITWISE_XOR_EQUALS;
-        default:
-            throw new IllegalArgumentException("Invalid assignment operator " + op);
+            case ADDITION:
+                return ADDITION_EQUALS;
+            case SUBTRACTION:
+                return SUBTRACTION_EQUALS;
+            case MULTIPLICATION:
+                return MULTIPLICATION_EQUALS;
+            case DIVISION:
+                return DIVISION_EQUALS;
+            case LEFT_SHIFT:
+                return LEFT_SHIFT_EQUALS;
+            case RIGHT_SHIFT_SIGNED:
+                return RIGHT_SHIFT_SIGNED_EQUALS;
+            case RIGHT_SHIFT_UNSIGNED:
+                return RIGHT_SHIFT_UNSIGNED_EQUALS;
+            case BITWISE_AND:
+                return BITWISE_AND_EQUALS;
+            case BITWISE_OR:
+                return BITWISE_OR_EQUALS;
+            case BITWISE_XOR:
+                return BITWISE_XOR_EQUALS;
+            default:
+                throw new IllegalArgumentException("Invalid assignment operator " + op);
         }
     }
 }

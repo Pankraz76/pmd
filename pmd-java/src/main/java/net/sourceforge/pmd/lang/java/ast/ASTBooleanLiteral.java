@@ -29,18 +29,15 @@ public final class ASTBooleanLiteral extends AbstractLiteral implements ASTLiter
         return this.isTrue;
     }
 
-    @Override
-    public @NonNull Boolean getConstValue() {
+    @Override public @NonNull Boolean getConstValue() {
         return (Boolean) super.getConstValue();
     }
 
-    @Override
-    public Chars getLiteralText() {
+    @Override public Chars getLiteralText() {
         return super.getLiteralText();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

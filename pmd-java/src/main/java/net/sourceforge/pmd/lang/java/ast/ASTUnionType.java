@@ -26,16 +26,15 @@ import net.sourceforge.pmd.lang.java.ast.InternalInterfaces.AtLeastOneChildOfTyp
  * @see ASTCatchParameter#getAllExceptionTypes()
  */
 public final class ASTUnionType extends AbstractJavaTypeNode
-    implements ASTReferenceType,
-               AtLeastOneChildOfType<ASTClassType>,
-               Iterable<ASTClassType> {
+        implements ASTReferenceType,
+        AtLeastOneChildOfType<ASTClassType>,
+        Iterable<ASTClassType> {
 
     ASTUnionType(int id) {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -44,8 +43,7 @@ public final class ASTUnionType extends AbstractJavaTypeNode
         return children(ASTClassType.class);
     }
 
-    @Override
-    public Iterator<ASTClassType> iterator() {
+    @Override public Iterator<ASTClassType> iterator() {
         return children(ASTClassType.class).iterator();
     }
 

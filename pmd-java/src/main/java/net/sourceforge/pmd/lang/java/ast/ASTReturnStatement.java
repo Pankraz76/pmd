@@ -23,16 +23,14 @@ public final class ASTReturnStatement extends AbstractStatement {
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
     /**
      * Returns the returned expression, or null if this is a simple return.
      */
-    @Nullable
-    public ASTExpression getExpr() {
+    @Nullable public ASTExpression getExpr() {
         return AstImplUtil.getChildAs(this, 0, ASTExpression.class);
     }
 }

@@ -22,15 +22,14 @@ import net.sourceforge.pmd.lang.ast.NodeStream;
 public final class ASTBreakStatement extends AbstractStatement {
 
     private static final Function<Object, ASTStatement> BREAK_TARGET_MAPPER =
-        NodeStream.asInstanceOf(ASTLoopStatement.class, ASTSwitchStatement.class);
+            NodeStream.asInstanceOf(ASTLoopStatement.class, ASTSwitchStatement.class);
 
     ASTBreakStatement(int id) {
         super(id);
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -52,8 +51,8 @@ public final class ASTBreakStatement extends AbstractStatement {
             return ancestors().map(BREAK_TARGET_MAPPER).first();
         }
         return ancestors(ASTLabeledStatement.class)
-            .filter(it -> it.getLabel().equals(myLabel))
-            .first();
+                .filter(it -> it.getLabel().equals(myLabel))
+                .first();
     }
 
 }

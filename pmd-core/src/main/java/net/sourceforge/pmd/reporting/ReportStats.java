@@ -37,8 +37,7 @@ public final class ReportStats {
         return numViolations;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ReportStats{numErrors=" + numErrors + ", numViolations=" + numViolations + '}';
     }
 }

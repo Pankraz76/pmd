@@ -25,8 +25,7 @@ public final class ASTBlock extends ASTMaybeEmptyListOf<ASTStatement>
     }
 
 
-    @Override
-    public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

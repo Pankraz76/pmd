@@ -17,8 +17,7 @@ class XPathJspRuleTest extends AbstractJspNodesTst {
     /**
      * Test matching a XPath expression against a JSP source.
      */
-    @Test
-    void testExpressionMatching() {
+    @Test void testExpressionMatching() {
         Rule rule = jsp.newXpathRule("//Element [@Name='hr']");
         Report report = jsp.executeRule(rule, "<html><hr/></html>");
 

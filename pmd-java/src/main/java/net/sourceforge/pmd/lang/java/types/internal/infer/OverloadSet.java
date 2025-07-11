@@ -46,18 +46,18 @@ public abstract class OverloadSet<T> {
             T existing = iterator.next();
 
             switch (shouldTakePrecedence(existing, sig)) {
-            case YES:
-                // new sig is less specific than an existing one, don't add it
-                return;
-            case NO:
-                // new sig is more specific than an existing one
-                iterator.remove();
-                break;
-            case UNKNOWN:
-                // neither sig is more specific
-                break;
-            default:
-                throw new AssertionError();
+                case YES:
+                    // new sig is less specific than an existing one, don't add it
+                    return;
+                case NO:
+                    // new sig is more specific than an existing one
+                    iterator.remove();
+                    break;
+                case UNKNOWN:
+                    // neither sig is more specific
+                    break;
+                default:
+                    throw new AssertionError();
             }
         }
         overloads.add(sig);
@@ -86,12 +86,12 @@ public abstract class OverloadSet<T> {
      */
     public static Collector<JMethodSig, ?, List<JMethodSig>> collectMostSpecific(JTypeMirror commonSubtype) {
         return Collector.of(
-            () -> new ContextIndependentSet(commonSubtype),
-            OverloadSet::add,
-            (left, right) -> {
-                throw new NotImplementedException("Cannot use this in a parallel stream");
-            },
-            o -> Collections.unmodifiableList(o.getOverloadsMutable())
+                () -> new ContextIndependentSet(commonSubtype),
+                OverloadSet::add,
+                (left, right) -> {
+                    throw new NotImplementedException("Cannot use this in a parallel stream");
+                },
+                o -> Collections.unmodifiableList(o.getOverloadsMutable())
         );
     }
 
@@ -105,15 +105,13 @@ public abstract class OverloadSet<T> {
         }
 
 
-        @Override
-        protected OptionalBool shouldTakePrecedence(JMethodSig m1, JMethodSig m2) {
+        @Override protected OptionalBool shouldTakePrecedence(JMethodSig m1, JMethodSig m2) {
             return areOverrideEquivalent(m1, m2)
-                   ? shouldAlwaysTakePrecedence(m1, m2, viewingSite)
-                   : OptionalBool.UNKNOWN;
+                    ? shouldAlwaysTakePrecedence(m1, m2, viewingSite)
+                    : OptionalBool.UNKNOWN;
         }
 
-        @Override
-        void add(JMethodSig sig) {
+        @Override void add(JMethodSig sig) {
             if (name == null) {
                 name = sig.getName();
             }
@@ -161,7 +159,7 @@ public abstract class OverloadSet<T> {
         }
 
         if (Modifier.isPrivate(m1.getModifiers() | m2.getModifiers())
-            && commonSubtype instanceof JClassType) {
+                && commonSubtype instanceof JClassType) {
             // One of them is private, which means, they can't be overridden,
             // so they failed the above test
             // Maybe it's shadowing then

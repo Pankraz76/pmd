@@ -97,35 +97,31 @@ public final class XmlParserImpl {
             this.astInfo = new AstInfo<>(task, this);
         }
 
-        @Override
-        public AstInfo<RootXmlNode> getAstInfo() {
+        @Override public AstInfo<RootXmlNode> getAstInfo() {
             return astInfo;
         }
 
-        @Override
-        public XmlNode wrap(Node domNode) {
+        @Override public XmlNode wrap(Node domNode) {
             return super.wrap(domNode);
         }
 
-        @Override
-        public Document getNode() {
+        @Override public Document getNode() {
             return (Document) super.getNode();
         }
-        
+
         public String getXmlEncoding() {
             return getNode().getXmlEncoding();
         }
-        
+
         public boolean isXmlStandalone() {
             return getNode().getXmlStandalone();
         }
-        
+
         public String getXmlVersion() {
             return getNode().getXmlVersion();
         }
 
-        @Override
-        public Iterator<Attribute> getXPathAttributesIterator() {
+        @Override public Iterator<Attribute> getXPathAttributesIterator() {
             // Expose this node's attributes through reflection
             return new AttributeAxisIterator(this);
         }

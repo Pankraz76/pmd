@@ -40,34 +40,28 @@ class AstAttributeNode extends BaseNodeInfo implements SiblingCountingNode {
         this.treeInfo = parent.getTreeInfo();
     }
 
-    @Override
-    List<AstElementNode> getChildren() {
+    @Override List<AstElementNode> getChildren() {
         return Collections.emptyList();
     }
 
-    @Override
-    public int getSiblingPosition() {
+    @Override public int getSiblingPosition() {
         return siblingPosition;
     }
 
 
-    @Override
-    protected AxisIterator iterateAttributes(NodeTest nodeTest) {
+    @Override protected AxisIterator iterateAttributes(NodeTest nodeTest) {
         return EmptyIterator.ofNodes();
     }
 
-    @Override
-    protected AxisIterator iterateChildren(NodeTest nodeTest) {
+    @Override protected AxisIterator iterateChildren(NodeTest nodeTest) {
         return EmptyIterator.ofNodes();
     }
 
-    @Override
-    protected AxisIterator iterateSiblings(NodeTest nodeTest, boolean forwards) {
+    @Override protected AxisIterator iterateSiblings(NodeTest nodeTest, boolean forwards) {
         return EmptyIterator.ofNodes();
     }
 
-    @Override
-    public AtomicSequence atomize() {
+    @Override public AtomicSequence atomize() {
         getTreeInfo().getLogger().recordUsageOf(attribute);
         if (value == null) {
             value = DomainConversion.convert(attribute.getValue());
@@ -75,19 +69,16 @@ class AstAttributeNode extends BaseNodeInfo implements SiblingCountingNode {
         return value;
     }
 
-    @Override
-    public SchemaType getSchemaType() {
+    @Override public SchemaType getSchemaType() {
         return schemaType;
     }
 
 
-    @Override
-    public Attribute getUnderlyingNode() {
+    @Override public Attribute getUnderlyingNode() {
         return attribute;
     }
 
-    @Override
-    public int compareOrder(NodeInfo other) {
+    @Override public int compareOrder(NodeInfo other) {
         if (other instanceof SiblingCountingNode) {
             return Navigator.compareOrder(this, (SiblingCountingNode) other);
         }
@@ -95,20 +86,17 @@ class AstAttributeNode extends BaseNodeInfo implements SiblingCountingNode {
     }
 
 
-    @Override
-    public String getLocalPart() {
+    @Override public String getLocalPart() {
         return attribute.getName();
     }
 
 
-    @Override
-    public void generateId(StringBuilder buffer) {
+    @Override public void generateId(StringBuilder buffer) {
         buffer.append(hashCode());
     }
 
 
-    @Override
-    public String getStringValue() {
+    @Override public String getStringValue() {
         getTreeInfo().getLogger().recordUsageOf(attribute);
         return attribute.getStringValue();
     }

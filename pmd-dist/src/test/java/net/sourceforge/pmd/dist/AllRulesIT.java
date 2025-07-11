@@ -21,9 +21,7 @@ class AllRulesIT extends AbstractBinaryDistributionTest {
                 "plsql", "pom", "visualforce", "velocity", "xml", "xsl");
     }
 
-    @ParameterizedTest
-    @MethodSource("languagesToTest")
-    void runRuleTests(String language) throws Exception {
+    @ParameterizedTest @MethodSource("languagesToTest") void runRuleTests(String language) throws Exception {
         String srcDir = new File(".", "src/test/resources/sample-source/" + language + "/").getAbsolutePath();
 
         ExecutionResult result = PMDExecutor.runPMDRules(createTemporaryReportFile(), tempDir, srcDir,
@@ -33,7 +31,7 @@ class AllRulesIT extends AbstractBinaryDistributionTest {
 
     private static void assertDefaultExecutionResult(ExecutionResult result) {
         result.assertExitCode(4)
-              .assertStdOut(containsString(""));
+                .assertStdOut(containsString(""));
 
         result.assertNoError("Exception applying rule");
         result.assertNoError("Ruleset not found");

@@ -16,13 +16,11 @@ public final class MatchesSignatureFunction extends BaseRewrittenFunction<Invoca
         super("matchesSig", InvocationNode.class);
     }
 
-    @Override
-    protected boolean matches(InvocationNode contextNode, String arg, InvocationMatcher parsedArg, boolean isConstant) {
+    @Override protected boolean matches(InvocationNode contextNode, String arg, InvocationMatcher parsedArg, boolean isConstant) {
         return parsedArg.matchesCall(contextNode);
     }
 
-    @Override
-    protected InvocationMatcher parseArgument(String arg) throws XPathFunctionException {
+    @Override protected InvocationMatcher parseArgument(String arg) throws XPathFunctionException {
         try {
             return InvocationMatcher.parse(arg);
         } catch (IllegalArgumentException e) {

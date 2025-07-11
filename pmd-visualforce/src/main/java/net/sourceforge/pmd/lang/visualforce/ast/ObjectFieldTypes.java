@@ -132,8 +132,7 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
     /**
      * Looks in {@code objectsDirectories} for a custom field identified by {@code expression}.
      */
-    @Override
-    protected void findDataType(String expression, List<Path> objectsDirectories) {
+    @Override protected void findDataType(String expression, List<Path> objectsDirectories) {
         // The expression should be in the form <objectName>.<fieldName>
         String[] parts = expression.split("\\.");
         if (parts.length == 1) {
@@ -296,8 +295,7 @@ class ObjectFieldTypes extends SalesforceFieldTypes {
         return str != null && str.toLowerCase(Locale.ROOT).endsWith(suffix.toLowerCase(Locale.ROOT));
     }
 
-    @Override
-    protected DataType putDataType(String name, DataType dataType) {
+    @Override protected DataType putDataType(String name, DataType dataType) {
         DataType previousType = super.putDataType(name, dataType);
         if (previousType != null && !previousType.equals(dataType)) {
             // It should not be possible to have conflicting types for CustomFields

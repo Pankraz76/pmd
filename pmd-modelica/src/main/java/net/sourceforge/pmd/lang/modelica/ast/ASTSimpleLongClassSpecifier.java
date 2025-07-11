@@ -11,13 +11,11 @@ public final class ASTSimpleLongClassSpecifier extends AbstractModelicaClassSpec
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    void populateExtendsAndImports(ModelicaClassType classTypeDeclaration) {
+    @Override void populateExtendsAndImports(ModelicaClassType classTypeDeclaration) {
         super.populateExtendsAndImports(classTypeDeclaration);
         pushExtendsAndImports(classTypeDeclaration, firstChild(ASTComposition.class));
     }

@@ -21,16 +21,14 @@ public final class ErrorsAsWarningsReporter extends MessageReporterBase {
         this.backend = backend;
     }
 
-    @Override
-    protected boolean isLoggableImpl(Level level) {
+    @Override protected boolean isLoggableImpl(Level level) {
         if (level == Level.ERROR) {
             level = Level.WARN;
         }
         return super.isLoggableImpl(level);
     }
 
-    @Override
-    protected void logImpl(Level level, String message) {
+    @Override protected void logImpl(Level level, String message) {
         if (level == Level.ERROR) {
             level = Level.WARN;
         }

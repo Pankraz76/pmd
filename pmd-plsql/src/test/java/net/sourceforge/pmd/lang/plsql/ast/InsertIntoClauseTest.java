@@ -10,18 +10,15 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class InsertIntoClauseTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseInsertInto() {
+    @Test void parseInsertInto() {
         plsql.parseResource("InsertIntoClause.pls");
     }
 
-    @Test
-    void parseInsertIntoReturning() {
+    @Test void parseInsertIntoReturning() {
         plsql.parseResource("InsertIntoClauseReturning.pls");
     }
 
-    @Test
-    void parseInsertIntoWithRecord() {
+    @Test void parseInsertIntoWithRecord() {
         plsql.parseResource("InsertIntoClauseRecord.pls");
     }
 }

@@ -24,11 +24,10 @@ public class SingleMethodSingletonRule extends AbstractJavaRulechainRule {
      * @param data of Object
      * @return Object
      */
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
         int count = node.descendants(ASTMethodDeclaration.class)
-            .filter(m -> "getInstance".equals(m.getName()))
-            .count();
+                .filter(m -> "getInstance".equals(m.getName()))
+                .count();
         if (count > 1) {
             asCtx(data).addViolation(node);
         }

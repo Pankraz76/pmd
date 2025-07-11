@@ -37,8 +37,7 @@ import net.sourceforge.pmd.internal.util.IOUtil;
 
 class IOUtilTest {
 
-    @Test
-    void testReadAllBytes() throws IOException {
+    @Test void testReadAllBytes() throws IOException {
         byte[] data = "12345".getBytes(StandardCharsets.UTF_8);
         try (InputStream stream = new ByteArrayInputStream(data)) {
             byte[] bytes = IOUtil.toByteArray(stream);
@@ -47,8 +46,7 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testToByteArrayResize() throws IOException {
+    @Test void testToByteArrayResize() throws IOException {
         int size = 8192 + 8192 + 10;
         byte[] data = new byte[size];
         for (int i = 0; i < size; i++) {
@@ -61,8 +59,7 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testSkipFully() throws IOException {
+    @Test void testSkipFully() throws IOException {
         byte[] data = "12345".getBytes(StandardCharsets.UTF_8);
         try (InputStream stream = new ByteArrayInputStream(data)) {
             assertThrows(IllegalArgumentException.class, () -> IOUtil.skipFully(stream, -1));
@@ -74,8 +71,7 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testSkipFully2() throws IOException {
+    @Test void testSkipFully2() throws IOException {
         byte[] data = "12345".getBytes(StandardCharsets.UTF_8);
         try (InputStream stream = new ByteArrayInputStream(data)) {
             // skip more bytes than the stream contains
@@ -85,8 +81,7 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testNormalizePath() {
+    @Test void testNormalizePath() {
         if (SystemUtils.IS_OS_UNIX) {
             assertEquals("ab/cd.txt", IOUtil.normalizePath("ab/ef/../cd.txt"));
             assertEquals("/a.txt", IOUtil.normalizePath("/x/../../a.txt"));
@@ -145,23 +140,20 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testFilenameExtension() {
+    @Test void testFilenameExtension() {
         assertEquals("txt", IOUtil.getFilenameExtension("ab/cd.txt"));
         assertEquals("txt", IOUtil.getFilenameExtension("ab.cd.txt"));
         assertEquals("", IOUtil.getFilenameExtension("ab/cd"));
         assertEquals("html", IOUtil.getFilenameExtension("cd.html"));
     }
 
-    @Test
-    void testFilenameBase() {
+    @Test void testFilenameBase() {
         assertEquals("cd", IOUtil.getFilenameBase("ab/cd.txt"));
         assertEquals("ab.cd", IOUtil.getFilenameBase("ab.cd.txt"));
         assertEquals("cd", IOUtil.getFilenameBase("ab/cd"));
     }
 
-    @Test
-    void testBomAwareStream() throws IOException {
+    @Test void testBomAwareStream() throws IOException {
         assertBomStream("No BOM".getBytes(StandardCharsets.UTF_8), "No BOM", null);
         assertBomStream("\ufeffBOM".getBytes(StandardCharsets.UTF_8), "BOM", StandardCharsets.UTF_8.name());
         assertBomStream("\ufeffBOM".getBytes(StandardCharsets.UTF_16LE), "BOM", StandardCharsets.UTF_16LE.name());
@@ -183,8 +175,7 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testOutputStreamFromWriter() throws IOException {
+    @Test void testOutputStreamFromWriter() throws IOException {
         StringWriter writer = new StringWriter();
         try (OutputStream outputStream = IOUtil.fromWriter(writer, "UTF-8")) {
             outputStream.write("abc".getBytes(StandardCharsets.UTF_8));
@@ -192,16 +183,14 @@ class IOUtilTest {
         assertEquals("abc", writer.toString());
     }
 
-    @Test
-    void testInputStreamFromReader() throws IOException {
+    @Test void testInputStreamFromReader() throws IOException {
         try (InputStream inputStream = IOUtil.fromReader(new StringReader("abc"))) {
             byte[] bytes = IOUtil.toByteArray(inputStream);
             assertEquals("abc", new String(bytes, StandardCharsets.UTF_8));
         }
     }
 
-    @Test
-    void testInputStreamFromReader2() throws IOException {
+    @Test void testInputStreamFromReader2() throws IOException {
         int size = 8192 + 8192 + 10;
         char[] data = new char[size];
         for (int i = 0; i < size; i++) {
@@ -215,8 +204,7 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testCopyStream() throws IOException {
+    @Test void testCopyStream() throws IOException {
         int size = 8192 + 8192 + 10;
         byte[] data = new byte[size];
         for (int i = 0; i < size; i++) {
@@ -231,8 +219,7 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testCopyReader() throws IOException {
+    @Test void testCopyReader() throws IOException {
         int size = 8192 + 8192 + 10;
         char[] data = new char[size];
         for (int i = 0; i < size; i++) {
@@ -247,8 +234,7 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testReadEmptyStream() throws IOException {
+    @Test void testReadEmptyStream() throws IOException {
         try (InputStream in = new ByteArrayInputStream(new byte[0])) {
             byte[] bytes = IOUtil.toByteArray(in);
             assertNotNull(bytes);
@@ -256,18 +242,15 @@ class IOUtilTest {
         }
     }
 
-    @Test
-    void testCloseQuietly() {
+    @Test void testCloseQuietly() {
         class Stream extends InputStream {
             private boolean closed = false;
 
-            @Override
-            public int read() throws IOException {
+            @Override public int read() throws IOException {
                 return 0;
             }
 
-            @Override
-            public void close() throws IOException {
+            @Override public void close() throws IOException {
                 closed = true;
                 throw new IOException("test");
             }
@@ -282,35 +265,30 @@ class IOUtilTest {
         assertTrue(stream.isClosed());
     }
 
-    @Test
-    void testReadFileToString() throws IOException {
+    @Test void testReadFileToString() throws IOException {
         String testString = "Test ABC";
         Path tempFile = Files.createTempFile("pmd", ".txt");
         Files.write(tempFile, testString.getBytes(Charset.defaultCharset()));
         assertEquals(testString, IOUtil.readFileToString(tempFile.toFile()));
     }
 
-    @Test
-    void testReadToString() throws IOException {
+    @Test void testReadToString() throws IOException {
         String testString = "testReadToString";
         Reader reader = new StringReader(testString);
         assertEquals(testString, IOUtil.readToString(reader));
     }
 
-    @Test
-    void testReadStreamToString() throws IOException {
+    @Test void testReadStreamToString() throws IOException {
         String testString = "testReadStreamToString";
         InputStream stream = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
         assertEquals(testString, IOUtil.readToString(stream, StandardCharsets.UTF_8));
     }
 
-    @Test
-    void testCreateWriterStdout() throws IOException {
+    @Test void testCreateWriterStdout() throws IOException {
         PrintStream originalOut = System.out;
         ByteArrayOutputStream data = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(new FilterOutputStream(data) {
-            @Override
-            public void close() {
+            @Override public void close() {
                 fail("Stream must not be closed");
             }
         });

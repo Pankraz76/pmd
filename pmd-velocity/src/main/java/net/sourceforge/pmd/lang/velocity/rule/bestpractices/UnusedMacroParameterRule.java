@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.velocity.rule.AbstractVtlRule;
 
 public class UnusedMacroParameterRule extends AbstractVtlRule {
 
-    @Override
-    public Object visit(final ASTDirective node, final Object data) {
+    @Override public Object visit(final ASTDirective node, final Object data) {
         if ("macro".equals(node.getDirectiveName())) {
             final Set<String> paramNames = new HashSet<>();
             for (final ASTReference param : node.children(ASTReference.class)) {
@@ -60,7 +59,7 @@ public class UnusedMacroParameterRule extends AbstractVtlRule {
 
     private String[] formatNameVariations(final String param) {
         final String actualName = param.substring(1);
-        return new String[] { param, "${" + actualName + "}", "${" + actualName + ".", "$!" + actualName,
-            "$!{" + actualName + ".", "$!{" + actualName + "}", };
+        return new String[]{param, "${" + actualName + "}", "${" + actualName + ".", "$!" + actualName,
+                "$!{" + actualName + ".", "$!{" + actualName + "}", };
     }
 }

@@ -20,8 +20,7 @@ final class AstFormalParamSym extends AbstractAstVariableSym implements JFormalP
         this.owner = owner;
     }
 
-    @Override
-    public JExecutableSymbol getDeclaringSymbol() {
+    @Override public JExecutableSymbol getDeclaringSymbol() {
         return owner;
     }
 

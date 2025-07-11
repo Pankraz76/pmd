@@ -26,7 +26,7 @@ public class CodeClimateRenderer extends AbstractIncrementingRenderer {
     public static final String NAME = "codeclimate";
     public static final String BODY_PLACEHOLDER = "REPLACE_THIS_WITH_MARKDOWN";
     public static final int REMEDIATION_POINTS_DEFAULT = 50000;
-    public static final String[] CODECLIMATE_DEFAULT_CATEGORIES = new String[] {"Style"};
+    public static final String[] CODECLIMATE_DEFAULT_CATEGORIES = new String[]{"Style"};
 
     // Note: required by https://github.com/codeclimate/platform/blob/master/spec/analyzers/SPEC.md
     protected static final String NULL_CHARACTER = "\u0000";
@@ -45,8 +45,7 @@ public class CodeClimateRenderer extends AbstractIncrementingRenderer {
         return BASE_URL + VERSION_PART + PAGE;
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
         while (violations.hasNext()) {
@@ -76,29 +75,28 @@ public class CodeClimateRenderer extends AbstractIncrementingRenderer {
         issue.categories = getCategories();
 
         switch (rule.getPriority()) {
-        case HIGH:
-            issue.severity = "blocker";
-            break;
-        case MEDIUM_HIGH:
-            issue.severity = "critical";
-            break;
-        case MEDIUM:
-            issue.severity = "major";
-            break;
-        case MEDIUM_LOW:
-            issue.severity = "minor";
-            break;
-        case LOW:
-        default:
-            issue.severity = "info";
-            break;
+            case HIGH:
+                issue.severity = "blocker";
+                break;
+            case MEDIUM_HIGH:
+                issue.severity = "critical";
+                break;
+            case MEDIUM:
+                issue.severity = "major";
+                break;
+            case MEDIUM_LOW:
+                issue.severity = "minor";
+                break;
+            case LOW:
+            default:
+                issue.severity = "info";
+                break;
         }
 
         return issue;
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "json";
     }
 
@@ -155,8 +153,7 @@ public class CodeClimateRenderer extends AbstractIncrementingRenderer {
                     continue;
                 }
 
-                @SuppressWarnings("unchecked")
-                PropertyDescriptor<T> typed = (PropertyDescriptor<T>) property;
+                @SuppressWarnings("unchecked") PropertyDescriptor<T> typed = (PropertyDescriptor<T>) property;
                 T value = rule.getProperty(typed);
                 String propertyValue = typed.serializer().toString(value);
                 propertyValue = propertyValue.replaceAll("\\R", "\\\\n");

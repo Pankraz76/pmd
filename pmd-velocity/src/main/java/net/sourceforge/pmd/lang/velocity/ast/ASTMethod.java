@@ -1,4 +1,3 @@
-
 package net.sourceforge.pmd.lang.velocity.ast;
 
 /*
@@ -41,8 +40,7 @@ public final class ASTMethod extends AbstractVtlNode {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

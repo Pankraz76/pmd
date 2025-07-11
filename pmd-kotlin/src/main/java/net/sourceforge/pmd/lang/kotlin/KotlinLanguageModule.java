@@ -18,11 +18,11 @@ public class KotlinLanguageModule extends SimpleLanguageModuleBase {
 
     public KotlinLanguageModule() {
         super(LanguageMetadata.withId(ID).name("Kotlin")
-                              .extensions("kt", "ktm")
-                              .addVersion("1.6")
-                              .addVersion("1.7")
-                              .addDefaultVersion("1.8"),
-              new KotlinHandler());
+                        .extensions("kt", "ktm")
+                        .addVersion("1.6")
+                        .addVersion("1.7")
+                        .addDefaultVersion("1.8"),
+                new KotlinHandler());
 
     }
 
@@ -30,8 +30,7 @@ public class KotlinLanguageModule extends SimpleLanguageModuleBase {
         return (KotlinLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new KotlinCpdLexer();
     }
 }

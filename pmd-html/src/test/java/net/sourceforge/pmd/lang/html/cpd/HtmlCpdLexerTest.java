@@ -16,18 +16,15 @@ class HtmlCpdLexerTest extends CpdTextComparisonTest {
         super(HtmlLanguageModule.getInstance(), ".html");
     }
 
-    @Test
-    void testSimpleHtmlFile() {
+    @Test void testSimpleHtmlFile() {
         doTest("SimpleHtmlFile");
     }
 
-    @Test
-    void invalidHtml() {
+    @Test void invalidHtml() {
         doTest("InvalidHtml");
     }
 
-    @Test
-    void metaTag() {
+    @Test void metaTag() {
         doTest("MetaTag");
     }
 }

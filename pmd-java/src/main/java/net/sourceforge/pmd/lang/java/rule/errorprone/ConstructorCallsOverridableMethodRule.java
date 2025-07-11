@@ -59,22 +59,20 @@ public final class ConstructorCallsOverridableMethodRule extends AbstractJavaRul
     private static final Deque<JMethodSymbol> EMPTY_STACK = new LinkedList<>();
 
     private static final Set<String> MAKE_FIELD_FINAL_CLASS_ANNOT =
-        setOf(
-            "lombok.Value"
-        );
+            setOf(
+                    "lombok.Value"
+            );
 
     public ConstructorCallsOverridableMethodRule() {
         super(ASTConstructorDeclaration.class);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         super.start(ctx);
         safeMethods.clear();
     }
 
-    @Override
-    public Object visit(ASTConstructorDeclaration node, Object data) {
+    @Override public Object visit(ASTConstructorDeclaration node, Object data) {
         if (node.getEnclosingType().isFinal() || JavaAstUtils.hasAnyAnnotation(node.getEnclosingType(), MAKE_FIELD_FINAL_CLASS_ANNOT)) {
             return null; // then cannot be overridden
         }
@@ -92,8 +90,7 @@ public final class ConstructorCallsOverridableMethodRule extends AbstractJavaRul
         return null;
     }
 
-    @NonNull
-    private Deque<JMethodSymbol> getUnsafetyReason(ASTMethodCall call, PVector<ASTMethodDeclaration> recursionGuard) {
+    @NonNull private Deque<JMethodSymbol> getUnsafetyReason(ASTMethodCall call, PVector<ASTMethodDeclaration> recursionGuard) {
         if (!isCallOnThisInstance(call)) {
             return EMPTY_STACK;
         }
@@ -113,8 +110,7 @@ public final class ConstructorCallsOverridableMethodRule extends AbstractJavaRul
         }
     }
 
-    @NonNull
-    private Deque<JMethodSymbol> getUnsafetyReason(JMethodSymbol method, PVector<ASTMethodDeclaration> recursionGuard) {
+    @NonNull private Deque<JMethodSymbol> getUnsafetyReason(JMethodSymbol method, PVector<ASTMethodDeclaration> recursionGuard) {
         if (method.isStatic()) {
             return EMPTY_STACK; // no access to this instance anyway
         }

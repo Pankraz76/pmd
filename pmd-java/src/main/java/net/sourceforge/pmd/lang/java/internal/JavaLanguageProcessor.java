@@ -36,7 +36,7 @@ import net.sourceforge.pmd.util.designerbindings.DesignerBindings;
  * @author Clément Fournier
  */
 public class JavaLanguageProcessor extends BatchLanguageProcessor<JavaLanguageProperties>
-    implements LanguageVersionHandler {
+        implements LanguageVersionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(JavaLanguageProcessor.class);
 
@@ -61,13 +61,11 @@ public class JavaLanguageProcessor extends BatchLanguageProcessor<JavaLanguagePr
         LOG.debug("Using analysis classloader: {}", properties.getAnalysisClassLoader());
     }
 
-    @Override
-    public @NonNull LanguageVersionHandler services() {
+    @Override public @NonNull LanguageVersionHandler services() {
         return this;
     }
 
-    @Override
-    public Parser getParser() {
+    @Override public Parser getParser() {
         return parser;
     }
 
@@ -94,50 +92,44 @@ public class JavaLanguageProcessor extends BatchLanguageProcessor<JavaLanguagePr
         }
     }
 
-    @Override
-    public DesignerBindings getDesignerBindings() {
+    @Override public DesignerBindings getDesignerBindings() {
         return JavaDesignerBindings.INSTANCE;
     }
 
-    @Override
-    public XPathHandler getXPathHandler() {
+    @Override public XPathHandler getXPathHandler() {
         return XPATH_HANDLER;
     }
 
-    @Override
-    public List<ViolationSuppressor> getExtraViolationSuppressors() {
+    @Override public List<ViolationSuppressor> getExtraViolationSuppressors() {
         return JavaAnnotationSuppressor.ALL_JAVA_SUPPRESSORS;
     }
 
-    @Override
-    public ViolationDecorator getViolationDecorator() {
+    @Override public ViolationDecorator getViolationDecorator() {
         return JavaViolationDecorator.INSTANCE;
     }
 
-    @Override
-    public LanguageMetricsProvider getLanguageMetricsProvider() {
+    @Override public LanguageMetricsProvider getLanguageMetricsProvider() {
         return myMetricsProvider;
     }
 
     private static final XPathHandler XPATH_HANDLER =
-        XPathHandler.getHandlerForFunctionDefs(
-            BaseContextNodeTestFun.TYPE_IS_EXACTLY,
-            BaseContextNodeTestFun.TYPE_IS,
-            BaseContextNodeTestFun.HAS_ANNOTATION,
-            MatchesSignatureFunction.INSTANCE,
-            NodeIsFunction.INSTANCE,
-            GetModifiersFun.GET_EFFECTIVE,
-            GetModifiersFun.GET_EXPLICIT,
-            MetricFunction.INSTANCE,
-            GetCommentOnFunction.INSTANCE
-        );
+            XPathHandler.getHandlerForFunctionDefs(
+                    BaseContextNodeTestFun.TYPE_IS_EXACTLY,
+                    BaseContextNodeTestFun.TYPE_IS,
+                    BaseContextNodeTestFun.HAS_ANNOTATION,
+                    MatchesSignatureFunction.INSTANCE,
+                    NodeIsFunction.INSTANCE,
+                    GetModifiersFun.GET_EFFECTIVE,
+                    GetModifiersFun.GET_EXPLICIT,
+                    MetricFunction.INSTANCE,
+                    GetCommentOnFunction.INSTANCE
+            );
 
     public void setTypeSystem(TypeSystem ts) {
         this.typeSystem = Objects.requireNonNull(ts);
     }
 
-    @Override
-    public void close() throws Exception {
+    @Override public void close() throws Exception {
         this.typeSystem.logStats();
         super.close();
     }

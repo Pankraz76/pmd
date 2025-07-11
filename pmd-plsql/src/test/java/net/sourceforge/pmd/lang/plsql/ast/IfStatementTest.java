@@ -12,8 +12,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class IfStatementTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseIfWithElseIf() throws Exception {
+    @Test void parseIfWithElseIf() throws Exception {
         String code = "BEGIN\nIF 1 = 1 THEN null;\nELSIF (2 = 2) THEN null;\nELSE null;\nEND IF;\nEND;\n/\n";
         ASTInput input = plsql.parse(code);
         assertNotNull(input);

@@ -34,8 +34,7 @@ class GlobalAnalysisListenerTest {
 
     static final int NUM_DATA_SOURCES = 3;
 
-    @Test
-    void testViolationCounter() {
+    @Test void testViolationCounter() {
 
         PMDConfiguration config = newConfig();
 
@@ -49,8 +48,7 @@ class GlobalAnalysisListenerTest {
 
     }
 
-    @Test
-    void testViolationCounterOnMulti() {
+    @Test void testViolationCounterOnMulti() {
 
         PMDConfiguration config = newConfig();
         config.setThreads(2);
@@ -67,8 +65,7 @@ class GlobalAnalysisListenerTest {
 
     }
 
-    @Test
-    void testAnalysisCache() throws Exception {
+    @Test void testAnalysisCache() throws Exception {
 
         PMDConfiguration config = newConfig();
         AnalysisCache mockCache = spy(NoopAnalysisCache.class);
@@ -82,8 +79,7 @@ class GlobalAnalysisListenerTest {
         verify(mockCache, times(NUM_DATA_SOURCES)).isUpToDate(any());
     }
 
-    @Test
-    void testCacheWithFailure() throws Exception {
+    @Test void testCacheWithFailure() throws Exception {
 
         PMDConfiguration config = newConfig();
         AnalysisCache mockCache = spy(NoopAnalysisCache.class);
@@ -98,8 +94,7 @@ class GlobalAnalysisListenerTest {
         verify(mockCache, times(NUM_DATA_SOURCES)).isUpToDate(any());
     }
 
-    @Test
-    void testCacheWithPropagatedException() throws Exception {
+    @Test void testCacheWithPropagatedException() throws Exception {
 
         PMDConfiguration config = newConfig();
         AnalysisCache mockCache = spy(NoopAnalysisCache.class);
@@ -120,8 +115,7 @@ class GlobalAnalysisListenerTest {
         verify(mockCache, times(1)).isUpToDate(any());
     }
 
-    @NonNull
-    private PMDConfiguration newConfig() {
+    @NonNull private PMDConfiguration newConfig() {
         PMDConfiguration config = new PMDConfiguration();
         config.setAnalysisCacheLocation(null);
         config.setIgnoreIncrementalAnalysis(true);
@@ -143,8 +137,7 @@ class GlobalAnalysisListenerTest {
 
     public static class MyFooRule extends FooRule {
 
-        @Override
-        public void apply(Node node, RuleContext ctx) {
+        @Override public void apply(Node node, RuleContext ctx) {
             if (node.getTextDocument().getFileId().getFileName().contains("1")) {
                 ctx.addViolation(node);
             }
@@ -153,14 +146,12 @@ class GlobalAnalysisListenerTest {
 
     public static class BrokenRule extends FooRule {
 
-        @Override
-        public void apply(Node node, RuleContext ctx) {
+        @Override public void apply(Node node, RuleContext ctx) {
             throw new IllegalArgumentException("Something happened");
         }
     }
 
-    @Test
-    void teeShouldForwardAllEventsSingleListeners() throws Exception {
+    @Test void teeShouldForwardAllEventsSingleListeners() throws Exception {
         GlobalAnalysisListener mockListener1 = createMockListener();
         GlobalAnalysisListener teed = GlobalAnalysisListener.tee(Arrays.asList(mockListener1));
 
@@ -173,8 +164,7 @@ class GlobalAnalysisListenerTest {
         Mockito.verifyNoMoreInteractions(mockListener1);
     }
 
-    @Test
-    void teeShouldForwardAllEventsMultipleListeners() throws Exception {
+    @Test void teeShouldForwardAllEventsMultipleListeners() throws Exception {
         GlobalAnalysisListener mockListener1 = createMockListener();
         GlobalAnalysisListener mockListener2 = createMockListener();
         GlobalAnalysisListener teed = GlobalAnalysisListener.tee(Arrays.asList(mockListener1, mockListener2));

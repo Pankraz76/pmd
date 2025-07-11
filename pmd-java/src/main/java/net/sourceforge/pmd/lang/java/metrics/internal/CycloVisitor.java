@@ -51,18 +51,15 @@ public class CycloVisitor extends JavaVisitorBase<MutableInt, Void> {
     }
 
 
-    @Override
-    public final Void visitJavaNode(JavaNode localNode, MutableInt data) {
+    @Override public final Void visitJavaNode(JavaNode localNode, MutableInt data) {
         return localNode.isFindBoundary() && !localNode.equals(topNode) ? null : super.visitJavaNode(localNode, data);
     }
 
-    @Override
-    public Void visit(ASTSwitchExpression node, MutableInt data) {
+    @Override public Void visit(ASTSwitchExpression node, MutableInt data) {
         return handleSwitch(node, data);
     }
 
-    @Override
-    public Void visit(ASTSwitchStatement node, MutableInt data) {
+    @Override public Void visit(ASTSwitchStatement node, MutableInt data) {
         return handleSwitch(node, data);
     }
 
@@ -80,7 +77,7 @@ public class CycloVisitor extends JavaVisitorBase<MutableInt, Void> {
             if (considerBooleanPaths) {
                 data.add(JavaAstUtils.numAlternatives(branch));
             } else if (branch instanceof ASTSwitchFallthroughBranch
-                && ((ASTSwitchFallthroughBranch) branch).getStatements().nonEmpty()) {
+                    && ((ASTSwitchFallthroughBranch) branch).getStatements().nonEmpty()) {
                 data.increment();
             }
         }
@@ -89,8 +86,7 @@ public class CycloVisitor extends JavaVisitorBase<MutableInt, Void> {
     }
 
 
-    @Override
-    public Void visit(ASTConditionalExpression node, MutableInt data) {
+    @Override public Void visit(ASTConditionalExpression node, MutableInt data) {
         data.increment();
         if (considerBooleanPaths) {
             data.add(booleanExpressionComplexity(node.getCondition()));
@@ -99,8 +95,7 @@ public class CycloVisitor extends JavaVisitorBase<MutableInt, Void> {
     }
 
 
-    @Override
-    public Void visit(ASTWhileStatement node, MutableInt data) {
+    @Override public Void visit(ASTWhileStatement node, MutableInt data) {
         data.increment();
         if (considerBooleanPaths) {
             data.add(booleanExpressionComplexity(node.getCondition()));
@@ -109,8 +104,7 @@ public class CycloVisitor extends JavaVisitorBase<MutableInt, Void> {
     }
 
 
-    @Override
-    public Void visit(ASTIfStatement node, MutableInt data) {
+    @Override public Void visit(ASTIfStatement node, MutableInt data) {
         data.increment();
         if (considerBooleanPaths) {
             data.add(booleanExpressionComplexity(node.getCondition()));
@@ -120,8 +114,7 @@ public class CycloVisitor extends JavaVisitorBase<MutableInt, Void> {
     }
 
 
-    @Override
-    public Void visit(ASTForStatement node, MutableInt data) {
+    @Override public Void visit(ASTForStatement node, MutableInt data) {
         data.increment();
 
         if (considerBooleanPaths) {
@@ -131,20 +124,17 @@ public class CycloVisitor extends JavaVisitorBase<MutableInt, Void> {
         return super.visit(node, data);
     }
 
-    @Override
-    public Void visit(ASTForeachStatement node, MutableInt data) {
+    @Override public Void visit(ASTForeachStatement node, MutableInt data) {
         data.increment();
         return super.visit(node, data);
     }
 
-    @Override
-    public Void visitMethodOrCtor(ASTExecutableDeclaration node, MutableInt data) {
+    @Override public Void visitMethodOrCtor(ASTExecutableDeclaration node, MutableInt data) {
         data.increment();
         return super.visitMethodOrCtor(node, data);
     }
 
-    @Override
-    public Void visit(ASTDoStatement node, MutableInt data) {
+    @Override public Void visit(ASTDoStatement node, MutableInt data) {
         data.increment();
         if (considerBooleanPaths) {
             data.add(booleanExpressionComplexity(node.getCondition()));
@@ -154,22 +144,19 @@ public class CycloVisitor extends JavaVisitorBase<MutableInt, Void> {
     }
 
 
-    @Override
-    public Void visit(ASTCatchClause node, MutableInt data) {
+    @Override public Void visit(ASTCatchClause node, MutableInt data) {
         data.increment();
         return super.visit(node, data);
     }
 
 
-    @Override
-    public Void visit(ASTThrowStatement node, MutableInt data) {
+    @Override public Void visit(ASTThrowStatement node, MutableInt data) {
         data.increment();
         return super.visit(node, data);
     }
 
 
-    @Override
-    public Void visit(ASTAssertStatement node, MutableInt data) {
+    @Override public Void visit(ASTAssertStatement node, MutableInt data) {
         if (considerAssert) {
             data.add(2); // equivalent to if (condition) { throw .. }
 
@@ -197,13 +184,13 @@ public class CycloVisitor extends JavaVisitorBase<MutableInt, Void> {
         if (expr instanceof ASTConditionalExpression) {
             ASTConditionalExpression conditional = (ASTConditionalExpression) expr;
             return booleanExpressionComplexity(conditional.getCondition())
-                + booleanExpressionComplexity(conditional.getThenBranch())
-                + booleanExpressionComplexity(conditional.getElseBranch())
-                + 2;
+                    + booleanExpressionComplexity(conditional.getThenBranch())
+                    + booleanExpressionComplexity(conditional.getElseBranch())
+                    + 2;
         } else {
             return expr.descendantsOrSelf()
-                       .filter(JavaAstUtils::isConditional)
-                       .count();
+                    .filter(JavaAstUtils::isConditional)
+                    .count();
         }
     }
 }

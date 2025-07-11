@@ -35,8 +35,7 @@ import net.sourceforge.pmd.util.IteratorUtil;
 
 public final class StreamImpl {
 
-    @SuppressWarnings({"rawtypes", "PMD.UseDiamondOperator"})
-    private static final DescendantNodeStream EMPTY = new EmptyNodeStream();
+    @SuppressWarnings({"rawtypes", "PMD.UseDiamondOperator"}) private static final DescendantNodeStream EMPTY = new EmptyNodeStream();
 
     private StreamImpl() {
         // utility class
@@ -61,16 +60,14 @@ public final class StreamImpl {
 
     public static <T extends Node> NodeStream<T> union(Iterable<? extends @Nullable NodeStream<? extends T>> streams) {
         return new IteratorBasedNStream<T>() {
-            @Override
-            public Iterator<T> iterator() {
+            @Override public Iterator<T> iterator() {
                 return IteratorUtil.flatMap(streams.iterator(), NodeStream::iterator);
             }
         };
     }
 
 
-    @SuppressWarnings("unchecked")
-    public static <T extends Node> DescendantNodeStream<T> empty() {
+    @SuppressWarnings("unchecked") public static <T extends Node> DescendantNodeStream<T> empty() {
         return EMPTY;
     }
 
@@ -88,12 +85,10 @@ public final class StreamImpl {
      * same node stream type and makes no effort to pick an empty or singleton
      * stream if possible. That allows the JVM to devirtualize calls.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <N extends GenericNode<N>> NodeStream<N> childrenArray(GenericNode<N> parent,
-                                                                         Node @NonNull [] array) {
+    @SuppressWarnings({"unchecked", "rawtypes"}) public static <N extends GenericNode<N>> NodeStream<N> childrenArray(GenericNode<N> parent,
+            Node @NonNull [] array) {
         return (NodeStream) new ChildrenStream(parent, 0, parent.getNumChildren()) {
-            @Override
-            public void forEach(Consumer<? super @NonNull Node> action) {
+            @Override public void forEach(Consumer<? super @NonNull Node> action) {
                 // Looping on the array directly is about twice faster than
                 // the default implementation.
                 for (Node child : array) {
@@ -101,13 +96,11 @@ public final class StreamImpl {
                 }
             }
 
-            @Override
-            public List<Node> toList() {
+            @Override public List<Node> toList() {
                 return Collections.unmodifiableList(Arrays.asList(array));
             }
 
-            @Override
-            protected Iterator<Node> baseIterator() {
+            @Override protected Iterator<Node> baseIterator() {
                 return Arrays.asList(array).iterator();
             }
         };
@@ -119,7 +112,7 @@ public final class StreamImpl {
 
     public static <R extends Node> DescendantNodeStream<R> descendants(@NonNull Node node, Class<? extends R> rClass) {
         return node.getNumChildren() == 0 ? empty()
-                                          : new FilteredDescendantStream<>(node, TreeWalker.DEFAULT, Filtermap.isInstance(rClass));
+                : new FilteredDescendantStream<>(node, TreeWalker.DEFAULT, Filtermap.isInstance(rClass));
     }
 
     public static DescendantNodeStream<Node> descendantsOrSelf(@NonNull Node node) {
@@ -132,8 +125,8 @@ public final class StreamImpl {
             return NodeStream.empty();
         }
         return sliceChildren(parent, Filtermap.NODE_IDENTITY,
-                             node.getIndexInParent() + 1,
-                             parent.getNumChildren() - node.getIndexInParent() - 1
+                node.getIndexInParent() + 1,
+                parent.getNumChildren() - node.getIndexInParent() - 1
         );
     }
 
@@ -155,9 +148,8 @@ public final class StreamImpl {
         if (length == 0) {
             return empty();
         } else if (filtermap == Filtermap.NODE_IDENTITY) {
-            @SuppressWarnings("unchecked")
-            NodeStream<T> res = length == 1 ? (NodeStream<T>) singleton(parent.getChild(from))
-                                           : (NodeStream<T>) new ChildrenStream(parent, from, length);
+            @SuppressWarnings("unchecked") NodeStream<T> res = length == 1 ? (NodeStream<T>) singleton(parent.getChild(from))
+                    : (NodeStream<T>) new ChildrenStream(parent, from, length);
             return res;
         } else {
             if (length == 1) {
@@ -216,48 +208,39 @@ public final class StreamImpl {
 
     private static final class EmptyNodeStream<N extends Node> extends IteratorBasedNStream<N> implements DescendantNodeStream<N> {
 
-        @Override
-        protected <R extends Node> NodeStream<R> mapIter(Function<Iterator<N>, Iterator<R>> fun) {
+        @Override protected <R extends Node> NodeStream<R> mapIter(Function<Iterator<N>, Iterator<R>> fun) {
             return StreamImpl.empty();
         }
 
-        @Override
-        protected @NonNull <R extends Node> DescendantNodeStream<R> flatMapDescendants(Function<N, DescendantNodeStream<? extends R>> mapper) {
+        @Override protected @NonNull <R extends Node> DescendantNodeStream<R> flatMapDescendants(Function<N, DescendantNodeStream<? extends R>> mapper) {
             return StreamImpl.empty();
         }
 
-        @Override
-        public DescendantNodeStream<N> crossFindBoundaries(boolean cross) {
+        @Override public DescendantNodeStream<N> crossFindBoundaries(boolean cross) {
             return this;
         }
 
-        @Override
-        public Iterator<N> iterator() {
+        @Override public Iterator<N> iterator() {
             return Collections.emptyIterator();
         }
 
-        @Override
-        public List<N> toList() {
+        @Override public List<N> toList() {
             return Collections.emptyList();
         }
 
-        @Override
-        public <R> List<R> toList(Function<? super N, ? extends R> mapper) {
+        @Override public <R> List<R> toList(Function<? super N, ? extends R> mapper) {
             return Collections.emptyList();
         }
 
-        @Override
-        public Spliterator<N> spliterator() {
+        @Override public Spliterator<N> spliterator() {
             return Spliterators.emptySpliterator();
         }
 
-        @Override
-        public NodeStream<N> cached() {
+        @Override public NodeStream<N> cached() {
             return this;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "EmptyStream";
         }
     }

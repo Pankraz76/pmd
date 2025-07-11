@@ -16,8 +16,7 @@ public final class ASTTermCasesBlock extends AbstractScalaNode<Term.CasesBlock> 
         super(scalaNode);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

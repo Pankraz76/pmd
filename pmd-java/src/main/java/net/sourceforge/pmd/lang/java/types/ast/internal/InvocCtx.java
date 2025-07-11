@@ -24,8 +24,7 @@ public final class InvocCtx extends ExprContext {
         this.node = node;
     }
 
-    @Override
-    public @Nullable JTypeMirror getTargetType() {
+    @Override public @Nullable JTypeMirror getTargetType() {
         // this triggers type resolution of the enclosing expr.
         OverloadSelectionResult overload = node.getOverloadSelectionInfo();
         if (overload.isFailed()) {
@@ -34,8 +33,7 @@ public final class InvocCtx extends ExprContext {
         return overload.ithFormalParam(arg);
     }
 
-    @Override
-    public boolean isMissing() {
+    @Override public boolean isMissing() {
         return false;
     }
 
@@ -43,8 +41,7 @@ public final class InvocCtx extends ExprContext {
         return node;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "InvocCtx{arg=" + arg + ", node=" + node + '}';
     }
 }

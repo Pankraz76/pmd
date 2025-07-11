@@ -22,8 +22,7 @@ public final class ASTSource extends AbstractScalaNode<Source> implements RootNo
     }
 
 
-    @Override
-    public AstInfo<ASTSource> getAstInfo() {
+    @Override public AstInfo<ASTSource> getAstInfo() {
         return astInfo;
     }
 
@@ -31,8 +30,7 @@ public final class ASTSource extends AbstractScalaNode<Source> implements RootNo
         this.astInfo = new AstInfo<>(task, this);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

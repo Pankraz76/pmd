@@ -29,8 +29,7 @@ public abstract class BackslashEscapeTranslator extends EscapeTranslator {
         super(builder);
     }
 
-    @Override
-    protected int gobbleMaxWithoutEscape(final int maxOff) throws MalformedSourceException {
+    @Override protected int gobbleMaxWithoutEscape(final int maxOff) throws MalformedSourceException {
         int notEscapeEnd = this.savedNotEscapeSpecialEnd;
         int off = input.indexOf(BACKSLASH, bufpos, min(maxOff, notEscapeEnd));
         if (off == -1) {
@@ -43,8 +42,7 @@ public abstract class BackslashEscapeTranslator extends EscapeTranslator {
 
     protected abstract int handleBackslash(int maxOff, int firstBackslashOff) throws MalformedSourceException;
 
-    @Override
-    protected int recordEscape(int startOffsetInclusive, int endOffsetExclusive, Chars translation) {
+    @Override protected int recordEscape(int startOffsetInclusive, int endOffsetExclusive, Chars translation) {
         this.savedNotEscapeSpecialEnd = Integer.MAX_VALUE;
         return super.recordEscape(startOffsetInclusive, endOffsetExclusive, translation);
     }

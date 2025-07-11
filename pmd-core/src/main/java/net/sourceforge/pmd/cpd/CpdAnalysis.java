@@ -86,8 +86,8 @@ public final class CpdAnalysis implements AutoCloseable {
         this.configuration = config;
         this.reporter = config.getReporter();
         this.files = InternalApiBridge.newCollector(
-            config.getLanguageVersionDiscoverer(),
-            reporter
+                config.getLanguageVersionDiscoverer(),
+                reporter
         );
 
         this.renderer = config.getCPDReportRenderer();
@@ -152,7 +152,8 @@ public final class CpdAnalysis implements AutoCloseable {
     }
 
     public void performAnalysis() {
-        performAnalysis(r -> { });
+        performAnalysis(r -> {
+        });
     }
 
     public void performAnalysis(Consumer<CPDReport> consumer) {
@@ -238,8 +239,7 @@ public final class CpdAnalysis implements AutoCloseable {
         return tokens;
     }
 
-    @Override
-    public void close() throws IOException {
+    @Override public void close() throws IOException {
         // nothing for now
     }
 

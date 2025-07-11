@@ -30,8 +30,7 @@ public final class ASTLocalClassStatement extends AbstractStatement {
         setLastToken(tdecl.getLastToken());
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -43,8 +42,7 @@ public final class ASTLocalClassStatement extends AbstractStatement {
         return (ASTTypeDeclaration) getChild(0);
     }
 
-    @Override
-    public boolean isFindBoundary() {
+    @Override public boolean isFindBoundary() {
         return true;
     }
 }

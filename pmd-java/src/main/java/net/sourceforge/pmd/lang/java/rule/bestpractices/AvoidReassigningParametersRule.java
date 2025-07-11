@@ -19,15 +19,13 @@ public class AvoidReassigningParametersRule extends AbstractJavaRulechainRule {
         super(ASTMethodDeclaration.class, ASTConstructorDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         lookForViolations(node, data);
         return data;
     }
 
 
-    @Override
-    public Object visit(ASTConstructorDeclaration node, Object data) {
+    @Override public Object visit(ASTConstructorDeclaration node, Object data) {
         lookForViolations(node, data);
         return data;
     }

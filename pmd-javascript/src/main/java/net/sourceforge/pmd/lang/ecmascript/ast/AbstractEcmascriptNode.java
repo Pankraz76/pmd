@@ -18,19 +18,15 @@ abstract class AbstractEcmascriptNode<T extends AstNode> extends AbstractNode<Ab
         this.node = node;
     }
 
-    @Override
-    protected void addChild(AbstractEcmascriptNode<?> child, int index) {
+    @Override protected void addChild(AbstractEcmascriptNode<?> child, int index) {
         super.addChild(child, index);
     }
 
-    @Override
-    public TextRegion getTextRegion() {
+    @Override public TextRegion getTextRegion() {
         return TextRegion.fromOffsetLength(node.getAbsolutePosition(), node.getLength());
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override @SuppressWarnings("unchecked") public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof EcmascriptVisitor) {
             return acceptJsVisitor((EcmascriptVisitor<? super P, ? extends R>) visitor, data);
         }
@@ -39,18 +35,15 @@ abstract class AbstractEcmascriptNode<T extends AstNode> extends AbstractNode<Ab
 
     protected abstract <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data);
 
-    @Override
-    public String getJsDoc() {
+    @Override public String getJsDoc() {
         return node.getJsDoc();
     }
 
-    @Override
-    public boolean hasSideEffects() {
+    @Override public boolean hasSideEffects() {
         return node.hasSideEffects();
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return node.shortName();
     }
 

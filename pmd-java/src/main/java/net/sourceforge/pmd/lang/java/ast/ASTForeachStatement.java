@@ -26,15 +26,12 @@ public final class ASTForeachStatement extends AbstractStatement implements Inte
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
 
-    @Override
-    @NonNull
-    public ASTVariableId getVarId() {
+    @Override @NonNull public ASTVariableId getVarId() {
         // in case of destructuring record patterns, there might be multiple vars
         return getFirstChild().descendants(ASTVariableId.class).first();
     }
@@ -43,8 +40,7 @@ public final class ASTForeachStatement extends AbstractStatement implements Inte
      * Returns the expression that evaluates to the {@link Iterable}
      * being looped upon.
      */
-    @NonNull
-    public ASTExpression getIterableExpr() {
+    @NonNull public ASTExpression getIterableExpr() {
         return firstChild(ASTExpression.class);
     }
 

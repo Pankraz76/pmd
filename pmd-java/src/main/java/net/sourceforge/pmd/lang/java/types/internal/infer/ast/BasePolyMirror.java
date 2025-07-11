@@ -31,21 +31,18 @@ abstract class BasePolyMirror<T extends JavaNode> extends BaseExprMirror<T> impl
         return subexprMaker.createMirrorForSubexpression(subexpr, this, subexprMaker);
     }
 
-    @Override
-    public void setInferredType(JTypeMirror mirror) {
+    @Override public void setInferredType(JTypeMirror mirror) {
         this.inferredType = mirror;
         if (myNode instanceof TypeNode && mayMutateAst()) {
             InternalApiBridge.setTypeMirrorInternal((TypeNode) myNode, mirror);
         }
     }
 
-    @Override
-    public JTypeMirror getInferredType() {
+    @Override public JTypeMirror getInferredType() {
         return inferredType;
     }
 
-    @Override
-    public @NonNull JClassType getEnclosingType() {
+    @Override public @NonNull JClassType getEnclosingType() {
         return myNode.getEnclosingType().getTypeMirror();
     }
 

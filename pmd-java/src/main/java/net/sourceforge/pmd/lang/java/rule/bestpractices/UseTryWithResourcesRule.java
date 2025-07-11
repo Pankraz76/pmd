@@ -32,15 +32,14 @@ public final class UseTryWithResourcesRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(CLOSE_METHODS);
     }
 
-    @Override
-    public Object visit(ASTTryStatement node, Object data) {
+    @Override public Object visit(ASTTryStatement node, Object data) {
         boolean isJava9OrLater = node.getLanguageVersion().compareToVersion("9") >= 0;
 
         ASTFinallyClause finallyClause = node.getFinallyClause();
         if (finallyClause != null) {
             List<ASTMethodCall> methods = finallyClause.descendants(ASTMethodCall.class)
-                .filter(m -> getProperty(CLOSE_METHODS).contains(m.getMethodName()))
-                .toList();
+                    .filter(m -> getProperty(CLOSE_METHODS).contains(m.getMethodName()))
+                    .toList();
             for (ASTMethodCall method : methods) {
                 ASTExpression closeTarget = method.getQualifier();
                 if (!(closeTarget instanceof ASTTypeExpression) // ignore static method calls

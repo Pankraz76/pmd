@@ -26,6 +26,5 @@ public abstract class CpdOnlyLanguageModuleBase extends LanguageModuleBase imple
         super(metadata);
     }
 
-    @Override
-    public abstract CpdLexer createCpdLexer(LanguagePropertyBundle bundle);
+    @Override public abstract CpdLexer createCpdLexer(LanguagePropertyBundle bundle);
 }

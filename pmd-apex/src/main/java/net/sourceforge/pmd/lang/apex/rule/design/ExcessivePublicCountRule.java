@@ -30,13 +30,11 @@ public class ExcessivePublicCountRule extends AbstractCounterCheckRule<ASTUserCl
         super(ASTUserClass.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 20;
     }
 
-    @Override
-    protected int getMetric(ASTUserClass node) {
+    @Override protected int getMetric(ASTUserClass node) {
         int publicMethods =
                 node.children(ASTMethod.class)
                         .filter(it -> it.getModifiers().isPublic())
@@ -54,8 +52,7 @@ public class ExcessivePublicCountRule extends AbstractCounterCheckRule<ASTUserCl
         return publicFields + publicMethods + publicProperties;
     }
 
-    @Override
-    protected Object[] getViolationParameters(ASTUserClass node, int metric, int limit) {
-        return new Object[] { node.getSimpleName(), metric, limit };
+    @Override protected Object[] getViolationParameters(ASTUserClass node, int metric, int limit) {
+        return new Object[]{node.getSimpleName(), metric, limit};
     }
 }

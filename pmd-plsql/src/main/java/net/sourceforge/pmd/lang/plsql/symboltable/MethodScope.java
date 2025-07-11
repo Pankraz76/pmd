@@ -25,8 +25,7 @@ public class MethodScope extends MethodOrLocalScope {
         return this;
     }
 
-    @Override
-    public Set<NameDeclaration> addNameOccurrence(NameOccurrence occ) {
+    @Override public Set<NameDeclaration> addNameOccurrence(NameOccurrence occ) {
         PLSQLNameOccurrence occurrence = (PLSQLNameOccurrence) occ;
         Set<NameDeclaration> declarations = findVariableHere(occurrence);
         if (!declarations.isEmpty() && !occurrence.isThisOrSuper()) {
@@ -45,8 +44,7 @@ public class MethodScope extends MethodOrLocalScope {
         return node.getChild(1).getCanonicalImage();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "MethodScope:" + getVariableDeclarations().keySet();
     }
 }

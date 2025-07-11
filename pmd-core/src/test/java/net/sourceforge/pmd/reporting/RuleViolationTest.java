@@ -25,12 +25,10 @@ import net.sourceforge.pmd.lang.rule.Rule;
 
 class RuleViolationTest {
 
-    @RegisterExtension
-    private final DummyParsingHelper helper = new DummyParsingHelper();
+    @RegisterExtension private final DummyParsingHelper helper = new DummyParsingHelper();
     private FileId filename = FileId.fromPathLikeString("filename");
 
-    @Test
-    void testConstructor1() {
+    @Test void testConstructor1() {
         Rule rule = new MockRule("name", "desc", "msg", "rulesetname");
         DummyRootNode s = helper.parse("abcd", filename);
         RuleViolation r = new ParametricRuleViolation(rule, s, rule.getMessage());
@@ -39,8 +37,7 @@ class RuleViolationTest {
         assertSame(filename, r.getFileId(), "filename is wrong");
     }
 
-    @Test
-    void testConstructor2() {
+    @Test void testConstructor2() {
         Rule rule = new MockRule("name", "desc", "msg", "rulesetname");
         DummyRootNode s = helper.parse("abcd", filename);
         RuleViolation r = new ParametricRuleViolation(rule, s, "description");
@@ -50,8 +47,7 @@ class RuleViolationTest {
         assertEquals("description", r.getDescription(), "description is wrong");
     }
 
-    @Test
-    void testComparatorWithDifferentFilenames() {
+    @Test void testComparatorWithDifferentFilenames() {
         Rule rule = new MockRule("name", "desc", "msg", "rulesetname");
         Comparator<RuleViolation> comp = RuleViolation.DEFAULT_COMPARATOR;
         DummyNode s = helper.parse("(abc)", FileId.fromPathLikeString("f1")).getFirstChild();
@@ -62,8 +58,7 @@ class RuleViolationTest {
         assertEquals(1, comp.compare(r2, r1));
     }
 
-    @Test
-    void testComparatorWithSameFileDifferentLines() {
+    @Test void testComparatorWithSameFileDifferentLines() {
         Rule rule = new MockRule("name", "desc", "msg", "rulesetname");
         Comparator<RuleViolation> comp = RuleViolation.DEFAULT_COMPARATOR;
         DummyRootNode root = helper.parse("(abc) (def)");
@@ -75,8 +70,7 @@ class RuleViolationTest {
         assertTrue(comp.compare(r2, r1) > 0);
     }
 
-    @Test
-    void testComparatorWithSameFileSameLines() {
+    @Test void testComparatorWithSameFileSameLines() {
         Rule rule = new MockRule("name", "desc", "msg", "rulesetname");
         Comparator<RuleViolation> comp = RuleViolation.DEFAULT_COMPARATOR;
 

@@ -11,8 +11,7 @@ public final class ASTIfStatement extends AbstractEcmascriptNode<IfStatement> {
         super(ifStatement);
     }
 
-    @Override
-    protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

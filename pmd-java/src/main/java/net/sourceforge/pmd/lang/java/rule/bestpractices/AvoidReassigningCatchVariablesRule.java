@@ -15,13 +15,11 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 
 public class AvoidReassigningCatchVariablesRule extends AbstractJavaRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTCatchParameter.class);
     }
 
-    @Override
-    public Object visit(ASTCatchParameter catchParam, Object data) {
+    @Override public Object visit(ASTCatchParameter catchParam, Object data) {
         ASTVariableId caughtExceptionId = catchParam.getVarId();
         for (ASTNamedReferenceExpr usage : caughtExceptionId.getLocalUsages()) {
             if (usage.getAccessType() == AccessType.WRITE) {

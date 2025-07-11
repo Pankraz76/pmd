@@ -2,6 +2,8 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
+
 import net.sourceforge.pmd.lang.java.types.testdata.MyList;
 import net.sourceforge.pmd.lang.java.types.testdata.MyListAbstract;
 
@@ -16,5 +18,6 @@ public class GitHubBug3101 {
         MyList<Inner> a = MyListAbstract.<Inner>of(new Inner());
     }
 
-    private static class Inner { }
+    private static class Inner {
+    }
 }

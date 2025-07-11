@@ -37,16 +37,16 @@ import net.sourceforge.pmd.util.StringUtil.CaseConvention;
 public class AvoidReassigningLoopVariablesRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<ForeachReassignOption> FOREACH_REASSIGN
-        = enumProperty("foreachReassign", ForeachReassignOption.class, ForeachReassignOption::getDisplayName)
-        .defaultValue(ForeachReassignOption.DENY)
-        .desc("how/if foreach control variables may be reassigned")
-        .build();
+            = enumProperty("foreachReassign", ForeachReassignOption.class, ForeachReassignOption::getDisplayName)
+            .defaultValue(ForeachReassignOption.DENY)
+            .desc("how/if foreach control variables may be reassigned")
+            .build();
 
     private static final PropertyDescriptor<ForReassignOption> FOR_REASSIGN
-        = enumProperty("forReassign", ForReassignOption.class, ForReassignOption::getDisplayName)
-        .defaultValue(ForReassignOption.DENY)
-        .desc("how/if for control variables may be reassigned")
-        .build();
+            = enumProperty("forReassign", ForReassignOption.class, ForReassignOption::getDisplayName)
+            .defaultValue(ForReassignOption.DENY)
+            .desc("how/if for control variables may be reassigned")
+            .build();
 
     public AvoidReassigningLoopVariablesRule() {
         super(ASTForStatement.class, ASTForeachStatement.class);
@@ -54,8 +54,7 @@ public class AvoidReassigningLoopVariablesRule extends AbstractJavaRulechainRule
         definePropertyDescriptor(FOR_REASSIGN);
     }
 
-    @Override
-    public Object visit(ASTForeachStatement loopStmt, Object data) {
+    @Override public Object visit(ASTForeachStatement loopStmt, Object data) {
         ForeachReassignOption behavior = getProperty(FOREACH_REASSIGN);
         if (behavior == ForeachReassignOption.ALLOW) {
             return data;
@@ -76,8 +75,7 @@ public class AvoidReassigningLoopVariablesRule extends AbstractJavaRulechainRule
         return null;
     }
 
-    @Override
-    public Object visit(ASTForStatement loopStmt, Object data) {
+    @Override public Object visit(ASTForStatement loopStmt, Object data) {
         ForReassignOption behavior = getProperty(FOR_REASSIGN);
         if (behavior == ForReassignOption.ALLOW) {
             return data;
@@ -138,9 +136,9 @@ public class AvoidReassigningLoopVariablesRule extends AbstractJavaRulechainRule
             }
 
             NodeStream<? extends JavaNode> unwrappedBlock =
-                node instanceof ASTBlock
-                ? ((ASTBlock) node).toStream()
-                : NodeStream.of(node);
+                    node instanceof ASTBlock
+                            ? ((ASTBlock) node).toStream()
+                            : NodeStream.of(node);
 
             return roamStatementsForExit(unwrappedBlock);
         }
@@ -150,7 +148,7 @@ public class AvoidReassigningLoopVariablesRule extends AbstractJavaRulechainRule
         private boolean roamStatementsForExit(NodeStream<? extends JavaNode> stmts) {
             for (JavaNode stmt : stmts) {
                 if (stmt instanceof ASTThrowStatement
-                    || stmt instanceof ASTReturnStatement) {
+                        || stmt instanceof ASTReturnStatement) {
                     return true;
                 } else if (stmt instanceof ASTBreakStatement) {
                     String label = ((ASTBreakStatement) stmt).getLabel();
@@ -201,10 +199,10 @@ public class AvoidReassigningLoopVariablesRule extends AbstractJavaRulechainRule
             }
             final boolean onlyConsiderWrite = guarded || mayExit;
             node.descendants(ASTNamedReferenceExpr.class)
-                .filter(it -> loopVarNames.contains(it.getName()))
-                .filter(it -> onlyConsiderWrite ? JavaAstUtils.isVarAccessStrictlyWrite(it)
-                                                : JavaAstUtils.isVarAccessReadAndWrite(it))
-                .forEach(it -> asCtx(ruleCtx).addViolation(it, it.getName()));
+                    .filter(it -> loopVarNames.contains(it.getName()))
+                    .filter(it -> onlyConsiderWrite ? JavaAstUtils.isVarAccessStrictlyWrite(it)
+                            : JavaAstUtils.isVarAccessReadAndWrite(it))
+                    .forEach(it -> asCtx(ruleCtx).addViolation(it, it.getName()));
         }
     }
 
@@ -229,8 +227,7 @@ public class AvoidReassigningLoopVariablesRule extends AbstractJavaRulechainRule
          *
          * @return the mapped property value instead of the enum name
          */
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return getDisplayName();
         }
 
@@ -260,8 +257,7 @@ public class AvoidReassigningLoopVariablesRule extends AbstractJavaRulechainRule
          *
          * @return the mapped property value instead of the enum name
          */
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return getDisplayName();
         }
 

@@ -20,22 +20,20 @@ public class AvoidDeeplyNestedIfStmtsRule extends AbstractJavaRule {
 
     private static final PropertyDescriptor<Integer> PROBLEM_DEPTH_DESCRIPTOR
             = PropertyFactory.intProperty("problemDepth")
-                             .desc("The if statement depth reporting threshold")
-                             .require(positive()).defaultValue(3).build();
+            .desc("The if statement depth reporting threshold")
+            .require(positive()).defaultValue(3).build();
 
     public AvoidDeeplyNestedIfStmtsRule() {
         definePropertyDescriptor(PROBLEM_DEPTH_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTCompilationUnit node, Object data) {
+    @Override public Object visit(ASTCompilationUnit node, Object data) {
         depth = 0;
         depthLimit = getProperty(PROBLEM_DEPTH_DESCRIPTOR);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTIfStatement node, Object data) {
+    @Override public Object visit(ASTIfStatement node, Object data) {
         if (!node.hasElse()) {
             depth++;
         }

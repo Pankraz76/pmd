@@ -50,8 +50,8 @@ import net.sourceforge.pmd.util.CollectionUtil;
 
 
 final class AstClassSym
-    extends AbstractAstTParamOwner<ASTTypeDeclaration>
-    implements JClassSymbol {
+        extends AbstractAstTParamOwner<ASTTypeDeclaration>
+        implements JClassSymbol {
 
     private final @Nullable JTypeParameterOwnerSymbol enclosing;
     private final List<JClassSymbol> declaredClasses;
@@ -65,8 +65,8 @@ final class AstClassSym
     private List<JClassSymbol> permittedSubclasses;
 
     AstClassSym(ASTTypeDeclaration node,
-                AstSymFactory factory,
-                @Nullable JTypeParameterOwnerSymbol enclosing) {
+            AstSymFactory factory,
+            @Nullable JTypeParameterOwnerSymbol enclosing) {
         super(node, factory);
         this.enclosing = enclosing;
 
@@ -82,7 +82,7 @@ final class AstClassSym
 
         if (isRecord()) {
             ASTRecordComponentList components = Objects.requireNonNull(node.getRecordComponents(),
-                                                                       "Null component list for " + node);
+                    "Null component list for " + node);
             recordComponents = mapComponentsToMutableList(factory, components, myFields);
 
             JConstructorSymbol canonicalRecordCtor = ImplicitMemberSymbols.recordConstructor(this, recordComponents, components.isVarargs());
@@ -96,11 +96,11 @@ final class AstClassSym
         if (isEnum()) {
             enumConstants = new ArrayList<>();
             node.getEnumConstants()
-                .forEach(constant -> {
-                    AstFieldSym fieldSym = new AstFieldSym(constant.getVarId(), factory, this);
-                    enumConstants.add(fieldSym);
-                    myFields.add(fieldSym);
-                });
+                    .forEach(constant -> {
+                        AstFieldSym fieldSym = new AstFieldSym(constant.getVarId(), factory, this);
+                        enumConstants.add(fieldSym);
+                        myFields.add(fieldSym);
+                    });
         } else {
             enumConstants = null;
         }
@@ -123,7 +123,7 @@ final class AstClassSym
                 }
             }
         }
-        
+
 
         if (!recordComponents.isEmpty()) {
             // then the recordsComponents contains all record components
@@ -151,8 +151,8 @@ final class AstClassSym
         this.enumConstants = CollectionUtil.makeUnmodifiableAndNonNull(enumConstants);
         this.recordComponents = CollectionUtil.makeUnmodifiableAndNonNull(recordComponents);
         this.annotAttributes = isAnnotation()
-                               ? getDeclaredMethods().stream().filter(JMethodSymbol::isAnnotationAttribute).map(JElementSymbol::getSimpleName).collect(CollectionUtil.toPersistentSet())
-                               : HashTreePSet.empty();
+                ? getDeclaredMethods().stream().filter(JMethodSymbol::isAnnotationAttribute).map(JElementSymbol::getSimpleName).collect(CollectionUtil.toPersistentSet())
+                : HashTreePSet.empty();
     }
 
     public void processLombok(JavaAstProcessor processor) {
@@ -163,8 +163,8 @@ final class AstClassSym
 
 
     private List<JRecordComponentSymbol> mapComponentsToMutableList(AstSymFactory factory,
-                                                          ASTRecordComponentList components,
-                                                          List<JFieldSymbol> fieldSyms) {
+            ASTRecordComponentList components,
+            List<JFieldSymbol> fieldSyms) {
         List<JRecordComponentSymbol> list = new ArrayList<>();
         for (ASTRecordComponent comp : components) {
             list.add(new AstRecordComponentSym(comp, factory, this));
@@ -173,29 +173,24 @@ final class AstClassSym
         return list;
     }
 
-    @Override
-    public @NonNull String getSimpleName() {
+    @Override public @NonNull String getSimpleName() {
         return node.getSimpleName();
     }
 
 
-    @Override
-    public @NonNull String getBinaryName() {
+    @Override public @NonNull String getBinaryName() {
         return node.getBinaryName();
     }
 
-    @Override
-    public @Nullable String getCanonicalName() {
+    @Override public @Nullable String getCanonicalName() {
         return node.getCanonicalName();
     }
 
-    @Override
-    public boolean isUnresolved() {
+    @Override public boolean isUnresolved() {
         return false;
     }
 
-    @Override
-    public @Nullable JClassSymbol getEnclosingClass() {
+    @Override public @Nullable JClassSymbol getEnclosingClass() {
         if (enclosing instanceof JClassSymbol) {
             return (JClassSymbol) enclosing;
         } else if (enclosing instanceof JExecutableSymbol) {
@@ -205,44 +200,36 @@ final class AstClassSym
         return null;
     }
 
-    @Override
-    public @Nullable JExecutableSymbol getEnclosingMethod() {
+    @Override public @Nullable JExecutableSymbol getEnclosingMethod() {
         return enclosing instanceof JExecutableSymbol ? (JExecutableSymbol) enclosing : null;
     }
 
-    @Override
-    public List<JClassSymbol> getDeclaredClasses() {
+    @Override public List<JClassSymbol> getDeclaredClasses() {
         return Collections.unmodifiableList(declaredClasses);
     }
 
-    @Override
-    public List<JMethodSymbol> getDeclaredMethods() {
+    @Override public List<JMethodSymbol> getDeclaredMethods() {
         return Collections.unmodifiableList(declaredMethods);
     }
 
-    @Override
-    public List<JConstructorSymbol> getConstructors() {
+    @Override public List<JConstructorSymbol> getConstructors() {
         return Collections.unmodifiableList(declaredCtors);
     }
 
-    @Override
-    public List<JFieldSymbol> getDeclaredFields() {
+    @Override public List<JFieldSymbol> getDeclaredFields() {
         return Collections.unmodifiableList(declaredFields);
     }
 
-    @Override
-    public @NonNull List<JFieldSymbol> getEnumConstants() {
+    @Override public @NonNull List<JFieldSymbol> getEnumConstants() {
         return enumConstants;
     }
 
-    @Override
-    public @NonNull List<JRecordComponentSymbol> getRecordComponents() {
+    @Override public @NonNull List<JRecordComponentSymbol> getRecordComponents() {
         return recordComponents;
     }
 
 
-    @Override
-    public List<JClassSymbol> getPermittedSubtypes() {
+    @Override public List<JClassSymbol> getPermittedSubtypes() {
         // permitted subclasses are populated lazily because they require
         // symbol and type resolution to determine which types are sealed.
         if (permittedSubclasses == null) {
@@ -289,26 +276,24 @@ final class AstClassSym
         if (!isEnum()) {
             boolean isInterface = isInterface();
             List<JClassSymbol> list = node
-                .getRoot().descendants(ASTTypeDeclaration.class).crossFindBoundaries()
-                .filter(it -> it.getCanonicalName() != null)
-                .filter(it -> {
-                    if (isInterface) {
-                        return it.getSuperInterfaceTypeNodes().any(ty -> Objects.equals(ty.getTypeMirror().getSymbol(), this));
-                    }
-                    return NodeStream.of(it.getSuperClassTypeNode()).any(ty -> Objects.equals(ty.getTypeMirror().getSymbol(), this));
-                }).toList(ASTTypeDeclaration::getSymbol);
+                    .getRoot().descendants(ASTTypeDeclaration.class).crossFindBoundaries()
+                    .filter(it -> it.getCanonicalName() != null)
+                    .filter(it -> {
+                        if (isInterface) {
+                            return it.getSuperInterfaceTypeNodes().any(ty -> Objects.equals(ty.getTypeMirror().getSymbol(), this));
+                        }
+                        return NodeStream.of(it.getSuperClassTypeNode()).any(ty -> Objects.equals(ty.getTypeMirror().getSymbol(), this));
+                    }).toList(ASTTypeDeclaration::getSymbol);
             return Collections.unmodifiableList(list);
         }
         return Collections.emptyList();
     }
 
-    @Override
-    public boolean isSealed() {
+    @Override public boolean isSealed() {
         return node.hasModifiers(JModifier.SEALED);
     }
 
-    @Override
-    public @Nullable JClassType getSuperclassType(Substitution substitution) {
+    @Override public @Nullable JClassType getSuperclassType(Substitution substitution) {
         TypeSystem ts = getTypeSystem();
 
         if (node.isEnum()) {
@@ -319,9 +304,9 @@ final class AstClassSym
 
             ASTClassType superClass = node.getSuperClassTypeNode();
             return superClass == null
-                   ? ts.OBJECT
-                   // this cast relies on the fact that the superclass is not a type variable
-                   : (JClassType) TypeOps.subst(superClass.getTypeMirror(), substitution);
+                    ? ts.OBJECT
+                    // this cast relies on the fact that the superclass is not a type variable
+                    : (JClassType) TypeOps.subst(superClass.getTypeMirror(), substitution);
 
         } else if (isAnonymousClass()) {
 
@@ -334,8 +319,8 @@ final class AstClassSym
                 @NonNull JTypeMirror sym = ((ASTConstructorCall) node.getParent()).getTypeMirror();
 
                 return sym instanceof JClassType && !sym.isInterface()
-                       ? (JClassType) sym
-                       : factory.types().OBJECT;
+                        ? (JClassType) sym
+                        : factory.types().OBJECT;
             }
 
         } else if (isRecord()) {
@@ -351,8 +336,7 @@ final class AstClassSym
         return null;
     }
 
-    @Override
-    public @Nullable JClassSymbol getSuperclass() {
+    @Override public @Nullable JClassSymbol getSuperclass() {
         // notice this relies on the fact that the extends clause
         // (or the type node of the constructor call, for an anonymous class),
         // was disambiguated early
@@ -363,8 +347,8 @@ final class AstClassSym
             @NonNull JTypeMirror sym = ((ASTConstructorCall) node.getParent()).getTypeNode().getTypeMirror();
 
             return sym instanceof JClassType && !sym.isInterface()
-                   ? ((JClassType) sym).getSymbol()
-                   : factory.types().OBJECT.getSymbol();
+                    ? ((JClassType) sym).getSymbol()
+                    : factory.types().OBJECT.getSymbol();
 
         }
 
@@ -372,17 +356,16 @@ final class AstClassSym
         return sup == null ? null : sup.getSymbol();
     }
 
-    @Override
-    public List<JClassSymbol> getSuperInterfaces() {
+    @Override public List<JClassSymbol> getSuperInterfaces() {
         List<JClassSymbol> itfs = CollectionUtil.mapNotNull(
-            node.getSuperInterfaceTypeNodes(),
-            n -> {
-                // we play safe here, but the symbol is either a JClassSymbol
-                // or a JTypeParameterSymbol, with the latter case being a
-                // compile-time error
-                JTypeDeclSymbol sym = n.getTypeMirror().getSymbol();
-                return sym instanceof JClassSymbol ? (JClassSymbol) sym : null;
-            }
+                node.getSuperInterfaceTypeNodes(),
+                n -> {
+                    // we play safe here, but the symbol is either a JClassSymbol
+                    // or a JTypeParameterSymbol, with the latter case being a
+                    // compile-time error
+                    JTypeDeclSymbol sym = n.getTypeMirror().getSymbol();
+                    return sym instanceof JClassSymbol ? (JClassSymbol) sym : null;
+                }
         );
         if (isAnnotation()) {
             itfs = CollectionUtil.concatView(Collections.singletonList(factory.annotationSym()), itfs);
@@ -390,8 +373,7 @@ final class AstClassSym
         return itfs;
     }
 
-    @Override
-    public List<JClassType> getSuperInterfaceTypes(Substitution subst) {
+    @Override public List<JClassType> getSuperInterfaceTypes(Substitution subst) {
         List<JClassType> itfs = CollectionUtil.map(node.getSuperInterfaceTypeNodes(), n -> (JClassType) TypeOps.subst(n.getTypeMirror(), subst));
         if (isAnnotation()) {
             itfs = CollectionUtil.concatView(Collections.singletonList(factory.annotationType()), itfs);
@@ -399,53 +381,43 @@ final class AstClassSym
         return itfs;
     }
 
-    @Override
-    public @Nullable JTypeDeclSymbol getArrayComponent() {
+    @Override public @Nullable JTypeDeclSymbol getArrayComponent() {
         return null;
     }
 
-    @Override
-    public boolean isArray() {
+    @Override public boolean isArray() {
         return false;
     }
 
-    @Override
-    public boolean isPrimitive() {
+    @Override public boolean isPrimitive() {
         return false;
     }
 
-    @Override
-    public boolean isInterface() {
+    @Override public boolean isInterface() {
         return node.isInterface();
     }
 
-    @Override
-    public boolean isEnum() {
+    @Override public boolean isEnum() {
         return node.isEnum();
     }
 
-    @Override
-    public boolean isRecord() {
+    @Override public boolean isRecord() {
         return node.isRecord();
     }
 
-    @Override
-    public boolean isAnnotation() {
+    @Override public boolean isAnnotation() {
         return node.isAnnotation();
     }
 
-    @Override
-    public boolean isLocalClass() {
+    @Override public boolean isLocalClass() {
         return node.isLocal();
     }
 
-    @Override
-    public boolean isAnonymousClass() {
+    @Override public boolean isAnonymousClass() {
         return node.isAnonymous();
     }
 
-    @Override
-    public PSet<String> getAnnotationAttributeNames() {
+    @Override public PSet<String> getAnnotationAttributeNames() {
         return annotAttributes;
     }
 }

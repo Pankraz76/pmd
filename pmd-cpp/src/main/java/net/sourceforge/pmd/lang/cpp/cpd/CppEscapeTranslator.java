@@ -17,8 +17,7 @@ public class CppEscapeTranslator extends BackslashEscapeTranslator {
         super(input);
     }
 
-    @Override
-    protected int handleBackslash(int maxOff, final int backSlashOff) {
+    @Override protected int handleBackslash(int maxOff, final int backSlashOff) {
         int off = backSlashOff + 1;
 
         if (input.charAt(off) == NEWLINE) {

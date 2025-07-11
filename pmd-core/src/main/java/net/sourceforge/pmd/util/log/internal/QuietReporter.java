@@ -18,13 +18,11 @@ public class QuietReporter extends MessageReporterBase implements PmdReporter {
     // note: not singleton because PmdLogger accumulates error count.
     // note: not final because used as mock in tests.
 
-    @Override
-    protected boolean isLoggableImpl(Level level) {
+    @Override protected boolean isLoggableImpl(Level level) {
         return false;
     }
 
-    @Override
-    protected void logImpl(Level level, String message) {
+    @Override protected void logImpl(Level level, String message) {
         // noop
     }
 }

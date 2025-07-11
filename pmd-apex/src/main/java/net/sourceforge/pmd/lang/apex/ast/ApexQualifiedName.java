@@ -61,8 +61,7 @@ public final class ApexQualifiedName {
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(classes[0]);
 
@@ -93,19 +92,17 @@ public final class ApexQualifiedName {
     }
 
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         int result = Arrays.hashCode(classes);
         result = 31 * result + (operation != null ? operation.hashCode() : 0);
         return result;
     }
 
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         return obj instanceof ApexQualifiedName
-               && Objects.deepEquals(classes, ((ApexQualifiedName) obj).classes)
-               && Objects.equals(operation, ((ApexQualifiedName) obj).operation);
+                && Objects.deepEquals(classes, ((ApexQualifiedName) obj).classes)
+                && Objects.equals(operation, ((ApexQualifiedName) obj).operation);
 
     }
 
@@ -173,8 +170,8 @@ public final class ApexQualifiedName {
         sb.append(node.getImage()).append('(');
 
         List<String> paramTypes = node.children(ASTParameter.class).toStream()
-            .map(ASTParameter::getType)
-            .collect(Collectors.toList());
+                .map(ASTParameter::getType)
+                .collect(Collectors.toList());
 
         if (!paramTypes.isEmpty()) {
             for (int i = 0; i < paramTypes.size(); i++) {

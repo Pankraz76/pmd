@@ -10,8 +10,7 @@ import net.sourceforge.pmd.reporting.RuleContext;
 
 public class UnnecessaryTypeAttributeRule extends AbstractHtmlRule {
 
-    @Override
-    public Object visit(ASTHtmlElement node, Object data) {
+    @Override public Object visit(ASTHtmlElement node, Object data) {
         if ("link".equalsIgnoreCase(node.getNodeName())) {
             checkLink(node, data);
         } else if ("script".equalsIgnoreCase(node.getNodeName())) {

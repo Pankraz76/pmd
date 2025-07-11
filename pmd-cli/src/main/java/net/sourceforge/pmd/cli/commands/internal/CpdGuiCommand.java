@@ -9,11 +9,10 @@ import net.sourceforge.pmd.cpd.GUI;
 import picocli.CommandLine.Command;
 
 @Command(name = "cpd-gui",
-    description = "GUI for the Copy/Paste Detector%n  Warning: May not support the full CPD feature set")
+        description = "GUI for the Copy/Paste Detector%n  Warning: May not support the full CPD feature set")
 public class CpdGuiCommand implements Runnable {
 
-    @Override
-    public void run() {
+    @Override public void run() {
         new GUI();
 
         // wait for the process to be killed by the GUI

@@ -26,9 +26,7 @@ public final class ASTArrayAccess extends AbstractJavaExpr implements ASTAssigna
      * This can never be a {@linkplain ASTTypeExpression type},
      * and is never {@linkplain ASTAmbiguousName ambiguous}.
      */
-    @NonNull
-    @Override
-    public ASTExpression getQualifier() {
+    @NonNull @Override public ASTExpression getQualifier() {
         return (ASTExpression) getChild(0);
     }
 
@@ -38,8 +36,7 @@ public final class ASTArrayAccess extends AbstractJavaExpr implements ASTAssigna
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -7,13 +7,11 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride;
 import java.util.Collection;
 
 public abstract class AbstractBuilderMixedTypeVarOverride<B extends AbstractBuilderMixedTypeVarOverride<B, T>, T> {
-    @SuppressWarnings("unchecked")
-    public B defaultValue(T val) {
+    @SuppressWarnings("unchecked") public B defaultValue(T val) {
         return (B) this;
     }
 
-    @SuppressWarnings("unchecked")
-    public B defaultValue2(T val) {
+    @SuppressWarnings("unchecked") public B defaultValue2(T val) {
         return (B) this;
     }
 
@@ -23,8 +21,7 @@ public abstract class AbstractBuilderMixedTypeVarOverride<B extends AbstractBuil
             return this;
         }
 
-        @Override
-        public ConcreteBuilder<V, C> defaultValue2(C val) {
+        @Override public ConcreteBuilder<V, C> defaultValue2(C val) {
             return this;
         }
     }

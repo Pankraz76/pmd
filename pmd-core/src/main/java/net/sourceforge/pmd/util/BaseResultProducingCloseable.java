@@ -40,8 +40,7 @@ public abstract class BaseResultProducingCloseable<T> implements AutoCloseable {
      *
      * @implNote Override {@link #closeImpl()} instead.
      */
-    @Override
-    public final void close() {
+    @Override public final void close() {
         if (!closed) {
             closed = true;
             closeImpl();

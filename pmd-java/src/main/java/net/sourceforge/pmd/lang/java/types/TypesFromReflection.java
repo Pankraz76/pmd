@@ -111,8 +111,8 @@ public final class TypesFromReflection {
 
             Type[] typeArguments = parameterized.getActualTypeArguments();
             List<JTypeMirror> mapped = CollectionUtil.map(
-                typeArguments,
-                a -> fromReflect(ts, a, lexicalScope, subst)
+                    typeArguments,
+                    a -> fromReflect(ts, a, lexicalScope, subst)
             );
 
             if (CollectionUtil.any(mapped, Objects::isNull)) {
@@ -136,8 +136,8 @@ public final class TypesFromReflection {
             @Nullable SubstVar mapped = lexicalScope.apply(typeVariable.getName());
             if (mapped == null) {
                 throw new IllegalArgumentException(
-                    "The lexical scope " + lexicalScope + " does not contain an entry for type variable "
-                        + typeVariable.getName() + " (declared on " + typeVariable.getGenericDeclaration() + ")"
+                        "The lexical scope " + lexicalScope + " does not contain an entry for type variable "
+                                + typeVariable.getName() + " (declared on " + typeVariable.getGenericDeclaration() + ")"
                 );
             }
 
@@ -168,10 +168,10 @@ public final class TypesFromReflection {
     }
 
     private static JTypeMirror makeWildcard(TypeSystem ts,
-                                            boolean isUpper,
-                                            Type[] bounds,
-                                            LexicalScope lexicalScope,
-                                            Substitution subst) {
+            boolean isUpper,
+            Type[] bounds,
+            LexicalScope lexicalScope,
+            Substitution subst) {
 
         List<JTypeMirror> boundsMapped = new ArrayList<>(bounds.length);
         for (Type a : bounds) {
@@ -212,8 +212,8 @@ public final class TypesFromReflection {
 
 
     private static @Nullable JTypeMirror loadClassMaybeArray(TypeSystem ts,
-                                                             String className,
-                                                             @Nullable UnresolvedClassStore unresolvedClassStore) {
+            String className,
+            @Nullable UnresolvedClassStore unresolvedClassStore) {
         Validate.notNull(className, "className must not be null.");
         if (className.endsWith("[]")) {
             int dimension = 0;

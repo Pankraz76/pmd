@@ -32,32 +32,26 @@ public final class ASTNumericLiteral extends AbstractLiteral implements ASTLiter
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public Chars getLiteralText() {
+    @Override public Chars getLiteralText() {
         return super.getLiteralText();
     }
 
-    @Override
-    public @NonNull Number getConstValue() {
+    @Override public @NonNull Number getConstValue() {
         return (Number) super.getConstValue();
     }
 
     /**
      * @deprecated Since 7.12.0. See super method. This override is needed due to covariant return type change.
      */
-    @Override
-    @Deprecated
-    protected @Nullable Number buildConstValue() {
+    @Override @Deprecated protected @Nullable Number buildConstValue() {
         return (Number) super.buildConstValue();
     }
 
-    @Override
-    public @NonNull JPrimitiveType getTypeMirror() {
+    @Override public @NonNull JPrimitiveType getTypeMirror() {
         return (JPrimitiveType) super.getTypeMirror();
     }
 
@@ -70,8 +64,7 @@ public final class ASTNumericLiteral extends AbstractLiteral implements ASTLiter
         this.isIntegral = false;
     }
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
 
         Chars image = getLiteralText();
@@ -125,14 +118,14 @@ public final class ASTNumericLiteral extends AbstractLiteral implements ASTLiter
     static int getBase(Chars image, boolean isIntegral) {
         if (image.length() > 1 && image.charAt(0) == '0') {
             switch (image.charAt(1)) {
-            case 'x':
-            case 'X':
-                return 16;
-            case 'b':
-            case 'B':
-                return 2;
-            default:
-                return isIntegral ? 8 : 10;
+                case 'x':
+                case 'X':
+                    return 16;
+                case 'b':
+                case 'B':
+                    return 2;
+                default:
+                    return isIntegral ? 8 : 10;
             }
         }
         return 10;

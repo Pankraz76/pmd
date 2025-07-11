@@ -17,16 +17,14 @@ class ASTForInLoopTest extends EcmascriptParserTestBase {
      *
      * @see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for_each...in">for each...in</a>
      */
-    @Test
-    void testForEachLoop() {
+    @Test void testForEachLoop() {
         ASTAstRoot node = js.parse("for each (var item in items) {}");
         ASTForInLoop loop = (ASTForInLoop) node.getChild(0);
         assertFalse(loop.isForOf());
         assertTrue(loop.isForEach());
     }
 
-    @Test
-    void testForOfLoop() {
+    @Test void testForOfLoop() {
         ASTAstRoot node = js.parse("for (var item of items) {}");
         ASTForInLoop loop = (ASTForInLoop) node.getChild(0);
         assertTrue(loop.isForOf());

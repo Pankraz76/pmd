@@ -45,13 +45,11 @@ public class FieldNamingConventionsRule extends AbstractNamingConventionsRule {
     }
 
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTField.class);
     }
 
-    @Override
-    public Object visit(ASTField node, Object data) {
+    @Override public Object visit(ASTField node, Object data) {
         if (node.ancestors(ASTProperty.class).first() != null) {
             return data;
         }
@@ -81,8 +79,7 @@ public class FieldNamingConventionsRule extends AbstractNamingConventionsRule {
         return field.getParent().descendants(ASTFieldDeclaration.class).first(fieldDeclaration -> fieldDeclaration.getName().equals(field.getName()));
     }
 
-    @Override
-    protected String displayName(String name) {
+    @Override protected String displayName(String name) {
         return DESCRIPTOR_TO_DISPLAY_NAME.get(name);
     }
 }

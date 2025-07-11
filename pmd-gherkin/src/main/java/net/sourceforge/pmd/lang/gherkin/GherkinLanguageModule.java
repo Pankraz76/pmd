@@ -27,8 +27,7 @@ public class GherkinLanguageModule extends CpdOnlyLanguageModuleBase {
         return (GherkinLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new GherkinCpdLexer();
     }
 }

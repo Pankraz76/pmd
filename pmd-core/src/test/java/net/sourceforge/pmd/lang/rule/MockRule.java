@@ -22,9 +22,9 @@ import net.sourceforge.pmd.reporting.RuleContext;
 public class MockRule extends MockRuleWithNoProperties {
 
     public static final PropertyDescriptor<Integer> PROP =
-        PropertyFactory.intProperty("testIntProperty")
-                       .desc("testIntProperty")
-                       .require(inRange(1, 100)).defaultValue(1).build();
+            PropertyFactory.intProperty("testIntProperty")
+                    .desc("testIntProperty")
+                    .require(inRange(1, 100)).defaultValue(1).build();
 
     public MockRule() {
         super();
@@ -42,8 +42,7 @@ public class MockRule extends MockRuleWithNoProperties {
         this(name, description, message, ruleSetName, RulePriority.MEDIUM);
     }
 
-    @Override
-    public void apply(Node node, RuleContext ctx) {
+    @Override public void apply(Node node, RuleContext ctx) {
         // the mock rule does nothing. Usually you would start here to analyze the AST.
     }
 }

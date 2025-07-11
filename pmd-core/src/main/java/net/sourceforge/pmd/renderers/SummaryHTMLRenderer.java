@@ -32,13 +32,11 @@ public class SummaryHTMLRenderer extends AbstractAccumulatingRenderer {
         definePropertyDescriptor(HTMLRenderer.HTML_EXTENSION);
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "html";
     }
 
-    @Override
-    public void outputReport(Report report) throws IOException {
+    @Override public void outputReport(Report report) throws IOException {
         writer.println("<html><head><title>PMD</title></head><body>");
         renderSummary(report);
         writer.write("<center><h2>Detail</h2></center>");

@@ -35,8 +35,7 @@ class JavaViolationDecoratorTest {
 
     // TODO there are no tests for anon or local classes
 
-    @Test
-    void testASTFormalParameterVariableName() {
+    @Test void testASTFormalParameterVariableName() {
         ASTCompilationUnit ast = parse("class Foo { void bar(int x) {} }");
         ASTFormalParameter node = ast.descendants(ASTFormalParameter.class).first();
         Map<String, String> info = decorate(node);
@@ -53,8 +52,7 @@ class JavaViolationDecoratorTest {
      *
      * @see <a href="https://sourceforge.net/p/pmd/bugs/1250/">#1250</a>
      */
-    @Test
-    void testMethodName() {
+    @Test void testMethodName() {
         ASTCompilationUnit ast = parse("class Foo { void bar(int x) {} }");
         ASTMethodDeclaration md = ast.descendants(ASTMethodDeclaration.class).first();
         assertThat(decorate(md), hasEntry(METHOD_NAME, "bar"));
@@ -69,8 +67,7 @@ class JavaViolationDecoratorTest {
     /**
      * Tests that the enum name is taken correctly from the given node.
      */
-    @Test
-    void testEnumName() {
+    @Test void testEnumName() {
         ASTCompilationUnit ast = parse("enum Foo {FOO; void bar(int x) {} }");
         ASTMethodDeclaration md = ast.descendants(ASTMethodDeclaration.class).first();
         assertThat(decorate(md), hasEntry(CLASS_NAME, "Foo"));
@@ -82,8 +79,7 @@ class JavaViolationDecoratorTest {
      *
      * @see <a href="https://sourceforge.net/p/pmd/bugs/1529/">#1529</a>
      */
-    @Test
-    void testPackageAndClassNameForImport() {
+    @Test void testPackageAndClassNameForImport() {
         ASTCompilationUnit ast = parse("package pkg; import java.util.List; public class Foo { }");
         ASTImportDeclaration importNode = ast.descendants(ASTImportDeclaration.class).first();
 
@@ -92,8 +88,7 @@ class JavaViolationDecoratorTest {
         assertThat(violation, hasEntry(CLASS_NAME, "Foo"));
     }
 
-    @Test
-    void testPackageAndClassNameForField() {
+    @Test void testPackageAndClassNameForField() {
         ASTCompilationUnit ast = parse("package pkg; public class Foo { int a; }");
         ASTClassDeclaration classDeclaration = ast.descendants(ASTClassDeclaration.class).first();
         ASTFieldDeclaration field = ast.descendants(ASTFieldDeclaration.class).first();
@@ -107,8 +102,7 @@ class JavaViolationDecoratorTest {
         assertThat(violation, hasEntry(CLASS_NAME, "Foo"));
     }
 
-    @Test
-    void testPackageAndEnumName() {
+    @Test void testPackageAndEnumName() {
         ASTCompilationUnit ast = parse("package pkg; import java.util.List; public enum FooE { }");
         ASTImportDeclaration importNode = ast.descendants(ASTImportDeclaration.class).first();
 
@@ -117,8 +111,7 @@ class JavaViolationDecoratorTest {
         assertThat(violation, hasEntry(CLASS_NAME, "FooE"));
     }
 
-    @Test
-    void testDefaultPackageAndClassName() {
+    @Test void testDefaultPackageAndClassName() {
         ASTCompilationUnit ast = parse("import java.util.List; public class Foo { }");
         ASTImportDeclaration importNode = ast.descendants(ASTImportDeclaration.class).first();
 
@@ -127,8 +120,7 @@ class JavaViolationDecoratorTest {
         assertThat(violation, hasEntry(CLASS_NAME, "Foo"));
     }
 
-    @Test
-    void testPackageAndMultipleClassesName() {
+    @Test void testPackageAndMultipleClassesName() {
         ASTCompilationUnit ast = parse("package pkg; import java.util.List; class Foo { } public class Bar { }");
         ASTImportDeclaration importNode = ast.descendants(ASTImportDeclaration.class).first();
 
@@ -137,8 +129,7 @@ class JavaViolationDecoratorTest {
         assertThat(violation, hasEntry(CLASS_NAME, "Bar"));
     }
 
-    @Test
-    void testPackageAndPackagePrivateClassesName() {
+    @Test void testPackageAndPackagePrivateClassesName() {
         ASTCompilationUnit ast = parse("package pkg; import java.util.List; class Foo { }");
         ASTImportDeclaration importNode = ast.descendants(ASTImportDeclaration.class).first();
 
@@ -151,8 +142,7 @@ class JavaViolationDecoratorTest {
      * Test that the name of the inner class is taken correctly.
      * Also check fields.
      */
-    @Test
-    void testInnerClass() {
+    @Test void testInnerClass() {
         ASTCompilationUnit ast = parse("class Foo { int a; class Bar { int a; } }");
         List<ASTClassDeclaration> classes = ast.descendants(ASTClassDeclaration.class).toList();
         assertEquals(2, classes.size());
@@ -167,8 +157,7 @@ class JavaViolationDecoratorTest {
         assertThat(decorate(fields.get(1)), hasEntry(CLASS_NAME, "Bar"));
     }
 
-    @Test
-    void testInitializers() {
+    @Test void testInitializers() {
         ASTCompilationUnit ast = parse("class Foo { int a = 1;  { int x = 2; } }");
         List<ASTNumericLiteral> expressions = ast.descendants(ASTNumericLiteral.class).toList();
         assertEquals(2, expressions.size());

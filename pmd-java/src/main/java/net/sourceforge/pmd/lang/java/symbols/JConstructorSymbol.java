@@ -23,19 +23,16 @@ public interface JConstructorSymbol extends JExecutableSymbol, BoundToNode<ASTCo
 
 
     /** For constructors, this returns the special name {@value CTOR_NAME}. */
-    @Override
-    default String getSimpleName() {
+    @Override default String getSimpleName() {
         return CTOR_NAME;
     }
 
-    @Override
-    default JTypeMirror getReturnType(Substitution subst) {
+    @Override default JTypeMirror getReturnType(Substitution subst) {
         TypeSystem ts = getTypeSystem();
         return ts.declaration(getEnclosingClass()).subst(subst);
     }
 
-    @Override
-    default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitCtor(this, param);
     }
 

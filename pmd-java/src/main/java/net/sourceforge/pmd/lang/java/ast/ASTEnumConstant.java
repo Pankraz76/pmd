@@ -19,11 +19,11 @@ import net.sourceforge.pmd.lang.java.types.OverloadSelectionResult;
  * </pre>
  */
 public final class ASTEnumConstant extends AbstractJavaTypeNode
-    implements InvocationNode,
-               ModifierOwner,
-               ASTBodyDeclaration,
-               InternalInterfaces.VariableIdOwner,
-               JavadocCommentOwner {
+        implements InvocationNode,
+        ModifierOwner,
+        ASTBodyDeclaration,
+        InternalInterfaces.VariableIdOwner,
+        JavadocCommentOwner {
 
     private OverloadSelectionResult result;
 
@@ -32,30 +32,24 @@ public final class ASTEnumConstant extends AbstractJavaTypeNode
     }
 
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         return getVarId().getFirstToken().getReportLocation();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
 
-    @Override
-    public ASTVariableId getVarId() {
+    @Override public ASTVariableId getVarId() {
         return firstChild(ASTVariableId.class);
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return getName();
     }
 
-    @Override
-    @Nullable
-    public ASTArgumentList getArguments() {
+    @Override @Nullable public ASTArgumentList getArguments() {
         return firstChild(ASTArgumentList.class);
     }
 
@@ -82,8 +76,7 @@ public final class ASTEnumConstant extends AbstractJavaTypeNode
         return AstImplUtil.getChildAs(this, getNumChildren() - 1, ASTAnonymousClassDeclaration.class);
     }
 
-    @Override
-    public @Nullable ASTTypeArguments getExplicitTypeArguments() {
+    @Override public @Nullable ASTTypeArguments getExplicitTypeArguments() {
         // no syntax for that
         return null;
     }
@@ -93,8 +86,7 @@ public final class ASTEnumConstant extends AbstractJavaTypeNode
         this.result = result;
     }
 
-    @Override
-    public OverloadSelectionResult getOverloadSelectionInfo() {
+    @Override public OverloadSelectionResult getOverloadSelectionInfo() {
         forceTypeResolution();
         return assertNonNullAfterTypeRes(result);
     }

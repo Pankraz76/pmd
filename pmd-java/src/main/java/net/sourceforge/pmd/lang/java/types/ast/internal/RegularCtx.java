@@ -24,13 +24,11 @@ public final class RegularCtx extends ExprContext {
         this.targetType = targetType;
     }
 
-    @Override
-    public @Nullable JTypeMirror getTargetType() {
+    @Override public @Nullable JTypeMirror getTargetType() {
         return targetType;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "RegularCtx{kind=" + kind + ", targetType=" + targetType + '}';
     }
 }

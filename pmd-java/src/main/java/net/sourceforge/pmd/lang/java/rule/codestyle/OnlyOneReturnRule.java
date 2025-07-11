@@ -15,14 +15,13 @@ public class OnlyOneReturnRule extends AbstractJavaRulechainRule {
         super(ASTMethodDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         if (node.getBody() == null) {
             return null;
         }
 
         NodeStream<ASTReturnStatement> returnsExceptLast =
-            node.getBody().descendants(ASTReturnStatement.class).dropLast(1);
+                node.getBody().descendants(ASTReturnStatement.class).dropLast(1);
 
         for (ASTReturnStatement returnStmt : returnsExceptLast) {
             asCtx(data).addViolation(returnStmt);

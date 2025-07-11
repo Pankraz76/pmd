@@ -48,11 +48,11 @@ public final class ImplicitMemberSymbols {
         assert enumSym.isEnum() : "Not an enum symbol " + enumSym;
 
         return new FakeMethodSym(
-            enumSym,
-            "valueOf",
-            Modifier.PUBLIC | Modifier.STATIC,
-            TypeSystem::declaration,
-            singletonList(t -> new FakeFormalParamSym(t, "name", (ts, s) -> ts.declaration(ts.getClassSymbol(String.class))))
+                enumSym,
+                "valueOf",
+                Modifier.PUBLIC | Modifier.STATIC,
+                TypeSystem::declaration,
+                singletonList(t -> new FakeFormalParamSym(t, "name", (ts, s) -> ts.declaration(ts.getClassSymbol(String.class))))
         );
     }
 
@@ -60,11 +60,11 @@ public final class ImplicitMemberSymbols {
         assert enumSym.isEnum() : "Not an enum symbol " + enumSym;
 
         return new FakeMethodSym(
-            enumSym,
-            "values",
-            Modifier.PUBLIC | Modifier.STATIC,
-            (ts, c) -> ts.arrayType(ts.declaration(c)),
-            emptyList()
+                enumSym,
+                "values",
+                Modifier.PUBLIC | Modifier.STATIC,
+                (ts, c) -> ts.arrayType(ts.declaration(c)),
+                emptyList()
         );
     }
 
@@ -77,7 +77,7 @@ public final class ImplicitMemberSymbols {
         // They are not reflected by the symbol
 
         int modifiers = sym.isEnum() ? Modifier.PRIVATE
-                                     : sym.getModifiers() & VISIBILITY_MASK;
+                : sym.getModifiers() & VISIBILITY_MASK;
 
         return new FakeCtorSym(sym, modifiers, emptyList());
     }
@@ -87,11 +87,11 @@ public final class ImplicitMemberSymbols {
         assert arraySym.isArray() : "Not an array symbol " + arraySym;
 
         return new FakeMethodSym(
-            arraySym,
-            "clone",
-            Modifier.PUBLIC | Modifier.FINAL,
-            TypeSystem::declaration,
-            emptyList()
+                arraySym,
+                "clone",
+                Modifier.PUBLIC | Modifier.FINAL,
+                TypeSystem::declaration,
+                emptyList()
         );
     }
 
@@ -99,28 +99,28 @@ public final class ImplicitMemberSymbols {
         assert arraySym.isArray() : "Not an array symbol " + arraySym;
 
         return new FakeCtorSym(
-            arraySym,
-            Modifier.PUBLIC | Modifier.FINAL,
-            singletonList(c -> new FakeFormalParamSym(c, "arg0", (ts, sym) -> ts.INT))
+                arraySym,
+                Modifier.PUBLIC | Modifier.FINAL,
+                singletonList(c -> new FakeFormalParamSym(c, "arg0", (ts, sym) -> ts.INT))
         );
     }
 
     /** Symbol for the canonical record constructor. */
     public static JConstructorSymbol recordConstructor(JClassSymbol recordSym,
-                                                       List<JRecordComponentSymbol> recordComponents,
-                                                       boolean isVarargs) {
+            List<JRecordComponentSymbol> recordComponents,
+            boolean isVarargs) {
         assert recordSym.isRecord() : "Not a record symbol " + recordSym;
 
         int modifiers = isVarargs ? Modifier.PUBLIC | VARARGS_MOD
-                                  : Modifier.PUBLIC;
+                : Modifier.PUBLIC;
 
         return new FakeCtorSym(
-            recordSym,
-            modifiers,
-            CollectionUtil.map(
-                recordComponents,
-                f -> c -> new FakeFormalParamSym(c, f.getSimpleName(), f.tryGetNode().getVarId(), (ts, sym) -> f.getTypeMirror(Substitution.EMPTY))
-            )
+                recordSym,
+                modifiers,
+                CollectionUtil.map(
+                        recordComponents,
+                        f -> c -> new FakeFormalParamSym(c, f.getSimpleName(), f.tryGetNode().getVarId(), (ts, sym) -> f.getTypeMirror(Substitution.EMPTY))
+                )
         );
     }
 
@@ -134,11 +134,11 @@ public final class ImplicitMemberSymbols {
         assert recordSym.isRecord() : "Not a record symbol " + recordSym;
 
         return new FakeMethodSym(
-            recordSym,
-            recordComponent.getSimpleName(),
-            Modifier.PUBLIC,
-            (ts, encl) -> recordComponent.getTypeMirror(Substitution.EMPTY),
-            emptyList()
+                recordSym,
+                recordComponent.getSimpleName(),
+                Modifier.PUBLIC,
+                (ts, encl) -> recordComponent.getTypeMirror(Substitution.EMPTY),
+                emptyList()
         );
     }
 
@@ -146,10 +146,10 @@ public final class ImplicitMemberSymbols {
         assert arraySym.isArray() : "Not an array symbol " + arraySym;
 
         return new FakeFieldSym(
-            arraySym,
-            "length",
-            Modifier.PUBLIC | Modifier.FINAL,
-            (ts, s) -> ts.INT
+                arraySym,
+                "length",
+                Modifier.PUBLIC | Modifier.FINAL,
+                (ts, s) -> ts.INT
         );
     }
 
@@ -174,75 +174,63 @@ public final class ImplicitMemberSymbols {
 
 
         FakeExecutableSymBase(JClassSymbol owner,
-                              String name,
-                              int modifiers,
-                              List<Function<T, JFormalParamSymbol>> formals) {
+                String name,
+                int modifiers,
+                List<Function<T, JFormalParamSymbol>> formals) {
             this.owner = owner;
             this.name = name;
             this.modifiers = modifiers;
             this.formals = CollectionUtil.map(formals, f -> f.apply((T) this));
         }
 
-        @Override
-        public TypeSystem getTypeSystem() {
+        @Override public TypeSystem getTypeSystem() {
             return owner.getTypeSystem();
         }
 
-        @Override
-        public List<JTypeMirror> getFormalParameterTypes(Substitution subst) {
+        @Override public List<JTypeMirror> getFormalParameterTypes(Substitution subst) {
             return CollectionUtil.map(formals, p -> p.getTypeMirror(subst));
         }
 
-        @Override
-        public List<JTypeMirror> getThrownExceptionTypes(Substitution subst) {
+        @Override public List<JTypeMirror> getThrownExceptionTypes(Substitution subst) {
             return emptyList();
         }
 
-        @Override
-        public List<JTypeVar> getTypeParameters() {
+        @Override public List<JTypeVar> getTypeParameters() {
             return emptyList();
         }
 
-        @Override
-        public String getSimpleName() {
+        @Override public String getSimpleName() {
             return name;
         }
 
-        @Override
-        public List<JFormalParamSymbol> getFormalParameters() {
+        @Override public List<JFormalParamSymbol> getFormalParameters() {
             return formals;
         }
 
-        @Override
-        public boolean isVarargs() {
+        @Override public boolean isVarargs() {
             return (modifiers & VARARGS_MOD) != 0;
         }
 
-        @Override
-        public int getArity() {
+        @Override public int getArity() {
             return formals.size();
         }
 
-        @Override
-        public @Nullable JTypeMirror getAnnotatedReceiverType(Substitution subst) {
+        @Override public @Nullable JTypeMirror getAnnotatedReceiverType(Substitution subst) {
             if (!this.hasReceiver()) {
                 return null;
             }
             return getTypeSystem().declaration(owner).subst(subst);
         }
 
-        @Override
-        public int getModifiers() {
+        @Override public int getModifiers() {
             return modifiers;
         }
 
-        @Override
-        public @NonNull JClassSymbol getEnclosingClass() {
+        @Override public @NonNull JClassSymbol getEnclosingClass() {
             return owner;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return SymbolToStrings.FAKE.toString(this);
         }
     }
@@ -252,31 +240,27 @@ public final class ImplicitMemberSymbols {
         private final BiFunction<? super TypeSystem, ? super JClassSymbol, ? extends JTypeMirror> returnType;
 
         FakeMethodSym(JClassSymbol owner,
-                      String name,
-                      int modifiers,
-                      BiFunction<? super TypeSystem, ? super JClassSymbol, ? extends JTypeMirror> returnType,
-                      List<Function<JMethodSymbol, JFormalParamSymbol>> formals) {
+                String name,
+                int modifiers,
+                BiFunction<? super TypeSystem, ? super JClassSymbol, ? extends JTypeMirror> returnType,
+                List<Function<JMethodSymbol, JFormalParamSymbol>> formals) {
             super(owner, name, modifiers, formals);
             this.returnType = returnType;
         }
 
-        @Override
-        public boolean isBridge() {
+        @Override public boolean isBridge() {
             return false;
         }
 
-        @Override
-        public JTypeMirror getReturnType(Substitution subst) {
+        @Override public JTypeMirror getReturnType(Substitution subst) {
             return returnType.apply(getTypeSystem(), getEnclosingClass());
         }
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             return SymbolEquality.METHOD.equals(this, o);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return SymbolEquality.METHOD.hash(this);
         }
     }
@@ -284,19 +268,17 @@ public final class ImplicitMemberSymbols {
     private static final class FakeCtorSym extends FakeExecutableSymBase<JConstructorSymbol> implements JConstructorSymbol {
 
         FakeCtorSym(JClassSymbol owner,
-                    int modifiers,
-                    List<Function<JConstructorSymbol, JFormalParamSymbol>> formals) {
+                int modifiers,
+                List<Function<JConstructorSymbol, JFormalParamSymbol>> formals) {
             super(owner, JConstructorSymbol.CTOR_NAME, modifiers, formals);
         }
 
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             return SymbolEquality.CONSTRUCTOR.equals(this, o);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return SymbolEquality.CONSTRUCTOR.hash(this);
         }
     }
@@ -319,48 +301,39 @@ public final class ImplicitMemberSymbols {
             this.type = type;
         }
 
-        @Override
-        public @Nullable ASTVariableId tryGetNode() {
+        @Override public @Nullable ASTVariableId tryGetNode() {
             return node;
         }
 
-        @Override
-        public TypeSystem getTypeSystem() {
+        @Override public TypeSystem getTypeSystem() {
             return owner.getTypeSystem();
         }
 
-        @Override
-        public JTypeMirror getTypeMirror(Substitution subst) {
+        @Override public JTypeMirror getTypeMirror(Substitution subst) {
             return type.apply(getTypeSystem(), this).subst(subst);
         }
 
-        @Override
-        public JExecutableSymbol getDeclaringSymbol() {
+        @Override public JExecutableSymbol getDeclaringSymbol() {
             return owner;
         }
 
-        @Override
-        public boolean isFinal() {
+        @Override public boolean isFinal() {
             return false;
         }
 
-        @Override
-        public String getSimpleName() {
+        @Override public String getSimpleName() {
             return name;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return SymbolToStrings.FAKE.toString(this);
         }
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             return SymbolEquality.FORMAL_PARAM.equals(this, o);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return SymbolEquality.FORMAL_PARAM.hash(this);
         }
     }
@@ -380,48 +353,39 @@ public final class ImplicitMemberSymbols {
             this.type = type;
         }
 
-        @Override
-        public TypeSystem getTypeSystem() {
+        @Override public TypeSystem getTypeSystem() {
             return owner.getTypeSystem();
         }
 
-        @Override
-        public JTypeMirror getTypeMirror(Substitution subst) {
+        @Override public JTypeMirror getTypeMirror(Substitution subst) {
             return type.apply(getTypeSystem(), owner).subst(subst);
         }
 
-        @Override
-        public String getSimpleName() {
+        @Override public String getSimpleName() {
             return name;
         }
 
-        @Override
-        public int getModifiers() {
+        @Override public int getModifiers() {
             return modifiers;
         }
 
-        @Override
-        public boolean isEnumConstant() {
+        @Override public boolean isEnumConstant() {
             return false;
         }
 
-        @Override
-        public @NonNull JClassSymbol getEnclosingClass() {
+        @Override public @NonNull JClassSymbol getEnclosingClass() {
             return owner;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return SymbolToStrings.FAKE.toString(this);
         }
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             return SymbolEquality.FIELD.equals(this, o);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return SymbolEquality.FIELD.hash(this);
         }
     }

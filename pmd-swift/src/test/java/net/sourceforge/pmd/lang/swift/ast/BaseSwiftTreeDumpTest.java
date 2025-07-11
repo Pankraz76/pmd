@@ -19,9 +19,7 @@ public class BaseSwiftTreeDumpTest extends BaseTreeDumpTest {
         super(NodePrintersKt.getSimpleNodePrinter(), ".swift");
     }
 
-    @NonNull
-    @Override
-    public SwiftParsingHelper getParser() {
+    @NonNull @Override public SwiftParsingHelper getParser() {
         return SwiftParsingHelper.DEFAULT.withResourceContext(getClass(), "testdata");
     }
 }

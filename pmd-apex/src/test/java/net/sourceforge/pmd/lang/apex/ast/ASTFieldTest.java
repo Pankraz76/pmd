@@ -11,28 +11,25 @@ import org.junit.jupiter.api.Test;
 
 class ASTFieldTest extends ApexParserTestBase {
 
-    @Test
-    void testGetType() {
+    @Test void testGetType() {
         ASTField field = parse("public class Foo { private String myField = 'a'; }")
-            .descendants(ASTField.class).firstOrThrow();
+                .descendants(ASTField.class).firstOrThrow();
 
         assertEquals("myField", field.getImage());
         assertEquals("String", field.getType());
         assertEquals("a", field.getValue());
     }
 
-    @Test
-    void testGetValue() {
+    @Test void testGetValue() {
         ASTField field = parse("public class Foo { private String myField = 'a'; }")
-            .descendants(ASTField.class).firstOrThrow();
+                .descendants(ASTField.class).firstOrThrow();
 
         assertEquals("a", field.getValue());
     }
 
-    @Test
-    void testGetNoValue() {
+    @Test void testGetNoValue() {
         ASTField field = parse("public class Foo { private String myField; }")
-            .descendants(ASTField.class).firstOrThrow();
+                .descendants(ASTField.class).firstOrThrow();
 
         assertNull(field.getValue());
     }

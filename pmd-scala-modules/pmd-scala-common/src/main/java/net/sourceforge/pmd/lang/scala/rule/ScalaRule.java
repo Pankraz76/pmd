@@ -15,13 +15,11 @@ import net.sourceforge.pmd.reporting.RuleContext;
  */
 public class ScalaRule extends AbstractRule implements ScalaVisitor<RuleContext, RuleContext> {
 
-    @Override
-    public void apply(Node target, RuleContext ctx) {
+    @Override public void apply(Node target, RuleContext ctx) {
         target.acceptVisitor(this, ctx);
     }
 
-    @Override
-    public RuleContext visitNode(Node node, RuleContext param) {
+    @Override public RuleContext visitNode(Node node, RuleContext param) {
         for (Node child : node.children()) {
             child.acceptVisitor(this, param);
         }

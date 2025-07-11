@@ -102,7 +102,7 @@ public final class JavaExprMirrors {
     }
 
     private InvocationMirror getInvocationMirror(InvocationNode e, @Nullable ExprMirror parent,
-                                                 boolean mustBeStandalone, MirrorMaker subexprMaker) {
+            boolean mustBeStandalone, MirrorMaker subexprMaker) {
         if (e instanceof ASTMethodCall) {
             return new MethodInvocMirror(this, (ASTMethodCall) e, mustBeStandalone, parent, subexprMaker);
         } else if (e instanceof ASTConstructorCall) {

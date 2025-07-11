@@ -19,8 +19,7 @@ public class ApexDesignerBindings extends DefaultDesignerBindings {
 
     public static final ApexDesignerBindings INSTANCE = new ApexDesignerBindings();
 
-    @Override
-    public Attribute getMainAttribute(Node node) {
+    @Override public Attribute getMainAttribute(Node node) {
         if (node instanceof ApexNode) {
             Attribute attr = (Attribute) node.acceptVisitor(MainAttrVisitor.INSTANCE, null);
             if (attr != null) {
@@ -31,8 +30,7 @@ public class ApexDesignerBindings extends DefaultDesignerBindings {
         return super.getMainAttribute(node);
     }
 
-    @Override
-    public TreeIconId getIcon(Node node) {
+    @Override public TreeIconId getIcon(Node node) {
         if (node instanceof ASTFieldDeclaration) {
             return TreeIconId.FIELD;
         } else if (node instanceof ASTUserClass) {
@@ -50,13 +48,11 @@ public class ApexDesignerBindings extends DefaultDesignerBindings {
 
         private static final MainAttrVisitor INSTANCE = new MainAttrVisitor();
 
-        @Override
-        public Object visitApexNode(ApexNode<?> node, Object data) {
+        @Override public Object visitApexNode(ApexNode<?> node, Object data) {
             return null; // don't recurse
         }
 
-        @Override
-        public Object visit(ASTMethodCallExpression node, Object data) {
+        @Override public Object visit(ASTMethodCallExpression node, Object data) {
             return new Attribute(node, "MethodName", node.getMethodName());
         }
     }

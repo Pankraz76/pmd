@@ -20,17 +20,14 @@ public class NcssMethodCountRule extends AbstractNcssCountRule<ExecutableCode> {
         super(ExecutableCode.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 100;
     }
 
-    @Override
-    protected Object[] getViolationParameters(ExecutableCode node, int metric) {
+    @Override protected Object[] getViolationParameters(ExecutableCode node, int metric) {
         String name = node.getMethodName();
-        return new Object[] {name == null ? "(unnamed)" : name, metric};
+        return new Object[]{name == null ? "(unnamed)" : name, metric};
     }
-
 
 
 }

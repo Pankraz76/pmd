@@ -17,23 +17,19 @@ import net.sourceforge.pmd.reporting.Report;
 
 class AbstractApexRuleTest extends ApexParserTestBase {
 
-    @Test
-    void shouldVisitTopLevelClass() {
+    @Test void shouldVisitTopLevelClass() {
         run("class Foo { }");
     }
 
-    @Test
-    void shouldVisitTopLevelInterface() {
+    @Test void shouldVisitTopLevelInterface() {
         run("interface Foo { }");
     }
 
-    @Test
-    void shouldVisitTopLevelTrigger() {
+    @Test void shouldVisitTopLevelTrigger() {
         run("trigger Foo on Account (before insert, before update) { }");
     }
 
-    @Test
-    void shouldVisitTopLevelEnum() {
+    @Test void shouldVisitTopLevelEnum() {
         run("enum Foo { }");
     }
 
@@ -46,37 +42,31 @@ class AbstractApexRuleTest extends ApexParserTestBase {
 
     private static class TopLevelRule extends AbstractApexRule {
 
-        @Override
-        public String getMessage() {
+        @Override public String getMessage() {
             return "a message";
         }
 
-        @Override
-        public Object visit(ASTUserClass node, Object data) {
+        @Override public Object visit(ASTUserClass node, Object data) {
             asCtx(data).addViolation(node);
             return data;
         }
 
-        @Override
-        public Object visit(ASTUserInterface node, Object data) {
+        @Override public Object visit(ASTUserInterface node, Object data) {
             asCtx(data).addViolation(node);
             return data;
         }
 
-        @Override
-        public Object visit(ASTUserTrigger node, Object data) {
+        @Override public Object visit(ASTUserTrigger node, Object data) {
             asCtx(data).addViolation(node);
             return data;
         }
 
-        @Override
-        public Object visit(ASTUserEnum node, Object data) {
+        @Override public Object visit(ASTUserEnum node, Object data) {
             asCtx(data).addViolation(node);
             return data;
         }
 
-        @Override
-        public Object visit(ASTAnonymousClass node, Object data) {
+        @Override public Object visit(ASTAnonymousClass node, Object data) {
             asCtx(data).addViolation(node);
             return data;
         }

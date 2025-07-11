@@ -36,15 +36,15 @@ import net.sourceforge.pmd.properties.PropertyFactory;
  */
 public class UnsynchronizedStaticFormatterRule extends AbstractJavaRulechainRule {
     private static final List<String> THREAD_SAFE_FORMATTER = Arrays.asList(
-        "org.apache.commons.lang3.time.FastDateFormat"
+            "org.apache.commons.lang3.time.FastDateFormat"
     );
 
     private static final PropertyDescriptor<Boolean> ALLOW_METHOD_LEVEL_SYNC =
-        PropertyFactory.booleanProperty("allowMethodLevelSynchronization")
-            .desc("If true, method level synchronization is allowed as well as synchronized block. Otherwise"
-                + " only synchronized blocks are allowed.")
-            .defaultValue(false)
-            .build();
+            PropertyFactory.booleanProperty("allowMethodLevelSynchronization")
+                    .desc("If true, method level synchronization is allowed as well as synchronized block. Otherwise"
+                            + " only synchronized blocks are allowed.")
+                    .defaultValue(false)
+                    .build();
 
     private Class<?> formatterClassToCheck = Format.class;
 
@@ -58,19 +58,18 @@ public class UnsynchronizedStaticFormatterRule extends AbstractJavaRulechainRule
         this.formatterClassToCheck = formatterClassToCheck;
     }
 
-    @Override
-    public Object visit(ASTFieldDeclaration node, Object data) {
+    @Override public Object visit(ASTFieldDeclaration node, Object data) {
         if (!node.hasModifiers(JModifier.STATIC)) {
             return data;
         }
         ASTType cit = node.getTypeNode();
         if (!(cit instanceof ASTClassType)
-            || !TypeTestUtil.isA(formatterClassToCheck, cit)) {
+                || !TypeTestUtil.isA(formatterClassToCheck, cit)) {
             return data;
         }
 
         ASTVariableId var = node.getVarIds().firstOrThrow();
-        for (String formatter: THREAD_SAFE_FORMATTER) {
+        for (String formatter : THREAD_SAFE_FORMATTER) {
             if (TypeTestUtil.isA(formatter, var)) {
                 return data;
             }

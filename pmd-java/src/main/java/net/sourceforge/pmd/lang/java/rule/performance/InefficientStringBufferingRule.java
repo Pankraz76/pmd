@@ -28,16 +28,14 @@ public class InefficientStringBufferingRule extends AbstractJavaRulechainRule {
         super(ASTConstructorCall.class, ASTMethodCall.class);
     }
 
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         if (JavaRuleUtil.isStringBuilderCtorOrAppend(node)) {
             checkArgument(node.getArguments(), (RuleContext) data);
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTConstructorCall node, Object data) {
+    @Override public Object visit(ASTConstructorCall node, Object data) {
         if (JavaRuleUtil.isStringBuilderCtorOrAppend(node)) {
             checkArgument(node.getArguments(), (RuleContext) data);
         }
@@ -48,8 +46,8 @@ public class InefficientStringBufferingRule extends AbstractJavaRulechainRule {
         ASTExpression arg = ASTList.singleOrNull(argList);
 
         if (JavaAstUtils.isStringConcatExpr(arg)
-            // ignore concatenations that produce constants
-            && !arg.getConstFoldingResult().hasValue()) {
+                // ignore concatenations that produce constants
+                && !arg.getConstFoldingResult().hasValue()) {
             ctx.addViolation(arg);
         }
     }
@@ -63,6 +61,6 @@ public class InefficientStringBufferingRule extends AbstractJavaRulechainRule {
         Node parent = node.getParent();
 
         return parent instanceof ASTMethodCall
-            && JavaRuleUtil.isStringBuilderCtorOrAppend((ASTMethodCall) parent);
+                && JavaRuleUtil.isStringBuilderCtorOrAppend((ASTMethodCall) parent);
     }
 }

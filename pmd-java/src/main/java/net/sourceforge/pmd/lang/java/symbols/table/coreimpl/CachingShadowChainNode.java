@@ -24,17 +24,16 @@ class CachingShadowChainNode<S, I> extends ShadowChainNodeBase<S, I> {
     private final Map<String, OptionalBool> keysThatIKnow = new HashMap<>();
 
     protected CachingShadowChainNode(@NonNull ShadowChainNode<S, I> parent,
-                                     Map<String, List<S>> known,
-                                     NameResolver<? extends S> resolver,
-                                     boolean shadowBarrier,
-                                     I scopeTag,
-                                     BinaryOperator<List<S>> merger) {
+            Map<String, List<S>> known,
+            NameResolver<? extends S> resolver,
+            boolean shadowBarrier,
+            I scopeTag,
+            BinaryOperator<List<S>> merger) {
         super(parent, shadowBarrier, scopeTag, resolver, merger);
         this.cache = known;
     }
 
-    @Override
-    public @NonNull List<S> resolve(String name) {
+    @Override public @NonNull List<S> resolve(String name) {
         List<S> result = cache.get(name);
         if (result != null) {
             return result;
@@ -44,13 +43,11 @@ class CachingShadowChainNode<S, I> extends ShadowChainNodeBase<S, I> {
         return result;
     }
 
-    @Override
-    protected void handleResolverKnows(String name, boolean resolverKnows) {
+    @Override protected void handleResolverKnows(String name, boolean resolverKnows) {
         keysThatIKnow.putIfAbsent(name, OptionalBool.definitely(resolverKnows));
     }
 
-    @Override
-    public S resolveFirst(String name) {
+    @Override public S resolveFirst(String name) {
         List<S> result = cache.get(name);
         if (result != null && !result.isEmpty()) {
             return result.get(0);
@@ -65,8 +62,7 @@ class CachingShadowChainNode<S, I> extends ShadowChainNodeBase<S, I> {
         return first;
     }
 
-    @Override
-    public OptionalBool knowsSymbol(String simpleName) {
+    @Override public OptionalBool knowsSymbol(String simpleName) {
         OptionalBool resolverKnows = resolver.knows(simpleName);
         if (resolverKnows.isKnown()) {
             return resolverKnows;
@@ -75,11 +71,10 @@ class CachingShadowChainNode<S, I> extends ShadowChainNodeBase<S, I> {
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Cached("
-            + "cache size=" + cache.size() + ", "
-            + "resolver=" + super.toString()
-            + ')';
+                + "cache size=" + cache.size() + ", "
+                + "resolver=" + super.toString()
+                + ')';
     }
 }

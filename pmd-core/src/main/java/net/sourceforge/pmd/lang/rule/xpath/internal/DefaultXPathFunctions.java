@@ -16,13 +16,13 @@ import net.sourceforge.pmd.util.CollectionUtil;
 public final class DefaultXPathFunctions {
 
     private static final Set<XPathFunctionDefinition> DEFAULTS =
-        CollectionUtil.immutableSetOf(
-            FileNameXPathFunction.INSTANCE,
-            CoordinateXPathFunction.START_LINE,
-            CoordinateXPathFunction.START_COLUMN,
-            CoordinateXPathFunction.END_LINE,
-            CoordinateXPathFunction.END_COLUMN
-        );
+            CollectionUtil.immutableSetOf(
+                    FileNameXPathFunction.INSTANCE,
+                    CoordinateXPathFunction.START_LINE,
+                    CoordinateXPathFunction.START_COLUMN,
+                    CoordinateXPathFunction.END_LINE,
+                    CoordinateXPathFunction.END_COLUMN
+            );
 
     private DefaultXPathFunctions() {
         // utility class

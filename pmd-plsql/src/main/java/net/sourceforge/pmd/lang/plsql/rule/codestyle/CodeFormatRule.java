@@ -33,10 +33,10 @@ public class CodeFormatRule extends AbstractPLSQLRule {
 
     private static final PropertyDescriptor<Integer> INDENTATION_PROPERTY =
             PropertyFactory.intProperty("indentation")
-                .desc("Indentation to be used for blocks")
-                .defaultValue(2)
-                .require(inRange(0, 32))
-                .build();
+                    .desc("Indentation to be used for blocks")
+                    .defaultValue(2)
+                    .require(inRange(0, 32))
+                    .build();
 
     private int indentation = INDENTATION_PROPERTY.defaultValue();
 
@@ -44,35 +44,30 @@ public class CodeFormatRule extends AbstractPLSQLRule {
         definePropertyDescriptor(INDENTATION_PROPERTY);
     }
 
-    @Override
-    public Object visit(ASTInput node, Object data) {
+    @Override public Object visit(ASTInput node, Object data) {
         indentation = getProperty(INDENTATION_PROPERTY);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTSelectList node, Object data) {
+    @Override public Object visit(ASTSelectList node, Object data) {
         Node parent = node.getParent();
         checkEachChildOnNextLine(data, node, parent.getBeginLine(), parent.getBeginColumn() + 7);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTBulkCollectIntoClause node, Object data) {
+    @Override public Object visit(ASTBulkCollectIntoClause node, Object data) {
         Node parent = node.getParent();
         checkIndentation(data, node, parent.getBeginColumn() + indentation, "BULK COLLECT INTO");
         checkEachChildOnNextLine(data, node, node.getBeginLine(), parent.getBeginColumn() + 7);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTFromClause node, Object data) {
+    @Override public Object visit(ASTFromClause node, Object data) {
         checkIndentation(data, node, node.getParent().getBeginColumn() + indentation, "FROM");
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTJoinClause node, Object data) {
+    @Override public Object visit(ASTJoinClause node, Object data) {
         // first child is the table reference
         Node tableReference = node.getChild(0);
 
@@ -108,8 +103,7 @@ public class CodeFormatRule extends AbstractPLSQLRule {
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTSubqueryOperation node, Object data) {
+    @Override public Object visit(ASTSubqueryOperation node, Object data) {
         // get previous sibling
         int thisIndex = node.getIndexInParent();
         Node prevSibling = node.getParent().getChild(thisIndex - 1);
@@ -158,8 +152,7 @@ public class CodeFormatRule extends AbstractPLSQLRule {
         }
     }
 
-    @Override
-    public Object visit(ASTFormalParameters node, Object data) {
+    @Override public Object visit(ASTFormalParameters node, Object data) {
         int parameterIndentation = node.getParent().getBeginColumn() + indentation;
         checkEachChildOnNextLine(data, node, node.getBeginLine() + 1, parameterIndentation);
 
@@ -177,8 +170,7 @@ public class CodeFormatRule extends AbstractPLSQLRule {
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTDeclarativeSection node, Object data) {
+    @Override public Object visit(ASTDeclarativeSection node, Object data) {
         int variableIndentation = node.ancestors().get(1).getBeginColumn() + 2 * indentation;
         int line = node.getBeginLine();
 
@@ -207,8 +199,7 @@ public class CodeFormatRule extends AbstractPLSQLRule {
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTArgumentList node, Object data) {
+    @Override public Object visit(ASTArgumentList node, Object data) {
         List<ASTArgument> arguments = node.children(ASTArgument.class).toList();
 
         // note: end column is exclusive

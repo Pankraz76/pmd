@@ -27,11 +27,9 @@ public final class ProgressBarListener implements GlobalAnalysisListener {
     private final AtomicInteger numErrors = new AtomicInteger(0);
     private final AtomicInteger numViolations = new AtomicInteger(0);
 
-    @Override
-    public ListenerInitializer initializer() {
+    @Override public ListenerInitializer initializer() {
         return new ListenerInitializer() {
-            @Override
-            public void setNumberOfFilesToAnalyze(int totalFiles) {
+            @Override public void setNumberOfFilesToAnalyze(int totalFiles) {
                 // We need to delay initialization until we know how many files there are to avoid a first bogus render
                 progressBar = new ProgressBarBuilder()
                         .setTaskName("Processing files")
@@ -59,26 +57,21 @@ public final class ProgressBarListener implements GlobalAnalysisListener {
         return String.format("Violations:%d, Errors:%d", numViolations.get(), numErrors.get());
     }
 
-    @Override
-    public FileAnalysisListener startFileAnalysis(TextFile file) {
+    @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
         return new FileAnalysisListener() {
-            @Override
-            public void onRuleViolation(RuleViolation violation) {
+            @Override public void onRuleViolation(RuleViolation violation) {
                 ProgressBarListener.this.numViolations.addAndGet(1);
             }
 
-            @Override
-            public void onSuppressedRuleViolation(Report.SuppressedViolation violation) {
+            @Override public void onSuppressedRuleViolation(Report.SuppressedViolation violation) {
                 /*Not handled*/
             }
 
-            @Override
-            public void onError(Report.ProcessingError error) {
+            @Override public void onError(Report.ProcessingError error) {
                 ProgressBarListener.this.numErrors.addAndGet(1);
             }
 
-            @Override
-            public void close() {
+            @Override public void close() {
                 // Refresh progress bar on file analysis end (or file was in cache)
                 progressBar.step();
                 refreshProgressBar();
@@ -86,8 +79,7 @@ public final class ProgressBarListener implements GlobalAnalysisListener {
         };
     }
 
-    @Override
-    public void close() throws Exception {
+    @Override public void close() throws Exception {
         progressBar.close();
     }
 }

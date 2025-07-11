@@ -25,73 +25,55 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.ParameterException;
 
 @Command(name = "cpd", showDefaultValues = true,
-    description = "Copy/Paste Detector - find duplicate code")
+        description = "Copy/Paste Detector - find duplicate code")
 public class CpdCommand extends AbstractAnalysisPmdSubcommand<CPDConfiguration> {
 
 
-    @CommandLine.ArgGroup(heading = FILE_COLLECTION_OPTION_HEADER, exclusive = false)
-    FileCollectionOptions<CPDConfiguration> files = new FileCollectionOptions<>();
+    @CommandLine.ArgGroup(heading = FILE_COLLECTION_OPTION_HEADER, exclusive = false) FileCollectionOptions<CPDConfiguration> files = new FileCollectionOptions<>();
 
-    @Option(names = { "--language", "-l" }, description = "The source code language.%nValid values: ${COMPLETION-CANDIDATES}",
-            defaultValue = CPDConfiguration.DEFAULT_LANGUAGE, converter = CpdLanguageTypeSupport.class, completionCandidates = CpdLanguageTypeSupport.class)
-    private Language language;
+    @Option(names = {"--language", "-l"}, description = "The source code language.%nValid values: ${COMPLETION-CANDIDATES}",
+            defaultValue = CPDConfiguration.DEFAULT_LANGUAGE, converter = CpdLanguageTypeSupport.class, completionCandidates = CpdLanguageTypeSupport.class) private Language language;
 
     @Option(names = "--minimum-tokens",
-            description = "The minimum token length which should be reported as a duplicate.", required = true)
-    private int minimumTokens;
+            description = "The minimum token length which should be reported as a duplicate.", required = true) private int minimumTokens;
 
     @Option(names = "--skip-duplicate-files",
-            description = "Ignore multiple copies of files of the same name and length in comparison.")
-    private boolean skipDuplicates;
+            description = "Ignore multiple copies of files of the same name and length in comparison.") private boolean skipDuplicates;
 
 
-
-
-    @Option(names = { "--format", "-f" },
+    @Option(names = {"--format", "-f"},
             description = "Report format.%nValid values: ${COMPLETION-CANDIDATES}%n"
-                        + "Alternatively, you can provide the fully qualified name of a custom CpdRenderer in the classpath.",
-            defaultValue = CPDConfiguration.DEFAULT_RENDERER, completionCandidates = CpdSupportedReportFormatsCandidates.class)
-    private String rendererName;
+                    + "Alternatively, you can provide the fully qualified name of a custom CpdRenderer in the classpath.",
+            defaultValue = CPDConfiguration.DEFAULT_RENDERER, completionCandidates = CpdSupportedReportFormatsCandidates.class) private String rendererName;
 
     @Option(names = "--ignore-literals",
-            description = "Ignore literal values such as numbers and strings when comparing text.")
-    private boolean ignoreLiterals;
+            description = "Ignore literal values such as numbers and strings when comparing text.") private boolean ignoreLiterals;
 
     @Option(names = "--ignore-identifiers",
-            description = "Ignore names of classes, methods, variables, constants, etc. when comparing text.")
-    private boolean ignoreIdentifiers;
+            description = "Ignore names of classes, methods, variables, constants, etc. when comparing text.") private boolean ignoreIdentifiers;
 
-    @Option(names = "--ignore-annotations", description = "Ignore language annotations when comparing text.")
-    private boolean ignoreAnnotations;
+    @Option(names = "--ignore-annotations", description = "Ignore language annotations when comparing text.") private boolean ignoreAnnotations;
 
-    @Option(names = "--ignore-usings", description = "Ignore using directives in C#")
-    private boolean ignoreUsings;
+    @Option(names = "--ignore-usings", description = "Ignore using directives in C#") private boolean ignoreUsings;
 
-    @Option(names = "--ignore-literal-sequences", description = "Ignore sequences of literals such as list initializers.")
-    private boolean ignoreLiteralSequences;
+    @Option(names = "--ignore-literal-sequences", description = "Ignore sequences of literals such as list initializers.") private boolean ignoreLiteralSequences;
 
-    @Option(names = "--ignore-sequences", description = "Ignore sequences of identifiers and literals")
-    private boolean ignoreIdentifierAndLiteralSequences;
+    @Option(names = "--ignore-sequences", description = "Ignore sequences of identifiers and literals") private boolean ignoreIdentifierAndLiteralSequences;
 
     /**
      * @deprecated Since 7.3.0. Use --[no-]fail-on-error instead.
      */
     @Option(names = "--skip-lexical-errors",
-            description = "Skip files which can't be tokenized due to invalid characters, instead of aborting with an error. Deprecated - use --[no-]fail-on-error instead.")
-    @Deprecated
-    private boolean skipLexicalErrors;
+            description = "Skip files which can't be tokenized due to invalid characters, instead of aborting with an error. Deprecated - use --[no-]fail-on-error instead.") @Deprecated private boolean skipLexicalErrors;
 
     @Option(names = "--no-skip-blocks",
-            description = "Do not skip code blocks marked with --skip-blocks-pattern (e.g. #if 0 until #endif).")
-    private boolean noSkipBlocks;
+            description = "Do not skip code blocks marked with --skip-blocks-pattern (e.g. #if 0 until #endif).") private boolean noSkipBlocks;
 
     @Option(names = "--skip-blocks-pattern",
             description = "Pattern to find the blocks to skip. Start and End pattern separated by |.",
-            defaultValue = CpdLanguagePropertiesDefaults.DEFAULT_SKIP_BLOCKS_PATTERN)
-    private String skipBlocksPattern;
+            defaultValue = CpdLanguagePropertiesDefaults.DEFAULT_SKIP_BLOCKS_PATTERN) private String skipBlocksPattern;
 
-    @Override
-    protected FileCollectionOptions<CPDConfiguration> getFileCollectionOptions() {
+    @Override protected FileCollectionOptions<CPDConfiguration> getFileCollectionOptions() {
         return files;
     }
 
@@ -102,8 +84,7 @@ public class CpdCommand extends AbstractAnalysisPmdSubcommand<CPDConfiguration> 
      *
      * @throws ParameterException if the parameters are inconsistent or incomplete
      */
-    @Override
-    protected CPDConfiguration toConfiguration() {
+    @Override protected CPDConfiguration toConfiguration() {
         final CPDConfiguration configuration = new CPDConfiguration();
         setCommonConfigProperties(configuration);
 
@@ -128,8 +109,7 @@ public class CpdCommand extends AbstractAnalysisPmdSubcommand<CPDConfiguration> 
         return configuration;
     }
 
-    @Override
-    protected @NonNull CliExitCode doExecute(CPDConfiguration configuration) {
+    @Override protected @NonNull CliExitCode doExecute(CPDConfiguration configuration) {
         try (CpdAnalysis cpd = CpdAnalysis.create(configuration)) {
 
             MutableBoolean hasViolations = new MutableBoolean();
@@ -157,8 +137,7 @@ public class CpdCommand extends AbstractAnalysisPmdSubcommand<CPDConfiguration> 
      */
     private static final class CpdSupportedReportFormatsCandidates implements Iterable<String> {
 
-        @Override
-        public Iterator<String> iterator() {
+        @Override public Iterator<String> iterator() {
             return CPDConfiguration.getRenderers().stream().sorted().iterator();
         }
     }

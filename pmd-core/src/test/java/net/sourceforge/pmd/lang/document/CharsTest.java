@@ -32,20 +32,17 @@ import net.sourceforge.pmd.util.IteratorUtil;
  */
 class CharsTest {
 
-    @Test
-    void wrapStringRoundTrip() {
+    @Test void wrapStringRoundTrip() {
         String s = "ooo";
         assertSame(s, Chars.wrap(s).toString());
     }
 
-    @Test
-    void wrapCharsRoundTrip() {
+    @Test void wrapCharsRoundTrip() {
         Chars s = Chars.wrap("ooo");
         assertSame(s, Chars.wrap(s));
     }
 
-    @Test
-    void appendChars() {
+    @Test void appendChars() {
         StringBuilder sb = new StringBuilder();
         Chars bc = Chars.wrap("abcd").slice(1, 2);
         assertEquals("bc", bc.toString());
@@ -54,8 +51,7 @@ class CharsTest {
         assertEquals("bc", sb.toString());
     }
 
-    @Test
-    void appendCharsWithOffsets() {
+    @Test void appendCharsWithOffsets() {
         StringBuilder sb = new StringBuilder();
         Chars bc = Chars.wrap("abcd").slice(1, 2);
         assertEquals("bc", bc.toString());
@@ -64,16 +60,14 @@ class CharsTest {
         assertEquals("b", sb.toString());
     }
 
-    @Test
-    void toStringBuilder() {
+    @Test void toStringBuilder() {
         Chars bc = Chars.wrap("abcd").slice(1, 2);
         assertEquals("bc", bc.toString());
 
         assertEquals("bc", bc.toStringBuilder().toString());
     }
 
-    @Test
-    void write() throws IOException {
+    @Test void write() throws IOException {
         StringWriter writer = new StringWriter();
         Chars bc = Chars.wrap("abcd").slice(1, 2);
         assertEquals("bc", bc.toString());
@@ -85,13 +79,12 @@ class CharsTest {
         assertEquals("bc", writer.toString());
     }
 
-    @Test
-    void getChars() {
+    @Test void getChars() {
         char[] arr = new char[4];
         Chars bc = Chars.wrap("abcd").slice(1, 2);
 
         bc.getChars(0, arr, 1, 2);
-        assertArrayEquals(arr, new char[] { 0, 'b', 'c', 0 });
+        assertArrayEquals(arr, new char[]{0, 'b', 'c', 0});
 
         assertThrows(IndexOutOfBoundsException.class, () -> bc.getChars(2, arr, 0, 1));
         assertThrows(IndexOutOfBoundsException.class, () -> bc.getChars(-1, arr, 0, 1));
@@ -100,8 +93,7 @@ class CharsTest {
         assertThrows(NullPointerException.class, () -> bc.getChars(0, null, 0, 0));
     }
 
-    @Test
-    void indexOf() {
+    @Test void indexOf() {
         Chars bc = Chars.wrap("aaaaabcdb").slice(5, 2);
         //                          --
         assertEquals(0, bc.indexOf('b', 0));
@@ -115,8 +107,7 @@ class CharsTest {
     }
 
 
-    @Test
-    void indexOfWithEndOffset() {
+    @Test void indexOfWithEndOffset() {
         Chars bc = Chars.wrap("aaaaabcdb").slice(5, 2);
         //                          --
         assertEquals(-1, bc.indexOf('b', 0, 0));
@@ -135,8 +126,7 @@ class CharsTest {
 
     }
 
-    @Test
-    void indexOfWithEndOffsetFullStr() {
+    @Test void indexOfWithEndOffsetFullStr() {
         Chars bc = Chars.wrap("aaaaabc").slice(5, 2);
         //                          --
         assertEquals(-1, bc.indexOf('b', 0, 0));
@@ -157,8 +147,7 @@ class CharsTest {
 
     }
 
-    @Test
-    void indexOfString() {
+    @Test void indexOfString() {
         Chars bc = Chars.wrap("aaaaabcdb").slice(5, 2);
         //                          --
         assertEquals(0, bc.indexOf("b", 0));
@@ -182,8 +171,7 @@ class CharsTest {
         assertEquals(2, bc.indexOf("bx", 0));
     }
 
-    @Test
-    void lastIndexOf() {
+    @Test void lastIndexOf() {
         Chars bc = Chars.wrap("aaaaabcdb").slice(5, 2);
         //                          --
         assertEquals(0, bc.lastIndexOf('b', 0));
@@ -199,8 +187,7 @@ class CharsTest {
         assertEquals(-1, bc.lastIndexOf('a', 1));
     }
 
-    @Test
-    void startsWith() {
+    @Test void startsWith() {
         Chars bc = Chars.wrap("abcdb").slice(1, 2);
 
         assertTrue(bc.startsWith("bc"));
@@ -225,8 +212,7 @@ class CharsTest {
 
     }
 
-    @Test
-    void removeSuffix() {
+    @Test void removeSuffix() {
         Chars bc = Chars.wrap("abcdb").slice(1, 2);
         //                      --
 
@@ -241,8 +227,7 @@ class CharsTest {
         assertEquals("aaa", bc.removeSuffix("aaaa").toString());
     }
 
-    @Test
-    void removePrefix() {
+    @Test void removePrefix() {
         Chars bc = Chars.wrap("abcdb").slice(1, 2);
         //                      --
 
@@ -259,8 +244,7 @@ class CharsTest {
         assertEquals("aaa", bc.removePrefix("aaaa").toString());
     }
 
-    @Test
-    void trimNoop() {
+    @Test void trimNoop() {
         Chars bc = Chars.wrap("abcdb").slice(1, 2);
         assertEquals("bc", bc.toString());
         assertEquals("bc", bc.trimStart().toString());
@@ -268,8 +252,7 @@ class CharsTest {
         assertEquals("bc", bc.trim().toString());
     }
 
-    @Test
-    void trimStartAndEnd() {
+    @Test void trimStartAndEnd() {
         Chars bc = Chars.wrap("a   bc db").slice(1, 6);
         //                      ------
         assertEquals("   bc ", bc.toString());
@@ -278,8 +261,7 @@ class CharsTest {
         assertEquals("bc", bc.trim().toString());
     }
 
-    @Test
-    void charAt() {
+    @Test void charAt() {
 
         Chars bc = Chars.wrap("a   bc db").slice(1, 6);
         //                      ------
@@ -291,8 +273,7 @@ class CharsTest {
         assertThrows(IndexOutOfBoundsException.class, () -> bc.charAt(7));
     }
 
-    @Test
-    void linesTest() {
+    @Test void linesTest() {
 
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
         //                      ------------
@@ -300,29 +281,25 @@ class CharsTest {
         assertEquals(listOf(" ", "  ", "bc "), lines);
     }
 
-    @Test
-    void linesTest2() {
+    @Test void linesTest2() {
         Chars bc = Chars.wrap("aa\n");
         List<String> lines = CollectionUtil.map(bc.lines(), Chars::toString);
         assertEquals(listOf("aa"), lines);
     }
 
-    @Test
-    void linesStreamTest() {
+    @Test void linesStreamTest() {
         Chars bc = Chars.wrap("aa\nb\rded\r\nlff");
         List<String> lines = bc.lineStream().map(Chars::toString).collect(Collectors.toList());
         assertEquals(listOf("aa", "b", "ded", "lff"), lines);
     }
 
-    @Test
-    void linesTest3WithCr() {
+    @Test void linesTest3WithCr() {
         Chars bc = Chars.wrap("aa\rb");
         List<String> lines = CollectionUtil.map(bc.lines(), Chars::toString);
         assertEquals(listOf("aa", "b"), lines);
     }
 
-    @Test
-    void testEqualsHashCode() {
+    @Test void testEqualsHashCode() {
 
 
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
@@ -338,8 +315,7 @@ class CharsTest {
 
     }
 
-    @Test
-    void testContentEquals() {
+    @Test void testContentEquals() {
 
 
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
@@ -354,8 +330,7 @@ class CharsTest {
         assertTrue(chars.contentEquals(Chars.wrap("A_B_C"), true));
     }
 
-    @Test
-    void testSplits() {
+    @Test void testSplits() {
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
         assertEquals("a_b_c", chars.toString());
 
@@ -387,8 +362,7 @@ class CharsTest {
         assertEquals(expected, splitList, "Split should behave like String#split");
     }
 
-    @Test
-    void testSlice() {
+    @Test void testSlice() {
         // slice is offset + length
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
         //                          -----
@@ -397,8 +371,7 @@ class CharsTest {
         assertThrows(IndexOutOfBoundsException.class, () -> chars.slice(0, 6));
     }
 
-    @Test
-    void testSubsequence() {
+    @Test void testSubsequence() {
         // subsequence is start + end
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
         //                          -----
@@ -407,8 +380,7 @@ class CharsTest {
         assertThrows(IndexOutOfBoundsException.class, () -> chars.slice(0, 6));
     }
 
-    @Test
-    void testSubstring() {
+    @Test void testSubstring() {
         // substring is start + end
         Chars chars = Chars.wrap("a_a_b_c_s").slice(2, 5);
         //                          -----
@@ -418,10 +390,9 @@ class CharsTest {
     }
 
 
-    @Test
-    void testTrimBlankLines() {
+    @Test void testTrimBlankLines() {
         assertTrimBlankLinesEquals(" \n \n abc \n \n de \n \n ",
-                                   " abc \n \n de ");
+                " abc \n \n de ");
         assertTrimBlankLinesEquals("", "");
     }
 
@@ -431,8 +402,7 @@ class CharsTest {
     }
 
 
-    @Test
-    void testReaderSingleChars() throws IOException {
+    @Test void testReaderSingleChars() throws IOException {
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
         //                      ------------
 
@@ -450,8 +420,7 @@ class CharsTest {
         }
     }
 
-    @Test
-    void testReaderBuffer() throws IOException {
+    @Test void testReaderBuffer() throws IOException {
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
         //                      ------------
 
@@ -468,8 +437,7 @@ class CharsTest {
         }
     }
 
-    @Test
-    void testReaderSlicedBuffer() throws IOException {
+    @Test void testReaderSlicedBuffer() throws IOException {
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
         //                      ------------
 
@@ -487,8 +455,7 @@ class CharsTest {
         }
     }
 
-    @Test
-    void testReadClosed() throws IOException {
+    @Test void testReadClosed() throws IOException {
         Chars bc = Chars.wrap("a \n  \r\nbc db").slice(1, 9);
         //                      ------------
 
@@ -497,8 +464,7 @@ class CharsTest {
         assertThrows(IOException.class, reader::read);
     }
 
-    @Test
-    void testReaderMark() throws IOException {
+    @Test void testReaderMark() throws IOException {
         Chars bc = Chars.wrap("abcdefghijklmnop").slice(1, 9);
         //                      ------------
 
@@ -527,8 +493,7 @@ class CharsTest {
         }
     }
 
-    @Test
-    void testReaderMissingMark() throws IOException {
+    @Test void testReaderMissingMark() throws IOException {
         Chars bc = Chars.wrap("abcdefghijklmnop").slice(1, 9);
         //                      ------------
 
@@ -540,8 +505,7 @@ class CharsTest {
         }
     }
 
-    @Test
-    void testReaderSkip() throws IOException {
+    @Test void testReaderSkip() throws IOException {
         Chars bc = Chars.wrap("abcdefghijklmnop").slice(1, 9);
         //                      ------------
 
@@ -564,8 +528,7 @@ class CharsTest {
         }
     }
 
-    @Test
-    void testReaderInvalidParams() throws IOException {
+    @Test void testReaderInvalidParams() throws IOException {
         Chars bc = Chars.wrap("abcdefghijklmnop").slice(1, 9);
         //                      ------------
         char[] cbuf = new char[4];

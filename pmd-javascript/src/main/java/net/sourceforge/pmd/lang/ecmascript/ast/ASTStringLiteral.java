@@ -11,8 +11,7 @@ public final class ASTStringLiteral extends AbstractEcmascriptNode<StringLiteral
         super(stringLiteral);
     }
 
-    @Override
-    protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

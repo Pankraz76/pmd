@@ -20,13 +20,11 @@ import net.sourceforge.pmd.util.CollectionUtil;
 
 class CPDFilelistTest {
 
-    @Test
-    void testFilelist() throws IOException {
+    @Test void testFilelist() throws IOException {
         testFileList("src/test/resources/net/sourceforge/pmd/cpd/cli/filelist.txt");
     }
 
-    @Test
-    void testFilelistMultipleLines() throws IOException {
+    @Test void testFilelistMultipleLines() throws IOException {
         testFileList("src/test/resources/net/sourceforge/pmd/cpd/cli/filelist2.txt");
     }
 
@@ -42,8 +40,8 @@ class CPDFilelistTest {
         assertEquals(2, paths.size());
         List<String> simpleNames = CollectionUtil.map(paths, FileId::getFileName);
         assertEquals(
-            listOf("anotherfile.dummy", "somefile.dummy"),
-            simpleNames
+                listOf("anotherfile.dummy", "somefile.dummy"),
+                simpleNames
         );
     }
 }

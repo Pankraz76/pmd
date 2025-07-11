@@ -27,8 +27,7 @@ public class ExceptionAsFlowControlRule extends AbstractJavaRulechainRule {
         super(ASTThrowStatement.class);
     }
 
-    @Override
-    public Object visit(ASTThrowStatement node, Object data) {
+    @Override public Object visit(ASTThrowStatement node, Object data) {
         JTypeMirror thrownType = node.getExpr().getTypeMirror();
         JavaNode parent = node.getParent();
         while (!(parent instanceof ASTBodyDeclaration)) {

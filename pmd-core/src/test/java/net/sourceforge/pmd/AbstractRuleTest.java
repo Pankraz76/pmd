@@ -55,8 +55,7 @@ class AbstractRuleTest {
             setProperty(FOO_PROPERTY, "value");
         }
 
-        @Override
-        public void apply(Node target, RuleContext ctx) {
+        @Override public void apply(Node target, RuleContext ctx) {
         }
     }
 
@@ -71,16 +70,13 @@ class AbstractRuleTest {
             setProperty(FOO_PROPERTY, "value");
         }
 
-        @Override
-        public void apply(Node target, RuleContext ctx) {
+        @Override public void apply(Node target, RuleContext ctx) {
         }
     }
 
-    @RegisterExtension
-    private final DummyParsingHelper helper = new DummyParsingHelper();
+    @RegisterExtension private final DummyParsingHelper helper = new DummyParsingHelper();
 
-    @Test
-    void testCreateRV() {
+    @Test void testCreateRV() {
         MyRule r = new MyRule();
         r.setRuleSetName("foo");
         DummyRootNode s = helper.parse("abc()", FileId.fromPathLikeString("abc"));
@@ -94,8 +90,7 @@ class AbstractRuleTest {
         }, r).addViolation(s);
     }
 
-    @Test
-    void testCreateRV2() {
+    @Test void testCreateRV2() {
         MyRule r = new MyRule();
         DummyRootNode s = helper.parse("abc()", FileId.fromPathLikeString("filename"));
 
@@ -107,11 +102,9 @@ class AbstractRuleTest {
         }, r).addViolationWithMessage(s, "specificdescription");
     }
 
-    @Test
-    void testRuleWithVariableInMessage() {
+    @Test void testRuleWithVariableInMessage() {
         MyRule r = new MyRule() {
-            @Override
-            public void apply(Node target, RuleContext ctx) {
+            @Override public void apply(Node target, RuleContext ctx) {
                 ctx.addViolation(target);
             }
         };
@@ -124,8 +117,7 @@ class AbstractRuleTest {
         assertEquals("Message foo ${className} ${methodName} ${variableName} 10 ${noSuchProperty}", rv.getDescription());
     }
 
-    @Test
-    void testRuleSuppress() {
+    @Test void testRuleSuppress() {
         DummyRootNode n = helper.parse("abc()", FileId.UNKNOWN);
         n = n.withNoPmdComments(new SuppressionCommentImpl<>(n, "ohio"));
 
@@ -137,57 +129,49 @@ class AbstractRuleTest {
         verify(listener, times(1)).onSuppressedRuleViolation(any());
     }
 
-    @Test
-    void testEquals1() {
+    @Test void testEquals1() {
         MyRule r = new MyRule();
         assertFalse(r.equals(null), "A rule is never equals to null!");
     }
 
-    @Test
-    void testEquals2() {
+    @Test void testEquals2() {
         MyRule r = new MyRule();
         assertEquals(r, r, "A rule must be equals to itself");
     }
 
-    @Test
-    void testEquals3() {
+    @Test void testEquals3() {
         MyRule r1 = new MyRule();
         MyRule r2 = new MyRule();
         assertEquals(r1, r2, "Two instances of the same rule are equal");
         assertEquals(r1.hashCode(), r2.hashCode(), "Hashcode for two instances of the same rule must be equal");
     }
 
-    @Test
-    void testEquals4() {
+    @Test void testEquals4() {
         MyRule myRule = new MyRule();
         assertFalse(myRule.equals("MyRule"), "A rule cannot be equal to an object of another class");
     }
 
-    @Test
-    void testEquals5() {
+    @Test void testEquals5() {
         MyRule myRule = new MyRule();
         MyOtherRule myOtherRule = new MyOtherRule();
         assertFalse(myRule.equals(myOtherRule), "Two rules from different classes cannot be equal");
     }
 
-    @Test
-    void testEquals6() {
+    @Test void testEquals6() {
         MyRule r1 = new MyRule();
         MyRule r2 = new MyRule();
         r2.setName("MyRule2");
         assertFalse(r1.equals(r2), "Rules with different names cannot be equal");
     }
 
-    @Test
-    void testEquals7() {
+    @Test void testEquals7() {
         MyRule r1 = new MyRule();
         MyRule r2 = new MyRule();
         r2.setPriority(RulePriority.HIGH);
         assertFalse(r1.equals(r2), "Rules with different priority levels cannot be equal");
     }
 
-    @Test
-    void testEquals8() {
+    @Test void testEquals8() {
         MyRule r1 = new MyRule();
         r1.setProperty(MyRule.XPATH_PROPERTY, "something");
         MyRule r2 = new MyRule();
@@ -195,16 +179,14 @@ class AbstractRuleTest {
         assertFalse(r1.equals(r2), "Rules with different properties values cannot be equal");
     }
 
-    @Test
-    void testEquals9() {
+    @Test void testEquals9() {
         MyRule r1 = new MyRule();
         MyRule r2 = new MyRule();
         r2.setProperty(MyRule.XPATH_PROPERTY, "something else");
         assertFalse(r1.equals(r2), "Rules with different properties cannot be equal");
     }
 
-    @Test
-    void testEquals10() {
+    @Test void testEquals10() {
         MyRule r1 = new MyRule();
         MyRule r2 = new MyRule();
         r2.setMessage("another message");
@@ -212,8 +194,7 @@ class AbstractRuleTest {
         assertEquals(r1.hashCode(), r2.hashCode(), "Rules that are equal must have the an equal hashcode");
     }
 
-    @Test
-    void twoRulesUsingPatternPropertiesShouldBeEqual() {
+    @Test void twoRulesUsingPatternPropertiesShouldBeEqual() {
         class MockRuleWithPatternProperty extends net.sourceforge.pmd.lang.rule.MockRule {
             MockRuleWithPatternProperty(String defaultValue) {
                 super();
@@ -243,8 +224,7 @@ class AbstractRuleTest {
         assertEquals(new MockRuleWithPatternProperty("jkl"), rule2);
     }
 
-    @Test
-    void testDeepCopyRule() {
+    @Test void testDeepCopyRule() {
         MyRule r1 = new MyRule();
         MyRule r2 = (MyRule) r1.deepCopy();
         assertEquals(r1.getDescription(), r2.getDescription());

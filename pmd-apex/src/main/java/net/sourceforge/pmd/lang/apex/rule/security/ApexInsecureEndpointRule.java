@@ -32,20 +32,17 @@ public class ApexInsecureEndpointRule extends AbstractApexRule {
 
     private final Set<String> httpEndpointStrings = new HashSet<>();
 
-    @Override
-    public Object visit(ASTAssignmentExpression node, Object data) {
+    @Override public Object visit(ASTAssignmentExpression node, Object data) {
         findInsecureEndpoints(node);
         return data;
     }
 
-    @Override
-    public Object visit(ASTVariableDeclaration node, Object data) {
+    @Override public Object visit(ASTVariableDeclaration node, Object data) {
         findInsecureEndpoints(node);
         return data;
     }
 
-    @Override
-    public Object visit(ASTFieldDeclaration node, Object data) {
+    @Override public Object visit(ASTFieldDeclaration node, Object data) {
         findInsecureEndpoints(node);
         return data;
     }
@@ -74,8 +71,7 @@ public class ApexInsecureEndpointRule extends AbstractApexRule {
         }
     }
 
-    @Override
-    public Object visit(ASTMethodCallExpression node, Object data) {
+    @Override public Object visit(ASTMethodCallExpression node, Object data) {
         processInsecureEndpoint(node, data);
         return data;
     }

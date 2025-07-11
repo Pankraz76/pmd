@@ -41,12 +41,12 @@ public class PreserveStackTraceRule extends AbstractJavaRulechainRule {
 
     private static final InvocationMatcher INIT_CAUSE = InvocationMatcher.parse("java.lang.Throwable#initCause(_)");
     private static final CompoundInvocationMatcher ALLOWED_GETTERS = InvocationMatcher.parseAll(
-        "java.lang.Throwable#fillInStackTrace()", // returns this
-        "java.lang.reflect.InvocationTargetException#getTargetException()", // allowed, to unwrap reflection frames
-        "java.lang.reflect.InvocationTargetException#getCause()", // this is equivalent to getTargetException, see javadoc
-        // same rationale as for InvocationTargetException
-        "java.security.PrivilegedActionException#getException()",
-        "java.security.PrivilegedActionException#getCause()"
+            "java.lang.Throwable#fillInStackTrace()", // returns this
+            "java.lang.reflect.InvocationTargetException#getTargetException()", // allowed, to unwrap reflection frames
+            "java.lang.reflect.InvocationTargetException#getCause()", // this is equivalent to getTargetException, see javadoc
+            // same rationale as for InvocationTargetException
+            "java.security.PrivilegedActionException#getException()",
+            "java.security.PrivilegedActionException#getCause()"
     );
 
     private final Set<ASTVariableId> recursingOnVars = new HashSet<>();
@@ -55,8 +55,7 @@ public class PreserveStackTraceRule extends AbstractJavaRulechainRule {
         super(ASTCatchClause.class);
     }
 
-    @Override
-    public Object visit(ASTCatchClause catchStmt, Object data) {
+    @Override public Object visit(ASTCatchClause catchStmt, Object data) {
         ASTVariableId exceptionParam = catchStmt.getParameter().getVarId();
         if (JavaRuleUtil.isExplicitUnusedVarName(exceptionParam.getName())) {
             // ignore those
@@ -107,7 +106,7 @@ public class PreserveStackTraceRule extends AbstractJavaRulechainRule {
                     .ifPresent(possibleExceptionParams::add);
 
             return exprConsumesException(possibleExceptionParams, ternary.getThenBranch(), mayBeSelf)
-                && exprConsumesException(possibleExceptionParams, ternary.getElseBranch(), mayBeSelf);
+                    && exprConsumesException(possibleExceptionParams, ternary.getElseBranch(), mayBeSelf);
 
         } else if (expr instanceof ASTVariableAccess) {
             JVariableSymbol referencedSym = ((ASTVariableAccess) expr).getReferencedSym();
@@ -155,10 +154,10 @@ public class PreserveStackTraceRule extends AbstractJavaRulechainRule {
         if (usage.getIndexInParent() == 0) {
             ASTExpression assignmentRhs = JavaAstUtils.getOtherOperandIfInAssignmentExpr(usage);
             boolean rhsIsSelfReferential =
-                NodeStream.of(assignmentRhs)
-                          .descendantsOrSelf()
-                          .filterIs(ASTVariableAccess.class)
-                          .any(it -> JavaAstUtils.isReferenceToVar(it, lhsVariable.getSymbol()));
+                    NodeStream.of(assignmentRhs)
+                            .descendantsOrSelf()
+                            .filterIs(ASTVariableAccess.class)
+                            .any(it -> JavaAstUtils.isReferenceToVar(it, lhsVariable.getSymbol()));
             return !rhsIsSelfReferential && exprConsumesException(exceptionParams, assignmentRhs, true);
         }
         return false;
@@ -166,7 +165,7 @@ public class PreserveStackTraceRule extends AbstractJavaRulechainRule {
 
     private boolean ctorConsumesException(Set<ASTVariableId> exceptionParams, ASTConstructorCall ctorCall) {
         return ctorCall.isAnonymousClass() && callsInitCauseInAnonInitializer(exceptionParams, ctorCall)
-            || anArgumentConsumesException(exceptionParams, ctorCall);
+                || anArgumentConsumesException(exceptionParams, ctorCall);
     }
 
     private boolean consumesExceptionNonRecursive(Set<ASTVariableId> exceptionParam, ASTExpression expr) {
@@ -190,10 +189,10 @@ public class PreserveStackTraceRule extends AbstractJavaRulechainRule {
 
     private boolean callsInitCauseInAnonInitializer(Set<ASTVariableId> exceptionParams, ASTConstructorCall ctorCall) {
         return NodeStream.of(ctorCall.getAnonymousClassDeclaration())
-                         .flatMap(ASTTypeDeclaration::getDeclarations)
-                         .map(NodeStream.asInstanceOf(ASTFieldDeclaration.class, ASTInitializer.class))
-                         .descendants().filterIs(ASTMethodCall.class)
-                         .any(it -> isInitCauseWithTargetInArg(exceptionParams, it));
+                .flatMap(ASTTypeDeclaration::getDeclarations)
+                .map(NodeStream.asInstanceOf(ASTFieldDeclaration.class, ASTInitializer.class))
+                .descendants().filterIs(ASTMethodCall.class)
+                .any(it -> isInitCauseWithTargetInArg(exceptionParams, it));
     }
 
     private boolean isInitCauseWithTargetInArg(Set<ASTVariableId> exceptionParams, JavaNode expr) {

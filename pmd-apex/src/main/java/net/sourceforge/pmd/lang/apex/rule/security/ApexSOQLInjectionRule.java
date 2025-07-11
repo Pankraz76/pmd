@@ -41,12 +41,12 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
  *
  */
 public class ApexSOQLInjectionRule extends AbstractApexRule {
-    private static final Set<String> SAFE_VARIABLE_TYPES = 
-        Collections.unmodifiableSet(Stream.of(
-            "double", "long", "decimal", "boolean", "id", "integer",
-            "sobjecttype", "schema.sobjecttype", "sobjectfield", "schema.sobjectfield"
-        ).collect(Collectors.toSet()));
-    
+    private static final Set<String> SAFE_VARIABLE_TYPES =
+            Collections.unmodifiableSet(Stream.of(
+                    "double", "long", "decimal", "boolean", "id", "integer",
+                    "sobjecttype", "schema.sobjecttype", "sobjectfield", "schema.sobjectfield"
+            ).collect(Collectors.toSet()));
+
     private static final String JOIN = "join";
     private static final String ESCAPE_SINGLE_QUOTES = "escapeSingleQuotes";
     private static final String STRING = "String";
@@ -57,13 +57,11 @@ public class ApexSOQLInjectionRule extends AbstractApexRule {
     private final Set<String> safeVariables = new HashSet<>();
     private final Map<String, Boolean> selectContainingVariables = new HashMap<>();
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
 
         if (Helper.isTestMethodOrClass(node) || Helper.isSystemLevelClass(node)) {
             return data; // stops all the rules

@@ -20,7 +20,8 @@ import net.sourceforge.pmd.lang.apex.ApexLanguageProperties;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static ApexMultifileAnalysis createApexMultiFileAnalysis(ApexLanguageProperties properties) {
         return new ApexMultifileAnalysis(properties);

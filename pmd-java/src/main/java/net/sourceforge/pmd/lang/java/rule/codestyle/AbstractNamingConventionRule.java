@@ -29,8 +29,7 @@ abstract class AbstractNamingConventionRule<T extends JavaNode> extends Abstract
     static final String CAMEL_CASE = "[a-z][a-zA-Z0-9]*";
     static final String PASCAL_CASE = "[A-Z][a-zA-Z0-9]*";
 
-    @SafeVarargs
-    protected AbstractNamingConventionRule(Class<? extends JavaNode> first, Class<? extends JavaNode>... visits) {
+    @SafeVarargs protected AbstractNamingConventionRule(Class<? extends JavaNode> first, Class<? extends JavaNode>... visits) {
         super(first, visits);
     }
 
@@ -42,8 +41,8 @@ abstract class AbstractNamingConventionRule<T extends JavaNode> extends Abstract
     /** Returns a pre-filled builder with the given name and display name (for the description). */
     RegexPropertyBuilder defaultProp(String name, String displayName) {
         return PropertyFactory.regexProperty(name + "Pattern")
-                              .desc("Regex which applies to " + displayName.trim() + " names")
-                              .defaultValue(defaultConvention());
+                .desc("Regex which applies to " + displayName.trim() + " names")
+                .defaultValue(defaultConvention());
     }
 
     /** Default regex string for this kind of entities. */
@@ -61,8 +60,8 @@ abstract class AbstractNamingConventionRule<T extends JavaNode> extends Abstract
         String name = nameExtractor(node);
         if (!getProperty(regex).matcher(name).matches()) {
             asCtx(data).addViolation(node, kindDisplayName(node, regex),
-                                     name,
-                                     getProperty(regex).toString());
+                    name,
+                    getProperty(regex).toString());
         }
     }
 

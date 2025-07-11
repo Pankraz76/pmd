@@ -73,8 +73,7 @@ public final class XmlTreeRenderer implements TreeRenderer {
      * @throws IllegalArgumentException If some node has attributes or
      *                                  a name that is not a valid XML name
      */
-    @Override
-    public void renderSubtree(Node node, Appendable out) throws IOException {
+    @Override public void renderSubtree(Node node, Appendable out) throws IOException {
         if (strategy.renderProlog) {
             renderProlog(out);
         }
@@ -84,8 +83,8 @@ public final class XmlTreeRenderer implements TreeRenderer {
 
     private void renderProlog(Appendable out) throws IOException {
         out.append("<?xml version=").append(attrDelim).append("1.0").append(attrDelim)
-           .append(" encoding=").append(attrDelim).append("UTF-8").append(attrDelim)
-           .append(" ?>").append(strategy.lineSeparator);
+                .append(" encoding=").append(attrDelim).append("UTF-8").append(attrDelim)
+                .append(" ?>").append(strategy.lineSeparator);
     }
 
     private void renderSubtree(int depth, Node node, Appendable out) throws IOException {
@@ -125,11 +124,11 @@ public final class XmlTreeRenderer implements TreeRenderer {
         checkValidName(name);
 
         out.append(' ')
-           .append(name)
-           .append('=')
-           .append(attrDelim)
-           .append(escapeXmlAttribute(value, strategy.singleQuoteAttributes))
-            .append(attrDelim);
+                .append(name)
+                .append('=')
+                .append(attrDelim)
+                .append(escapeXmlAttribute(value, strategy.singleQuoteAttributes))
+                .append(attrDelim);
     }
 
     private void checkValidName(String name) {
@@ -147,14 +146,14 @@ public final class XmlTreeRenderer implements TreeRenderer {
 
     private static String escapeXmlText(String xml) {
         return xml.replaceAll("<", "&lt;")
-                  .replaceAll("&", "&amp;");
+                .replaceAll("&", "&amp;");
 
     }
 
     private static String escapeXmlAttribute(String xml, boolean isSingleQuoted) {
 
         return isSingleQuoted ? escapeXmlText(xml).replaceAll("'", "&apos;")
-                              : escapeXmlText(xml).replaceAll("\"", "&quot;");
+                : escapeXmlText(xml).replaceAll("\"", "&quot;");
     }
 
     private static boolean isValidXmlName(String xml) {
@@ -233,17 +232,17 @@ public final class XmlTreeRenderer implements TreeRenderer {
 
         private static String interpretLineSep(String lineSeparator) {
             switch (lineSeparator) {
-            case "CR":
-            case "\\r":
-                return "\r";
-            case "CRLF":
-            case "\\r\\n":
-                return "\r\n";
-            case "LF":
-            case "\\n":
-                return "\n";
-            default:
-                return lineSeparator;
+                case "CR":
+                case "\\r":
+                    return "\r";
+                case "CRLF":
+                case "\\r\\n":
+                    return "\r\n";
+                case "LF":
+                case "\\n":
+                    return "\n";
+                default:
+                    return lineSeparator;
             }
         }
 

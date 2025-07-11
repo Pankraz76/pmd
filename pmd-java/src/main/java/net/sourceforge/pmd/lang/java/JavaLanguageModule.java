@@ -24,48 +24,45 @@ public class JavaLanguageModule extends LanguageModuleBase implements PmdCapable
 
     public JavaLanguageModule() {
         super(LanguageMetadata.withId(ID).name(NAME).extensions("java")
-                              .addVersion("1.3")
-                              .addVersion("1.4")
-                              .addVersion("1.5", "5")
-                              .addVersion("1.6", "6")
-                              .addVersion("1.7", "7")
-                              .addVersion("1.8", "8")
-                              .addVersion("9", "1.9")
-                              .addVersion("10", "1.10")
-                              .addVersion("11")
-                              .addVersion("12")
-                              .addVersion("13")
-                              .addVersion("14")
-                              .addVersion("15")
-                              .addVersion("16")
-                              .addVersion("17")
-                              .addVersion("18")
-                              .addVersion("19")
-                              .addVersion("20")
-                              .addVersion("21")
-                              .addVersion("22")
-                              .addVersion("23")
-                              .addVersion("23-preview")
-                              .addDefaultVersion("24") // 24 is the default
-                              .addVersion("24-preview"));
+                .addVersion("1.3")
+                .addVersion("1.4")
+                .addVersion("1.5", "5")
+                .addVersion("1.6", "6")
+                .addVersion("1.7", "7")
+                .addVersion("1.8", "8")
+                .addVersion("9", "1.9")
+                .addVersion("10", "1.10")
+                .addVersion("11")
+                .addVersion("12")
+                .addVersion("13")
+                .addVersion("14")
+                .addVersion("15")
+                .addVersion("16")
+                .addVersion("17")
+                .addVersion("18")
+                .addVersion("19")
+                .addVersion("20")
+                .addVersion("21")
+                .addVersion("22")
+                .addVersion("23")
+                .addVersion("23-preview")
+                .addDefaultVersion("24") // 24 is the default
+                .addVersion("24-preview"));
     }
 
     public static JavaLanguageModule getInstance() {
         return (JavaLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public LanguagePropertyBundle newPropertyBundle() {
+    @Override public LanguagePropertyBundle newPropertyBundle() {
         return new JavaLanguageProperties();
     }
 
-    @Override
-    public LanguageProcessor createProcessor(LanguagePropertyBundle bundle) {
+    @Override public LanguageProcessor createProcessor(LanguagePropertyBundle bundle) {
         return new JavaLanguageProcessor((JavaLanguageProperties) bundle);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new JavaCpdLexer((JavaLanguageProperties) bundle);
     }
 }

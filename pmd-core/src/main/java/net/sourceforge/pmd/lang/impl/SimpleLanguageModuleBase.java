@@ -36,12 +36,10 @@ public class SimpleLanguageModuleBase extends LanguageModuleBase implements PmdC
         this.handler = makeHandler;
     }
 
-    @Override
-    public LanguageProcessor createProcessor(LanguagePropertyBundle bundle) {
+    @Override public LanguageProcessor createProcessor(LanguagePropertyBundle bundle) {
         LanguageVersionHandler services = handler.apply(bundle);
         return new BatchLanguageProcessor<LanguagePropertyBundle>(bundle) {
-            @Override
-            public @NonNull LanguageVersionHandler services() {
+            @Override public @NonNull LanguageVersionHandler services() {
                 return services;
             }
         };

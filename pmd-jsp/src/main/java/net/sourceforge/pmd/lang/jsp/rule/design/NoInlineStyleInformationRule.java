@@ -27,23 +27,22 @@ public class NoInlineStyleInformationRule extends AbstractJspRule {
      * List of HTML element-names that define style.
      */
     private static final Set<String> STYLE_ELEMENT_NAMES =
-        setOf("B", "I", "FONT", "BASEFONT", "U", "CENTER");
+            setOf("B", "I", "FONT", "BASEFONT", "U", "CENTER");
 
     /**
      * List of HTML element-names that can have attributes defining style.
      */
     private static final Set<String> ELEMENT_NAMES_THAT_CAN_HAVE_STYLE_ATTRIBUTES =
-        setOf("P", "TABLE", "THEAD", "TBODY", "TFOOT", "TR", "TD", "COL", "COLGROUP");
+            setOf("P", "TABLE", "THEAD", "TBODY", "TFOOT", "TR", "TD", "COL", "COLGROUP");
 
     /**
      * List of attributes that define style when they are attributes of HTML
      * elements with names in ELEMENT_NAMES_THAT_CAN_HAVE_STYLE_ATTRIBUTES.
      */
     private static final Set<String> STYLE_ATTRIBUTES =
-        setOf("STYLE", "FONT", "SIZE", "COLOR", "FACE", "ALIGN", "VALIGN", "BGCOLOR");
+            setOf("STYLE", "FONT", "SIZE", "COLOR", "FACE", "ALIGN", "VALIGN", "BGCOLOR");
 
-    @Override
-    public Object visit(ASTAttribute node, Object data) {
+    @Override public Object visit(ASTAttribute node, Object data) {
         if (isStyleAttribute(node)) {
             asCtx(data).addViolation(node);
         }
@@ -51,8 +50,7 @@ public class NoInlineStyleInformationRule extends AbstractJspRule {
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTElement node, Object data) {
+    @Override public Object visit(ASTElement node, Object data) {
         if (isStyleElement(node)) {
             asCtx(data).addViolation(node);
         }

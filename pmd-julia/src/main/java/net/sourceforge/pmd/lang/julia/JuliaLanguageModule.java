@@ -27,8 +27,7 @@ public class JuliaLanguageModule extends CpdOnlyLanguageModuleBase {
         return (JuliaLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new JuliaCpdLexer();
     }
 }

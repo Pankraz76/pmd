@@ -80,11 +80,11 @@ public class LawOfDemeterRule extends AbstractJavaRule {
 
 
     private static final PropertyDescriptor<Integer> TRUST_RADIUS =
-        PropertyFactory.intProperty("trustRadius")
-                       .desc("Maximum degree of trusted data. The default of 1 is the most restrictive.")
-                       .require(positive())
-                       .defaultValue(1)
-                       .build();
+            PropertyFactory.intProperty("trustRadius")
+                    .desc("Maximum degree of trusted data. The default of 1 is the most restrictive.")
+                    .require(positive())
+                    .defaultValue(1)
+                    .build();
     private static final String FIELD_ACCESS_ON_FOREIGN_VALUE = "Access to field `{0}` on foreign value `{1}` (degree {2})";
     private static final String METHOD_CALL_ON_FOREIGN_VALUE = "Call to `{0}` on foreign value `{1}` (degree {2})";
 
@@ -101,20 +101,19 @@ public class LawOfDemeterRule extends AbstractJavaRule {
      */
     private final Map<ASTExpression, Integer> degreeCache = new LinkedHashMap<>();
 
-    @Override
-    public void apply(Node target, RuleContext ctx) {
+    @Override public void apply(Node target, RuleContext ctx) {
         degreeCache.clear();
         // reimplement our own traversal instead of using the rulechain,
         // so that we have a stable traversal order.
         ((ASTCompilationUnit) target)
-            .descendants().crossFindBoundaries()
-            .forEach(it -> {
-                if (it instanceof ASTMethodCall) {
-                    this.visit((ASTMethodCall) it, ctx);
-                } else if (it instanceof ASTFieldAccess) {
-                    this.visit((ASTFieldAccess) it, ctx);
-                }
-            });
+                .descendants().crossFindBoundaries()
+                .forEach(it -> {
+                    if (it instanceof ASTMethodCall) {
+                        this.visit((ASTMethodCall) it, ctx);
+                    } else if (it instanceof ASTFieldAccess) {
+                        this.visit((ASTFieldAccess) it, ctx);
+                    }
+                });
         degreeCache.clear(); // avoid memory leak
     }
 
@@ -126,28 +125,26 @@ public class LawOfDemeterRule extends AbstractJavaRule {
         return degree == getProperty(TRUST_RADIUS) + 1;
     }
 
-    @Override
-    public Object visit(ASTFieldAccess node, Object data) {
+    @Override public Object visit(ASTFieldAccess node, Object data) {
         if (shouldReport(node)) {
             asCtx(data).addViolationWithMessage(
-                node,
-                FIELD_ACCESS_ON_FOREIGN_VALUE,
-                node.getName(),
-                PrettyPrintingUtil.prettyPrint(node.getQualifier()),
-                foreignDegree(node.getQualifier()));
+                    node,
+                    FIELD_ACCESS_ON_FOREIGN_VALUE,
+                    node.getName(),
+                    PrettyPrintingUtil.prettyPrint(node.getQualifier()),
+                    foreignDegree(node.getQualifier()));
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         if (shouldReport(node)) {
             asCtx(data).addViolationWithMessage(
-                node,
-                METHOD_CALL_ON_FOREIGN_VALUE,
-                node.getMethodName(),
-                PrettyPrintingUtil.prettyPrint(node.getQualifier()),
-                foreignDegree(node.getQualifier()));
+                    node,
+                    METHOD_CALL_ON_FOREIGN_VALUE,
+                    node.getMethodName(),
+                    PrettyPrintingUtil.prettyPrint(node.getQualifier()),
+                    foreignDegree(node.getQualifier()));
         }
         return null;
     }
@@ -171,7 +168,7 @@ public class LawOfDemeterRule extends AbstractJavaRule {
         // If some usages of that local escape, the local hasn't been reported. Those usages
         // that don't escape need to be reported.
         if (qualifier instanceof ASTVariableAccess
-            && isReportedDegree(foreignDegree(qualifier))) {
+                && isReportedDegree(foreignDegree(qualifier))) {
             JVariableSymbol sym = ((ASTVariableAccess) qualifier).getReferencedSym();
             return sym != null && !isAllowedStore(sym.tryGetNode());
         }
@@ -221,20 +218,19 @@ public class LawOfDemeterRule extends AbstractJavaRule {
     }
 
 
-
     private int methodCallDegree(ASTMethodCall call) {
         if (call.getOverloadSelectionInfo().isFailed() // be conservative
-            || call.getMethodType().isStatic() // static methods are taken to be construction methods.
-            || isCallOnThisInstance(call) != OptionalBool.NO
-            || call.getQualifier() == null // either static or call on this. Prevents NPE when unresolved
-            || isFactoryMethod(call)
-            || isBuilderPattern(call.getQualifier())
-            || isPureData(call)) {
+                || call.getMethodType().isStatic() // static methods are taken to be construction methods.
+                || isCallOnThisInstance(call) != OptionalBool.NO
+                || call.getQualifier() == null // either static or call on this. Prevents NPE when unresolved
+                || isFactoryMethod(call)
+                || isBuilderPattern(call.getQualifier())
+                || isPureData(call)) {
             return ACCESSIBLE;
         } else if (isPureDataContainer(call.getMethodType().getDeclaringType())
-            || isPureDataContainer(call.getTypeMirror())
-            || !isGetterCall(call)
-            || isTransformationMethod(call)) {
+                || isPureDataContainer(call.getTypeMirror())
+                || !isGetterCall(call)
+                || isTransformationMethod(call)) {
             return asForeignAsQualifier(call);
         }
         return moreForeignThanQualifier(call);
@@ -253,23 +249,23 @@ public class LawOfDemeterRule extends AbstractJavaRule {
 
     private boolean isPureData(ASTExpression expr) {
         return TypeTestUtil.isA(String.class, expr)
-            || TypeTestUtil.isA(StringBuilder.class, expr)
-            || TypeTestUtil.isA(StringBuffer.class, expr)
-            || expr.getTypeMirror().isPrimitive()
-            || expr.getTypeMirror().isBoxedPrimitive()
-            || isNullChecked(expr)
-            || isInfixExprWithOperator(expr.getParent(), INSTANCEOF);
+                || TypeTestUtil.isA(StringBuilder.class, expr)
+                || TypeTestUtil.isA(StringBuffer.class, expr)
+                || expr.getTypeMirror().isPrimitive()
+                || expr.getTypeMirror().isBoxedPrimitive()
+                || isNullChecked(expr)
+                || isInfixExprWithOperator(expr.getParent(), INSTANCEOF);
     }
 
     private boolean isPureDataContainer(JTypeMirror type) {
         JTypeDeclSymbol symbol = type.getSymbol();
         if (symbol instanceof JClassSymbol) {
             return "java.util".equals(symbol.getPackageName()) // collection, map, iterator, properties, etc
-                || TypeTestUtil.isA(Stream.class, type)
-                || TypeTestUtil.isA(Class.class, type)
-                || TypeTestUtil.isA(org.w3c.dom.NodeList.class, type)
-                || TypeTestUtil.isA(org.w3c.dom.NamedNodeMap.class, type)
-                || type.isArray();
+                    || TypeTestUtil.isA(Stream.class, type)
+                    || TypeTestUtil.isA(Class.class, type)
+                    || TypeTestUtil.isA(org.w3c.dom.NodeList.class, type)
+                    || TypeTestUtil.isA(org.w3c.dom.NamedNodeMap.class, type)
+                    || type.isArray();
         }
         return false;
     }
@@ -277,8 +273,8 @@ public class LawOfDemeterRule extends AbstractJavaRule {
 
     private boolean escapesMethod(ASTExpression expr) {
         return expr.getParent() instanceof ASTArgumentList
-            || expr.getParent() instanceof ASTReturnStatement
-            || expr.getParent() instanceof ASTThrowStatement;
+                || expr.getParent() instanceof ASTReturnStatement
+                || expr.getParent() instanceof ASTThrowStatement;
     }
 
     private boolean isUsedAsGetter(ASTExpression expr) {
@@ -292,8 +288,8 @@ public class LawOfDemeterRule extends AbstractJavaRule {
         if (reaching.isNotFullyKnown()) {
             // a field symbol, normally
             return expr.getReferencedSym() instanceof JFieldSymbol
-                   ? fieldAccessDegree(expr)
-                   : TRUSTED; // unresolved, or failure in data flow pass
+                    ? fieldAccessDegree(expr)
+                    : TRUSTED; // unresolved, or failure in data flow pass
         }
 
         // note this max could be changed to min to get a more conservative
@@ -338,26 +334,26 @@ public class LawOfDemeterRule extends AbstractJavaRule {
         ASTExpression qualifier = expr.getQualifier();
         if (qualifier != null) {
             return typeEndsWith(qualifier, "Factory")
-                || nameEndsWith(qualifier, "Factory")
-                || nameIs(qualifier, "factory");
+                    || nameEndsWith(qualifier, "Factory")
+                    || nameIs(qualifier, "factory");
         }
         return false;
     }
 
     private boolean nameEndsWith(ASTExpression expr, String suffix) {
         return expr instanceof ASTNamedReferenceExpr
-            && ((ASTNamedReferenceExpr) expr).getName().endsWith(suffix);
+                && ((ASTNamedReferenceExpr) expr).getName().endsWith(suffix);
     }
 
     private boolean nameIs(ASTExpression expr, String name) {
         return expr instanceof ASTNamedReferenceExpr
-            && ((ASTNamedReferenceExpr) expr).getName().equals(name);
+                && ((ASTNamedReferenceExpr) expr).getName().equals(name);
     }
 
     private boolean typeEndsWith(ASTExpression expr, String suffix) {
         return expr != null
-            && expr.getTypeMirror() instanceof JClassType
-            && expr.getTypeMirror().getSymbol().getSimpleName().endsWith(suffix);
+                && expr.getTypeMirror() instanceof JClassType
+                && expr.getTypeMirror().getSymbol().getSimpleName().endsWith(suffix);
     }
 
     /**

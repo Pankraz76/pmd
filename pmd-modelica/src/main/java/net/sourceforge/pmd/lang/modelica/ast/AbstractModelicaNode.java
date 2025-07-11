@@ -26,9 +26,7 @@ abstract class AbstractModelicaNode extends AbstractJjtreeNode<AbstractModelicaN
     }
 
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override @SuppressWarnings("unchecked") public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof ModelicaVisitor) {
             return acceptModelicaVisitor((ModelicaVisitor<? super P, ? extends R>) visitor, data);
         }
@@ -37,18 +35,15 @@ abstract class AbstractModelicaNode extends AbstractJjtreeNode<AbstractModelicaN
 
     protected abstract <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data);
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return getClass().getSimpleName().substring(3);
     }
 
-    @Override
-    public ModelicaScope getContainingScope() {
+    @Override public ModelicaScope getContainingScope() {
         return getParent().getMostSpecificScope();
     }
 
-    @Override
-    public ModelicaScope getMostSpecificScope() {
+    @Override public ModelicaScope getMostSpecificScope() {
         if (ownScope == null) {
             return getContainingScope();
         } else {

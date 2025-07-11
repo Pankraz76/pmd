@@ -40,7 +40,7 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
     public static final String NAME = "xml";
 
     public static final PropertyDescriptor<String> ENCODING =
-        PropertyFactory.stringProperty("encoding").desc("XML encoding format").defaultValue("UTF-8").build();
+            PropertyFactory.stringProperty("encoding").desc("XML encoding format").defaultValue("UTF-8").build();
 
     private static final String PMD_REPORT_NS_URI = "http://pmd.sourceforge.net/report/2.0.0";
     private static final String PMD_REPORT_NS_LOCATION = "https://pmd.github.io/schema/report_2_0_0.xsd";
@@ -60,13 +60,11 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
         setProperty(ENCODING, encoding);
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "xml";
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         String encoding = getProperty(ENCODING);
         String unmarkedEncoding = toUnmarkedEncoding(encoding);
         lineSeparator = System.lineSeparator().getBytes(unmarkedEncoding);
@@ -136,8 +134,7 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
         stream.write(lineSeparator);
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         String filename = null;
 
         try {
@@ -186,8 +183,7 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
         }
     }
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         try {
             // errors
             for (Report.ProcessingError pe : errors) {
@@ -244,8 +240,7 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
         }
     }
 
-    @Override
-    public void setReportFile(String reportFilename) {
+    @Override public void setReportFile(String reportFilename) {
         String encoding = getProperty(ENCODING);
 
         try {
@@ -261,8 +256,7 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
         }
     }
 
-    @Override
-    public void setWriter(final Writer writer) {
+    @Override public void setWriter(final Writer writer) {
         String encoding = getProperty(ENCODING);
         // for backwards compatibility, create a OutputStream that writes to the writer.
         this.stream = IOUtil.fromWriter(writer, encoding);
@@ -286,8 +280,7 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
             this.xmlWriter = xmlWriter;
         }
 
-        @Override
-        public void flush() throws IOException {
+        @Override public void flush() throws IOException {
             try {
                 xmlWriter.flush();
             } catch (XMLStreamException e) {
@@ -296,8 +289,7 @@ public class XMLRenderer extends AbstractIncrementingRenderer {
             super.flush();
         }
 
-        @Override
-        public void close() throws IOException {
+        @Override public void close() throws IOException {
             try {
                 xmlWriter.close();
             } catch (XMLStreamException e) {

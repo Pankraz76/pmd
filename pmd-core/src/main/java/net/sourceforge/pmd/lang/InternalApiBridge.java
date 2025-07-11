@@ -26,15 +26,16 @@ import net.sourceforge.pmd.util.log.PmdReporter;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static LanguageProcessor.AnalysisTask createAnalysisTask(RuleSets rulesets,
-                                                                    List<TextFile> files,
-                                                                    GlobalAnalysisListener listener,
-                                                                    int threadCount,
-                                                                    AnalysisCache analysisCache,
-                                                                    PmdReporter messageReporter,
-                                                                    LanguageProcessorRegistry lpRegistry) {
+            List<TextFile> files,
+            GlobalAnalysisListener listener,
+            int threadCount,
+            AnalysisCache analysisCache,
+            PmdReporter messageReporter,
+            LanguageProcessorRegistry lpRegistry) {
         return new LanguageProcessor.AnalysisTask(rulesets, files, listener, threadCount, analysisCache, messageReporter, lpRegistry);
     }
 

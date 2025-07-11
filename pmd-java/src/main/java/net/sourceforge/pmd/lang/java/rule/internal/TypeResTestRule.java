@@ -62,16 +62,14 @@ public class TypeResTestRule extends AbstractJavaRule {
     }
 
 
-    @Override
-    public Object visit(ASTCompilationUnit node, Object data) {
+    @Override public Object visit(ASTCompilationUnit node, Object data) {
         for (JavaNode descendant : node.descendants().crossFindBoundaries()) {
             visitJavaNode(descendant, data);
         }
         return data;
     }
 
-    @Override
-    public Object visitJavaNode(JavaNode node, Object data) {
+    @Override public Object visitJavaNode(JavaNode node, Object data) {
 
         if (node instanceof TypeNode) {
             try {
@@ -80,7 +78,7 @@ public class TypeResTestRule extends AbstractJavaRule {
                 if (t == ts.ERROR || t == ts.UNKNOWN) {
                     if (PRINT_ALL_UNRESOLVED) {
                         System.err.println("Unresolved at " + position(node) + "\t"
-                                               + StringUtil.escapeJava(StringUtils.truncate(node.toString(), 100)));
+                                + StringUtil.escapeJava(StringUtils.truncate(node.toString(), 100)));
                     }
                     state.numUnresolved++;
                 } else {
@@ -104,8 +102,7 @@ public class TypeResTestRule extends AbstractJavaRule {
         return "In: " + node.getReportLocation().startPosToStringWithFile();
     }
 
-    @Override
-    public void end(RuleContext ctx) {
+    @Override public void end(RuleContext ctx) {
         super.end(ctx);
         state.fileId++;
         if (state.fileId % 200 == 0) {

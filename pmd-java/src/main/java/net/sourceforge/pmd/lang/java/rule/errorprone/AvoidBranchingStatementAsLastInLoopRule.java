@@ -53,7 +53,6 @@ public class AvoidBranchingStatementAsLastInLoopRule extends AbstractJavaRulecha
     public static final PropertyDescriptor<List<String>> CHECK_RETURN_LOOP_TYPES = propertyFor("return");
 
 
-
     public AvoidBranchingStatementAsLastInLoopRule() {
         super(ASTBreakStatement.class, ASTContinueStatement.class, ASTReturnStatement.class);
         definePropertyDescriptor(CHECK_BREAK_LOOP_TYPES);
@@ -62,8 +61,7 @@ public class AvoidBranchingStatementAsLastInLoopRule extends AbstractJavaRulecha
     }
 
 
-    @Override
-    public Object visit(ASTBreakStatement node, Object data) {
+    @Override public Object visit(ASTBreakStatement node, Object data) {
         // skip breaks, that are within a switch statement
         if (node.ancestors().get(1) instanceof ASTSwitchStatement) {
             return data;
@@ -104,20 +102,17 @@ public class AvoidBranchingStatementAsLastInLoopRule extends AbstractJavaRulecha
     }
 
 
-    @Override
-    public Object visit(ASTContinueStatement node, Object data) {
+    @Override public Object visit(ASTContinueStatement node, Object data) {
         return check(CHECK_CONTINUE_LOOP_TYPES, node, data);
     }
 
 
-    @Override
-    public Object visit(ASTReturnStatement node, Object data) {
+    @Override public Object visit(ASTReturnStatement node, Object data) {
         return check(CHECK_RETURN_LOOP_TYPES, node, data);
     }
 
 
-    @Override
-    public String dysfunctionReason() {
+    @Override public String dysfunctionReason() {
         return checksNothing() ? "All loop types are ignored" : null;
     }
 
@@ -131,6 +126,6 @@ public class AvoidBranchingStatementAsLastInLoopRule extends AbstractJavaRulecha
     public boolean checksNothing() {
 
         return getProperty(CHECK_BREAK_LOOP_TYPES).isEmpty() && getProperty(CHECK_CONTINUE_LOOP_TYPES).isEmpty()
-            && getProperty(CHECK_RETURN_LOOP_TYPES).isEmpty();
+                && getProperty(CHECK_RETURN_LOOP_TYPES).isEmpty();
     }
 }

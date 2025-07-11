@@ -17,8 +17,7 @@ class PerlCpdLexerTest extends CpdTextComparisonTest {
         super("perl", ".pl");
     }
 
-    @Test
-    void testSample() {
+    @Test void testSample() {
         doTest("sample");
     }
 }

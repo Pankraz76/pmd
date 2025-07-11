@@ -94,7 +94,7 @@ public final class InvocationMatcher {
             return false;
         }
         if (expectedName != null && !node.getMethodName().equals(expectedName)
-            || argMatchers != null && ASTList.sizeOrZero(node.getArguments()) != argMatchers.size()) {
+                || argMatchers != null && ASTList.sizeOrZero(node.getArguments()) != argMatchers.size()) {
             return false;
         }
         OverloadSelectionResult info = node.getOverloadSelectionInfo();
@@ -188,8 +188,8 @@ public final class InvocationMatcher {
         // (_*) matches any argument list
         List<TypeMatcher> argMatchers;
         if (isChar(sig, i, '_')
-            && isChar(sig, i + 1, '*')
-            && isChar(sig, i + 2, ')')) {
+                && isChar(sig, i + 1, '*')
+                && isChar(sig, i + 2, ')')) {
             argMatchers = null;
             i = i + 3;
         } else {
@@ -253,7 +253,7 @@ public final class InvocationMatcher {
     private static int parseType(String source, int i) {
         final int start = i;
         while (i < source.length() && (Character.isJavaIdentifierPart(source.charAt(i))
-            || source.charAt(i) == '.')) {
+                || source.charAt(i) == '.')) {
             i++;
         }
         if (i == start) {
@@ -285,8 +285,8 @@ public final class InvocationMatcher {
 
         boolean matches(JTypeMirror type, boolean exact) {
             return name == null
-                   || (exact ? TypeTestUtil.isExactlyAOrAnon(name, type) == OptionalBool.YES
-                         : TypeTestUtil.isA(name, type));
+                    || (exact ? TypeTestUtil.isExactlyAOrAnon(name, type) == OptionalBool.YES
+                    : TypeTestUtil.isA(name, type));
         }
     }
 

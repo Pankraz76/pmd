@@ -16,7 +16,7 @@ public class DummyLanguageNoCapabilities extends LanguageModuleBase {
 
     public DummyLanguageNoCapabilities() {
         super(LanguageMetadata.withId(TERSE_NAME).name(NAME).extensions("dummyxxx", "txt")
-                              .addDefaultVersion("1.7", "7"));
+                .addDefaultVersion("1.7", "7"));
     }
 
     public static DummyLanguageNoCapabilities getInstance() {

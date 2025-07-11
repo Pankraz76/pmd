@@ -9,7 +9,7 @@ public class NonSealedIdentifier {
         // sealed is a valid identifier name in both Java16 and Java16 Preview
         int sealed = 2;
         // non-sealed is a valid subtraction expression in both Java16 and Java16 Preview
-        result = non-sealed;
+        result = non - sealed;
         System.out.println(result);
     }
 }

@@ -16,15 +16,14 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 public class LocalVariableCouldBeFinalRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<Boolean> IGNORE_FOR_EACH =
-        booleanProperty("ignoreForEachDecl").defaultValue(false).desc("Ignore non-final loop variables in a for-each statement.").build();
+            booleanProperty("ignoreForEachDecl").defaultValue(false).desc("Ignore non-final loop variables in a for-each statement.").build();
 
     public LocalVariableCouldBeFinalRule() {
         super(ASTLocalVariableDeclaration.class);
         definePropertyDescriptor(IGNORE_FOR_EACH);
     }
 
-    @Override
-    public Object visit(ASTLocalVariableDeclaration node, Object data) {
+    @Override public Object visit(ASTLocalVariableDeclaration node, Object data) {
         if (node.isFinal()) { // also for implicit finals, like resources, or lombok.val
             return data;
         }

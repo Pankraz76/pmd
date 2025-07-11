@@ -27,7 +27,8 @@ import net.sourceforge.pmd.lang.symboltable.Scope;
 @InternalApi
 public final class InternalApiBridge {
 
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static void setScope(PLSQLNode node, Scope decl) {
         ((AbstractPLSQLNode) node).setScope(decl);

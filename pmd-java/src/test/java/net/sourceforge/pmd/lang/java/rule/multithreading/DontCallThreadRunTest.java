@@ -9,8 +9,7 @@ import net.sourceforge.pmd.test.PmdRuleTst;
 class DontCallThreadRunTest extends PmdRuleTst {
     // Used by DontCallThreadRun test cases
     public static class TestThread extends Thread {
-        @Override
-        public void run() {
+        @Override public void run() {
             System.out.println("test");
         }
     }

@@ -23,18 +23,15 @@ public class VBHTMLRenderer extends AbstractIncrementingRenderer {
         super(NAME, "Vladimir Bossicard HTML format.");
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "vb.html";
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         getWriter().write(header());
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         if (!violations.hasNext()) {
             return;
         }
@@ -78,8 +75,7 @@ public class VBHTMLRenderer extends AbstractIncrementingRenderer {
         }
     }
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         StringBuilder sb = new StringBuilder();
 
         writer.write("<br>");
@@ -128,16 +124,16 @@ public class VBHTMLRenderer extends AbstractIncrementingRenderer {
 
     private String header() {
         return "<html><head><title>PMD</title></head>"
-            + "<style type=\"text/css\">" + "<!--" + System.lineSeparator()
-            + "body { background-color: white; font-family:verdana, arial, helvetica, geneva; font-size: 16px; font-style: italic; color: black; }"
-            + System.lineSeparator()
-            + ".title { font-family: verdana, arial, helvetica,geneva; font-size: 12px; font-weight:bold; color: white; }"
-            + System.lineSeparator()
-            + ".body { font-family: verdana, arial, helvetica, geneva; font-size: 12px; font-weight:plain; color: black; }"
-            + System.lineSeparator() + "#TableHeader { background-color: #003366; }" + System.lineSeparator()
-            + "#RowColor1 { background-color: #eeeeee; }" + System.lineSeparator()
-            + "#RowColor2 { background-color: white; }" + System.lineSeparator() + "-->" + "</style>"
-            + "<body><center>";
+                + "<style type=\"text/css\">" + "<!--" + System.lineSeparator()
+                + "body { background-color: white; font-family:verdana, arial, helvetica, geneva; font-size: 16px; font-style: italic; color: black; }"
+                + System.lineSeparator()
+                + ".title { font-family: verdana, arial, helvetica,geneva; font-size: 12px; font-weight:bold; color: white; }"
+                + System.lineSeparator()
+                + ".body { font-family: verdana, arial, helvetica, geneva; font-size: 12px; font-weight:plain; color: black; }"
+                + System.lineSeparator() + "#TableHeader { background-color: #003366; }" + System.lineSeparator()
+                + "#RowColor1 { background-color: #eeeeee; }" + System.lineSeparator()
+                + "#RowColor2 { background-color: white; }" + System.lineSeparator() + "-->" + "</style>"
+                + "<body><center>";
     }
 
     private String footer() {

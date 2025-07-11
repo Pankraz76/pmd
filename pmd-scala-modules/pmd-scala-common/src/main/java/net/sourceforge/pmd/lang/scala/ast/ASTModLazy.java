@@ -15,8 +15,7 @@ public final class ASTModLazy extends AbstractScalaNode<Mod.Lazy> {
         super(scalaNode);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

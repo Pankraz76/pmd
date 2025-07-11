@@ -22,8 +22,7 @@ public class ASTStoredDefinition extends AbstractModelicaNode implements RootNod
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -31,8 +30,7 @@ public class ASTStoredDefinition extends AbstractModelicaNode implements RootNod
         hasBOM = true;
     }
 
-    @Override
-    public AstInfo<ASTStoredDefinition> getAstInfo() {
+    @Override public AstInfo<ASTStoredDefinition> getAstInfo() {
         return astInfo;
     }
 

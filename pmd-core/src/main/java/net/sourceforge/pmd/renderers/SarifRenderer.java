@@ -33,26 +33,22 @@ public class SarifRenderer extends AbstractIncrementingRenderer {
         super(NAME, DEFAULT_DESCRIPTION);
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return DEFAULT_FILE_EXTENSION;
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         sarifLogBuilder = SarifLogBuilder.sarifLogBuilder();
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         while (violations.hasNext()) {
             final RuleViolation violation = violations.next();
             sarifLogBuilder.add(violation);
         }
     }
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         addErrors();
         writeLog();
     }
@@ -62,7 +58,7 @@ public class SarifRenderer extends AbstractIncrementingRenderer {
             sarifLogBuilder.addRunTimeError(error);
         }
 
-        for (Report.ConfigurationError error: this.configErrors) {
+        for (Report.ConfigurationError error : this.configErrors) {
             sarifLogBuilder.addConfigurationError(error);
         }
     }
@@ -74,8 +70,7 @@ public class SarifRenderer extends AbstractIncrementingRenderer {
         writer.println();
     }
 
-    @Override
-    public void setReportFile(String reportFilename) {
+    @Override public void setReportFile(String reportFilename) {
         this.setWriter(IOUtil.createWriter(StandardCharsets.UTF_8, reportFilename));
     }
 }

@@ -27,48 +27,39 @@ public class ScalaTokenAdapter implements GenericToken<ScalaTokenAdapter> {
         this.previousComment = comment;
     }
 
-    @Override
-    public ScalaTokenAdapter getNext() {
+    @Override public ScalaTokenAdapter getNext() {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public ScalaTokenAdapter getPreviousComment() {
+    @Override public ScalaTokenAdapter getPreviousComment() {
         return previousComment;
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return token.text();
     }
 
-    @Override
-    public Chars getImageCs() {
+    @Override public Chars getImageCs() {
         return textDocument.sliceTranslatedText(getRegion());
     }
 
-    @Override
-    public TextRegion getRegion() {
+    @Override public TextRegion getRegion() {
         return TextRegion.fromBothOffsets(token.pos().start(), token.pos().end());
     }
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         return textDocument.toLocation(getRegion());
     }
 
-    @Override
-    public boolean isEof() {
+    @Override public boolean isEof() {
         return token instanceof Token.EOF;
     }
 
-    @Override
-    public int getKind() {
+    @Override public int getKind() {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ScalaTokenAdapter{"
                 + "token=" + token
                 + ", previousComment=" + previousComment

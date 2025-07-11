@@ -123,9 +123,9 @@ public interface Metric<N extends Node, R extends Number> extends DataKey<Metric
      * @throws NullPointerException If either parameter is null
      */
     static <T extends Node, R extends Number> Metric<T, R> of(BiFunction<? super T, MetricOptions, ? extends R> compute,
-                                                              Function<? super Node, ? extends @Nullable T> cast,
-                                                              @NonNull String fullName,
-                                                              String... aliases) {
+            Function<? super Node, ? extends @Nullable T> cast,
+            @NonNull String fullName,
+            String... aliases) {
         AssertionUtil.requireParamNotNull("compute", compute);
         AssertionUtil.requireParamNotNull("cast", cast);
         AssertionUtil.requireParamNotNull("fullName", fullName);
@@ -134,23 +134,19 @@ public interface Metric<N extends Node, R extends Number> extends DataKey<Metric
         List<String> allNames = listOf(fullName, aliases);
 
         return new Metric<T, R>() {
-            @Override
-            public String displayName() {
+            @Override public String displayName() {
                 return fullName;
             }
 
-            @Override
-            public List<String> nameAliases() {
+            @Override public List<String> nameAliases() {
                 return allNames;
             }
 
-            @Override
-            public @Nullable T castIfSupported(@NonNull Node node) {
+            @Override public @Nullable T castIfSupported(@NonNull Node node) {
                 return cast.apply(node);
             }
 
-            @Override
-            public R computeFor(T node, MetricOptions options) {
+            @Override public R computeFor(T node, MetricOptions options) {
                 return compute.apply(node, options);
             }
 

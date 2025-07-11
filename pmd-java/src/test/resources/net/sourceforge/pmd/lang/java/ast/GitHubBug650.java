@@ -36,10 +36,8 @@ public class MapUtilsTest extends JUnitTestSupport {
         super();
     }
 
-    @Test
-    public void testPutUniqueValuesForNoSource() {
-        @SuppressWarnings("unchecked")
-        Map<Object, Object>[] maps = new Map[] { null, Collections.emptyMap() };
+    @Test public void testPutUniqueValuesForNoSource() {
+        @SuppressWarnings("unchecked") Map<Object, Object>[] maps = new Map[]{null, Collections.emptyMap()};
         for (Map<Object, Object> dst : maps) {
             for (Map<?, ?> src : maps) {
                 assertSame("Mismatched result for src=" + src + ", dst=" + dst, dst, MapUtils.putUniqueValues(src, dst));
@@ -47,8 +45,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testPutUniqueValuesWithDuplicates() {
+    @Test(expected = IllegalStateException.class) public void testPutUniqueValuesWithDuplicates() {
         Map<Object, Object> dst = new HashMap<>(Collections.singletonMap("test", getCurrentTestName()));
         assertSame("Mismatched result for self update", dst, MapUtils.putUniqueValues(dst, dst));
 
@@ -58,8 +55,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test
-    public void testPutUniqueValues() {
+    @Test public void testPutUniqueValues() {
         final Class<?> anchor = getClass();
         Map<String, String> extra = new TreeMap<String, String>() {
             // Not serializing it
@@ -80,7 +76,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertEquals("Mismatched merged size", extra.size() + original.size(), merged.size());
 
         for (@SuppressWarnings("unchecked")
-        Map<String, String> m : new Map[] { original, extra }) {
+        Map<String, String> m : new Map[]{original, extra}) {
             for (Map.Entry<String, String> me : m.entrySet()) {
                 String key = me.getKey();
                 String expected = me.getValue();
@@ -90,8 +86,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test
-    public void testSort() {
+    @Test public void testSort() {
         Map<Integer, String> map = new HashMap<>();
         map.put(5, "aa");
         map.put(1, "ss");
@@ -107,8 +102,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertEquals(expectedMap, actualMap);
     }
 
-    @Test
-    public void testAddValuesToMap() {
+    @Test public void testAddValuesToMap() {
         Map<Integer, ArrayList<String>> map = new HashMap<>();
         MapUtils.addValueToMapList(map, 5, "aa");
         assertTrue("Missing '5' key", map.containsKey(5));
@@ -121,8 +115,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertTrue("Missing 'aa' sub-key of '1'", map.get(1).contains("aa"));
     }
 
-    @Test
-    public void testSortKeys() {
+    @Test public void testSortKeys() {
         Map<Integer, String> map = new HashMap<>();
         map.put(5, "aa");
         map.put(1, "ss");
@@ -137,8 +130,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertEquals(expectedMap, actualMap);
     }
 
-    @Test
-    public void testValuesSort() {
+    @Test public void testValuesSort() {
         Map<Integer, String> map = new HashMap<>();
         map.put(5, "aa");
         map.put(1, "ss");
@@ -154,8 +146,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertEquals(expectedMap, actualMap);
     }
 
-    @Test
-    public void testRandomSortByValue() {
+    @Test public void testRandomSortByValue() {
         Random random = new Random(System.currentTimeMillis());
         Map<String, Integer> testMap = new HashMap<>(1000);
         for (int i = 0; i < 1000; ++i) {
@@ -175,8 +166,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test
-    public void testByKeyComparator() {
+    @Test public void testByKeyComparator() {
         Map<String, Object> original = new TreeMap<String, Object>(String.CASE_INSENSITIVE_ORDER) {
             // not serializing it
             private static final long serialVersionUID = 1L;
@@ -201,8 +191,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertListEquals(getCurrentTestName(), expected, actual);
     }
 
-    @Test
-    public void testFlip() {
+    @Test public void testFlip() {
         Map<String, Long> src = new TreeMap<String, Long>() {
             private static final long serialVersionUID = -3686693573082540693L;
 
@@ -222,15 +211,13 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test
-    public void testFlipNullOrEmpty() {
+    @Test public void testFlipNullOrEmpty() {
         Map<Object, Object> dst = Collections.unmodifiableMap(new HashMap<>());
         assertSame("Mismatached instance for null source", dst, MapUtils.flip(false, null, dst));
         assertSame("Mismatached instance for empty source", dst, MapUtils.flip(false, Collections.emptyMap(), dst));
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testFlipOnDuplicateKeys() {
+    @Test(expected = IllegalStateException.class) public void testFlipOnDuplicateKeys() {
         Map<String, String> map = new HashMap<>();
         map.put("testName1", getCurrentTestName());
         map.put("testName2", getCurrentTestName());
@@ -239,8 +226,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         fail("Unexpected success: " + flipped);
     }
 
-    @Test
-    public void testGetMandatoryValue() {
+    @Test public void testGetMandatoryValue() {
         Map<String, Object> map = new HashMap<>();
         map.put("A", 1);
         map.put("B", 2);
@@ -253,8 +239,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testGetMandatoryValueWithoutValue() {
+    @Test(expected = NullPointerException.class) public void testGetMandatoryValueWithoutValue() {
         Map<String, Object> map = new HashMap<>();
         map.put("A", 1);
         map.put("B", 2);
@@ -263,16 +248,14 @@ public class MapUtilsTest extends JUnitTestSupport {
         fail("Unexpected success: " + mandatoryValue);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testGetMandatoryValueWithEmptyMap() {
+    @Test(expected = NullPointerException.class) public void testGetMandatoryValueWithEmptyMap() {
         Map<String, Object> map = new HashMap<>();
 
         Object mandatoryValue = MapUtils.getMandatoryValue(map, getCurrentTestName());
         fail("Unexpected success: " + mandatoryValue);
     }
 
-    @Test
-    public void testGetMandatoryIntValue() {
+    @Test public void testGetMandatoryIntValue() {
         Map<String, Object> map = new HashMap<>();
         map.put("A", 1);
         map.put("B", "2");
@@ -283,8 +266,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertEquals("Mismatched value for the 'B' key", 2, mandatoryIntValueB);
     }
 
-    @Test
-    public void testGetMandatoryDoubleValue() {
+    @Test public void testGetMandatoryDoubleValue() {
         Map<String, Object> map = new HashMap<>();
         map.put("A", 1.2);
         map.put("B", "2.2");
@@ -295,8 +277,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertEquals("Mismatched value for the 'B' key", 2.2, mandatoryIntValueB, 0);
     }
 
-    @Test
-    public void testNestedLen() {
+    @Test public void testNestedLen() {
         Map<String, Collection<Object>> mapOfColls = new HashMap<>();
 
         Collection<Object> col1 = new ArrayList<>();
@@ -313,28 +294,23 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertEquals("Mismatched nested entries count", 5, MapUtils.nestedLen(mapOfColls));
     }
 
-    @Test
-    public void testEmptyNestedLen() {
+    @Test public void testEmptyNestedLen() {
         assertEquals("Mismatched empty nested entries count", 0, MapUtils.nestedLen(new HashMap<String, Collection<Object>>()));
     }
 
-    @Test
-    public void testNullNestedLen() {
+    @Test public void testNullNestedLen() {
         assertEquals("Mismatched null 0 nested entries count", 0, MapUtils.nestedLen((Map<String, Collection<Object>>) null));
     }
 
-    @Test
-    public void testClearNullOrEmptyMap() {
+    @Test public void testClearNullOrEmptyMap() {
         assertNull("Unexpected null map clear result", MapUtils.clear(null));
 
-        @SuppressWarnings("unchecked")
-        Map<String, String> expected = Mockito.mock(Map.class);
+        @SuppressWarnings("unchecked") Map<String, String> expected = Mockito.mock(Map.class);
         Mockito.when(expected.size()).thenReturn(NumberUtils.INTEGER_ZERO);
         Mockito.when(expected.isEmpty()).thenReturn(Boolean.TRUE);
         Mockito.when(expected.toString()).thenReturn(getCurrentTestName());
         Mockito.doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocation) throws Throwable {
+            @Override public Void answer(InvocationOnMock invocation) throws Throwable {
                 fail("Unexpected clear method invocation");
                 return null;
             }
@@ -344,8 +320,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertSame("Mismatched cleared result reference", expected, actual);
     }
 
-    @Test
-    public void testClearNonEmptyMap() {
+    @Test public void testClearNonEmptyMap() {
         Map<String, String> expected = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER) {
             // Not serializing it
             private static final long serialVersionUID = 1L;
@@ -361,10 +336,9 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertEquals("Size not zeroed", 0, actual.size());
     }
 
-    @Test
-    public void testClearAndReplace() {
+    @Test public void testClearAndReplace() {
         for (@SuppressWarnings("unchecked")
-            Map<String, String> expected : new Map[] { null, Collections.emptyMap(), new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER) {
+            Map<String, String> expected : new Map[]{null, Collections.emptyMap(), new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER) {
                 // Not serializing it
                 private static final long serialVersionUID = 1L;
 
@@ -372,7 +346,7 @@ public class MapUtilsTest extends JUnitTestSupport {
                     put("testName", getCurrentTestName());
                     put("className", SafeUtils.safeShortName(getCurrentTestClass()));
                 }
-            } }) {
+            }}) {
             Map<String, String> original = new HashMap<String, String>() {
                 // Not serializing it
                 private static final long serialVersionUID = 1L;
@@ -388,8 +362,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test
-    public void testKeyExtractor() {
+    @Test public void testKeyExtractor() {
         Map<String, Object> map = new TreeMap<String, Object>() {
             // Not serializing it
             private static final long serialVersionUID = 1L;
@@ -408,8 +381,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test
-    public void testValueExtractor() {
+    @Test public void testValueExtractor() {
         Map<String, Object> map = new TreeMap<String, Object>() {
             // Not serializing it
             private static final long serialVersionUID = 1L;
@@ -429,8 +401,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test
-    public void testFilterByKey() {
+    @Test public void testFilterByKey() {
         String expectedKey = "testName";
         Map<String, Object> map = new HashMap<String, Object>() {
             // Not serializing it
@@ -451,8 +422,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertSame("Mismatched value instance", expEntry.getValue(), actEntry.getValue());
     }
 
-    @Test
-    public void testFilterByEntry() {
+    @Test public void testFilterByEntry() {
         Map<Integer, Integer> map = new HashMap<>();
         for (int index = 1; index <= Byte.SIZE; index++) {
             map.put(index, index & 0x01);
@@ -470,8 +440,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertMapEquals(getCurrentTestName(), expected, actual);
     }
 
-    @Test
-    public void testEqualPropertiesCaseSensitiveName() {
+    @Test public void testEqualPropertiesCaseSensitiveName() {
         Properties p1 = new Properties() {
             // Not serializing it
             private static final long serialVersionUID = 1L;
@@ -498,8 +467,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertTrue("Non-equal case insensitive result", MapUtils.equalProperties(p1, p2, String.CASE_INSENSITIVE_ORDER, Comparator.naturalOrder()));
     }
 
-    @Test
-    public void testEqualPropertiesCaseSensitiveValue() {
+    @Test public void testEqualPropertiesCaseSensitiveValue() {
         Properties p1 = new Properties() {
             // Not serializing it
             private static final long serialVersionUID = 1L;
@@ -525,8 +493,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertTrue("Non-equal case insensitive result", MapUtils.equalProperties(p1, p2, Comparator.naturalOrder(), String.CASE_INSENSITIVE_ORDER));
     }
 
-    @Test
-    public void testSubMapWithEmptyMaps() {
+    @Test public void testSubMapWithEmptyMaps() {
         Map<String, Integer> m1 = new HashMap<>();
         m1.put(getCurrentTestName(), 1);
         Collection<Map<String, Integer>> empties = Arrays.asList(null, Collections.emptyMap());
@@ -537,8 +504,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         }
     }
 
-    @Test
-    public void testSubMapWithSubs() {
+    @Test public void testSubMapWithSubs() {
         Map<String, Integer> m1 = new HashMap<>();
         m1.put(getCurrentTestName(), 1);
         Map<String, Integer> m2 = new HashMap<>();
@@ -557,8 +523,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertFalse("non sub", MapUtils.isSubMap(m2, m1));
     }
 
-    @Test
-    public void testGetSubMap() {
+    @Test public void testGetSubMap() {
         Map<String, Integer> hashMap = new HashMap<>();
         hashMap.put(getCurrentTestName(), 1);
         hashMap.put(JAVA_SUFFIX, 2);
@@ -575,8 +540,7 @@ public class MapUtilsTest extends JUnitTestSupport {
         assertEquals(treeMap, expectedAllEntries);
     }
 
-    @Test
-    public void testGetSubMapEmpty() {
+    @Test public void testGetSubMapEmpty() {
         assertEquals(Collections.emptyMap(), MapUtils.getSubMap(Collections.emptyMap(), e -> true, TreeMap::new));
         assertEquals(Collections.emptyMap(), MapUtils.getSubMap(null, e -> true, HashMap::new));
     }

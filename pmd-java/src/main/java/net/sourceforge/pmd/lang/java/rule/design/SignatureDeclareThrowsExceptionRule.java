@@ -32,18 +32,17 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 public class SignatureDeclareThrowsExceptionRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<Boolean> IGNORE_JUNIT_COMPLETELY_DESCRIPTOR =
-        booleanProperty("IgnoreJUnitCompletely").defaultValue(false)
-                                                .desc("Allow all methods in a JUnit3 TestCase to throw Exceptions").build();
+            booleanProperty("IgnoreJUnitCompletely").defaultValue(false)
+                    .desc("Allow all methods in a JUnit3 TestCase to throw Exceptions").build();
 
     public SignatureDeclareThrowsExceptionRule() {
         super(ASTThrowsList.class);
         definePropertyDescriptor(IGNORE_JUNIT_COMPLETELY_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTThrowsList throwsList, Object o) {
+    @Override public Object visit(ASTThrowsList throwsList, Object o) {
         if (!isIgnored(throwsList.getOwner())
-            && throwsList.toStream().any(it -> TypeTestUtil.isExactlyA(Exception.class, it))) {
+                && throwsList.toStream().any(it -> TypeTestUtil.isExactlyA(Exception.class, it))) {
             asCtx(o).addViolation(throwsList);
         }
         return null;
@@ -51,14 +50,14 @@ public class SignatureDeclareThrowsExceptionRule extends AbstractJavaRulechainRu
 
     private boolean isIgnored(ASTExecutableDeclaration owner) {
         if (getProperty(IGNORE_JUNIT_COMPLETELY_DESCRIPTOR)
-            && TestFrameworksUtil.isJUnit3Class(owner.getEnclosingType())) {
+                && TestFrameworksUtil.isJUnit3Class(owner.getEnclosingType())) {
             return true;
         } else if (owner instanceof ASTMethodDeclaration) {
             ASTMethodDeclaration m = (ASTMethodDeclaration) owner;
             return TestFrameworksUtil.isTestMethod(m)
-                || TestFrameworksUtil.isTestConfigurationMethod(m)
-                // Ignore overridden methods, the issue should be marked on the method definition
-                || m.isOverridden();
+                    || TestFrameworksUtil.isTestConfigurationMethod(m)
+                    // Ignore overridden methods, the issue should be marked on the method definition
+                    || m.isOverridden();
         }
         return false;
     }

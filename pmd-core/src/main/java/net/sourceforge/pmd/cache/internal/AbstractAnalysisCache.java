@@ -60,37 +60,35 @@ abstract class AbstractAnalysisCache implements AnalysisCache {
         pmdVersion = PMDVersion.VERSION;
     }
 
-    @Override
-    public boolean isUpToDate(final TextDocument document) {
+    @Override public boolean isUpToDate(final TextDocument document) {
         try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.ANALYSIS_CACHE, "up-to-date check")) {
             final AnalysisResult cachedResult = fileResultsCache.get(document.getFileId());
             final AnalysisResult updatedResult;
 
             // is this a known file? has it changed?
             final boolean upToDate = cachedResult != null
-                && cachedResult.getFileChecksum() == document.getCheckSum();
+                    && cachedResult.getFileChecksum() == document.getCheckSum();
 
             if (upToDate) {
                 LOG.trace("Incremental Analysis cache HIT");
-                
+
                 // copy results over
                 updatedResult = cachedResult;
             } else {
                 LOG.trace("Incremental Analysis cache MISS - {}",
-                          cachedResult != null ? "file changed" : "no previous result found");
-                
+                        cachedResult != null ? "file changed" : "no previous result found");
+
                 // New file being analyzed, create new empty entry
                 updatedResult = new AnalysisResult(document.getCheckSum(), new ArrayList<>());
             }
 
             updatedResultsCache.put(document.getFileId(), updatedResult);
-            
+
             return upToDate;
         }
     }
 
-    @Override
-    public List<RuleViolation> getCachedViolations(final TextDocument sourceFile) {
+    @Override public List<RuleViolation> getCachedViolations(final TextDocument sourceFile) {
         final AnalysisResult analysisResult = fileResultsCache.get(sourceFile.getFileId());
 
         if (analysisResult == null) {
@@ -101,8 +99,7 @@ abstract class AbstractAnalysisCache implements AnalysisCache {
         return analysisResult.getViolations();
     }
 
-    @Override
-    public void analysisFailed(final TextDocument sourceFile) {
+    @Override public void analysisFailed(final TextDocument sourceFile) {
         updatedResultsCache.remove(sourceFile.getFileId());
     }
 
@@ -114,8 +111,7 @@ abstract class AbstractAnalysisCache implements AnalysisCache {
     protected abstract boolean cacheExists();
 
 
-    @Override
-    public void checkValidity(RuleSets ruleSets, ClassLoader auxclassPathClassLoader, Collection<? extends TextFile> files) {
+    @Override public void checkValidity(RuleSets ruleSets, ClassLoader auxclassPathClassLoader, Collection<? extends TextFile> files) {
         try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.ANALYSIS_CACHE, "validity check")) {
             boolean cacheIsValid = cacheExists();
 
@@ -168,9 +164,8 @@ abstract class AbstractAnalysisCache implements AnalysisCache {
         final List<URL> entries = new ArrayList<>();
 
         final SimpleFileVisitor<Path> fileVisitor = new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(final Path file,
-                                             final BasicFileAttributes attrs) throws IOException {
+            @Override public FileVisitResult visitFile(final Path file,
+                    final BasicFileAttributes attrs) throws IOException {
                 if (!attrs.isSymbolicLink()) { // Broken link that can't be followed
                     entries.add(file.toUri().toURL());
                 }
@@ -178,9 +173,8 @@ abstract class AbstractAnalysisCache implements AnalysisCache {
             }
         };
         final SimpleFileVisitor<Path> jarFileVisitor = new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(final Path file,
-                                             final BasicFileAttributes attrs) throws IOException {
+            @Override public FileVisitResult visitFile(final Path file,
+                    final BasicFileAttributes attrs) throws IOException {
                 String extension = IOUtil.getFilenameExtension(file.toString());
                 if ("jar".equalsIgnoreCase(extension)) {
                     fileVisitor.visitFile(file, attrs);
@@ -194,12 +188,12 @@ abstract class AbstractAnalysisCache implements AnalysisCache {
                 final File f = new File(entry);
                 if (isClassPathWildcard(entry)) {
                     Files.walkFileTree(new File(entry.substring(0, entry.length() - 1)).toPath(),
-                                       EnumSet.of(FileVisitOption.FOLLOW_LINKS), 1, jarFileVisitor);
+                            EnumSet.of(FileVisitOption.FOLLOW_LINKS), 1, jarFileVisitor);
                 } else if (f.isFile()) {
                     entries.add(f.toURI().toURL());
                 } else if (f.exists()) { // ignore non-existing directories
                     Files.walkFileTree(f.toPath(), EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE,
-                                       fileVisitor);
+                            fileVisitor);
                 }
             }
         } catch (final IOException e) {
@@ -210,22 +204,19 @@ abstract class AbstractAnalysisCache implements AnalysisCache {
         return entries.toArray(new URL[0]);
     }
 
-    @Override
-    public FileAnalysisListener startFileAnalysis(TextDocument file) {
+    @Override public FileAnalysisListener startFileAnalysis(TextDocument file) {
         final FileId fileName = file.getFileId();
 
         return new FileAnalysisListener() {
             private boolean failed = false;
 
-            @Override
-            public void onRuleViolation(RuleViolation violation) {
+            @Override public void onRuleViolation(RuleViolation violation) {
                 if (!failed) {
                     updatedResultsCache.get(fileName).addViolation(violation);
                 }
             }
 
-            @Override
-            public void onError(ProcessingError error) {
+            @Override public void onError(ProcessingError error) {
                 failed = true;
                 analysisFailed(file);
             }

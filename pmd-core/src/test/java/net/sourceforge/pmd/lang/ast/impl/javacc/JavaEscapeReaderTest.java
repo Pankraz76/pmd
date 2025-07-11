@@ -23,8 +23,7 @@ class JavaEscapeReaderTest {
     }
 
 
-    @Test
-    void testSimpleRead() throws IOException {
+    @Test void testSimpleRead() throws IOException {
 
         String input = "abcdede";
         try (TextDocument r = readString(input)) {
@@ -32,8 +31,7 @@ class JavaEscapeReaderTest {
         }
     }
 
-    @Test
-    void testNotAnEscape1Read() throws IOException {
+    @Test void testNotAnEscape1Read() throws IOException {
 
         String input = "abc\\dede";
         try (TextDocument r = readString(input)) {
@@ -41,8 +39,7 @@ class JavaEscapeReaderTest {
         }
     }
 
-    @Test
-    void testNotAnEscape1Read2() throws IOException {
+    @Test void testNotAnEscape1Read2() throws IOException {
 
         String input = "abc\\\\\\dede";
         try (TextDocument r = readString(input)) {
@@ -50,8 +47,7 @@ class JavaEscapeReaderTest {
         }
     }
 
-    @Test
-    void testAnEscapeStopAtEnd() throws IOException {
+    @Test void testAnEscapeStopAtEnd() throws IOException {
 
         String input = "abc\\\\\\u00a0dede";
         try (TextDocument r = readString(input)) {
@@ -59,8 +55,7 @@ class JavaEscapeReaderTest {
         }
     }
 
-    @Test
-    void testSeveralEscapes() throws IOException {
+    @Test void testSeveralEscapes() throws IOException {
 
         String input = "abc\\\\\\u00a0d\\uu00a0ede";
         try (TextDocument r = readString(input)) {
@@ -68,8 +63,7 @@ class JavaEscapeReaderTest {
         }
     }
 
-    @Test
-    void testAnEscapeInsideBlock() throws IOException {
+    @Test void testAnEscapeInsideBlock() throws IOException {
 
         String input = "abc\\\\\\u00a0dede\\u00a0";
         try (TextDocument r = readString(input)) {

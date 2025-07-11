@@ -9,8 +9,7 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride;
  * @since 6.2.0
  */
 public class ConcreteClassTransitive extends AbsClassWithInterface {
-    @Override
-    public void run() {
+    @Override public void run() {
 
     }
 }

@@ -17,8 +17,7 @@ public class AtfdTestRule extends JavaIntMetricTestRule {
         super(JavaMetrics.ACCESS_TO_FOREIGN_DATA);
     }
 
-    @Override
-    protected String violationMessage(Node node, Integer result) {
+    @Override protected String violationMessage(Node node, Integer result) {
         return super.violationMessage(node, result);
     }
 }

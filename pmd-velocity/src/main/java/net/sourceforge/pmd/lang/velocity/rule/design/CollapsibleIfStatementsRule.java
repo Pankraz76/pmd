@@ -17,14 +17,12 @@ import net.sourceforge.pmd.lang.velocity.rule.AbstractVtlRule;
 
 public class CollapsibleIfStatementsRule extends AbstractVtlRule {
 
-    @Override
-    public Object visit(final ASTIfStatement node, final Object data) {
+    @Override public Object visit(final ASTIfStatement node, final Object data) {
         handleIfElseIf(node, data);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(final ASTElseIfStatement node, final Object data) {
+    @Override public Object visit(final ASTElseIfStatement node, final Object data) {
         // verify that this elseif doesn't have any siblings
         if (node.getParent().children(ASTElseIfStatement.class).count() == 1) {
             handleIfElseIf(node, data);

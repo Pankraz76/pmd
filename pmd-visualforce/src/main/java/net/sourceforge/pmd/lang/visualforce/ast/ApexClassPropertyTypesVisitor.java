@@ -49,8 +49,7 @@ final class ApexClassPropertyTypesVisitor extends ApexVisitorBase<Void, Void> {
      * Stores the return type of the method in {@link #variables} if the method is referenceable from a
      * Visualforce page.
      */
-    @Override
-    public Void visit(ASTMethod node, Void data) {
+    @Override public Void visit(ASTMethod node, Void data) {
         if (node.getArity() == 0
                 && isVisibleToVisualForce(node)
                 && !RETURN_TYPE_VOID.equalsIgnoreCase(node.getReturnType())

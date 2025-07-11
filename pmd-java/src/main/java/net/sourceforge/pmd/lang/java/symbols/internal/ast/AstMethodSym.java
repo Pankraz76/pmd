@@ -19,35 +19,31 @@ import net.sourceforge.pmd.lang.java.types.TypeOps;
  * @author Clément Fournier
  */
 final class AstMethodSym
-    extends AbstractAstExecSymbol<ASTMethodDeclaration>
-    implements JMethodSymbol {
+        extends AbstractAstExecSymbol<ASTMethodDeclaration>
+        implements JMethodSymbol {
 
     AstMethodSym(ASTMethodDeclaration node, AstSymFactory factory, JClassSymbol owner) {
         super(node, factory, owner);
     }
 
-    @Override
-    public boolean isBridge() {
+    @Override public boolean isBridge() {
         return false;
     }
 
-    @Override
-    protected JTypeMirror makeReturnType(Substitution subst) {
+    @Override protected JTypeMirror makeReturnType(Substitution subst) {
         ASTType rt = node.getResultTypeNode();
         return TypeOps.subst(rt.getTypeMirror(), subst);
     }
 
-    @Override
-    public String getSimpleName() {
+    @Override public String getSimpleName() {
         return node.getName();
     }
 
-    @Override
-    public @Nullable SymbolicValue getDefaultAnnotationValue() {
+    @Override public @Nullable SymbolicValue getDefaultAnnotationValue() {
         if (node.getDefaultClause() != null) {
             return AstSymbolicAnnot.ofNode(node.getDefaultClause().getConstant());
         }
-        
+
         return null;
     }
 }

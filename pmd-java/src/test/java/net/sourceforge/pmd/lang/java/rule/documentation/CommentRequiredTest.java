@@ -17,8 +17,7 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 import net.sourceforge.pmd.test.PmdRuleTst;
 
 class CommentRequiredTest extends PmdRuleTst {
-    @Test
-    void allCommentTypesIgnored() {
+    @Test void allCommentTypesIgnored() {
         CommentRequiredRule rule = new CommentRequiredRule();
         assertNull(rule.dysfunctionReason(), "By default, the rule should be functional");
 

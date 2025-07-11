@@ -26,8 +26,7 @@ public class SimplifyConditionalRule extends AbstractJavaRulechainRule {
     }
 
 
-    @Override
-    public Object visit(ASTInfixExpression node, Object data) {
+    @Override public Object visit(ASTInfixExpression node, Object data) {
         if (node.getOperator() == INSTANCEOF) {
 
             StablePathMatcher instanceOfSubject = StablePathMatcher.matching(node.getLeftOperand());
@@ -42,7 +41,7 @@ public class SimplifyConditionalRule extends AbstractJavaRulechainRule {
                 negated = false;
                 nullCheckExpr = getOtherOperandIfInInfixExpr(node);
             } else if (isBooleanNegation(node.getParent())
-                && isInfixExprWithOperator(node.getParent().getParent(), CONDITIONAL_OR)) {
+                    && isInfixExprWithOperator(node.getParent().getParent(), CONDITIONAL_OR)) {
                 // a == null || a instanceof T
                 negated = true;
                 nullCheckExpr = getOtherOperandIfInInfixExpr(node.getParent());

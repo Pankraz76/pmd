@@ -33,7 +33,7 @@ public class DealingWithNull {
     static void test2(Object o) {
         switch (o) {
             case null      -> throw new NullPointerException();
-            case String s  -> System.out.println("String: "+s);
+            case String s  -> System.out.println("String: " + s);
             case Integer i -> System.out.println("Integer");
             default  -> System.out.println("default");
         }
@@ -41,7 +41,7 @@ public class DealingWithNull {
 
 
     static void test3(Object o) {
-        switch(o) {
+        switch (o) {
             case null:
                 System.out.println("null");
                 break; // note: fall-through to a CasePattern is not allowed, as the pattern variable is not initialized
@@ -53,19 +53,20 @@ public class DealingWithNull {
                 break;
         }
 
-        switch(o) {
+        switch (o) {
             case null -> System.out.println("null");
             case String s -> System.out.println("String");
             default -> System.out.println("default case");
         }
 
-        switch(o) {
-            case null: default: 
+        switch (o) {
+            case null:
+            default:
                 System.out.println("The rest (including null)");
         }
 
-        switch(o) {
-            case null, default -> 
+        switch (o) {
+            case null, default ->
                 System.out.println("The rest (including null)");
         }
     }

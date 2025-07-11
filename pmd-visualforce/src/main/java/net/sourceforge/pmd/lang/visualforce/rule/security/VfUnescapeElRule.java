@@ -49,8 +49,7 @@ public class VfUnescapeElRule extends AbstractVfRule {
     private static final Set<ElEscapeDetector.Escaping> JSENCODE_JSINHTMLENCODE = EnumSet.of(ElEscapeDetector.Escaping.JSENCODE, ElEscapeDetector.Escaping.JSINHTMLENCODE);
     private static final Set<ElEscapeDetector.Escaping> ANY_ENCODE = EnumSet.of(ElEscapeDetector.Escaping.ANY);
 
-    @Override
-    public Object visit(ASTHtmlScript node, Object data) {
+    @Override public Object visit(ASTHtmlScript node, Object data) {
         checkIfCorrectlyEscaped(node, data);
 
         return super.visit(node, data);
@@ -83,8 +82,7 @@ public class VfUnescapeElRule extends AbstractVfRule {
                 || ElEscapeDetector.expressionRecursivelyValid(expression, JSENCODE_JSINHTMLENCODE);
     }
 
-    @Override
-    public Object visit(ASTElement node, Object data) {
+    @Override public Object visit(ASTElement node, Object data) {
         if (doesTagSupportEscaping(node)) {
             checkApexTagsThatSupportEscaping(node, data);
         } else {
@@ -97,12 +95,12 @@ public class VfUnescapeElRule extends AbstractVfRule {
 
     private void checkLimitedFlags(ASTElement node, Object data) {
         switch (node.getName().toLowerCase(Locale.ROOT)) {
-        case IFRAME_CONST:
-        case APEXIFRAME_CONST:
-        case A_CONST:
-            break;
-        default:
-            return;
+            case IFRAME_CONST:
+            case APEXIFRAME_CONST:
+            case A_CONST:
+                break;
+            default:
+                return;
         }
 
         final List<ASTAttribute> attributes = node.children(ASTAttribute.class).toList();
@@ -214,41 +212,41 @@ public class VfUnescapeElRule extends AbstractVfRule {
         for (ASTAttribute attr : node.children(ASTAttribute.class)) {
             String name = attr.getName().toLowerCase(Locale.ROOT);
             switch (name) {
-            case ESCAPE:
-            case ITEM_ESCAPED:
-                final ASTText text = attr.descendants(ASTText.class).first();
-                if (text != null) {
-                    if (FALSE.equalsIgnoreCase(text.getImage())) {
-                        isUnescaped = true;
+                case ESCAPE:
+                case ITEM_ESCAPED:
+                    final ASTText text = attr.descendants(ASTText.class).first();
+                    if (text != null) {
+                        if (FALSE.equalsIgnoreCase(text.getImage())) {
+                            isUnescaped = true;
+                        }
                     }
-                }
-                break;
-            case VALUE:
-            case ITEM_VALUE:
+                    break;
+                case VALUE:
+                case ITEM_VALUE:
 
-                for (ASTElExpression el : attr.descendants(ASTElExpression.class)) {
-                    if (ElEscapeDetector.startsWithSafeResource(el)) {
-                        continue;
+                    for (ASTElExpression el : attr.descendants(ASTElExpression.class)) {
+                        if (ElEscapeDetector.startsWithSafeResource(el)) {
+                            continue;
+                        }
+
+                        if (ElEscapeDetector.doesElContainAnyUnescapedIdentifiers(el,
+                                ElEscapeDetector.Escaping.HTMLENCODE)) {
+                            isEL = true;
+                            toReport.add(el);
+                        }
                     }
 
-                    if (ElEscapeDetector.doesElContainAnyUnescapedIdentifiers(el,
-                            ElEscapeDetector.Escaping.HTMLENCODE)) {
-                        isEL = true;
-                        toReport.add(el);
+                    final ASTText textValue = attr.descendants(ASTText.class).first();
+                    if (textValue != null) {
+
+                        if (PLACEHOLDERS.matcher(textValue.getImage()).matches()) {
+                            hasPlaceholders = true;
+                        }
                     }
-                }
 
-                final ASTText textValue = attr.descendants(ASTText.class).first();
-                if (textValue != null) {
-
-                    if (PLACEHOLDERS.matcher(textValue.getImage()).matches()) {
-                        hasPlaceholders = true;
-                    }
-                }
-
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
             }
 
         }
@@ -272,13 +270,13 @@ public class VfUnescapeElRule extends AbstractVfRule {
         }
 
         switch (node.getName().toLowerCase(Locale.ROOT)) { // vf is case insensitive
-        case APEX_OUTPUT_TEXT:
-        case APEX_PAGE_MESSAGE:
-        case APEX_PAGE_MESSAGES:
-        case APEX_SELECT_OPTION:
-            return true;
-        default:
-            return false;
+            case APEX_OUTPUT_TEXT:
+            case APEX_PAGE_MESSAGE:
+            case APEX_PAGE_MESSAGES:
+            case APEX_SELECT_OPTION:
+                return true;
+            default:
+                return false;
         }
 
     }

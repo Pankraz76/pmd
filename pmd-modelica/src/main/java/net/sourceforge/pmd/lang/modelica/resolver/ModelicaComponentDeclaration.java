@@ -35,8 +35,7 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
             this.name = name;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return name;
         }
     }
@@ -53,8 +52,7 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
             this.name = name;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return name;
         }
     }
@@ -70,8 +68,7 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
             this.name = name;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return name;
         }
     }
@@ -100,8 +97,7 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
         containingScope = scope;
     }
 
-    @Override
-    public ModelicaClassScope getContainingScope() {
+    @Override public ModelicaClassScope getContainingScope() {
         return containingScope;
     }
 
@@ -158,18 +154,15 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
         return causality;
     }
 
-    @Override
-    public String getSimpleDeclarationName() {
+    @Override public String getSimpleDeclarationName() {
         return declarationName;
     }
 
-    @Override
-    public String getDescriptiveName() {
+    @Override public String getDescriptiveName() {
         return declarationName;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder sb = new StringBuilder();
         if (kind != null) {
             sb.append(kind.toString());
@@ -202,19 +195,18 @@ public class ModelicaComponentDeclaration extends AbstractModelicaDeclaration im
         return typeCandidates;
     }
 
-    @Override
-    void resolveFurtherNameComponents(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
+    @Override void resolveFurtherNameComponents(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
         if (name.isEmpty()) {
             result.addCandidate(this);
             return;
         }
 
         ResolutionResult<ModelicaType> resolvedType = getTypeCandidates();
-        for (ModelicaType decl: resolvedType.getBestCandidates()) {
+        for (ModelicaType decl : resolvedType.getBestCandidates()) {
             ((AbstractModelicaDeclaration) decl).resolveFurtherNameComponents(result, name);
         }
         result.markHidingPoint();
-        for (ModelicaType decl: resolvedType.getHiddenCandidates()) {
+        for (ModelicaType decl : resolvedType.getHiddenCandidates()) {
             ((AbstractModelicaDeclaration) decl).resolveFurtherNameComponents(result, name);
         }
     }

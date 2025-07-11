@@ -22,8 +22,7 @@ abstract class AbstractInvocationExpr extends AbstractJavaExpr implements Invoca
         this.result = result;
     }
 
-    @Override
-    public OverloadSelectionResult getOverloadSelectionInfo() {
+    @Override public OverloadSelectionResult getOverloadSelectionInfo() {
         forceTypeResolution();
         return assertNonNullAfterTypeRes(result);
     }

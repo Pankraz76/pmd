@@ -28,13 +28,11 @@ public class FormalParameterNamingConventionsRule extends AbstractNamingConventi
         definePropertyDescriptor(METHOD_PARAMETER_REGEX);
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTParameter.class);
     }
 
-    @Override
-    public Object visit(ASTParameter node, Object data) {
+    @Override public Object visit(ASTParameter node, Object data) {
         // classes that extend Exception will contains methods that have parameters with null names
         if (node.getImage() == null) {
             return data;
@@ -49,8 +47,7 @@ public class FormalParameterNamingConventionsRule extends AbstractNamingConventi
         return data;
     }
 
-    @Override
-    protected String displayName(String name) {
+    @Override protected String displayName(String name) {
         return DESCRIPTOR_TO_DISPLAY_NAME.get(name);
     }
 }

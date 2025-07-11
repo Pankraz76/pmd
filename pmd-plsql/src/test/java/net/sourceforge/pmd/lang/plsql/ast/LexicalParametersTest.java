@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class LexicalParametersTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseLexicalParameters() {
+    @Test void parseLexicalParameters() {
         plsql.parseResource("LexicalParameters.sql");
     }
 }

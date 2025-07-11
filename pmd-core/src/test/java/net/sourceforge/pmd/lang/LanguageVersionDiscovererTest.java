@@ -17,8 +17,7 @@ import org.junit.jupiter.api.Test;
 
 class LanguageVersionDiscovererTest {
 
-    @Test
-    void testFileLanguageIsUnknown() {
+    @Test void testFileLanguageIsUnknown() {
         DummyLanguageModule lang = DummyLanguageModule.getInstance();
         LanguageRegistry lr = LanguageRegistry.singleton(lang);
         LanguageVersionDiscoverer lvDicoverer = new LanguageVersionDiscoverer(lr);
@@ -27,8 +26,7 @@ class LanguageVersionDiscovererTest {
         assertNull(versionForFile);
     }
 
-    @Test
-    void testFileLanguageIsDetected() {
+    @Test void testFileLanguageIsDetected() {
         DummyLanguageModule lang = DummyLanguageModule.getInstance();
         LanguageRegistry lr = LanguageRegistry.singleton(lang);
         LanguageVersionDiscoverer lvDicoverer = new LanguageVersionDiscoverer(lr);
@@ -39,8 +37,7 @@ class LanguageVersionDiscovererTest {
         assertEquals(lang.getDefaultVersion().getVersion(), versionForFile.getVersion());
     }
 
-    @Test
-    void testDialectTakesPrecedence() {
+    @Test void testDialectTakesPrecedence() {
         DummyLanguageModule lang = DummyLanguageModule.getInstance();
         DummyLanguageDialectModule dialect = DummyLanguageDialectModule.getInstance();
         Set<Language> langSet = new HashSet<>();

@@ -37,12 +37,11 @@ public abstract class AbstractPropertySource implements PropertySource {
     private final Map<PropertyDescriptor<?>, Object> propertyValuesByDescriptor = new HashMap<>();
 
 
-    @Override
-    public void definePropertyDescriptor(PropertyDescriptor<?> propertyDescriptor) {
+    @Override public void definePropertyDescriptor(PropertyDescriptor<?> propertyDescriptor) {
         // Check to ensure the property does not already exist.
         if (getPropertyDescriptor(propertyDescriptor.name()) != null) {
             throw new IllegalArgumentException("There is already a PropertyDescriptor with name '"
-                                                       + propertyDescriptor.name() + "' defined on " + getPropertySourceType() + " " + getName() + ".");
+                    + propertyDescriptor.name() + "' defined on " + getPropertySourceType() + " " + getName() + ".");
 
         }
         propertyDescriptors.add(propertyDescriptor);
@@ -51,8 +50,7 @@ public abstract class AbstractPropertySource implements PropertySource {
 
     protected abstract String getPropertySourceType();
 
-    @Override
-    public PropertyDescriptor<?> getPropertyDescriptor(String name) {
+    @Override public PropertyDescriptor<?> getPropertyDescriptor(String name) {
         for (PropertyDescriptor<?> propertyDescriptor : propertyDescriptors) {
             if (name.equals(propertyDescriptor.name())) {
                 return propertyDescriptor;
@@ -62,45 +60,38 @@ public abstract class AbstractPropertySource implements PropertySource {
     }
 
 
-    @Override
-    public boolean hasDescriptor(PropertyDescriptor<?> descriptor) {
+    @Override public boolean hasDescriptor(PropertyDescriptor<?> descriptor) {
         return propertyDescriptors.contains(descriptor);
     }
 
 
-    @Override
-    public final List<PropertyDescriptor<?>> getOverriddenPropertyDescriptors() {
+    @Override public final List<PropertyDescriptor<?>> getOverriddenPropertyDescriptors() {
         return new ArrayList<>(propertyValuesByDescriptor.keySet());
     }
 
 
-    @Override
-    public List<PropertyDescriptor<?>> getPropertyDescriptors() {
+    @Override public List<PropertyDescriptor<?>> getPropertyDescriptors() {
         return Collections.unmodifiableList(propertyDescriptors);
     }
 
 
-    @Override
-    public <T> T getProperty(PropertyDescriptor<T> propertyDescriptor) {
+    @Override public <T> T getProperty(PropertyDescriptor<T> propertyDescriptor) {
         checkValidPropertyDescriptor(propertyDescriptor);
         T result = propertyDescriptor.defaultValue();
         if (propertyValuesByDescriptor.containsKey(propertyDescriptor)) {
-            @SuppressWarnings("unchecked")
-            T value = (T) propertyValuesByDescriptor.get(propertyDescriptor);
+            @SuppressWarnings("unchecked") T value = (T) propertyValuesByDescriptor.get(propertyDescriptor);
             result = value;
         }
         return result;
     }
 
 
-    @Override
-    public boolean isPropertyOverridden(PropertyDescriptor<?> propertyDescriptor) {
+    @Override public boolean isPropertyOverridden(PropertyDescriptor<?> propertyDescriptor) {
         return propertyValuesByDescriptor.containsKey(propertyDescriptor);
     }
 
 
-    @Override
-    public <T> void setProperty(PropertyDescriptor<T> propertyDescriptor, T value) {
+    @Override public <T> void setProperty(PropertyDescriptor<T> propertyDescriptor, T value) {
         checkValidPropertyDescriptor(propertyDescriptor);
         if (value instanceof List) {
             propertyValuesByDescriptor.put(propertyDescriptor, Collections.unmodifiableList((List) value));
@@ -122,14 +113,12 @@ public abstract class AbstractPropertySource implements PropertySource {
     }
 
 
-    @Override
-    public final Map<PropertyDescriptor<?>, Object> getOverriddenPropertiesByPropertyDescriptor() {
+    @Override public final Map<PropertyDescriptor<?>, Object> getOverriddenPropertiesByPropertyDescriptor() {
         return new HashMap<>(propertyValuesByDescriptor);
     }
 
 
-    @Override
-    public Map<PropertyDescriptor<?>, Object> getPropertiesByPropertyDescriptor() {
+    @Override public Map<PropertyDescriptor<?>, Object> getPropertiesByPropertyDescriptor() {
         if (propertyDescriptors.isEmpty()) {
             return Collections.emptyMap();
         }
@@ -149,8 +138,7 @@ public abstract class AbstractPropertySource implements PropertySource {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -168,22 +156,19 @@ public abstract class AbstractPropertySource implements PropertySource {
         Map<String, String> propertiesWithValues = new HashMap<>();
         propertyDescriptors.forEach(propertyDescriptor -> {
             Object value = propertyValuesByDescriptor.getOrDefault(propertyDescriptor, propertyDescriptor.defaultValue());
-            @SuppressWarnings({"unchecked", "rawtypes"})
-            String valueString = ((PropertyDescriptor) propertyDescriptor).serializer().toString(value);
+            @SuppressWarnings({"unchecked", "rawtypes"}) String valueString = ((PropertyDescriptor) propertyDescriptor).serializer().toString(value);
             propertiesWithValues.put(propertyDescriptor.name(), valueString);
         });
         Map<String, String> thatPropertiesWithValues = new HashMap<>();
         that.propertyDescriptors.forEach(propertyDescriptor -> {
             Object value = that.propertyValuesByDescriptor.getOrDefault(propertyDescriptor, propertyDescriptor.defaultValue());
-            @SuppressWarnings({"unchecked", "rawtypes"})
-            String valueString = ((PropertyDescriptor) propertyDescriptor).serializer().toString(value);
+            @SuppressWarnings({"unchecked", "rawtypes"}) String valueString = ((PropertyDescriptor) propertyDescriptor).serializer().toString(value);
             thatPropertiesWithValues.put(propertyDescriptor.name(), valueString);
         });
         return Objects.equals(propertiesWithValues, thatPropertiesWithValues);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hash(propertyDescriptors, propertyValuesByDescriptor);
     }
 }

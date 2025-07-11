@@ -39,8 +39,7 @@ import net.sourceforge.pmd.util.IteratorUtil;
  */
 class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
 
-    @Test
-    void testHasPrimaryBound() {
+    @Test void testHasPrimaryBound() {
         TypeInferenceLogger log = spy(TypeInferenceLogger.noop());
         InferenceContext ctx = emptyCtx(log);
 
@@ -64,8 +63,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         verify(log).boundAdded(ctx, v2, BoundKind.UPPER, listOfV1, false);
     }
 
-    @Test
-    void testBoundsOnConvertibilityCheck() {
+    @Test void testBoundsOnConvertibilityCheck() {
         TypeInferenceLogger log = spy(TypeInferenceLogger.noop());
         InferenceContext ctx = emptyCtx(log);
 
@@ -84,8 +82,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
     }
 
 
-    @Test
-    void testNullTypeCannotBeLowerBound() {
+    @Test void testNullTypeCannotBeLowerBound() {
         TypeInferenceLogger log = spy(TypeInferenceLogger.noop());
         InferenceContext ctx = emptyCtx(log);
 
@@ -99,8 +96,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         verify(log, never()).boundAdded(ctx, v1, BoundKind.LOWER, ts.NULL_TYPE, false);
     }
 
-    @Test
-    void testEqBoundWithGenerics() {
+    @Test void testEqBoundWithGenerics() {
         TypeInferenceLogger log = spy(TypeInferenceLogger.noop());
         InferenceContext ctx = emptyCtx(log);
 
@@ -128,8 +124,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
     }
 
 
-    @Test
-    void testEqBoundMergesIvar() {
+    @Test void testEqBoundMergesIvar() {
         TypeInferenceLogger log = spy(TypeInferenceLogger.noop());
         InferenceContext ctx = emptyCtx(log);
 
@@ -151,8 +146,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         assertTrue(v2.isEquivalentTo(v1));
     }
 
-    @Test
-    void testSymmetricPropagationOfUpper() {
+    @Test void testSymmetricPropagationOfUpper() {
         TypeInferenceLogger log = spy(TypeInferenceLogger.noop());
         InferenceContext ctx = emptyCtx(log);
 
@@ -171,8 +165,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         verify(log, never()).boundAdded(any(), any(), any(), any(), eq(true));
     }
 
-    @Test
-    void testWildLowerLower() {
+    @Test void testWildLowerLower() {
         InferenceContext ctx = emptyCtx();
 
         InferenceVar a = newIvar(ctx);
@@ -186,8 +179,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         assertThat(b, hasBoundsExactly(upper(a)));
     }
 
-    @Test
-    void testWildUpperUpper() {
+    @Test void testWildUpperUpper() {
         InferenceContext ctx = emptyCtx();
 
         InferenceVar a = newIvar(ctx);
@@ -215,8 +207,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
             G<A> <: G<?> forall A (incl. wildcards)
      */
 
-    @Test
-    void testWildLowerUpper() {
+    @Test void testWildLowerUpper() {
         InferenceContext ctx = emptyCtx();
 
         InferenceVar a = newIvar(ctx);
@@ -230,8 +221,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         assertThat(a, hasBoundsExactly(upper(ts.OBJECT)));
     }
 
-    @Test
-    void testWildUpperLower() {
+    @Test void testWildUpperLower() {
         InferenceContext ctx = emptyCtx();
 
         InferenceVar a = newIvar(ctx);
@@ -258,9 +248,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
     }
 
 
-
-    @Test
-    void testIntersectionRight() {
+    @Test void testIntersectionRight() {
         InferenceContext ctx = emptyCtx();
 
         InferenceVar a = newIvar(ctx);
@@ -272,16 +260,15 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
 
         JTypeMirror listOfB = listType(extendsWild(b));
         addSubtypeConstraint(ctx,
-                             a,
-                             intersect(listOfB, ts.SERIALIZABLE));
+                a,
+                intersect(listOfB, ts.SERIALIZABLE));
 
         assertThat(a, hasBoundsExactly(upper(ts.SERIALIZABLE), upper(listOfB)));
         assertThat(b, hasBoundsExactly(upper(ts.OBJECT)));
     }
 
 
-    @Test
-    void testIntersectionLeft() {
+    @Test void testIntersectionLeft() {
         InferenceContext ctx = emptyCtx();
 
         InferenceVar a = newIvar(ctx);
@@ -303,15 +290,14 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
 
         JTypeMirror listOfA = listType(extendsWild(a));
         addSubtypeConstraint(ctx,
-                             intersect(listOfA, ts.SERIALIZABLE),
-                             b);
+                intersect(listOfA, ts.SERIALIZABLE),
+                b);
 
         assertThat(a, hasBoundsExactly(upper(ts.OBJECT)));
         assertThat(b, hasBoundsExactly(lower(intersect(listOfA, ts.SERIALIZABLE))));
     }
 
-    @Test
-    void testArrayLower() {
+    @Test void testArrayLower() {
         InferenceContext ctx = emptyCtx();
 
         InferenceVar a = newIvar(ctx);
@@ -319,14 +305,13 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         // Boolean[] <: 'a[]
         // ~> Boolean <: 'a
         addSubtypeConstraint(ctx,
-                             ts.arrayType(ts.BOOLEAN.box()),
-                             ts.arrayType(a));
+                ts.arrayType(ts.BOOLEAN.box()),
+                ts.arrayType(a));
 
         assertThat(a, hasBoundsExactly(lower(ts.BOOLEAN.box())));
     }
 
-    @Test
-    void testArrayUpper() {
+    @Test void testArrayUpper() {
         InferenceContext ctx = emptyCtx();
 
         InferenceVar a = newIvar(ctx);
@@ -334,8 +319,8 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         // 'a[] <: Boolean[]
         // ~> 'a <: Boolean
         addSubtypeConstraint(ctx,
-                             ts.arrayType(a),
-                             ts.arrayType(ts.BOOLEAN.box()));
+                ts.arrayType(a),
+                ts.arrayType(ts.BOOLEAN.box()));
 
         assertThat(a, hasBoundsExactly(upper(ts.BOOLEAN.box())));
     }
@@ -347,8 +332,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         return batches;
     }
 
-    @Test
-    void testGraphBuilding() {
+    @Test void testGraphBuilding() {
         InferenceContext ctx = emptyCtx();
         InferenceVar a = newIvar(ctx);
         InferenceVar b = newIvar(ctx);
@@ -358,8 +342,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         assertThat(batches, containsInAnyOrder(setOf(a), setOf(b)));
     }
 
-    @Test
-    void testGraphBuildingWithDependency() {
+    @Test void testGraphBuildingWithDependency() {
         InferenceContext ctx = emptyCtx();
         InferenceVar a = newIvar(ctx);
         InferenceVar b = newIvar(ctx);
@@ -372,8 +355,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         assertThat(batches, contains(setOf(b), setOf(a)));
     }
 
-    @Test
-    void testGraphBuildingWithDependency2() {
+    @Test void testGraphBuildingWithDependency2() {
         InferenceContext ctx = emptyCtx();
         InferenceVar a = newIvar(ctx);
         InferenceVar b = newIvar(ctx);
@@ -388,10 +370,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
     }
 
 
-
-
-    @Test
-    void testGraphBuildingWithExtraDependency() {
+    @Test void testGraphBuildingWithExtraDependency() {
         InferenceContext ctx = emptyCtx();
         InferenceVar a = newIvar(ctx);
         InferenceVar b = newIvar(ctx);
@@ -404,8 +383,7 @@ class InferenceCtxUnitTests extends BaseTypeInferenceUnitTest {
         assertThat(batches, contains(setOf(a), setOf(b)));
     }
 
-    @Test
-    void testGraphBuildingWithDependencyCycle() {
+    @Test void testGraphBuildingWithDependencyCycle() {
         InferenceContext ctx = emptyCtx();
         InferenceVar a = newIvar(ctx);
         InferenceVar b = newIvar(ctx);

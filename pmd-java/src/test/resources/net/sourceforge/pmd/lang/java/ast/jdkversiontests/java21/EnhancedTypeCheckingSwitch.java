@@ -9,8 +9,11 @@ public class EnhancedTypeCheckingSwitch {
 
     // As of Java 21
     // Selector expression typing
-    record Point(int i, int j) {}
-    enum Color { RED, GREEN, BLUE; }
+    record Point(int i, int j) {
+    }
+
+    enum Color { RED, GREEN, BLUE;
+    }
 
     static void typeTester(Object obj) {
         switch (obj) {
@@ -28,7 +31,7 @@ public class EnhancedTypeCheckingSwitch {
         typeTester(o);
         typeTester(Color.BLUE);
 
-        o = new int[] {1, 2, 3, 4};
+        o = new int[]{1, 2, 3, 4};
         typeTester(o);
 
         o = new Point(7, 8);

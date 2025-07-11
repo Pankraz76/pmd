@@ -16,13 +16,11 @@ public class DuplicateJspImportsRule extends AbstractJspRule {
 
     private Set<String> imports = new HashSet<>();
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         imports.clear();
     }
 
-    @Override
-    public Object visit(ASTJspDirectiveAttribute node, Object data) {
+    @Override public Object visit(ASTJspDirectiveAttribute node, Object data) {
 
         if (!"import".equals(node.getName())) {
             return super.visit(node, data);

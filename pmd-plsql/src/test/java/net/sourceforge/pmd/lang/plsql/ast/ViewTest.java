@@ -10,18 +10,15 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class ViewTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseCreateViewIssue981() {
+    @Test void parseCreateViewIssue981() {
         plsql.parseResource("ViewIssue981.pls");
     }
 
-    @Test
-    void parseCreateView() {
+    @Test void parseCreateView() {
         plsql.parseResource("CreateViewWithSubquery.pls");
     }
 
-    @Test
-    void parseCreateViewWithoutSemicolon() {
+    @Test void parseCreateViewWithoutSemicolon() {
         plsql.parseResource("QueryWithoutSemicolon.sql");
     }
 }

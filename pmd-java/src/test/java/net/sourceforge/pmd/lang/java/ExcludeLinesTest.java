@@ -16,8 +16,7 @@ import net.sourceforge.pmd.reporting.Report;
 
 class ExcludeLinesTest extends BaseParserTest {
 
-    @Test
-    void testAcceptance() {
+    @Test void testAcceptance() {
         assertSize(java.executeRule(getRule(), TEST1), 0);
         assertSize(java.executeRule(getRule(), TEST2), 1);
     }
@@ -28,36 +27,34 @@ class ExcludeLinesTest extends BaseParserTest {
                 setMessage("!");
             }
 
-            @Override
-            public Object visit(ASTVariableId node, Object data) {
+            @Override public Object visit(ASTVariableId node, Object data) {
                 asCtx(data).addViolation(node);
                 return data;
             }
         };
     }
 
-    @Test
-    void testAlternateMarker() {
+    @Test void testAlternateMarker() {
         Report rpt = java.withSuppressMarker("FOOBAR").executeRule(getRule(), TEST3);
         assertSize(rpt, 0);
         assertSuppressed(rpt, 1);
     }
 
     private static final String TEST1 = "public class Foo {\n"
-                                        + " void foo() {\n"
-                                        + "  int x; //NOPMD \n"
-                                        + " } \n"
-                                        + "}";
+            + " void foo() {\n"
+            + "  int x; //NOPMD \n"
+            + " } \n"
+            + "}";
 
     private static final String TEST2 = "public class Foo {\n"
-                                        + " void foo() {\n"
-                                        + "  int x;\n"
-                                        + " } \n"
-                                        + "}";
+            + " void foo() {\n"
+            + "  int x;\n"
+            + " } \n"
+            + "}";
 
     private static final String TEST3 = "public class Foo {\n"
-                                        + " void foo() {\n"
-                                        + "  int x; // FOOBAR\n"
-                                        + " } \n"
-                                        + "}";
+            + " void foo() {\n"
+            + "  int x; // FOOBAR\n"
+            + " } \n"
+            + "}";
 }

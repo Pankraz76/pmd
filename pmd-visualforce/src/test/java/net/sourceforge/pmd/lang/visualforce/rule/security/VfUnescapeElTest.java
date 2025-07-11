@@ -25,8 +25,7 @@ class VfUnescapeElTest extends PmdRuleTst {
     /**
      * Verify that CustomFields stored in sfdx project format are correctly parsed
      */
-    @Test
-    void testSfdxCustomFields() {
+    @Test void testSfdxCustomFields() {
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
                 .resolve("StandardAccount.page");
 
@@ -50,8 +49,7 @@ class VfUnescapeElTest extends PmdRuleTst {
     /**
      * Verify that CustomFields stored in mdapi format are correctly parsed
      */
-    @Test
-    void testMdapiCustomFields() {
+    @Test void testMdapiCustomFields() {
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.MDAPI, VFTestUtils.MetadataType.Vf).resolve("StandardAccount.page");
 
         Report report = runRule(vfPagePath);
@@ -68,8 +66,7 @@ class VfUnescapeElTest extends PmdRuleTst {
     /**
      * Tests a page with a single Apex controller
      */
-    @Test
-    void testApexController() {
+    @Test void testApexController() {
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf).resolve("ApexController.page");
 
         Report report = runRule(vfPagePath);
@@ -87,8 +84,7 @@ class VfUnescapeElTest extends PmdRuleTst {
     /**
      * Tests a page with a standard controller and two Apex extensions
      */
-    @Test
-    void testExtensions() {
+    @Test void testExtensions() {
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
                 .resolve(Paths.get("StandardAccountWithExtensions.page"));
 

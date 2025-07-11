@@ -10,8 +10,7 @@ public final class ASTTriggerUnit extends AbstractPLSQLNode implements Executabl
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -20,8 +19,7 @@ public final class ASTTriggerUnit extends AbstractPLSQLNode implements Executabl
      *
      * @return a String representing the name of the trigger
      */
-    @Override
-    public String getMethodName() {
+    @Override public String getMethodName() {
         return getImage();
     }
 
@@ -34,8 +32,7 @@ public final class ASTTriggerUnit extends AbstractPLSQLNode implements Executabl
      *
      * @return a String representing the name of the Oracle Object
      */
-    @Override
-    public String getObjectName() {
+    @Override public String getObjectName() {
         return getImage();
     }
 }

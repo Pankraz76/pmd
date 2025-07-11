@@ -20,8 +20,8 @@ class LazyTypeSig {
     private TypeAnnotationSet typeAnnots;
 
     LazyTypeSig(ClassStub ctx,
-                String descriptor,
-                @Nullable String signature) {
+            String descriptor,
+            @Nullable String signature) {
         this.ctx = ctx;
         this.sig = signature == null ? descriptor : signature;
     }
@@ -46,8 +46,7 @@ class LazyTypeSig {
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return sig;
     }
 

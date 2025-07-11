@@ -27,8 +27,7 @@ public class VfHtmlStyleTagXssRule extends AbstractVfRule {
     private static final Set<ElEscapeDetector.Escaping> ANY_ENCODE = EnumSet.of(ElEscapeDetector.Escaping.ANY);
     private static final Pattern URL_METHOD_PATTERN = Pattern.compile("url\\s*\\([^)]*$", Pattern.CASE_INSENSITIVE);
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTElExpression.class);
     }
 
@@ -45,8 +44,7 @@ public class VfHtmlStyleTagXssRule extends AbstractVfRule {
      * </ASTElement>
      * }</pre>
      */
-    @Override
-    public Object visit(ASTElExpression node, Object data) {
+    @Override public Object visit(ASTElExpression node, Object data) {
         final VfNode nodeParent = node.getParent();
         if (!(nodeParent instanceof ASTContent)) {
             // nothing to do here.

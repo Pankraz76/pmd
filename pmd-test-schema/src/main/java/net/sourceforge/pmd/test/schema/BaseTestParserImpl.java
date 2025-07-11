@@ -89,11 +89,11 @@ class BaseTestParserImpl {
     }
 
     private void parseSingleTest(Element testCode,
-                                 RuleTestDescriptor descriptor,
-                                 Map<String, Element> fragments,
-                                 Set<String> usedFragments,
-                                 XmlPositioner xmlPositioner,
-                                 PmdXmlReporter err) {
+            RuleTestDescriptor descriptor,
+            Map<String, Element> fragments,
+            Set<String> usedFragments,
+            XmlPositioner xmlPositioner,
+            PmdXmlReporter err) {
         {
             String description = getSingleChildText(testCode, "description", true, err);
             if (description == null) {
@@ -106,13 +106,13 @@ class BaseTestParserImpl {
         parseBoolAttribute(testCode, "useAuxClasspath", true, err, "Attribute 'useAuxClasspath' is deprecated and ignored, assumed true");
 
         boolean disabled = parseBoolAttribute(testCode, "disabled", false, err, null)
-                          | !parseBoolAttribute(testCode, "regressionTest", true, err, "Attribute ''regressionTest'' is deprecated, use ''disabled'' with inverted value");
+                | !parseBoolAttribute(testCode, "regressionTest", true, err, "Attribute ''regressionTest'' is deprecated, use ''disabled'' with inverted value");
 
         descriptor.setDisabled(disabled);
 
 
         boolean focused = parseBoolAttribute(testCode, "focused", false, err,
-                                             "Attribute focused is used, do not forget to remove it when checking in sources");
+                "Attribute focused is used, do not forget to remove it when checking in sources");
 
         descriptor.setFocused(focused);
 
@@ -188,10 +188,10 @@ class BaseTestParserImpl {
         }
 
         descriptor.recordExpectedViolations(
-            expectedProblems,
-            expectedLineNumbers,
-            expectedEndLineNumbers,
-            expectedMessages
+                expectedProblems,
+                expectedLineNumbers,
+                expectedEndLineNumbers,
+                expectedMessages
         );
 
     }
@@ -229,7 +229,7 @@ class BaseTestParserImpl {
             List<Element> coderefs = DomUtils.childrenNamed(testCode, "code-ref");
             if (coderefs.isEmpty()) {
                 throw new RuntimeException(
-                    "Required tag is missing from the test-xml. Supply either a code or a code-ref tag");
+                        "Required tag is missing from the test-xml. Supply either a code or a code-ref tag");
             }
             Element coderef = coderefs.get(0);
             Attr id = getRequiredAttribute("id", coderef, err);

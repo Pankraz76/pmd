@@ -22,8 +22,7 @@ public class NullAssignmentRule extends AbstractJavaRulechainRule {
         super(ASTNullLiteral.class);
     }
 
-    @Override
-    public Object visit(ASTNullLiteral node, Object data) {
+    @Override public Object visit(ASTNullLiteral node, Object data) {
         if (node.getParent() instanceof ASTAssignmentExpression) {
             ASTAssignmentExpression assignment = (ASTAssignmentExpression) node.getParent();
             if (isAssignmentToFinal(assignment)) {
@@ -42,11 +41,9 @@ public class NullAssignmentRule extends AbstractJavaRulechainRule {
     }
 
     private boolean isAssignmentToFinal(ASTAssignmentExpression n) {
-        @NonNull
-        ASTAssignableExpr leftOperand = n.getLeftOperand();
+        @NonNull ASTAssignableExpr leftOperand = n.getLeftOperand();
         if (leftOperand instanceof ASTNamedReferenceExpr) {
-            @Nullable
-            JVariableSymbol symbol = ((ASTNamedReferenceExpr) leftOperand).getReferencedSym();
+            @Nullable JVariableSymbol symbol = ((ASTNamedReferenceExpr) leftOperand).getReferencedSym();
             return symbol != null && symbol.isFinal();
         }
         return false;

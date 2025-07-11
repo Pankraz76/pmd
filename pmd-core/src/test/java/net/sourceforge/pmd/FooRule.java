@@ -25,23 +25,19 @@ public class FooRule extends AbstractRule {
         setLanguage(DummyLanguageModule.getInstance());
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forXPathNames(setOf("dummyNode", "dummyRootNode"));
     }
 
-    @Override
-    public String getMessage() {
+    @Override public String getMessage() {
         return "blah";
     }
 
-    @Override
-    public String getRuleSetName() {
+    @Override public String getRuleSetName() {
         return "RuleSet";
     }
 
-    @Override
-    public void apply(Node node, RuleContext ctx) {
+    @Override public void apply(Node node, RuleContext ctx) {
         for (int i = 0; i < node.getNumChildren(); i++) {
             apply(node.getChild(i), ctx);
         }

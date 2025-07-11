@@ -111,8 +111,7 @@ class SignatureParser {
             super(getTypeSystem(), lexicalScope, chars, start, end);
         }
 
-        @Override
-        public @NonNull JClassSymbol makeClassSymbol(String internalName, int observedArity) {
+        @Override public @NonNull JClassSymbol makeClassSymbol(String internalName, int observedArity) {
             return loader.resolveFromInternalNameCannotFail(internalName, observedArity);
         }
     }

@@ -53,8 +53,7 @@ abstract class AbstractModelicaClassSpecifierNode extends AbstractModelicaNode i
         }
     }
 
-    @Override
-    public String getSimpleClassName() {
+    @Override public String getSimpleClassName() {
         return firstChild(ASTSimpleName.class).getName();
     }
 }

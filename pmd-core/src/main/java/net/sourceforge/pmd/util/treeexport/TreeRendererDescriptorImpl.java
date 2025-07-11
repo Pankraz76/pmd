@@ -23,8 +23,7 @@ abstract class TreeRendererDescriptorImpl implements TreeRendererDescriptor {
     }
 
 
-    @Override
-    public PropertySource newPropertyBundle() {
+    @Override public PropertySource newPropertyBundle() {
         return new PropertyBundle(id, availableDescriptors());
     }
 
@@ -33,22 +32,19 @@ abstract class TreeRendererDescriptorImpl implements TreeRendererDescriptor {
         return Collections.emptySet();
     }
 
-    @Override
-    public String id() {
+    @Override public String id() {
         return id;
     }
 
-    @Override
-    public String description() {
+    @Override public String description() {
         return description;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "TreeDescriptorImpl{"
-            + "id='" + id + '\''
-            + ", description='" + description + '\''
-            + '}';
+                + "id='" + id + '\''
+                + ", description='" + description + '\''
+                + '}';
     }
 
     private static class PropertyBundle extends AbstractPropertySource {
@@ -57,20 +53,18 @@ abstract class TreeRendererDescriptorImpl implements TreeRendererDescriptor {
         private final String name;
 
         PropertyBundle(String name,
-                              Set<PropertyDescriptor<?>> available) {
+                Set<PropertyDescriptor<?>> available) {
             this.name = name;
             for (PropertyDescriptor<?> p : available) {
                 definePropertyDescriptor(p);
             }
         }
 
-        @Override
-        public String getName() {
+        @Override public String getName() {
             return name;
         }
 
-        @Override
-        protected String getPropertySourceType() {
+        @Override protected String getPropertySourceType() {
             return "tree renderer";
         }
     }

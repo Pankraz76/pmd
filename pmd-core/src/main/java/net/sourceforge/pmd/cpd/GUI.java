@@ -77,10 +77,10 @@ import net.sourceforge.pmd.util.CollectionUtil;
 public class GUI implements CPDListener {
 
     private static final Object[][] RENDERER_SETS = {
-        { "Text", new SimpleRenderer(), },
-        { "XML", new XMLRenderer(), },
-        { "CSV (comma)", new CSVRenderer(','), },
-        { "CSV (tab)", new CSVRenderer('\t'), }, };
+            {"Text", new SimpleRenderer(), },
+            {"XML", new XMLRenderer(), },
+            {"CSV (comma)", new CSVRenderer(','), },
+            {"CSV (tab)", new CSVRenderer('\t'), }, };
 
     private abstract static class LanguageConfig {
 
@@ -126,24 +126,20 @@ public class GUI implements CPDListener {
     private static final LanguageConfig CUSTOM_EXTENSION_LANG = new LanguageConfig() {
         private String extension = "custom_ext";
 
-        @Override
-        void setExtension(String extension) {
+        @Override void setExtension(String extension) {
             this.extension = extension;
         }
 
-        @Override
-        boolean canUseCustomExtension() {
+        @Override boolean canUseCustomExtension() {
             return true;
         }
 
-        @Override
-        public Language getLanguage() {
+        @Override public Language getLanguage() {
             return new CpdOnlyLanguageModuleBase(
-                LanguageMetadata.withId("custom_extension")
-                                .extensions(extension)
-                                .name("By extension...")) {
-                @Override
-                public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+                    LanguageMetadata.withId("custom_extension")
+                            .extensions(extension)
+                            .name("By extension...")) {
+                @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
                     return new AnyCpdLexer();
                 }
             };
@@ -154,8 +150,7 @@ public class GUI implements CPDListener {
     static {
         List<LanguageConfig> languages = new ArrayList<>();
         LanguageRegistry.CPD.getLanguages().stream().map(l -> new LanguageConfig() {
-            @Override
-            public Language getLanguage() {
+            @Override public Language getLanguage() {
                 return l;
             }
         }).forEach(languages::add);
@@ -167,9 +162,9 @@ public class GUI implements CPDListener {
 
     private static final int DEFAULT_CPD_MINIMUM_LENGTH = 75;
     private static final Map<String, LanguageConfig> LANGUAGE_CONFIGS_BY_LABEL =
-        CollectionUtil.associateBy(LANGUAGE_SETS, l -> l.getLanguage().getName());
+            CollectionUtil.associateBy(LANGUAGE_SETS, l -> l.getLanguage().getName());
     private static final KeyStroke COPY_KEY_STROKE = KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK,
-                                                                            false);
+            false);
     private static final KeyStroke DELETE_KEY_STROKE = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
 
     private static class ColumnSpec {
@@ -205,9 +200,9 @@ public class GUI implements CPDListener {
 
     public static final Comparator<Match> LABEL_COMPARATOR = Comparator.comparing(GUI::getLabel);
     private final ColumnSpec[] matchColumns = {
-        new ColumnSpec("Source", SwingConstants.LEFT, -1, LABEL_COMPARATOR),
-        new ColumnSpec("Matches", SwingConstants.RIGHT, 60, Match.MATCHES_COMPARATOR),
-        new ColumnSpec("Lines", SwingConstants.RIGHT, 45, Match.LINES_COMPARATOR), };
+            new ColumnSpec("Source", SwingConstants.LEFT, -1, LABEL_COMPARATOR),
+            new ColumnSpec("Matches", SwingConstants.RIGHT, 60, Match.MATCHES_COMPARATOR),
+            new ColumnSpec("Lines", SwingConstants.RIGHT, 45, Match.LINES_COMPARATOR), };
 
     private static LanguageConfig languageConfigFor(String label) {
         return LANGUAGE_CONFIGS_BY_LABEL.get(label);
@@ -222,8 +217,7 @@ public class GUI implements CPDListener {
             this.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_X);
         }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
+        @Override public void actionPerformed(ActionEvent e) {
             if (cleanupTask != null) {
                 try {
                     cleanupTask.run();
@@ -236,8 +230,7 @@ public class GUI implements CPDListener {
     }
 
     private final class GoListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+        @Override public void actionPerformed(ActionEvent e) {
             new Thread(() -> {
                 tokenizingFilesBar.setValue(0);
                 tokenizingFilesBar.setString("");
@@ -257,8 +250,7 @@ public class GUI implements CPDListener {
             renderer = theRenderer;
         }
 
-        @Override
-        public void actionPerformed(ActionEvent evt) {
+        @Override public void actionPerformed(ActionEvent evt) {
             JFileChooser fcSave = new JFileChooser();
             int ret = fcSave.showSaveDialog(GUI.this.frame);
             File f = fcSave.getSelectedFile();
@@ -290,8 +282,7 @@ public class GUI implements CPDListener {
     }
 
     private final class BrowseListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+        @Override public void actionPerformed(ActionEvent e) {
             JFileChooser fc = new JFileChooser(rootDirectoryField.getText());
             fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             fc.showDialog(frame, "Select");
@@ -309,8 +300,7 @@ public class GUI implements CPDListener {
             alignments = theAlignments;
         }
 
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+        @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
                 int row, int column) {
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
@@ -410,8 +400,7 @@ public class GUI implements CPDListener {
         frame.getContentPane().add(topPanel, BorderLayout.NORTH);
         frame.getContentPane().add(resultsPanel, BorderLayout.CENTER);
         frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
+            @Override public void windowClosing(WindowEvent e) {
                 closeSourceManager();
                 System.exit(0);
             }
@@ -440,7 +429,7 @@ public class GUI implements CPDListener {
 
     private JPanel makeSettingsPanel(JButton browseButton, JButton goButton, JButton cxButton) {
         JPanel settingsPanel = new JPanel();
-        GridBagHelper helper = new GridBagHelper(settingsPanel, new double[] { 0.2, 0.7, 0.1, 0.1 });
+        GridBagHelper helper = new GridBagHelper(settingsPanel, new double[]{0.2, 0.7, 0.1, 0.1});
         helper.addLabel("Root source directory:");
         helper.add(rootDirectoryField);
         helper.add(browseButton, 2);
@@ -515,7 +504,7 @@ public class GUI implements CPDListener {
 
     private JPanel makeProgressPanel() {
         JPanel progressPanel = new JPanel();
-        final double[] weights = { 0.0, 0.8, 0.4, 0.2 };
+        final double[] weights = {0.0, 0.8, 0.4, 0.2};
         GridBagHelper helper = new GridBagHelper(progressPanel, weights);
         helper.addLabel("Tokenizing files:");
         helper.add(tokenizingFilesBar, 3);
@@ -606,8 +595,7 @@ public class GUI implements CPDListener {
 
         final JTableHeader header = resultsTable.getTableHeader();
         header.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+            @Override public void mouseClicked(MouseEvent e) {
                 sortOnColumn(header.columnAtPoint(new Point(e.getX(), e.getY())));
             }
         });
@@ -642,7 +630,7 @@ public class GUI implements CPDListener {
             File dirPath = new File(rootDirectoryField.getText());
             if (!dirPath.exists()) {
                 JOptionPane.showMessageDialog(frame, "Can't read from that root source directory", "Error",
-                                              JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -685,7 +673,7 @@ public class GUI implements CPDListener {
                     String reportString = new SimpleRenderer().renderToString(report);
                     if (reportString.isEmpty()) {
                         JOptionPane.showMessageDialog(frame,
-                                                      "Done. Couldn't find any duplicates longer than " + minimumLengthField.getText() + " tokens");
+                                "Done. Couldn't find any duplicates longer than " + minimumLengthField.getText() + " tokens");
                     } else {
                         resultsTextArea.setText(reportString);
                     }
@@ -714,8 +702,7 @@ public class GUI implements CPDListener {
             // fileCollector itself is empty, contains no closable resources.
             // the created sourceManager will be closed when exiting or when a new analysis is started,
             // see #closeSourceManager().
-            @SuppressWarnings("PMD.CloseResource")
-            FileCollector fileCollector = InternalApiBridge.newCollector(config.getLanguageVersionDiscoverer(), config.getReporter());
+            @SuppressWarnings("PMD.CloseResource") FileCollector fileCollector = InternalApiBridge.newCollector(config.getLanguageVersionDiscoverer(), config.getReporter());
             fileCollector.addFileOrDirectory(dirPath, recurse);
             sourceManager = new SourceManager(fileCollector.getCollectedFiles());
         } catch (Exception e) {
@@ -770,70 +757,59 @@ public class GUI implements CPDListener {
             private int sortColumn;
             private boolean sortDescending;
 
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
+            @Override public Object getValueAt(int rowIndex, int columnIndex) {
                 Match match = items.get(rowIndex);
                 switch (columnIndex) {
-                case 0:
-                    return getLabel(match);
-                case 2:
-                    return Integer.toString(match.getLineCount());
-                case 1:
-                    return match.getMarkCount() > 2 ? Integer.toString(match.getMarkCount()) : "";
-                case 99:
-                    return match;
-                default:
-                    return "";
+                    case 0:
+                        return getLabel(match);
+                    case 2:
+                        return Integer.toString(match.getLineCount());
+                    case 1:
+                        return match.getMarkCount() > 2 ? Integer.toString(match.getMarkCount()) : "";
+                    case 99:
+                        return match;
+                    default:
+                        return "";
                 }
             }
 
-            @Override
-            public int getColumnCount() {
+            @Override public int getColumnCount() {
                 return matchColumns.length;
             }
 
-            @Override
-            public int getRowCount() {
+            @Override public int getRowCount() {
                 return items.size();
             }
 
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
+            @Override public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
             }
 
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
+            @Override public Class<?> getColumnClass(int columnIndex) {
                 return Object.class;
             }
 
-            @Override
-            public String getColumnName(int i) {
+            @Override public String getColumnName(int i) {
                 return matchColumns[i].label();
             }
 
-            @Override
-            public int sortColumn() {
+            @Override public int sortColumn() {
                 return sortColumn;
             }
 
-            @Override
-            public void sortColumn(int column) {
+            @Override public void sortColumn(int column) {
                 sortColumn = column;
             }
 
-            @Override
-            public boolean sortDescending() {
+            @Override public boolean sortDescending() {
                 return sortDescending;
             }
 
-            @Override
-            public void sortDescending(boolean flag) {
+            @Override public void sortDescending(boolean flag) {
                 sortDescending = flag;
             }
 
-            @Override
-            public void sort(Comparator<Match> comparator) {
+            @Override public void sort(Comparator<Match> comparator) {
                 if (sortDescending) {
                     comparator = comparator.reversed();
                 }
@@ -875,33 +851,32 @@ public class GUI implements CPDListener {
     }
 
     // CPDListener
-    @Override
-    public void phaseUpdate(int phase) {
+    @Override public void phaseUpdate(int phase) {
         phaseLabel.setText(getPhaseText(phase));
     }
 
     public String getPhaseText(int phase) {
         switch (phase) {
-        case CPDListener.INIT:
-            return "Initializing";
-        case CPDListener.HASH:
-            return "Hashing";
-        case CPDListener.MATCH:
-            return "Matching";
-        case CPDListener.GROUPING:
-            return "Grouping";
-        case CPDListener.DONE:
-            return "Done";
-        default:
-            return "Unknown";
+            case CPDListener.INIT:
+                return "Initializing";
+            case CPDListener.HASH:
+                return "Hashing";
+            case CPDListener.MATCH:
+                return "Matching";
+            case CPDListener.GROUPING:
+                return "Grouping";
+            case CPDListener.DONE:
+                return "Done";
+            default:
+                return "Unknown";
         }
     }
 
-    @Override
-    public void addedFile(int fileCount) {
+    @Override public void addedFile(int fileCount) {
         tokenizingFilesBar.setMaximum(fileCount);
         tokenizingFilesBar.setValue(tokenizingFilesBar.getValue() + 1);
     }
+
     // CPDListener
 
     public static void main(String[] args) {

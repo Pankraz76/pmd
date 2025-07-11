@@ -2,6 +2,8 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
@@ -58,12 +60,12 @@ public class TextBlocks {
                         """;          // the seven characters w i n t e r LF
 
         String greeting =
-            """
+                """
             Hi, "Bob"
             """;        // the ten characters H i , SP " B o b " LF
 
         String salutation =
-            """
+                """
             Hi,
              "Bob"
             """;        // the eleven characters H i , LF SP " B o b " LF
@@ -82,7 +84,7 @@ public class TextBlocks {
         String normalStringLiteral = "test";
 
         String code =
-            """
+                """
             String text = \"""
                 A text block inside a text block
             \""";

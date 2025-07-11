@@ -53,8 +53,7 @@ public interface Renderer extends PropertySource {
      *
      * @return The name of the Renderer.
      */
-    @Override
-    String getName();
+    @Override String getName();
 
     /**
      * Set the name of the Renderer.
@@ -185,7 +184,6 @@ public interface Renderer extends PropertySource {
     void setReportFile(String reportFilename);
 
 
-
     /**
      * Returns a new analysis listener, that handles violations by rendering
      * them in an implementation-defined way.
@@ -206,30 +204,25 @@ public interface Renderer extends PropertySource {
 
             final GlobalReportBuilderListener configErrorReport = new GlobalReportBuilderListener();
 
-            @Override
-            public void onConfigError(ConfigurationError error) {
+            @Override public void onConfigError(ConfigurationError error) {
                 configErrorReport.onConfigError(error);
             }
 
-            @Override
-            public ListenerInitializer initializer() {
+            @Override public ListenerInitializer initializer() {
                 return new ListenerInitializer() {
-                    @Override
-                    public void setFileNameRenderer(FileNameRenderer fileNameRenderer) {
+                    @Override public void setFileNameRenderer(FileNameRenderer fileNameRenderer) {
                         Renderer.this.setFileNameRenderer(fileNameRenderer);
                     }
                 };
             }
 
-            @Override
-            public FileAnalysisListener startFileAnalysis(TextFile file) {
+            @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
                 Renderer renderer = Renderer.this;
 
                 renderer.startFileAnalysis(file); // this routine is thread-safe by contract
                 return new CloseHookFileListener<ReportBuilderListener>(new ReportBuilderListener()) {
 
-                    @Override
-                    protected void doClose(ReportBuilderListener reportBuilder, @Nullable Exception ignoredEx) throws Exception {
+                    @Override protected void doClose(ReportBuilderListener reportBuilder, @Nullable Exception ignoredEx) throws Exception {
                         reportBuilder.close();
                         synchronized (reportMergeLock) {
                             // TODO renderFileReport should be thread-safe instead
@@ -239,15 +232,13 @@ public interface Renderer extends PropertySource {
                         }
                     }
 
-                    @Override
-                    public String toString() {
+                    @Override public String toString() {
                         return "FileRendererListener[" + Renderer.this + "]";
                     }
                 };
             }
 
-            @Override
-            public void close() throws Exception {
+            @Override public void close() throws Exception {
                 configErrorReport.close();
                 Renderer.this.renderFileReport(configErrorReport.getResult());
                 try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.REPORTING)) {

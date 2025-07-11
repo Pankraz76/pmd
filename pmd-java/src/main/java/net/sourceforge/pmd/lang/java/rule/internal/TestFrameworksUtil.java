@@ -30,38 +30,38 @@ public final class TestFrameworksUtil {
     private static final String TESTNG_TEST_ANNOT = "org.testng.annotations.Test";
 
     private static final Set<String> JUNIT5_ALL_TEST_ANNOTS =
-        setOf("org.junit.jupiter.api.Test",
-              "org.junit.jupiter.api.RepeatedTest",
-              "org.junit.jupiter.api.TestFactory",
-              "org.junit.jupiter.api.TestTemplate",
-              "org.junit.jupiter.params.ParameterizedTest"
-        );
+            setOf("org.junit.jupiter.api.Test",
+                    "org.junit.jupiter.api.RepeatedTest",
+                    "org.junit.jupiter.api.TestFactory",
+                    "org.junit.jupiter.api.TestTemplate",
+                    "org.junit.jupiter.params.ParameterizedTest"
+            );
 
     private static final String JUNIT5_NESTED = "org.junit.jupiter.api.Nested";
 
     private static final Set<String> ASSERT_CONTAINERS = setOf("org.junit.Assert",
-                                                               "org.junit.jupiter.api.Assertions",
-                                                               "org.hamcrest.MatcherAssert",
-                                                               "org.testng.Assert",
-                                                               "junit.framework.Assert",
-                                                               "junit.framework.TestCase");
+            "org.junit.jupiter.api.Assertions",
+            "org.hamcrest.MatcherAssert",
+            "org.testng.Assert",
+            "junit.framework.Assert",
+            "junit.framework.TestCase");
 
     private static final Set<String> TEST_CONFIGURATION_ANNOTATIONS =
-        setOf("org.junit.Before",
-                "org.junit.BeforeClass",
-                "org.junit.After",
-                "org.junit.AfterClass",
-                "org.testng.annotations.AfterClass",
-                "org.testng.annotations.AfterGroups",
-                "org.testng.annotations.AfterMethod",
-                "org.testng.annotations.AfterSuite",
-                "org.testng.annotations.AfterTest",
-                "org.testng.annotations.BeforeClass",
-                "org.testng.annotations.BeforeGroups",
-                "org.testng.annotations.BeforeMethod",
-                "org.testng.annotations.BeforeSuite",
-                "org.testng.annotations.BeforeTest"
-        );
+            setOf("org.junit.Before",
+                    "org.junit.BeforeClass",
+                    "org.junit.After",
+                    "org.junit.AfterClass",
+                    "org.testng.annotations.AfterClass",
+                    "org.testng.annotations.AfterGroups",
+                    "org.testng.annotations.AfterMethod",
+                    "org.testng.annotations.AfterSuite",
+                    "org.testng.annotations.AfterTest",
+                    "org.testng.annotations.BeforeClass",
+                    "org.testng.annotations.BeforeGroups",
+                    "org.testng.annotations.BeforeMethod",
+                    "org.testng.annotations.BeforeSuite",
+                    "org.testng.annotations.BeforeTest"
+            );
 
     private TestFrameworksUtil() {
         // utility class
@@ -94,8 +94,8 @@ public final class TestFrameworksUtil {
     public static boolean isTestConfigurationMethod(ASTMethodDeclaration method) {
         return TEST_CONFIGURATION_ANNOTATIONS.stream().anyMatch(method::isAnnotationPresent)
                 || isJUnit3Class(method.getEnclosingType())
-                        && ("setUp".equals(method.getName())
-                            || "tearDown".equals(method.getName()));
+                && ("setUp".equals(method.getName())
+                || "tearDown".equals(method.getName()));
     }
 
     private static boolean isTestNgMethod(ASTMethodDeclaration method) {
@@ -109,16 +109,16 @@ public final class TestFrameworksUtil {
 
     public static boolean isJUnit5Method(ASTMethodDeclaration method) {
         return method.getDeclaredAnnotations().any(
-            it -> {
-                String canonicalName = it.getTypeMirror().getSymbol().getCanonicalName();
-                return JUNIT5_ALL_TEST_ANNOTS.contains(canonicalName);
-            }
+                it -> {
+                    String canonicalName = it.getTypeMirror().getSymbol().getCanonicalName();
+                    return JUNIT5_ALL_TEST_ANNOTS.contains(canonicalName);
+                }
         );
     }
 
     public static boolean isJUnit3Method(ASTMethodDeclaration method) {
         return isJUnit3Class(method.getEnclosingType())
-            && isJunit3MethodSignature(method);
+                && isJunit3MethodSignature(method);
     }
 
     public static boolean isJunit4TestAnnotation(ASTAnnotation annot) {
@@ -130,8 +130,8 @@ public final class TestFrameworksUtil {
      */
     public static boolean isJunit3MethodSignature(ASTMethodDeclaration method) {
         return method.isVoid()
-            && method.getVisibility() == Visibility.V_PUBLIC
-            && method.getName().startsWith("test");
+                && method.getVisibility() == Visibility.V_PUBLIC
+                && method.getName().startsWith("test");
     }
 
     /**
@@ -139,17 +139,17 @@ public final class TestFrameworksUtil {
      */
     public static boolean isJUnit3Class(ASTTypeDeclaration node) {
         return node != null
-            && node.isRegularClass()
-            && !node.isNested()
-            && !node.isAbstract()
-            && TypeTestUtil.isA(JUNIT3_CLASS_NAME, node);
+                && node.isRegularClass()
+                && !node.isNested()
+                && !node.isAbstract()
+                && TypeTestUtil.isA(JUNIT3_CLASS_NAME, node);
     }
 
     public static boolean isTestClass(ASTTypeDeclaration node) {
         return node.isRegularClass() && !node.isAbstract() && !node.isNested()
-            && (isJUnit3Class(node)
-            || node.getDeclarations(ASTMethodDeclaration.class)
-                   .any(TestFrameworksUtil::isTestMethod));
+                && (isJUnit3Class(node)
+                || node.getDeclarations(ASTMethodDeclaration.class)
+                .any(TestFrameworksUtil::isTestMethod));
     }
 
 
@@ -159,7 +159,7 @@ public final class TestFrameworksUtil {
 
     public static boolean isExpectExceptionCall(ASTMethodCall call) {
         return "expect".equals(call.getMethodName())
-            && TypeTestUtil.isA("org.junit.rules.ExpectedException", call.getQualifier());
+                && TypeTestUtil.isA("org.junit.rules.ExpectedException", call.getQualifier());
     }
 
     public static boolean isCallOnAssertionContainer(ASTMethodCall call) {
@@ -167,20 +167,20 @@ public final class TestFrameworksUtil {
         JTypeDeclSymbol sym = declaring.getSymbol();
         return sym instanceof JClassSymbol
                 && (ASSERT_CONTAINERS.contains(((JClassSymbol) sym).getBinaryName())
-                        || TypeTestUtil.isA("junit.framework.Assert", declaring));
+                || TypeTestUtil.isA("junit.framework.Assert", declaring));
     }
 
     public static boolean isProbableAssertCall(ASTMethodCall call) {
         String name = call.getMethodName();
         boolean isSoftAssertType = isSoftAssert(call);
         return name.startsWith("assert") && !isSoftAssertType
-            || "assertAll".equals(name) && isSoftAssertType
-            || "assertSoftly".equals(name) && isSoftAssertType
-            || name.startsWith("check")
-            || name.startsWith("verify")
-            || "fail".equals(name)
-            || "failWith".equals(name)
-            || isExpectExceptionCall(call);
+                || "assertAll".equals(name) && isSoftAssertType
+                || "assertSoftly".equals(name) && isSoftAssertType
+                || name.startsWith("check")
+                || name.startsWith("verify")
+                || "fail".equals(name)
+                || "failWith".equals(name)
+                || isExpectExceptionCall(call);
     }
 
     public static boolean isSoftAssert(ASTMethodCall call) {
@@ -195,9 +195,9 @@ public final class TestFrameworksUtil {
      */
     public static boolean isExpectAnnotated(ASTMethodDeclaration method) {
         return method.getDeclaredAnnotations()
-                     .filter(TestFrameworksUtil::isJunit4TestAnnotation)
-                     .flatMap(ASTAnnotation::getMembers)
-                     .any(it -> "expected".equals(it.getName()));
+                .filter(TestFrameworksUtil::isJunit4TestAnnotation)
+                .flatMap(ASTAnnotation::getMembers)
+                .any(it -> "expected".equals(it.getName()));
 
     }
 }

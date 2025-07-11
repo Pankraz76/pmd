@@ -22,8 +22,7 @@ import net.sourceforge.pmd.reporting.RuleContext;
 
 class SummaryHTMLRendererTest extends AbstractRendererTest {
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         Renderer result = new SummaryHTMLRenderer();
         result.setProperty(HTMLRenderer.LINK_PREFIX, "link_prefix");
         result.setProperty(HTMLRenderer.LINE_PREFIX, Optional.of("line_prefix"));
@@ -31,13 +30,11 @@ class SummaryHTMLRendererTest extends AbstractRendererTest {
         return result;
     }
 
-    @Override
-    protected String getSourceCodeFilename() {
+    @Override protected String getSourceCodeFilename() {
         return "notAvailable";
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return "<html><head><title>PMD</title></head><body>" + EOL + "<center><h2>Summary</h2></center>" + EOL
                 + "<table align=\"center\" cellspacing=\"0\" cellpadding=\"3\">" + EOL
                 + "<tr><th>Rule name</th><th>Number of violations</th></tr>" + EOL
@@ -53,8 +50,7 @@ class SummaryHTMLRendererTest extends AbstractRendererTest {
 
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return "<html><head><title>PMD</title></head><body>" + EOL + "<center><h2>Summary</h2></center>" + EOL
                 + "<table align=\"center\" cellspacing=\"0\" cellpadding=\"3\">" + EOL
                 + "<tr><th>Rule name</th><th>Number of violations</th></tr>" + EOL + "</table>" + EOL
@@ -65,8 +61,7 @@ class SummaryHTMLRendererTest extends AbstractRendererTest {
                 + "</table></tr></table></body></html>" + EOL;
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return "<html><head><title>PMD</title></head><body>" + EOL + "<center><h2>Summary</h2></center>" + EOL
                 + "<table align=\"center\" cellspacing=\"0\" cellpadding=\"3\">" + EOL
                 + "<tr><th>Rule name</th><th>Number of violations</th></tr>" + EOL
@@ -85,8 +80,7 @@ class SummaryHTMLRendererTest extends AbstractRendererTest {
                 + EOL + "</table></tr></table></body></html>" + EOL;
     }
 
-    @Override
-    String getExpectedError(ProcessingError error) {
+    @Override String getExpectedError(ProcessingError error) {
         return "<html><head><title>PMD</title></head><body>" + EOL + "<center><h2>Summary</h2></center>" + EOL
                 + "<table align=\"center\" cellspacing=\"0\" cellpadding=\"3\">" + EOL
                 + "<tr><th>Rule name</th><th>Number of violations</th></tr>" + EOL + "</table>" + EOL
@@ -100,8 +94,7 @@ class SummaryHTMLRendererTest extends AbstractRendererTest {
                 + "</table></tr></table></body></html>" + EOL;
     }
 
-    @Override
-    String getExpectedError(ConfigurationError error) {
+    @Override String getExpectedError(ConfigurationError error) {
         return "<html><head><title>PMD</title></head><body>" + EOL + "<center><h2>Summary</h2></center>" + EOL
                 + "<table align=\"center\" cellspacing=\"0\" cellpadding=\"3\">" + EOL
                 + "<tr><th>Rule name</th><th>Number of violations</th></tr>" + EOL + "</table>" + EOL
@@ -115,8 +108,7 @@ class SummaryHTMLRendererTest extends AbstractRendererTest {
                 + "</table></tr></table></body></html>" + EOL;
     }
 
-    @Test
-    void testShowSuppressions() throws Exception {
+    @Test void testShowSuppressions() throws Exception {
         Renderer renderer = getRenderer();
         renderer.setShowSuppressedViolations(true);
         String actual = renderReport(renderer, createEmptyReportWithSuppression());
@@ -129,15 +121,14 @@ class SummaryHTMLRendererTest extends AbstractRendererTest {
                 + EOL + "<th>#</th><th>File</th><th>Line</th><th>Problem</th></tr>" + EOL
                 + "</table><hr/><center><h3>Suppressed warnings</h3></center><table align=\"center\" cellspacing=\"0\" cellpadding=\"3\"><tr>"
                 + EOL + "<th>File</th><th>Line</th><th>Rule</th><th>NOPMD or Annotation</th><th>Reason</th></tr>"
-                         + EOL + "<tr bgcolor=\"lightgrey\"> " + EOL + "<td align=\"left\"><a href=\"link_prefix" + getSourceCodeFilename() + ".html#line_prefix1\">" + getSourceCodeFilename() + "</a></td>" + EOL
+                + EOL + "<tr bgcolor=\"lightgrey\"> " + EOL + "<td align=\"left\"><a href=\"link_prefix" + getSourceCodeFilename() + ".html#line_prefix1\">" + getSourceCodeFilename() + "</a></td>" + EOL
                 + "<td align=\"center\">1</td>" + EOL + "<td align=\"center\">Foo</td>" + EOL
-                         + "<td align=\"center\">//NOPMD</td>" + EOL + "<td align=\"center\">test</td>" + EOL
-                         + "</tr>"
+                + "<td align=\"center\">//NOPMD</td>" + EOL + "<td align=\"center\">test</td>" + EOL
+                + "</tr>"
                 + EOL + "</table></tr></table></body></html>" + EOL, actual);
     }
 
-    @Test
-    void testHideSuppressions() throws Exception {
+    @Test void testHideSuppressions() throws Exception {
         Renderer renderer = getRenderer();
         renderer.setShowSuppressedViolations(false);
         String actual = renderReport(renderer, createEmptyReportWithSuppression());

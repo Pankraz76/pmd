@@ -12,8 +12,7 @@ import net.sourceforge.pmd.lang.ast.Parser;
  */
 public class XmlHandler extends AbstractPmdLanguageVersionHandler {
 
-    @Override
-    public Parser getParser() {
+    @Override public Parser getParser() {
         return new XmlParser();
     }
 

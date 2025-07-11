@@ -40,8 +40,7 @@ final class MultiThreadProcessor extends AbstractPMDProcessor {
         futureList = new LinkedList<>();
     }
 
-    @Override
-    @SuppressWarnings("PMD.CloseResource") // closed by the PMDRunnable
+    @Override @SuppressWarnings("PMD.CloseResource") // closed by the PMDRunnable
     public void processFiles() {
         // The thread-local is not static, but analysis-global
         // This means we don't have to reset it manually, every analysis is isolated.
@@ -56,16 +55,14 @@ final class MultiThreadProcessor extends AbstractPMDProcessor {
 
         for (final TextFile textFile : task.getFiles()) {
             futureList.add(executor.submit(new PmdRunnable(textFile, task) {
-                @Override
-                protected RuleSets getRulesets() {
+                @Override protected RuleSets getRulesets() {
                     return ruleSetCopy.get();
                 }
             }));
         }
     }
 
-    @Override
-    public void close() {
+    @Override public void close() {
         try {
             try {
                 for (Future<?> task : futureList) {

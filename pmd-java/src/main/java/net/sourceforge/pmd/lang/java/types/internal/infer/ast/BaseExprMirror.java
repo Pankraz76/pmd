@@ -23,13 +23,11 @@ abstract class BaseExprMirror<T extends JavaNode> implements ExprMirror {
         this.parent = parent;
     }
 
-    @Override
-    public JavaNode getLocation() {
+    @Override public JavaNode getLocation() {
         return myNode;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Mirror of: " + myNode;
     }
 
@@ -37,8 +35,7 @@ abstract class BaseExprMirror<T extends JavaNode> implements ExprMirror {
         return this.factory.mayMutateAst();
     }
 
-    @Override
-    public TypingContext getTypingContext() {
+    @Override public TypingContext getTypingContext() {
         if (typingContext != null) {
             return typingContext;
         } else if (parent != null) {

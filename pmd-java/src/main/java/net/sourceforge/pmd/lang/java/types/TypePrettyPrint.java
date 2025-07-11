@@ -147,7 +147,7 @@ public final class TypePrettyPrint {
             if (this.printTypeAnnotations) {
                 for (SymAnnot annot : annots) {
                     String name = this.qualifyAnnotations ? annot.getBinaryName()
-                                                          : annot.getSimpleName();
+                            : annot.getSimpleName();
                     append('@').append(name).append(' ');
                 }
             }
@@ -158,15 +158,13 @@ public final class TypePrettyPrint {
 
         static final PrettyPrintVisitor INSTANCE = new PrettyPrintVisitor();
 
-        @Override
-        public Void visit(JTypeMirror t, TypePrettyPrinter sb) {
+        @Override public Void visit(JTypeMirror t, TypePrettyPrinter sb) {
             sb.printTypeAnnotations(t.getTypeAnnotations());
             sb.append(t.toString());
             return null;
         }
 
-        @Override
-        public Void visitClass(JClassType t, TypePrettyPrinter sb) {
+        @Override public Void visitClass(JClassType t, TypePrettyPrinter sb) {
 
             JClassType enclosing = t.getEnclosingType();
             boolean isAnon = t.getSymbol().isAnonymousClass();
@@ -201,8 +199,7 @@ public final class TypePrettyPrint {
             return null;
         }
 
-        @Override
-        public Void visitWildcard(JWildcardType t, TypePrettyPrinter sb) {
+        @Override public Void visitWildcard(JWildcardType t, TypePrettyPrinter sb) {
             sb.printTypeAnnotations(t.getTypeAnnotations());
             sb.append("?");
             if (t.isUnbounded()) {
@@ -215,15 +212,13 @@ public final class TypePrettyPrint {
             return null;
         }
 
-        @Override
-        public Void visitPrimitive(JPrimitiveType t, TypePrettyPrinter sb) {
+        @Override public Void visitPrimitive(JPrimitiveType t, TypePrettyPrinter sb) {
             sb.printTypeAnnotations(t.getTypeAnnotations());
             sb.append(t.getSimpleName());
             return null;
         }
 
-        @Override
-        public Void visitTypeVar(JTypeVar t, TypePrettyPrinter sb) {
+        @Override public Void visitTypeVar(JTypeVar t, TypePrettyPrinter sb) {
             if (t instanceof CaptureMatcher) {
                 sb.append(t.toString());
                 return null;
@@ -257,8 +252,7 @@ public final class TypePrettyPrint {
         /**
          * Formats {@link Arrays#asList(Object[])} as {@code <T> asList(T...) -> List<T>}
          */
-        @Override
-        public Void visitMethodType(JMethodSig t, TypePrettyPrinter sb) {
+        @Override public Void visitMethodType(JMethodSig t, TypePrettyPrinter sb) {
             if (sb.printMethodHeader) {
                 t.getDeclaringType().acceptVisitor(this, sb);
                 sb.append(".");
@@ -284,13 +278,11 @@ public final class TypePrettyPrint {
             return null;
         }
 
-        @Override
-        public Void visitIntersection(JIntersectionType t, TypePrettyPrinter sb) {
+        @Override public Void visitIntersection(JIntersectionType t, TypePrettyPrinter sb) {
             return join(sb, t.getComponents(), " & ", "", "");
         }
 
-        @Override
-        public Void visitArray(JArrayType t, TypePrettyPrinter sb) {
+        @Override public Void visitArray(JArrayType t, TypePrettyPrinter sb) {
             JTypeMirror component = t.getComponentType();
             if (component instanceof JIntersectionType) {
                 sb.append("(");
@@ -309,14 +301,12 @@ public final class TypePrettyPrint {
             return null;
         }
 
-        @Override
-        public Void visitNullType(JTypeMirror t, TypePrettyPrinter sb) {
+        @Override public Void visitNullType(JTypeMirror t, TypePrettyPrinter sb) {
             sb.append("null");
             return null;
         }
 
-        @Override
-        public Void visitInferenceVar(InferenceVar t, TypePrettyPrinter sb) {
+        @Override public Void visitInferenceVar(InferenceVar t, TypePrettyPrinter sb) {
             sb.append(t.getName());
             return null;
         }

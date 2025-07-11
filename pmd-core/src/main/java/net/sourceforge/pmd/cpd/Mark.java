@@ -41,9 +41,9 @@ public final class Mark implements Comparable<Mark> {
     public FileLocation getLocation() {
         TokenEntry endToken = getEndToken();
         return FileLocation.range(
-            getFileId(),
-            TextRange2d.range2d(token.getBeginLine(), token.getBeginColumn(),
-                                endToken.getEndLine(), endToken.getEndColumn()));
+                getFileId(),
+                TextRange2d.range2d(token.getBeginLine(), token.getBeginColumn(),
+                        endToken.getEndLine(), endToken.getEndColumn()));
     }
 
     FileId getFileId() {
@@ -60,21 +60,19 @@ public final class Mark implements Comparable<Mark> {
 
     void setEndToken(@NonNull TokenEntry endToken) {
         assert endToken.getFileId().equals(token.getFileId())
-            : "Tokens are not from the same file";
+                : "Tokens are not from the same file";
         this.endToken = endToken;
     }
 
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + token.hashCode();
         return result;
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -86,11 +84,10 @@ public final class Mark implements Comparable<Mark> {
         }
         Mark other = (Mark) obj;
         return Objects.equals(token, other.token)
-            && Objects.equals(endToken, other.endToken);
+                && Objects.equals(endToken, other.endToken);
     }
 
-    @Override
-    public int compareTo(Mark other) {
+    @Override public int compareTo(Mark other) {
         return getToken().compareTo(other.getToken());
     }
 

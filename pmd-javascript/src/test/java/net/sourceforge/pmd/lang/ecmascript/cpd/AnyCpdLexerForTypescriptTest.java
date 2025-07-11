@@ -18,13 +18,11 @@ class AnyCpdLexerForTypescriptTest extends CpdTextComparisonTest {
         super(EcmascriptLanguageModule.getInstance(), ".ts");
     }
 
-    @Override
-    protected String getResourcePrefix() {
+    @Override protected String getResourcePrefix() {
         return "testdata/ts";
     }
 
-    @Test
-    void testFile1() {
+    @Test void testFile1() {
         doTest("SampleTypeScript");
     }
 

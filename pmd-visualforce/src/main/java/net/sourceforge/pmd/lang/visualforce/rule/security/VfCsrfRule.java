@@ -21,8 +21,7 @@ public class VfCsrfRule extends AbstractVfRule {
 
     private static final String APEX_PAGE = "apex:page";
 
-    @Override
-    public Object visit(ASTElement node, Object data) {
+    @Override public Object visit(ASTElement node, Object data) {
         if (APEX_PAGE.equalsIgnoreCase(node.getName())) {
             List<ASTAttribute> attribs = node.children(ASTAttribute.class).toList();
             boolean controller = false;
@@ -31,20 +30,20 @@ public class VfCsrfRule extends AbstractVfRule {
 
             for (ASTAttribute attr : attribs) {
                 switch (attr.getName().toLowerCase(Locale.ROOT)) {
-                case "action":
-                    ASTElExpression value = attr.descendants(ASTElExpression.class).first();
-                    if (value != null) {
-                        if (doesElContainIdentifiers(value)) {
-                            isEl = true;
-                            valToReport = value;
+                    case "action":
+                        ASTElExpression value = attr.descendants(ASTElExpression.class).first();
+                        if (value != null) {
+                            if (doesElContainIdentifiers(value)) {
+                                isEl = true;
+                                valToReport = value;
+                            }
                         }
-                    }
-                    break;
-                case "controller":
-                    controller = true;
-                    break;
-                default:
-                    break;
+                        break;
+                    case "controller":
+                        controller = true;
+                        break;
+                    default:
+                        break;
 
                 }
 

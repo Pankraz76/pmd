@@ -56,52 +56,44 @@ public abstract class BaseAntlrNode<A extends AntlrToPmdParseTreeAdapter<N>, N e
 
     public abstract Token getLastAntlrToken();
 
-    @Override
-    public TextRegion getTextRegion() {
+    @Override public TextRegion getTextRegion() {
         return TextRegion.fromBothOffsets(getFirstAntlrToken().getStartIndex(),
-                                          getLastAntlrToken().getStopIndex() + 1);
+                getLastAntlrToken().getStopIndex() + 1);
     }
 
     void setIndexInParent(int indexInParent) {
         this.indexInParent = indexInParent;
     }
 
-    @Override
-    public N getParent() {
+    @Override public N getParent() {
         AntlrToPmdParseTreeAdapter<N> parent = asAntlrNode().getParent();
         return parent == null ? null : (N) parent.getPmdNode();
     }
 
-    @Override
-    public int getBeginLine() {
+    @Override public int getBeginLine() {
         return getFirstAntlrToken().getLine(); // This goes from 1 to n
     }
 
-    @Override
-    public int getEndLine() {
+    @Override public int getEndLine() {
         // FIXME this is not the end line if the stop token spans several lines
         return getLastAntlrToken().getLine();
     }
 
-    @Override
-    public int getBeginColumn() {
+    @Override public int getBeginColumn() {
         return getFirstAntlrToken().getCharPositionInLine() + 1;
     }
 
-    @Override
-    public int getEndColumn() {
+    @Override public int getEndColumn() {
         Token tok = getLastAntlrToken();
         return tok.getCharPositionInLine() + tok.getStopIndex() - tok.getStartIndex() + 1;
     }
 
-    @Override
-    public int getIndexInParent() {
+    @Override public int getIndexInParent() {
         assert getParent() == null || indexInParent >= 0 : "Index not set";
         return indexInParent;
     }
 
-    @Override
-    public DataMap<DataKey<?, ?>> getUserMap() {
+    @Override public DataMap<DataKey<?, ?>> getUserMap() {
         if (userMap == null) {
             userMap = DataMap.newDataMap();
         }
@@ -116,7 +108,6 @@ public abstract class BaseAntlrNode<A extends AntlrToPmdParseTreeAdapter<N>, N e
         BaseAntlrNode<?, N> getPmdNode();
 
 
-        @Override
-        AntlrToPmdParseTreeAdapter<N> getParent();
+        @Override AntlrToPmdParseTreeAdapter<N> getParent();
     }
 }

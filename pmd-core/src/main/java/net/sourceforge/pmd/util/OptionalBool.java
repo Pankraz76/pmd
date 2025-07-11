@@ -18,12 +18,12 @@ public enum OptionalBool {
      */
     public OptionalBool complement() {
         switch (this) {
-        case YES:
-            return NO;
-        case NO:
-            return YES;
-        default:
-            return this;
+            case YES:
+                return NO;
+            case NO:
+                return YES;
+            default:
+                return this;
         }
     }
 

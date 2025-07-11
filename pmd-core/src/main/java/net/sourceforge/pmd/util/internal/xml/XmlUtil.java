@@ -32,8 +32,8 @@ public final class XmlUtil {
 
     public static Stream<Element> getElementChildren(Element parent) {
         return DomUtils.asList(parent.getChildNodes()).stream()
-                       .filter(it -> it.getNodeType() == Node.ELEMENT_NODE)
-                       .map(Element.class::cast);
+                .filter(it -> it.getNodeType() == Node.ELEMENT_NODE)
+                .map(Element.class::cast);
     }
 
     public static List<Element> getElementChildrenList(Element parent) {
@@ -46,14 +46,14 @@ public final class XmlUtil {
 
     public static Stream<Element> getElementChildrenNamedReportOthers(Element parent, Set<SchemaConstant> names, PmdXmlReporter err) {
         return getElementChildren(parent)
-            .map(it -> {
-                if (matchesName(it, names)) {
-                    return it;
-                } else {
-                    err.at(it).warn(IGNORED__UNEXPECTED_ELEMENT_IN, it.getTagName(), formatPossibleNames(names));
-                    return null;
-                }
-            }).filter(Objects::nonNull);
+                .map(it -> {
+                    if (matchesName(it, names)) {
+                        return it;
+                    } else {
+                        err.at(it).warn(IGNORED__UNEXPECTED_ELEMENT_IN, it.getTagName(), formatPossibleNames(names));
+                        return null;
+                    }
+                }).filter(Objects::nonNull);
     }
 
     public static boolean matchesName(Element elt, Set<SchemaConstant> names) {
@@ -61,13 +61,13 @@ public final class XmlUtil {
     }
 
     public static void reportIgnoredUnexpectedElt(Element parent,
-                                                  Element unexpectedChild,
-                                                  Set<SchemaConstant> names,
-                                                  PmdXmlReporter err) {
+            Element unexpectedChild,
+            Set<SchemaConstant> names,
+            PmdXmlReporter err) {
         err.at(unexpectedChild).warn(IGNORED__UNEXPECTED_ELEMENT,
-                                     unexpectedChild.getTagName(),
-                                     parent.getTagName(),
-                                     formatPossibleNames(names));
+                unexpectedChild.getTagName(),
+                parent.getTagName(),
+                formatPossibleNames(names));
     }
 
     public static Stream<Element> getElementChildrenNamed(Element parent, String name) {
@@ -113,9 +113,9 @@ public final class XmlUtil {
             return StringUtil.inSingleQuotes(names.iterator().next().xmlName());
         } else {
             return "one of " + names.stream()
-                                    .map(SchemaConstant::xmlName)
-                                    .map(StringUtil::inSingleQuotes)
-                                    .collect(Collectors.joining(", "));
+                    .map(SchemaConstant::xmlName)
+                    .map(StringUtil::inSingleQuotes)
+                    .collect(Collectors.joining(", "));
         }
     }
 

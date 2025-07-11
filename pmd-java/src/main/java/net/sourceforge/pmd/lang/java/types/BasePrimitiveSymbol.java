@@ -27,18 +27,15 @@ abstract class BasePrimitiveSymbol extends EmptyClassSymbol {
             super(ts);
         }
 
-        @Override
-        public @NonNull String getBinaryName() {
+        @Override public @NonNull String getBinaryName() {
             return "void";
         }
 
-        @Override
-        public String getCanonicalName() {
+        @Override public String getCanonicalName() {
             return "void";
         }
 
-        @Override
-        public @NonNull String getSimpleName() {
+        @Override public @NonNull String getSimpleName() {
             return "void";
         }
 
@@ -54,51 +51,42 @@ abstract class BasePrimitiveSymbol extends EmptyClassSymbol {
             this.kind = kind;
         }
 
-        @Override
-        public @NonNull String getBinaryName() {
+        @Override public @NonNull String getBinaryName() {
             return kind.getSimpleName();
         }
 
-        @Override
-        public @Nullable String getCanonicalName() {
+        @Override public @Nullable String getCanonicalName() {
             return kind.getSimpleName();
         }
 
-        @Override
-        public @NonNull String getSimpleName() {
+        @Override public @NonNull String getSimpleName() {
             return kind.getSimpleName();
         }
 
 
     }
 
-    @Override
-    public @NonNull String getPackageName() {
+    @Override public @NonNull String getPackageName() {
         return PRIMITIVE_PACKAGE;
     }
 
-    @Override
-    public boolean isPrimitive() {
+    @Override public boolean isPrimitive() {
         return true;
     }
 
-    @Override
-    public int getModifiers() {
+    @Override public int getModifiers() {
         return Modifier.PUBLIC | Modifier.ABSTRACT | Modifier.FINAL;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.CLASS.hash(this);
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         return SymbolEquality.CLASS.equals(this, obj);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return SymbolToStrings.SHARED.toString(this);
     }
 }

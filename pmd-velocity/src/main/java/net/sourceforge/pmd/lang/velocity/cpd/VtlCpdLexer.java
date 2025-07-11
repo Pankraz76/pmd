@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.velocity.ast.VtlTokenKinds;
  * <p>Note: This class has been called VmTokenizer in PMD 6</p>.
  */
 public class VtlCpdLexer extends JavaccCpdLexer {
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) throws IOException {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) throws IOException {
         return VtlTokenKinds.newTokenManager(CharStream.create(doc));
     }
 }

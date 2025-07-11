@@ -36,13 +36,11 @@ import com.google.common.reflect.ClassPath;
 public class TypeShadowsBuiltInNamespaceRule extends AbstractRule {
     private static final ApexVisitor<RuleContext, Void> VISITOR = new Visitor();
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class, ASTUserEnum.class, ASTUserInterface.class);
     }
 
-    @Override
-    public void apply(Node target, RuleContext ctx) {
+    @Override public void apply(Node target, RuleContext ctx) {
         target.acceptVisitor(VISITOR, ctx);
     }
 
@@ -86,26 +84,22 @@ public class TypeShadowsBuiltInNamespaceRule extends AbstractRule {
             }
         }
 
-        @Override
-        public Void visit(ASTUserClass node, RuleContext data) {
+        @Override public Void visit(ASTUserClass node, RuleContext data) {
             checkNode(node, data);
             return null;
         }
 
-        @Override
-        public Void visit(ASTUserEnum node, RuleContext data) {
+        @Override public Void visit(ASTUserEnum node, RuleContext data) {
             checkNode(node, data);
             return null;
         }
 
-        @Override
-        public Void visit(ASTUserInterface node, RuleContext data) {
+        @Override public Void visit(ASTUserInterface node, RuleContext data) {
             checkNode(node, data);
             return null;
         }
 
-        @Override
-        public Void visitNode(Node node, RuleContext param) {
+        @Override public Void visitNode(Node node, RuleContext param) {
             return null;
         }
     }

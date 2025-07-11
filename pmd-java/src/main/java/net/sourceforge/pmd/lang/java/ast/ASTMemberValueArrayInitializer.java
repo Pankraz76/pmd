@@ -24,14 +24,12 @@ public final class ASTMemberValueArrayInitializer extends AbstractJavaNode imple
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
 
-    @Override
-    public Iterator<ASTMemberValue> iterator() {
+    @Override public Iterator<ASTMemberValue> iterator() {
         return children(ASTMemberValue.class).iterator();
     }
 }

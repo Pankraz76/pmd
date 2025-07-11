@@ -23,68 +23,58 @@ class PMDTaskTest extends AbstractAntTestHelper {
         antTestScriptFilename = "pmdtasktest.xml";
     }
 
-    @Test
-    void testNoFormattersValidation() {
+    @Test void testNoFormattersValidation() {
         executeTarget("testNoFormattersValidation");
         assertOutputContaining("Violation from test-rset-1.xml");
     }
 
-    @Test
-    void testNestedRuleset() {
+    @Test void testNestedRuleset() {
         executeTarget("testNestedRuleset");
         assertOutputContaining("Violation from test-rset-1.xml");
         assertOutputContaining("Violation from test-rset-2.xml");
     }
 
-    @Test
-    void testFormatterWithProperties() {
+    @Test void testFormatterWithProperties() {
         executeTarget("testFormatterWithProperties");
         assertOutputContaining("Violation from test-rset-1.xml");
         assertOutputContaining("link_prefix");
         assertOutputContaining("line_prefix");
     }
 
-    @Test
-    void testAbstractNames() {
+    @Test void testAbstractNames() {
         executeTarget("testAbstractNames");
         assertOutputContaining("Violation from test-rset-1.xml");
         assertOutputContaining("Violation from test-rset-2.xml");
     }
 
-    @Test
-    void testAbstractNamesInNestedRuleset() {
+    @Test void testAbstractNamesInNestedRuleset() {
         executeTarget("testAbstractNamesInNestedRuleset");
         assertOutputContaining("Violation from test-rset-1.xml");
         assertOutputContaining("Violation from test-rset-2.xml");
     }
 
-    @Test
-    void testCommaInRulesetfiles() {
+    @Test void testCommaInRulesetfiles() {
         executeTarget("testCommaInRulesetfiles");
         assertOutputContaining("Violation from test-rset-1.xml");
         assertOutputContaining("Violation from test-rset-2.xml");
     }
 
-    @Test
-    void testRelativeRulesets() {
+    @Test void testRelativeRulesets() {
         executeTarget("testRelativeRulesets");
         assertOutputContaining("Violation from test-rset-1.xml");
     }
 
-    @Test
-    void testRelativeRulesetsInRulesetfiles() {
+    @Test void testRelativeRulesetsInRulesetfiles() {
         executeTarget("testRelativeRulesetsInRulesetfiles");
         assertOutputContaining("Violation from test-rset-1.xml");
     }
 
-    @Test
-    void testExplicitRuleInRuleSet() {
+    @Test void testExplicitRuleInRuleSet() {
         executeTarget("testExplicitRuleInRuleSet");
         assertOutputContaining("Violation from test-rset-1.xml");
     }
 
-    @Test
-    void testClasspath() {
+    @Test void testClasspath() {
         executeTarget("testClasspath");
     }
 
@@ -92,8 +82,7 @@ class PMDTaskTest extends AbstractAntTestHelper {
         System.setProperty("file.encoding", charsetName);
     }
 
-    @Test
-    void testFormatterEncodingWithXML() throws Exception {
+    @Test void testFormatterEncodingWithXML() throws Exception {
         Locale.setDefault(Locale.FRENCH);
         setDefaultCharset("cp1252");
 
@@ -102,8 +91,7 @@ class PMDTaskTest extends AbstractAntTestHelper {
         assertTrue(report.contains("someVariableWithÜmlaut"));
     }
 
-    @Test
-    void testFormatterEncodingWithXMLConsole() throws UnsupportedEncodingException {
+    @Test void testFormatterEncodingWithXMLConsole() throws UnsupportedEncodingException {
         setDefaultCharset("cp1252");
 
         String report = executeTarget("testFormatterEncodingWithXMLConsole");
@@ -111,15 +99,13 @@ class PMDTaskTest extends AbstractAntTestHelper {
         assertTrue(report.contains("someVariableWithÜmlaut"));
     }
 
-    @Test
-    void testMissingCacheLocation() {
+    @Test void testMissingCacheLocation() {
         executeTarget("testMissingCacheLocation");
         assertOutputContaining("Violation from test-rset-1.xml");
         assertContains(getLog(), "This analysis could be faster");
     }
 
-    @Test
-    void testAnalysisCache() {
+    @Test void testAnalysisCache() {
         executeTarget("testAnalysisCache");
         assertOutputContaining("Violation from test-rset-1.xml");
         assertDoesntContain(getLog(), "This analysis could be faster");
@@ -128,8 +114,7 @@ class PMDTaskTest extends AbstractAntTestHelper {
     }
 
 
-    @Test
-    void testDisableIncrementalAnalysis() {
+    @Test void testDisableIncrementalAnalysis() {
         executeTarget("testDisableIncrementalAnalysis");
         assertOutputContaining("Violation from test-rset-1.xml");
         assertDoesntContain(getLog(), "This analysis could be faster");

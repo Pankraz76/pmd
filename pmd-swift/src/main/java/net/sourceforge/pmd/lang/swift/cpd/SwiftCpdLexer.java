@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.swift.ast.SwiftLexer;
  */
 public class SwiftCpdLexer extends AntlrCpdLexer {
 
-    @Override
-    protected Lexer getLexerForSource(final CharStream charStream) {
+    @Override protected Lexer getLexerForSource(final CharStream charStream) {
         return new SwiftLexer(charStream);
     }
 }

@@ -34,14 +34,14 @@ import net.sourceforge.pmd.properties.PropertyFactory;
 public class CyclomaticComplexityRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<Integer> CLASS_LEVEL_DESCRIPTOR
-        = PropertyFactory.intProperty("classReportLevel")
-                         .desc("Total class complexity reporting threshold")
-                         .require(positive()).defaultValue(80).build();
+            = PropertyFactory.intProperty("classReportLevel")
+            .desc("Total class complexity reporting threshold")
+            .require(positive()).defaultValue(80).build();
 
     private static final PropertyDescriptor<Integer> METHOD_LEVEL_DESCRIPTOR
-        = PropertyFactory.intProperty("methodReportLevel")
-                         .desc("Cyclomatic complexity reporting threshold")
-                         .require(positive()).defaultValue(10).build();
+            = PropertyFactory.intProperty("methodReportLevel")
+            .desc("Cyclomatic complexity reporting threshold")
+            .require(positive()).defaultValue(10).build();
 
     private static final Map<String, CycloOption> OPTION_MAP;
 
@@ -53,9 +53,9 @@ public class CyclomaticComplexityRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<List<CycloOption>> CYCLO_OPTIONS_DESCRIPTOR
             = PropertyFactory.enumListProperty("cycloOptions", OPTION_MAP)
-                             .desc("Choose options for the computation of Cyclo")
-                             .emptyDefaultValue()
-                             .build();
+            .desc("Choose options for the computation of Cyclo")
+            .emptyDefaultValue()
+            .build();
 
 
     public CyclomaticComplexityRule() {
@@ -66,8 +66,7 @@ public class CyclomaticComplexityRule extends AbstractJavaRulechainRule {
     }
 
 
-    @Override
-    public Object visitJavaNode(JavaNode node, Object param) {
+    @Override public Object visitJavaNode(JavaNode node, Object param) {
         if (node instanceof ASTTypeDeclaration) {
             visitTypeDecl((ASTTypeDeclaration) node, param);
         }
@@ -85,9 +84,9 @@ public class CyclomaticComplexityRule extends AbstractJavaRulechainRule {
                 int classHighest = (int) MetricsUtil.computeStatistics(JavaMetrics.CYCLO, node.getOperations(), cycloOptions).getMax();
 
                 String[] messageParams = {PrettyPrintingUtil.getPrintableNodeKind(node),
-                                          node.getSimpleName(),
-                                          " total",
-                                          classWmc + " (highest " + classHighest + ")", };
+                        node.getSimpleName(),
+                        " total",
+                        classWmc + " (highest " + classHighest + ")", };
 
                 asCtx(data).addViolation(node, (Object[]) messageParams);
             }
@@ -96,14 +95,12 @@ public class CyclomaticComplexityRule extends AbstractJavaRulechainRule {
     }
 
 
-    @Override
-    public final Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public final Object visit(ASTMethodDeclaration node, Object data) {
         visitMethodLike(node, data);
         return data;
     }
 
-    @Override
-    public final Object visit(ASTConstructorDeclaration node, Object data) {
+    @Override public final Object visit(ASTConstructorDeclaration node, Object data) {
         visitMethodLike(node, data);
         return data;
     }

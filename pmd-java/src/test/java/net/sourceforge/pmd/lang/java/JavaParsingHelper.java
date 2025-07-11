@@ -59,10 +59,10 @@ public class JavaParsingHelper extends BaseParsingHelper<JavaParsingHelper, ASTC
 
     /** This runs all processing stages when parsing. */
     public static final JavaParsingHelper DEFAULT = new JavaParsingHelper(
-        Params.getDefault(),
-        SemanticErrorReporter.noop(), // todo change this to unforgiving logger, need to update a lot of tests
-        TEST_TYPE_SYSTEM,
-        TypeInferenceLogger.noop()
+            Params.getDefault(),
+            SemanticErrorReporter.noop(), // todo change this to unforgiving logger, need to update a lot of tests
+            TEST_TYPE_SYSTEM,
+            TypeInferenceLogger.noop()
     );
 
     private final SemanticErrorReporter semanticLogger;
@@ -76,10 +76,8 @@ public class JavaParsingHelper extends BaseParsingHelper<JavaParsingHelper, ASTC
         this.typeInfLogger = typeInfLogger;
     }
 
-    @Override
-    protected @NonNull ASTCompilationUnit doParse(@NotNull LanguageProcessor processor, @NotNull Params params, @NotNull ParserTask task) {
-        @SuppressWarnings({ "PMD.CloseResource", "resource" })
-        JavaLanguageProcessor proc = (JavaLanguageProcessor) processor;
+    @Override protected @NonNull ASTCompilationUnit doParse(@NotNull LanguageProcessor processor, @NotNull Params params, @NotNull ParserTask task) {
+        @SuppressWarnings({"PMD.CloseResource", "resource"}) JavaLanguageProcessor proc = (JavaLanguageProcessor) processor;
         proc.setTypeSystem(ts);
         JavaParser parser = proc.getParserWithoutProcessing();
         ASTCompilationUnit rootNode = parser.parse(task);
@@ -113,8 +111,7 @@ public class JavaParsingHelper extends BaseParsingHelper<JavaParsingHelper, ASTC
         return logTypeInference(true, System.out);
     }
 
-    @Override
-    protected @NonNull JavaParsingHelper clone(@NonNull Params params) {
+    @Override protected @NonNull JavaParsingHelper clone(@NonNull Params params) {
         return new JavaParsingHelper(params, semanticLogger, ts, typeInfLogger);
     }
 
@@ -143,23 +140,20 @@ public class JavaParsingHelper extends BaseParsingHelper<JavaParsingHelper, ASTC
             return SemanticErrorReporter.reportToLogger(reporter);
         }
 
-        @Override
-        public void warning(Node location, String message, Object... args) {
+        @Override public void warning(Node location, String message, Object... args) {
             warnings.computeIfAbsent(message, k -> new ArrayList<>())
                     .add(new Pair<>(location, args));
 
             baseLogger.warning(location, message, args);
         }
 
-        @Override
-        public SemanticException error(Node location, String message, Object... args) {
+        @Override public SemanticException error(Node location, String message, Object... args) {
             errors.computeIfAbsent(message, k -> new ArrayList<>())
-                  .add(new Pair<>(location, args));
+                    .add(new Pair<>(location, args));
             return baseLogger.error(location, message, args);
         }
 
-        @Override
-        public @Nullable SemanticException getFirstError() {
+        @Override public @Nullable SemanticException getFirstError() {
             return baseLogger.getFirstError();
         }
     }
@@ -177,26 +171,23 @@ public class JavaParsingHelper extends BaseParsingHelper<JavaParsingHelper, ASTC
 
         }
 
-        @Override
-        public void warning(Node location, String message, Object... formatArgs) {
+        @Override public void warning(Node location, String message, Object... formatArgs) {
             String warning = MessageFormat.format(message, formatArgs);
             throw new AssertionError(
-                "Expected no warnings, but got: " + warning + "\n"
-                    + "at " + StringUtils.truncate(location.toString(), 100)
+                    "Expected no warnings, but got: " + warning + "\n"
+                            + "at " + StringUtils.truncate(location.toString(), 100)
             );
         }
 
-        @Override
-        public SemanticException error(Node location, String message, Object... formatArgs) {
+        @Override public SemanticException error(Node location, String message, Object... formatArgs) {
             String error = MessageFormat.format(message, formatArgs);
             throw new AssertionError(
-                "Expected no errors, but got: " + error + "\n"
-                    + "at " + StringUtils.truncate(location.toString(), MAX_NODE_TEXT_WIDTH)
+                    "Expected no errors, but got: " + error + "\n"
+                            + "at " + StringUtils.truncate(location.toString(), MAX_NODE_TEXT_WIDTH)
             );
         }
 
-        @Override
-        public @Nullable SemanticException getFirstError() {
+        @Override public @Nullable SemanticException getFirstError() {
             return null;
         }
     }

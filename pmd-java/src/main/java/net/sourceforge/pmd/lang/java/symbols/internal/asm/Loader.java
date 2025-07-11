@@ -14,21 +14,18 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 abstract class Loader {
 
 
-    @Nullable
-    abstract InputStream getInputStream() throws IOException;
+    @Nullable abstract InputStream getInputStream() throws IOException;
 
 
     static class FailedLoader extends Loader {
 
         static final FailedLoader INSTANCE = new FailedLoader();
 
-        @Override
-        @Nullable InputStream getInputStream() {
+        @Override @Nullable InputStream getInputStream() {
             return null;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "(failed loader)";
         }
 
@@ -43,13 +40,11 @@ abstract class Loader {
             this.stream = stream;
         }
 
-        @Override
-        @NonNull InputStream getInputStream() {
+        @Override @NonNull InputStream getInputStream() {
             return stream;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "StreamLoader(for " + name + ")";
         }
     }

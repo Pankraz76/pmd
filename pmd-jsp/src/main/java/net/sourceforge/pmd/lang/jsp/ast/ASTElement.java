@@ -77,8 +77,7 @@ public final class ASTElement extends AbstractJspNode {
         this.empty = empty;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

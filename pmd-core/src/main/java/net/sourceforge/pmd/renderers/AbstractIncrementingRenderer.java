@@ -45,18 +45,15 @@ public abstract class AbstractIncrementingRenderer extends AbstractRenderer {
         super(name, description);
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         // does nothing - override if necessary
     }
 
-    @Override
-    public void startFileAnalysis(TextFile dataSource) {
+    @Override public void startFileAnalysis(TextFile dataSource) {
         // does nothing - override if necessary
     }
 
-    @Override
-    public void renderFileReport(Report report) throws IOException {
+    @Override public void renderFileReport(Report report) throws IOException {
         Iterator<RuleViolation> violations = report.getViolations().iterator();
         if (violations.hasNext()) {
             renderFileViolations(violations);
@@ -81,8 +78,7 @@ public abstract class AbstractIncrementingRenderer extends AbstractRenderer {
      */
     public abstract void renderFileViolations(Iterator<RuleViolation> violations) throws IOException;
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         // does nothing - override if necessary
     }
 }

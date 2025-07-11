@@ -16,9 +16,9 @@ public class PomDialectModule extends SimpleDialectLanguageModuleBase {
 
     public PomDialectModule() {
         super(LanguageMetadata.withId(ID).name("Maven POM")
-                              .extensions("pom")
-                              .addDefaultVersion("4.0.0")
-                              .asDialectOf("xml"));
+                .extensions("pom")
+                .addDefaultVersion("4.0.0")
+                .asDialectOf("xml"));
     }
 
     public static PomDialectModule getInstance() {

@@ -58,8 +58,7 @@ public interface FileAnalysisListener extends AutoCloseable {
      *
      * @throws Exception If an exception occurs, e.g. IOException when writing to a renderer
      */
-    @Override
-    default void close() throws Exception {
+    @Override default void close() throws Exception {
         // by default do nothing
     }
 
@@ -83,8 +82,7 @@ public interface FileAnalysisListener extends AutoCloseable {
      * @throws IllegalArgumentException If the parameter is empty
      * @throws NullPointerException     If the parameter or any of its elements is null
      */
-    @SuppressWarnings("PMD.CloseResource")
-    static FileAnalysisListener tee(Collection<? extends FileAnalysisListener> listeners) {
+    @SuppressWarnings("PMD.CloseResource") static FileAnalysisListener tee(Collection<? extends FileAnalysisListener> listeners) {
         AssertionUtil.requireParamNotNull("Listeners", listeners);
         AssertionUtil.requireNotEmpty("Listeners", listeners);
         AssertionUtil.requireContainsNoNullValue("Listeners", listeners);
@@ -100,37 +98,32 @@ public interface FileAnalysisListener extends AutoCloseable {
 
         class TeeListener implements FileAnalysisListener {
 
-            @Override
-            public void onRuleViolation(RuleViolation violation) {
+            @Override public void onRuleViolation(RuleViolation violation) {
                 for (FileAnalysisListener it : list) {
                     it.onRuleViolation(violation);
                 }
             }
 
-            @Override
-            public void onSuppressedRuleViolation(SuppressedViolation violation) {
+            @Override public void onSuppressedRuleViolation(SuppressedViolation violation) {
                 for (FileAnalysisListener it : list) {
                     it.onSuppressedRuleViolation(violation);
                 }
             }
 
-            @Override
-            public void onError(ProcessingError error) {
+            @Override public void onError(ProcessingError error) {
                 for (FileAnalysisListener it : list) {
                     it.onError(error);
                 }
             }
 
-            @Override
-            public void close() throws Exception {
+            @Override public void close() throws Exception {
                 Exception composed = IOUtil.closeAll(list);
                 if (composed != null) {
                     throw composed;
                 }
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "Tee" + list;
             }
         }

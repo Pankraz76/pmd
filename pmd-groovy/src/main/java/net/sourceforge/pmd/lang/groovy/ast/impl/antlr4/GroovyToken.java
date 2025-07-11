@@ -40,44 +40,36 @@ public class GroovyToken implements GenericToken<GroovyToken> {
         this.textDoc = textDoc;
     }
 
-    @Override
-    public GroovyToken getNext() {
+    @Override public GroovyToken getNext() {
         return next;
     }
 
-    @Override
-    public GroovyToken getPreviousComment() {
+    @Override public GroovyToken getPreviousComment() {
         return previousComment;
     }
 
-    @Override
-    public CharSequence getImageCs() {
+    @Override public CharSequence getImageCs() {
         return token.getText();
     }
 
     /** Returns a text region with the coordinates of this token. */
-    @Override
-    public TextRegion getRegion() {
+    @Override public TextRegion getRegion() {
         return TextRegion.fromBothOffsets(token.getStartIndex(), token.getStopIndex() + 1);
     }
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         return textDoc.toLocation(getRegion());
     }
 
-    @Override
-    public boolean isEof() {
+    @Override public boolean isEof() {
         return getKind() == Token.EOF;
     }
 
-    @Override
-    public int compareTo(GroovyToken o) {
+    @Override public int compareTo(GroovyToken o) {
         return getRegion().compareTo(o.getRegion());
     }
 
-    @Override
-    public int getKind() {
+    @Override public int getKind() {
         return token.getType();
     }
 

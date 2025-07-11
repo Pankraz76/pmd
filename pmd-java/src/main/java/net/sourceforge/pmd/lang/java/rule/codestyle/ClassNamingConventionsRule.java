@@ -35,9 +35,9 @@ public class ClassNamingConventionsRule extends AbstractNamingConventionRule<AST
 
     public ClassNamingConventionsRule() {
         super(ASTClassDeclaration.class,
-              ASTEnumDeclaration.class,
-              ASTAnnotationTypeDeclaration.class,
-              ASTRecordDeclaration.class);
+                ASTEnumDeclaration.class,
+                ASTAnnotationTypeDeclaration.class,
+                ASTRecordDeclaration.class);
         definePropertyDescriptor(classRegex);
         definePropertyDescriptor(abstractClassRegex);
         definePropertyDescriptor(interfaceRegex);
@@ -52,8 +52,7 @@ public class ClassNamingConventionsRule extends AbstractNamingConventionRule<AST
         return !node.isNested() && TestFrameworksUtil.isTestClass(node);
     }
 
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
 
         if (isTestClass(node)) {
             checkMatches(node, testClassRegex, data);
@@ -74,38 +73,32 @@ public class ClassNamingConventionsRule extends AbstractNamingConventionRule<AST
     }
 
 
-    @Override
-    public Object visit(ASTEnumDeclaration node, Object data) {
+    @Override public Object visit(ASTEnumDeclaration node, Object data) {
         checkMatches(node, enumerationRegex, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTRecordDeclaration node, Object data) {
+    @Override public Object visit(ASTRecordDeclaration node, Object data) {
         checkMatches(node, classRegex, data); // property?
         return data;
     }
 
-    @Override
-    public Object visit(ASTAnnotationTypeDeclaration node, Object data) {
+    @Override public Object visit(ASTAnnotationTypeDeclaration node, Object data) {
         checkMatches(node, annotationRegex, data);
         return data;
     }
 
 
-    @Override
-    String defaultConvention() {
+    @Override String defaultConvention() {
         return PASCAL_CASE;
     }
 
-    @Override
-    String nameExtractor(ASTTypeDeclaration node) {
+    @Override String nameExtractor(ASTTypeDeclaration node) {
         return node.getSimpleName();
     }
 
 
-    @Override
-    String kindDisplayName(ASTTypeDeclaration node, PropertyDescriptor<Pattern> descriptor) {
+    @Override String kindDisplayName(ASTTypeDeclaration node, PropertyDescriptor<Pattern> descriptor) {
         return JavaRuleUtil.isUtilityClass(node) ? "utility class" : PrettyPrintingUtil.getPrintableNodeKind(node);
     }
 }

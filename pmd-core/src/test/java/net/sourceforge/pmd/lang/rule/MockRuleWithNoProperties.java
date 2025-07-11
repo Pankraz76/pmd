@@ -33,8 +33,7 @@ public class MockRuleWithNoProperties extends AbstractRule {
         setRuleSetName(ruleSetName);
     }
 
-    @Override
-    public void apply(Node node, RuleContext ctx) {
+    @Override public void apply(Node node, RuleContext ctx) {
         // the mock rule does nothing. Usually you would start here to analyze the AST.
     }
 }

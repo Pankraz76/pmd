@@ -24,8 +24,7 @@ import net.sourceforge.pmd.lang.document.FileId;
 class XMLOldRendererTest {
     private static final String ENCODING = (String) System.getProperties().get("file.encoding");
 
-    @Test
-    void testWithNoDuplication() throws IOException, ParserConfigurationException, SAXException {
+    @Test void testWithNoDuplication() throws IOException, ParserConfigurationException, SAXException {
         CPDReportRenderer renderer = new XMLOldRenderer();
         StringWriter sw = new StringWriter();
         renderer.render(CpdTestUtils.makeReport(Collections.emptyList()), sw);
@@ -43,8 +42,7 @@ class XMLOldRendererTest {
         assertEquals(0, doc.getElementsByTagName("duplication").getLength());
     }
 
-    @Test
-    void testWithOneDuplication() throws Exception {
+    @Test void testWithOneDuplication() throws Exception {
         CPDReportRenderer renderer = new XMLOldRenderer();
         CpdTestUtils.CpdReportBuilder builder = new CpdTestUtils.CpdReportBuilder();
         int lineCount = 6;

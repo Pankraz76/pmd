@@ -20,8 +20,7 @@ import net.sourceforge.pmd.lang.java.symbols.SymbolicValue;
 import net.sourceforge.pmd.lang.java.types.TypeSystem;
 
 class ModuleStubTest {
-    @Test
-    void loadModuleInfo() {
+    @Test void loadModuleInfo() {
         TypeSystem ts = TypeSystem.usingClasspath(name -> {
             ClassLoader classLoader = ModuleStubTest.class.getClassLoader();
 
