@@ -88,6 +88,7 @@
         <junit5.platform.version>1.13.3</junit5.platform.version>
         <dokka.version>2.0.0</dokka.version>
         <rewrite.version>6.12.1</rewrite.version>
+        <rewrite.static.analysis.version>2.11.0</rewrite.static.analysis.version>
 
         <javacc.version>5.0</javacc.version>
         <surefire.version>3.5.3</surefire.version>
@@ -500,7 +501,7 @@
                         <dependency>
                             <groupId>org.openrewrite.recipe</groupId>
                             <artifactId>rewrite-static-analysis</artifactId>
-                            <version>2.11.0</version>
+                            <version>${rewrite.static.analysis.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
