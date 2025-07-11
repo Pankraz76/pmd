@@ -8,7 +8,7 @@ public class AnonClassExample {
     static {
         new Thread(new Runnable() {
             // missing
-            public void run() {
+            @Override public void run() {
 
             }
         }).start();

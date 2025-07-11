@@ -13,7 +13,7 @@ import net.sourceforge.pmd.reporting.RuleContext;
  */
 public class DummyJavaRule extends AbstractJavaRule {
 
-    public void apply(Node node, RuleContext ctx) {
+    @Override public void apply(Node node, RuleContext ctx) {
 
     }
 

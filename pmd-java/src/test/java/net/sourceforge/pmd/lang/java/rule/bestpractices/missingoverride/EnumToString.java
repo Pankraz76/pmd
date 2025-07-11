@@ -7,18 +7,18 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride;
 public enum EnumToString {
     sub_EnumClazz {
         // missing @Override
-        public String toString() {
+        @Override public String toString() {
             return "test";
         }
 
         // missing @Override
-        public void notOverride() {
+        @Override public void notOverride() {
             System.out.println("test");
         }
     };
 
     // missing @Override
-    public String toString() {
+    @Override public String toString() {
         return "test";
     }
 

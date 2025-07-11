@@ -79,7 +79,7 @@ public final class Chars implements CharSequence {
     // We compile against Java 8 and execute maven on GitHub Actions with Java 11. So there is no missing override.
     // However, when executing Maven with Java 15+, then we get MissingOverride (#5299).
     // This is suppressed via maven-pmd-plugin's excludeFromFailureFile
-    public boolean isEmpty() {
+    @Override public boolean isEmpty() {
         return len == 0;
     }
 

@@ -66,7 +66,7 @@ class XSLTRendererTest extends AbstractRendererTest {
         assertTrue(result.contains("violation message"));
     }
 
-    protected String readFile(String relativePath) {
+    @Override protected String readFile(String relativePath) {
         return super.readFile("xslt/" + relativePath);
     }
 }

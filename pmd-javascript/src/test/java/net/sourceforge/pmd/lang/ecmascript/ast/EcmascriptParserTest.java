@@ -62,7 +62,7 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
 
         class MyEcmascriptRule extends AbstractEcmascriptRule {
 
-            public Object visit(ASTScope node, Object data) {
+            @Override public Object visit(ASTScope node, Object data) {
                 asCtx(data).addViolationWithMessage(node, "Scope from " + node.getBeginLine() + " to " + node.getEndLine());
                 return super.visit(node, data);
             }

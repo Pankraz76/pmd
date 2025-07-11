@@ -25,7 +25,7 @@ class ExposingSerializer extends Serializer {
      *
      * <p>See: https://sourceforge.net/tracker/?func=detail&aid=1415525&group_id=56262&atid=479921
      */
-    public void writeChild(Node node) throws IOException {
+    @Override public void writeChild(Node node) throws IOException {
         super.writeChild(node);
     }
 }
