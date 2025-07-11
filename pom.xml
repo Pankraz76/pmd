@@ -482,9 +482,9 @@
                     <version>6.12.1</version>
                     <configuration>
                         <exclusions>
-                            <exclusion>**testdata**</exclusion>
                             <exclusion>**Chars.java</exclusion> <!-- // @SuppressWarnings("PMD.MissingOverride") -->
                             <exclusion>**Jep441_PatternMatchingForSwitch.java</exclusion>
+                            <exclusion>**testdata**</exclusion>
                         </exclusions>
                         <activeRecipes>
 <!--                            <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>-->
