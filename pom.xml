@@ -483,17 +483,17 @@
                     <version>${rewrite.version}</version>
                     <configuration>
                         <exclusions>
-                            <exclusion>**Chars.java</exclusion> <!-- // @SuppressWarnings("PMD.MissingOverride") -->
-                            <exclusion>**Jep441_PatternMatchingForSwitch.java</exclusion>
-                            <exclusion>**TypeScriptLexerBase.java</exclusion>
                             <exclusion>**AbstractJavaRule.java</exclusion>
                             <exclusion>**AbstractPLSQLRule.java</exclusion>
-                            <exclusion>**TypeSystem.java</exclusion>
+                            <exclusion>**Chars.java</exclusion> <!-- // @SuppressWarnings("PMD.MissingOverride") -->
+                            <exclusion>**DesignerCommand.java</exclusion>
+                            <exclusion>**Jep441_PatternMatchingForSwitch.java</exclusion>
                             <exclusion>**MatchAlgorithm.java</exclusion>
                             <exclusion>**PmdRootCommand.java</exclusion>
-                            <exclusion>**DesignerCommand.java</exclusion>
-                            <exclusion>**testdata**</exclusion>
+                            <exclusion>**TypeScriptLexerBase.java</exclusion>
+                            <exclusion>**TypeSystem.java</exclusion>
                             <exclusion>**generated-sources**</exclusion>
+                            <exclusion>**testdata**</exclusion>
                         </exclusions>
                         <activeRecipes>
 <!--                            <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>-->
