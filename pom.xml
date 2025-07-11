@@ -1028,11 +1028,6 @@
      <version>6.12.1</version>
      <configuration>
       <activeRecipes>
-<recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
-<recipe>org.openrewrite.java.format.NormalizeLineBreaks</recipe>
-<recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>
-<recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>
-<recipe>org.openrewrite.staticanalysis.StringLiteralEquality</recipe>
 <!--                            <recipe>org.openrewrite.java.format.AutoFormat</recipe>-->
 <!--                            <recipe>org.openrewrite.java.format.BlankLines</recipe>-->
 <!--                            <recipe>org.openrewrite.java.format.NormalizeFormat</recipe>-->
@@ -1049,13 +1044,18 @@
 <!--                            <recipe>org.openrewrite.staticanalysis.CodeCleanup</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.CommonStaticAnalysis</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.FinalizeLocalVariables</recipe>-->
-                            <recipe>org.openrewrite.staticanalysis.MissingOverrideAnnotation</recipe>
-                            <recipe>org.openrewrite.staticanalysis.RedundantFileCreation</recipe>
 <!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedLocalVariables</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateFields</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods</recipe>-->
+<recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
+<recipe>org.openrewrite.java.format.NormalizeLineBreaks</recipe>
 <recipe>org.openrewrite.maven.OrderPomElements</recipe>
+<recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>
+<recipe>org.openrewrite.staticanalysis.MissingOverrideAnnotation</recipe>
+<recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>
+<recipe>org.openrewrite.staticanalysis.RedundantFileCreation</recipe>
+<recipe>org.openrewrite.staticanalysis.StringLiteralEquality</recipe>
 <recipe>org.openrewrite.text.EndOfLineAtEndOfFile</recipe>
 </activeRecipes>
       <failOnDryRunResults>true</failOnDryRunResults>
