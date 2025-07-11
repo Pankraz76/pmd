@@ -4,6 +4,8 @@
 
 package net.sourceforge.pmd.lang.java.ast;
 
+import net.sourceforge.pmd.lang.ast.Node;
+
 /**
  * The declaration of an annotation type.
  * This is a {@linkplain Node#isFindBoundary() find boundary} for tree traversal methods.

@@ -109,7 +109,7 @@ class SarifRendererTest extends AbstractRendererTest {
         };
     }
 
-    @Override protected String readFile(String relativePath) {
+    protected String readFile(String relativePath) {
         return super.readFile("sarif/" + relativePath);
     }
 }

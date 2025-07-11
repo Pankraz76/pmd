@@ -31,7 +31,7 @@ class SuppressWarningsTest extends ApexParserTestBase {
 
         @Override
         public Object visit(ASTUserClass clazz, Object ctx) {
-            if ("bar".equalsIgnoreCase(clazz.getSimpleName())) {
+            if (clazz.getSimpleName().equalsIgnoreCase("bar")) {
                 asCtx(ctx).addViolation(clazz);
             }
             return super.visit(clazz, ctx);

@@ -25,7 +25,7 @@ public class Java9Interface {
 
     public static class SampleTool implements Tool {
 
-        @Override public void use() {
+        public void use() {
             if (true) { // force a PMD violation: java-basic/UnconditionalIfStatement
                 System.out.println("Instance: " + getName());
                 System.out.println("  Static: " + getStaticName());

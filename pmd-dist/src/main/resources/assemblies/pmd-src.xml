@@ -34,6 +34,7 @@
                 <exclude>**/.settings/**</exclude>
                 <exclude>**/.project</exclude>
                 <exclude>**/.classpath</exclude>
+                <exclude>**/.checkstyle</exclude>
                 <exclude>**/.pmd</exclude>
                 <exclude>**/.pmdruleset.xml</exclude>
                 <exclude>**/.ruleset</exclude>

@@ -2,6 +2,7 @@ target/
 bin/
 .project
 .classpath
+.checkstyle
 .pmd
 .pmdruleset.xml
 .ruleset

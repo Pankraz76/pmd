@@ -11,12 +11,12 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride;
 public enum EnumWithAnonClass {
     Foo {
         // missing
-        @Override public String toString() {
+        public String toString() {
             return super.toString();
         }
 
         // missing
-        @Override public String getSomething() {
+        public String getSomething() {
             return null;
         }
     };
