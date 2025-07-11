@@ -224,7 +224,7 @@ public class SaxonXPathRuleQuery {
         Iterable<Expression> subexpressions = SaxonExprTransformations.splitUnions(expr);
 
         // Second step: Analyze each expression separately
-        for (final Expression subexpression : subexpressions) { // final because of checkstyle
+        for ( Expression subexpression : subexpressions) {
             Expression modified = subexpression;
             modified = SaxonExprTransformations.hoistFilters(modified);
             modified = SaxonExprTransformations.reduceRoot(modified);
