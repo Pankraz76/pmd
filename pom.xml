@@ -87,6 +87,7 @@
         <junit5.version>5.13.3</junit5.version>
         <junit5.platform.version>1.13.3</junit5.platform.version>
         <dokka.version>2.0.0</dokka.version>
+        <rewrite.version>6.12.1</rewrite.version>
 
         <javacc.version>5.0</javacc.version>
         <surefire.version>3.5.3</surefire.version>
@@ -447,7 +448,7 @@
                 <plugin>
                     <groupId>org.openrewrite.maven</groupId>
                     <artifactId>rewrite-maven-plugin</artifactId>
-                    <version>6.12.1</version>
+                    <version>${rewrite.version}</version>
                     <configuration>
                         <exclusions>
                             <exclusion>**Chars.java</exclusion> <!-- // @SuppressWarnings("PMD.MissingOverride") -->
