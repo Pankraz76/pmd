@@ -683,7 +683,7 @@
 <!--                            <recipe>org.openrewrite.java.testing.cleanup.AssertTrueNullToAssertNull</recipe>-->
 <!--                            <recipe>org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic</recipe>-->
 <!--                            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>-->
-<!--                            <recipe>org.openrewrite.maven.OrderPomElements</recipe>-->
+                            <recipe>org.openrewrite.maven.OrderPomElements</recipe>
 <!--                            <recipe>org.openrewrite.staticanalysis.CodeCleanup</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.CommonStaticAnalysis</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>-->
