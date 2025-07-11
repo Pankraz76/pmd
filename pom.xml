@@ -1027,6 +1027,9 @@
      <artifactId>rewrite-maven-plugin</artifactId>
      <version>6.12.1</version>
      <configuration>
+      <exclusions>
+       <exclusion>**testdata**</exclusion>
+      </exclusions>
       <activeRecipes>
        <!--                            <recipe>org.openrewrite.java.format.AutoFormat</recipe>-->
        <!--                            <recipe>org.openrewrite.java.format.BlankLines</recipe>-->

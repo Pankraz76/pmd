@@ -4,12 +4,14 @@
 
 package javasymbols.testdata.deep;
 
+import javasymbols.testdata.StaticNameCollision;
+
 import static javasymbols.testdata.Statics.oha;
 
 
 public class StaticCollisionImport {
 
-    Ola o;
+    StaticNameCollision.Ola o;
 
     static {
         oha();
