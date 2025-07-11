@@ -14,7 +14,7 @@ class StringTemplateReduction {
     boolean isRuleName(Object o) {
         if (o != null) {
             return true;
-        } else if (o.equals("ref")) { // might be wrongly tokenized as STRING_TEMPLATE_END
+        } else if ("ref".equals(o)) { // might be wrongly tokenized as STRING_TEMPLATE_END
             return false;
         }
     }

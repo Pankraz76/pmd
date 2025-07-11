@@ -26,9 +26,9 @@ public class LocalRecords {
 
     void methodWithLocalRecordAndModifiers() {
         final record MyRecord1(String a) {}
-        final static record MyRecord2(String a) {}
+        static final record MyRecord2(String a) {}
         @Deprecated record MyRecord3(String a) {}
-        final @Deprecated static record MyRecord4(String a) {}
+        static @Deprecated final record MyRecord4(String a) {}
     }
 
     void methodWithLocalClass() {
