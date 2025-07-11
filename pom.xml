@@ -456,6 +456,8 @@
                             <exclusion>**Jep441_PatternMatchingForSwitch.java</exclusion>
                             <exclusion>**TypeScriptLexerBase.java</exclusion>
                             <exclusion>**MatchAlgorithm.java</exclusion>
+                            <exclusion>**PmdRootCommand.java</exclusion>
+                            <exclusion>**DesignerCommand.java</exclusion>
                             <exclusion>**testdata**</exclusion>
                             <exclusion>**generated-sources**</exclusion>
                         </exclusions>
