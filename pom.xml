@@ -706,16 +706,17 @@
                         <activeRecipes>
                             <recipe>org.openrewrite.staticanalysis.CodeCleanup</recipe>
                             <recipe>org.openrewrite.maven.OrderPomElements</recipe>
+                            <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>
 <!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.MissingOverrideAnnotation</recipe>-->
                         </activeRecipes>
-                        <checkstyleConfigFile>pmd-checkstyle-config.xml</checkstyleConfigFile>
+                        <failOnDryRunResults>true</failOnDryRunResults>
                     </configuration>
                     <executions>
                         <execution>
                             <phase>process-sources</phase>
                             <goals>
-                                <goal>run</goal>
+                                <goal>dryRun</goal>
                             </goals>
                         </execution>
                     </executions>
