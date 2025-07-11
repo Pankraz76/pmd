@@ -7,9 +7,7 @@
 
 package net.sourceforge.pmd.lang.typescript.ast;
 
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.*;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
