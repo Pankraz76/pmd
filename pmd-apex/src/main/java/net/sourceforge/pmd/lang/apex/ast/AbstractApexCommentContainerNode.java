@@ -23,8 +23,7 @@ abstract class AbstractApexCommentContainerNode<T extends Node> extends Abstract
         this.containsComment = containsComment;
     }
 
-    @Override
-    public boolean getContainsComment() {
+    @Override public boolean getContainsComment() {
         return containsComment;
     }
 }

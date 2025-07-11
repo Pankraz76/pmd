@@ -27,23 +27,20 @@ public final class GetModifiersFun extends BaseJavaXPathFunction {
         this.explicit = explicit;
     }
 
-    @Override
-    public Type getResultType() {
+    @Override public Type getResultType() {
         return Type.STRING_SEQUENCE;
     }
 
-    @Override
-    public boolean dependsOnContext() {
+    @Override public boolean dependsOnContext() {
         return true;
     }
 
-    @Override
-    public FunctionCall makeCallExpression() {
+    @Override public FunctionCall makeCallExpression() {
         return (contextNode, arguments) -> {
             if (contextNode instanceof ModifierOwner) {
                 ASTModifierList modList = ((ModifierOwner) contextNode).getModifiers();
                 Set<JModifier> mods = explicit ? modList.getExplicitModifiers()
-                                               : modList.getEffectiveModifiers();
+                        : modList.getEffectiveModifiers();
                 return CollectionUtil.map(mods, JModifier::getToken);
             }
             return Collections.<String>emptyList();

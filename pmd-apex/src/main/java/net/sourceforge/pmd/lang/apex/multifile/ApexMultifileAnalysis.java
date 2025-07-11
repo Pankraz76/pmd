@@ -111,7 +111,7 @@ public final class ApexMultifileAnalysis {
     public List<Issue> getFileIssues(String filename) {
         // Extract issues for a specific metadata file from the org
         return org == null ? Collections.emptyList()
-                           : Collections.unmodifiableList(Arrays.asList(org.issues().issuesForFile(filename)));
+                : Collections.unmodifiableList(Arrays.asList(org.issues().issuesForFile(filename)));
     }
 
     /*
@@ -119,18 +119,15 @@ public final class ApexMultifileAnalysis {
      */
     private static final class AnalysisLogger implements com.nawforce.pkgforce.diagnostics.Logger {
 
-        @Override
-        public void info(String message) {
+        @Override public void info(String message) {
             LOG.info(message);
         }
 
-        @Override
-        public void debug(String message) {
+        @Override public void debug(String message) {
             LOG.debug(message);
         }
 
-        @Override
-        public void trace(String message) {
+        @Override public void trace(String message) {
             LOG.trace(message);
         }
     }

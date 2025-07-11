@@ -23,13 +23,11 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
  */
 public class InaccessibleAuraEnabledGetterRule extends AbstractApexRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTProperty.class);
     }
 
-    @Override
-    public Object visit(ASTProperty node, Object data) {
+    @Override public Object visit(ASTProperty node, Object data) {
         // Find @AuraEnabled property
         ASTModifierNode propModifiers = node.getModifiers();
         if (hasAuraEnabledAnnotation(propModifiers)) {

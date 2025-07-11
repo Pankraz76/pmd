@@ -20,31 +20,26 @@ public final class ASTUnqualifiedImportClause extends AbstractModelicaImportClau
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
 
         importFromWhere = firstChild(ASTName.class);
     }
 
-    @Override
-    protected ResolutionResult<ModelicaDeclaration> getCacheableImportSources(ResolutionState state, ModelicaScope scope) {
+    @Override protected ResolutionResult<ModelicaDeclaration> getCacheableImportSources(ResolutionState state, ModelicaScope scope) {
         return scope.safeResolveLexically(ModelicaDeclaration.class, state, importFromWhere.getCompositeName());
     }
 
-    @Override
-    protected void fetchImportedClassesFromSource(ResolutionContext result, ModelicaDeclaration source, String simpleName) throws Watchdog.CountdownException {
+    @Override protected void fetchImportedClassesFromSource(ResolutionContext result, ModelicaDeclaration source, String simpleName) throws Watchdog.CountdownException {
         result.watchdogTick();
         InternalApiBridge.resolveFurtherNameComponents(source, result, CompositeName.create(simpleName));
     }
 
-    @Override
-    public boolean isQualified() {
+    @Override public boolean isQualified() {
         return false;
     }
 }

@@ -22,8 +22,7 @@ public final class ASTArrayType extends AbstractJavaTypeNode implements ASTRefer
     }
 
 
-    @Override
-    public NodeStream<ASTAnnotation> getDeclaredAnnotations() {
+    @Override public NodeStream<ASTAnnotation> getDeclaredAnnotations() {
         return getDimensions().getFirstChild().getDeclaredAnnotations();
     }
 
@@ -40,8 +39,7 @@ public final class ASTArrayType extends AbstractJavaTypeNode implements ASTRefer
         return getDimensions().size();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -25,16 +25,15 @@ import net.sourceforge.pmd.lang.html.ast.HtmlParser;
  */
 public class HtmlCpdLexer implements CpdLexer {
 
-    @Override
-    public void tokenize(TextDocument document, TokenFactory tokens) {
+    @Override public void tokenize(TextDocument document, TokenFactory tokens) {
         HtmlLanguageModule html = HtmlLanguageModule.getInstance();
 
         try (LanguageProcessor processor = html.createProcessor(html.newPropertyBundle())) {
 
             ParserTask task = new ParserTask(
-                document,
-                SemanticErrorReporter.noop(),
-                LanguageProcessorRegistry.singleton(processor)
+                    document,
+                    SemanticErrorReporter.noop(),
+                    LanguageProcessorRegistry.singleton(processor)
             );
 
             HtmlParser parser = new HtmlParser();

@@ -405,8 +405,8 @@ public class PMDConfiguration extends AbstractConfiguration {
      */
     public void setAnalysisCacheLocation(final String cacheLocation) {
         setAnalysisCache(cacheLocation == null
-                         ? new NoopAnalysisCache()
-                         : new FileAnalysisCache(new File(cacheLocation)));
+                ? new NoopAnalysisCache()
+                : new FileAnalysisCache(new File(cacheLocation)));
     }
 
 
@@ -433,11 +433,10 @@ public class PMDConfiguration extends AbstractConfiguration {
         return ignoreIncrementalAnalysis;
     }
 
-    @Override
-    protected void checkLanguageIsAcceptable(Language lang) throws UnsupportedOperationException {
+    @Override protected void checkLanguageIsAcceptable(Language lang) throws UnsupportedOperationException {
         if (!(lang instanceof PmdCapableLanguage)) {
             throw new UnsupportedOperationException("Language " + lang.getId() + " does not support analysis with PMD and cannot be used in a PMDConfiguration. "
-                + "You may be able to use it with CPD though.");
+                    + "You may be able to use it with CPD though.");
         }
     }
 }

@@ -41,18 +41,15 @@ class AntlrVersionTest {
      *
      * @see <a href="https://github.com/pmd/pmd/issues/4678">[apex] Warning messages about ANTLR version mismatch #4678</a>
      */
-    @Test
-    void antlrVersionIsCompatible() throws IOException {
+    @Test void antlrVersionIsCompatible() throws IOException {
         ClassReader classReader = new ClassReader(ApexParser.class.getName());
         classReader.accept(new ClassVisitor(Opcodes.ASM9) {
-            @Override
-            public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
+            @Override public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
                 if ("<clinit>".equals(name)) {
                     return new MethodVisitor(Opcodes.ASM9) {
                         private final Deque<String> versions = new LinkedList<>();
 
-                        @Override
-                        public void visitLdcInsn(Object value) {
+                        @Override public void visitLdcInsn(Object value) {
                             if (value instanceof String) {
                                 versions.addLast((String) value);
                                 if (versions.size() > 2) {
@@ -61,8 +58,7 @@ class AntlrVersionTest {
                             }
                         }
 
-                        @Override
-                        public void visitMethodInsn(int opcode, String owner, String name, String descriptor, boolean isInterface) {
+                        @Override public void visitMethodInsn(int opcode, String owner, String name, String descriptor, boolean isInterface) {
                             if ("org/antlr/v4/runtime/RuntimeMetaData".equals(owner) && "checkVersion".equals(name)) {
                                 assertEquals(2, versions.size());
                                 String checkResult = executeCheckVersion(versions.getFirst(), versions.getLast());

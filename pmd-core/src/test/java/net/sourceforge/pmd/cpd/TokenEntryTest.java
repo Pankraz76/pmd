@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class TokenEntryTest {
 
-    @Test
-    void testSimple() {
+    @Test void testSimple() {
         Tokens tokens = new Tokens();
         TokenEntry mark = tokens.addToken("public", CpdTestUtils.FOO_FILE_ID, 1, 2, 3, 4);
         assertEquals(1, mark.getBeginLine());

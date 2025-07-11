@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.jsp.rule.AbstractJspRule;
  * @author maxime_robert
  */
 public class NoUnsanitizedJSPExpressionRule extends AbstractJspRule {
-    @Override
-    public Object visit(ASTElExpression node, Object data) {
+    @Override public Object visit(ASTElExpression node, Object data) {
         if (elOutsideTaglib(node)) {
             asCtx(data).addViolation(node);
         }

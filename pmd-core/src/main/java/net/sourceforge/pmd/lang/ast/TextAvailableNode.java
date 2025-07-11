@@ -26,8 +26,7 @@ public interface TextAvailableNode extends Node {
      * the translated coordinate system, ie the coordinate system of
      * {@link #getTextDocument()}.
      */
-    @Override
-    TextRegion getTextRegion();
+    @Override TextRegion getTextRegion();
 
     /**
      * Returns the original source code underlying this node, before
@@ -36,8 +35,7 @@ public interface TextAvailableNode extends Node {
      *
      * @see TextDocument#sliceOriginalText(TextRegion)
      */
-    @NoAttribute
-    default Chars getOriginalText() {
+    @NoAttribute default Chars getOriginalText() {
         return getTextDocument().sliceOriginalText(getTextRegion());
     }
 
@@ -48,8 +46,7 @@ public interface TextAvailableNode extends Node {
      *
      * @see TextDocument#sliceTranslatedText(TextRegion)
      */
-    @NoAttribute
-    default Chars getText() {
+    @NoAttribute default Chars getText() {
         return getTextDocument().sliceTranslatedText(getTextRegion());
     }
 

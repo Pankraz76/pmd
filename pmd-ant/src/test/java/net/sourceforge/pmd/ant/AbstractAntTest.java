@@ -38,8 +38,7 @@ class AbstractAntTest {
         ProjectHelper.configureProject(project, antFile);
     }
 
-    @AfterAll
-    static void resetLogging() {
+    @AfterAll static void resetLogging() {
         Slf4jSimpleConfiguration.reconfigureDefaultLogLevel(null);
     }
 
@@ -87,32 +86,25 @@ class AbstractAntTest {
         }
 
 
-        @Override
-        public void buildStarted(BuildEvent event) {
+        @Override public void buildStarted(BuildEvent event) {
         }
 
-        @Override
-        public void buildFinished(BuildEvent event) {
+        @Override public void buildFinished(BuildEvent event) {
         }
 
-        @Override
-        public void targetStarted(BuildEvent event) {
+        @Override public void targetStarted(BuildEvent event) {
         }
 
-        @Override
-        public void targetFinished(BuildEvent event) {
+        @Override public void targetFinished(BuildEvent event) {
         }
 
-        @Override
-        public void taskStarted(BuildEvent event) {
+        @Override public void taskStarted(BuildEvent event) {
         }
 
-        @Override
-        public void taskFinished(BuildEvent event) {
+        @Override public void taskFinished(BuildEvent event) {
         }
 
-        @Override
-        public void messageLogged(BuildEvent event) {
+        @Override public void messageLogged(BuildEvent event) {
             if (event.getPriority() > logLevel) {
                 return;
             }

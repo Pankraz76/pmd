@@ -2,6 +2,8 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
+
 import java.util.*;
 
 public class InfiniteLoopInLookahead {
@@ -16,6 +18,7 @@ public class InfiniteLoopInLookahead {
                                 resList.forEach(g -> {
                                     resList.forEach(h -> {
                                         resList // note: missing semicolon -> parse error here...
+                                    
                                     });
                                 });
                             });

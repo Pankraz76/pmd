@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.velocity.ast.VtlParser;
 
 public class VtlHandler extends AbstractPmdLanguageVersionHandler {
 
-    @Override
-    public Parser getParser() {
+    @Override public Parser getParser() {
         return new VtlParser();
     }
 

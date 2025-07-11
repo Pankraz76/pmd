@@ -66,8 +66,7 @@ public abstract class DeprecatedAttrLogger {
 
         static final Noop INSTANCE = new Noop();
 
-        @Override
-        public void recordUsageOf(Attribute attribute) {
+        @Override public void recordUsageOf(Attribute attribute) {
             // do nothing
         }
     }
@@ -83,8 +82,7 @@ public abstract class DeprecatedAttrLogger {
             this.isSuppressionQuery = isSuppressionQuery;
         }
 
-        @Override
-        public void recordUsageOf(Attribute attribute) {
+        @Override public void recordUsageOf(Attribute attribute) {
             String replacement = InternalApiBridge.replacementIfDeprecated(attribute);
             if (replacement != null) {
                 String name = getLoggableAttributeName(attribute);
@@ -93,7 +91,7 @@ public abstract class DeprecatedAttrLogger {
                     // this message needs to be kept in sync with PMDCoverageTest / BinaryDistributionIT
 
                     String user = isSuppressionQuery ? "violationSuppressXPath for rule " + ruleToString()
-                                                     : "XPath rule " + ruleToString();
+                            : "XPath rule " + ruleToString();
                     String msg = "Use of deprecated attribute '" + name + "' by " + user;
                     if (!replacement.isEmpty()) {
                         msg += ", please use " + replacement + " instead";
@@ -115,8 +113,7 @@ public abstract class DeprecatedAttrLogger {
     }
 
     private static final class AdhocLoggerImpl extends DeprecatedAttrLogger {
-        @Override
-        public void recordUsageOf(Attribute attribute) {
+        @Override public void recordUsageOf(Attribute attribute) {
             String replacement = InternalApiBridge.replacementIfDeprecated(attribute);
             if (replacement != null) {
                 String name = getLoggableAttributeName(attribute);

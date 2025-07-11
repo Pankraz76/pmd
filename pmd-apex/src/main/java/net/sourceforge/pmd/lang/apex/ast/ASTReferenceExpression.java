@@ -23,8 +23,7 @@ public final class ASTReferenceExpression extends AbstractApexNode.Many<Identifi
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -32,16 +31,14 @@ public final class ASTReferenceExpression extends AbstractApexNode.Many<Identifi
         return referenceType;
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         if (!nodes.isEmpty()) {
             return nodes.get(0).getString();
         }
         return "";
     }
 
-    @NoAttribute
-    public List<String> getNames() {
+    @NoAttribute public List<String> getNames() {
         return nodes.stream().map(Identifier::getString).collect(Collectors.toList());
     }
 
@@ -53,8 +50,7 @@ public final class ASTReferenceExpression extends AbstractApexNode.Many<Identifi
         return nodes.stream().anyMatch(id -> "sobjecttype".equalsIgnoreCase(id.getString()));
     }
 
-    @Override
-    public boolean hasRealLoc() {
+    @Override public boolean hasRealLoc() {
         return !nodes.isEmpty();
     }
 }

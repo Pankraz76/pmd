@@ -19,7 +19,8 @@ import net.sourceforge.pmd.annotation.InternalApi;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static LexException newLexException(boolean eofSeen, String lexStateName, int errorLine, int errorColumn, String errorAfter, char curChar) {
         return new LexException(eofSeen, lexStateName, errorLine, errorColumn, errorAfter, curChar);

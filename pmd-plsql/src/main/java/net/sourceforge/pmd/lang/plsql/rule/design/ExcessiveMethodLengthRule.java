@@ -16,8 +16,7 @@ public class ExcessiveMethodLengthRule extends AbstractCounterCheckRule.Abstract
         );
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 100;
     }
 }

@@ -22,15 +22,13 @@ import net.sourceforge.pmd.util.treeexport.XmlTreeRenderer.XmlRenderingConfig;
  */
 class XmlTreeRendererTest {
 
-    @RegisterExtension
-    private final DummyParsingHelper helper = new DummyParsingHelper();
+    @RegisterExtension private final DummyParsingHelper helper = new DummyParsingHelper();
 
     DummyNode dummyTree1() {
         return TreeRenderersTest.dummyTree1(helper);
     }
 
-    @Test
-    void testRenderWithAttributes() throws IOException {
+    @Test void testRenderWithAttributes() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
@@ -44,15 +42,14 @@ class XmlTreeRendererTest {
         renderer.renderSubtree(dummy, out);
 
         assertEquals("<?xml version='1.0' encoding='UTF-8' ?>\n"
-                                + "<dummyNode foo='bar' ohio='4'>\n"
-                                + "    <dummyNode o='ha' />\n"
-                                + "    <dummyNode />\n"
-                                + "</dummyNode>\n", out.toString());
+                + "<dummyNode foo='bar' ohio='4'>\n"
+                + "    <dummyNode o='ha' />\n"
+                + "    <dummyNode />\n"
+                + "</dummyNode>\n", out.toString());
 
     }
 
-    @Test
-    void testRenderWithCustomLineSep() throws IOException {
+    @Test void testRenderWithCustomLineSep() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
@@ -66,15 +63,14 @@ class XmlTreeRendererTest {
         renderer.renderSubtree(dummy, out);
 
         assertEquals("<?xml version='1.0' encoding='UTF-8' ?>\r\n"
-                                + "<dummyNode foo='bar' ohio='4'>\r\n"
-                                + "    <dummyNode o='ha' />\r\n"
-                                + "    <dummyNode />\r\n"
-                                + "</dummyNode>\r\n", out.toString());
+                + "<dummyNode foo='bar' ohio='4'>\r\n"
+                + "    <dummyNode o='ha' />\r\n"
+                + "    <dummyNode />\r\n"
+                + "</dummyNode>\r\n", out.toString());
 
     }
 
-    @Test
-    void testRenderWithCustomIndent() throws IOException {
+    @Test void testRenderWithCustomIndent() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
@@ -88,21 +84,19 @@ class XmlTreeRendererTest {
         renderer.renderSubtree(dummy, out);
 
         assertEquals("<?xml version='1.0' encoding='UTF-8' ?>"
-                                + "<dummyNode foo='bar' ohio='4'>"
-                                + "<dummyNode o='ha' />"
-                                + "<dummyNode />"
-                                + "</dummyNode>", out.toString());
+                + "<dummyNode foo='bar' ohio='4'>"
+                + "<dummyNode o='ha' />"
+                + "<dummyNode />"
+                + "</dummyNode>", out.toString());
 
     }
 
-    @Test
-    void testRenderWithNoAttributes() throws IOException {
+    @Test void testRenderWithNoAttributes() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
         XmlRenderingConfig strat = new XmlRenderingConfig() {
-            @Override
-            public boolean takeAttribute(Node node, Attribute attribute) {
+            @Override public boolean takeAttribute(Node node, Attribute attribute) {
                 return false;
             }
         }.lineSeparator("\n");
@@ -115,21 +109,19 @@ class XmlTreeRendererTest {
         renderer.renderSubtree(dummy, out);
 
         assertEquals("<?xml version='1.0' encoding='UTF-8' ?>\n"
-                                + "<dummyNode>\n"
-                                + "    <dummyNode />\n"
-                                + "    <dummyNode />\n"
-                                + "</dummyNode>\n", out.toString());
+                + "<dummyNode>\n"
+                + "    <dummyNode />\n"
+                + "    <dummyNode />\n"
+                + "</dummyNode>\n", out.toString());
 
     }
 
-    @Test
-    void testRenderFilterAttributes() throws IOException {
+    @Test void testRenderFilterAttributes() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
         XmlRenderingConfig strategy = new XmlRenderingConfig() {
-            @Override
-            public boolean takeAttribute(Node node, Attribute attribute) {
+            @Override public boolean takeAttribute(Node node, Attribute attribute) {
                 return "ohio".equals(attribute.getName());
             }
         }.lineSeparator("\n");
@@ -141,15 +133,14 @@ class XmlTreeRendererTest {
         renderer.renderSubtree(dummy, out);
 
         assertEquals("<?xml version='1.0' encoding='UTF-8' ?>\n"
-                                + "<dummyNode ohio='4'>\n"
-                                + "    <dummyNode />\n"
-                                + "    <dummyNode />\n"
-                                + "</dummyNode>\n", out.toString());
+                + "<dummyNode ohio='4'>\n"
+                + "    <dummyNode />\n"
+                + "    <dummyNode />\n"
+                + "</dummyNode>\n", out.toString());
 
     }
 
-    @Test
-    void testInvalidAttributeName() throws IOException {
+    @Test void testInvalidAttributeName() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
@@ -167,8 +158,7 @@ class XmlTreeRendererTest {
     }
 
 
-    @Test
-    void testEscapeAttributes() throws IOException {
+    @Test void testEscapeAttributes() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
@@ -183,15 +173,14 @@ class XmlTreeRendererTest {
         renderer.renderSubtree(dummy, out);
 
         assertEquals("<?xml version='1.0' encoding='UTF-8' ?>\n"
-                                + "<dummyNode eh=' &apos;a &amp;> b\" ' foo='bar' ohio='4'>\n"
-                                + "    <dummyNode o='ha' />\n"
-                                + "    <dummyNode />\n"
-                                + "</dummyNode>\n", out.toString());
+                + "<dummyNode eh=' &apos;a &amp;> b\" ' foo='bar' ohio='4'>\n"
+                + "    <dummyNode o='ha' />\n"
+                + "    <dummyNode />\n"
+                + "</dummyNode>\n", out.toString());
 
     }
 
-    @Test
-    void testEscapeDoubleAttributes() throws IOException {
+    @Test void testEscapeDoubleAttributes() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
@@ -206,15 +195,14 @@ class XmlTreeRendererTest {
         renderer.renderSubtree(dummy, out);
 
         assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
-                                + "<dummyNode eh=\" 'a &amp;> b&quot; \" foo=\"bar\" ohio=\"4\">\n"
-                                + "    <dummyNode o=\"ha\" />\n"
-                                + "    <dummyNode />\n"
-                                + "</dummyNode>\n", out.toString());
+                + "<dummyNode eh=\" 'a &amp;> b&quot; \" foo=\"bar\" ohio=\"4\">\n"
+                + "    <dummyNode o=\"ha\" />\n"
+                + "    <dummyNode />\n"
+                + "</dummyNode>\n", out.toString());
 
     }
 
-    @Test
-    void testNoProlog() throws IOException {
+    @Test void testNoProlog() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
@@ -228,15 +216,14 @@ class XmlTreeRendererTest {
         renderer.renderSubtree(dummy, out);
 
         assertEquals("<dummyNode foo='bar' ohio='4'>\n"
-                                + "    <dummyNode o='ha' />\n"
-                                + "    <dummyNode />\n"
-                                + "</dummyNode>\n", out.toString());
+                + "    <dummyNode o='ha' />\n"
+                + "    <dummyNode />\n"
+                + "</dummyNode>\n", out.toString());
 
     }
 
 
-    @Test
-    void testDefaultLineSep() throws IOException {
+    @Test void testDefaultLineSep() throws IOException {
 
         DummyNode dummy = dummyTree1();
 
@@ -248,10 +235,10 @@ class XmlTreeRendererTest {
         renderer.renderSubtree(dummy, out);
 
         assertEquals("<?xml version='1.0' encoding='UTF-8' ?>" + System.lineSeparator()
-                                + "<dummyNode foo='bar' ohio='4'>" + System.lineSeparator()
-                                + "    <dummyNode o='ha' />" + System.lineSeparator()
-                                + "    <dummyNode />" + System.lineSeparator()
-                                + "</dummyNode>" + System.lineSeparator(), out.toString());
+                + "<dummyNode foo='bar' ohio='4'>" + System.lineSeparator()
+                + "    <dummyNode o='ha' />" + System.lineSeparator()
+                + "    <dummyNode />" + System.lineSeparator()
+                + "</dummyNode>" + System.lineSeparator(), out.toString());
 
     }
 }

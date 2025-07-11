@@ -44,8 +44,7 @@ abstract class BaseInvocMirror<T extends InvocationNode> extends BasePolyMirror<
         mayBePoly = !mustBeStandalone;
     }
 
-    @Override
-    public boolean isEquivalentToUnderlyingAst() {
+    @Override public boolean isEquivalentToUnderlyingAst() {
         MethodCtDecl ctDecl = getCtDecl();
         AssertionUtil.validateState(ctDecl != null, "overload resolution is not complete");
         if (ctDecl.isFailed()) {
@@ -54,7 +53,7 @@ abstract class BaseInvocMirror<T extends InvocationNode> extends BasePolyMirror<
         if (!myNode.getMethodType().getSymbol().equals(ctDecl.getMethodType().getSymbol())) {
             return false;
         } else if (myNode instanceof ASTConstructorCall && ((ASTConstructorCall) myNode).isAnonymousClass()
-            && !((ASTConstructorCall) myNode).getTypeNode().getTypeMirror().equals(getInferredType())) {
+                && !((ASTConstructorCall) myNode).getTypeNode().getTypeMirror().equals(getInferredType())) {
             // check anon class has same type args
             return false;
         } else if (myNode.getParent() instanceof ASTVariableDeclarator) {
@@ -78,21 +77,18 @@ abstract class BaseInvocMirror<T extends InvocationNode> extends BasePolyMirror<
         }
     }
 
-    @Override
-    public List<JTypeMirror> getExplicitTypeArguments() {
+    @Override public List<JTypeMirror> getExplicitTypeArguments() {
         return ASTList.orEmptyStream(myNode.getExplicitTypeArguments())
-                      .toStream()
-                      .map(TypeNode::getTypeMirror)
-                      .collect(Collectors.toList());
+                .toStream()
+                .map(TypeNode::getTypeMirror)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public JavaNode getExplicitTargLoc(int i) {
+    @Override public JavaNode getExplicitTargLoc(int i) {
         return ASTList.orEmptyStream(myNode.getExplicitTypeArguments()).get(i);
     }
 
-    @Override
-    public List<ExprMirror> getArgumentExpressions() {
+    @Override public List<ExprMirror> getArgumentExpressions() {
         if (this.args == null) {
             ASTArgumentList args = myNode.getArguments();
             this.args = CollectionUtil.map(ASTList.orEmpty(args), this::createSubexpression);
@@ -100,13 +96,11 @@ abstract class BaseInvocMirror<T extends InvocationNode> extends BasePolyMirror<
         return args;
     }
 
-    @Override
-    public int getArgumentCount() {
+    @Override public int getArgumentCount() {
         return ASTList.sizeOrZero(myNode.getArguments());
     }
 
-    @Override
-    public void setCompileTimeDecl(MethodCtDecl methodType) {
+    @Override public void setCompileTimeDecl(MethodCtDecl methodType) {
         ctDecl = methodType;
         if (mayMutateAst()) {
             InternalApiBridge.setOverload(myNode, methodType);
@@ -114,13 +108,11 @@ abstract class BaseInvocMirror<T extends InvocationNode> extends BasePolyMirror<
     }
 
 
-    @Override
-    public @Nullable MethodCtDecl getCtDecl() {
+    @Override public @Nullable MethodCtDecl getCtDecl() {
         return ctDecl;
     }
 
-    @Override
-    public @Nullable JTypeMirror getReceiverType() {
+    @Override public @Nullable JTypeMirror getReceiverType() {
         return null;
     }
 }

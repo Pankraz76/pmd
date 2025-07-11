@@ -37,7 +37,7 @@ public final class LanguageRegistry implements Iterable<Language> {
 
     // test only
     static final LanguageRegistry ALL_LANGUAGES =
-        loadLanguages(LanguageRegistry.class.getClassLoader());
+            loadLanguages(LanguageRegistry.class.getClassLoader());
 
     /**
      * Contains the languages that support PMD and are found on the classpath
@@ -62,8 +62,8 @@ public final class LanguageRegistry implements Iterable<Language> {
      */
     public LanguageRegistry(Set<? extends Language> languages) {
         this.languages = languages.stream()
-                                  .sorted(Comparator.comparing(Language::getId, String::compareToIgnoreCase))
-                                  .collect(CollectionUtil.toUnmodifiableSet());
+                .sorted(Comparator.comparing(Language::getId, String::compareToIgnoreCase))
+                .collect(CollectionUtil.toUnmodifiableSet());
         this.languagesById = CollectionUtil.associateBy(languages, Language::getId);
         this.languagesByFullName = CollectionUtil.associateBy(languages, Language::getName);
     }
@@ -73,7 +73,7 @@ public final class LanguageRegistry implements Iterable<Language> {
      */
     public LanguageRegistry filter(Predicate<Language> filterFun) {
         return new LanguageRegistry(languages.stream().filter(filterFun)
-                                             .collect(Collectors.toSet()));
+                .collect(Collectors.toSet()));
     }
 
     /**
@@ -104,7 +104,7 @@ public final class LanguageRegistry implements Iterable<Language> {
             Language dep = getLanguageById(depId);
             if (dep == null) {
                 throw new IllegalStateException(
-                    "Cannot find language " + depId + " in " + this);
+                        "Cannot find language " + depId + " in " + this);
             }
             if (languages.add(dep)) {
                 addDepsOrThrow(dep, languages);
@@ -112,8 +112,7 @@ public final class LanguageRegistry implements Iterable<Language> {
         }
     }
 
-    @Override
-    public @NonNull Iterator<Language> iterator() {
+    @Override public @NonNull Iterator<Language> iterator() {
         return languages.iterator();
     }
 
@@ -183,7 +182,7 @@ public final class LanguageRegistry implements Iterable<Language> {
             return null;
         }
         return version == null ? lang.getDefaultVersion()
-                               : lang.getVersion(version);
+                : lang.getVersion(version);
     }
 
     /**
@@ -206,8 +205,7 @@ public final class LanguageRegistry implements Iterable<Language> {
         return getLanguages().stream().map(languageToString).sorted().collect(Collectors.joining(", "));
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "LanguageRegistry(" + commaSeparatedList(Language::getId) + ")";
     }
 }

@@ -138,15 +138,13 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
         InternalApiBridge.setScope(node, scope);
     }
 
-    @Override
-    public Object visit(ASTInput node, Object data) {
+    @Override public Object visit(ASTInput node, Object data) {
         createSourceFileScope(node);
         cont(node);
         return data;
     }
 
-    @Override
-    public Object visit(ASTPackageSpecification node, Object data) {
+    @Override public Object visit(ASTPackageSpecification node, Object data) {
         createClassScope(node);
         Scope s = ((PLSQLNode) node.getParent()).getScope();
         s.addDeclaration(new ClassNameDeclaration(node));
@@ -154,8 +152,7 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
         return data;
     }
 
-    @Override
-    public Object visit(ASTPackageBody node, Object data) {
+    @Override public Object visit(ASTPackageBody node, Object data) {
         createClassScope(node);
         Scope s = ((PLSQLNode) node.getParent()).getScope();
         s.addDeclaration(new ClassNameDeclaration(node));
@@ -163,8 +160,7 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
         return data;
     }
 
-    @Override
-    public Object visit(ASTTypeSpecification node, Object data) {
+    @Override public Object visit(ASTTypeSpecification node, Object data) {
         createClassScope(node);
         Scope s = ((PLSQLNode) node.getParent()).getScope();
         s.addDeclaration(new ClassNameDeclaration(node));
@@ -172,8 +168,7 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
         return data;
     }
 
-    @Override
-    public Object visit(ASTTriggerUnit node, Object data) {
+    @Override public Object visit(ASTTriggerUnit node, Object data) {
         createClassScope(node);
         Scope s = ((PLSQLNode) node.getParent()).getScope();
         s.addDeclaration(new ClassNameDeclaration(node));
@@ -189,8 +184,7 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
      * MethodNameDeclaration(md)); cont(node); return data; }
      */
 
-    @Override
-    public Object visit(ASTTriggerTimingPointSection node, Object data) {
+    @Override public Object visit(ASTTriggerTimingPointSection node, Object data) {
         createMethodScope(node);
         // Treat a Timing Point Section like a packaged FUNCTION or PROCEDURE
         node.getScope().getEnclosingScope(ClassScope.class).addDeclaration(new MethodNameDeclaration(node));
@@ -212,14 +206,12 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
     // return data;
     // }
 
-    @Override
-    public Object visit(ASTObjectDeclaration node, Object data) {
+    @Override public Object visit(ASTObjectDeclaration node, Object data) {
         super.visit(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTBlock node, Object data) {
+    @Override public Object visit(ASTBlock node, Object data) {
         createLocalScope(node);
         cont(node);
         return data;
@@ -291,34 +283,29 @@ public class ScopeAndDeclarationFinder extends PlsqlVisitorBase<Object, Object> 
         cont(node);
         return data;
     }
-    
-    @Override
-    public Object visit(ASTTypeMethod node, Object data) {
+
+    @Override public Object visit(ASTTypeMethod node, Object data) {
         return visitMethodLike(node, data);
     }
 
-    @Override
-    public Object visit(ASTProgramUnit node, Object data) {
+    @Override public Object visit(ASTProgramUnit node, Object data) {
         return visitMethodLike(node, data);
     }
 
     // TODO - what about while loops and do loops?
-    @Override
-    public Object visit(ASTForStatement node, Object data) {
+    @Override public Object visit(ASTForStatement node, Object data) {
         createLocalScope(node);
         cont(node);
         return data;
     }
 
-    @Override
-    public Object visit(ASTForAllStatement node, Object data) {
+    @Override public Object visit(ASTForAllStatement node, Object data) {
         createLocalScope(node);
         cont(node);
         return data;
     }
 
-    @Override
-    public Object visit(ASTVariableOrConstantDeclaratorId node, Object data) {
+    @Override public Object visit(ASTVariableOrConstantDeclaratorId node, Object data) {
         VariableNameDeclaration decl = new VariableNameDeclaration(node);
         node.getScope().addDeclaration(decl);
         InternalApiBridge.setNameDeclaration(node, decl);

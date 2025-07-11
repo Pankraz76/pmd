@@ -1,5 +1,5 @@
 public class Bug1530 {
-	public void incChild() {
+    public void incChild() {
         ((PathElement) stack.getLastLeaf().getUserObject()).currentChild++;
     }
 }

@@ -51,7 +51,8 @@ public final class RendererFactory {
         REPORT_FORMAT_TO_RENDERER = Collections.unmodifiableMap(map);
     }
 
-    private RendererFactory() { }
+    private RendererFactory() {
+    }
 
     /**
      * Retrieves a collection of all supported renderer names.
@@ -88,8 +89,7 @@ public final class RendererFactory {
                 for (PropertyDescriptor<?> prop : renderer.getPropertyDescriptors()) {
                     String value = properties.getProperty(prop.name());
                     if (value != null) {
-                        @SuppressWarnings("unchecked")
-                        PropertyDescriptor<Object> prop2 = (PropertyDescriptor<Object>) prop;
+                        @SuppressWarnings("unchecked") PropertyDescriptor<Object> prop2 = (PropertyDescriptor<Object>) prop;
                         Object valueFrom = prop2.serializer().fromString(value);
                         renderer.setProperty(prop2, valueFrom);
                     }
@@ -111,8 +111,7 @@ public final class RendererFactory {
         return renderer;
     }
 
-    @SuppressWarnings("unchecked")
-    private static Class<? extends Renderer> getRendererClass(String reportFormat) {
+    @SuppressWarnings("unchecked") private static Class<? extends Renderer> getRendererClass(String reportFormat) {
         AssertionUtil.requireParamNotNull("reportFormat", reportFormat);
         Class<? extends Renderer> rendererClass = REPORT_FORMAT_TO_RENDERER.get(reportFormat);
 

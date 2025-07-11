@@ -12,8 +12,7 @@ public final class ASTXmlPropRef extends AbstractEcmascriptNode<XmlPropRef> {
         super(xmlPropRef);
     }
 
-    @Override
-    protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

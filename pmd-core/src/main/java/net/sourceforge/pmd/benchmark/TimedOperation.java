@@ -12,8 +12,7 @@ public interface TimedOperation extends AutoCloseable {
     /**
      * Stops tracking if not already stopped.
      */
-    @Override
-    void close();
+    @Override void close();
 
     /**
      * Stops tracking if not already stopped.

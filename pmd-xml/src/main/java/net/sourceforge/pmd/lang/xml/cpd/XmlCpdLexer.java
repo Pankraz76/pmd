@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.xml.ast.XMLLexer;
  */
 public class XmlCpdLexer extends AntlrCpdLexer {
 
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new XMLLexer(charStream);
     }
 }

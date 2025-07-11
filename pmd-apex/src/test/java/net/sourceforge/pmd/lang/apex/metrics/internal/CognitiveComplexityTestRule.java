@@ -18,13 +18,11 @@ public class CognitiveComplexityTestRule extends AbstractMetricTestRule.OfInt {
         super(ApexMetrics.COGNITIVE_COMPLEXITY);
     }
 
-    @Override
-    protected boolean reportOn(Node node) {
+    @Override protected boolean reportOn(Node node) {
         return node instanceof ASTMethod;
     }
 
-    @Override
-    protected String violationMessage(Node node, Integer result) {
+    @Override protected String violationMessage(Node node, Integer result) {
         return AllMetricsTest.formatApexMessage(node, result, super.violationMessage(node, result));
     }
 

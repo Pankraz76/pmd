@@ -97,8 +97,7 @@ public abstract class AbstractRuleSetFactoryTest {
      * @throws Exception
      *             any error
      */
-    @BeforeAll
-    static void init() throws Exception {
+    @BeforeAll static void init() throws Exception {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         saxParserFactory.setValidating(true);
         saxParserFactory.setNamespaceAware(true);
@@ -122,8 +121,7 @@ public abstract class AbstractRuleSetFactoryTest {
      * @throws Exception
      *             any error
      */
-    @Test
-    void testAllPMDBuiltInRulesMeetConventions() throws Exception {
+    @Test void testAllPMDBuiltInRulesMeetConventions() throws Exception {
         int invalidSinceAttributes = 0;
         int invalidExternalInfoURL = 0;
         int invalidClassName = 0;
@@ -237,8 +235,7 @@ public abstract class AbstractRuleSetFactoryTest {
      * @throws Exception
      *             any error
      */
-    @Test
-    void testXmlSchema() throws Exception {
+    @Test void testXmlSchema() throws Exception {
         boolean allValid = true;
         List<String> ruleSetFileNames = getRuleSetFileNames();
         for (String fileName : ruleSetFileNames) {
@@ -248,8 +245,7 @@ public abstract class AbstractRuleSetFactoryTest {
         assertTrue(allValid, "All XML must parse without producing validation messages.");
     }
 
-    @Test
-    void verifyCorrectXmlEncoding() throws Exception {
+    @Test void verifyCorrectXmlEncoding() throws Exception {
         boolean allValid = true;
         List<String> ruleSetFileNames = getRuleSetFileNames();
         StringBuilder messages = new StringBuilder();
@@ -284,8 +280,7 @@ public abstract class AbstractRuleSetFactoryTest {
      * @throws Exception
      *             any error
      */
-    @Test
-    void testDtd() throws Exception {
+    @Test void testDtd() throws Exception {
         boolean allValid = true;
         List<String> ruleSetFileNames = getRuleSetFileNames();
         for (String fileName : ruleSetFileNames) {
@@ -302,8 +297,7 @@ public abstract class AbstractRuleSetFactoryTest {
      * @throws Exception
      *             any error
      */
-    @Test
-    void testReadWriteRoundTrip() throws Exception {
+    @Test void testReadWriteRoundTrip() throws Exception {
 
         List<String> ruleSetFileNames = getRuleSetFileNames();
         for (String fileName : ruleSetFileNames) {
@@ -336,8 +330,7 @@ public abstract class AbstractRuleSetFactoryTest {
     private List<String> getRuleSetFileNames(String language, String propertiesPath) throws IOException {
         List<String> ruleSetFileNames = new ArrayList<>();
         Properties properties = new Properties();
-        @SuppressWarnings("PMD.CloseResource")
-        InputStream input = loadResourceAsStream(propertiesPath);
+        @SuppressWarnings("PMD.CloseResource") InputStream input = loadResourceAsStream(propertiesPath);
         if (input == null) {
             // this might happen if a language is only support by CPD, but not
             // by PMD
@@ -358,8 +351,7 @@ public abstract class AbstractRuleSetFactoryTest {
     private RuleSet loadRuleSetByFileName(String ruleSetFileName) {
         final StringBuilder messages = new StringBuilder();
         class Reporter extends MessageReporterBase {
-            @Override
-            protected void logImpl(Level level, String message) {
+            @Override protected void logImpl(Level level, String message) {
                 messages.append(message).append(System.lineSeparator());
             }
         }
@@ -417,12 +409,12 @@ public abstract class AbstractRuleSetFactoryTest {
 
         if (RuleSetWriter.RULESET_2_0_0_NS_URI.equals(rulesetNamespace)) {
             file = "<?xml version=\"1.0\"?>" + System.lineSeparator()
-                + "<!DOCTYPE ruleset SYSTEM \"https://pmd.sourceforge.io/ruleset_2_0_0.dtd\">" + System.lineSeparator()
-                + file;
+                    + "<!DOCTYPE ruleset SYSTEM \"https://pmd.sourceforge.io/ruleset_2_0_0.dtd\">" + System.lineSeparator()
+                    + file;
         } else {
             file = "<?xml version=\"1.0\"?>" + System.lineSeparator()
-                + "<!DOCTYPE ruleset>" + System.lineSeparator()
-                + file;
+                    + "<!DOCTYPE ruleset>" + System.lineSeparator()
+                    + file;
         }
 
         try (InputStream modifiedStream = new ByteArrayInputStream(file.getBytes())) {
@@ -566,7 +558,7 @@ public abstract class AbstractRuleSetFactoryTest {
                     value2 = ((Pattern) value2).pattern();
                 }
                 assertEquals(value1, value2, message + ", Rule " + rule1.getName() + " property "
-                    + propertyDescriptors1.get(j).name());
+                        + propertyDescriptors1.get(j).name());
             }
             assertEquals(propertyDescriptors1.size(), propertyDescriptors2.size(),
                     message + ", Rule property descriptor count");
@@ -595,18 +587,15 @@ public abstract class AbstractRuleSetFactoryTest {
             return valid;
         }
 
-        @Override
-        public void error(SAXParseException e) {
+        @Override public void error(SAXParseException e) {
             log("Error", e);
         }
 
-        @Override
-        public void fatalError(SAXParseException e) {
+        @Override public void fatalError(SAXParseException e) {
             log("FatalError", e);
         }
 
-        @Override
-        public void warning(SAXParseException e) {
+        @Override public void warning(SAXParseException e) {
             log("Warning", e);
         }
 
@@ -616,8 +605,7 @@ public abstract class AbstractRuleSetFactoryTest {
             valid = false;
         }
 
-        @Override
-        public InputSource resolveEntity(String publicId, String systemId) throws IOException {
+        @Override public InputSource resolveEntity(String publicId, String systemId) throws IOException {
             String resource = schemaMapping.get(systemId);
 
             if (resource != null) {

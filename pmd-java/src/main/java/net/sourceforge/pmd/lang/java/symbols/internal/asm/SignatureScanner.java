@@ -80,8 +80,8 @@ class SignatureScanner {
     public RuntimeException expected(String expectedWhat, int pos) {
         final String indent = "    ";
         String sb = "Expected " + expectedWhat + ":\n"
-            + indent + bufferToString() + "\n"
-            + indent + StringUtils.repeat(' ', pos - start) + '^' + "\n";
+                + indent + bufferToString() + "\n"
+                + indent + StringUtils.repeat(' ', pos - start) + '^' + "\n";
         return new InvalidTypeSignatureException(sb);
     }
 
@@ -100,8 +100,7 @@ class SignatureScanner {
         return chars.substring(start, end);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "TypeBuilder{sig=" + bufferToString() + '}';
     }
 }

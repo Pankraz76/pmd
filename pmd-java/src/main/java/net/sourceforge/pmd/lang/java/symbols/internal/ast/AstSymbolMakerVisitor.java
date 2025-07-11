@@ -58,8 +58,7 @@ final class AstSymbolMakerVisitor extends JavaVisitorBase<AstSymFactory, Void> {
         return new MapSymResolver(byCanonicalName, byBinaryName);
     }
 
-    @Override
-    public Void visit(ASTVariableId node, AstSymFactory data) {
+    @Override public Void visit(ASTVariableId node, AstSymFactory data) {
 
         if (isTrueLocalVar(node)) {
             data.setLocalVarSymbol(node);
@@ -73,13 +72,12 @@ final class AstSymbolMakerVisitor extends JavaVisitorBase<AstSymFactory, Void> {
 
     private boolean isTrueLocalVar(ASTVariableId node) {
         return !(node.isField()
-            || node.isEnumConstant()
-            || node.isRecordComponent()
-            || node.getParent() instanceof ASTFormalParameter);
+                || node.isEnumConstant()
+                || node.isRecordComponent()
+                || node.getParent() instanceof ASTFormalParameter);
     }
 
-    @Override
-    public Void visitTypeDecl(ASTTypeDeclaration node, AstSymFactory data) {
+    @Override public Void visitTypeDecl(ASTTypeDeclaration node, AstSymFactory data) {
         String binaryName = makeBinaryName(node);
         @Nullable String canonicalName = makeCanonicalName(node, binaryName);
         InternalApiBridge.setQname(node, binaryName, canonicalName);
@@ -107,12 +105,11 @@ final class AstSymbolMakerVisitor extends JavaVisitorBase<AstSymFactory, Void> {
         return null;
     }
 
-    @NonNull
-    private String makeBinaryName(ASTTypeDeclaration node) {
+    @NonNull private String makeBinaryName(ASTTypeDeclaration node) {
         String simpleName = node.getSimpleName();
         if (node.isLocal()) {
             simpleName = getNextIndexFromHistogram(currentLocalIndices.getFirst(), node.getSimpleName(), 1)
-                + simpleName;
+                    + simpleName;
         } else if (node.isAnonymous()) {
             simpleName = "" + anonymousCounters.getFirst().incrementAndGet();
         } else if (node.isUnnamedToplevelClass()) {
@@ -121,12 +118,11 @@ final class AstSymbolMakerVisitor extends JavaVisitorBase<AstSymFactory, Void> {
 
         String enclosing = enclosingBinaryNames.peek();
         return enclosing != null ? enclosing + "$" + simpleName
-                                 : packageName.isEmpty() ? simpleName
-                                                         : packageName + "." + simpleName;
+                : packageName.isEmpty() ? simpleName
+                : packageName + "." + simpleName;
     }
 
-    @Nullable
-    private String makeCanonicalName(ASTTypeDeclaration node, String binaryName) {
+    @Nullable private String makeCanonicalName(ASTTypeDeclaration node, String binaryName) {
         if (node.isAnonymous() || node.isLocal() || node.isUnnamedToplevelClass()) {
             return null;
         }
@@ -138,13 +134,12 @@ final class AstSymbolMakerVisitor extends JavaVisitorBase<AstSymFactory, Void> {
 
         String enclCanon = enclosingCanonicalNames.getFirst();
         return NO_CANONICAL_NAME.equals(enclCanon)
-               ? null  // enclosing has no canonical name, so this one doesn't either
-               : enclCanon + '.' + node.getSimpleName();
+                ? null  // enclosing has no canonical name, so this one doesn't either
+                : enclCanon + '.' + node.getSimpleName();
 
     }
 
-    @Override
-    public Void visitMethodOrCtor(ASTExecutableDeclaration node, AstSymFactory data) {
+    @Override public Void visitMethodOrCtor(ASTExecutableDeclaration node, AstSymFactory data) {
         enclosingSymbols.push(node.getSymbol());
         visitChildren(node, data);
         enclosingSymbols.pop();

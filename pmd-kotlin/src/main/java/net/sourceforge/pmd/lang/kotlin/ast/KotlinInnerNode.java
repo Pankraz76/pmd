@@ -15,8 +15,7 @@ abstract class KotlinInnerNode extends BaseAntlrInnerNode<KotlinNode> implements
         super(parent, invokingStateNumber);
     }
 
-    @Override
-    public <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override public <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof KotlinVisitor) {
             // some of the generated antlr nodes have no accept method...
             return ((KotlinVisitor<? super P, ? extends R>) visitor).visitKotlinNode(this, data);
@@ -30,8 +29,7 @@ abstract class KotlinInnerNode extends BaseAntlrInnerNode<KotlinNode> implements
         return super.asAntlrNode();
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return KotlinParser.DICO.getXPathNameOfRule(getRuleIndex());
     }
 }

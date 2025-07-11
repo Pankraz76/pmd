@@ -118,12 +118,12 @@ public final class RuleSetLoader {
      */
     RuleSetFactory toFactory() {
         return new RuleSetFactory(
-            this.resourceLoader,
-            this.languageRegistry,
-            this.minimumPriority,
-            this.warnDeprecated,
-            this.includeDeprecatedRuleReferences,
-            this.reporter
+                this.resourceLoader,
+                this.languageRegistry,
+                this.minimumPriority,
+                this.warnDeprecated,
+                this.includeDeprecatedRuleReferences,
+                this.reporter
         );
     }
 
@@ -155,8 +155,7 @@ public final class RuleSetLoader {
         ResourceLoader oldLoader = this.resourceLoader;
         try {
             loadResourcesWith(new ResourceLoader() {
-                @Override
-                public @NonNull InputStream loadResourceAsStream(String name) throws IOException {
+                @Override public @NonNull InputStream loadResourceAsStream(String name) throws IOException {
                     if (Objects.equals(name, filename)) {
                         return new ByteArrayInputStream(rulesetXmlContent.getBytes(StandardCharsets.UTF_8));
                     }
@@ -210,7 +209,7 @@ public final class RuleSetLoader {
         }
         if (!anyRules && !error) {
             reporter.warn("No rules found. Maybe you misspelled a rule name? ({0})",
-                          StringUtils.join(rulesetPaths, ','));
+                    StringUtils.join(rulesetPaths, ','));
         }
         return ruleSets;
     }
@@ -260,8 +259,8 @@ public final class RuleSetLoader {
      */
     public static RuleSetLoader fromPmdConfig(PMDConfiguration configuration) {
         return new RuleSetLoader().filterAbovePriority(configuration.getMinimumPriority())
-                                  .withLanguages(configuration.getLanguageRegistry())
-                                  .withReporter(configuration.getReporter());
+                .withLanguages(configuration.getLanguageRegistry())
+                .withReporter(configuration.getReporter());
     }
 
 

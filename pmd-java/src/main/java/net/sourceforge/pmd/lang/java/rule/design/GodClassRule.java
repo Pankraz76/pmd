@@ -47,8 +47,7 @@ public class GodClassRule extends AbstractJavaRulechainRule {
     }
 
 
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
         if (!MetricsUtil.supportsAll(node, WEIGHED_METHOD_COUNT, TIGHT_CLASS_COHESION, ACCESS_TO_FOREIGN_DATA)) {
             return data;
         }
@@ -60,8 +59,8 @@ public class GodClassRule extends AbstractJavaRulechainRule {
         if (wmc >= WMC_VERY_HIGH && atfd > FEW_ATFD_THRESHOLD && tcc < TCC_THRESHOLD) {
 
             asCtx(data).addViolation(node, wmc,
-                                     StringUtil.percentageString(tcc, 3),
-                                     atfd);
+                    StringUtil.percentageString(tcc, 3),
+                    atfd);
         }
         return data;
     }

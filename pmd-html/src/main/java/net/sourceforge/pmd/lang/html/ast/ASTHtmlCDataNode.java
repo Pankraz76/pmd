@@ -17,8 +17,7 @@ public final class ASTHtmlCDataNode extends AbstractHtmlNode<CDataNode> {
         return node.text();
     }
 
-    @Override
-    protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

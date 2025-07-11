@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class JoinClauseTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void testInnerCrossJoin() {
+    @Test void testInnerCrossJoin() {
         ASTInput input = plsql.parseResource("InnerCrossJoin.pls");
         List<ASTInnerCrossJoinClause> joins = input.descendants(ASTInnerCrossJoinClause.class).toList();
         assertEquals(1, joins.size());
@@ -26,8 +25,7 @@ class JoinClauseTest extends AbstractPLSQLParserTst {
         assertFalse(joins.get(0).isNatural());
     }
 
-    @Test
-    void testInnerNaturalJoin() {
+    @Test void testInnerNaturalJoin() {
         ASTInput input = plsql.parseResource("InnerNaturalJoin.pls");
         List<ASTInnerCrossJoinClause> joins = input.descendants(ASTInnerCrossJoinClause.class).toList();
         assertEquals(2, joins.size());
@@ -35,8 +33,7 @@ class JoinClauseTest extends AbstractPLSQLParserTst {
         assertTrue(joins.get(0).isNatural());
     }
 
-    @Test
-    void testInnerJoinUsing() {
+    @Test void testInnerJoinUsing() {
         ASTInput input = plsql.parseResource("InnerJoinUsing.pls");
         List<ASTInnerCrossJoinClause> joins = input.descendants(ASTInnerCrossJoinClause.class).toList();
         assertEquals(3, joins.size());
@@ -47,8 +44,7 @@ class JoinClauseTest extends AbstractPLSQLParserTst {
         assertEquals("department_id", columns.get(0).getImage());
     }
 
-    @Test
-    void testOuterJoinUsing() {
+    @Test void testOuterJoinUsing() {
         ASTInput input = plsql.parseResource("OuterJoinUsing.pls");
         List<ASTOuterJoinClause> joins = input.descendants(ASTOuterJoinClause.class).toList();
         assertEquals(1, joins.size());
@@ -59,8 +55,7 @@ class JoinClauseTest extends AbstractPLSQLParserTst {
         assertEquals("department_id", columns.get(0).getImage());
     }
 
-    @Test
-    void testRightOuterJoin() {
+    @Test void testRightOuterJoin() {
         ASTInput input = plsql.parseResource("RightOuterJoin.pls");
         List<ASTOuterJoinClause> joins = input.descendants(ASTOuterJoinClause.class).toList();
         assertEquals(2, joins.size());
@@ -68,8 +63,7 @@ class JoinClauseTest extends AbstractPLSQLParserTst {
         assertEquals(ASTOuterJoinType.Type.RIGHT, type.getType());
     }
 
-    @Test
-    void testLeftOuterJoin() {
+    @Test void testLeftOuterJoin() {
         ASTInput input = plsql.parseResource("LeftOuterJoin.pls");
         List<ASTOuterJoinClause> joins = input.descendants(ASTOuterJoinClause.class).toList();
         assertEquals(2, joins.size());
@@ -82,8 +76,7 @@ class JoinClauseTest extends AbstractPLSQLParserTst {
         assertTrue(selects.get(1).getFromClause().getChild(0) instanceof ASTJoinClause);
     }
 
-    @Test
-    void testNaturalRightOuterJoin() {
+    @Test void testNaturalRightOuterJoin() {
         ASTInput input = plsql.parseResource("NaturalRightOuterJoin.pls");
         List<ASTOuterJoinClause> joins = input.descendants(ASTOuterJoinClause.class).toList();
         assertEquals(1, joins.size());
@@ -92,8 +85,7 @@ class JoinClauseTest extends AbstractPLSQLParserTst {
         assertTrue(joins.get(0).isNatural());
     }
 
-    @Test
-    void testOuterJoinPartitioned() {
+    @Test void testOuterJoinPartitioned() {
         ASTInput input = plsql.parseResource("OuterJoinPartitioned.pls");
         List<ASTOuterJoinClause> joins = input.descendants(ASTOuterJoinClause.class).toList();
         assertEquals(1, joins.size());
@@ -102,18 +94,15 @@ class JoinClauseTest extends AbstractPLSQLParserTst {
         assertNotNull(joins.get(0).firstChild(ASTQueryPartitionClause.class));
     }
 
-    @Test
-    void testFullOuterJoin() {
+    @Test void testFullOuterJoin() {
         plsql.parseResource("FullOuterJoin.pls");
     }
 
-    @Test
-    void testInnerJoinSubquery() {
+    @Test void testInnerJoinSubquery() {
         plsql.parseResource("InnerJoinSubquery.pls");
     }
 
-    @Test
-    void testJoinOperator() {
+    @Test void testJoinOperator() {
         ASTInput input = plsql.parseResource("JoinOperator.pls");
         List<ASTOuterJoinExpression> expressions = input.descendants(ASTOuterJoinExpression.class).toList();
         assertEquals(4, expressions.size());

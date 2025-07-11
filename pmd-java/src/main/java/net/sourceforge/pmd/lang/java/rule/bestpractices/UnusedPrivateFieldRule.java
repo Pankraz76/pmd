@@ -43,8 +43,7 @@ public class UnusedPrivateFieldRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(REPORT_FOR_ANNOTATIONS_DESCRIPTOR);
     }
 
-    @Override
-    public Object visitJavaNode(JavaNode node, Object data) {
+    @Override public Object visitJavaNode(JavaNode node, Object data) {
         if (node instanceof ASTTypeDeclaration) {
             ASTTypeDeclaration type = (ASTTypeDeclaration) node;
             if (hasAnyAnnotation(type)) {
@@ -66,8 +65,8 @@ public class UnusedPrivateFieldRule extends AbstractJavaRulechainRule {
 
     private boolean isIgnored(ASTFieldDeclaration field) {
         return field.getVisibility() != Visibility.V_PRIVATE
-            || isOK(field)
-            || hasAnyAnnotation(field);
+                || isOK(field)
+                || hasAnyAnnotation(field);
     }
 
     private boolean isOK(ASTFieldDeclaration field) {
@@ -78,7 +77,7 @@ public class UnusedPrivateFieldRule extends AbstractJavaRulechainRule {
         NodeStream<ASTAnnotation> declaredAnnotations = node.getDeclaredAnnotations()
                 .filterNot(a -> TypeTestUtil.isA(SuppressWarnings.class, a));
         for (String reportAnnotation : getProperty(REPORT_FOR_ANNOTATIONS_DESCRIPTOR)) {
-            for (ASTAnnotation annotation: declaredAnnotations) {
+            for (ASTAnnotation annotation : declaredAnnotations) {
                 if (TypeTestUtil.isA(reportAnnotation, annotation)) {
                     return false;
                 }

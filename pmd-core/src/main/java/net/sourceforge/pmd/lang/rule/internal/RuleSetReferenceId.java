@@ -337,8 +337,7 @@ public class RuleSetReferenceId {
      * String representation of this reference. Do not rely on the format of this method,
      * instead use {@link #toNormalizedReference()}.
      */
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return toNormalizedReference();
     }
 }

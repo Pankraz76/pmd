@@ -6,6 +6,5 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride;
 
 public interface InterfaceWithNoSuperClass {
 
-    @Override
-    String toString();
+    @Override String toString();
 }

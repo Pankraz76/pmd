@@ -12,7 +12,7 @@ import net.sourceforge.pmd.lang.apex.multifile.InternalApiBridge;
 import net.sourceforge.pmd.lang.impl.BatchLanguageProcessor;
 
 public class ApexLanguageProcessor
-    extends BatchLanguageProcessor<ApexLanguageProperties> {
+        extends BatchLanguageProcessor<ApexLanguageProperties> {
 
     private final ApexMultifileAnalysis multifileAnalysis;
     private final ApexLanguageHandler services;
@@ -23,8 +23,7 @@ public class ApexLanguageProcessor
         this.services = new ApexLanguageHandler();
     }
 
-    @Override
-    public @NonNull LanguageVersionHandler services() {
+    @Override public @NonNull LanguageVersionHandler services() {
         return services;
     }
 

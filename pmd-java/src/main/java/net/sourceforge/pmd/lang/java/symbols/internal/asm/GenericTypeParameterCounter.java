@@ -14,8 +14,7 @@ class GenericTypeParameterCounter extends SignatureVisitor {
         super(AsmSymbolResolver.ASM_API_V);
     }
 
-    @Override
-    public void visitFormalTypeParameter(String name) {
+    @Override public void visitFormalTypeParameter(String name) {
         count++;
     }
 

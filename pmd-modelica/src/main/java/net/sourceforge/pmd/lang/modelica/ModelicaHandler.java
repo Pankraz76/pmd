@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.modelica.ast.ModelicaParser;
 
 public class ModelicaHandler extends AbstractPmdLanguageVersionHandler {
 
-    @Override
-    public Parser getParser() {
+    @Override public Parser getParser() {
         return new ModelicaParser();
     }
 

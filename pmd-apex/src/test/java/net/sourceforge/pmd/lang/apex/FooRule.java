@@ -19,40 +19,35 @@ public class FooRule extends AbstractApexRule {
         setMessage("No Foo allowed");
     }
 
-    @Override
-    public Object visit(ASTUserClass c, Object ctx) {
+    @Override public Object visit(ASTUserClass c, Object ctx) {
         if ("Foo".equalsIgnoreCase(c.getSimpleName())) {
             asCtx(ctx).addViolation(c);
         }
         return super.visit(c, ctx);
     }
 
-    @Override
-    public Object visit(ASTVariableDeclaration c, Object ctx) {
+    @Override public Object visit(ASTVariableDeclaration c, Object ctx) {
         if ("Foo".equalsIgnoreCase(c.getImage())) {
             asCtx(ctx).addViolation(c);
         }
         return super.visit(c, ctx);
     }
 
-    @Override
-    public Object visit(ASTField c, Object ctx) {
+    @Override public Object visit(ASTField c, Object ctx) {
         if ("Foo".equalsIgnoreCase(c.getImage())) {
             asCtx(ctx).addViolation(c);
         }
         return super.visit(c, ctx);
     }
 
-    @Override
-    public Object visit(ASTParameter c, Object ctx) {
+    @Override public Object visit(ASTParameter c, Object ctx) {
         if ("Foo".equalsIgnoreCase(c.getImage())) {
             asCtx(ctx).addViolation(c);
         }
         return super.visit(c, ctx);
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return "NoFoo";
     }
 }

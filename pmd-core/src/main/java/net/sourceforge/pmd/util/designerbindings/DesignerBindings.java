@@ -134,18 +134,15 @@ public interface DesignerBindings {
 
         private static final DefaultDesignerBindings INSTANCE = new DefaultDesignerBindings();
 
-        @Override
-        public RelatedNodesSelector getRelatedNodesSelector() {
+        @Override public RelatedNodesSelector getRelatedNodesSelector() {
             return null;
         }
 
-        @Override
-        public Collection<AdditionalInfo> getAdditionalInfo(Node node) {
+        @Override public Collection<AdditionalInfo> getAdditionalInfo(Node node) {
             return Collections.emptyList();
         }
 
-        @Override
-        public Attribute getMainAttribute(Node node) {
+        @Override public Attribute getMainAttribute(Node node) {
             String image = node.getImage();
             if (image != null) {
                 return new Attribute(node, "Image", image);
@@ -153,13 +150,11 @@ public interface DesignerBindings {
             return null;
         }
 
-        @Override
-        public boolean isExpandedByDefaultInTree(Node node) {
+        @Override public boolean isExpandedByDefaultInTree(Node node) {
             return true;
         }
 
-        @Override
-        public TreeIconId getIcon(Node node) {
+        @Override public TreeIconId getIcon(Node node) {
             return null;
         }
 

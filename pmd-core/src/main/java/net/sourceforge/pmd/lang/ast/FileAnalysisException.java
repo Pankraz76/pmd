@@ -61,8 +61,7 @@ public class FileAnalysisException extends ContextedRuntimeException {
         return fileId;
     }
 
-    @Override
-    public final String getMessage() {
+    @Override public final String getMessage() {
         return errorKind() + StringUtils.uncapitalize(positionToString()) + ": " + super.getMessage();
     }
 

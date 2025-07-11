@@ -34,7 +34,7 @@ class ArraySymbolImpl implements JClassSymbol {
 
     // Like Class::getModifiers, we preserve the public/private/protected flag
     private static final int COMPONENT_MOD_MASK =
-        Opcodes.ACC_PRIVATE | Opcodes.ACC_PROTECTED | Opcodes.ACC_PUBLIC;
+            Opcodes.ACC_PRIVATE | Opcodes.ACC_PROTECTED | Opcodes.ACC_PUBLIC;
 
     private final TypeSystem ts;
     private final JTypeDeclSymbol component;
@@ -47,21 +47,18 @@ class ArraySymbolImpl implements JClassSymbol {
         }
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return ts;
     }
 
-    @Override
-    public @NonNull String getBinaryName() {
+    @Override public @NonNull String getBinaryName() {
         if (component instanceof JClassSymbol) {
             return ((JClassSymbol) component).getBinaryName() + "[]";
         }
         return component.getSimpleName() + "[]";
     }
 
-    @Override
-    public String getCanonicalName() {
+    @Override public String getCanonicalName() {
         if (component instanceof JClassSymbol) {
             String compName = ((JClassSymbol) component).getCanonicalName();
             return compName == null ? null : compName + "[]";
@@ -69,147 +66,116 @@ class ArraySymbolImpl implements JClassSymbol {
         return component.getSimpleName() + "[]";
     }
 
-    @Override
-    public boolean isUnresolved() {
+    @Override public boolean isUnresolved() {
         return false;
     }
 
-    @Override
-    public @Nullable JExecutableSymbol getEnclosingMethod() {
+    @Override public @Nullable JExecutableSymbol getEnclosingMethod() {
         return null;
     }
 
-    @Override
-    public List<JMethodSymbol> getDeclaredMethods() {
+    @Override public List<JMethodSymbol> getDeclaredMethods() {
         return Collections.singletonList(ImplicitMemberSymbols.arrayClone(this));
     }
 
-    @Override
-    public List<JFieldSymbol> getDeclaredFields() {
+    @Override public List<JFieldSymbol> getDeclaredFields() {
         return Collections.singletonList(ImplicitMemberSymbols.arrayLengthField(this));
     }
 
-    @Override
-    public @Nullable JClassSymbol getSuperclass() {
+    @Override public @Nullable JClassSymbol getSuperclass() {
         return getTypeSystem().OBJECT.getSymbol();
     }
 
-    @Override
-    public List<JClassSymbol> getSuperInterfaces() {
+    @Override public List<JClassSymbol> getSuperInterfaces() {
         return listOf(getTypeSystem().CLONEABLE.getSymbol(), getTypeSystem().SERIALIZABLE.getSymbol());
     }
 
-    @Override
-    public List<JClassType> getSuperInterfaceTypes(Substitution substitution) {
+    @Override public List<JClassType> getSuperInterfaceTypes(Substitution substitution) {
         return listOf(getTypeSystem().CLONEABLE, getTypeSystem().SERIALIZABLE);
     }
 
-    @Override
-    public @Nullable JClassType getSuperclassType(Substitution substitution) {
+    @Override public @Nullable JClassType getSuperclassType(Substitution substitution) {
         return getTypeSystem().OBJECT;
     }
 
-    @Override
-    public @NonNull JTypeDeclSymbol getArrayComponent() {
+    @Override public @NonNull JTypeDeclSymbol getArrayComponent() {
         return component;
     }
 
-    @Override
-    public <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override public <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitArray(this, component, param);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return SymbolEquality.equals(this, o);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.hash(this);
     }
 
-    @Override
-    public boolean isAnnotation() {
+    @Override public boolean isAnnotation() {
         return false;
     }
 
-    @Override
-    public List<JClassSymbol> getDeclaredClasses() {
+    @Override public List<JClassSymbol> getDeclaredClasses() {
         return Collections.emptyList();
     }
 
-    @Override
-    public List<JConstructorSymbol> getConstructors() {
+    @Override public List<JConstructorSymbol> getConstructors() {
         return Collections.singletonList(ImplicitMemberSymbols.arrayConstructor(this));
     }
 
-    @Override
-    @NonNull
-    public String getPackageName() {
+    @Override @NonNull public String getPackageName() {
         return getArrayComponent().getPackageName();
     }
 
-    @Override
-    @NonNull
-    public String getSimpleName() {
+    @Override @NonNull public String getSimpleName() {
         return getArrayComponent().getSimpleName() + "[]";
     }
 
-    @Override
-    public int getModifiers() {
+    @Override public int getModifiers() {
         int comp = getArrayComponent().getModifiers() & COMPONENT_MOD_MASK;
         return Modifier.FINAL | Modifier.ABSTRACT | comp;
     }
 
-    @Override
-    public List<JTypeVar> getTypeParameters() {
+    @Override public List<JTypeVar> getTypeParameters() {
         return Collections.emptyList();
     }
 
-    @Override
-    @Nullable
-    public JClassSymbol getEnclosingClass() {
+    @Override @Nullable public JClassSymbol getEnclosingClass() {
         return null;
     }
 
-    @Override
-    public boolean isArray() {
+    @Override public boolean isArray() {
         return true;
     }
 
-    @Override
-    public boolean isPrimitive() {
+    @Override public boolean isPrimitive() {
         return false;
     }
 
-    @Override
-    public boolean isInterface() {
+    @Override public boolean isInterface() {
         return false;
     }
 
-    @Override
-    public boolean isEnum() {
+    @Override public boolean isEnum() {
         return false;
     }
 
-    @Override
-    public boolean isRecord() {
+    @Override public boolean isRecord() {
         return false;
     }
 
-    @Override
-    public boolean isLocalClass() {
+    @Override public boolean isLocalClass() {
         return false;
     }
 
-    @Override
-    public boolean isAnonymousClass() {
+    @Override public boolean isAnonymousClass() {
         return false;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return SymbolToStrings.SHARED.toString(this);
     }
 

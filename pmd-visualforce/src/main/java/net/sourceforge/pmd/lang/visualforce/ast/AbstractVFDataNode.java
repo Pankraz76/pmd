@@ -17,8 +17,7 @@ abstract class AbstractVFDataNode extends AbstractVfNode implements VfTypedNode 
         super(id);
     }
 
-    @Override
-    public DataType getDataType() {
+    @Override public DataType getDataType() {
         return dataType;
     }
 

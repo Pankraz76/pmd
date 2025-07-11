@@ -28,79 +28,65 @@ final class CaptureMatcher implements JTypeVar {
         this.wild = wild;
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return wild.getTypeSystem();
     }
 
-    @Override
-    public boolean isCaptured() {
+    @Override public boolean isCaptured() {
         return true;
     }
 
-    @Override
-    public JTypeVar withAnnotations(PSet<SymAnnot> newTypeAnnots) {
+    @Override public JTypeVar withAnnotations(PSet<SymAnnot> newTypeAnnots) {
         throw new UnsupportedOperationException("this is a test only object which should only be used for equals");
     }
 
-    @Override
-    public JTypeVar withUpperBound(@NonNull JTypeMirror newUB) {
+    @Override public JTypeVar withUpperBound(@NonNull JTypeMirror newUB) {
         throw new UnsupportedOperationException("this is a test only object which should only be used for equals");
     }
 
-    @Override
-    public PSet<SymAnnot> getTypeAnnotations() {
+    @Override public PSet<SymAnnot> getTypeAnnotations() {
         if (captured != null) {
             return captured.getTypeAnnotations();
         }
         return HashTreePSet.empty();
     }
 
-    @Override
-    public @Nullable JTypeParameterSymbol getSymbol() {
+    @Override public @Nullable JTypeParameterSymbol getSymbol() {
         return null; // captured
     }
 
-    @Override
-    public @NonNull String getName() {
+    @Override public @NonNull String getName() {
         if (captured != null) {
             return captured.getName();
         }
         throw new UnsupportedOperationException("this is a test only object which should only be used for equals");
     }
 
-    @Override
-    public @NonNull JTypeMirror getUpperBound() {
+    @Override public @NonNull JTypeMirror getUpperBound() {
         return captured != null ? captured.getUpperBound() : getTypeSystem().OBJECT;
     }
 
-    @Override
-    public @NonNull JTypeMirror getLowerBound() {
+    @Override public @NonNull JTypeMirror getLowerBound() {
         return captured != null ? captured.getLowerBound() : getTypeSystem().NULL_TYPE;
     }
 
-    @Override
-    public boolean isCaptureOf(JWildcardType wildcard) {
+    @Override public boolean isCaptureOf(JWildcardType wildcard) {
         return this.wild.equals(wildcard);
     }
 
-    @Override
-    public @Nullable JWildcardType getCapturedOrigin() {
+    @Override public @Nullable JWildcardType getCapturedOrigin() {
         return wild;
     }
 
-    @Override
-    public JTypeVar cloneWithBounds(JTypeMirror lower, JTypeMirror upper) {
+    @Override public JTypeVar cloneWithBounds(JTypeMirror lower, JTypeMirror upper) {
         throw new UnsupportedOperationException("this is a test only object which should only be used for equals");
     }
 
-    @Override
-    public JTypeVar substInBounds(Function<? super SubstVar, ? extends @NonNull JTypeMirror> substitution) {
+    @Override public JTypeVar substInBounds(Function<? super SubstVar, ? extends @NonNull JTypeMirror> substitution) {
         throw new UnsupportedOperationException("this is a test only object which should only be used for equals");
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -119,14 +105,12 @@ final class CaptureMatcher implements JTypeVar {
         return true;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         throw new UnsupportedOperationException("this is a test only object which should only be used for equals");
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return captured == null ? "unbound capture matcher of (" + wild + ")"
-                                : "bound(" + captured + ")";
+                : "bound(" + captured + ")";
     }
 }

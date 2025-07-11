@@ -26,14 +26,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class AbstractClasspathEntryFingerprinterTest {
 
-    @TempDir
-    Path tempDir;
+    @TempDir Path tempDir;
 
     protected ClasspathEntryFingerprinter fingerprinter = newFingerPrinter();
     protected Checksum checksum = new Adler32();
 
-    @BeforeEach
-    void setUp() {
+    @BeforeEach void setUp() {
         checksum.reset();
     }
 
@@ -45,25 +43,19 @@ abstract class AbstractClasspathEntryFingerprinterTest {
 
     protected abstract File createValidNonEmptyFile() throws IOException;
 
-    @Test
-    void appliesToNullIsSafe() {
+    @Test void appliesToNullIsSafe() {
         fingerprinter.appliesTo(null);
     }
 
-    @ParameterizedTest
-    @MethodSource("getValidFileExtensions")
-    void appliesToValidFile(final String extension) {
+    @ParameterizedTest @MethodSource("getValidFileExtensions") void appliesToValidFile(final String extension) {
         assertTrue(fingerprinter.appliesTo(extension));
     }
 
-    @ParameterizedTest
-    @MethodSource("getInvalidFileExtensions")
-    void doesNotApplyToInvalidFile(final String extension) {
+    @ParameterizedTest @MethodSource("getInvalidFileExtensions") void doesNotApplyToInvalidFile(final String extension) {
         assertFalse(fingerprinter.appliesTo(extension));
     }
 
-    @Test
-    void fingerprintNonExistingFile() throws MalformedURLException, IOException {
+    @Test void fingerprintNonExistingFile() throws MalformedURLException, IOException {
         final long prevValue = checksum.getValue();
 
         fingerprinter.fingerprint(new File("non-existing").toURI().toURL(), checksum);
@@ -71,8 +63,7 @@ abstract class AbstractClasspathEntryFingerprinterTest {
         assertEquals(prevValue, checksum.getValue());
     }
 
-    @Test
-    void fingerprintExistingValidFile() throws IOException {
+    @Test void fingerprintExistingValidFile() throws IOException {
         final long prevValue = checksum.getValue();
         final File file = createValidNonEmptyFile();
 

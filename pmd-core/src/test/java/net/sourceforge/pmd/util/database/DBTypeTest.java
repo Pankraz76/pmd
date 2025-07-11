@@ -30,11 +30,9 @@ class DBTypeTest {
     private Properties testProperties;
     private Properties includeProperties;
 
-    @TempDir
-    private Path folder;
+    @TempDir private Path folder;
 
-    @BeforeEach
-    void setUp() throws Exception {
+    @BeforeEach void setUp() throws Exception {
         testProperties = new Properties();
         testProperties.put("prop1", "value1");
         testProperties.put("prop2", "value2");
@@ -53,16 +51,14 @@ class DBTypeTest {
         }
     }
 
-    @AfterEach
-    void tearDown() throws Exception {
+    @AfterEach void tearDown() throws Exception {
         testProperties = null;
     }
 
     /**
      * Test of getProperties method, of class DBType.
      */
-    @Test
-    void testGetPropertiesFromFile() throws Exception {
+    @Test void testGetPropertiesFromFile() throws Exception {
         System.out.println("getPropertiesFromFile");
         DBType instance = new DBType(absoluteFile.getAbsolutePath());
         Properties expResult = testProperties;
@@ -76,8 +72,7 @@ class DBTypeTest {
     /**
      * Test of getProperties method, of class DBType.
      */
-    @Test
-    void testGetProperties() throws Exception {
+    @Test void testGetProperties() throws Exception {
         System.out.println("testGetProperties");
         DBType instance = new DBType("test");
         Properties expResult = testProperties;
@@ -93,8 +88,7 @@ class DBTypeTest {
     /**
      * Test of getProperties method, of class DBType.
      */
-    @Test
-    void testGetIncludeProperties() throws Exception {
+    @Test void testGetIncludeProperties() throws Exception {
         System.out.println("testGetIncludeProperties");
         DBType instance = new DBType("include");
         Properties expResult = includeProperties;
@@ -110,8 +104,7 @@ class DBTypeTest {
     /**
      * Test of getResourceBundleAsProperties method, of class DBType.
      */
-    @Test
-    void testAsProperties() {
+    @Test void testAsProperties() {
         System.out.println("asProperties");
         ResourceBundle bundle = ResourceBundle.getBundle(DBType.class.getPackage().getName() + ".test");
         Properties expResult = testProperties;

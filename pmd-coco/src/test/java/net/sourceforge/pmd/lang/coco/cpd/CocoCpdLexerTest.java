@@ -14,13 +14,11 @@ class CocoCpdLexerTest extends CpdTextComparisonTest {
         super(CocoLanguageModule.getInstance(), ".coco");
     }
 
-    @Test
-    void testAnnotatedSource() {
+    @Test void testAnnotatedSource() {
         doTest("simple_machine");
     }
 
-    @Test
-    void testDocstring() {
+    @Test void testDocstring() {
         doTest("enum");
     }
 }

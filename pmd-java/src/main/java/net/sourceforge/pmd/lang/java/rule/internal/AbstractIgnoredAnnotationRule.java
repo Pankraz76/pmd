@@ -20,10 +20,10 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 public abstract class AbstractIgnoredAnnotationRule extends AbstractJavaRule {
 
     private final PropertyDescriptor<List<String>> ignoredAnnotationsDescriptor
-        = stringListProperty("ignoredAnnotations")
-        .desc(defaultIgnoredAnnotationsDescription())
-        .defaultValue(defaultSuppressionAnnotations())
-        .build();
+            = stringListProperty("ignoredAnnotations")
+            .desc(defaultIgnoredAnnotationsDescription())
+            .defaultValue(defaultSuppressionAnnotations())
+            .build();
 
     protected Collection<String> defaultSuppressionAnnotations() {
         return Collections.emptyList();

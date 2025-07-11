@@ -28,9 +28,9 @@ public final class JavaPropertyUtil {
         List<String> sortedDefaults = new ArrayList<>(defaults);
         sortedDefaults.sort(Comparator.naturalOrder());
         return stringListProperty("ignoredAnnotations")
-            .desc("Fully qualified names of the annotation types that should be ignored by this rule")
-            .defaultValue(sortedDefaults)
-            .build();
+                .desc("Fully qualified names of the annotation types that should be ignored by this rule")
+                .defaultValue(sortedDefaults)
+                .build();
     }
 
     public static PropertyDescriptor<List<String>> ignoredAnnotationsDescriptor(String... defaults) {

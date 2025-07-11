@@ -36,9 +36,9 @@ import net.sourceforge.pmd.properties.PropertyFactory;
 public class CouplingBetweenObjectsRule extends AbstractJavaRule {
 
     private static final PropertyDescriptor<Integer> THRESHOLD_DESCRIPTOR
-        = PropertyFactory.intProperty("threshold")
-                         .desc("Unique type reporting threshold")
-                         .require(positive()).defaultValue(20).build();
+            = PropertyFactory.intProperty("threshold")
+            .desc("Unique type reporting threshold")
+            .require(positive()).defaultValue(20).build();
 
     private int couplingCount;
     private boolean inInterface;
@@ -48,8 +48,7 @@ public class CouplingBetweenObjectsRule extends AbstractJavaRule {
         definePropertyDescriptor(THRESHOLD_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTCompilationUnit cu, Object data) {
+    @Override public Object visit(ASTCompilationUnit cu, Object data) {
         super.visit(cu, data);
 
         Integer threshold = getProperty(THRESHOLD_DESCRIPTOR);
@@ -62,8 +61,7 @@ public class CouplingBetweenObjectsRule extends AbstractJavaRule {
         return null;
     }
 
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
         boolean prev = inInterface;
         inInterface = node.isInterface();
         super.visit(node, data);
@@ -71,29 +69,25 @@ public class CouplingBetweenObjectsRule extends AbstractJavaRule {
         return null;
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         ASTType type = node.getResultTypeNode();
         checkVariableType(type);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTLocalVariableDeclaration node, Object data) {
+    @Override public Object visit(ASTLocalVariableDeclaration node, Object data) {
         ASTType type = node.getTypeNode();
         checkVariableType(type);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTFormalParameter node, Object data) {
+    @Override public Object visit(ASTFormalParameter node, Object data) {
         ASTType type = node.getTypeNode();
         checkVariableType(type);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTFieldDeclaration node, Object data) {
+    @Override public Object visit(ASTFieldDeclaration node, Object data) {
         ASTType type = node.getTypeNode();
         checkVariableType(type);
         return super.visit(node, data);
@@ -132,9 +126,9 @@ public class CouplingBetweenObjectsRule extends AbstractJavaRule {
         }
         JTypeDeclSymbol symbol = t.getSymbol();
         return symbol == null
-            || JAccessibleElementSymbol.PRIMITIVE_PACKAGE.equals(symbol.getPackageName())
-            || t.isPrimitive()
-            || t.isBoxedPrimitive();
+                || JAccessibleElementSymbol.PRIMITIVE_PACKAGE.equals(symbol.getPackageName())
+                || t.isPrimitive()
+                || t.isBoxedPrimitive();
     }
 
 }

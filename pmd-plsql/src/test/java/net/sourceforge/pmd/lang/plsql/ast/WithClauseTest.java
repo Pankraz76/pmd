@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class WithClauseTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void testSelect() {
+    @Test void testSelect() {
         ASTInput input = plsql.parseResource("WithClause.pls");
 
         List<ASTSelectStatement> selectStatements = input.descendants(ASTSelectStatement.class).toList();
@@ -26,8 +25,7 @@ class WithClauseTest extends AbstractPLSQLParserTst {
         assertNotNull(selectStatements.get(0).descendants(ASTSelectList.class).first());
     }
 
-    @Test
-    void testSelectInto() {
+    @Test void testSelectInto() {
         ASTInput input = plsql.parseResource("WithClause.pls");
 
         List<ASTSelectIntoStatement> selectStatements = input.descendants(ASTSelectIntoStatement.class).toList();

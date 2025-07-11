@@ -85,12 +85,12 @@ public class JVariableSig {
      */
     public JTypeMirror getTypeMirror() {
         Substitution subst = declarator instanceof JClassType
-                             ? ((JClassType) declarator).getTypeParamSubst()
-                             : Substitution.EMPTY; // array
+                ? ((JClassType) declarator).getTypeParamSubst()
+                : Substitution.EMPTY; // array
 
         JTypeMirror symType = declarator.isRaw()
-                                  ? ClassTypeImpl.eraseToRaw(sym.getTypeMirror(Substitution.EMPTY), subst)
-                                  : sym.getTypeMirror(subst);
+                ? ClassTypeImpl.eraseToRaw(sym.getTypeMirror(Substitution.EMPTY), subst)
+                : sym.getTypeMirror(subst);
         if (symType instanceof JWildcardType) {
             throw new IllegalStateException("Forgotten capture of " + this.declarator + " for symbol " + sym);
         }
@@ -105,8 +105,7 @@ public class JVariableSig {
         return new JVariableSig(declarator, sym);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -115,16 +114,14 @@ public class JVariableSig {
         }
         JVariableSig that = (JVariableSig) o;
         return Objects.equals(sym, that.sym)
-            && Objects.equals(declarator, that.declarator);
+                && Objects.equals(declarator, that.declarator);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hash(sym, declarator);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Signature of " + sym + " in " + declarator;
     }
 
@@ -137,8 +134,7 @@ public class JVariableSig {
             super(declarator, sym);
         }
 
-        @Override
-        public JFieldSymbol getSymbol() {
+        @Override public JFieldSymbol getSymbol() {
             return (JFieldSymbol) super.sym;
         }
     }

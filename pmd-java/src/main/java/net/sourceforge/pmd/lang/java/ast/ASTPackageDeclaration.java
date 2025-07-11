@@ -29,8 +29,7 @@ public final class ASTPackageDeclaration extends AbstractJavaNode implements Ann
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -38,8 +37,7 @@ public final class ASTPackageDeclaration extends AbstractJavaNode implements Ann
         reportRegion = TextRegion.union(startTok.getRegion(), endTok.getRegion());
     }
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         // the report location is the name of the package
         return getAstInfo().getTextDocument().toLocation(reportRegion);
     }
@@ -53,8 +51,7 @@ public final class ASTPackageDeclaration extends AbstractJavaNode implements Ann
         return super.getImage();
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         // the image was null before 7.0, best keep it that way
         return null;
     }

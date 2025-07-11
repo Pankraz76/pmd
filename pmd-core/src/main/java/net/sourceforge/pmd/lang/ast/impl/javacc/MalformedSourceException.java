@@ -25,13 +25,11 @@ public class MalformedSourceException extends FileAnalysisException {
         setFileId(fileLocation.getFileId());
     }
 
-    @Override
-    protected @NonNull FileLocation location() {
+    @Override protected @NonNull FileLocation location() {
         return location;
     }
 
-    @Override
-    protected String errorKind() {
+    @Override protected String errorKind() {
         return "Source format error";
     }
 }

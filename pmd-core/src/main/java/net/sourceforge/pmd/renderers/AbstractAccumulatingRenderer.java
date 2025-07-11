@@ -36,18 +36,15 @@ public abstract class AbstractAccumulatingRenderer extends AbstractRenderer {
         super(name, description);
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         // do nothing
     }
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         // do nothing
     }
 
-    @Override
-    public void startFileAnalysis(TextFile dataSource) {
+    @Override public void startFileAnalysis(TextFile dataSource) {
         Objects.requireNonNull(dataSource);
     }
 
@@ -59,8 +56,7 @@ public abstract class AbstractAccumulatingRenderer extends AbstractRenderer {
      * end. Subclasses of {@link AbstractAccumulatingRenderer} cannot override this method
      * anymore.
      */
-    @Override
-    public final void renderFileReport(Report report) throws IOException {
+    @Override public final void renderFileReport(Report report) throws IOException {
         // do nothing, final because it will never be called by the listener
         Objects.requireNonNull(report);
     }
@@ -73,8 +69,7 @@ public abstract class AbstractAccumulatingRenderer extends AbstractRenderer {
     protected abstract void outputReport(Report report) throws IOException;
 
 
-    @Override
-    public GlobalAnalysisListener newListener() throws IOException {
+    @Override public GlobalAnalysisListener newListener() throws IOException {
         try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.REPORTING)) {
             this.start();
         }
@@ -82,19 +77,16 @@ public abstract class AbstractAccumulatingRenderer extends AbstractRenderer {
         return new GlobalAnalysisListener() {
             final GlobalReportBuilderListener reportBuilder = new GlobalReportBuilderListener();
 
-            @Override
-            public FileAnalysisListener startFileAnalysis(TextFile file) {
+            @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
                 AbstractAccumulatingRenderer.this.startFileAnalysis(file);
                 return reportBuilder.startFileAnalysis(file);
             }
 
-            @Override
-            public void onConfigError(ConfigurationError error) {
+            @Override public void onConfigError(ConfigurationError error) {
                 reportBuilder.onConfigError(error);
             }
 
-            @Override
-            public void close() throws Exception {
+            @Override public void close() throws Exception {
                 reportBuilder.close();
                 try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.REPORTING)) {
                     outputReport(reportBuilder.getResult());

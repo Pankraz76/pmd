@@ -205,8 +205,8 @@ final class TypesFromAst {
     // Whether the reference needs an enclosing type if it is unqualified (non-static inner type)
     private static boolean needsEnclosing(JTypeDeclSymbol reference) {
         return reference instanceof JClassSymbol
-            && reference.getEnclosingClass() != null
-            && !Modifier.isStatic(reference.getModifiers());
+                && reference.getEnclosingClass() != null
+                && !Modifier.isStatic(reference.getModifiers());
     }
 
     private static @NonNull JTypeDeclSymbol getReferenceEnsureResolved(ASTClassType node) {
@@ -216,14 +216,14 @@ final class TypesFromAst {
             ASTExpression qualifier = ((ASTConstructorCall) node.getParent()).getQualifier();
             if (qualifier != null) {
                 assert node.getImplicitEnclosing() == null
-                    : "Qualified ctor calls should be handled lazily";
+                        : "Qualified ctor calls should be handled lazily";
                 // note: this triggers recursive type resolution of the qualifier
                 JTypeMirror qualifierType = qualifier.getTypeMirror();
                 JClassSymbol symbol;
                 if (qualifierType instanceof JClassType) {
                     JClassType enclosing = (JClassType) qualifierType;
                     JClassType resolved = JavaResolvers.getMemberClassResolver(enclosing, node.getRoot().getPackageName(), node.getEnclosingType().getSymbol(), node.getSimpleName())
-                                                       .resolveFirst(node.getSimpleName());
+                            .resolveFirst(node.getSimpleName());
                     if (resolved == null) {
                         // compile-time error
                         symbol = (JClassSymbol) node.getTypeSystem().UNKNOWN.getSymbol();

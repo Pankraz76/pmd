@@ -29,8 +29,7 @@ public final class ASTArrayInitializer extends AbstractJavaExpr implements Itera
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -42,8 +41,7 @@ public final class ASTArrayInitializer extends AbstractJavaExpr implements Itera
     }
 
 
-    @Override
-    public Iterator<ASTExpression> iterator() {
+    @Override public Iterator<ASTExpression> iterator() {
         return children(ASTExpression.class).iterator();
     }
 }

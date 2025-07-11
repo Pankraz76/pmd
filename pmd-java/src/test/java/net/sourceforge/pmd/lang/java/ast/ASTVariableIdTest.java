@@ -16,15 +16,13 @@ import net.sourceforge.pmd.lang.java.ast.internal.PrettyPrintingUtil;
 class ASTVariableIdTest extends BaseParserTest {
 
 
-    @Test
-    void testIsExceptionBlockParameter() {
+    @Test void testIsExceptionBlockParameter() {
         ASTCompilationUnit acu = java.parse(EXCEPTION_PARAMETER);
         ASTVariableId id = acu.descendants(ASTVariableId.class).first();
         assertTrue(id.isExceptionBlockParameter());
     }
 
-    @Test
-    void testTypeNameNode() {
+    @Test void testTypeNameNode() {
         ASTCompilationUnit acu = java.parse(TYPE_NAME_NODE);
         ASTVariableId id = acu.descendants(ASTVariableId.class).first();
 
@@ -32,8 +30,7 @@ class ASTVariableIdTest extends BaseParserTest {
         assertEquals("String", name.getSimpleName());
     }
 
-    @Test
-    void testAnnotations() {
+    @Test void testAnnotations() {
         ASTCompilationUnit acu = java.parse(TEST_ANNOTATIONS);
         ASTVariableId id = acu.descendants(ASTVariableId.class).first();
 
@@ -41,16 +38,14 @@ class ASTVariableIdTest extends BaseParserTest {
         assertEquals("String", name.getSimpleName());
     }
 
-    @Test
-    void testLambdaWithType() throws Exception {
+    @Test void testLambdaWithType() throws Exception {
         ASTCompilationUnit acu = java8.parse(TEST_LAMBDA_WITH_TYPE);
         ASTLambdaExpression lambda = acu.descendants(ASTLambdaExpression.class).first();
         ASTVariableId f = lambda.descendants(ASTVariableId.class).first();
         assertEquals("File", PrettyPrintingUtil.prettyPrintType(f.getTypeNode()));
     }
 
-    @Test
-    void testLambdaWithoutType() throws Exception {
+    @Test void testLambdaWithoutType() throws Exception {
         ASTCompilationUnit acu = java8.parse(TEST_LAMBDA_WITHOUT_TYPE);
         ASTLambdaExpression lambda = acu.descendants(ASTLambdaExpression.class).first();
         ASTVariableId f = lambda.descendants(ASTVariableId.class).first();
@@ -61,8 +56,8 @@ class ASTVariableIdTest extends BaseParserTest {
     private static final String EXCEPTION_PARAMETER = "public class Test { { try {} catch(Exception ie) {} } }";
     private static final String TEST_ANNOTATIONS = "public class Foo {\n    public void bar(@A1 @A2 String s) {}\n}";
     private static final String TEST_LAMBDA_WITH_TYPE =
-        "public class Foo {\n    public void bar() {\n        FileFilter java = (File f) -> f.getName().endsWith(\".java\");\n    }\n}\n";
+            "public class Foo {\n    public void bar() {\n        FileFilter java = (File f) -> f.getName().endsWith(\".java\");\n    }\n}\n";
     private static final String TEST_LAMBDA_WITHOUT_TYPE =
-        "public class Foo {\n    public void bar() {\n        FileFilter java2 = f -> f.getName().endsWith(\".java\");\n    }\n}\n";
+            "public class Foo {\n    public void bar() {\n        FileFilter java2 = f -> f.getName().endsWith(\".java\");\n    }\n}\n";
 
 }

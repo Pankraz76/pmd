@@ -24,8 +24,7 @@ abstract class BaseFunctionalMirror<N extends FunctionalExpression> extends Base
         super(mirrors, myNode, parent, subexprMaker);
     }
 
-    @Override
-    public void setFunctionalMethod(JMethodSig methodType) {
+    @Override public void setFunctionalMethod(JMethodSig methodType) {
         this.inferredMethod = methodType;
         if (mayMutateAst()) {
             InternalApiBridge.setFunctionalMethod(myNode, methodType);
@@ -36,8 +35,7 @@ abstract class BaseFunctionalMirror<N extends FunctionalExpression> extends Base
         return inferredMethod;
     }
 
-    @Override
-    public void finishFailedInference(@Nullable JTypeMirror targetType) {
+    @Override public void finishFailedInference(@Nullable JTypeMirror targetType) {
         setInferredType(targetType == null ? factory.ts.UNKNOWN : targetType);
         setFunctionalMethod(factory.ts.UNRESOLVED_METHOD);
     }

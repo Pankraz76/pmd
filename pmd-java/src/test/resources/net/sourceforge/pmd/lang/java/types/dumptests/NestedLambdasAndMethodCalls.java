@@ -16,16 +16,16 @@ public class NestedLambdasAndMethodCalls {
 
     private Map<String, Map<String, String>> run(Library library) {
         return library
-            .books()
-            .stream()
-            .map(book -> book.lenders().stream().collect(Collectors.toMap(Lender::name, lender -> Map.of(book.title(), lender.status()))))
-            .reduce(this::reduceBooksAndLenderStatusByLender)
-            .orElse(null);
+                .books()
+                .stream()
+                .map(book -> book.lenders().stream().collect(Collectors.toMap(Lender::name, lender -> Map.of(book.title(), lender.status()))))
+                .reduce(this::reduceBooksAndLenderStatusByLender)
+                .orElse(null);
     }
 
     private Map<String, Map<String, String>> reduceBooksAndLenderStatusByLender(
-        Map<String, Map<String, String>> previousMap,
-        Map<String, Map<String, String>> nextMap
+            Map<String, Map<String, String>> previousMap,
+            Map<String, Map<String, String>> nextMap
     ) {
         previousMap.putAll(nextMap);
         return previousMap;
@@ -33,6 +33,11 @@ public class NestedLambdasAndMethodCalls {
 }
 
 
-record Lender(String name, String status) {}
-record Book(String title, Collection<Lender> lenders) {}
-record Library(Collection<Book> books) {}
+record Lender(String name, String status) {
+}
+
+record Book(String title, Collection<Lender> lenders) {
+}
+
+record Library(Collection<Book> books) {
+}

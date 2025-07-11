@@ -18,16 +18,15 @@ public class TsLanguageModule extends CpdOnlyLanguageModuleBase {
 
     public TsLanguageModule() {
         super(LanguageMetadata.withId(ID)
-                  .name("TypeScript")
-                  .extensions("ts"));
+                .name("TypeScript")
+                .extensions("ts"));
     }
 
     public static TsLanguageModule getInstance() {
         return (TsLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new TypeScriptCpdLexer();
     }
 }

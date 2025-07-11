@@ -15,15 +15,14 @@ package net.sourceforge.pmd.lang.java.ast;
  * </pre>
  */
 public final class ASTEmptyDeclaration extends AbstractJavaNode
-    implements ASTBodyDeclaration, ASTTopLevelDeclaration {
+        implements ASTBodyDeclaration, ASTTopLevelDeclaration {
 
     ASTEmptyDeclaration(int id) {
         super(id);
     }
 
 
-    @Override
-    public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -32,8 +32,7 @@ public class JavaComment implements Reportable {
         this.token = t;
     }
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         return getToken().getReportLocation();
     }
 
@@ -81,11 +80,11 @@ public class JavaComment implements Reportable {
             return () -> IteratorUtil.map(getText().lines().iterator(), JavaComment::removeCommentMarkup);
         } else {
             return () -> IteratorUtil.mapNotNull(
-                getText().lines().iterator(),
-                line -> {
-                    line = removeCommentMarkup(line);
-                    return line.isEmpty() ? null : line;
-                }
+                    getText().lines().iterator(),
+                    line -> {
+                        line = removeCommentMarkup(line);
+                        return line.isEmpty() ? null : line;
+                    }
             );
         }
     }
@@ -96,12 +95,12 @@ public class JavaComment implements Reportable {
      */
     public static boolean isMarkupWord(Chars word) {
         return word.length() <= 3
-            && (word.contentEquals("*")
-            || word.contentEquals("//")
-            || word.contentEquals("///")
-            || word.contentEquals("/*")
-            || word.contentEquals("*/")
-            || word.contentEquals("/**"));
+                && (word.contentEquals("*")
+                || word.contentEquals("//")
+                || word.contentEquals("///")
+                || word.contentEquals("/*")
+                || word.contentEquals("*/")
+                || word.contentEquals("/**"));
     }
 
     /**
@@ -113,10 +112,10 @@ public class JavaComment implements Reportable {
         int subseqFrom = 0;
         if (line.startsWith('/', 0)) {
             if (line.startsWith("**", 1)
-                || line.startsWith("//", 1)) {
+                    || line.startsWith("//", 1)) {
                 subseqFrom = 3;
             } else if (line.startsWith('/', 1)
-                || line.startsWith('*', 1)) {
+                    || line.startsWith('*', 1)) {
                 subseqFrom = 2;
             }
         } else if (line.startsWith('*', 0)) {
@@ -127,40 +126,39 @@ public class JavaComment implements Reportable {
 
     private static Stream<JavaccToken> getSpecialTokensIn(JjtreeNode<?> node) {
         return GenericToken.streamRange(node.getFirstToken(), node.getLastToken())
-                           .flatMap(it -> IteratorUtil.toStream(GenericToken.previousSpecials(it).iterator()));
+                .flatMap(it -> IteratorUtil.toStream(GenericToken.previousSpecials(it).iterator()));
     }
 
     public static Stream<JavaComment> getLeadingComments(JavaNode node) {
         Stream<JavaccToken> specialTokens = getSpecialTokensIn(node);
-        
+
         if (node instanceof ModifierOwner && !(node instanceof ASTConstructorDeclaration)) {
             node = ((ModifierOwner) node).getModifiers();
             specialTokens = getSpecialTokensIn(node);
-            
+
             // if this was a non-implicit empty modifier node, we should also consider comments immediately after
             if (!node.getFirstToken().isImplicit()) {
                 specialTokens = Stream.concat(specialTokens, getSpecialTokensIn(node.getNextSibling()));
             }
         }
-        
+
         return specialTokens.filter(JavaComment::isComment)
-                                         .map(JavaComment::toComment);
+                .map(JavaComment::toComment);
     }
 
     private static JavaComment toComment(JavaccToken tok) {
         switch (tok.kind) {
-        case JavaTokenKinds.FORMAL_COMMENT:
-            return new JavadocComment(tok);
-        case JavaTokenKinds.MULTI_LINE_COMMENT:
-        case JavaTokenKinds.SINGLE_LINE_COMMENT:
-            return new JavaComment(tok);
-        default:
-            throw new IllegalArgumentException("Token is not a comment: " + tok);
+            case JavaTokenKinds.FORMAL_COMMENT:
+                return new JavadocComment(tok);
+            case JavaTokenKinds.MULTI_LINE_COMMENT:
+            case JavaTokenKinds.SINGLE_LINE_COMMENT:
+                return new JavaComment(tok);
+            default:
+                throw new IllegalArgumentException("Token is not a comment: " + tok);
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -171,8 +169,7 @@ public class JavaComment implements Reportable {
         return token.equals(that.token);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return token.hashCode();
     }
 }

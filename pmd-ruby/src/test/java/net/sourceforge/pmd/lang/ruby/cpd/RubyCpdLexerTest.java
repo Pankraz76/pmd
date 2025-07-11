@@ -14,13 +14,11 @@ class RubyCpdLexerTest extends CpdTextComparisonTest {
         super("ruby", ".rb");
     }
 
-    @Test
-    void testSimple() {
+    @Test void testSimple() {
         doTest("server");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 }

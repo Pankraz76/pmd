@@ -45,7 +45,7 @@ public interface ASTAssignableExpr extends ASTPrimaryExpression {
         Node parent = this.getParent();
 
         if (parent instanceof ASTUnaryExpression && !((ASTUnaryExpression) parent).getOperator().isPure()
-            || getIndexInParent() == 0 && parent instanceof ASTAssignmentExpression) {
+                || getIndexInParent() == 0 && parent instanceof ASTAssignmentExpression) {
             return AccessType.WRITE;
         }
 

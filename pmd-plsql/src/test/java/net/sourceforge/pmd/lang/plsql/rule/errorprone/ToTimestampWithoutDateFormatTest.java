@@ -13,8 +13,7 @@ import net.sourceforge.pmd.test.PmdRuleTst;
 class ToTimestampWithoutDateFormatTest extends PmdRuleTst {
     // No additional unit tests
 
-    @Override
-    protected List<Rule> getRules() {
+    @Override protected List<Rule> getRules() {
         Rule rule = findRule("category/plsql/errorprone.xml", "TO_TIMESTAMPWithoutDateFormat");
         return Collections.singletonList(rule);
     }

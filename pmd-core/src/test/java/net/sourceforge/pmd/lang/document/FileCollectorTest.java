@@ -40,11 +40,9 @@ import net.sourceforge.pmd.util.CollectionUtil;
 class FileCollectorTest {
     private static final Path RESOURCES = Paths.get("src/test/resources/net/sourceforge/pmd/lang/document/filecollectortest/");
 
-    @TempDir
-    private Path tempFolder;
+    @TempDir private Path tempFolder;
 
-    @Test
-    void testAddFile() throws IOException {
+    @Test void testAddFile() throws IOException {
         Path foo = newFile(tempFolder, "foo.dummy");
         Path bar = newFile(tempFolder, "bar.unknown");
 
@@ -56,8 +54,7 @@ class FileCollectorTest {
         assertCollected(collector, listOf(FileId.fromPath(foo)));
     }
 
-    @Test
-    void testAddFileForceLanguage() throws IOException {
+    @Test void testAddFileForceLanguage() throws IOException {
         Path bar = newFile(tempFolder, "bar.unknown");
 
         Language dummy = DummyLanguageModule.getInstance();
@@ -69,16 +66,14 @@ class FileCollectorTest {
         assertNoErrors(collector);
     }
 
-    @Test
-    void testAddFileNotExists() {
+    @Test void testAddFileNotExists() {
         FileCollector collector = newCollector();
 
         assertFalse(collector.addFile(tempFolder.resolve("does_not_exist.dummy")));
         assertEquals(1, collector.getReporter().numErrors());
     }
 
-    @Test
-    void testAddFileNotAFile() throws IOException {
+    @Test void testAddFileNotAFile() throws IOException {
         Path dir = tempFolder.resolve("src");
         Files.createDirectories(dir);
 
@@ -87,8 +82,7 @@ class FileCollectorTest {
         assertEquals(1, collector.getReporter().numErrors());
     }
 
-    @Test
-    void testAddDirectory() throws IOException {
+    @Test void testAddDirectory() throws IOException {
         Path root = tempFolder;
         Path foo = newFile(root, "src/foo.dummy");
         newFile(root, "src/bar.unknown");
@@ -101,8 +95,7 @@ class FileCollectorTest {
         assertCollected(collector, listOf(FileId.fromPath(foo), FileId.fromPath(bar)));
     }
 
-    @Test
-    void testGetApplicableFiles() {
+    @Test void testGetApplicableFiles() {
         FileCollector collector = newCollector();
 
         collectFileList(collector, RESOURCES.resolve("filelist.txt"));
@@ -113,8 +106,7 @@ class FileCollectorTest {
         assertThat(applicableFiles.get(1).getFileId().getFileName(), equalTo("somefile.dummy"));
     }
 
-    @Test
-    void testGetApplicableFilesMultipleLines() {
+    @Test void testGetApplicableFilesMultipleLines() {
         FileCollector collector = newCollector();
 
         collectFileList(collector, RESOURCES.resolve("filelist2.txt"));
@@ -126,8 +118,7 @@ class FileCollectorTest {
         assertFilenameIs(applicableFiles.get(1), "somefile.dummy");
     }
 
-    @Test
-    void testGetApplicableFilesWithIgnores() {
+    @Test void testGetApplicableFilesWithIgnores() {
         FileCollector collector = newCollector();
 
         PMDConfiguration configuration = new PMDConfiguration();
@@ -141,8 +132,7 @@ class FileCollectorTest {
         assertFilenameIs(applicableFiles.get(1), "somefile4.dummy");
     }
 
-    @Test
-    void testRelativizeWith() {
+    @Test void testRelativizeWith() {
         PMDConfiguration conf = new PMDConfiguration();
         conf.setInputFilePath(RESOURCES.resolve("filelist2.txt"));
         conf.addRelativizeRoot(Paths.get("src/test/resources"));
@@ -154,8 +144,7 @@ class FileCollectorTest {
         }
     }
 
-    @Test
-    void testRelativizeWithOtherDir() {
+    @Test void testRelativizeWithOtherDir() {
         PMDConfiguration conf = new PMDConfiguration();
         conf.setInputFilePath(RESOURCES.resolve("filelist4.txt"));
         conf.addRelativizeRoot(RESOURCES.resolve("src"));
@@ -168,8 +157,7 @@ class FileCollectorTest {
         }
     }
 
-    @Test
-    void testRelativizeWithSeveralDirs() {
+    @Test void testRelativizeWithSeveralDirs() {
         PMDConfiguration conf = new PMDConfiguration();
         conf.setInputFilePath(RESOURCES.resolve("filelist4.txt"));
         conf.addRelativizeRoot(RESOURCES.resolve("src"));
@@ -183,8 +171,7 @@ class FileCollectorTest {
         }
     }
 
-    @Test
-    void testUseAbsolutePaths() {
+    @Test void testUseAbsolutePaths() {
         PMDConfiguration conf = new PMDConfiguration();
         conf.setInputFilePath(RESOURCES.resolve("filelist4.txt"));
         conf.addRelativizeRoot(RESOURCES.toAbsolutePath().getRoot());
@@ -198,8 +185,7 @@ class FileCollectorTest {
     }
 
 
-    @Test
-    void testGetApplicableFilesWithDirAndIgnores() {
+    @Test void testGetApplicableFilesWithDirAndIgnores() {
         PMDConfiguration configuration = new PMDConfiguration();
         configuration.addInputPath(RESOURCES.resolve("src"));
         configuration.setIgnoreFilePath(RESOURCES.resolve("ignorelist.txt"));

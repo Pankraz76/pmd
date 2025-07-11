@@ -11,8 +11,7 @@ public final class ASTArrayComprehensionLoop extends AbstractEcmascriptNode<Arra
         super(arrayComprehensionLoop);
     }
 
-    @Override
-    protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

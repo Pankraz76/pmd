@@ -17,11 +17,9 @@ import net.sourceforge.pmd.reporting.Report;
 
 class ReportTest extends EcmascriptParserTestBase {
 
-    @Test
-    void testExclusionsInReportWithNOPMDEcmascript() {
+    @Test void testExclusionsInReportWithNOPMDEcmascript() {
         Rule rule = new AbstractEcmascriptRule() {
-            @Override
-            public Object visit(ASTFunctionNode node, Object data) {
+            @Override public Object visit(ASTFunctionNode node, Object data) {
                 asCtx(data).addViolationWithMessage(node, "Test");
                 return data;
             }

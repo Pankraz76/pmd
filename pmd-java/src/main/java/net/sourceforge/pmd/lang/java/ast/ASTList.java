@@ -81,8 +81,7 @@ public abstract class ASTList<N extends JavaNode> extends AbstractJavaNode imple
         return children(elementType);
     }
 
-    @Override
-    public Iterator<N> iterator() {
+    @Override public Iterator<N> iterator() {
         return toStream().iterator();
     }
 
@@ -136,8 +135,8 @@ public abstract class ASTList<N extends JavaNode> extends AbstractJavaNode imple
      * as a child.
      */
     abstract static class ASTNonEmptyList<T extends JavaNode>
-        extends ASTMaybeEmptyListOf<T>
-        implements AtLeastOneChildOfType<T> {
+            extends ASTMaybeEmptyListOf<T>
+            implements AtLeastOneChildOfType<T> {
 
         ASTNonEmptyList(int id, Class<T> kind) {
             super(id, kind);
@@ -149,15 +148,14 @@ public abstract class ASTList<N extends JavaNode> extends AbstractJavaNode imple
      * as a child.
      */
     abstract static class ASTMaybeEmptyListOf<T extends JavaNode>
-        extends ASTList<T>
-        implements AllChildrenAreOfType<T> {
+            extends ASTList<T>
+            implements AllChildrenAreOfType<T> {
 
         ASTMaybeEmptyListOf(int id, Class<T> kind) {
             super(id, kind);
         }
 
-        @Override
-        public NodeStream<T> toStream() {
+        @Override public NodeStream<T> toStream() {
             return (NodeStream<T>) children();
         }
 

@@ -11,8 +11,7 @@ public final class ASTDoLoop extends AbstractEcmascriptNode<DoLoop> {
         super(doLoop);
     }
 
-    @Override
-    protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

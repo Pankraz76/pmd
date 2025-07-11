@@ -26,12 +26,12 @@ import net.sourceforge.pmd.util.AssertionUtil;
 public final class FileLocation {
 
     public static final Comparator<FileLocation> COORDS_COMPARATOR =
-        Comparator.comparing(FileLocation::getStartPos)
-                  .thenComparing(FileLocation::getEndPos);
+            Comparator.comparing(FileLocation::getStartPos)
+                    .thenComparing(FileLocation::getEndPos);
 
 
     public static final Comparator<FileLocation> COMPARATOR =
-        Comparator.comparing(FileLocation::getFileId).thenComparing(COORDS_COMPARATOR);
+            Comparator.comparing(FileLocation::getFileId).thenComparing(COORDS_COMPARATOR);
 
     private final int beginLine;
     private final int endLine;
@@ -148,10 +148,10 @@ public final class FileLocation {
         TextPos2d start = range2d.getStartPos();
         TextPos2d end = range2d.getEndPos();
         return new FileLocation(fileName,
-                                start.getLine(),
-                                start.getColumn(),
-                                end.getLine(),
-                                end.getColumn());
+                start.getLine(),
+                start.getColumn(),
+                end.getLine(),
+                end.getColumn());
     }
 
     /**
@@ -170,8 +170,7 @@ public final class FileLocation {
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "!debug only! " + startPosToStringWithFile();
     }
 }

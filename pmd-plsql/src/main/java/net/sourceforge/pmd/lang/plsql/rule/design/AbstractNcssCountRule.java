@@ -45,15 +45,13 @@ abstract class AbstractNcssCountRule<T extends PLSQLNode> extends AbstractCounte
     }
 
 
-    @Override
-    protected int getMetric(T node) {
+    @Override protected int getMetric(T node) {
         return 1 + (Integer) node.acceptVisitor(new NcssVisitor(), null);
     }
 
     private static final class NcssVisitor extends PlsqlVisitorBase<Object, Object> {
 
-        @Override
-        public Object visitPlsqlNode(PLSQLNode node, Object data) {
+        @Override public Object visitPlsqlNode(PLSQLNode node, Object data) {
             return countNodeChildren(node, data);
         }
 
@@ -75,89 +73,72 @@ abstract class AbstractNcssCountRule<T extends PLSQLNode> extends AbstractCounte
         }
 
 
-        @Override
-        public Object visit(ASTForStatement node, Object data) {
+        @Override public Object visit(ASTForStatement node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTLoopStatement node, Object data) {
+        @Override public Object visit(ASTLoopStatement node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTIfStatement node, Object data) {
+        @Override public Object visit(ASTIfStatement node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTElsifClause node, Object data) {
+        @Override public Object visit(ASTElsifClause node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTElseClause node, Object data) {
+        @Override public Object visit(ASTElseClause node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTWhileStatement node, Object data) {
+        @Override public Object visit(ASTWhileStatement node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTExitStatement node, Object data) {
+        @Override public Object visit(ASTExitStatement node, Object data) {
             return 1;
         }
 
-        @Override
-        public Object visit(ASTExceptionHandler node, Object data) {
+        @Override public Object visit(ASTExceptionHandler node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTContinueStatement node, Object data) {
+        @Override public Object visit(ASTContinueStatement node, Object data) {
             return 1;
         }
 
-        @Override
-        public Object visit(ASTGotoStatement node, Object data) {
+        @Override public Object visit(ASTGotoStatement node, Object data) {
             return 1;
         }
 
-        @Override
-        public Object visit(ASTReturnStatement node, Object data) {
+        @Override public Object visit(ASTReturnStatement node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTCaseStatement node, Object data) {
+        @Override public Object visit(ASTCaseStatement node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTRaiseStatement node, Object data) {
+        @Override public Object visit(ASTRaiseStatement node, Object data) {
             return 1;
         }
 
-        @Override
-        public Object visit(ASTExpression node, Object data) {
+        @Override public Object visit(ASTExpression node, Object data) {
             // "For" update expressions do not count as separate lines of code
             return node.getParent() instanceof ASTStatement ? 0 : 1;
         }
 
-        @Override
-        public Object visit(ASTFieldDeclaration node, Object data) {
+        @Override public Object visit(ASTFieldDeclaration node, Object data) {
             return 1;
         }
 
-        @Override
-        public Object visit(ASTLabelledStatement node, Object data) {
+        @Override public Object visit(ASTLabelledStatement node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 
-        @Override
-        public Object visit(ASTCaseWhenClause node, Object data) {
+        @Override public Object visit(ASTCaseWhenClause node, Object data) {
             return countNodeChildren(node, data) + 1;
         }
 

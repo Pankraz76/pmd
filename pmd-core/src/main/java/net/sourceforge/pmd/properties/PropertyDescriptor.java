@@ -40,11 +40,11 @@ public final class PropertyDescriptor<T> {
     private final boolean isXPathAvailable;
 
     PropertyDescriptor(String name,
-                       String description,
-                       T defaultValue,
-                       PropertySerializer<T> parser,
-                       @Nullable PropertyTypeId typeId,
-                       boolean isXPathAvailable) {
+            String description,
+            T defaultValue,
+            PropertySerializer<T> parser,
+            @Nullable PropertyTypeId typeId,
+            boolean isXPathAvailable) {
 
         this.name = name;
         this.description = description;
@@ -54,8 +54,8 @@ public final class PropertyDescriptor<T> {
         this.isXPathAvailable = isXPathAvailable;
 
         PropertyParsingUtil.checkConstraintsThrow(
-            defaultValue,
-            parser.getConstraints()
+                defaultValue,
+                parser.getConstraints()
         );
     }
 
@@ -120,19 +120,17 @@ public final class PropertyDescriptor<T> {
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "PropertyDescriptor{ "
-            + "name='" + name + '\''
-            + ", parser=" + parser
-            + ", typeId=" + typeId
-            + ", description='" + description + '\''
-            + ", defaultValue=" + defaultValue + '}';
+                + "name='" + name + '\''
+                + ", parser=" + parser
+                + ", typeId=" + typeId
+                + ", description='" + description + '\''
+                + ", defaultValue=" + defaultValue + '}';
     }
 
     // TODO these equality routines needs to go away, should be implemented in Rule::equals
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -141,11 +139,10 @@ public final class PropertyDescriptor<T> {
         }
         PropertyDescriptor<?> that = (PropertyDescriptor<?>) o;
         return name.equals(that.name)
-            && description.equals(that.description);
+                && description.equals(that.description);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hash(name, description);
     }
 }

@@ -21,8 +21,8 @@ import net.sourceforge.pmd.lang.ast.Parser;
 final class HtmlTreeBuilder {
 
     public ASTHtmlDocument build(Document doc,
-                                 Parser.ParserTask task,
-                                 Map<Integer, String> suppressMap) {
+            Parser.ParserTask task,
+            Map<Integer, String> suppressMap) {
         ASTHtmlDocument root = new ASTHtmlDocument(doc, task, suppressMap);
         addChildren(root, doc);
 
@@ -31,7 +31,7 @@ final class HtmlTreeBuilder {
 
         return root;
     }
-    
+
     private void addChildren(AbstractHtmlNode<?> parent, Node node) {
         for (Node child : node.childNodes()) {
             AbstractHtmlNode<?> converted = convertJsoupNode(child);

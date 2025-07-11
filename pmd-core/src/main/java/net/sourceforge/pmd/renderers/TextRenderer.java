@@ -25,13 +25,11 @@ public class TextRenderer extends AbstractIncrementingRenderer {
         super(NAME, "Text format.");
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "txt";
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         StringBuilder buf = new StringBuilder();
 
         while (violations.hasNext()) {
@@ -45,8 +43,7 @@ public class TextRenderer extends AbstractIncrementingRenderer {
         }
     }
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         StringBuilder buf = new StringBuilder(500);
 
         for (Report.ProcessingError error : errors) {
@@ -59,10 +56,10 @@ public class TextRenderer extends AbstractIncrementingRenderer {
         for (Report.SuppressedViolation excluded : suppressed) {
             buf.setLength(0);
             buf.append(excluded.getRuleViolation().getRule().getName())
-               .append(" rule violation suppressed by ")
-               .append(excluded.getSuppressor().getId())
-               .append(" in ")
-                .append(determineFileName(excluded.getRuleViolation().getFileId()));
+                    .append(" rule violation suppressed by ")
+                    .append(excluded.getSuppressor().getId())
+                    .append(" in ")
+                    .append(determineFileName(excluded.getRuleViolation().getFileId()));
             writer.println(buf);
         }
 

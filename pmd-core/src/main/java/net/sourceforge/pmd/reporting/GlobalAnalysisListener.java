@@ -50,7 +50,7 @@ public interface GlobalAnalysisListener extends AutoCloseable {
     default ListenerInitializer initializer() {
         return ListenerInitializer.noop();
     }
-    
+
     /**
      * Returns a file listener that will handle events occurring during
      * the analysis of the given file. The new listener may receive events
@@ -81,8 +81,7 @@ public interface GlobalAnalysisListener extends AutoCloseable {
      * @throws Exception If an error occurs. For example, renderer listeners
      *                   may throw {@link IOException}
      */
-    @Override
-    void close() throws Exception;
+    @Override void close() throws Exception;
 
 
     /**
@@ -122,44 +121,39 @@ public interface GlobalAnalysisListener extends AutoCloseable {
             TeeListener(List<GlobalAnalysisListener> myList) {
                 this.myList = myList;
             }
-            
-            @Override
-            public ListenerInitializer initializer() {
+
+            @Override public ListenerInitializer initializer() {
                 return ListenerInitializer.tee(CollectionUtil.map(myList, GlobalAnalysisListener::initializer));
             }
 
-            @Override
-            public FileAnalysisListener startFileAnalysis(TextFile file) {
+            @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
                 return FileAnalysisListener.tee(CollectionUtil.map(myList, it -> it.startFileAnalysis(file)));
             }
 
-            @Override
-            public void close() throws Exception {
+            @Override public void close() throws Exception {
                 Exception composed = IOUtil.closeAll(myList);
                 if (composed != null) {
                     throw composed;
                 }
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "TeeListener{" + myList + '}';
             }
 
-            @Override
-            public void onConfigError(ConfigurationError error) {
+            @Override public void onConfigError(ConfigurationError error) {
                 myList.forEach(l -> l.onConfigError(error));
             }
         }
-        
+
         // Flatten other tee listeners in the list
         // This prevents suppressed exceptions from being chained too deep if they occur in close()
         List<GlobalAnalysisListener> myList =
-            listeners.stream()
-                     .flatMap(l -> l instanceof TeeListener ? ((TeeListener) l).myList.stream() : Stream.of(l))
-                     .filter(l -> !(l instanceof NoopAnalysisListener))
-                     .collect(CollectionUtil.toUnmodifiableList());
-        
+                listeners.stream()
+                        .flatMap(l -> l instanceof TeeListener ? ((TeeListener) l).myList.stream() : Stream.of(l))
+                        .filter(l -> !(l instanceof NoopAnalysisListener))
+                        .collect(CollectionUtil.toUnmodifiableList());
+
         if (myList.isEmpty()) {
             return noop();
         } else if (myList.size() == 1) {
@@ -178,13 +172,11 @@ public interface GlobalAnalysisListener extends AutoCloseable {
 
         private final AtomicInteger count = new AtomicInteger();
 
-        @Override
-        protected Integer getResultImpl() {
+        @Override protected Integer getResultImpl() {
             return count.get();
         }
 
-        @Override
-        public FileAnalysisListener startFileAnalysis(TextFile file) {
+        @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
             return violation -> count.incrementAndGet();
         }
     }
@@ -201,29 +193,24 @@ public interface GlobalAnalysisListener extends AutoCloseable {
     static GlobalAnalysisListener exceptionThrower() {
         class ExceptionThrowingListener implements GlobalAnalysisListener {
 
-            @Override
-            public FileAnalysisListener startFileAnalysis(TextFile file) {
+            @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
                 FileId filename = file.getFileId(); // capture the filename instead of the file
                 return new FileAnalysisListener() {
-                    @Override
-                    public void onRuleViolation(RuleViolation violation) {
+                    @Override public void onRuleViolation(RuleViolation violation) {
                         // do nothing
                     }
 
-                    @Override
-                    public void onError(ProcessingError error) throws FileAnalysisException {
+                    @Override public void onError(ProcessingError error) throws FileAnalysisException {
                         throw FileAnalysisException.wrap(filename, error.getError().getMessage(), error.getError());
                     }
 
-                    @Override
-                    public String toString() {
+                    @Override public String toString() {
                         return "ExceptionThrower";
                     }
                 };
             }
 
-            @Override
-            public void close() {
+            @Override public void close() {
                 // nothing to do
             }
         }

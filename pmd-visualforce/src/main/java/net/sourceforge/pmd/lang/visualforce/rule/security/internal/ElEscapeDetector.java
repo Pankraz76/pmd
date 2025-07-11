@@ -308,7 +308,7 @@ public final class ElEscapeDetector {
     }
 
     public static boolean doesElContainAnyUnescapedIdentifiers(final ASTElExpression elExpression,
-                                                         Set<Escaping> escapes) {
+            Set<Escaping> escapes) {
         if (elExpression == null) {
             return false;
         }
@@ -392,8 +392,7 @@ public final class ElEscapeDetector {
             this.text = text;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return text;
         }
     }

@@ -14,18 +14,17 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 public class AvoidUsingOctalValuesRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<Boolean> STRICT_METHODS_DESCRIPTOR =
-        booleanProperty("strict")
-            .desc("Detect violations between 00 and 07")
-            .defaultValue(false)
-            .build();
+            booleanProperty("strict")
+                    .desc("Detect violations between 00 and 07")
+                    .defaultValue(false)
+                    .build();
 
     public AvoidUsingOctalValuesRule() {
         super(ASTNumericLiteral.class);
         definePropertyDescriptor(STRICT_METHODS_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTNumericLiteral node, Object data) {
+    @Override public Object visit(ASTNumericLiteral node, Object data) {
         if (node.getBase() == 8) {
             if (getProperty(STRICT_METHODS_DESCRIPTOR) || !isBetweenZeroAnd7(node)) {
                 asCtx(data).addViolation(node);

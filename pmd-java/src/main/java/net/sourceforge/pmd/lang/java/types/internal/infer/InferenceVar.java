@@ -54,13 +54,11 @@ public final class InferenceVar implements SubstVar {
         this.id = id;
     }
 
-    @Override
-    public JTypeMirror withAnnotations(PSet<SymAnnot> newTypeAnnots) {
+    @Override public JTypeMirror withAnnotations(PSet<SymAnnot> newTypeAnnots) {
         return this;
     }
 
-    @Override
-    public PSet<SymAnnot> getTypeAnnotations() {
+    @Override public PSet<SymAnnot> getTypeAnnotations() {
         return HashTreePSet.empty();
     }
 
@@ -70,8 +68,7 @@ public final class InferenceVar implements SubstVar {
         return prefix + NAMES.charAt(id % NAMES.length()) + generationNum();
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return ctx.ts;
     }
 
@@ -144,8 +141,7 @@ public final class InferenceVar implements SubstVar {
      * Returns the instantiation of this inference variable if
      * it has already been determined. Returns null otherwise.
      */
-    @Nullable
-    JTypeMirror getInst() {
+    @Nullable JTypeMirror getInst() {
         return boundSet.inst;
     }
 
@@ -199,7 +195,7 @@ public final class InferenceVar implements SubstVar {
 
     public boolean isEquivalentTo(JTypeMirror t) {
         return this == t || t instanceof InferenceVar
-            && ((InferenceVar) t).boundSet == this.boundSet;
+                && ((InferenceVar) t).boundSet == this.boundSet;
     }
 
     public boolean isSubtypeNoSideEffect(@NonNull JTypeMirror other) {
@@ -227,27 +223,23 @@ public final class InferenceVar implements SubstVar {
         ctx.onIvarMerged(candidate, this);
     }
 
-    @Override
-    public @Nullable JTypeDeclSymbol getSymbol() {
+    @Override public @Nullable JTypeDeclSymbol getSymbol() {
         JTypeMirror inst = getInst();
         return inst != null ? inst.getSymbol()
-                            : new InferenceVarSym(ctx.ts, this);
+                : new InferenceVarSym(ctx.ts, this);
     }
 
 
-    @Override
-    public JTypeMirror subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
+    @Override public JTypeMirror subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
         return subst.apply(this);
     }
 
-    @Override
-    public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
+    @Override public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
         return visitor.visitInferenceVar(this, p);
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return TypePrettyPrint.prettyPrint(this);
     }
 
@@ -272,36 +264,30 @@ public final class InferenceVar implements SubstVar {
 
     public enum BoundKind {
         UPPER(" <: ") {
-            @Override
-            public BoundKind complement() {
+            @Override public BoundKind complement() {
                 return LOWER;
             }
 
-            @Override
-            public Set<BoundKind> complementSet(boolean eqIsAll) {
+            @Override public Set<BoundKind> complementSet(boolean eqIsAll) {
                 return EQ_LOWER;
             }
 
         },
         EQ(" = ") {
-            @Override
-            public BoundKind complement() {
+            @Override public BoundKind complement() {
                 return this;
             }
 
-            @Override
-            public Set<BoundKind> complementSet(boolean eqIsAll) {
+            @Override public Set<BoundKind> complementSet(boolean eqIsAll) {
                 return eqIsAll ? ALL : JUST_EQ;
             }
         },
         LOWER(" >: ") {
-            @Override
-            public BoundKind complement() {
+            @Override public BoundKind complement() {
                 return UPPER;
             }
 
-            @Override
-            public Set<BoundKind> complementSet(boolean eqIsAll) {
+            @Override public Set<BoundKind> complementSet(boolean eqIsAll) {
                 return EQ_UPPER;
             }
         };
@@ -344,8 +330,7 @@ public final class InferenceVar implements SubstVar {
             return sym;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return sym;
         }
     }

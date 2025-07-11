@@ -41,14 +41,12 @@ public final class ClassFanOutVisitor extends JavaVisitorBase<Set<JClassSymbol>,
         }
     }
 
-    @Override
-    public Void visitExpression(ASTExpression node, Set<JClassSymbol> data) {
+    @Override public Void visitExpression(ASTExpression node, Set<JClassSymbol> data) {
         check(node, data);
         return visitChildren(node, data);
     }
 
-    @Override
-    public Void visit(ASTClassType node, Set<JClassSymbol> data) {
+    @Override public Void visit(ASTClassType node, Set<JClassSymbol> data) {
         check(node, data);
         return visitChildren(node, data);
     }

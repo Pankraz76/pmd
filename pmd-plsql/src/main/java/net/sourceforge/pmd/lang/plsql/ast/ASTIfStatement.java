@@ -19,8 +19,7 @@ public final class ASTIfStatement extends AbstractPLSQLNode {
         return this.hasElse;
     }
 
-    @Override
-    protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

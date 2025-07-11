@@ -73,7 +73,7 @@ public class InsufficientStringBufferDeclarationRule extends AbstractJavaRulecha
 
 
         public Object[] getParamsForViolation() {
-            return new String[] { getTypeName(variable), String.valueOf(capacity), String.valueOf(anticipatedLength) };
+            return new String[]{getTypeName(variable), String.valueOf(capacity), String.valueOf(anticipatedLength)};
         }
 
 
@@ -111,14 +111,12 @@ public class InsufficientStringBufferDeclarationRule extends AbstractJavaRulecha
             branches.clear();
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "State[capacity=" + capacity + ",anticipatedLength=" + anticipatedLength + "]";
         }
     }
 
-    @Override
-    public Object visit(ASTVariableId node, Object data) {
+    @Override public Object visit(ASTVariableId node, Object data) {
         if (!TypeTestUtil.isA(StringBuilder.class, node) && !TypeTestUtil.isA(StringBuffer.class, node)) {
             return data;
         }
@@ -167,7 +165,7 @@ public class InsufficientStringBufferDeclarationRule extends AbstractJavaRulecha
                     counter += ((ASTStringLiteral) literal).length();
                 } else if (literal instanceof ASTNumericLiteral) {
                     if (literal.getParent() instanceof ASTCastExpression
-                        && TypeTestUtil.isA(char.class, (ASTCastExpression) literal.getParent())) {
+                            && TypeTestUtil.isA(char.class, (ASTCastExpression) literal.getParent())) {
                         counter += 1;
                     } else {
                         counter += String.valueOf(((ASTNumericLiteral) literal).getConstValue()).length();
@@ -176,7 +174,7 @@ public class InsufficientStringBufferDeclarationRule extends AbstractJavaRulecha
                     counter += 1;
                 }
             }
-    
+
             ASTIfStatement ifStatement = methodCall.ancestors(ASTIfStatement.class).first();
             ASTSwitchStatement switchStatement = methodCall.ancestors(ASTSwitchStatement.class).first();
             if (ifStatement != null) {

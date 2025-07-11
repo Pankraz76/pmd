@@ -107,10 +107,10 @@ public final class Infer {
     /** Site for a nested poly expr. */
     // package
     MethodCallSite newCallSite(InvocationMirror expr,
-                               @Nullable JTypeMirror expectedType,
-                               @Nullable MethodCallSite outerSite,
-                               @Nullable InferenceContext outerCtx,
-                               boolean isSpecificityCheck) {
+            @Nullable JTypeMirror expectedType,
+            @Nullable MethodCallSite outerSite,
+            @Nullable InferenceContext outerCtx,
+            boolean isSpecificityCheck) {
         return new MethodCallSite(expr, expectedType, outerSite, outerCtx != null ? outerCtx : emptyContext(), isSpecificityCheck);
     }
 
@@ -118,8 +118,7 @@ public final class Infer {
         return newContextFor(Collections.emptyList());
     }
 
-    @NonNull
-    InferenceContext newContextFor(JMethodSig m) {
+    @NonNull InferenceContext newContextFor(JMethodSig m) {
         return newContextFor(m.getTypeParameters());
     }
 
@@ -320,7 +319,7 @@ public final class Infer {
             if (applicable.nonEmpty()) {
                 MethodCtDecl bestApplicable = applicable.getMostSpecificOrLogAmbiguity(LOG);
                 JMethodSig adapted = ExprOps.adaptGetClass(bestApplicable.getMethodType(),
-                                                           site.getExpr()::getErasedReceiverType);
+                        site.getExpr()::getErasedReceiverType);
                 return bestApplicable.withMethod(adapted);
             }
         }
@@ -351,17 +350,17 @@ public final class Infer {
         // to instantiate all tvars
 
         return logInference(site,
-                            ctdecl.getResolvePhase().asInvoc(),
-                            cast(ctdecl.getMethodType()).adaptedMethod());
+                ctdecl.getResolvePhase().asInvoc(),
+                cast(ctdecl.getMethodType()).adaptedMethod());
     }
 
     // this is skipped when running without assertions
     private boolean assertReturnIsGround(JMethodSig t) {
         subst(t.getReturnType(), var -> {
             assert !(var instanceof InferenceVar)
-                : "Expected a ground type " + t;
+                    : "Expected a ground type " + t;
             assert !(var instanceof JTypeVar) || !t.getTypeParameters().contains(var)
-                : "Some type parameters have not been instantiated";
+                    : "Some type parameters have not been instantiated";
             return var;
         });
         return true;
@@ -377,18 +376,18 @@ public final class Infer {
             return FAILED_INVOCATION;
         } else {
             return new MethodCtDecl(candidate,
-                                    phase,
-                                    site.canSkipInvocation(),
+                    phase,
+                    site.canSkipInvocation(),
                     OptionalBool.definitely(site.needsUncheckedConversion()),
-                                    false,
-                                    site.getExpr());
+                    false,
+                    site.getExpr());
         }
     }
 
 
     private @Nullable JMethodSig instantiateMethodOrCtor(MethodCallSite site, MethodResolutionPhase phase, JMethodSig m) {
         return site.getExpr() instanceof CtorInvocationMirror ? instantiateConstructor(m, site, phase)
-                                                              : instantiateMethod(m, site, phase);
+                : instantiateMethod(m, site, phase);
     }
 
 
@@ -402,8 +401,8 @@ public final class Infer {
      * @param phase Phase in which the method is reviewed
      */
     private @Nullable JMethodSig instantiateMethod(JMethodSig m,
-                                                   MethodCallSite site,
-                                                   MethodResolutionPhase phase) {
+            MethodCallSite site,
+            MethodResolutionPhase phase) {
         if (phase.requiresVarargs() && !m.isVarargs()) {
             return null; // don't log such a dumb mistake
         }
@@ -418,8 +417,8 @@ public final class Infer {
     }
 
     private @Nullable JMethodSig instantiateConstructor(JMethodSig cons,
-                                                        MethodCallSite site,
-                                                        MethodResolutionPhase phase) {
+            MethodCallSite site,
+            MethodResolutionPhase phase) {
 
         CtorInvocationMirror expr = (CtorInvocationMirror) site.getExpr();
 
@@ -434,8 +433,8 @@ public final class Infer {
         JClassType newType = (JClassType) newTypeMaybeInvalid;
         boolean isAdapted = needsAdaptation(expr, newType);
         JMethodSig adapted = isAdapted
-                             ? adaptGenericConstructor(cons, newType, expr)
-                             : cons;
+                ? adaptGenericConstructor(cons, newType, expr)
+                : cons;
 
         site.maySkipInvocation(!isAdapted);
 
@@ -457,8 +456,8 @@ public final class Infer {
 
     private boolean needsAdaptation(CtorInvocationMirror expr, JClassType newType) {
         return expr.isDiamond()
-            || newType.isParameterizedType() // ???
-            || expr.isAnonymous();
+                || newType.isParameterizedType() // ???
+                || expr.isAnonymous();
     }
 
     /**
@@ -672,10 +671,10 @@ public final class Infer {
 
     private boolean shouldPropagateOutwards(JTypeMirror resultType, MethodCallSite target, InferenceContext inferenceContext) {
         return !isPreJava8
-            && !target.getOuterCtx().isEmpty()  //enclosing context is a generic method
-            && !inferenceContext.isGround(resultType)   //return type contains inference vars
-            && !(resultType instanceof InferenceVar    //no eager instantiation is required (as per 18.5.2)
-            && needsEagerInstantiation((InferenceVar) resultType, target.getExpectedType(), inferenceContext));
+                && !target.getOuterCtx().isEmpty()  //enclosing context is a generic method
+                && !inferenceContext.isGround(resultType)   //return type contains inference vars
+                && !(resultType instanceof InferenceVar    //no eager instantiation is required (as per 18.5.2)
+                && needsEagerInstantiation((InferenceVar) resultType, target.getExpectedType(), inferenceContext));
     }
 
     /**
@@ -787,9 +786,9 @@ public final class Infer {
             for (JTypeMirror aLowerBound : alpha.getBounds(BoundKind.LOWER)) {
                 for (JTypeMirror anotherLowerBound : alpha.getBounds(BoundKind.LOWER)) {
                     if (aLowerBound != anotherLowerBound
-                        && infCtx.isGround(aLowerBound)
-                        && infCtx.isGround(anotherLowerBound)
-                        && commonSuperWithDiffParameterization(aLowerBound, anotherLowerBound)) {
+                            && infCtx.isGround(aLowerBound)
+                            && infCtx.isGround(anotherLowerBound)
+                            && commonSuperWithDiffParameterization(aLowerBound, anotherLowerBound)) {
                         return true;
                     }
                 }
@@ -873,8 +872,7 @@ public final class Infer {
 
         List<JTypeMirror> fs = m.getFormalParameters();
 
-        @Nullable
-        JArrayType varargsParam = varargsRequired && m.isVarargs() ? (JArrayType) fs.get(fs.size() - 1) : null;
+        @Nullable JArrayType varargsParam = varargsRequired && m.isVarargs() ? (JArrayType) fs.get(fs.size() - 1) : null;
         int lastP = varargsParam == null ? fs.size() : fs.size() - 1;
 
         List<ExprMirror> args = expr.getArgumentExpressions();
@@ -935,7 +933,7 @@ public final class Infer {
      */
     private void addBoundOrDefer(@Nullable MethodCallSite site, InferenceContext infCtx, MethodResolutionPhase phase, @NonNull ExprMirror arg, @NonNull JTypeMirror formalType) {
         ExprChecker exprChecker =
-            (ctx, exprType, formalType1) -> checkConvertibleOrDefer(ctx, exprType, formalType1, arg, phase, site);
+                (ctx, exprType, formalType1) -> checkConvertibleOrDefer(ctx, exprType, formalType1, arg, phase, site);
 
         ExprCheckHelper helper = new ExprCheckHelper(infCtx, phase, exprChecker, site, this);
         if (!helper.isCompatible(formalType, arg)) {
@@ -1018,8 +1016,8 @@ public final class Infer {
     private boolean isPotentiallyApplicable(JMethodSig m, InvocationMirror expr) {
 
         if (m.isGeneric()
-            && !expr.getExplicitTypeArguments().isEmpty()
-            && expr.getExplicitTypeArguments().size() != m.getTypeParameters().size()) {
+                && !expr.getExplicitTypeArguments().isEmpty()
+                && expr.getExplicitTypeArguments().size() != m.getTypeParameters().size()) {
             return false;
         }
 
@@ -1063,7 +1061,7 @@ public final class Infer {
                 JArrayType t = (JArrayType) fs.get(varargIdx);
 
                 return exprOps.isPotentiallyCompatible(m, last, t)
-                    || exprOps.isPotentiallyCompatible(m, last, t.getComponentType());
+                        || exprOps.isPotentiallyCompatible(m, last, t.getComponentType());
             }
 
             if (args.size() > fs.size()) {

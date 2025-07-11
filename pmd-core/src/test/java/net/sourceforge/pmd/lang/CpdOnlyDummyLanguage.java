@@ -20,15 +20,14 @@ public class CpdOnlyDummyLanguage extends CpdOnlyLanguageModuleBase {
 
     public CpdOnlyDummyLanguage() {
         super(LanguageMetadata.withId(TERSE_NAME).name(NAME).extensions("dummy", "txt")
-                              .addDefaultVersion("1.7", "7"));
+                .addDefaultVersion("1.7", "7"));
     }
 
     public static CpdOnlyDummyLanguage getInstance() {
         return (CpdOnlyDummyLanguage) Objects.requireNonNull(LanguageRegistry.CPD.getLanguageByFullName(NAME));
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new AnyCpdLexer();
     }
 }

@@ -27,8 +27,7 @@ public class ASTHtmlElement extends AbstractHtmlNode<Element> {
         }
     }
 
-    @Override
-    protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -49,19 +48,16 @@ public class ASTHtmlElement extends AbstractHtmlNode<Element> {
                 .orElse(null);
     }
 
-    @Override
-    public Iterator<Attribute> getXPathAttributesIterator() {
+    @Override public Iterator<Attribute> getXPathAttributesIterator() {
         Iterator<Attribute> defaultAttributes = super.getXPathAttributesIterator();
         Iterator<Attribute> elementAttributes = attributes.iterator();
 
         return new Iterator<Attribute>() {
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return defaultAttributes.hasNext() || elementAttributes.hasNext();
             }
 
-            @Override
-            public Attribute next() {
+            @Override public Attribute next() {
                 if (defaultAttributes.hasNext()) {
                     return defaultAttributes.next();
                 }

@@ -19,27 +19,24 @@ import net.sourceforge.pmd.lang.jsp.ast.AbstractJspNodesTst;
 
 class LanguageVersionDiscovererTest extends AbstractJspNodesTst {
 
-    @Test
-    void testParseJsp() {
+    @Test void testParseJsp() {
         testLanguageIsJsp("sample.jsp");
         testLanguageIsJsp("sample.jspx");
     }
 
-    @Test
-    void testTag() {
+    @Test void testTag() {
         testLanguageIsJsp("sample.tag");
     }
 
 
     private void testLanguageIsJsp(String first) {
         assertEquals(jsp.getLanguage().getDefaultVersion(),
-                                getLanguageVersion(Paths.get(first)));
+                getLanguageVersion(Paths.get(first)));
     }
 
-    @Test
-    void testParseWrong() {
+    @Test void testParseWrong() {
         assertNotEquals(jsp.getLanguage().getDefaultVersion(),
-                                getLanguageVersion(Paths.get("sample.xxx")));
+                getLanguageVersion(Paths.get("sample.xxx")));
     }
 
     private LanguageVersion getLanguageVersion(Path jspFile) {

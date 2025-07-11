@@ -14,13 +14,11 @@ import net.sourceforge.pmd.lang.apex.rule.AbstractApexRule;
 
 public class AvoidGlobalModifierRule extends AbstractApexRule {
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         return checkForGlobal(node, data);
     }
 
-    @Override
-    public Object visit(ASTUserInterface node, Object data) {
+    @Override public Object visit(ASTUserInterface node, Object data) {
         return checkForGlobal(node, data);
     }
 

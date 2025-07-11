@@ -69,8 +69,7 @@ public final class ASTAmbiguousName extends AbstractJavaExpr implements ASTRefer
         super(id);
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         if (getFirstToken() == getLastToken()) {
             return getFirstToken().getImage();
         }
@@ -94,8 +93,7 @@ public final class ASTAmbiguousName extends AbstractJavaExpr implements ASTRefer
         this.wasProcessed = true;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -156,7 +154,7 @@ public final class ASTAmbiguousName extends AbstractJavaExpr implements ASTRefer
      * @return The node that will replace this one.
      */
     private <T extends AbstractJavaNode> T shrinkOneSegment(Function<ASTAmbiguousName, T> simpleNameHandler,
-                                                            BiFunction<ASTAmbiguousName, String, T> splitNameConsumer) {
+            BiFunction<ASTAmbiguousName, String, T> splitNameConsumer) {
 
         JavaccToken lastToken = getLastToken();
         JavaccToken firstToken = getFirstToken();
@@ -201,26 +199,26 @@ public final class ASTAmbiguousName extends AbstractJavaExpr implements ASTRefer
         // but if we use them instead of this, we avoid capturing the
         // this reference and the lambdas can be optimised to a singleton
         shrinkOneSegment(
-            simpleName -> {
-                String simpleNameImage = simpleName.getFirstToken().getImage();
-                AbstractJavaNode parent = (AbstractJavaNode) simpleName.getParent();
-                if (parent instanceof ASTClassType) {
-                    ((ASTClassType) parent).setSimpleName(simpleNameImage);
-                } else {
-                    parent.setImage(simpleNameImage);
+                simpleName -> {
+                    String simpleNameImage = simpleName.getFirstToken().getImage();
+                    AbstractJavaNode parent = (AbstractJavaNode) simpleName.getParent();
+                    if (parent instanceof ASTClassType) {
+                        ((ASTClassType) parent).setSimpleName(simpleNameImage);
+                    } else {
+                        parent.setImage(simpleNameImage);
+                    }
+                    parent.removeChildAtIndex(simpleName.getIndexInParent());
+                    return null;
+                },
+                (ambig, simpleName) -> {
+                    AbstractJavaNode parent = (AbstractJavaNode) ambig.getParent();
+                    if (parent instanceof ASTClassType) {
+                        ((ASTClassType) parent).setSimpleName(simpleName);
+                    } else {
+                        parent.setImage(simpleName);
+                    }
+                    return null;
                 }
-                parent.removeChildAtIndex(simpleName.getIndexInParent());
-                return null;
-            },
-            (ambig, simpleName) -> {
-                AbstractJavaNode parent = (AbstractJavaNode) ambig.getParent();
-                if (parent instanceof ASTClassType) {
-                    ((ASTClassType) parent).setSimpleName(simpleName);
-                } else {
-                    parent.setImage(simpleName);
-                }
-                return null;
-            }
         );
     }
 }

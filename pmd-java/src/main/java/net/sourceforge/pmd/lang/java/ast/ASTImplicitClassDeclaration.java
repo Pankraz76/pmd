@@ -27,13 +27,11 @@ public final class ASTImplicitClassDeclaration extends AbstractTypeDeclaration {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public @NonNull String getSimpleName() {
+    @Override public @NonNull String getSimpleName() {
         return "";
     }
 }

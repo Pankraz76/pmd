@@ -87,8 +87,7 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
         this.names = new Names(internalName);
 
         this.parseLock = new CheckedParseLock("ClassStub:" + internalName) {
-            @Override
-            protected boolean doParse() throws IOException {
+            @Override protected boolean doParse() throws IOException {
                 try (InputStream instream = loader.getInputStream()) {
                     if (instream != null) {
                         ClassReader classReader = new ClassReader(instream);
@@ -104,8 +103,7 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
                 }
             }
 
-            @Override
-            protected void finishParse(boolean failed) {
+            @Override protected void finishParse(boolean failed) {
                 if (enclosingInfo == null) {
                     // this may be normal
                     enclosingInfo = EnclosingInfo.NO_ENCLOSING;
@@ -133,23 +131,21 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
                 }
             }
 
-            @Override
-            protected boolean postCondition() {
+            @Override protected boolean postCondition() {
                 return signature != null && enclosingInfo != null && names.simpleName != null;
             }
         };
     }
 
-    @Override
-    public AsmSymbolResolver getResolver() {
+    @Override public AsmSymbolResolver getResolver() {
         return resolver;
     }
 
     // <editor-fold  defaultstate="collapsed" desc="Setters used during loading">
 
     void setHeader(@Nullable String signature,
-                   @Nullable String superName,
-                   String[] interfaces) {
+            @Nullable String superName,
+            String[] interfaces) {
         this.signature = new LazyClassSignature(this, signature, superName, interfaces);
     }
 
@@ -203,7 +199,7 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
             // with ACC_SYNCHRONIZED
             accessFlags = accessFlags & ~Opcodes.ACC_SUPER;
         } else if ((myAccess & Opcodes.ACC_PUBLIC) != 0
-            && (accessFlags & visibilityMask) != Opcodes.ACC_PUBLIC) {
+                && (accessFlags & visibilityMask) != Opcodes.ACC_PUBLIC) {
             // ClassInfo mentions ACC_PUBLIC even if the real
             // visibility is protected or private
             // We remove the public to avoid a "public protected" or "public private" combination
@@ -229,7 +225,7 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
         if (enclosingInfo == null) {
             if (outer == null) {
                 assert methodName == null && methodDescriptor == null
-                    : "Enclosing method requires enclosing class";
+                        : "Enclosing method requires enclosing class";
                 this.enclosingInfo = EnclosingInfo.NO_ENCLOSING;
             } else {
                 this.enclosingInfo = new EnclosingInfo(outer, localOrAnon, methodName, methodDescriptor);
@@ -272,8 +268,7 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
         this.permittedSubclasses.add(permittedSubclass);
     }
 
-    @Override
-    public void addAnnotation(SymAnnot annot) {
+    @Override public void addAnnotation(SymAnnot annot) {
         annotations = annotations.plus(annot);
     }
 
@@ -281,95 +276,81 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
     // </editor-fold>
 
 
-    @Override
-    public @Nullable JClassSymbol getSuperclass() {
+    @Override public @Nullable JClassSymbol getSuperclass() {
         parseLock.ensureParsed();
         return signature.getRawSuper();
     }
 
-    @Override
-    public List<JClassSymbol> getSuperInterfaces() {
+    @Override public List<JClassSymbol> getSuperInterfaces() {
         parseLock.ensureParsed();
         return signature.getRawItfs();
     }
 
-    @Override
-    public @Nullable JClassType getSuperclassType(Substitution substitution) {
+    @Override public @Nullable JClassType getSuperclassType(Substitution substitution) {
         parseLock.ensureParsed();
         return signature.getSuperType(substitution);
     }
 
-    @Override
-    public List<JClassType> getSuperInterfaceTypes(Substitution substitution) {
+    @Override public List<JClassType> getSuperInterfaceTypes(Substitution substitution) {
         parseLock.ensureParsed();
         return signature.getSuperItfs(substitution);
     }
 
-    @Override
-    public List<JTypeVar> getTypeParameters() {
+    @Override public List<JTypeVar> getTypeParameters() {
         parseLock.ensureParsed();
         return signature.getTypeParams();
     }
 
-    @Override
-    public int getTypeParameterCount() {
+    @Override public int getTypeParameterCount() {
         parseLock.ensureParsed();
         return signature.getTypeParameterCount();
     }
 
-    @Override
-    public LexicalScope getLexicalScope() {
+    @Override public LexicalScope getLexicalScope() {
         if (scope == null) {
             scope = JClassSymbol.super.getLexicalScope();
         }
         return scope;
     }
 
-    @Override
-    public List<JFieldSymbol> getDeclaredFields() {
+    @Override public List<JFieldSymbol> getDeclaredFields() {
         parseLock.ensureParsed();
         return fields;
     }
 
-    @Override
-    public List<JMethodSymbol> getDeclaredMethods() {
+    @Override public List<JMethodSymbol> getDeclaredMethods() {
         parseLock.ensureParsed();
         return methods;
     }
 
-    @Override
-    public List<JConstructorSymbol> getConstructors() {
+    @Override public List<JConstructorSymbol> getConstructors() {
         parseLock.ensureParsed();
         return ctors;
     }
 
-    @Override
-    public List<JClassSymbol> getDeclaredClasses() {
+    @Override public List<JClassSymbol> getDeclaredClasses() {
         parseLock.ensureParsed();
         return memberClasses;
     }
 
-    @Override
-    public PSet<SymAnnot> getDeclaredAnnotations() {
+    @Override public PSet<SymAnnot> getDeclaredAnnotations() {
         parseLock.ensureParsed();
         return annotations;
     }
 
-    @Override
-    public PSet<String> getAnnotationAttributeNames() {
+    @Override public PSet<String> getAnnotationAttributeNames() {
         if (annotAttributes == null) {
             parseLock.ensureParsed();
             annotAttributes = isAnnotation()
-                              ? getDeclaredMethods().stream().filter(JMethodSymbol::isAnnotationAttribute)
-                                                    .map(JElementSymbol::getSimpleName)
-                                                    .collect(CollectionUtil.toPersistentSet())
-                              : HashTreePSet.empty();
+                    ? getDeclaredMethods().stream().filter(JMethodSymbol::isAnnotationAttribute)
+                    .map(JElementSymbol::getSimpleName)
+                    .collect(CollectionUtil.toPersistentSet())
+                    : HashTreePSet.empty();
         }
         return annotAttributes;
     }
 
-    @Override
-    public @Nullable SymbolicValue getDefaultAnnotationAttributeValue(String attrName) {
+    @Override public @Nullable SymbolicValue getDefaultAnnotationAttributeValue(String attrName) {
         parseLock.ensureParsed();
         if (!getAnnotationAttributeNames().contains(attrName)) {
             // this is a shortcut, because the default impl checks each method
@@ -378,58 +359,49 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
         return JClassSymbol.super.getDefaultAnnotationAttributeValue(attrName);
     }
 
-    @Override
-    public @Nullable JClassSymbol getEnclosingClass() {
+    @Override public @Nullable JClassSymbol getEnclosingClass() {
         parseLock.ensureParsed();
         return enclosingInfo.getEnclosingClass();
     }
 
-    @Override
-    public @Nullable JExecutableSymbol getEnclosingMethod() {
+    @Override public @Nullable JExecutableSymbol getEnclosingMethod() {
         parseLock.ensureParsed();
         return enclosingInfo.getEnclosingMethod();
     }
 
-    @Override
-    public @NonNull List<JFieldSymbol> getEnumConstants() {
+    @Override public @NonNull List<JFieldSymbol> getEnumConstants() {
         parseLock.ensureParsed();
         return enumConstants;
     }
 
 
-    @Override
-    public @NonNull List<JRecordComponentSymbol> getRecordComponents() {
+    @Override public @NonNull List<JRecordComponentSymbol> getRecordComponents() {
         parseLock.ensureParsed();
         return recordComponents;
     }
 
 
-    @Override
-    public List<JClassSymbol> getPermittedSubtypes() {
+    @Override public List<JClassSymbol> getPermittedSubtypes() {
         parseLock.ensureParsed();
         return permittedSubclasses;
     }
 
-    @Override
-    public JTypeParameterOwnerSymbol getEnclosingTypeParameterOwner() {
+    @Override public JTypeParameterOwnerSymbol getEnclosingTypeParameterOwner() {
         parseLock.ensureParsed();
         return enclosingInfo.getEnclosing();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         // do not use SymbolToString as it triggers the class parsing,
         // making tests undebuggable
         return getInternalName();
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.CLASS.hash(this);
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         return SymbolEquality.CLASS.equals(this, obj);
     }
 
@@ -443,8 +415,7 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
         return names;
     }
 
-    @Override
-    public @NonNull String getBinaryName() {
+    @Override public @NonNull String getBinaryName() {
         return getNames().binaryName;
     }
 
@@ -455,8 +426,7 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
         return getCanonicalName() != null;
     }
 
-    @Override
-    public @Nullable String getCanonicalName() {
+    @Override public @Nullable String getCanonicalName() {
         @Nullable String canoName = names.canonicalName;
         if (canoName == null) {
             canoName = computeCanonicalName();
@@ -489,13 +459,11 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
         return outerName + '.' + names.simpleName;
     }
 
-    @Override
-    public @NonNull String getPackageName() {
+    @Override public @NonNull String getPackageName() {
         return getNames().packageName;
     }
 
-    @Override
-    public @NonNull String getSimpleName() {
+    @Override public @NonNull String getSimpleName() {
         String mySimpleName = names.simpleName;
         if (mySimpleName == null) {
             parseLock.ensureParsed();
@@ -504,8 +472,7 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
         return mySimpleName;
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return getResolver().getTypeSystem();
     }
 
@@ -514,71 +481,58 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
     // <editor-fold  defaultstate="collapsed" desc="Modifier info">
 
 
-    @Override
-    public boolean isUnresolved() {
+    @Override public boolean isUnresolved() {
         return parseLock.isFailed();
     }
 
-    @Override
-    public boolean isArray() {
+    @Override public boolean isArray() {
         return false;
     }
 
-    @Override
-    public boolean isPrimitive() {
+    @Override public boolean isPrimitive() {
         return false;
     }
 
-    @Override
-    public @Nullable JTypeDeclSymbol getArrayComponent() {
+    @Override public @Nullable JTypeDeclSymbol getArrayComponent() {
         return null;
     }
 
-    @Override
-    public int getModifiers() {
+    @Override public int getModifiers() {
         parseLock.ensureParsed();
         return accessFlags;
     }
 
-    @Override
-    public boolean isAbstract() {
+    @Override public boolean isAbstract() {
         return (getModifiers() & Opcodes.ACC_ABSTRACT) != 0;
     }
 
-    @Override
-    public boolean isEnum() {
+    @Override public boolean isEnum() {
         return (getModifiers() & Opcodes.ACC_ENUM) != 0;
     }
 
-    @Override
-    public boolean isAnnotation() {
+    @Override public boolean isAnnotation() {
         return (getModifiers() & Opcodes.ACC_ANNOTATION) != 0;
     }
 
-    @Override
-    public boolean isInterface() {
+    @Override public boolean isInterface() {
         return (getModifiers() & Opcodes.ACC_INTERFACE) != 0;
     }
 
-    @Override
-    public boolean isClass() {
+    @Override public boolean isClass() {
         return (getModifiers() & (Opcodes.ACC_INTERFACE | Opcodes.ACC_ANNOTATION)) == 0;
     }
 
-    @Override
-    public boolean isRecord() {
+    @Override public boolean isRecord() {
         JClassSymbol sup = getSuperclass();
         return sup != null && "java.lang.Record".equals(sup.getBinaryName());
     }
 
-    @Override
-    public boolean isLocalClass() {
+    @Override public boolean isLocalClass() {
         parseLock.ensureParsed();
         return enclosingInfo.isLocalOrAnon() && !isAnonymousClass();
     }
 
-    @Override
-    public boolean isAnonymousClass() {
+    @Override public boolean isAnonymousClass() {
         return getSimpleName().isEmpty();
     }
 
@@ -694,8 +648,7 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
             }
         }
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             if (this == o) {
                 return true;
             }
@@ -704,13 +657,12 @@ final class ClassStub implements JClassSymbol, AsmStub, AnnotationOwner {
             }
             EnclosingInfo that = (EnclosingInfo) o;
             return Objects.equals(stub, that.stub)
-                && isLocalOrAnon == that.isLocalOrAnon
-                && Objects.equals(methodName, that.methodName)
-                && Objects.equals(methodDescriptor, that.methodDescriptor);
+                    && isLocalOrAnon == that.isLocalOrAnon
+                    && Objects.equals(methodName, that.methodName)
+                    && Objects.equals(methodDescriptor, that.methodDescriptor);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return Objects.hash(stub, isLocalOrAnon, methodName, methodDescriptor);
         }
     }

@@ -12,33 +12,28 @@ import org.junit.jupiter.api.Test;
 
 class ASTUserClassTest extends ApexParserTestBase {
 
-    @Test
-    void testClassName() {
+    @Test void testClassName() {
         ASTUserClass node = (ASTUserClass) parse("class Foo { }");
         assertEquals("Foo", node.getSimpleName());
     }
 
-    @Test
-    void testInnerClassName() {
+    @Test void testInnerClassName() {
         ASTUserClass foo = (ASTUserClass) parse("class Foo { class Bar { } }");
         ASTUserClass innerNode = foo.descendants(ASTUserClass.class).firstOrThrow();
         assertEquals("Bar", innerNode.getSimpleName());
     }
 
-    @Test
-    void testSuperClassName() {
+    @Test void testSuperClassName() {
         ASTUserClass toplevel = (ASTUserClass) parse("public class AccountTriggerHandler extends TriggerHandler {}");
         assertEquals("TriggerHandler", toplevel.getSuperClassName());
     }
 
-    @Test
-    void testSuperClassName2() {
+    @Test void testSuperClassName2() {
         ASTUserClass toplevel = (ASTUserClass) parse("public class AccountTriggerHandler extends Other.TriggerHandler {}");
         assertEquals("Other.TriggerHandler", toplevel.getSuperClassName());
     }
 
-    @Test
-    void testInterfaces() {
+    @Test void testInterfaces() {
         ASTUserClass toplevel = (ASTUserClass) parse("public class AccountTriggerHandler implements TriggerHandler, Other.Interface2 {}");
         assertEquals(Arrays.asList("TriggerHandler", "Other.Interface2"), toplevel.getInterfaceNames());
     }

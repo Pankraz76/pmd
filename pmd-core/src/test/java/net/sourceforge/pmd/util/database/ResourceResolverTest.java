@@ -19,8 +19,7 @@ class ResourceResolverTest {
     /**
      * Test of resolve method, of class ResourceResolver.
      */
-    @Test
-    void testResolve() throws Exception {
+    @Test void testResolve() throws Exception {
         System.out.println("resolve");
         String href = "";
         String base = "";

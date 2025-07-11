@@ -32,9 +32,9 @@ public final class PlainTextLanguage extends SimpleLanguageModuleBase implements
 
     private PlainTextLanguage() {
         super(LanguageMetadata.withId(ID).name("Plain text")
-                              .extensions("plain-text-file-goo-extension")
-                              .addDefaultVersion("default"),
-              new TextLvh());
+                        .extensions("plain-text-file-goo-extension")
+                        .addDefaultVersion("default"),
+                new TextLvh());
     }
 
     /**
@@ -44,14 +44,12 @@ public final class PlainTextLanguage extends SimpleLanguageModuleBase implements
         return INSTANCE; // note: this language is _not_ exposed via LanguageRegistry (no entry in META-INF/services)
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new AnyCpdLexer();
     }
 
     private static final class TextLvh implements LanguageVersionHandler {
-        @Override
-        public Parser getParser() {
+        @Override public Parser getParser() {
             return PlainTextFile::new;
         }
     }
@@ -68,28 +66,23 @@ public final class PlainTextLanguage extends SimpleLanguageModuleBase implements
             this.astInfo = new AstInfo<>(task, this);
         }
 
-        @Override
-        public TextRegion getTextRegion() {
+        @Override public TextRegion getTextRegion() {
             return getTextDocument().getEntireRegion();
         }
 
-        @Override
-        public String getXPathNodeName() {
+        @Override public String getXPathNodeName() {
             return "TextFile";
         }
 
-        @Override
-        public String getImage() {
+        @Override public String getImage() {
             return null;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "Plain text file (" + getEndLine() + " lines)";
         }
 
-        @Override
-        public AstInfo<? extends RootNode> getAstInfo() {
+        @Override public AstInfo<? extends RootNode> getAstInfo() {
             return astInfo;
         }
     }

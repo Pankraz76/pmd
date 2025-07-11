@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
  */
 class SourceCodePositionerTest {
 
-    @Test
-    void testLineNumberFromOffset() {
+    @Test void testLineNumberFromOffset() {
         final String source = "abcd\ndefghi\n\rjklmn\ropq";
 
         SourceCodePositioner positioner = SourceCodePositioner.create(source);
@@ -47,8 +46,7 @@ class SourceCodePositionerTest {
         assertEquals(-1, positioner.columnFromOffset(3, offset));
     }
 
-    @Test
-    void testOffsetFromLineColumn() {
+    @Test void testOffsetFromLineColumn() {
         final String source = "abcd\ndefghi\r\njklmn\nopq";
 
         SourceCodePositioner positioner = SourceCodePositioner.create(source);
@@ -70,8 +68,7 @@ class SourceCodePositionerTest {
     }
 
 
-    @Test
-    void testWrongOffsets() {
+    @Test void testWrongOffsets() {
         final String source = "abcd\ndefghi\r\njklmn\nopq";
 
         SourceCodePositioner positioner = SourceCodePositioner.create(source);
@@ -88,8 +85,7 @@ class SourceCodePositionerTest {
     }
 
 
-    @Test
-    void testEmptyDocument() {
+    @Test void testEmptyDocument() {
 
         SourceCodePositioner positioner = SourceCodePositioner.create("");
 
@@ -104,8 +100,7 @@ class SourceCodePositionerTest {
 
     }
 
-    @Test
-    void testDocumentStartingWithNl() {
+    @Test void testDocumentStartingWithNl() {
 
         SourceCodePositioner positioner = SourceCodePositioner.create("\n");
 
@@ -120,37 +115,34 @@ class SourceCodePositionerTest {
     }
 
 
-    @Test
-    void lineToOffsetMappingWithLineFeedShouldSucceed() {
+    @Test void lineToOffsetMappingWithLineFeedShouldSucceed() {
         final String code = "public static int main(String[] args) {\n"
-            + "int var;\n"
-            + "}";
+                + "int var;\n"
+                + "}";
 
         SourceCodePositioner positioner = SourceCodePositioner.create(code);
 
-        assertArrayEquals(new int[] { 0, 40, 49, 50 }, positioner.getLineOffsets());
+        assertArrayEquals(new int[]{0, 40, 49, 50}, positioner.getLineOffsets());
     }
 
-    @Test
-    void lineToOffsetMappingWithCarriageReturnFeedLineFeedShouldSucceed() {
+    @Test void lineToOffsetMappingWithCarriageReturnFeedLineFeedShouldSucceed() {
         final String code = "public static int main(String[] args) {\r\n"
-            + "int var;\r\n"
-            + "}";
+                + "int var;\r\n"
+                + "}";
 
         SourceCodePositioner positioner = SourceCodePositioner.create(code);
 
-        assertArrayEquals(new int[] { 0, 41, 51, 52 }, positioner.getLineOffsets());
+        assertArrayEquals(new int[]{0, 41, 51, 52}, positioner.getLineOffsets());
     }
 
-    @Test
-    void lineToOffsetMappingWithMixedLineSeparatorsShouldSucceed() {
+    @Test void lineToOffsetMappingWithMixedLineSeparatorsShouldSucceed() {
         final String code = "public static int main(String[] args) {\r\n"
-            + "int var;\n"
-            + "}";
+                + "int var;\n"
+                + "}";
 
         SourceCodePositioner positioner = SourceCodePositioner.create(code);
 
-        assertArrayEquals(new int[] { 0, 41, 50, 51 }, positioner.getLineOffsets());
+        assertArrayEquals(new int[]{0, 41, 50, 51}, positioner.getLineOffsets());
     }
 
 }

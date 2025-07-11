@@ -14,8 +14,8 @@ import net.sourceforge.pmd.lang.java.types.JTypeMirror;
 import net.sourceforge.pmd.lang.java.types.JTypeVar;
 
 final class AstTypeParamSym
-    extends AbstractAstAnnotableSym<ASTTypeParameter>
-    implements JTypeParameterSymbol {
+        extends AbstractAstAnnotableSym<ASTTypeParameter>
+        implements JTypeParameterSymbol {
 
     private final JTypeVar tvar;
     private final AbstractAstTParamOwner<?> owner;
@@ -26,26 +26,21 @@ final class AstTypeParamSym
         this.tvar = factory.types().newTypeVar(this);
     }
 
-    @Override
-    public JTypeVar getTypeMirror() {
+    @Override public JTypeVar getTypeMirror() {
         return tvar;
     }
 
-    @Override
-    public JTypeMirror computeUpperBound() {
+    @Override public JTypeMirror computeUpperBound() {
         ASTType bound = node.getTypeBoundNode();
         return bound == null ? node.getTypeSystem().OBJECT
-                             : bound.getTypeMirror();
+                : bound.getTypeMirror();
     }
 
-    @Override
-    public JTypeParameterOwnerSymbol getDeclaringSymbol() {
+    @Override public JTypeParameterOwnerSymbol getDeclaringSymbol() {
         return owner;
     }
 
-    @NonNull
-    @Override
-    public String getSimpleName() {
+    @NonNull @Override public String getSimpleName() {
         return node.getName();
     }
 

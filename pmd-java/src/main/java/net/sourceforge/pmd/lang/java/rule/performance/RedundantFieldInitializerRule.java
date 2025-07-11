@@ -18,8 +18,6 @@ import net.sourceforge.pmd.lang.java.ast.internal.JavaAstUtils;
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRulechainRule;
 
 
-
-
 /**
  * Detects redundant field initializers, i.e. the field initializer expressions
  * the JVM would assign by default.
@@ -30,16 +28,15 @@ import net.sourceforge.pmd.lang.java.rule.AbstractJavaRulechainRule;
 public class RedundantFieldInitializerRule extends AbstractJavaRulechainRule {
 
     private static final Set<String> MAKE_FIELD_FINAL_CLASS_ANNOT =
-        setOf(
-                "lombok.Value"
-        );
+            setOf(
+                    "lombok.Value"
+            );
 
     public RedundantFieldInitializerRule() {
         super(ASTFieldDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTFieldDeclaration fieldDeclaration, Object data) {
+    @Override public Object visit(ASTFieldDeclaration fieldDeclaration, Object data) {
         if (!fieldDeclaration.hasModifiers(JModifier.FINAL) && !JavaAstUtils.hasAnyAnnotation(fieldDeclaration.getEnclosingType(), MAKE_FIELD_FINAL_CLASS_ANNOT)) {
             for (ASTVariableId varId : fieldDeclaration.getVarIds()) {
                 ASTExpression init = varId.getInitializer();

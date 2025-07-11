@@ -42,8 +42,7 @@ public final class JavadocComment extends JavaComment {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public Chars getText() {
+    @Override public Chars getText() {
         if (tokens.isEmpty()) {
             return super.getText();
         }
@@ -55,8 +54,7 @@ public final class JavadocComment extends JavaComment {
         return Chars.wrap(markdownBlock.toString());
     }
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         if (tokens.isEmpty()) {
             return super.getReportLocation();
         }
@@ -67,8 +65,7 @@ public final class JavadocComment extends JavaComment {
         return firstToken.getDocument().getTextDocument().toLocation(region);
     }
 
-    @Override
-    public boolean isSingleLine() {
+    @Override public boolean isSingleLine() {
         if (tokens.isEmpty()) {
             return super.isSingleLine();
         }

@@ -22,7 +22,7 @@ import net.sourceforge.pmd.lang.java.types.JTypeVar;
  * @author Clément Fournier
  */
 abstract class AbstractAstTParamOwner<T extends TypeParamOwnerNode & ModifierOwner>
-    extends AbstractAstAnnotableSym<T> implements JTypeParameterOwnerSymbol {
+        extends AbstractAstAnnotableSym<T> implements JTypeParameterOwnerSymbol {
 
     private final List<JTypeVar> tparams;
     private final int modifiers;
@@ -31,23 +31,20 @@ abstract class AbstractAstTParamOwner<T extends TypeParamOwnerNode & ModifierOwn
         super(node, factory);
         this.modifiers = JModifier.toReflect(node.getModifiers().getEffectiveModifiers());
         this.tparams = Collections.unmodifiableList(map(
-            ASTList.orEmpty(node.getTypeParameters()),
-            it -> new AstTypeParamSym(it, factory, this).getTypeMirror()
+                ASTList.orEmpty(node.getTypeParameters()),
+                it -> new AstTypeParamSym(it, factory, this).getTypeMirror()
         ));
     }
 
-    @Override
-    public int getModifiers() {
+    @Override public int getModifiers() {
         return modifiers;
     }
 
-    @Override
-    public List<JTypeVar> getTypeParameters() {
+    @Override public List<JTypeVar> getTypeParameters() {
         return tparams;
     }
 
-    @Override
-    public @NonNull String getPackageName() {
+    @Override public @NonNull String getPackageName() {
         return node.getRoot().getPackageName();
     }
 

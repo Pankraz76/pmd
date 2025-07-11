@@ -15,8 +15,7 @@ public final class ASTTermXml extends AbstractScalaNode<Term.Xml> {
         super(scalaNode);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(ScalaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

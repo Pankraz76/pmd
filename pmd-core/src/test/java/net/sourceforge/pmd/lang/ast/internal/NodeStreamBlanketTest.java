@@ -37,39 +37,37 @@ import net.sourceforge.pmd.lang.ast.NodeStream;
 class NodeStreamBlanketTest<T extends Node> {
 
     private static final List<Node> ASTS = Arrays.asList(
-        tree(
-            () ->
-                root(
+            tree(
+                    () ->
+                            root(
 
-                    node(
-                        node(),
-                        nodeB(
-                            node(
-                                nodeB()
+                                    node(
+                                            node(),
+                                            nodeB(
+                                                    node(
+                                                            nodeB()
+                                                    )
+                                            ),
+                                            node(),
+                                            nodeB()
+                                    ),
+                                    node()
                             )
-                        ),
-                        node(),
-                        nodeB()
-                    ),
-                    node()
-                )
-        ),
-        tree(
-            () ->
-                root(
-                    node(),
-                    node(),
-                    nodeB(
-                        node()
-                    ),
-                    node()
-                )
-        )
+            ),
+            tree(
+                    () ->
+                            root(
+                                    node(),
+                                    node(),
+                                    nodeB(
+                                            node()
+                                    ),
+                                    node()
+                            )
+            )
     );
 
-    @ParameterizedTest
-    @MethodSource("allNodeStreamVariants")
-    void testToListConsistency(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("allNodeStreamVariants") void testToListConsistency(NodeStream<T> stream) {
         List<T> toList = stream.toList();
         List<T> collected = stream.collect(Collectors.toList());
         List<T> fromStream = stream.toStream().collect(Collectors.toList());
@@ -80,124 +78,100 @@ class NodeStreamBlanketTest<T extends Node> {
         assertEquals(toList, cached);
     }
 
-    @ParameterizedTest
-    @MethodSource("allNodeStreamVariants")
-    void testToListSize(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("allNodeStreamVariants") void testToListSize(NodeStream<T> stream) {
         List<T> toList = stream.toList();
 
         assertEquals(toList.size(), stream.count());
     }
 
 
-    @ParameterizedTest
-    @MethodSource("nodeStreamVariantsNonEmpty")
-    void testLast(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("nodeStreamVariantsNonEmpty") void testLast(NodeStream<T> stream) {
         assertImplication(
-            stream,
-            prop("nonEmpty", NodeStream::nonEmpty),
-            prop("last() == toList().last()", it -> it.last() == it.toList().get(it.count() - 1))
+                stream,
+                prop("nonEmpty", NodeStream::nonEmpty),
+                prop("last() == toList().last()", it -> it.last() == it.toList().get(it.count() - 1))
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("nodeStreamVariantsNonEmpty")
-    void testFirst(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("nodeStreamVariantsNonEmpty") void testFirst(NodeStream<T> stream) {
         assertImplication(
-            stream,
-            prop("nonEmpty", NodeStream::nonEmpty),
-            prop("first() == toList().get(0)", it -> it.first() == it.toList().get(0))
+                stream,
+                prop("nonEmpty", NodeStream::nonEmpty),
+                prop("first() == toList().get(0)", it -> it.first() == it.toList().get(0))
         );
     }
 
 
-    @ParameterizedTest
-    @MethodSource("nodeStreamVariantsNonEmpty")
-    void testDrop(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("nodeStreamVariantsNonEmpty") void testDrop(NodeStream<T> stream) {
         assertImplication(
-            stream,
-            prop("nonEmpty", NodeStream::nonEmpty),
-            prop("drop(0) == this", it -> it.drop(0) == it),
-            prop("drop(1).count() == count() - 1", it -> it.drop(1).count() == it.count() - 1),
-            prop("drop(1).toList() == toList().tail()", it -> it.drop(1).toList().equals(tail(it.toList())))
+                stream,
+                prop("nonEmpty", NodeStream::nonEmpty),
+                prop("drop(0) == this", it -> it.drop(0) == it),
+                prop("drop(1).count() == count() - 1", it -> it.drop(1).count() == it.count() - 1),
+                prop("drop(1).toList() == toList().tail()", it -> it.drop(1).toList().equals(tail(it.toList())))
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("nodeStreamVariantsNonEmpty")
-    void testDropLast(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("nodeStreamVariantsNonEmpty") void testDropLast(NodeStream<T> stream) {
         assertImplication(
-            stream,
-            prop("nonEmpty", NodeStream::nonEmpty),
-            prop("dropLast(0) == this", it -> it.dropLast(0) == it),
-            prop("dropLast(1).count() == count() - 1", it -> it.dropLast(1).count() == it.count() - 1),
-            prop("dropLast(1).toList() == toList().init()", it -> it.dropLast(1).toList().equals(init(it.toList())))
+                stream,
+                prop("nonEmpty", NodeStream::nonEmpty),
+                prop("dropLast(0) == this", it -> it.dropLast(0) == it),
+                prop("dropLast(1).count() == count() - 1", it -> it.dropLast(1).count() == it.count() - 1),
+                prop("dropLast(1).toList() == toList().init()", it -> it.dropLast(1).toList().equals(init(it.toList())))
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("nodeStreamVariantsMoreThanOne")
-    void testDropMoreThan1(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("nodeStreamVariantsMoreThanOne") void testDropMoreThan1(NodeStream<T> stream) {
         assertImplication(
-            stream,
-            prop("count() > 1", it -> it.count() > 1),
-            prop("drop(2).toList() == toList().tail().tail()", it -> it.drop(2).toList().equals(tail(tail(it.toList())))),
-            prop("drop(1).drop(1) == drop(2)", it -> it.drop(1).drop(1).toList().equals(it.drop(2).toList()))
+                stream,
+                prop("count() > 1", it -> it.count() > 1),
+                prop("drop(2).toList() == toList().tail().tail()", it -> it.drop(2).toList().equals(tail(tail(it.toList())))),
+                prop("drop(1).drop(1) == drop(2)", it -> it.drop(1).drop(1).toList().equals(it.drop(2).toList()))
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("nodeStreamVariantsNonEmpty")
-    void testTake(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("nodeStreamVariantsNonEmpty") void testTake(NodeStream<T> stream) {
         assertImplication(
-            stream,
-            prop("nonEmpty", NodeStream::nonEmpty),
-            prop("it.take(0).count() == 0", it -> it.take(0).count() == 0),
-            prop("it.take(1).count() == 1", it -> it.take(1).count() == 1),
-            prop("it.take(it.count()).count() == it.count()", it -> it.take(it.count()).count() == it.count())
+                stream,
+                prop("nonEmpty", NodeStream::nonEmpty),
+                prop("it.take(0).count() == 0", it -> it.take(0).count() == 0),
+                prop("it.take(1).count() == 1", it -> it.take(1).count() == 1),
+                prop("it.take(it.count()).count() == it.count()", it -> it.take(it.count()).count() == it.count())
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("allNodeStreamVariants")
-    void testGet(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("allNodeStreamVariants") void testGet(NodeStream<T> stream) {
         for (int i = 0; i < 100; i++) {
             assertSame(stream.get(i), stream.drop(i).first(), "stream.get(i) == stream.drop(i).first()");
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("allNodeStreamVariants")
-    void testGetNegative(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("allNodeStreamVariants") void testGetNegative(NodeStream<T> stream) {
         assertThrows(IllegalArgumentException.class, () -> stream.get(-1));
     }
 
-    @ParameterizedTest
-    @MethodSource("allNodeStreamVariants")
-    void testDropNegative(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("allNodeStreamVariants") void testDropNegative(NodeStream<T> stream) {
         assertThrows(IllegalArgumentException.class, () -> stream.drop(-1));
     }
 
-    @ParameterizedTest
-    @MethodSource("allNodeStreamVariants")
-    void testTakeNegative(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("allNodeStreamVariants") void testTakeNegative(NodeStream<T> stream) {
         assertThrows(IllegalArgumentException.class, () -> stream.take(-1));
     }
 
-    @ParameterizedTest
-    @MethodSource("allNodeStreamVariants")
-    void testEmpty(NodeStream<T> stream) {
+    @ParameterizedTest @MethodSource("allNodeStreamVariants") void testEmpty(NodeStream<T> stream) {
         assertEquivalence(
-            stream,
-            prop("isEmpty", NodeStream::isEmpty),
-            prop("!nonEmpty", it -> !it.nonEmpty()),
-            prop("last() == null", it -> it.last() == null),
-            prop("first() == null", it -> it.first() == null),
-            prop("first(_ -> true) == null", it -> it.first(i -> true) == null),
-            prop("first(Node.class) == null", it -> it.first(Node.class) == null),
-            prop("count() == 0", it -> it.count() == 0),
-            prop("any(_) == false", it -> !it.any(i -> true)),
-            prop("all(_) == true", it -> it.all(i -> false)),
-            prop("none(_) == true", it -> it.none(i -> true))
+                stream,
+                prop("isEmpty", NodeStream::isEmpty),
+                prop("!nonEmpty", it -> !it.nonEmpty()),
+                prop("last() == null", it -> it.last() == null),
+                prop("first() == null", it -> it.first() == null),
+                prop("first(_ -> true) == null", it -> it.first(i -> true) == null),
+                prop("first(Node.class) == null", it -> it.first(Node.class) == null),
+                prop("count() == 0", it -> it.count() == 0),
+                prop("any(_) == false", it -> !it.any(i -> true)),
+                prop("all(_) == true", it -> it.all(i -> false)),
+                prop("none(_) == true", it -> it.none(i -> true))
         );
     }
 
@@ -212,70 +186,68 @@ class NodeStreamBlanketTest<T extends Node> {
 
     static Collection<NodeStream<?>> allNodeStreamVariants() {
         return ASTS.stream().flatMap(
-            root -> Stream.of(
-                root.asStream(),
-                root.children().first().asStream(),
-                // keep this, so that transformation are tested on empty node streams as well
-                NodeStream.empty()
-            )
+                root -> Stream.of(
+                        root.asStream(),
+                        root.children().first().asStream(),
+                        // keep this, so that transformation are tested on empty node streams as well
+                        NodeStream.empty()
+                )
         ).flatMap(
-            // add some transformations on each of them
-            stream -> Stream.of(
-                stream,
-                stream.drop(1),
-                stream.take(2),
-                stream.filter(n -> !n.getImage().isEmpty()),
-                stream.firstChild(DummyNodeTypeB.class),
-                stream.children(DummyNodeTypeB.class),
-                stream.descendants(DummyNodeTypeB.class),
-                stream.ancestors(DummyNodeTypeB.class),
-                stream.descendants(),
-                stream.ancestors(),
-                stream.ancestorsOrSelf(),
-                stream.followingSiblings(),
-                stream.precedingSiblings(),
-                stream.descendantsOrSelf(),
-                stream.children(),
-                stream.children().filter(c -> "0".equals(c.getImage())),
-                stream.children(DummyNode.class)
-            )
+                // add some transformations on each of them
+                stream -> Stream.of(
+                        stream,
+                        stream.drop(1),
+                        stream.take(2),
+                        stream.filter(n -> !n.getImage().isEmpty()),
+                        stream.firstChild(DummyNodeTypeB.class),
+                        stream.children(DummyNodeTypeB.class),
+                        stream.descendants(DummyNodeTypeB.class),
+                        stream.ancestors(DummyNodeTypeB.class),
+                        stream.descendants(),
+                        stream.ancestors(),
+                        stream.ancestorsOrSelf(),
+                        stream.followingSiblings(),
+                        stream.precedingSiblings(),
+                        stream.descendantsOrSelf(),
+                        stream.children(),
+                        stream.children().filter(c -> "0".equals(c.getImage())),
+                        stream.children(DummyNode.class)
+                )
         ).flatMap(
-            // add some transformations on each of them
-            stream -> Stream.of(
-                stream,
-                stream.filterIs(DummyNode.class),
-                stream.take(1),
-                stream.drop(1),
-                stream.filter(n -> !n.getImage().isEmpty()),
-                stream.cached()
-            )
+                // add some transformations on each of them
+                stream -> Stream.of(
+                        stream,
+                        stream.filterIs(DummyNode.class),
+                        stream.take(1),
+                        stream.drop(1),
+                        stream.filter(n -> !n.getImage().isEmpty()),
+                        stream.cached()
+                )
         ).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    @SafeVarargs
-    private static <T> void assertEquivalence(T input, Prop<? super T>... properties) {
+    @SafeVarargs private static <T> void assertEquivalence(T input, Prop<? super T>... properties) {
 
         for (Prop<? super T> prop1 : properties) {
             for (Prop<? super T> prop2 : properties) {
                 boolean p1 = prop1.test(input);
                 assertEquals(
-                    p1, prop2.test(input),
-                    "Expected (" + prop1.description + ") === (" + prop2.description
-                            + "), but the LHS was " + p1 + " and the RHS was " + !p1
+                        p1, prop2.test(input),
+                        "Expected (" + prop1.description + ") === (" + prop2.description
+                                + "), but the LHS was " + p1 + " and the RHS was " + !p1
                 );
             }
         }
     }
 
-    @SafeVarargs
-    private static <T> void assertImplication(T input, Prop<? super T> precond, Prop<? super T>... properties) {
+    @SafeVarargs private static <T> void assertImplication(T input, Prop<? super T> precond, Prop<? super T>... properties) {
         assumeTrue(precond.test(input));
 
         for (Prop<? super T> prop : properties) {
             assertTrue(
-                prop.test(input),
-                "Expected (" + precond.description + ") to entail (" + prop.description
-                        + "), but the latter was false"
+                    prop.test(input),
+                    "Expected (" + precond.description + ") to entail (" + prop.description
+                            + "), but the latter was false"
             );
         }
     }

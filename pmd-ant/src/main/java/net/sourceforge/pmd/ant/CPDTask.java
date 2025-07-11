@@ -67,8 +67,7 @@ public class CPDTask extends Task {
 
     private static final String TEXT_FORMAT = "text";
     private static final String XML_FORMAT = "xml";
-    @Deprecated
-    private static final String XMLOLD_FORMAT = "xmlold";
+    @Deprecated private static final String XMLOLD_FORMAT = "xmlold";
     private static final String CSV_FORMAT = "csv";
 
     private String format = TEXT_FORMAT;
@@ -78,8 +77,7 @@ public class CPDTask extends Task {
     private boolean ignoreIdentifiers;
     private boolean ignoreAnnotations;
     private boolean ignoreUsings;
-    @Deprecated
-    private boolean skipLexicalErrors;
+    @Deprecated private boolean skipLexicalErrors;
     private boolean skipDuplicateFiles;
     private boolean skipBlocks = true;
     private String skipBlocksPattern;
@@ -88,8 +86,7 @@ public class CPDTask extends Task {
     private List<FileSet> filesets = new ArrayList<>();
     private boolean failOnError = true;
 
-    @Override
-    public void execute() throws BuildException {
+    @Override public void execute() throws BuildException {
         ClassLoader oldClassloader = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(CPDTask.class.getClassLoader());
 
@@ -243,8 +240,7 @@ public class CPDTask extends Task {
     /**
      * @deprecated Use {@link #setFailOnError(boolean)} instead.
      */
-    @Deprecated
-    public void setSkipLexicalErrors(boolean skipLexicalErrors) {
+    @Deprecated public void setSkipLexicalErrors(boolean skipLexicalErrors) {
         this.skipLexicalErrors = skipLexicalErrors;
     }
 
@@ -286,10 +282,9 @@ public class CPDTask extends Task {
     }
 
     public static class FormatAttribute extends EnumeratedAttribute {
-        private static final String[] FORMATS = new String[] { XML_FORMAT, TEXT_FORMAT, CSV_FORMAT, XMLOLD_FORMAT };
+        private static final String[] FORMATS = new String[]{XML_FORMAT, TEXT_FORMAT, CSV_FORMAT, XMLOLD_FORMAT};
 
-        @Override
-        public String[] getValues() {
+        @Override public String[] getValues() {
             return FORMATS;
         }
     }

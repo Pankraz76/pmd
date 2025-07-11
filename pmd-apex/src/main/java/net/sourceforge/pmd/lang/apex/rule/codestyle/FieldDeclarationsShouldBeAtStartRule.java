@@ -23,23 +23,21 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 
 public class FieldDeclarationsShouldBeAtStartRule extends AbstractApexRule {
     private static final Comparator<ApexNode<?>> NODE_BY_SOURCE_LOCATION_COMPARATOR =
-        Comparator
-            .<ApexNode<?>>comparingInt(ApexNode::getBeginLine)
-            .thenComparing(ApexNode::getBeginColumn);
+            Comparator
+                    .<ApexNode<?>>comparingInt(ApexNode::getBeginLine)
+                    .thenComparing(ApexNode::getBeginColumn);
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         // Unfortunately the parser re-orders the AST to put field declarations before method declarations
         // so we have to rely on line numbers / positions to work out where the first non-field declaration starts
         // so we can check if the fields are in acceptable places.
         List<ASTFieldDeclaration> fields = node.children(ASTFieldDeclarationStatements.class)
-                                               .children(ASTFieldDeclaration.class)
-                                               .toList();
+                .children(ASTFieldDeclaration.class)
+                .toList();
 
         List<ApexNode<?>> nonFieldDeclarations = new ArrayList<>();
 
@@ -49,8 +47,8 @@ public class FieldDeclarationsShouldBeAtStartRule extends AbstractApexRule {
         nonFieldDeclarations.addAll(node.children(ASTBlockStatement.class).toList());
 
         Optional<ApexNode<?>> firstNonFieldDeclaration = nonFieldDeclarations.stream()
-            .filter(ApexNode::hasRealLoc)
-            .min(NODE_BY_SOURCE_LOCATION_COMPARATOR);
+                .filter(ApexNode::hasRealLoc)
+                .min(NODE_BY_SOURCE_LOCATION_COMPARATOR);
 
         if (!firstNonFieldDeclaration.isPresent()) {
             // there is nothing except field declaration, so that has to come first

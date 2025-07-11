@@ -15,8 +15,7 @@ class JspPageStyleTest extends AbstractJspNodesTst {
     /**
      * Test parsing of a JSP comment.
      */
-    @Test
-    void testComment() {
+    @Test void testComment() {
         List<ASTJspComment> comments = jsp.getNodes(ASTJspComment.class, JSP_COMMENT);
         assertEquals(1, comments.size(), "One comment expected!");
         ASTJspComment comment = comments.iterator().next();
@@ -26,8 +25,7 @@ class JspPageStyleTest extends AbstractJspNodesTst {
     /**
      * Test parsing a JSP directive.
      */
-    @Test
-    void testDirective() {
+    @Test void testDirective() {
         ASTCompilationUnit root = jsp.parse(JSP_DIRECTIVE);
 
         List<ASTJspDirective> directives = root.descendants(ASTJspDirective.class).toList();
@@ -51,8 +49,7 @@ class JspPageStyleTest extends AbstractJspNodesTst {
     /**
      * Test parsing of a JSP declaration.
      */
-    @Test
-    void testDeclaration() {
+    @Test void testDeclaration() {
         List<ASTJspDeclaration> declarations = jsp.getNodes(ASTJspDeclaration.class, JSP_DECLARATION);
         assertEquals(1, declarations.size(), "One declaration expected!");
         ASTJspDeclaration declaration = declarations.iterator().next();
@@ -62,8 +59,7 @@ class JspPageStyleTest extends AbstractJspNodesTst {
     /**
      * Test parsing of a JSP scriptlet.
      */
-    @Test
-    void testScriptlet() {
+    @Test void testScriptlet() {
         List<ASTJspScriptlet> scriptlets = jsp.getNodes(ASTJspScriptlet.class, JSP_SCRIPTLET);
         assertEquals(1, scriptlets.size(), "One scriptlet expected!");
         ASTJspScriptlet scriptlet = scriptlets.iterator().next();
@@ -74,8 +70,7 @@ class JspPageStyleTest extends AbstractJspNodesTst {
     /**
      * Test parsing of a JSP expression.
      */
-    @Test
-    void testExpression() {
+    @Test void testExpression() {
         List<ASTJspExpression> expressions = jsp.getNodes(ASTJspExpression.class, JSP_EXPRESSION);
         assertEquals(1, expressions.size(), "One expression expected!");
         ASTJspExpression expression = expressions.iterator().next();
@@ -85,8 +80,7 @@ class JspPageStyleTest extends AbstractJspNodesTst {
     /**
      * Test parsing of a JSP expression in an attribute.
      */
-    @Test
-    void testExpressionInAttribute() {
+    @Test void testExpressionInAttribute() {
         List<ASTJspExpressionInAttribute> expressions = jsp.getNodes(ASTJspExpressionInAttribute.class, JSP_EXPRESSION_IN_ATTRIBUTE);
         assertEquals(1, expressions.size(), "One expression expected!");
         ASTJspExpressionInAttribute expression = expressions.iterator().next();
@@ -96,8 +90,7 @@ class JspPageStyleTest extends AbstractJspNodesTst {
     /**
      * Test parsing of a EL expression.
      */
-    @Test
-    void testElExpression() {
+    @Test void testElExpression() {
         List<ASTElExpression> expressions = jsp.getNodes(ASTElExpression.class, JSP_EL_EXPRESSION);
         assertEquals(1, expressions.size(), "One expression expected!");
         ASTElExpression expression = expressions.iterator().next();
@@ -107,8 +100,7 @@ class JspPageStyleTest extends AbstractJspNodesTst {
     /**
      * Test parsing of a EL expression in an attribute.
      */
-    @Test
-    void testElExpressionInAttribute() {
+    @Test void testElExpressionInAttribute() {
         List<ASTElExpression> expressions = jsp.getNodes(ASTElExpression.class, JSP_EL_EXPRESSION_IN_ATTRIBUTE);
         assertEquals(1, expressions.size(), "One expression expected!");
         ASTElExpression expression = expressions.iterator().next();
@@ -118,8 +110,7 @@ class JspPageStyleTest extends AbstractJspNodesTst {
     /**
      * Test parsing of a EL expression in an attribute.
      */
-    @Test
-    void testJsfValueBinding() {
+    @Test void testJsfValueBinding() {
         List<ASTValueBinding> valueBindings = jsp.getNodes(ASTValueBinding.class, JSF_VALUE_BINDING);
         assertEquals(1, valueBindings.size(), "One value binding expected!");
         ASTValueBinding valueBinding = valueBindings.iterator().next();

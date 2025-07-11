@@ -9,36 +9,30 @@ import net.sourceforge.pmd.reporting.Report.ProcessingError;
 
 class CSVRendererTest extends AbstractRendererTest {
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         return new CSVRenderer();
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return getHeader()
                 + "\"1\",\"\",\"" + getSourceCodeFilename() + "\",\"5\",\"1\",\"blah\",\"RuleSet\",\"Foo\"" + EOL;
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return getHeader();
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return getHeader()
                 + "\"1\",\"\",\"" + getSourceCodeFilename() + "\",\"5\",\"1\",\"blah\",\"RuleSet\",\"Foo\"" + EOL
                 + "\"2\",\"\",\"" + getSourceCodeFilename() + "\",\"1\",\"1\",\"blah\",\"RuleSet\",\"Boo\"" + EOL;
     }
 
-    @Override
-    String getExpectedError(ProcessingError error) {
+    @Override String getExpectedError(ProcessingError error) {
         return getHeader();
     }
 
-    @Override
-    String getExpectedError(ConfigurationError error) {
+    @Override String getExpectedError(ConfigurationError error) {
         return getHeader();
     }
 

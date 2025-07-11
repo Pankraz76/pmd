@@ -15,8 +15,7 @@ public final class VtlParsingHelper extends BaseParsingHelper<VtlParsingHelper, 
         super(VtlLanguageModule.getInstance(), ASTTemplate.class, params);
     }
 
-    @Override
-    protected VtlParsingHelper clone(Params params) {
+    @Override protected VtlParsingHelper clone(Params params) {
         return new VtlParsingHelper(params);
     }
 }

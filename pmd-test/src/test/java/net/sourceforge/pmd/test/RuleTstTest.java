@@ -38,8 +38,7 @@ class RuleTstTest {
 
     private final RuleTst ruleTester = spy(RuleTst.class);
 
-    @Test
-    void shouldCallStartAndEnd() {
+    @Test void shouldCallStartAndEnd() {
         when(rule.getLanguage()).thenReturn(dummyLanguage.getLanguage());
         when(rule.getName()).thenReturn("test rule");
         when(rule.getTargetSelector()).thenReturn(RuleTargetSelector.forRootOnly());
@@ -53,8 +52,7 @@ class RuleTstTest {
         verify(rule).end(any(RuleContext.class));
     }
 
-    @Test
-    void shouldAssertLinenumbersSorted() {
+    @Test void shouldAssertLinenumbersSorted() {
         when(rule.getLanguage()).thenReturn(dummyLanguage.getLanguage());
         when(rule.getName()).thenReturn("test rule");
         when(rule.getMessage()).thenReturn("test rule");
@@ -102,8 +100,7 @@ class RuleTstTest {
         }).when(rule).apply(any(Node.class), Mockito.any(RuleContext.class));
     }
 
-    @Test
-    void suppressionAssertSuppressorIdIsOptional() {
+    @Test void suppressionAssertSuppressorIdIsOptional() {
         setupRuleWithSuppression();
 
         RuleTestDescriptor testDescriptor = new RuleTestDescriptor(0, rule);
@@ -116,8 +113,7 @@ class RuleTstTest {
         ruleTester.runTest(testDescriptor);
     }
 
-    @Test
-    void suppressionAssertSuppressorIdGood() {
+    @Test void suppressionAssertSuppressorIdGood() {
         setupRuleWithSuppression();
 
         RuleTestDescriptor testDescriptor = new RuleTestDescriptor(0, rule);
@@ -130,8 +126,7 @@ class RuleTstTest {
         ruleTester.runTest(testDescriptor);
     }
 
-    @Test
-    void suppressionAssertSuppressorIdWrong() {
+    @Test void suppressionAssertSuppressorIdWrong() {
         setupRuleWithSuppression();
 
         RuleTestDescriptor testDescriptor = new RuleTestDescriptor(0, rule);

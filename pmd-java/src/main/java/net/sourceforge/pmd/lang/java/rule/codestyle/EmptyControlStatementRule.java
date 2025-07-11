@@ -50,40 +50,35 @@ public class EmptyControlStatementRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(ALLOW_COMMENTED_BLOCKS);
     }
 
-    @Override
-    public Object visit(ASTFinallyClause node, Object data) {
+    @Override public Object visit(ASTFinallyClause node, Object data) {
         if (isEmpty(node.getBody())) {
             asCtx(data).addViolationWithMessage(node, "Empty finally clause");
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTSynchronizedStatement node, Object data) {
+    @Override public Object visit(ASTSynchronizedStatement node, Object data) {
         if (isEmpty(node.getBody())) {
             asCtx(data).addViolationWithMessage(node, "Empty synchronized statement");
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTSwitchStatement node, Object data) {
+    @Override public Object visit(ASTSwitchStatement node, Object data) {
         if (node.getNumChildren() == 1) {
             asCtx(data).addViolationWithMessage(node, "Empty switch statement");
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTBlock node, Object data) {
+    @Override public Object visit(ASTBlock node, Object data) {
         if (isEmpty(node) && node.getParent() instanceof ASTBlock) {
             asCtx(data).addViolationWithMessage(node, "Empty block");
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTIfStatement node, Object data) {
+    @Override public Object visit(ASTIfStatement node, Object data) {
         if (isEmpty(node.getThenBranch())) {
             asCtx(data).addViolationWithMessage(node, "Empty if statement");
         }
@@ -93,24 +88,21 @@ public class EmptyControlStatementRule extends AbstractJavaRulechainRule {
         return null;
     }
 
-    @Override
-    public Object visit(ASTWhileStatement node, Object data) {
+    @Override public Object visit(ASTWhileStatement node, Object data) {
         if (isEmpty(node.getBody())) {
             asCtx(data).addViolationWithMessage(node, "Empty while statement");
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTForStatement node, Object data) {
+    @Override public Object visit(ASTForStatement node, Object data) {
         if (isEmpty(node.getBody())) {
             asCtx(data).addViolationWithMessage(node, "Empty for statement");
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTForeachStatement node, Object data) {
+    @Override public Object visit(ASTForeachStatement node, Object data) {
         if (JavaRuleUtil.isExplicitUnusedVarName(node.getVarId().getName())) {
             // allow `for (ignored : iterable) {}`
             return null;
@@ -121,24 +113,21 @@ public class EmptyControlStatementRule extends AbstractJavaRulechainRule {
         return null;
     }
 
-    @Override
-    public Object visit(ASTDoStatement node, Object data) {
+    @Override public Object visit(ASTDoStatement node, Object data) {
         if (isEmpty(node.getBody())) {
             asCtx(data).addViolationWithMessage(node, "Empty do..while statement");
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTInitializer node, Object data) {
+    @Override public Object visit(ASTInitializer node, Object data) {
         if (isEmpty(node.getBody())) {
             asCtx(data).addViolationWithMessage(node, "Empty initializer statement");
         }
         return null;
     }
 
-    @Override
-    public Object visit(ASTTryStatement node, Object data) {
+    @Override public Object visit(ASTTryStatement node, Object data) {
         if (isEmpty(node.getBody())) {
             // all resources must be explicitly ignored
             boolean hasResource = false;
@@ -184,15 +173,15 @@ public class EmptyControlStatementRule extends AbstractJavaRulechainRule {
 
     private static boolean isSimpleExpression(ASTExpression init) {
         return init instanceof ASTThisExpression
-            || init instanceof ASTSuperExpression
-            || init instanceof ASTVariableAccess
-            || init instanceof ASTFieldAccess && isSimpleExpression(((ASTFieldAccess) init).getQualifier());
+                || init instanceof ASTSuperExpression
+                || init instanceof ASTVariableAccess
+                || init instanceof ASTFieldAccess && isSimpleExpression(((ASTFieldAccess) init).getQualifier());
     }
 
     private boolean isEmpty(JavaNode node) {
         boolean allowCommentedBlocks = getProperty(ALLOW_COMMENTED_BLOCKS);
 
         return (node instanceof ASTBlock && node.getNumChildren() == 0 && !(((ASTBlock) node).containsComment() && allowCommentedBlocks))
-            || node instanceof ASTEmptyStatement;
+                || node instanceof ASTEmptyStatement;
     }
 }

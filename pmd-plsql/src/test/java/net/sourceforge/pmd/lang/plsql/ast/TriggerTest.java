@@ -20,8 +20,7 @@ class TriggerTest extends AbstractPLSQLParserTst {
      *
      * @see <a href="https://github.com/pmd/pmd/issues/2325">#2325 [plsql] NullPointerException while running parsing test for CREATE TRIGGER</a>
      */
-    @Test
-    void parseCreateTrigger() {
+    @Test void parseCreateTrigger() {
         ASTInput input = plsql.parseResource("TriggerUnit.pls");
         PLSQLNode trigger = input.getChild(0);
         assertEquals(ASTTriggerUnit.class, trigger.getClass());

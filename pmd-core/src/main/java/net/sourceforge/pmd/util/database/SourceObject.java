@@ -56,8 +56,7 @@ public class SourceObject {
         this.revision = revision;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return String.format("schema=\"%s\",type=\"%s\",name=\"%s\",revision=\"%s\"", this.getSchema(), this.getType(),
                 this.getName(), this.getRevision());
     }

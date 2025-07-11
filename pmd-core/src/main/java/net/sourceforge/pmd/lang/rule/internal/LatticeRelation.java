@@ -74,9 +74,9 @@ class LatticeRelation<K, @NonNull V, C> {
      * @param <A>              Internal accumulator type of the collector
      */
     <A> LatticeRelation(TopoOrder<K> keyOrder,
-                        Predicate<? super K> queryKeySelector,
-                        Function<? super K, String> keyToString,
-                        Collector<? super V, A, ? extends C> collector) {
+            Predicate<? super K> queryKeySelector,
+            Function<? super K, String> keyToString,
+            Collector<? super V, A, ? extends C> collector) {
         this.keyOrder = keyOrder;
         this.queryKeySelector = queryKeySelector;
         this.keyToString = keyToString;
@@ -93,9 +93,9 @@ class LatticeRelation<K, @NonNull V, C> {
      * @throws IllegalStateException    If the topo order generates a cycle
      */
     <A> LatticeRelation(TopoOrder<K> keyOrder,
-                        Set<? extends K> querySet,
-                        Function<? super K, String> keyToString,
-                        Collector<? super V, A, ? extends C> collector) {
+            Set<? extends K> querySet,
+            Function<? super K, String> keyToString,
+            Collector<? super V, A, ? extends C> collector) {
         this.keyOrder = keyOrder;
         this.queryKeySelector = querySet::contains;
         this.keyToString = keyToString;
@@ -156,8 +156,7 @@ class LatticeRelation<K, @NonNull V, C> {
         n.addValueTransitive(val);
     }
 
-    @NonNull
-    private IllegalStateException cycleError(@NonNull Deque<LNode> preds, K k) {
+    @NonNull private IllegalStateException cycleError(@NonNull Deque<LNode> preds, K k) {
         List<String> toStrings = map(toMutableList(), preds, n -> keyToString.apply(n.key));
         toStrings.add(keyToString.apply(k));
         return new IllegalStateException("Cycle in graph: " + String.join(" -> ", toStrings));
@@ -201,8 +200,7 @@ class LatticeRelation<K, @NonNull V, C> {
      *
      * @throws NullPointerException If the key is null
      */
-    @NonNull
-    public C get(@NonNull K key) {
+    @NonNull public C get(@NonNull K key) {
         AssertionUtil.requireParamNotNull("key", key);
         LNode n = nodes.get(key);
         return n == null ? emptyValue : n.computeValue();
@@ -214,15 +212,14 @@ class LatticeRelation<K, @NonNull V, C> {
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         // generates a DOT representation of the lattice
         // Visualize eg at http://webgraphviz.com/
         return GraphUtil.toDot(
-            nodes.values(),
-            n -> n.transitiveSuccs,
-            n -> n.getClass() == QueryNode.class ? DotColor.GREEN : DotColor.BLACK,
-            n -> keyToString.apply(n.key)
+                nodes.values(),
+                n -> n.transitiveSuccs,
+                n -> n.getClass() == QueryNode.class ? DotColor.GREEN : DotColor.BLACK,
+                n -> keyToString.apply(n.key)
         );
     }
 
@@ -274,8 +271,7 @@ class LatticeRelation<K, @NonNull V, C> {
             // do nothing
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "node(" + key + ')';
         }
 
@@ -298,8 +294,7 @@ class LatticeRelation<K, @NonNull V, C> {
             resetValue();
         }
 
-        @Override
-        void addAsSuccessorTo(Iterable<LNode> preds) {
+        @Override void addAsSuccessorTo(Iterable<LNode> preds) {
             preds.forEach(n -> {
                 if (n.transitiveSuccs.add(this)) {
                     // otherwise the transitive successors are also already here
@@ -308,32 +303,27 @@ class LatticeRelation<K, @NonNull V, C> {
             });
         }
 
-        @Override
-        void addValue(@NonNull V v) {
+        @Override void addValue(@NonNull V v) {
             collector().accumulator().accept(accumulator, v);
         }
 
-        @Override
-        @NonNull C computeValue() {
+        @Override @NonNull C computeValue() {
             if (finished == null) {
                 this.finished = finish(collector(), accumulator);
             }
             return this.finished;
         }
 
-        @Override
-        void resetValue() {
+        @Override void resetValue() {
             accumulator = collector().supplier().get();
             finished = null;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "qnode(" + key + ')';
         }
 
-        @SuppressWarnings("unchecked")
-        private Collector<? super V, A, ? extends C> collector() {
+        @SuppressWarnings("unchecked") private Collector<? super V, A, ? extends C> collector() {
             return (Collector<? super V, A, ? extends C>) collector;
         }
     }

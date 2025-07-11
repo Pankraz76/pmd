@@ -39,30 +39,25 @@ class ClassStubBuilder extends ClassVisitor {
         this.resolver = resolver;
     }
 
-    @Override
-    public void visit(int version, int access, String internalName, @Nullable String signature, String superName, String[] interfaces) {
+    @Override public void visit(int version, int access, String internalName, @Nullable String signature, String superName, String[] interfaces) {
         myStub.setModifiers(access, true);
         myStub.setHeader(signature, superName, interfaces);
     }
 
-    @Override
-    public AnnotationBuilderVisitor visitAnnotation(String descriptor, boolean visible) {
+    @Override public AnnotationBuilderVisitor visitAnnotation(String descriptor, boolean visible) {
         return new AnnotationBuilderVisitor(myStub, resolver, visible, descriptor);
     }
 
 
-    @Override
-    public RecordComponentVisitor visitRecordComponent(String name, String descriptor, String signature) {
+    @Override public RecordComponentVisitor visitRecordComponent(String name, String descriptor, String signature) {
         RecordComponentStub componentStub = new RecordComponentStub(myStub, name, descriptor, signature);
         myStub.addRecordComponent(componentStub);
         return new RecordComponentVisitor(api) {
-            @Override
-            public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
+            @Override public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
                 return new AnnotationBuilderVisitor(componentStub, resolver, visible, descriptor);
             }
 
-            @Override
-            public AnnotationVisitor visitTypeAnnotation(int typeRef, @Nullable TypePath typePath, String descriptor, boolean visible) {
+            @Override public AnnotationVisitor visitTypeAnnotation(int typeRef, @Nullable TypePath typePath, String descriptor, boolean visible) {
                 assert new TypeReference(typeRef).getSort() == TypeReference.FIELD : typeRef;
                 return new AnnotationBuilderVisitor.TypeAnnotBuilderImpl(resolver, componentStub, typeRef, typePath, visible, descriptor);
             }
@@ -72,8 +67,7 @@ class ClassStubBuilder extends ClassVisitor {
 
 
     // called only if this is local or anonymous class
-    @Override
-    public void visitOuterClass(String ownerInternalName, @Nullable String methodName, @Nullable String methodDescriptor) {
+    @Override public void visitOuterClass(String ownerInternalName, @Nullable String methodName, @Nullable String methodDescriptor) {
         isAnonOrLocalClass = true;
         isInnerNonStaticClass = true;
         // only for enclosing method
@@ -81,26 +75,22 @@ class ClassStubBuilder extends ClassVisitor {
         myStub.setEnclosingInfo(outer, true, methodName, methodDescriptor);
     }
 
-    @Override
-    public FieldVisitor visitField(int access, String name, String descriptor, @Nullable String signature, @Nullable Object value) {
+    @Override public FieldVisitor visitField(int access, String name, String descriptor, @Nullable String signature, @Nullable Object value) {
         FieldStub field = new FieldStub(myStub, name, access, descriptor, signature, value);
         myStub.addField(field);
         return new FieldVisitor(AsmSymbolResolver.ASM_API_V) {
-            @Override
-            public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
+            @Override public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
                 return new AnnotationBuilderVisitor(field, resolver, visible, descriptor);
             }
 
-            @Override
-            public AnnotationVisitor visitTypeAnnotation(int typeRef, @Nullable TypePath typePath, String descriptor, boolean visible) {
+            @Override public AnnotationVisitor visitTypeAnnotation(int typeRef, @Nullable TypePath typePath, String descriptor, boolean visible) {
                 assert new TypeReference(typeRef).getSort() == TypeReference.FIELD : typeRef;
                 return new AnnotationBuilderVisitor.TypeAnnotBuilderImpl(resolver, field, typeRef, typePath, visible, descriptor);
             }
         };
     }
 
-    @Override
-    public void visitPermittedSubclass(String permittedSubclass) {
+    @Override public void visitPermittedSubclass(String permittedSubclass) {
         ClassStub permitted = resolver.resolveFromInternalNameCannotFail(permittedSubclass);
         myStub.addPermittedSubclass(permitted);
     }
@@ -119,8 +109,7 @@ class ClassStubBuilder extends ClassVisitor {
      * @param access            the access flags of the inner class as originally
      *                          declared in the enclosing class.
      */
-    @Override
-    public void visitInnerClass(String innerInternalName, @Nullable String outerName, @Nullable String innerSimpleName, int access) {
+    @Override public void visitInnerClass(String innerInternalName, @Nullable String outerName, @Nullable String innerSimpleName, int access) {
         if (myInternalName.equals(outerName) && innerSimpleName != null) { // not anonymous
             ClassStub member = resolver.resolveFromInternalNameCannotFail(innerInternalName, ClassStub.UNKNOWN_ARITY);
             member.setSimpleName(innerSimpleName);
@@ -139,8 +128,7 @@ class ClassStubBuilder extends ClassVisitor {
         }
     }
 
-    @Override
-    public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
+    @Override public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         if ((access & (Opcodes.ACC_SYNTHETIC | Opcodes.ACC_BRIDGE)) != 0) {
             // ignore synthetic methods
             return null;

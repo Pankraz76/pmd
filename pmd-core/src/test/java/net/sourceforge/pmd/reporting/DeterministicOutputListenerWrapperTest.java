@@ -28,8 +28,7 @@ import net.sourceforge.pmd.renderers.AbstractIncrementingRenderer;
 class DeterministicOutputListenerWrapperTest {
 
     // repeat the test several times to make sure it isn't suceeding by chance
-    @RepeatedTest(10)
-    void testDeterministicOutputListener() {
+    @RepeatedTest(10) void testDeterministicOutputListener() {
         PMDConfiguration config = new PMDConfiguration();
         config.setAnalysisCacheLocation(null);
         config.setIgnoreIncrementalAnalysis(true);
@@ -62,7 +61,7 @@ class DeterministicOutputListenerWrapperTest {
 
         // Unless this assumption is true, the test is not testing anything
         Assumptions.assumeFalse(mockrule.fileIds.equals(fileIds),
-                                "Order of application of rules was same as sorted by chance");
+                "Order of application of rules was same as sorted by chance");
 
         // Assert that the renderer observed each file id in sorted order
         assertEquals(numFiles, myRenderer.fileIds.size());
@@ -75,16 +74,14 @@ class DeterministicOutputListenerWrapperTest {
         /** This can be used to check that the order is random. */
         List<FileId> fileIds = new ArrayList<>();
 
-        @Override
-        public void apply(Node node, RuleContext ctx) {
+        @Override public void apply(Node node, RuleContext ctx) {
             ctx.addViolation(node);
             synchronized (this) {
                 fileIds.add(node.getTextDocument().getFileId());
             }
         }
 
-        @Override
-        public Rule deepCopy() {
+        @Override public Rule deepCopy() {
             return this;
         }
     }
@@ -98,13 +95,11 @@ class DeterministicOutputListenerWrapperTest {
             setWriter(new PrintWriter(System.out));
         }
 
-        @Override
-        public void renderFileViolations(Iterator<RuleViolation> violations) {
+        @Override public void renderFileViolations(Iterator<RuleViolation> violations) {
             fileIds.add(violations.next().getFileId());
         }
 
-        @Override
-        public String defaultFileExtension() {
+        @Override public String defaultFileExtension() {
             return "";
         }
     }

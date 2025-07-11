@@ -22,6 +22,5 @@ public interface ApexNode<T> extends GenericNode<ApexNode<?>> {
     String getDefiningType();
 
 
-    @Override
-    @NonNull ASTApexFile getRoot();
+    @Override @NonNull ASTApexFile getRoot();
 }

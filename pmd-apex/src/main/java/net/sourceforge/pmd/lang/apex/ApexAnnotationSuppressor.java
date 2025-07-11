@@ -28,13 +28,11 @@ final class ApexAnnotationSuppressor extends AbstractAnnotationSuppressor<ASTAnn
     }
 
 
-    @Override
-    protected NodeStream<ASTAnnotation> getAnnotations(Node node) {
+    @Override protected NodeStream<ASTAnnotation> getAnnotations(Node node) {
         return node.children(ASTModifierNode.class).children(ASTAnnotation.class);
     }
 
-    @Override
-    protected boolean walkAnnotation(ASTAnnotation annot, AnnotationWalkCallbacks callbacks) {
+    @Override protected boolean walkAnnotation(ASTAnnotation annot, AnnotationWalkCallbacks callbacks) {
         if ("SuppressWarnings".equalsIgnoreCase(annot.getName())) {
             for (ASTAnnotationParameter param : annot.children(ASTAnnotationParameter.class)) {
                 String image = param.getValue();

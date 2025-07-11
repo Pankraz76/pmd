@@ -16,8 +16,7 @@ public class FooRuleWithLanguageSetInJava extends AbstractRule {
     }
 
 
-    @Override
-    public void apply(Node node, RuleContext ctx) {
+    @Override public void apply(Node node, RuleContext ctx) {
         // do nothing
     }
 }

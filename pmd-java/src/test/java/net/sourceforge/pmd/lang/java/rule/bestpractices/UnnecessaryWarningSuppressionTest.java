@@ -16,10 +16,9 @@ import net.sourceforge.pmd.test.PmdRuleTst;
 
 class UnnecessaryWarningSuppressionTest extends PmdRuleTst {
 
-    @Override
-    protected Collection<? extends Rule> getExtraRules() {
+    @Override protected Collection<? extends Rule> getExtraRules() {
         return listOf(new FakeRuleThatReportsIncrements(),
-                      new FakeRuleThatReportsDecrements());
+                new FakeRuleThatReportsDecrements());
     }
 
 
@@ -32,8 +31,7 @@ class UnnecessaryWarningSuppressionTest extends PmdRuleTst {
             setName(getClass().getSimpleName());
         }
 
-        @Override
-        public Object visit(ASTUnaryExpression node, Object data) {
+        @Override public Object visit(ASTUnaryExpression node, Object data) {
             if (node.getOperator().isIncrement()) {
                 asCtx(data).addViolation(node);
             }
@@ -50,8 +48,7 @@ class UnnecessaryWarningSuppressionTest extends PmdRuleTst {
             setName(getClass().getSimpleName());
         }
 
-        @Override
-        public Object visit(ASTUnaryExpression node, Object data) {
+        @Override public Object visit(ASTUnaryExpression node, Object data) {
             if (node.getOperator().isDecrement()) {
                 asCtx(data).addViolation(node);
             }

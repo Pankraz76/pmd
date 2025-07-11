@@ -11,7 +11,7 @@ import net.sourceforge.pmd.lang.ast.impl.antlr4.BaseAntlrInnerNode;
 
 // package private base class
 abstract class SwiftInnerNode
-    extends BaseAntlrInnerNode<SwiftNode> implements SwiftNode {
+        extends BaseAntlrInnerNode<SwiftNode> implements SwiftNode {
 
     SwiftInnerNode() {
         super();
@@ -21,8 +21,7 @@ abstract class SwiftInnerNode
         super(parent, invokingStateNumber);
     }
 
-    @Override
-    public <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override public <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof SwiftVisitor) {
             // some of the generated antlr nodes have no accept method...
             return ((SwiftVisitor<? super P, ? extends R>) visitor).visitSwiftNode(this, data);
@@ -36,8 +35,7 @@ abstract class SwiftInnerNode
         return super.asAntlrNode();
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return SwiftParser.DICO.getXPathNameOfRule(getRuleIndex());
     }
 }

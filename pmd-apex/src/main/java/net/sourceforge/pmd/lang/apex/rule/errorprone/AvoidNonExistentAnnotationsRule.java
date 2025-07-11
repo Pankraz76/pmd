@@ -24,37 +24,31 @@ import net.sourceforge.pmd.lang.apex.rule.AbstractApexRule;
  * @author a.subramanian
  */
 public class AvoidNonExistentAnnotationsRule extends AbstractApexRule {
-    @Override
-    public Object visit(final ASTUserClass node, final Object data) {
+    @Override public Object visit(final ASTUserClass node, final Object data) {
         checkForNonExistentAnnotation(node, node.getModifiers(), data);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(final ASTUserInterface node, final Object data) {
+    @Override public Object visit(final ASTUserInterface node, final Object data) {
         checkForNonExistentAnnotation(node, node.getModifiers(), data);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(final ASTUserEnum node, final Object data) {
+    @Override public Object visit(final ASTUserEnum node, final Object data) {
         checkForNonExistentAnnotation(node, node.getModifiers(), data);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(final ASTMethod node, final Object data) {
+    @Override public Object visit(final ASTMethod node, final Object data) {
         return checkForNonExistentAnnotation(node, node.getModifiers(), data);
     }
 
-    @Override
-    public Object visit(final ASTProperty node, final Object data) {
+    @Override public Object visit(final ASTProperty node, final Object data) {
         // may have nested methods, don't visit children
         return checkForNonExistentAnnotation(node, node.getModifiers(), data);
     }
 
-    @Override
-    public Object visit(final ASTField node, final Object data) {
+    @Override public Object visit(final ASTField node, final Object data) {
         return checkForNonExistentAnnotation(node, node.getModifiers(), data);
     }
 

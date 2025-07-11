@@ -36,8 +36,7 @@ public class AntlrToken implements GenericToken<AntlrToken> {
      *
      * @deprecated Don't create antlr tokens directly, use an {@link AntlrTokenManager}
      */
-    @Deprecated
-    public AntlrToken(final Token token, final AntlrToken previousComment, TextDocument textDoc) {
+    @Deprecated public AntlrToken(final Token token, final AntlrToken previousComment, TextDocument textDoc) {
         this.previousComment = previousComment;
         this.textDoc = textDoc;
         this.image = token.getText();
@@ -47,44 +46,36 @@ public class AntlrToken implements GenericToken<AntlrToken> {
         this.kind = token.getType();
     }
 
-    @Override
-    public AntlrToken getNext() {
+    @Override public AntlrToken getNext() {
         return next;
     }
 
-    @Override
-    public AntlrToken getPreviousComment() {
+    @Override public AntlrToken getPreviousComment() {
         return previousComment;
     }
 
-    @Override
-    public CharSequence getImageCs() {
+    @Override public CharSequence getImageCs() {
         return image;
     }
 
     /** Returns a text region with the coordinates of this token. */
-    @Override
-    public TextRegion getRegion() {
+    @Override public TextRegion getRegion() {
         return TextRegion.fromBothOffsets(startOffset, endOffset);
     }
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         return textDoc.toLocation(getRegion());
     }
 
-    @Override
-    public boolean isEof() {
+    @Override public boolean isEof() {
         return getKind() == Token.EOF;
     }
 
-    @Override
-    public int compareTo(AntlrToken o) {
+    @Override public int compareTo(AntlrToken o) {
         return getRegion().compareTo(o.getRegion());
     }
 
-    @Override
-    public int getKind() {
+    @Override public int getKind() {
         return kind;
     }
 

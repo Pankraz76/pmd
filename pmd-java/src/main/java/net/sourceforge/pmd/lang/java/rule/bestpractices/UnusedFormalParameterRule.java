@@ -28,21 +28,19 @@ public class UnusedFormalParameterRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(CHECKALL_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTConstructorDeclaration node, Object data) {
+    @Override public Object visit(ASTConstructorDeclaration node, Object data) {
         check(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         if (node.getVisibility() != Visibility.V_PRIVATE && !getProperty(CHECKALL_DESCRIPTOR)) {
             return data;
         }
         if (node.getBody() != null
-            && !node.hasModifiers(JModifier.DEFAULT)
-            && !JavaRuleUtil.isSerializationReadObject(node)
-            && !node.isOverridden()) {
+                && !node.hasModifiers(JModifier.DEFAULT)
+                && !JavaRuleUtil.isSerializationReadObject(node)
+                && !node.isOverridden()) {
             check(node, data);
         }
         return data;

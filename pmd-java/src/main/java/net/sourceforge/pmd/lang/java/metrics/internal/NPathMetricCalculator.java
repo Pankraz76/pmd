@@ -71,26 +71,22 @@ public final class NPathMetricCalculator {
 
         static final NPathMetricCalculator.CfExpressionVisitor INSTANCE = new CfExpressionVisitor();
 
-        @Override
-        public DecisionPoint visitJavaNode(JavaNode node, CfPoint point) {
+        @Override public DecisionPoint visitJavaNode(JavaNode node, CfPoint point) {
             for (JavaNode child : node.children()) {
                 point = child.acceptVisitor(this, point).endPaths();
             }
             return point;
         }
 
-        @Override
-        public DecisionPoint visit(ASTAnonymousClassDeclaration node, CfPoint point) {
+        @Override public DecisionPoint visit(ASTAnonymousClassDeclaration node, CfPoint point) {
             return point; // stop recursion.
         }
 
-        @Override
-        public DecisionPoint visit(ASTLambdaExpression node, CfPoint point) {
+        @Override public DecisionPoint visit(ASTLambdaExpression node, CfPoint point) {
             return point; // stop recursion.
         }
 
-        @Override
-        public DecisionPoint visit(ASTConditionalExpression node, CfPoint point) {
+        @Override public DecisionPoint visit(ASTConditionalExpression node, CfPoint point) {
             DecisionPoint condition = node.getCondition().acceptVisitor(this, new CfPoint(point));
             DecisionPoint thenState = node.getThenBranch().acceptVisitor(this, new CfPoint(condition.truePoint()));
             DecisionPoint elseState = node.getElseBranch().acceptVisitor(this, new CfPoint(condition.falsePoint()));
@@ -102,8 +98,7 @@ public final class NPathMetricCalculator {
         }
 
 
-        @Override
-        public DecisionPoint visit(ASTUnaryExpression node, CfPoint point) {
+        @Override public DecisionPoint visit(ASTUnaryExpression node, CfPoint point) {
             if (JavaAstUtils.isBooleanNegation(node)) {
                 DecisionPoint condition = node.getOperand().acceptVisitor(this, point);
                 return condition.negate();
@@ -111,8 +106,7 @@ public final class NPathMetricCalculator {
             return super.visit(node, point);
         }
 
-        @Override
-        public DecisionPoint visit(ASTInfixExpression node, CfPoint point) {
+        @Override public DecisionPoint visit(ASTInfixExpression node, CfPoint point) {
             if (node.getOperator() == BinaryOp.CONDITIONAL_AND) {
                 // a && b
                 // b is only visited if a is true
@@ -179,23 +173,19 @@ public final class NPathMetricCalculator {
             this.falsePoint = falsePoint;
         }
 
-        @Override
-        public CfPoint truePoint() {
+        @Override public CfPoint truePoint() {
             return truePoint;
         }
 
-        @Override
-        public CfPoint falsePoint() {
+        @Override public CfPoint falsePoint() {
             return falsePoint;
         }
 
-        @Override
-        public CfPoint endPaths() {
+        @Override public CfPoint endPaths() {
             return pointLeadingToThisDecision;
         }
 
-        @Override
-        public DecisionPoint negate() {
+        @Override public DecisionPoint negate() {
             return new BooleanDecisionPoint(pointLeadingToThisDecision, falsePoint, truePoint);
         }
     }
@@ -204,51 +194,43 @@ public final class NPathMetricCalculator {
 
         static final CfVisitor INSTANCE = new CfVisitor();
 
-        @Override
-        protected CfVisitState visitChildren(Node node, CfVisitState state) {
+        @Override protected CfVisitState visitChildren(Node node, CfVisitState state) {
             for (int i = 0, numChildren = node.getNumChildren(); i < numChildren; i++) {
                 state = node.getChild(i).acceptVisitor(this, state);
             }
             return state;
         }
 
-        @Override
-        public CfVisitState visit(ASTBlock node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTBlock node, CfVisitState state) {
             return visitChildren(node, state);
         }
 
-        @Override
-        public CfVisitState visit(ASTReturnStatement node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTReturnStatement node, CfVisitState state) {
             if (node.getExpr() != null) {
                 state = node.getExpr().acceptVisitor(this, state);
             }
             return state.abruptCompletion(state.returnPoint);
         }
 
-        @Override
-        public CfVisitState visit(ASTThrowStatement node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTThrowStatement node, CfVisitState state) {
             state = node.getExpr().acceptVisitor(this, state);
             return state.abruptCompletion(state.throwPoint);
         }
 
-        @Override
-        public CfVisitState visit(ASTBreakStatement node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTBreakStatement node, CfVisitState state) {
             return state.abruptCompletion(state.getBreakPoint(node.getLabel()));
         }
 
-        @Override
-        public CfVisitState visit(ASTYieldStatement node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTYieldStatement node, CfVisitState state) {
             state = node.getExpr().acceptVisitor(this, state);
             return state.abruptCompletion(state.yieldPoint);
         }
 
-        @Override
-        public CfVisitState visit(ASTContinueStatement node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTContinueStatement node, CfVisitState state) {
             return state.abruptCompletion(state.getContinuePoint(node.getLabel()));
         }
 
-        @Override
-        public CfVisitState visit(ASTIfStatement node, CfVisitState data) {
+        @Override public CfVisitState visit(ASTIfStatement node, CfVisitState data) {
             return handleLabelsForRegularStmt(node, data, (stmt, state) -> {
                 DecisionPoint condition = getControlFlowInCondition(stmt.getCondition(), state.currentProgramPoint);
                 CfVisitState thenState = stmt.getThenBranch().acceptVisitor(this, state.fork(condition.truePoint()));
@@ -291,14 +273,12 @@ public final class NPathMetricCalculator {
             return currentFallthroughState;
         }
 
-        @Override
-        public CfVisitState visit(ASTSwitchStatement node, CfVisitState data) {
+        @Override public CfVisitState visit(ASTSwitchStatement node, CfVisitState data) {
             return handleLabels(node, data, true, false, this::visitSwitch);
         }
 
 
-        @Override
-        public CfVisitState visit(ASTSwitchExpression node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTSwitchExpression node, CfVisitState state) {
             final CfPoint prevYield = state.yieldPoint;
             state.yieldPoint = new CfPoint(0);
             CfVisitState endState = visitSwitch(node, state);
@@ -307,19 +287,16 @@ public final class NPathMetricCalculator {
             return endState;
         }
 
-        @Override
-        public CfVisitState visit(ASTForeachStatement node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTForeachStatement node, CfVisitState state) {
             return visitLoopExceptDoWhile(node, state, node.getIterableExpr(), null, node.getIterableExpr());
         }
 
 
-        @Override
-        public CfVisitState visit(ASTWhileStatement node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTWhileStatement node, CfVisitState state) {
             return visitLoopExceptDoWhile(node, state, null, null, node.getCondition());
         }
 
-        @Override
-        public CfVisitState visit(ASTForStatement node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTForStatement node, CfVisitState state) {
             return visitLoopExceptDoWhile(node, state, node.getInit(), node.getUpdate(), node.getCondition());
         }
 
@@ -345,8 +322,7 @@ public final class NPathMetricCalculator {
         }
 
 
-        @Override
-        public CfVisitState visit(ASTDoStatement node, CfVisitState state) {
+        @Override public CfVisitState visit(ASTDoStatement node, CfVisitState state) {
             return handleLabels(node, state, true, true, (loop, state2) -> loop.getBody().acceptVisitor(this, state2),
                     (afterBody, breakPoint, contPoint) -> {
                         assert contPoint != null;
@@ -367,8 +343,7 @@ public final class NPathMetricCalculator {
             return point;
         }
 
-        @Override
-        public CfVisitState visitExpression(ASTExpression node, CfVisitState state) {
+        @Override public CfVisitState visitExpression(ASTExpression node, CfVisitState state) {
             CfPoint endPoint = getControlFlowInCondition(node, state.currentProgramPoint).endPaths();
             return state.withPoint(endPoint);
         }
@@ -381,14 +356,14 @@ public final class NPathMetricCalculator {
         }
 
         private static <N extends ASTStatement> CfVisitState handleLabelsForRegularStmt(N stmt, CfVisitState state,
-                                                                                        BiFunction<N, CfVisitState, CfVisitState> action) {
+                BiFunction<N, CfVisitState, CfVisitState> action) {
             return handleLabels(stmt, state, false, false, action);
         }
 
         private static <N extends ASTStatement> CfVisitState handleLabels(N stmt, CfVisitState state,
-                                                                          boolean canBreakWithoutLabel,
-                                                                          boolean canContinue,
-                                                                          BiFunction<N, CfVisitState, CfVisitState> action) {
+                boolean canBreakWithoutLabel,
+                boolean canContinue,
+                BiFunction<N, CfVisitState, CfVisitState> action) {
             return handleLabels(stmt, state, canBreakWithoutLabel, canContinue, action,
                     (endState, breakPoint, contPoint) -> endState.absorb(breakPoint));
         }
@@ -398,10 +373,10 @@ public final class NPathMetricCalculator {
         }
 
         private static <N extends ASTStatement> CfVisitState handleLabels(N stmt, CfVisitState state,
-                                                                          boolean canBreakWithoutLabel,
-                                                                          boolean canContinue,
-                                                                          BiFunction<N, CfVisitState, CfVisitState> action,
-                                                                          BreakAndContinueHandler callback) {
+                boolean canBreakWithoutLabel,
+                boolean canContinue,
+                BiFunction<N, CfVisitState, CfVisitState> action,
+                BreakAndContinueHandler callback) {
             Set<String> labels = JavaAstUtils.getStatementLabels(stmt);
             if (labels.isEmpty() && !canBreakWithoutLabel && !canContinue) {
                 return action.apply(stmt, state);
@@ -464,28 +439,23 @@ public final class NPathMetricCalculator {
             return point;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return numPathsUntilThisPoint + "";
         }
 
-        @Override
-        public CfPoint truePoint() {
+        @Override public CfPoint truePoint() {
             return this;
         }
 
-        @Override
-        public CfPoint falsePoint() {
+        @Override public CfPoint falsePoint() {
             return this;
         }
 
-        @Override
-        public CfPoint endPaths() {
+        @Override public CfPoint endPaths() {
             return this;
         }
 
-        @Override
-        public DecisionPoint negate() {
+        @Override public DecisionPoint negate() {
             return this;
         }
     }
@@ -551,16 +521,14 @@ public final class NPathMetricCalculator {
             return this;
         }
 
-        @Nullable
-        CfPoint getBreakPoint(@Nullable String label) {
+        @Nullable CfPoint getBreakPoint(@Nullable String label) {
             if (label == null) {
                 return breakPoint;
             }
             return labeledBreakPoints.get(label);
         }
 
-        @Nullable
-        CfPoint getContinuePoint(@Nullable String label) {
+        @Nullable CfPoint getContinuePoint(@Nullable String label) {
             if (label == null) {
                 return continuePoint;
             }

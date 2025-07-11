@@ -37,45 +37,41 @@ import net.sourceforge.pmd.properties.internal.PropertyParsingUtil;
 class PropertyDescriptorTest {
 
 
-
-    @Test
-    void testDefaultValueConstraintViolationCausesFailure() {
+    @Test void testDefaultValueConstraintViolationCausesFailure() {
         PropertyConstraint<Integer> constraint = inRange(1, 10);
 
         IllegalArgumentException thrown = assertThrows(ConstraintViolatedException.class, () ->
-            PropertyFactory.intProperty("fooProp")
-                           .desc("hello")
-                           .defaultValue(1000)
-                           .require(constraint)
-                           .build());
+                PropertyFactory.intProperty("fooProp")
+                        .desc("hello")
+                        .defaultValue(1000)
+                        .require(constraint)
+                        .build());
         assertThat(thrown.getMessage(),
                 containsIgnoreCase(constraint.getConstraintDescription()));
     }
 
 
-    @Test
-    void testDefaultValueConstraintViolationCausesFailureMulti() {
+    @Test void testDefaultValueConstraintViolationCausesFailureMulti() {
         PropertyConstraint<Double> constraint = inRange(1d, 10d);
 
         IllegalArgumentException thrown = assertThrows(ConstraintViolatedException.class, () ->
-            PropertyFactory.doubleListProperty("fooProp")
-                           .desc("hello")
-                           .defaultValues(2., 11.) // 11. is out of range
-                           .requireEach(constraint)
-                           .build());
+                PropertyFactory.doubleListProperty("fooProp")
+                        .desc("hello")
+                        .defaultValues(2., 11.) // 11. is out of range
+                        .requireEach(constraint)
+                        .build());
         assertThat(thrown.getMessage(),
                 containsIgnoreCase(constraint.getConstraintDescription()));
     }
 
 
-    @Test
-    void testNoConstraintViolationCausesIsOkMulti() {
+    @Test void testNoConstraintViolationCausesIsOkMulti() {
 
         PropertyDescriptor<List<Double>> descriptor = PropertyFactory.doubleListProperty("fooProp")
-                                                                     .desc("hello")
-                                                                     .defaultValues(2., 11.) // 11. is in range
-                                                                     .requireEach(inRange(1d, 20d))
-                                                                     .build();
+                .desc("hello")
+                .defaultValues(2., 11.) // 11. is in range
+                .requireEach(inRange(1d, 20d))
+                .build();
 
         assertEquals("fooProp", descriptor.name());
         assertEquals("hello", descriptor.description());
@@ -83,22 +79,19 @@ class PropertyDescriptorTest {
     }
 
 
-
-    @Test
-    void testNoConstraintViolationCausesIsOk() {
+    @Test void testNoConstraintViolationCausesIsOk() {
 
         PropertyDescriptor<String> descriptor = PropertyFactory.stringProperty("fooProp")
-                                                                     .desc("hello")
-                                                                     .defaultValue("bazooli")
-                                                                     .build();
+                .desc("hello")
+                .defaultValue("bazooli")
+                .build();
 
         assertEquals("fooProp", descriptor.name());
         assertEquals("hello", descriptor.description());
         assertEquals("bazooli", descriptor.defaultValue());
     }
 
-    @Test
-    void testIntProperty() {
+    @Test void testIntProperty() {
         PropertyDescriptor<Integer> descriptor = PropertyFactory.intProperty("intProp")
                 .desc("hello")
                 .defaultValue(1)
@@ -120,20 +113,18 @@ class PropertyDescriptorTest {
         assertEquals(Arrays.asList(5, 7), listDescriptor.serializer().fromString(" 5 , 7 "));
     }
 
-    @Test
-    void testIntPropertyInvalidValue() {
+    @Test void testIntPropertyInvalidValue() {
         PropertyDescriptor<Integer> descriptor = PropertyFactory.intProperty("intProp")
                 .desc("hello")
                 .defaultValue(1)
                 .build();
 
         NumberFormatException thrown = assertThrows(NumberFormatException.class, () ->
-            descriptor.serializer().fromString("not a number"));
+                descriptor.serializer().fromString("not a number"));
         assertThat(thrown.getMessage(), containsString("not a number"));
     }
 
-    @Test
-    void testDoubleProperty() {
+    @Test void testDoubleProperty() {
         PropertyDescriptor<Double> descriptor = PropertyFactory.doubleProperty("doubleProp")
                 .desc("hello")
                 .defaultValue(1.0)
@@ -155,19 +146,17 @@ class PropertyDescriptorTest {
         assertEquals(Arrays.asList(2.0, 3.0), listDescriptor.serializer().fromString(" 2.0 , 3.0 "));
     }
 
-    @Test
-    void testDoublePropertyInvalidValue() {
+    @Test void testDoublePropertyInvalidValue() {
         PropertyDescriptor<Double> descriptor = PropertyFactory.doubleProperty("doubleProp")
                 .desc("hello")
                 .defaultValue(1.0)
                 .build();
         NumberFormatException thrown = assertThrows(NumberFormatException.class, () ->
-            descriptor.serializer().fromString("this is not a number"));
+                descriptor.serializer().fromString("this is not a number"));
         assertThat(thrown.getMessage(), containsString("this is not a number"));
     }
 
-    @Test
-    void testStringProperty() {
+    @Test void testStringProperty() {
         PropertyDescriptor<String> descriptor = PropertyFactory.stringProperty("stringProp")
                 .desc("hello")
                 .defaultValue("default value")
@@ -180,8 +169,7 @@ class PropertyDescriptorTest {
 
     }
 
-    @Test
-    void testStringListProperty() {
+    @Test void testStringListProperty() {
         PropertyDescriptor<List<String>> listDescriptor = PropertyFactory.stringListProperty("stringListProp")
                 .desc("hello")
                 .defaultValues("v1", "v2")
@@ -193,7 +181,8 @@ class PropertyDescriptorTest {
         assertEquals(Arrays.asList("foo", "bar"), listDescriptor.serializer().fromString("  foo ,  bar  "));
     }
 
-    private enum SampleEnum { A, B, C }
+    private enum SampleEnum { A, B, C
+    }
 
     private static final Map<String, SampleEnum> NAME_MAP = new LinkedHashMap<>();
 
@@ -203,8 +192,7 @@ class PropertyDescriptorTest {
         NAME_MAP.put("TEST_C", SampleEnum.C);
     }
 
-    @Test
-    void testEnumProperty() {
+    @Test void testEnumProperty() {
         PropertyDescriptor<SampleEnum> descriptor = PropertyFactory.enumProperty("enumProp", NAME_MAP)
                 .desc("hello")
                 .defaultValue(SampleEnum.B)
@@ -225,42 +213,38 @@ class PropertyDescriptorTest {
     }
 
 
-    @Test
-    void testEnumPropertyNullValueFailsBuild() {
+    @Test void testEnumPropertyNullValueFailsBuild() {
         Map<String, SampleEnum> map = new HashMap<>(NAME_MAP);
         map.put("TEST_NULL", null);
 
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () ->
-            PropertyFactory.enumProperty("enumProp", map));
+                PropertyFactory.enumProperty("enumProp", map));
         assertThat(thrown.getMessage(), containsIgnoreCase("null value"));
     }
 
 
-    @Test
-    void testEnumListPropertyNullValueFailsBuild() {
+    @Test void testEnumListPropertyNullValueFailsBuild() {
         Map<String, SampleEnum> map = new HashMap<>(NAME_MAP);
         map.put("TEST_NULL", null);
 
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () ->
-            PropertyFactory.enumListProperty("enumProp", map));
+                PropertyFactory.enumListProperty("enumProp", map));
         assertThat(thrown.getMessage(), containsIgnoreCase("null value"));
     }
 
 
-    @Test
-    void testEnumPropertyInvalidValue() {
+    @Test void testEnumPropertyInvalidValue() {
         PropertyDescriptor<SampleEnum> descriptor = PropertyFactory.enumProperty("enumProp", NAME_MAP)
                 .desc("hello")
                 .defaultValue(SampleEnum.B)
                 .build();
 
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () ->
-            descriptor.serializer().fromString("InvalidEnumValue"));
+                descriptor.serializer().fromString("InvalidEnumValue"));
         assertThat(thrown.getMessage(), containsString("'InvalidEnumValue' should be one of 'TEST_A', 'TEST_B', 'TEST_C'"));
     }
 
-    @Test
-    void testRegexProperty() {
+    @Test void testRegexProperty() {
         PropertyDescriptor<Pattern> descriptor = PropertyFactory.regexProperty("regexProp")
                 .desc("hello")
                 .defaultValue("^[A-Z].*$")
@@ -271,25 +255,23 @@ class PropertyDescriptorTest {
         assertEquals("[0-9]+", descriptor.serializer().fromString("[0-9]+").toString());
     }
 
-    @Test
-    void testRegexPropertyInvalidValue() {
+    @Test void testRegexPropertyInvalidValue() {
         PropertyDescriptor<Pattern> descriptor = PropertyFactory.regexProperty("regexProp")
                 .desc("hello")
                 .defaultValue("^[A-Z].*$")
                 .build();
 
         PatternSyntaxException thrown = assertThrows(PatternSyntaxException.class, () ->
-            descriptor.serializer().fromString("[open class"));
+                descriptor.serializer().fromString("[open class"));
         assertThat(thrown.getMessage(), containsString("Unclosed character class"));
     }
 
-    @Test
-    void testRegexPropertyInvalidDefaultValue() {
+    @Test void testRegexPropertyInvalidDefaultValue() {
         PatternSyntaxException thrown = assertThrows(PatternSyntaxException.class, () ->
-            PropertyFactory.regexProperty("regexProp")
-                    .desc("hello")
-                    .defaultValue("[open class")
-                    .build());
+                PropertyFactory.regexProperty("regexProp")
+                        .desc("hello")
+                        .defaultValue("[open class")
+                        .build());
         assertThat(thrown.getMessage(), containsString("Unclosed character class"));
     }
 
@@ -298,47 +280,40 @@ class PropertyDescriptorTest {
         return PropertyParsingUtil.parseListWithEscapes(s, d, Function.identity());
     }
 
-    @Test
-    void testStringParserEmptyString() {
+    @Test void testStringParserEmptyString() {
         assertEquals(emptyList(), parseEscaped("", ','));
     }
 
 
-    @Test
-    void testStringParserSimple() {
+    @Test void testStringParserSimple() {
         assertEquals(listOf("a", "b", "c"),
-                     parseEscaped("a,b,c", ','));
+                parseEscaped("a,b,c", ','));
     }
 
-    @Test
-    void testStringParserEscapedChar() {
+    @Test void testStringParserEscapedChar() {
         assertEquals(listOf("a", "b,c"),
-                     parseEscaped("a,b\\,c", ','));
+                parseEscaped("a,b\\,c", ','));
     }
 
-    @Test
-    void testStringParserEscapedEscapedChar() {
+    @Test void testStringParserEscapedEscapedChar() {
         assertEquals(listOf("a", "b\\", "c"),
-                     parseEscaped("a,b\\\\,c", ','));
+                parseEscaped("a,b\\\\,c", ','));
     }
 
-    @Test
-    void testStringParserDelimIsBackslash() {
+    @Test void testStringParserDelimIsBackslash() {
         assertEquals(listOf("a,b", "", ",c"),
-                     parseEscaped("a,b\\\\,c", '\\'));
+                parseEscaped("a,b\\\\,c", '\\'));
     }
 
-    @Test
-    void testStringParserTrailingBackslash() {
+    @Test void testStringParserTrailingBackslash() {
         assertEquals(listOf("a", "b\\"),
-                     parseEscaped("a,b\\", ','));
+                parseEscaped("a,b\\", ','));
     }
 
     private static Matcher<String> containsIgnoreCase(final String substring) {
         return new SubstringMatcher("containing (ignoring case)", true, substring) {
 
-            @Override
-            protected boolean evalSubstringOf(String string) {
+            @Override protected boolean evalSubstringOf(String string) {
                 return StringUtils.indexOfIgnoreCase(string, substring) != -1;
             }
         };

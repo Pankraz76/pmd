@@ -7,8 +7,7 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride.a;
 public class PackagePrivateMethodRealExtend extends PackagePrivateMethod {
 
     // package private, does override
-    @Override
-    void printMessage() {
+    @Override void printMessage() {
         System.out.println("Click");
     }
 }

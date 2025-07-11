@@ -32,15 +32,13 @@ public final class ASTFormalParameters extends ASTList<ASTFormalParameter> {
      * Returns the number of formal parameters.
      * This excludes the receiver parameter, if any.
      */
-    @Override
-    public int size() {
+    @Override public int size() {
         return getFirstChild() instanceof ASTReceiverParameter ? getNumChildren() - 1
-                                                               : getNumChildren();
+                : getNumChildren();
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -48,8 +46,7 @@ public final class ASTFormalParameters extends ASTList<ASTFormalParameter> {
      * Returns the receiver parameter if it is present, otherwise returns
      * null.
      */
-    @Nullable
-    public ASTReceiverParameter getReceiverParameter() {
+    @Nullable public ASTReceiverParameter getReceiverParameter() {
         return AstImplUtil.getChildAs(this, 0, ASTReceiverParameter.class);
     }
 }

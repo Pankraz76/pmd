@@ -24,7 +24,8 @@ import net.sourceforge.pmd.lang.rule.Rule;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static Rule getRule(RuleContext ruleContext) {
         return ruleContext.getRule();

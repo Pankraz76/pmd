@@ -26,8 +26,7 @@ public final class ASTMethodCall extends AbstractInvocationExpr implements Quali
     }
 
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
 
         // we need to set the name.
@@ -48,26 +47,20 @@ public final class ASTMethodCall extends AbstractInvocationExpr implements Quali
 
     }
 
-    @Override
-    public @NonNull String getMethodName() {
+    @Override public @NonNull String getMethodName() {
         return super.getImage();
     }
 
-    @Override
-    @NonNull
-    public ASTArgumentList getArguments() {
+    @Override @NonNull public ASTArgumentList getArguments() {
         return (ASTArgumentList) getChild(getNumChildren() - 1);
     }
 
 
-    @Override
-    @Nullable
-    public ASTTypeArguments getExplicitTypeArguments() {
+    @Override @Nullable public ASTTypeArguments getExplicitTypeArguments() {
         return firstChild(ASTTypeArguments.class);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -19,14 +19,14 @@ import net.sourceforge.pmd.lang.java.rule.errorprone.InvalidLogMessageFormatTest
 
 @Suite
 @SelectClasses({
-    LocalVariableCouldBeFinalTest.class,
-    ImmutableFieldTest.class,
-    UnusedAssignmentTest.class,
-    LawOfDemeterTest.class,
-    SingularFieldTest.class,
-    ImplicitSwitchFallThroughTest.class,
-    InvalidLogMessageFormatTest.class,
-    AvoidThrowingNullPointerExceptionTest.class
+        LocalVariableCouldBeFinalTest.class,
+        ImmutableFieldTest.class,
+        UnusedAssignmentTest.class,
+        LawOfDemeterTest.class,
+        SingularFieldTest.class,
+        ImplicitSwitchFallThroughTest.class,
+        InvalidLogMessageFormatTest.class,
+        AvoidThrowingNullPointerExceptionTest.class
 })
 public class AllDataflowRuleTests {
 }

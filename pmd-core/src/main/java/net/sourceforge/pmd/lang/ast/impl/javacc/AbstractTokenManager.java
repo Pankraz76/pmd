@@ -24,8 +24,7 @@ public abstract class AbstractTokenManager implements TokenManager<JavaccToken> 
     /**
      * @deprecated Since 7.14.0. Don't use this map directly anymore. Instead, use {@link #getSuppressionComments()}.
      */
-    @Deprecated
-    protected Map<Integer, String> suppressMap = new HashMap<>();
+    @Deprecated protected Map<Integer, String> suppressMap = new HashMap<>();
     protected String suppressMarker = PMDConfiguration.DEFAULT_SUPPRESS_MARKER;
 
     public void setSuppressMarker(String marker) {
@@ -35,8 +34,7 @@ public abstract class AbstractTokenManager implements TokenManager<JavaccToken> 
     /**
      * @deprecated since 7.14.0. Use {@link #getSuppressionComments()} instead.
      */
-    @Deprecated
-    public Map<Integer, String> getSuppressMap() {
+    @Deprecated public Map<Integer, String> getSuppressMap() {
         return suppressMap;
     }
 

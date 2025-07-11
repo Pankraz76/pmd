@@ -23,8 +23,7 @@ public class ImageFinderFunction implements Predicate<NameDeclaration> {
         images = new HashSet<>(imageList);
     }
 
-    @Override
-    public boolean test(NameDeclaration nameDeclaration) {
+    @Override public boolean test(NameDeclaration nameDeclaration) {
         if (images.contains(nameDeclaration.getImage())) {
             decl = nameDeclaration;
             return false;

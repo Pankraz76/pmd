@@ -42,58 +42,47 @@ abstract class BaseNodeInfo extends AbstractNodeWrapper implements SiblingCounti
 
     abstract List<AstElementNode> getChildren();
 
-    @Override
-    public AstTreeInfo getTreeInfo() {
+    @Override public AstTreeInfo getTreeInfo() {
         return (AstTreeInfo) treeInfo;
     }
 
-    @Override
-    public final String getURI() {
+    @Override public final String getURI() {
         return "";
     }
 
-    @Override
-    public final String getBaseURI() {
+    @Override public final String getBaseURI() {
         return "";
     }
 
-    @Override
-    public String getPrefix() {
+    @Override public String getPrefix() {
         return "";
     }
 
-    @Override
-    public final BaseNodeInfo getParent() {
+    @Override public final BaseNodeInfo getParent() {
         return parent;
     }
 
-    @Override
-    public final int getFingerprint() {
+    @Override public final int getFingerprint() {
         return fingerprint;
     }
 
-    @Override
-    public final boolean hasFingerprint() {
+    @Override public final boolean hasFingerprint() {
         return true;
     }
 
-    @Override
-    public final NamePool getNamePool() {
+    @Override public final NamePool getNamePool() {
         return namePool;
     }
 
-    @Override
-    public final int getNodeKind() {
+    @Override public final int getNodeKind() {
         return nodeKind;
     }
 
-    @Override
-    public UnicodeString getUnicodeStringValue() {
+    @Override public UnicodeString getUnicodeStringValue() {
         return StringView.of(getStringValue());
     }
 
-    @Override
-    public NamespaceUri getNamespaceUri() {
+    @Override public NamespaceUri getNamespaceUri() {
         return NamespaceUri.NULL;
     }
 
@@ -108,7 +97,7 @@ abstract class BaseNodeInfo extends AbstractNodeWrapper implements SiblingCounti
 
     static <N extends NodeInfo> AxisIterator iterateList(List<N> nodes, boolean forwards) {
         return forwards ? new NodeListIterator(Collections.unmodifiableList(nodes))
-                        : new RevListAxisIterator<>(nodes);
+                : new RevListAxisIterator<>(nodes);
     }
 
     private static class RevListAxisIterator<N extends NodeInfo> implements AxisIterator {
@@ -118,8 +107,7 @@ abstract class BaseNodeInfo extends AbstractNodeWrapper implements SiblingCounti
             iter = list.listIterator(list.size());
         }
 
-        @Override
-        public NodeInfo next() {
+        @Override public NodeInfo next() {
             return this.iter.hasPrevious() ? this.iter.previous() : null;
         }
     }

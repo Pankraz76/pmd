@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class ASTMethodTest extends ApexParserTestBase {
 
-    @Test
-    void testConstructorName() {
+    @Test void testConstructorName() {
         ASTUserClass node = (ASTUserClass) parse("public class Foo { public Foo() {} public void bar() {} }");
         List<ASTMethod> methods = node.children(ASTMethod.class).toList();
         assertEquals("Foo", methods.get(0).getImage()); // constructor
@@ -21,8 +20,7 @@ class ASTMethodTest extends ApexParserTestBase {
         assertEquals("bar", methods.get(1).getImage()); // normal method
     }
 
-    @Test
-    void qualifiedNameWithGenerics() {
+    @Test void qualifiedNameWithGenerics() {
         ASTUserClass node = (ASTUserClass) parse("public class Foo { public void bar(List<SObject> mylist, Map<Id, SObject> oldMap) {}}");
         ApexQualifiedName qualifiedName = node.getMethods().first().getQualifiedName();
         assertEquals("bar(List<SObject>, Map<Id, SObject>)", qualifiedName.getOperation());

@@ -12,13 +12,11 @@ public final class ASTSimpleShortClassSpecifier extends AbstractModelicaClassSpe
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public void populateExtendsAndImports(ModelicaClassType classTypeDeclaration) {
+    @Override public void populateExtendsAndImports(ModelicaClassType classTypeDeclaration) {
         super.populateExtendsAndImports(classTypeDeclaration);
         InternalApiBridge.addExtendToClass(
                 classTypeDeclaration,

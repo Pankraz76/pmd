@@ -30,8 +30,8 @@ public class AvoidDuplicateLiteralsRule extends AbstractJavaRulechainRule {
 
     public static final PropertyDescriptor<Integer> THRESHOLD_DESCRIPTOR
             = intProperty("maxDuplicateLiterals")
-                             .desc("Max duplicate literals")
-                             .require(positive()).defaultValue(4).build();
+            .desc("Max duplicate literals")
+            .require(positive()).defaultValue(4).build();
 
     public static final PropertyDescriptor<Integer> MINIMUM_LENGTH_DESCRIPTOR = intProperty("minimumLength").desc("Minimum string length to check").require(positive()).defaultValue(3).build();
 
@@ -40,13 +40,13 @@ public class AvoidDuplicateLiteralsRule extends AbstractJavaRulechainRule {
                     .desc("Skip literals within annotations").defaultValue(false).build();
 
     private static final PropertyDescriptor<Set<String>> EXCEPTION_LIST_DESCRIPTOR
-        = stringProperty("exceptionList")
-                         .desc("List of literals to ignore. "
-                                          + "A literal is ignored if its image can be found in this list. "
-                                          + "Components of this list should not be surrounded by double quotes.")
-                         .map(Collectors.toSet())
-                         .defaultValue(Collections.emptySet())
-                         .build();
+            = stringProperty("exceptionList")
+            .desc("List of literals to ignore. "
+                    + "A literal is ignored if its image can be found in this list. "
+                    + "Components of this list should not be surrounded by double quotes.")
+            .map(Collectors.toSet())
+            .defaultValue(Collections.emptySet())
+            .build();
 
     private Map<String, SortedSet<ASTStringLiteral>> literals = new HashMap<>();
     private Set<String> exceptions = new HashSet<>();
@@ -60,8 +60,7 @@ public class AvoidDuplicateLiteralsRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(EXCEPTION_LIST_DESCRIPTOR);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         super.start(ctx);
 
         literals.clear();
@@ -74,8 +73,7 @@ public class AvoidDuplicateLiteralsRule extends AbstractJavaRulechainRule {
 
     }
 
-    @Override
-    public void end(RuleContext ctx) {
+    @Override public void end(RuleContext ctx) {
         processResults(ctx);
         super.end(ctx);
     }
@@ -88,14 +86,13 @@ public class AvoidDuplicateLiteralsRule extends AbstractJavaRulechainRule {
             SortedSet<ASTStringLiteral> occurrences = entry.getValue();
             if (occurrences.size() >= threshold) {
                 ASTStringLiteral first = occurrences.first();
-                Object[] args = { first.toPrintableString(), occurrences.size(), first.getBeginLine(), };
+                Object[] args = {first.toPrintableString(), occurrences.size(), first.getBeginLine(), };
                 asCtx(data).addViolation(first, args);
             }
         }
     }
 
-    @Override
-    public Object visit(ASTStringLiteral node, Object data) {
+    @Override public Object visit(ASTStringLiteral node, Object data) {
         String image = node.getImage();
 
         // just catching strings of 'minLength' chars or more (including the

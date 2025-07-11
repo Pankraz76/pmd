@@ -28,9 +28,9 @@ public class CPDReport {
     private final List<Report.ProcessingError> processingErrors;
 
     CPDReport(SourceManager sourceManager,
-              List<Match> matches,
-              Map<FileId, Integer> numberOfTokensPerFile,
-              List<Report.ProcessingError> processingErrors) {
+            List<Match> matches,
+            Map<FileId, Integer> numberOfTokensPerFile,
+            List<Report.ProcessingError> processingErrors) {
         this.sourceManager = sourceManager;
         this.matches = Collections.unmodifiableList(matches);
         this.numberOfTokensPerFile = Collections.unmodifiableMap(new TreeMap<>(numberOfTokensPerFile));

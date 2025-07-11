@@ -36,11 +36,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ClasspathClassLoaderTest {
-    @TempDir
-    private Path tempDir;
+    @TempDir private Path tempDir;
 
-    @Test
-    void loadEmptyClasspathWithParent() throws IOException {
+    @Test void loadEmptyClasspathWithParent() throws IOException {
         try (ClasspathClassLoader loader = new ClasspathClassLoader("", ClasspathClassLoader.class.getClassLoader())) {
             try (InputStream resource = loader.getResourceAsStream("java/lang/Object.class")) {
                 assertNotNull(resource);
@@ -58,8 +56,7 @@ class ClasspathClassLoaderTest {
      * behavior of {@link java.lang.ClassLoader#getResource(java.lang.String)}, which will
      * search the class loader built into the VM (BootLoader).
      */
-    @Test
-    void loadEmptyClasspathNoParent() throws IOException {
+    @Test void loadEmptyClasspathNoParent() throws IOException {
         try (ClasspathClassLoader loader = new ClasspathClassLoader("", null)) {
             try (InputStream resource = loader.getResourceAsStream("java/lang/Object.class")) {
                 assertNotNull(resource);
@@ -85,8 +82,7 @@ class ClasspathClassLoaderTest {
         return jarPath;
     }
 
-    @Test
-    void loadFromJar() throws IOException {
+    @Test void loadFromJar() throws IOException {
         Path jarPath = prepareCustomJar();
         String classpath = jarPath.toString();
 
@@ -102,8 +98,7 @@ class ClasspathClassLoaderTest {
     /**
      * @see <a href="https://github.com/pmd/pmd/issues/4899">[java] Parsing failed in ParseLock#doParse() java.io.IOException: Stream closed #4899</a>
      */
-    @Test
-    void loadMultithreadedFromJar() throws IOException, InterruptedException {
+    @Test void loadMultithreadedFromJar() throws IOException, InterruptedException {
         Path jarPath = prepareCustomJar();
         String classpath = jarPath.toString();
 
@@ -121,8 +116,7 @@ class ClasspathClassLoaderTest {
                 this.number = number;
             }
 
-            @Override
-            public void run() {
+            @Override public void run() {
                 try (ClasspathClassLoader loader = new ClasspathClassLoader(classpath, null)) {
                     // Make sure, the threads get the resource stream one after another, so that the
                     // underlying Jar File is definitively cached (if caching is enabled).
@@ -185,9 +179,7 @@ class ClasspathClassLoaderTest {
      *     This test only runs, if you have a folder ${HOME}/openjdk{javaVersion}.
      * </p>
      */
-    @ParameterizedTest
-    @ValueSource(ints = {11, 17, 21})
-    void loadFromJava(int javaVersion) throws IOException {
+    @ParameterizedTest @ValueSource(ints = {11, 17, 21}) void loadFromJava(int javaVersion) throws IOException {
         Path javaHome = Paths.get(System.getProperty("user.home"), "openjdk" + javaVersion);
         assumeTrue(Files.isDirectory(javaHome), "Couldn't find java" + javaVersion + " installation at " + javaHome);
 
@@ -235,8 +227,7 @@ class ClasspathClassLoaderTest {
         return data.toByteArray();
     }
 
-    @Test
-    void findModuleInfoFromJar() throws IOException {
+    @Test void findModuleInfoFromJar() throws IOException {
         try (ClasspathClassLoader loader = new ClasspathClassLoader("", ClasspathClassLoader.class.getClassLoader())) {
             // search for module org.junit.platform.suite.api, which should be on the test-classpath in pmd-core...
             // inside a jar

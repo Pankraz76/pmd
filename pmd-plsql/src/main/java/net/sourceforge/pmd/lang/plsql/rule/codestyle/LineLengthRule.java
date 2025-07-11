@@ -31,13 +31,11 @@ public class LineLengthRule extends AbstractPLSQLRule {
         definePropertyDescriptor(EACH_LINE);
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTInput.class);
     }
 
-    @Override
-    public Object visit(ASTInput node, Object data) {
+    @Override public Object visit(ASTInput node, Object data) {
         boolean eachLine = getProperty(EACH_LINE);
         int maxLineLength = getProperty(MAX_LINE_LENGTH);
 

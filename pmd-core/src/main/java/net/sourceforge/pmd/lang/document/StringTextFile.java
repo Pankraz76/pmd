@@ -29,28 +29,23 @@ class StringTextFile implements TextFile {
         this.fileId = fileId;
     }
 
-    @Override
-    public @NonNull LanguageVersion getLanguageVersion() {
+    @Override public @NonNull LanguageVersion getLanguageVersion() {
         return languageVersion;
     }
 
-    @Override
-    public FileId getFileId() {
+    @Override public FileId getFileId() {
         return fileId;
     }
 
-    @Override
-    public TextFileContent readContents() {
+    @Override public TextFileContent readContents() {
         return content;
     }
 
-    @Override
-    public void close() {
+    @Override public void close() {
         // nothing to do
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ReadOnlyString[" + StringUtil.elide(content.getNormalizedText().toString(), 40, "...") + "]";
     }
 

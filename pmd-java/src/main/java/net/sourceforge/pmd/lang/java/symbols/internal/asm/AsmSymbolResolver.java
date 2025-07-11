@@ -50,8 +50,7 @@ public class AsmSymbolResolver implements SymbolResolver {
         this.failed = new ClassStub(this, "/*failed-lookup*/", FailedLoader.INSTANCE, 0);
     }
 
-    @Override
-    public @Nullable JClassSymbol resolveClassFromBinaryName(@NonNull String binaryName) {
+    @Override public @Nullable JClassSymbol resolveClassFromBinaryName(@NonNull String binaryName) {
         AssertionUtil.requireParamNotNull("binaryName", binaryName);
 
         String internalName = getInternalName(binaryName);
@@ -75,8 +74,7 @@ public class AsmSymbolResolver implements SymbolResolver {
         return found == failed ? null : found; // NOPMD CompareObjectsWithEquals
     }
 
-    @Override
-    public @Nullable JModuleSymbol resolveModule(@NonNull String moduleName) {
+    @Override public @Nullable JModuleSymbol resolveModule(@NonNull String moduleName) {
         // by convention try to load module-info via "moduleName/module-info.class". The used
         // classloader will need to handle this case to return the correct module-info.class for the
         // requested module. See impl of ClasspathClassLoader in pmd-core.
@@ -99,8 +97,7 @@ public class AsmSymbolResolver implements SymbolResolver {
         return binaryName.replace('.', '/');
     }
 
-    @Nullable
-    InputStream getStreamOfInternalName(String internalName) {
+    @Nullable InputStream getStreamOfInternalName(String internalName) {
         return classLoader.findResource(internalName + ".class");
     }
 
@@ -127,8 +124,7 @@ public class AsmSymbolResolver implements SymbolResolver {
         });
     }
 
-    @Override
-    public void logStats() {
+    @Override public void logStats() {
         int numParsed = 0;
         int numFailed = 0;
         int numFailedQueries = 0;
@@ -150,9 +146,9 @@ public class AsmSymbolResolver implements SymbolResolver {
         }
 
         LOG.trace("Of {} distinct queries to the classloader, {} queries failed, "
-                        + "{} classes were found and parsed successfully, "
-                        + "{} were found but failed parsing (!), "
-                        + "{} were found but never parsed.",
+                + "{} classes were found and parsed successfully, "
+                + "{} were found but failed parsing (!), "
+                + "{} were found but never parsed.",
                 knownStubs.size(), numFailedQueries, numParsed, numFailed, numNotParsed);
     }
 }

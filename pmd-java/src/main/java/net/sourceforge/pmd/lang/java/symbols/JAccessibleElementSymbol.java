@@ -47,8 +47,7 @@ public interface JAccessibleElementSymbol extends AnnotableSymbol {
      * 2. if it's obtained from an AST, then the enclosing class is in the same source file so we can
      * know about it
      */
-    @Nullable
-    JClassSymbol getEnclosingClass();
+    @Nullable JClassSymbol getEnclosingClass();
 
 
     /**
@@ -59,8 +58,7 @@ public interface JAccessibleElementSymbol extends AnnotableSymbol {
      *
      * <p>This is consistent with Java 9's {@code getPackageName()}.
      */
-    @NonNull
-    String getPackageName();
+    @NonNull String getPackageName();
 
 
 }

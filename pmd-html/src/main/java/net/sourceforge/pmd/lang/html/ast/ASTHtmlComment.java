@@ -15,18 +15,15 @@ public final class ASTHtmlComment extends AbstractHtmlNode<Comment> implements C
         super(node);
     }
 
-    @Override
-    public String getData() {
+    @Override public String getData() {
         return node.getData();
     }
 
-    @Override
-    protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return CommentNode.super.getXPathNodeName();
     }
 }

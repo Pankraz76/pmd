@@ -39,16 +39,15 @@ public class CSVRenderer extends AbstractIncrementingRenderer {
 
     public static final String NAME = "csv";
 
-    @SuppressWarnings("unchecked")
-    private final ColumnDescriptor<RuleViolation>[] allColumns = new ColumnDescriptor[] {
-        newColDescriptor("problem", "Problem", (idx, rv, cr) -> Integer.toString(idx)),
-        newColDescriptor("package", "Package", (idx, rv, cr) -> rv.getAdditionalInfo().getOrDefault(RuleViolation.PACKAGE_NAME, "")),
-        newColDescriptor("file", "File", (idx, rv, cr) -> determineFileName(rv.getFileId())),
-        newColDescriptor("priority", "Priority", (idx, rv, cr) -> Integer.toString(rv.getRule().getPriority().getPriority())),
-        newColDescriptor("line", "Line", (idx, rv, cr) -> Integer.toString(rv.getBeginLine())),
-        newColDescriptor("desc", "Description", (idx, rv, cr) -> StringUtils.replaceChars(rv.getDescription(), '\"', '\'')),
-        newColDescriptor("ruleSet", "Rule set", (idx, rv, cr) -> rv.getRule().getRuleSetName()),
-        newColDescriptor("rule", "Rule", (idx, rv, cr) -> rv.getRule().getName()),
+    @SuppressWarnings("unchecked") private final ColumnDescriptor<RuleViolation>[] allColumns = new ColumnDescriptor[]{
+            newColDescriptor("problem", "Problem", (idx, rv, cr) -> Integer.toString(idx)),
+            newColDescriptor("package", "Package", (idx, rv, cr) -> rv.getAdditionalInfo().getOrDefault(RuleViolation.PACKAGE_NAME, "")),
+            newColDescriptor("file", "File", (idx, rv, cr) -> determineFileName(rv.getFileId())),
+            newColDescriptor("priority", "Priority", (idx, rv, cr) -> Integer.toString(rv.getRule().getPriority().getPriority())),
+            newColDescriptor("line", "Line", (idx, rv, cr) -> Integer.toString(rv.getBeginLine())),
+            newColDescriptor("desc", "Description", (idx, rv, cr) -> StringUtils.replaceChars(rv.getDescription(), '\"', '\'')),
+            newColDescriptor("ruleSet", "Rule set", (idx, rv, cr) -> rv.getRule().getRuleSetName()),
+            newColDescriptor("rule", "Rule", (idx, rv, cr) -> rv.getRule().getName()),
     };
 
     private static @NonNull ColumnDescriptor<RuleViolation> newColDescriptor(String id, String title, Accessor<RuleViolation> accessor) {
@@ -112,18 +111,15 @@ public class CSVRenderer extends AbstractIncrementingRenderer {
         return csvWriter;
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         csvWriter().writeTitles(getWriter());
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "csv";
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         csvWriter().writeData(getWriter(), violations);
     }
 
@@ -132,8 +128,7 @@ public class CSVRenderer extends AbstractIncrementingRenderer {
      *
      * @see PropertySource#dysfunctionReason()
      */
-    @Override
-    public String dysfunctionReason() {
+    @Override public String dysfunctionReason() {
         return activeColumns().isEmpty() ? "No columns selected" : null;
     }
 }

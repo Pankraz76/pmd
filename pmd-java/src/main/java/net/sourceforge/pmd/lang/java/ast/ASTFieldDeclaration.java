@@ -22,10 +22,10 @@ import net.sourceforge.pmd.lang.rule.xpath.DeprecatedAttribute;
  * </pre>
  */
 public final class ASTFieldDeclaration extends AbstractJavaNode
-    implements LeftRecursiveNode,
-               ASTBodyDeclaration,
-               InternalInterfaces.MultiVariableIdOwner,
-               JavadocCommentOwner {
+        implements LeftRecursiveNode,
+        ASTBodyDeclaration,
+        InternalInterfaces.MultiVariableIdOwner,
+        JavadocCommentOwner {
 
 
     ASTFieldDeclaration(int id) {
@@ -33,14 +33,12 @@ public final class ASTFieldDeclaration extends AbstractJavaNode
     }
 
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         // report on the identifier and not the annotations
         return getVarIds().firstOrThrow().getFirstToken().getReportLocation();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -54,9 +52,7 @@ public final class ASTFieldDeclaration extends AbstractJavaNode
      * @deprecated FieldDeclaration may declare several variables, so this is not exhaustive
      *     Iterate on the {@linkplain ASTVariableId VariableIds} instead
      */
-    @Deprecated
-    @DeprecatedAttribute(replaceWith = "VariableId/@Name")
-    public String getVariableName() {
+    @Deprecated @DeprecatedAttribute(replaceWith = "VariableId/@Name") public String getVariableName() {
         return getVarIds().firstOrThrow().getName();
     }
 
@@ -66,8 +62,7 @@ public final class ASTFieldDeclaration extends AbstractJavaNode
      * The type of this node is not necessarily the type of the variables,
      * see {@link ASTVariableId#getTypeNode()}.
      */
-    @Override
-    public ASTType getTypeNode() {
+    @Override public ASTType getTypeNode() {
         return firstChild(ASTType.class);
     }
 

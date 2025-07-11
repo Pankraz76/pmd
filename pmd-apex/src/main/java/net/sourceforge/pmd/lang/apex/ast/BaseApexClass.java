@@ -14,23 +14,19 @@ abstract class BaseApexClass<T extends TypeDeclaration> extends AbstractApexNode
         super(node);
     }
 
-    @Override
-    public boolean isFindBoundary() {
+    @Override public boolean isFindBoundary() {
         return true;
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return getSimpleName();
     }
 
-    @Override
-    public String getSimpleName() {
+    @Override public String getSimpleName() {
         return node.getId().getString();
     }
 
-    @Override
-    public ApexQualifiedName getQualifiedName() {
+    @Override public ApexQualifiedName getQualifiedName() {
         if (qname == null) {
 
             ASTUserClass parent = ancestors(ASTUserClass.class).first();

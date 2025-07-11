@@ -54,18 +54,15 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
         definePropertyDescriptor(Rule.VIOLATION_SUPPRESS_XPATH_DESCRIPTOR);
     }
 
-    @Override
-    protected String getPropertySourceType() {
+    @Override protected String getPropertySourceType() {
         return "rule";
     }
 
-    @Override
-    public Language getLanguage() {
+    @Override public Language getLanguage() {
         return language;
     }
 
-    @Override
-    public void setLanguage(Language language) {
+    @Override public void setLanguage(Language language) {
         if (this.language != null && !this.language.equals(language)) {
             throw new UnsupportedOperationException("The Language for Rule class " + this.getClass().getName()
                     + " is immutable and cannot be changed.");
@@ -73,130 +70,106 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
         this.language = language;
     }
 
-    @Override
-    public LanguageVersion getMinimumLanguageVersion() {
+    @Override public LanguageVersion getMinimumLanguageVersion() {
         return minimumLanguageVersion;
     }
 
-    @Override
-    public void setMinimumLanguageVersion(LanguageVersion minimumLanguageVersion) {
+    @Override public void setMinimumLanguageVersion(LanguageVersion minimumLanguageVersion) {
         if (minimumLanguageVersion != null && !minimumLanguageVersion.getLanguage().equals(getLanguage())) {
             throw new IllegalArgumentException("Version " + minimumLanguageVersion + " does not belong to language " + getLanguage());
         }
         this.minimumLanguageVersion = minimumLanguageVersion;
     }
 
-    @Override
-    public LanguageVersion getMaximumLanguageVersion() {
+    @Override public LanguageVersion getMaximumLanguageVersion() {
         return maximumLanguageVersion;
     }
 
-    @Override
-    public void setMaximumLanguageVersion(LanguageVersion maximumLanguageVersion) {
+    @Override public void setMaximumLanguageVersion(LanguageVersion maximumLanguageVersion) {
         if (maximumLanguageVersion != null && !maximumLanguageVersion.getLanguage().equals(getLanguage())) {
             throw new IllegalArgumentException("Version " + maximumLanguageVersion + " does not belong to language " + getLanguage());
         }
         this.maximumLanguageVersion = maximumLanguageVersion;
     }
 
-    @Override
-    public boolean isDeprecated() {
+    @Override public boolean isDeprecated() {
         return deprecated;
     }
 
-    @Override
-    public void setDeprecated(boolean deprecated) {
+    @Override public void setDeprecated(boolean deprecated) {
         this.deprecated = deprecated;
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return name;
     }
 
-    @Override
-    public void setName(String name) {
+    @Override public void setName(String name) {
         this.name = name;
     }
 
-    @Override
-    public String getSince() {
+    @Override public String getSince() {
         return since;
     }
 
-    @Override
-    public void setSince(String since) {
+    @Override public void setSince(String since) {
         this.since = since;
     }
 
-    @Override
-    public String getRuleClass() {
+    @Override public String getRuleClass() {
         return ruleClass;
     }
 
-    @Override
-    public void setRuleClass(String ruleClass) {
+    @Override public void setRuleClass(String ruleClass) {
         this.ruleClass = ruleClass;
     }
 
-    @Override
-    public String getRuleSetName() {
+    @Override public String getRuleSetName() {
         return ruleSetName;
     }
 
-    @Override
-    public void setRuleSetName(String ruleSetName) {
+    @Override public void setRuleSetName(String ruleSetName) {
         this.ruleSetName = ruleSetName;
     }
 
-    @Override
-    public String getMessage() {
+    @Override public String getMessage() {
         return message;
     }
 
-    @Override
-    public void setMessage(String message) {
+    @Override public void setMessage(String message) {
         this.message = message;
     }
 
-    @Override
-    public String getDescription() {
+    @Override public String getDescription() {
         return description;
     }
 
-    @Override
-    public void setDescription(String description) {
+    @Override public void setDescription(String description) {
         this.description = description;
     }
 
-    @Override
-    public List<String> getExamples() {
+    @Override public List<String> getExamples() {
         // TODO Needs to be externally immutable
         return examples;
     }
 
-    @Override
-    public void addExample(String example) {
+    @Override public void addExample(String example) {
         examples.add(example);
     }
 
-    @Override
-    public String getExternalInfoUrl() {
+    @Override public String getExternalInfoUrl() {
         return externalInfoUrl;
     }
 
-    @Override
-    public void setExternalInfoUrl(String externalInfoUrl) {
+    @Override public void setExternalInfoUrl(String externalInfoUrl) {
         this.externalInfoUrl = externalInfoUrl;
     }
 
-    @Override
-    public RulePriority getPriority() {
+    @Override public RulePriority getPriority() {
         return priority;
     }
 
-    @Override
-    public void setPriority(RulePriority priority) {
+    @Override public void setPriority(RulePriority priority) {
         this.priority = priority;
     }
 
@@ -208,8 +181,7 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
         return classRuleChainVisits;
     }
 
-    @Override
-    public final RuleTargetSelector getTargetSelector() {
+    @Override public final RuleTargetSelector getTargetSelector() {
         if (myStrategy == null) {
             myStrategy = buildTargetSelector();
         }
@@ -220,20 +192,17 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
      * Create the targeting strategy for this rule.
      * Use the factory methods of {@link RuleTargetSelector}.
      */
-    @NonNull
-    protected RuleTargetSelector buildTargetSelector() {
+    @NonNull protected RuleTargetSelector buildTargetSelector() {
         Set<Class<? extends Node>> crvs = getClassRuleChainVisits();
         return crvs.isEmpty() ? RuleTargetSelector.forRootOnly()
-                              : RuleTargetSelector.forTypes(crvs);
+                : RuleTargetSelector.forTypes(crvs);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         // Override as needed
     }
 
-    @Override
-    public void end(RuleContext ctx) {
+    @Override public void end(RuleContext ctx) {
         // Override as needed
     }
 
@@ -254,7 +223,7 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
     protected final RuleContext asCtx(Object ctx) {
         if (ctx instanceof RuleContext) {
             assert isThisRule(InternalApiBridge.getRule((RuleContext) ctx))
-                : "not an appropriate rule context!";
+                    : "not an appropriate rule context!";
             return (RuleContext) ctx;
         } else {
             throw new ClassCastException("Unexpected context object! " + ctx);
@@ -263,7 +232,7 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
 
     private boolean isThisRule(Rule rule) {
         return rule == this // NOPMD CompareObjectsWithEquals
-            || rule instanceof RuleReference && this.isThisRule(((RuleReference) rule).getRule());
+                || rule instanceof RuleReference && this.isThisRule(((RuleReference) rule).getRule());
     }
 
     /**
@@ -275,8 +244,7 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
      * <li>They share the same properties.</li>
      * </ol>
      */
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true; // trivial
         }
@@ -290,14 +258,11 @@ public abstract class AbstractRule extends AbstractPropertySource implements Rul
                 && super.equals(o);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hash(getName(), getPriority(), super.hashCode());
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Rule deepCopy() {
+    @SuppressWarnings("unchecked") @Override public Rule deepCopy() {
         Rule result;
         try {
             Constructor<? extends AbstractRule> declaredConstructor = getClass().getDeclaredConstructor();

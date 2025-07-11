@@ -24,8 +24,7 @@ public class PrimitiveWrapperInstantiationRule extends AbstractJavaRulechainRule
         super(ASTConstructorCall.class, ASTMethodCall.class);
     }
 
-    @Override
-    public Object visit(ASTConstructorCall node, Object data) {
+    @Override public Object visit(ASTConstructorCall node, Object data) {
         ASTClassType type = node.firstChild(ASTClassType.class);
         if (type == null) {
             return data;
@@ -49,8 +48,7 @@ public class PrimitiveWrapperInstantiationRule extends AbstractJavaRulechainRule
     /**
      * Finds calls of "Boolean.valueOf".
      */
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         if (BOOLEAN_VALUEOF_MATCHER.matchesCall(node)) {
             checkArguments(node.getArguments(), node, data);
         }

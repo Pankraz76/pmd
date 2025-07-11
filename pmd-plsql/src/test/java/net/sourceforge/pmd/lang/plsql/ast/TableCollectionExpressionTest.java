@@ -10,13 +10,11 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class TableCollectionExpressionTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void testExamples() {
+    @Test void testExamples() {
         plsql.parseResource("TableCollectionExpressionExamples.pls");
     }
 
-    @Test
-    void testIssue1526() {
+    @Test void testIssue1526() {
         plsql.parseResource("TableCollectionExpressionIssue1526.pls");
     }
 }

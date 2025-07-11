@@ -11,8 +11,7 @@ public final class ASTLanguageSpecification extends AbstractModelicaNode {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

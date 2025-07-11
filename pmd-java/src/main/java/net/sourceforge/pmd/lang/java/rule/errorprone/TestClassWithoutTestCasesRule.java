@@ -30,12 +30,11 @@ public class TestClassWithoutTestCasesRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(TEST_CLASS_PATTERN);
     }
 
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
         if (isJUnit3Class(node) || isJUnit5NestedClass(node) || isTestClassByPattern(node)) {
             boolean hasTests =
-                node.getDeclarations(ASTMethodDeclaration.class)
-                    .any(TestFrameworksUtil::isTestMethod);
+                    node.getDeclarations(ASTMethodDeclaration.class)
+                            .any(TestFrameworksUtil::isTestMethod);
             boolean hasNestedTestClasses = node.getDeclarations(ASTTypeDeclaration.class)
                     .any(TestFrameworksUtil::isJUnit5NestedClass);
 

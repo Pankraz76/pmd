@@ -104,13 +104,11 @@ class BaseTypeInferenceUnitTest {
 
     static Matcher<InferenceVar> hasBound(BoundKind kind, JTypeMirror t) {
         return new BaseMatcher<InferenceVar>() {
-            @Override
-            public void describeTo(Description description) {
+            @Override public void describeTo(Description description) {
 
             }
 
-            @Override
-            public boolean matches(Object actual) {
+            @Override public boolean matches(Object actual) {
                 if (!(actual instanceof InferenceVar)) {
                     return false;
                 }
@@ -124,14 +122,12 @@ class BaseTypeInferenceUnitTest {
      */
     static Matcher<InferenceVar> hasBoundsExactly(Bound... bounds) {
         return new BaseMatcher<InferenceVar>() {
-            @Override
-            public void describeTo(Description description) {
+            @Override public void describeTo(Description description) {
                 description.appendText("'_ ");
                 Bound.describeList(description, Arrays.asList(bounds));
             }
 
-            @Override
-            public void describeMismatch(Object item, Description description) {
+            @Override public void describeMismatch(Object item, Description description) {
                 if (!(item instanceof InferenceVar)) {
                     description.appendText("Not an ivar: ").appendValue(item);
                     return;
@@ -144,8 +140,7 @@ class BaseTypeInferenceUnitTest {
 
             }
 
-            @Override
-            public boolean matches(Object actual) {
+            @Override public boolean matches(Object actual) {
                 if (!(actual instanceof InferenceVar)) {
                     return false;
                 }
@@ -223,8 +218,7 @@ class BaseTypeInferenceUnitTest {
             this.t = t;
         }
 
-        @Override
-        public void describeTo(Description description) {
+        @Override public void describeTo(Description description) {
             description.appendText(toString());
         }
 
@@ -244,8 +238,7 @@ class BaseTypeInferenceUnitTest {
             return description.appendList("{", ", ", "}", bounds);
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "_" + kind.getSym() + t;
         }
     }

@@ -19,8 +19,7 @@ public class VariableNameDeclaration extends AbstractNameDeclaration {
         super(node);
     }
 
-    @Override
-    public Scope getScope() {
+    @Override public Scope getScope() {
         try {
             return node.getScope().getEnclosingScope(ClassScope.class);
         } catch (Exception e) {
@@ -35,8 +34,7 @@ public class VariableNameDeclaration extends AbstractNameDeclaration {
         return (ASTVariableOrConstantDeclaratorId) node;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (!(o instanceof VariableNameDeclaration)) {
             return false;
         }
@@ -53,8 +51,7 @@ public class VariableNameDeclaration extends AbstractNameDeclaration {
         }
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         try {
             return this.getImage().hashCode();
         } catch (Exception e) {
@@ -65,8 +62,7 @@ public class VariableNameDeclaration extends AbstractNameDeclaration {
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Variable: image = '" + node.getImage() + "', line = " + node.getBeginLine();
     }
 }

@@ -16,30 +16,33 @@ public class ReproducerFor5084 {
         // );
     }
 
-    public abstract static class Body<T> { }
+    public abstract static class Body<T> {
+    }
 
-    public abstract static class BodyWithContentType<T> extends Body<T> { }
+    public abstract static class BodyWithContentType<T> extends Body<T> {
+    }
 
-    public interface HttpMessage<T extends HttpMessage, B extends Body> { }
+    public interface HttpMessage<T extends HttpMessage, B extends Body> {
+    }
 
-    public static class HttpRequest implements HttpMessage<HttpRequest, Body> { }
+    public static class HttpRequest implements HttpMessage<HttpRequest, Body> {
+    }
 
-    public static class HttpResponse implements HttpMessage<HttpResponse, BodyWithContentType> { }
+    public static class HttpResponse implements HttpMessage<HttpResponse, BodyWithContentType> {
+    }
 
     public interface Serializer<T> {
         String serialize(T t);
     }
 
     public class HttpRequestSerializer implements Serializer<HttpRequest> {
-        @Override
-        public String serialize(HttpRequest s) {
+        @Override public String serialize(HttpRequest s) {
             return String.valueOf(s);
         }
     }
 
     public class HttpResponseSerializer implements Serializer<HttpResponse> {
-        @Override
-        public String serialize(HttpResponse s) {
+        @Override public String serialize(HttpResponse s) {
             return String.valueOf(s);
         }
     }

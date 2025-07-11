@@ -54,8 +54,7 @@ public final class ASTVariableId extends AbstractTypedSymbolDeclarator<JVariable
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -84,14 +83,11 @@ public final class ASTVariableId extends AbstractTypedSymbolDeclarator<JVariable
      * returns {@code int}, and this method returns the dimensions that follow
      * the variable ID. Returns null if there are no such dimensions.
      */
-    @Nullable
-    public ASTArrayDimensions getExtraDimensions() {
+    @Nullable public ASTArrayDimensions getExtraDimensions() {
         return children(ASTArrayDimensions.class).first();
     }
 
-    @NonNull
-    @Override
-    public ASTModifierList getModifiers() {
+    @NonNull @Override public ASTModifierList getModifiers() {
         // delegates modifiers
         return getModifierOwnerParent().getModifiers();
     }
@@ -114,10 +110,9 @@ public final class ASTVariableId extends AbstractTypedSymbolDeclarator<JVariable
         return hasModifiers(JModifier.STATIC);
     }
 
-    @Override
-    public Visibility getVisibility() {
+    @Override public Visibility getVisibility() {
         return isPatternBinding() ? Visibility.V_LOCAL
-                                  : getModifierOwnerParent().getVisibility();
+                : getModifierOwnerParent().getVisibility();
     }
 
 
@@ -191,8 +186,8 @@ public final class ASTVariableId extends AbstractTypedSymbolDeclarator<JVariable
      */
     public boolean isLocalVariable() {
         return ancestors().get(1) instanceof ASTLocalVariableDeclaration
-            && !isResourceDeclaration()
-            && !isForeachVariable();
+                && !isResourceDeclaration()
+                && !isForeachVariable();
     }
 
     /**
@@ -280,8 +275,7 @@ public final class ASTVariableId extends AbstractTypedSymbolDeclarator<JVariable
             // do a first filter to avoid having to query the language processor
             return false;
         }
-        @SuppressWarnings("PMD.CloseResource")
-        JavaLanguageProcessor javaLanguage = (JavaLanguageProcessor) typeNode.getAstInfo().getLanguageProcessor();
+        @SuppressWarnings("PMD.CloseResource") JavaLanguageProcessor javaLanguage = (JavaLanguageProcessor) typeNode.getAstInfo().getLanguageProcessor();
         if (!javaLanguage.hasFirstClassLombokSupport()) {
             return false;
         }
@@ -289,7 +283,7 @@ public final class ASTVariableId extends AbstractTypedSymbolDeclarator<JVariable
         // type lombok.var unless it uses a qualified name. `var` is interpreted
         // as a keyword by the parser and produces no type node.
         return TypeTestUtil.isExactlyA("lombok.val", typeNode)
-            || !onlyVal && TypeTestUtil.isExactlyA("lombok.var", typeNode);
+                || !onlyVal && TypeTestUtil.isExactlyA("lombok.var", typeNode);
     }
 
     /**
@@ -304,8 +298,7 @@ public final class ASTVariableId extends AbstractTypedSymbolDeclarator<JVariable
     /**
      * Returns the initializer of the variable, or null if it doesn't exist.
      */
-    @Nullable
-    public ASTExpression getInitializer() {
+    @Nullable public ASTExpression getInitializer() {
         if (getParent() instanceof ASTVariableDeclarator) {
             return ((ASTVariableDeclarator) getParent()).getInitializer();
         }
@@ -318,8 +311,7 @@ public final class ASTVariableId extends AbstractTypedSymbolDeclarator<JVariable
      * type.
      */
     // TODO unreliable, not typesafe and not useful, should be deprecated
-    @Nullable
-    public Node getTypeNameNode() {
+    @Nullable public Node getTypeNameNode() {
         return getTypeNode();
     }
 
@@ -364,8 +356,7 @@ public final class ASTVariableId extends AbstractTypedSymbolDeclarator<JVariable
      * the variable.
      */
     // @formatter:on
-    @Override
-    public @NonNull JTypeMirror getTypeMirror() {
+    @Override public @NonNull JTypeMirror getTypeMirror() {
         return super.getTypeMirror();
     }
 }

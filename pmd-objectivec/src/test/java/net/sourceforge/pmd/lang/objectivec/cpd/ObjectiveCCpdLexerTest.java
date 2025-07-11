@@ -15,23 +15,19 @@ class ObjectiveCCpdLexerTest extends CpdTextComparisonTest {
         super("objectivec", ".m");
     }
 
-    @Test
-    void testLongSample() {
+    @Test void testLongSample() {
         doTest("big_sample");
     }
 
-    @Test
-    void testUnicodeEscape() {
+    @Test void testUnicodeEscape() {
         doTest("unicodeEscapeInString");
     }
 
-    @Test
-    void testUnicodeCharInIdent() {
+    @Test void testUnicodeCharInIdent() {
         doTest("unicodeCharInIdent");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 }

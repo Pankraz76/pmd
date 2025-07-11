@@ -85,8 +85,7 @@ public class CPDConfiguration extends AbstractConfiguration {
         super(languageRegistry, new SimpleMessageReporter(LoggerFactory.getLogger(CpdAnalysis.class)));
     }
 
-    @Override
-    public void setSourceEncoding(Charset sourceEncoding) {
+    @Override public void setSourceEncoding(Charset sourceEncoding) {
         super.setSourceEncoding(sourceEncoding);
         if (cpdReportRenderer != null) {
             setRendererEncoding(cpdReportRenderer, sourceEncoding);
@@ -233,8 +232,7 @@ public class CPDConfiguration extends AbstractConfiguration {
      * @deprecated This option will be removed. With {@link #isFailOnError()}, you can
      * control whether lexical errors should fail the build or not.
      */
-    @Deprecated
-    public boolean isSkipLexicalErrors() {
+    @Deprecated public boolean isSkipLexicalErrors() {
         return skipLexicalErrors;
     }
 
@@ -242,8 +240,7 @@ public class CPDConfiguration extends AbstractConfiguration {
      * @deprecated This option will be removed. With {@link #setFailOnError(boolean)}, you can
      * control whether lexical errors should fail the build or not.
      */
-    @Deprecated
-    public void setSkipLexicalErrors(boolean skipLexicalErrors) {
+    @Deprecated public void setSkipLexicalErrors(boolean skipLexicalErrors) {
         this.skipLexicalErrors = skipLexicalErrors;
     }
 
@@ -271,11 +268,10 @@ public class CPDConfiguration extends AbstractConfiguration {
         this.skipBlocksPattern = skipBlocksPattern;
     }
 
-    @Override
-    protected void checkLanguageIsAcceptable(Language lang) throws UnsupportedOperationException {
+    @Override protected void checkLanguageIsAcceptable(Language lang) throws UnsupportedOperationException {
         if (!(lang instanceof CpdCapableLanguage)) {
             throw new UnsupportedOperationException("Language " + lang.getId() + " does not support analysis with CPD and cannot be used in a CPDConfiguration. "
-                + "You may be able to use it with PMD though.");
+                    + "You may be able to use it with PMD though.");
         }
     }
 

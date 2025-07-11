@@ -30,8 +30,7 @@ public final class ASTResource extends AbstractJavaNode {
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -54,8 +53,7 @@ public final class ASTResource extends AbstractJavaNode {
      *          might be complex and not have a real "name". In this case we return the
      *          expression pretty printed.
      */
-    @Deprecated
-    public String getStableName() {
+    @Deprecated public String getStableName() {
         if (isConciseResource()) {
             return PrettyPrintingUtil.prettyPrint(getInitializer()).toString();
         } else {
@@ -63,8 +61,7 @@ public final class ASTResource extends AbstractJavaNode {
         }
     }
 
-    @Nullable
-    public ASTLocalVariableDeclaration asLocalVariableDeclaration() {
+    @Nullable public ASTLocalVariableDeclaration asLocalVariableDeclaration() {
         return AstImplUtil.getChildAs(this, 0, ASTLocalVariableDeclaration.class);
     }
 

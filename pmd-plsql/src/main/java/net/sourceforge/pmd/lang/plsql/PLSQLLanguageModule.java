@@ -20,9 +20,9 @@ public class PLSQLLanguageModule extends SimpleLanguageModuleBase {
 
     public PLSQLLanguageModule() {
         super(
-            LanguageMetadata.withId(ID)
-                            .name(NAME)
-                            .extensions(
+                LanguageMetadata.withId(ID)
+                        .name(NAME)
+                        .extensions(
                                 "sql",
                                 "trg",  // Triggers
                                 "prc", "fnc", // Standalone Procedures and Functions
@@ -31,14 +31,14 @@ public class PLSQLLanguageModule extends SimpleLanguageModuleBase {
                                 "pck", "pks", "pkh", "pkb", // Packages
                                 "typ", "tyb", // Object Types
                                 "tps", "tpb" // Object Types
-                            )
-                            .addVersion("11g")
-                            .addVersion("12c_Release_1", "12.1")
-                            .addVersion("12c_Release_2", "12.2")
-                            .addVersion("18c")
-                            .addVersion("19c")
-                            .addDefaultVersion("21c"),
-            new PLSQLHandler()
+                        )
+                        .addVersion("11g")
+                        .addVersion("12c_Release_1", "12.1")
+                        .addVersion("12c_Release_2", "12.2")
+                        .addVersion("18c")
+                        .addVersion("19c")
+                        .addDefaultVersion("21c"),
+                new PLSQLHandler()
         );
     }
 
@@ -47,16 +47,14 @@ public class PLSQLLanguageModule extends SimpleLanguageModuleBase {
     }
 
 
-    @Override
-    public LanguagePropertyBundle newPropertyBundle() {
+    @Override public LanguagePropertyBundle newPropertyBundle() {
         LanguagePropertyBundle bundle = super.newPropertyBundle();
         bundle.definePropertyDescriptor(CpdLanguageProperties.CPD_ANONYMIZE_LITERALS);
         bundle.definePropertyDescriptor(CpdLanguageProperties.CPD_ANONYMIZE_IDENTIFIERS);
         return bundle;
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new PLSQLCpdLexer(bundle);
     }
 }

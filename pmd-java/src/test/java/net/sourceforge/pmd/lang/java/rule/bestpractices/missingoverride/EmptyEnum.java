@@ -15,8 +15,7 @@ public enum EmptyEnum {
         System.out.println("1");
     }
 
-    @SuppressWarnings("PMD.AvoidUsingShortType")
-    public static void method(short... b) {
+    @SuppressWarnings("PMD.AvoidUsingShortType") public static void method(short... b) {
         System.out.println("2");
     }
 }

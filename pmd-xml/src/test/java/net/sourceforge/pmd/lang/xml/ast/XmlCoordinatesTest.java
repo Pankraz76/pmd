@@ -19,8 +19,7 @@ class XmlCoordinatesTest extends BaseTreeDumpTest {
         super(CoordinatesPrinter.INSTANCE, ".xml");
     }
 
-    @Override
-    public @NonNull BaseParsingHelper<?, ?> getParser() {
+    @Override public @NonNull BaseParsingHelper<?, ?> getParser() {
         return XmlParsingHelper.XML.withResourceContext(getClass(), "testdata");
     }
 
@@ -28,13 +27,11 @@ class XmlCoordinatesTest extends BaseTreeDumpTest {
      * See bug #1054: XML Rules ever report a line -1 and not the line/column
      * where the error occurs
      */
-    @Test
-    void testLineNumbers() {
+    @Test void testLineNumbers() {
         doTest("xmlCoords");
     }
 
-    @Test
-    void testAutoclosingElementLength() {
+    @Test void testAutoclosingElementLength() {
         final String xml = "<elementName att1='foo' att2='bar' att3='other' />";
         TestUtilsKt.assertPosition(XmlParsingHelper.XML.parse(xml), 1, 1, 1, xml.length());
     }

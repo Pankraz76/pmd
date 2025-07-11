@@ -12,8 +12,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class CreateTableTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseCreateTable() {
+    @Test void parseCreateTable() {
         ASTInput input = plsql.parseResource("CreateTable.pls");
 
         // 5th column of first table statement has a inline constraint of type check
@@ -22,8 +21,7 @@ class CreateTableTest extends AbstractPLSQLParserTst {
         assertEquals(ConstraintType.CHECK, columnStatus.firstChild(ASTInlineConstraint.class).getType());
     }
 
-    @Test
-    void parseCreateOrganizedTable() {
+    @Test void parseCreateOrganizedTable() {
         plsql.parseResource("CreateOrganizedTable.pls");
     }
 }

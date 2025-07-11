@@ -80,7 +80,7 @@ class RuleFactory {
      * @param resourceLoader The resource loader to load the rule from jar
      */
     RuleFactory(ResourceLoader resourceLoader,
-                       LanguageRegistry languageRegistry) {
+            LanguageRegistry languageRegistry) {
         this.resourceLoader = resourceLoader;
         this.languageRegistry = languageRegistry;
     }
@@ -130,9 +130,9 @@ class RuleFactory {
 
             } else {
                 err.at(node).error(
-                    XmlErrorMessages.ERR__UNEXPECTED_ELEMENT_IN,
-                    node.getTagName(),
-                    "rule " + ruleReference.getName()
+                        XmlErrorMessages.ERR__UNEXPECTED_ELEMENT_IN,
+                        node.getTagName(),
+                        "rule " + ruleReference.getName()
                 );
             }
         }
@@ -203,8 +203,8 @@ class RuleFactory {
 
             } else {
                 throw err.at(node).error(
-                    XmlErrorMessages.ERR__UNEXPECTED_ELEMENT_IN,
-                    "rule " + NAME.getAttributeOrNull(ruleElement));
+                        XmlErrorMessages.ERR__UNEXPECTED_ELEMENT_IN,
+                        "rule " + NAME.getAttributeOrNull(ruleElement));
             }
         }
 
@@ -213,13 +213,13 @@ class RuleFactory {
 
     private void checkVersionsAreOrdered(Element ruleElement, PmdXmlReporter err, Rule rule) {
         if (rule.getMinimumLanguageVersion() != null && rule.getMaximumLanguageVersion() != null
-            && rule.getMinimumLanguageVersion().compareTo(rule.getMaximumLanguageVersion()) > 0) {
+                && rule.getMinimumLanguageVersion().compareTo(rule.getMaximumLanguageVersion()) > 0) {
             throw err.at(MINIMUM_LANGUAGE_VERSION.getAttributeNode(ruleElement))
-                     .error(
-                         XmlErrorMessages.ERR__INVALID_VERSION_RANGE,
-                         rule.getMinimumLanguageVersion(),
-                         rule.getMaximumLanguageVersion()
-                     );
+                    .error(
+                            XmlErrorMessages.ERR__INVALID_VERSION_RANGE,
+                            rule.getMinimumLanguageVersion(),
+                            rule.getMaximumLanguageVersion()
+                    );
         }
     }
 
@@ -243,20 +243,20 @@ class RuleFactory {
             LanguageVersion version = language.getVersion(attrValue);
             if (version == null) {
                 String supportedVersions = language.getVersions().stream()
-                                                   .map(LanguageVersion::getVersion)
-                                                   .filter(it -> !it.isEmpty())
-                                                   .map(StringUtil::inSingleQuotes)
-                                                   .collect(Collectors.joining(", "));
+                        .map(LanguageVersion::getVersion)
+                        .filter(it -> !it.isEmpty())
+                        .map(StringUtil::inSingleQuotes)
+                        .collect(Collectors.joining(", "));
                 String message = supportedVersions.isEmpty()
-                                 ? ERR__INVALID_LANG_VERSION_NO_NAMED_VERSION
-                                 : ERR__INVALID_LANG_VERSION;
+                        ? ERR__INVALID_LANG_VERSION_NO_NAMED_VERSION
+                        : ERR__INVALID_LANG_VERSION;
                 throw err.at(attrName.getAttributeNode(ruleElement))
-                         .error(
-                             message,
-                             attrValue,
-                             language.getId(),
-                             supportedVersions
-                         );
+                        .error(
+                                message,
+                                attrValue,
+                                language.getId(),
+                                supportedVersions
+                        );
             }
             return version;
         }
@@ -269,7 +269,7 @@ class RuleFactory {
         if (lang == null) {
             Attr node = LANGUAGE.getAttributeNode(ruleElement);
             throw err.at(node)
-                     .error("Invalid language ''{0}'', possible values are {1}", langId, supportedLanguages());
+                    .error("Invalid language ''{0}'', possible values are {1}", langId, supportedLanguages());
         }
         rule.setLanguage(lang);
     }
@@ -362,25 +362,25 @@ class RuleFactory {
         PropertyTypeId factory = PropertyTypeId.lookupMnemonic(typeId);
         if (factory == null) {
             throw err.at(PROPERTY_TYPE.getAttributeNode(propertyElement))
-                     .error(XmlErrorMessages.ERR__UNSUPPORTED_PROPERTY_TYPE, typeId);
+                    .error(XmlErrorMessages.ERR__UNSUPPORTED_PROPERTY_TYPE, typeId);
         }
 
         return propertyDefCapture(propertyElement, err, factory.getBuilderUtils());
     }
 
     private static <T> PropertyDescriptor<T> propertyDefCapture(Element propertyElement,
-                                                                PmdXmlReporter err,
-                                                                BuilderAndMapper<T> factory) {
+            PmdXmlReporter err,
+            BuilderAndMapper<T> factory) {
 
         String name = NAME.getNonBlankAttributeOrThrow(propertyElement, err);
         String description = DESCRIPTION.getNonBlankAttributeOrThrow(propertyElement, err);
 
         try {
             PropertyBuilder<?, T> builder = factory.newBuilder(name)
-                                                   .desc(description);
+                    .desc(description);
             if (DELIMITER.hasAttribute(propertyElement)) {
                 err.at(DELIMITER.getAttributeNode(propertyElement))
-                    .warn(XmlErrorMessages.WARN__DELIMITER_DEPRECATED);
+                        .warn(XmlErrorMessages.WARN__DELIMITER_DEPRECATED);
             }
 
             parseConstraints(propertyElement, factory, builder, err);
@@ -400,26 +400,24 @@ class RuleFactory {
         if (min.isPresent() && max.isPresent()) {
             if (min.get().compareTo((T) max.get()) > 0) {
                 throw err.at(PROPERTY_MIN.getAttributeNode(propertyElement))
-                         .error(XmlErrorMessages.ERR__INVALID_VALUE_RANGE);
+                        .error(XmlErrorMessages.ERR__INVALID_VALUE_RANGE);
             }
-            @SuppressWarnings({ "unchecked", "rawtypes" })
-            PropertyConstraint<T> constraint = NumericConstraints.inRange((Comparable) min.get(), (Comparable) max.get());
+            @SuppressWarnings({"unchecked", "rawtypes"}) PropertyConstraint<T> constraint = NumericConstraints.inRange((Comparable) min.get(), (Comparable) max.get());
             builder.require(constraint);
         } else if (min.isPresent() || max.isPresent()) {
             Comparable<T> minOrMax = min.orElse(max.orElse(null));
 
-            @SuppressWarnings({ "unchecked", "rawtypes" })
-            PropertyConstraint<T> constraint = min.isPresent() ? NumericConstraints.above((Comparable) minOrMax)
-                                                               : NumericConstraints.below((Comparable) minOrMax);
+            @SuppressWarnings({"unchecked", "rawtypes"}) PropertyConstraint<T> constraint = min.isPresent() ? NumericConstraints.above((Comparable) minOrMax)
+                    : NumericConstraints.below((Comparable) minOrMax);
             builder.require(constraint);
         }
     }
 
     private static <T> Optional<Comparable<T>> parseIntoComparable(Element propertyElement, BuilderAndMapper<T> factory, PmdXmlReporter err, SchemaConstant schemaConstant) {
         return schemaConstant
-            .getAttributeOpt(propertyElement)
-            .map(s -> tryParsePropertyValue(factory, s, err.at(schemaConstant.getAttributeNode(propertyElement))))
-            .map(s -> asComparableOrThrow(s, err.at(schemaConstant.getAttributeNode(propertyElement))));
+                .getAttributeOpt(propertyElement)
+                .map(s -> tryParsePropertyValue(factory, s, err.at(schemaConstant.getAttributeNode(propertyElement))))
+                .map(s -> asComparableOrThrow(s, err.at(schemaConstant.getAttributeNode(propertyElement))));
     }
 
 

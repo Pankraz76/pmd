@@ -27,23 +27,19 @@ class AstRecordComponentSym extends AbstractAstAnnotableSym<ASTRecordComponent> 
         this.owner = owner;
     }
 
-    @Override
-    public String getSimpleName() {
+    @Override public String getSimpleName() {
         return node.getVarId().getName();
     }
 
-    @Override
-    public @NonNull JClassSymbol getEnclosingClass() {
+    @Override public @NonNull JClassSymbol getEnclosingClass() {
         return owner;
     }
 
-    @Override
-    public JTypeMirror getTypeMirror(Substitution subst) {
+    @Override public JTypeMirror getTypeMirror(Substitution subst) {
         return subst(node.getVarId().getTypeMirror(), subst);
     }
 
-    @Override
-    public <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override public <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitRecordComponent(this, param);
     }
 }

@@ -45,8 +45,7 @@ public class LanguageFilenameFilter implements FilenameFilter {
     /**
      * Check if a file should be checked by PMD. {@inheritDoc}
      */
-    @Override
-    public boolean accept(File dir, String name) {
+    @Override public boolean accept(File dir, String name) {
         // Any source file should have a '.' in its name...
         int lastDotIndex = name.lastIndexOf('.');
         if (lastDotIndex < 0) {
@@ -64,8 +63,7 @@ public class LanguageFilenameFilter implements FilenameFilter {
         return false;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder buffer = new StringBuilder("(Extension is one of: ");
         for (Language language : languages) {
             List<String> extensions = language.getExtensions();

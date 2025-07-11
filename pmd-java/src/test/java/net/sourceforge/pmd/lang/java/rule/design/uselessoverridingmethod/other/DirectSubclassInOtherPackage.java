@@ -10,18 +10,15 @@ public class DirectSubclassInOtherPackage extends BaseClass {
 
     // overrides to make the method available in this package
 
-    @Override
-    protected void doBase() {
+    @Override protected void doBase() {
         super.doBase();
     }
 
-    @Override
-    protected void doBaseWithArg(String foo) {
+    @Override protected void doBaseWithArg(String foo) {
         super.doBaseWithArg(foo);
     }
 
-    @Override
-    protected void doBaseWithArgs(String foo, int bar) {
+    @Override protected void doBaseWithArgs(String foo, int bar) {
         super.doBaseWithArgs(foo, bar);
     }
 }

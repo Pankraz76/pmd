@@ -25,27 +25,24 @@ import net.sourceforge.pmd.lang.document.FileLocation;
  */
 // TODO extend AbstractStatement
 public final class ASTLocalVariableDeclaration extends AbstractJavaNode
-    implements ASTStatement,
-               LeftRecursiveNode, // ModifierList is parsed separately in BlockStatement
-               InternalInterfaces.MultiVariableIdOwner {
+        implements ASTStatement,
+        LeftRecursiveNode, // ModifierList is parsed separately in BlockStatement
+        InternalInterfaces.MultiVariableIdOwner {
 
     ASTLocalVariableDeclaration(int id) {
         super(id);
     }
 
-    @Override
-    public @Nullable FileLocation getReportLocation() {
+    @Override public @Nullable FileLocation getReportLocation() {
         // the first varId
         return getVarIds().firstOrThrow().getFirstToken().getReportLocation();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public Visibility getVisibility() {
+    @Override public Visibility getVisibility() {
         return Visibility.V_LOCAL;
     }
 
@@ -69,8 +66,7 @@ public final class ASTLocalVariableDeclaration extends AbstractJavaNode
      *
      * @see #isTypeInferred()
      */
-    @Override
-    public ASTType getTypeNode() {
+    @Override public ASTType getTypeNode() {
         return firstChild(ASTType.class);
     }
 

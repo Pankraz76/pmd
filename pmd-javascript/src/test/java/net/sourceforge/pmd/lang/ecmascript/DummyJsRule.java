@@ -19,8 +19,7 @@ public class DummyJsRule extends AbstractEcmascriptRule {
 
     public static class DummyRuleOneViolationPerFile extends DummyJsRule {
 
-        @Override
-        public void apply(Node node, RuleContext ctx) {
+        @Override public void apply(Node node, RuleContext ctx) {
             ctx.addViolation(node);
         }
     }

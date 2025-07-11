@@ -28,19 +28,16 @@ public class AvoidNonRestrictiveQueriesRule extends AbstractApexRule {
     private static final Pattern SELECT_OR_FIND_PATTERN = Pattern.compile("(select\\s+|find\\s+)", Pattern.CASE_INSENSITIVE);
     private static final Pattern SUB_QUERY_PATTERN = Pattern.compile("(?i)\\(\\s*select\\s+[^)]+\\)");
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTSoqlExpression.class, ASTSoslExpression.class);
     }
 
-    @Override
-    public Object visit(ASTSoqlExpression node, Object data) {
+    @Override public Object visit(ASTSoqlExpression node, Object data) {
         visitSoqlOrSosl(node, "SOQL", node.getQuery(), asCtx(data));
         return data;
     }
 
-    @Override
-    public Object visit(ASTSoslExpression node, Object data) {
+    @Override public Object visit(ASTSoslExpression node, Object data) {
         visitSoqlOrSosl(node, "SOSL", node.getQuery(), asCtx(data));
         return data;
     }
@@ -66,9 +63,9 @@ public class AvoidNonRestrictiveQueriesRule extends AbstractApexRule {
                     .firstOpt()
                     .map(ASTAnnotationParameter::getBooleanValue));
             boolean classSeeAllData = classAnnotation.flatMap(m -> m.children(ASTAnnotationParameter.class)
-                            .filter(p -> p.hasName(ASTAnnotationParameter.SEE_ALL_DATA))
-                            .firstOpt()
-                            .map(ASTAnnotationParameter::getBooleanValue))
+                    .filter(p -> p.hasName(ASTAnnotationParameter.SEE_ALL_DATA))
+                    .firstOpt()
+                    .map(ASTAnnotationParameter::getBooleanValue))
                     .orElse(false);
 
             if (methodSeeAllData.isPresent()) {

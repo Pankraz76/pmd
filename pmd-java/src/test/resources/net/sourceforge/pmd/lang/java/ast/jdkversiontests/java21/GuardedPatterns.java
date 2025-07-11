@@ -29,7 +29,8 @@ public class GuardedPatterns {
     }
 
     // verify that "when" can still be used as a type name
-    private static class when {}
+    private static class when {
+    }
 
     static void testWithNull(Object o) {
         switch (o) {
@@ -41,7 +42,7 @@ public class GuardedPatterns {
         }
     }
 
-    
+
     static void instanceOfPattern(Object o) {
         if (o instanceof String s && s.length() > 2) {
             System.out.println("A string containing at least two characters");

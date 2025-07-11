@@ -34,7 +34,7 @@ public abstract class BatchLanguageProcessor<P extends LanguagePropertyBundle> i
     protected BatchLanguageProcessor(P bundle) {
         if (!(bundle.getLanguage() instanceof PmdCapableLanguage)) {
             throw new IllegalArgumentException(
-                "Cannot create a processor for a language which does not support PMD: " + bundle.getLanguage()
+                    "Cannot create a processor for a language which does not support PMD: " + bundle.getLanguage()
             );
         }
         this.language = (PmdCapableLanguage) bundle.getLanguage();
@@ -46,18 +46,15 @@ public abstract class BatchLanguageProcessor<P extends LanguagePropertyBundle> i
         return bundle;
     }
 
-    @Override
-    public @NonNull LanguageVersion getLanguageVersion() {
+    @Override public @NonNull LanguageVersion getLanguageVersion() {
         return version;
     }
 
-    @Override
-    public final @NonNull PmdCapableLanguage getLanguage() {
+    @Override public final @NonNull PmdCapableLanguage getLanguage() {
         return language;
     }
 
-    @Override
-    public @NonNull AutoCloseable launchAnalysis(@NonNull AnalysisTask task) {
+    @Override public @NonNull AutoCloseable launchAnalysis(@NonNull AnalysisTask task) {
         // The given analysis task has all files to analyse, not only the ones for this language.
         List<TextFile> files = new ArrayList<>(task.getFiles());
         files.removeIf(it -> !it.getLanguageVersion().getLanguage().equals(getLanguage()));
@@ -73,8 +70,7 @@ public abstract class BatchLanguageProcessor<P extends LanguagePropertyBundle> i
         return processor;
     }
 
-    @Override
-    public void close() throws Exception {
+    @Override public void close() throws Exception {
         // no additional resources
     }
 }

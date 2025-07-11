@@ -23,20 +23,17 @@ public class NPathComplexityRule extends AbstractCounterCheckRule<ExecutableCode
         super(ExecutableCode.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 200;
     }
 
 
-    @Override
-    protected int getMetric(ExecutableCode node) {
+    @Override protected int getMetric(ExecutableCode node) {
         return new NPathComplexityVisitor().compute(node);
     }
 
-    @Override
-    protected Object[] getViolationParameters(ExecutableCode node, int metric) {
-        return new Object[] {node.getMethodName(), metric};
+    @Override protected Object[] getViolationParameters(ExecutableCode node, int metric) {
+        return new Object[]{node.getMethodName(), metric};
     }
 
     /**

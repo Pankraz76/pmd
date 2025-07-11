@@ -27,8 +27,8 @@ import net.sourceforge.pmd.util.DataMap.DataKey;
  *            in the java module).
  */
 public abstract class AbstractNode<B extends AbstractNode<B, N>,
-    // node the Node as first bound here is to make casts from Node to N noops at runtime.
-    N extends Node & GenericNode<N>> implements GenericNode<N> {
+        // node the Node as first bound here is to make casts from Node to N noops at runtime.
+        N extends Node & GenericNode<N>> implements GenericNode<N> {
 
     private static final Node[] EMPTY_ARRAY = new Node[0];
 
@@ -44,23 +44,19 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
         // only for subclassing
     }
 
-    @Override
-    public final N getParent() {
+    @Override public final N getParent() {
         return (N) parent;
     }
 
-    @Override
-    public final int getIndexInParent() {
+    @Override public final int getIndexInParent() {
         return childIndex;
     }
 
-    @Override
-    public final N getChild(final int index) {
+    @Override public final N getChild(final int index) {
         return (N) children[index];
     }
 
-    @Override
-    public final int getNumChildren() {
+    @Override public final int getNumChildren() {
         return children.length;
     }
 
@@ -68,8 +64,7 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
         this.parent = parent;
     }
 
-    @SuppressWarnings("unchecked")
-    private B asSelf(Node n) {
+    @SuppressWarnings("unchecked") private B asSelf(Node n) {
         return (B) n;
     }
 
@@ -123,7 +118,7 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
      */
     protected void insertChild(final B child, final int index) {
         assert index >= 0 && index <= children.length
-            : "Invalid index for insertion into array of length " + children.length + ": " + index;
+                : "Invalid index for insertion into array of length " + children.length + ": " + index;
 
         Node[] newChildren = new Node[children.length + 1];
         if (index != 0) {
@@ -173,8 +168,7 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
         childIndex = index;
     }
 
-    @Override
-    public DataMap<DataKey<?, ?>> getUserMap() {
+    @Override public DataMap<DataKey<?, ?>> getUserMap() {
         if (userData == null) {
             userData = DataMap.newDataMap();
         }
@@ -182,13 +176,11 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getXPathNodeName();
     }
 
-    @Override
-    public final NodeStream<N> children() {
+    @Override public final NodeStream<N> children() {
         // Since this is used as a core part of tree traversal, the implementation
         // here is optimized. Importantly, this method is final and the
         // implementation returns always an instance of the same type, so
@@ -196,9 +188,7 @@ public abstract class AbstractNode<B extends AbstractNode<B, N>,
         return StreamImpl.childrenArray(this, children);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final <R extends Node> @Nullable R firstChild(Class<? extends R> rClass) {
+    @Override @SuppressWarnings("unchecked") public final <R extends Node> @Nullable R firstChild(Class<? extends R> rClass) {
         // This operation is extremely common so we give it an optimal
         // implementation, based directly on the array. This will never
         // create a node stream object, and array bounds are not checked.

@@ -71,8 +71,7 @@ public interface Language extends Comparable<Language> {
      * for the base language can be applied files of all dialects uniformly.
      * @experimental Since 7.13.0. See <a href="https://github.com/pmd/pmd/pull/5438">[core] Support language dialects #5438</a>.
      */
-    @Experimental
-    default @Nullable String getBaseLanguageId() {
+    @Experimental default @Nullable String getBaseLanguageId() {
         return null;
     }
 
@@ -82,9 +81,7 @@ public interface Language extends Comparable<Language> {
      * @param language A language (not null)
      * @experimental Since 7.13.0. See <a href="https://github.com/pmd/pmd/pull/5438">[core] Support language dialects #5438</a>.
      */
-    @Experimental
-    @SuppressWarnings("PMD.SimplifyBooleanReturns")
-    default boolean isDialectOf(Language language) {
+    @Experimental @SuppressWarnings("PMD.SimplifyBooleanReturns") default boolean isDialectOf(Language language) {
         AssertionUtil.requireParamNotNull("language", language);
         String base = getBaseLanguageId();
         if (base == null) {

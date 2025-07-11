@@ -23,15 +23,13 @@ import net.sourceforge.pmd.properties.PropertyFactory;
 
 class RuleReferenceTest {
 
-    @Test
-    void testRuleSetReference() {
+    @Test void testRuleSetReference() {
         RuleSetReference ruleSetReference = new RuleSetReference("somename");
         RuleReference ruleReference = new RuleReference(null, ruleSetReference);
         assertEquals(ruleSetReference, ruleReference.getRuleSetReference(), "Not same rule set reference");
     }
 
-    @Test
-    void testOverride() {
+    @Test void testOverride() {
         final PropertyDescriptor<String> PROPERTY1_DESCRIPTOR = PropertyFactory.stringProperty("property1").desc("Test property").defaultValue("").build();
         MockRule rule = new MockRule();
         rule.definePropertyDescriptor(PROPERTY1_DESCRIPTOR);
@@ -63,8 +61,7 @@ class RuleReferenceTest {
         validateOverriddenValues(PROPERTY1_DESCRIPTOR, PROPERTY2_DESCRIPTOR, ruleReference);
     }
 
-    @Test
-    void testOverridingDefaultValueOfProperty() {
+    @Test void testOverridingDefaultValueOfProperty() {
         final PropertyDescriptor<String> PROPERTY1_DESCRIPTOR = PropertyFactory.stringProperty("property1").desc("Test property").defaultValue("the-default").build();
         MockRule rule = new MockRule();
         rule.definePropertyDescriptor(PROPERTY1_DESCRIPTOR);
@@ -89,8 +86,7 @@ class RuleReferenceTest {
         assertTrue(overriddenPropertyDescriptors.contains(PROPERTY1_DESCRIPTOR));
     }
 
-    @Test
-    void testLanguageOverrideDisallowed() {
+    @Test void testLanguageOverrideDisallowed() {
         MockRule rule = new MockRule();
         Language dummyLang = dummyLanguage();
         rule.setLanguage(dummyLang);
@@ -105,8 +101,7 @@ class RuleReferenceTest {
         assertEquals(rule.getMinimumLanguageVersion(), ruleReference.getMinimumLanguageVersion());
     }
 
-    @Test
-    void testDeepCopyOverride() {
+    @Test void testDeepCopyOverride() {
         final PropertyDescriptor<String> PROPERTY1_DESCRIPTOR = PropertyFactory.stringProperty("property1").desc("Test property").defaultValue("").build();
         MockRule rule = new MockRule();
         rule.definePropertyDescriptor(PROPERTY1_DESCRIPTOR);
@@ -142,17 +137,17 @@ class RuleReferenceTest {
     private void validateOverriddenValues(final PropertyDescriptor<String> propertyDescriptor1,
             final PropertyDescriptor<String> propertyDescriptor2, RuleReference ruleReference) {
         assertEquals(dummyLanguage(), ruleReference.getLanguage(),
-                     "Override failed");
+                "Override failed");
 
         assertEquals(dummyLanguage().getVersion("1.3"), ruleReference.getMinimumLanguageVersion(),
-                     "Override failed");
+                "Override failed");
         assertEquals(dummyLanguage().getVersion("1.3"), ruleReference.getOverriddenMinimumLanguageVersion(),
-                     "Override failed");
+                "Override failed");
 
         assertEquals(dummyLanguage().getVersion("1.7"), ruleReference.getMaximumLanguageVersion(),
-                     "Override failed");
+                "Override failed");
         assertEquals(dummyLanguage().getVersion("1.7"), ruleReference.getOverriddenMaximumLanguageVersion(),
-                     "Override failed");
+                "Override failed");
 
         assertEquals(false, ruleReference.getRule().isDeprecated(), "Override failed");
         assertEquals(true, ruleReference.isDeprecated(), "Override failed");
@@ -194,8 +189,7 @@ class RuleReferenceTest {
         assertEquals(RulePriority.MEDIUM_HIGH, ruleReference.getOverriddenPriority(), "Override failed");
     }
 
-    @Test
-    void testNotOverride() {
+    @Test void testNotOverride() {
         final PropertyDescriptor<String> PROPERTY1_DESCRIPTOR = PropertyFactory.stringProperty("property1").desc("Test property").defaultValue("").build();
         MockRule rule = new MockRule();
         rule.definePropertyDescriptor(PROPERTY1_DESCRIPTOR);
@@ -212,9 +206,9 @@ class RuleReferenceTest {
 
         RuleReference ruleReference = new RuleReference(rule, null);
         ruleReference
-            .setMinimumLanguageVersion(dummyLanguage().getVersion("1.3"));
+                .setMinimumLanguageVersion(dummyLanguage().getVersion("1.3"));
         ruleReference
-            .setMaximumLanguageVersion(dummyLanguage().getVersion("1.7"));
+                .setMaximumLanguageVersion(dummyLanguage().getVersion("1.7"));
         ruleReference.setDeprecated(false);
         ruleReference.setName("name1");
         ruleReference.setProperty(PROPERTY1_DESCRIPTOR, "value1");
@@ -226,11 +220,11 @@ class RuleReferenceTest {
 
 
         assertEquals(dummyLanguage().getVersion("1.3"), ruleReference.getMinimumLanguageVersion(),
-                     "Override failed");
+                "Override failed");
         assertNull(ruleReference.getOverriddenMinimumLanguageVersion(), "Override failed");
 
         assertEquals(dummyLanguage().getVersion("1.7"), ruleReference.getMaximumLanguageVersion(),
-                     "Override failed");
+                "Override failed");
         assertNull(ruleReference.getOverriddenMaximumLanguageVersion(), "Override failed");
 
         assertEquals(false, ruleReference.isDeprecated(), "Override failed");

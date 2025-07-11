@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class FunctionsTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseSelectExtractExpression() {
+    @Test void parseSelectExtractExpression() {
         doTest("ExtractExpressions");
     }
 }

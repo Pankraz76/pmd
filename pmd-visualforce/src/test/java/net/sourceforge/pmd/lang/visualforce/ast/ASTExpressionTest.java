@@ -23,13 +23,12 @@ class ASTExpressionTest {
     /**
      * Slightly different scenarios which cause different AST, but should return the same results.
      */
-    private static final String[] SNIPPET_TEMPLATES = new String[] {
-        "{!%s}",
-        "<apex:outputText value=\"{!%s}\" escape=\"false\"/>",
-        "<script>function someFunc() {var foo = \"{!%s}\";}</script>"};
+    private static final String[] SNIPPET_TEMPLATES = new String[]{
+            "{!%s}",
+            "<apex:outputText value=\"{!%s}\" escape=\"false\"/>",
+            "<script>function someFunc() {var foo = \"{!%s}\";}</script>"};
 
-    @Test
-    void testExpressionWithApexGetter() throws ASTExpression.DataNodeStateException {
+    @Test void testExpressionWithApexGetter() throws ASTExpression.DataNodeStateException {
         for (String template : SNIPPET_TEMPLATES) {
             ASTCompilationUnit compilationUnit = compile(String.format(template, "MyValue"));
 
@@ -46,8 +45,7 @@ class ASTExpressionTest {
         }
     }
 
-    @Test
-    void testExpressionWithStandardController() throws ASTExpression.DataNodeStateException {
+    @Test void testExpressionWithStandardController() throws ASTExpression.DataNodeStateException {
         for (String template : SNIPPET_TEMPLATES) {
             ASTCompilationUnit compilationUnit = compile(String.format(template, "MyObject__c.Text__c"));
 
@@ -64,8 +62,7 @@ class ASTExpressionTest {
         }
     }
 
-    @Test
-    void testSelectOptions() throws ASTExpression.DataNodeStateException {
+    @Test void testSelectOptions() throws ASTExpression.DataNodeStateException {
         for (String template : SNIPPET_TEMPLATES) {
             ASTCompilationUnit compilationUnit = compile(String.format(template, "userOptions.0"));
 
@@ -82,8 +79,7 @@ class ASTExpressionTest {
         }
     }
 
-    @Test
-    void testMultipleIdentifiers() throws ASTExpression.DataNodeStateException {
+    @Test void testMultipleIdentifiers() throws ASTExpression.DataNodeStateException {
         for (String template : SNIPPET_TEMPLATES) {
             ASTCompilationUnit compilationUnit = compile(String.format(template, "MyObject__c.Text__c + ' this is a string' + MyObject__c.Text2__c"));
 
@@ -103,8 +99,7 @@ class ASTExpressionTest {
         }
     }
 
-    @Test
-    void testIdentifierWithRelation() throws ASTExpression.DataNodeStateException {
+    @Test void testIdentifierWithRelation() throws ASTExpression.DataNodeStateException {
         for (String template : SNIPPET_TEMPLATES) {
             ASTCompilationUnit compilationUnit = compile(String.format(template, "MyObject1__c.MyObject2__r.Text__c"));
 
@@ -122,8 +117,7 @@ class ASTExpressionTest {
         }
     }
 
-    @Test
-    void testMultipleIdentifiersWithRelation() throws ASTExpression.DataNodeStateException {
+    @Test void testMultipleIdentifiersWithRelation() throws ASTExpression.DataNodeStateException {
         for (String template : SNIPPET_TEMPLATES) {
             ASTCompilationUnit compilationUnit = compile(String.format(template, "MyObject1__c.MyObject2__r.Text__c + ' this is a string' + MyObject1__c.MyObject2__r.Text2__c"));
 
@@ -147,8 +141,7 @@ class ASTExpressionTest {
      * The current implementation does not support expressing statements using array notation. This notation introduces
      * complexities that may be addressed in a future release.
      */
-    @Test
-    void testExpressionWithArrayIndexingNotSupported() {
+    @Test void testExpressionWithArrayIndexingNotSupported() {
         for (String template : SNIPPET_TEMPLATES) {
             ASTCompilationUnit compilationUnit = compile(String.format(template, "MyObject__c['Name']"));
 
@@ -165,8 +158,7 @@ class ASTExpressionTest {
         }
     }
 
-    @Test
-    void testIdentifierWithRelationIndexedAsArrayNotSupported() {
+    @Test void testIdentifierWithRelationIndexedAsArrayNotSupported() {
         for (String template : SNIPPET_TEMPLATES) {
             ASTCompilationUnit compilationUnit = compile(String.format(template, "MyObject1__c['MyObject2__r'].Text__c"));
 
@@ -183,8 +175,7 @@ class ASTExpressionTest {
         }
     }
 
-    @Test
-    void testIdentifierWithComplexIndexedArrayNotSupported() {
+    @Test void testIdentifierWithComplexIndexedArrayNotSupported() {
         for (String template : SNIPPET_TEMPLATES) {
             ASTCompilationUnit compilationUnit = compile(String.format(template, "theLineItems[item.Id].UnitPrice"));
 
@@ -210,7 +201,7 @@ class ASTExpressionTest {
      */
     private Map<String, Node> invertMap(Map<VfTypedNode, String> map) {
         Map<String, Node> result = map.entrySet().stream()
-                                      .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
         // Ensure no values have been lost
         assertEquals(map.size(), result.size());
         return result;
@@ -222,9 +213,9 @@ class ASTExpressionTest {
 
     private ASTCompilationUnit compile(String snippet, boolean renderAST) {
         ASTCompilationUnit node = VfParsingHelper.DEFAULT.parse(
-            "<apex:page>"
-                + snippet
-                + "</apex:page>"
+                "<apex:page>"
+                        + snippet
+                        + "</apex:page>"
         );
 
         if (renderAST) {

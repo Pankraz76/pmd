@@ -65,9 +65,9 @@ public final class SymbolResolutionPass {
      */
     public static PSet<SymAnnot> buildSymbolicAnnotations(NodeStream<ASTAnnotation> annotations) {
         return annotations.toStream()
-                          .map(SymbolResolutionPass::toValidAnnotation)
-                          .filter(Objects::nonNull)
-                          .collect(CollectionUtil.toPersistentSet());
+                .map(SymbolResolutionPass::toValidAnnotation)
+                .filter(Objects::nonNull)
+                .collect(CollectionUtil.toPersistentSet());
     }
 
     private static @Nullable SymAnnot toValidAnnotation(ASTAnnotation node) {

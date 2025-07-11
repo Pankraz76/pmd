@@ -2,6 +2,8 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
+
 import java.util.Map;
 
 /**
@@ -11,11 +13,22 @@ public class Jep488_PrimitiveTypesInPatternsInstanceofAndSwitch {
 
     void switchWithPrimitiveTypePatterns() {
         class X {
-            int getStatus() { return 0; }
-            int getYearlyFlights() { return 1; }
-            void noop() {}
-            void issueDiscount() {}
-            void issueGoldCard() {}
+            int getStatus() {
+                return 0;
+            }
+
+            int getYearlyFlights() {
+                return 1;
+            }
+
+            void noop() {
+            }
+
+            void issueDiscount() {
+            }
+
+            void issueGoldCard() {
+            }
         }
         X x = new X();
 
@@ -36,13 +49,21 @@ public class Jep488_PrimitiveTypesInPatternsInstanceofAndSwitch {
         }
     }
 
-    sealed interface JsonValue {}
-    record JsonString(String s) implements JsonValue { }
-    record JsonNumber(double d) implements JsonValue { }
-    record JsonObject(Map<String, JsonValue> map) implements JsonValue { }
+    sealed interface JsonValue {
+    }
+
+    record JsonString(String s) implements JsonValue {
+    }
+
+    record JsonNumber(double d) implements JsonValue {
+    }
+
+    record JsonObject(Map<String, JsonValue> map) implements JsonValue {
+    }
+
     void recordPatternsWithPrimitiveTypes() {
         var json = new JsonObject(Map.of("name", new JsonString("John"),
-                "age",  new JsonNumber(30)));
+                "age", new JsonNumber(30)));
 
         if (json instanceof JsonObject(var map)
                 && map.get("name") instanceof JsonString(String n)
@@ -54,7 +75,9 @@ public class Jep488_PrimitiveTypesInPatternsInstanceofAndSwitch {
 
     void patternMatchingForInstanceofWithPrimitiveTypes() {
         class X {
-            int getPopulation() { return 0; }
+            int getPopulation() {
+                return 0;
+            }
         }
 
         X x = new X();
@@ -66,24 +89,32 @@ public class Jep488_PrimitiveTypesInPatternsInstanceofAndSwitch {
             System.out.println("byte: " + b);
         }
         if (i instanceof byte) {  // value of i fits in a byte
-            byte b = (byte)i; // traditional cast required
+            byte b = (byte) i; // traditional cast required
             System.out.println("byte: ... " + b);
         }
     }
 
     void expanedPrimitiveSupportInSwitch() {
         class User {
-            boolean isLoggedIn() { return false; }
-            int id() { return 42; }
+            boolean isLoggedIn() {
+                return false;
+            }
+
+            int id() {
+                return 42;
+            }
         }
         User user = new User();
         int userId = switch(user.isLoggedIn()) {
             case true -> user.id();
-            case false -> { System.out.println("Unrecognized user"); yield - 1; }
+            case false -> {
+                System.out.println("Unrecognized user");
+                yield - 1;
+            }
         };
 
         long v = 12345L;
-        switch(v) {
+        switch (v) {
             case 1L              -> System.out.println("1L");
             case 2L              -> System.out.println("2L");
             case 10_000_000_000L -> System.out.println("10x");

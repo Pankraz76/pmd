@@ -21,20 +21,19 @@ public class ScalaLanguageModule extends SimpleLanguageModuleBase {
      */
     public ScalaLanguageModule() {
         super(LanguageMetadata.withId(ID).name("Scala")
-                              .extensions("scala")
-                              .addVersion("2.10")
-                              .addVersion("2.11")
-                              .addVersion("2.12")
-                              .addDefaultVersion("2.13"),
-              new ScalaLanguageHandler());
+                        .extensions("scala")
+                        .addVersion("2.10")
+                        .addVersion("2.11")
+                        .addVersion("2.12")
+                        .addDefaultVersion("2.13"),
+                new ScalaLanguageHandler());
     }
 
     public static ScalaLanguageModule getInstance() {
         return (ScalaLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new ScalaCpdLexer(bundle);
     }
 }

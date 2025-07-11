@@ -56,8 +56,7 @@ public final class GenerateRuleDocsCmd {
         try {
             List<String> additionalRulesets = new ArrayList<>();
             Files.walkFileTree(basePath, new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                     if (ADDITIONAL_RULESET_PATTERN.matcher(file.toString()).matches()) {
                         additionalRulesets.add(file.toString());
                     }

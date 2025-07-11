@@ -33,8 +33,7 @@ public final class ASTRecordComponentList extends ASTMaybeEmptyListOf<ASTRecordC
         return lastChild != null && lastChild.isVarargs();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -43,8 +42,7 @@ public final class ASTRecordComponentList extends ASTMaybeEmptyListOf<ASTRecordC
      * record. There may be a compact record constructor declaration,
      * in which case they share the same symbol.
      */
-    @Override
-    public JConstructorSymbol getSymbol() {
+    @Override public JConstructorSymbol getSymbol() {
         // TODO deduplicate the symbol in case the canonical constructor
         //  is explicitly declared somewhere. Needs a notion of override-equivalence,
         //  to be provided by future PRs for type resolution

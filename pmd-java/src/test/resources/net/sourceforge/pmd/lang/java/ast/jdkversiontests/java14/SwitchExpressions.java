@@ -51,7 +51,7 @@ public class SwitchExpressions {
         String s = "Foo";
         // SwitchExpression
         int result = switch (s) {
-            case "Foo": 
+            case "Foo":
                 yield 1;
             case "Bar":
                 yield 2;
@@ -75,16 +75,16 @@ public class SwitchExpressions {
 
     private static void howManyExpr(int k) {
         System.out.println(
-            // SwitchExpression
-            switch (k) {
-                case  1 -> "one";
-                case  2 -> "two";
-                default -> "many";
-            }
+                // SwitchExpression
+                switch (k) {
+                    case  1 -> "one";
+                    case  2 -> "two";
+                    default -> "many";
+                }
         );
     }
 
     private static int f(int k) {
-        return k*2;
+        return k * 2;
     }
 }

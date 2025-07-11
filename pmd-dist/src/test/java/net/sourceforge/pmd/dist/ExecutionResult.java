@@ -29,13 +29,12 @@ public class ExecutionResult {
         this.report = theReport;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ExecutionResult:\n"
-            + " exit code: " + exitCode + "\n"
-            + " output:\n" + output + "\n"
-            + " errorOutput:\n" + errorOutput + "\n"
-            + " report:\n" + report + "\n";
+                + " exit code: " + exitCode + "\n"
+                + " output:\n" + output + "\n"
+                + " errorOutput:\n" + errorOutput + "\n"
+                + " report:\n" + report + "\n";
     }
 
     public ExecutionResult assertExitCode(int expectedExitCode) {

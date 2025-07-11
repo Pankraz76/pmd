@@ -18,47 +18,39 @@ import net.sourceforge.pmd.reporting.RuleViolation;
 
 class XSLTRendererTest extends AbstractRendererTest {
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         return new XSLTRenderer();
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return readFile("expected.html");
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return readFile("empty.html");
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return readFile("expected-multiple.html");
     }
 
-    @Override
-    String getExpectedError(Report.ProcessingError error) {
+    @Override String getExpectedError(Report.ProcessingError error) {
         return readFile("expected-error.html");
     }
 
-    @Override
-    String getExpectedError(Report.ConfigurationError error) {
+    @Override String getExpectedError(Report.ConfigurationError error) {
         return readFile("expected-error.html");
     }
 
-    @Override
-    String filter(String expected) {
+    @Override String filter(String expected) {
         return expected.replaceAll("<h2>PMD " + PMDVersion.VERSION + " Report\\. Generated on .+</h2>",
-                        "<h2>PMD unknown Report. Generated on ...</h2>")
+                "<h2>PMD unknown Report. Generated on ...</h2>")
                 .replaceAll("<title>PMD " + PMDVersion.VERSION + " Report</title>",
                         "<title>PMD unknown Report</title>")
                 .replaceAll("\r\n", "\n"); // make the test run on Windows, too
     }
 
-    @Test
-    void testDefaultStylesheet() throws Exception {
+    @Test void testDefaultStylesheet() throws Exception {
         XSLTRenderer renderer = new XSLTRenderer();
         FileLocation loc = FileLocation.range(FileId.UNKNOWN, TextRange2d.range2d(1, 1, 1, 2));
         RuleViolation rv = newRuleViolation(new FooRule(), loc, "violation message");

@@ -19,8 +19,7 @@ import net.sourceforge.pmd.lang.symboltable.Scope;
 public class OccurrenceFinder extends PlsqlVisitorBase<Object, Object> {
     private static final Logger LOG = LoggerFactory.getLogger(OccurrenceFinder.class);
 
-    @Override
-    public Object visit(ASTPrimaryExpression node, Object data) {
+    @Override public Object visit(ASTPrimaryExpression node, Object data) {
         NameFinder nameFinder = new NameFinder(node);
 
         // Maybe do some sort of State pattern thingy for when NameDeclaration

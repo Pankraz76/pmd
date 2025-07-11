@@ -28,8 +28,7 @@ public class MockedFileWriter implements FileWriter {
 
     private List<FileEntry> data = new ArrayList<>();
 
-    @Override
-    public void write(Path path, List<String> lines) throws IOException {
+    @Override public void write(Path path, List<String> lines) throws IOException {
         FileEntry entry = new FileEntry();
         entry.filename = path.toString();
         entry.content = StringUtils.join(lines, System.getProperty("line.separator"));

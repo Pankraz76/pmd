@@ -29,21 +29,19 @@ public class JavaParser extends JjtreeParserAdapter<ASTCompilationUnit> {
     private final boolean postProcess;
 
     public JavaParser(String suppressMarker,
-                      JavaLanguageProcessor javaProcessor,
-                      boolean postProcess) {
+            JavaLanguageProcessor javaProcessor,
+            boolean postProcess) {
         this.suppressMarker = suppressMarker;
         this.javaProcessor = javaProcessor;
         this.postProcess = postProcess;
     }
 
 
-    @Override
-    protected TokenDocumentBehavior tokenBehavior() {
+    @Override protected TokenDocumentBehavior tokenBehavior() {
         return JavaTokenDocumentBehavior.INSTANCE;
     }
 
-    @Override
-    protected ASTCompilationUnit parseImpl(CharStream cs, ParserTask task) throws ParseException {
+    @Override protected ASTCompilationUnit parseImpl(CharStream cs, ParserTask task) throws ParseException {
 
         LanguageVersion version = task.getLanguageVersion();
         int jdkVersion = JavaLanguageProperties.getInternalJdkVersion(version);
@@ -56,13 +54,13 @@ public class JavaParser extends JjtreeParserAdapter<ASTCompilationUnit> {
 
         ASTCompilationUnit root = parser.CompilationUnit();
         root.setAstInfo(new AstInfo<>(task, root)
-                            .withSuppressionComments(parser.getSuppressionComments()));
+                .withSuppressionComments(parser.getSuppressionComments()));
 
         LanguageLevelChecker<?> levelChecker =
-            new LanguageLevelChecker<>(jdkVersion,
-                                       preview,
-                                       // TODO change this strategy with a new lang property
-                                       ReportingStrategy.reporterThatThrows());
+                new LanguageLevelChecker<>(jdkVersion,
+                        preview,
+                        // TODO change this strategy with a new lang property
+                        ReportingStrategy.reporterThatThrows());
 
         levelChecker.check(root);
 

@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.coco.ast.CocoLexer;
  */
 public class CocoCpdLexer extends AntlrCpdLexer {
 
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new CocoLexer(charStream);
     }
 }

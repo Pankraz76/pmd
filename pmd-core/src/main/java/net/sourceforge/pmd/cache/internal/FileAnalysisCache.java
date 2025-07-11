@@ -43,8 +43,7 @@ public class FileAnalysisCache extends AbstractAnalysisCache {
         this.cacheFile = cache;
     }
 
-    @Override
-    public void checkValidity(RuleSets ruleSets, ClassLoader auxclassPathClassLoader, Collection<? extends TextFile> files) {
+    @Override public void checkValidity(RuleSets ruleSets, ClassLoader auxclassPathClassLoader, Collection<? extends TextFile> files) {
         // load cached data before checking for validity
         loadFromFile(cacheFile, files);
         super.checkValidity(ruleSets, auxclassPathClassLoader, files);
@@ -57,15 +56,15 @@ public class FileAnalysisCache extends AbstractAnalysisCache {
      */
     private void loadFromFile(final File cacheFile, Collection<? extends TextFile> files) {
         Map<String, FileId> idMap =
-            files.stream().map(TextFile::getFileId)
-                 .collect(Collectors.toMap(FileId::getUriString, id -> id));
+                files.stream().map(TextFile::getFileId)
+                        .collect(Collectors.toMap(FileId::getUriString, id -> id));
 
         try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.ANALYSIS_CACHE, "load")) {
             if (cacheExists()) {
                 try (
                     DataInputStream inputStream = new DataInputStream(
-                        new BufferedInputStream(Files.newInputStream(cacheFile.toPath())));
-                ) {
+                                new BufferedInputStream(Files.newInputStream(cacheFile.toPath())));
+                        ) {
                     final String cacheVersion = inputStream.readUTF();
 
                     if (PMDVersion.VERSION.equals(cacheVersion)) {
@@ -82,7 +81,7 @@ public class FileAnalysisCache extends AbstractAnalysisCache {
                             FileId fileId = idMap.get(filePathId);
                             if (fileId == null) {
                                 LOG.debug("File {} is in the cache but is not part of the analysis",
-                                          filePathId);
+                                        filePathId);
                                 fileId = FileId.fromURI(filePathId);
                             }
                             final long checksum = inputStream.readLong();
@@ -111,8 +110,7 @@ public class FileAnalysisCache extends AbstractAnalysisCache {
         }
     }
 
-    @Override
-    public void persist() {
+    @Override public void persist() {
         try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.ANALYSIS_CACHE, "persist")) {
             if (cacheFile.isDirectory()) {
                 LOG.error("Cannot persist the cache, the given path points to a directory.");
@@ -131,8 +129,8 @@ public class FileAnalysisCache extends AbstractAnalysisCache {
 
             try (
                 DataOutputStream outputStream = new DataOutputStream(
-                    new BufferedOutputStream(Files.newOutputStream(cacheFile.toPath())))
-            ) {
+                            new BufferedOutputStream(Files.newOutputStream(cacheFile.toPath())))
+                    ) {
                 outputStream.writeUTF(pmdVersion);
 
                 outputStream.writeLong(rulesetChecksum);
@@ -161,8 +159,7 @@ public class FileAnalysisCache extends AbstractAnalysisCache {
         }
     }
 
-    @Override
-    protected boolean cacheExists() {
+    @Override protected boolean cacheExists() {
         return cacheFile.exists() && cacheFile.isFile() && cacheFile.length() > 0;
     }
 }

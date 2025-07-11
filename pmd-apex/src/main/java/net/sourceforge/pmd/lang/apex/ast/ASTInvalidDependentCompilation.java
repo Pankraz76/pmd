@@ -13,14 +13,12 @@ public final class ASTInvalidDependentCompilation extends AbstractApexNode.Singl
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         String apexName = getDefiningType();
         return apexName.substring(apexName.lastIndexOf('.') + 1);
     }

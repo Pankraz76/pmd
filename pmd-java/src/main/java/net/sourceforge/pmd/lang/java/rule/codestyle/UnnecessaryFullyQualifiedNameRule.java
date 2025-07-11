@@ -42,16 +42,16 @@ import net.sourceforge.pmd.util.AssertionUtil;
 public class UnnecessaryFullyQualifiedNameRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<Boolean> REPORT_METHODS =
-        booleanProperty("reportStaticMethods")
-            .desc("Report unnecessary static method qualifiers like in `Collections.emptyList()`, if the method is imported or inherited.")
-            .defaultValue(true)
-            .build();
+            booleanProperty("reportStaticMethods")
+                    .desc("Report unnecessary static method qualifiers like in `Collections.emptyList()`, if the method is imported or inherited.")
+                    .defaultValue(true)
+                    .build();
 
     private static final PropertyDescriptor<Boolean> REPORT_FIELDS =
-        booleanProperty("reportStaticFields")
-            .desc("Report unnecessary static field qualifiers like in `Math.PI`, if the field is imported or inherited.")
-            .defaultValue(true)
-            .build();
+            booleanProperty("reportStaticFields")
+                    .desc("Report unnecessary static field qualifiers like in `Math.PI`, if the field is imported or inherited.")
+                    .defaultValue(true)
+                    .build();
 
     public UnnecessaryFullyQualifiedNameRule() {
         super(ASTClassType.class);
@@ -59,8 +59,7 @@ public class UnnecessaryFullyQualifiedNameRule extends AbstractJavaRulechainRule
         definePropertyDescriptor(REPORT_FIELDS);
     }
 
-    @Override
-    public Object visit(final ASTClassType deepest, Object data) {
+    @Override public Object visit(final ASTClassType deepest, Object data) {
         if (deepest.getQualifier() != null) {
             // the child will be visited instead
             return data;
@@ -91,7 +90,7 @@ public class UnnecessaryFullyQualifiedNameRule extends AbstractJavaRulechainRule
             if (getProperty(REPORT_METHODS) && opa instanceof ASTMethodCall) {
                 ASTMethodCall methodCall = (ASTMethodCall) opa;
                 if (methodCall.getExplicitTypeArguments() == null
-                    && methodProbablyMeansSame(methodCall)) {
+                        && methodProbablyMeansSame(methodCall)) {
                     // we don't actually know where the method came from
                     String simpleName = formatMemberName(next, methodCall.getMethodType().getSymbol());
                     String unnecessary = produceQualifier(deepest, next, true);
@@ -164,10 +163,10 @@ public class UnnecessaryFullyQualifiedNameRule extends AbstractJavaRulechainRule
         }
 
         return fieldOrTypeMeansSame(
-            sym,
-            typeNode.getSymbolTable(),
-            JSymbolTable::types,
-            (s, t) -> s.equals(t.getSymbol())
+                sym,
+                typeNode.getSymbolTable(),
+                JSymbolTable::types,
+                (s, t) -> s.equals(t.getSymbol())
         );
     }
 
@@ -198,20 +197,20 @@ public class UnnecessaryFullyQualifiedNameRule extends AbstractJavaRulechainRule
         }
 
         return fieldOrTypeMeansSame(
-            sym,
-            field.getSymbolTable(),
-            JSymbolTable::variables,
-            (s, t) -> s.equals(t.getSymbol())
+                sym,
+                field.getSymbolTable(),
+                JSymbolTable::variables,
+                (s, t) -> s.equals(t.getSymbol())
         );
     }
 
     private static <S extends JElementSymbol, T> ScopeInfo fieldOrTypeMeansSame(@NonNull S originalSym,
-                                                                                JSymbolTable symTable,
-                                                                                Function<JSymbolTable, ShadowChain<T, ScopeInfo>> shadowChainGetter,
-                                                                                BiPredicate<S, T> areEqual) {
+            JSymbolTable symTable,
+            Function<JSymbolTable, ShadowChain<T, ScopeInfo>> shadowChainGetter,
+            BiPredicate<S, T> areEqual) {
 
         ShadowChainIterator<T, ScopeInfo> iter =
-            shadowChainGetter.apply(symTable).iterateResults(originalSym.getSimpleName());
+                shadowChainGetter.apply(symTable).iterateResults(originalSym.getSimpleName());
 
         if (iter.hasNext()) {
             iter.next();
@@ -242,28 +241,28 @@ public class UnnecessaryFullyQualifiedNameRule extends AbstractJavaRulechainRule
 
     private static String unnecessaryReason(ScopeInfo scopeInfo) {
         switch (scopeInfo) {
-        case JAVA_LANG:
-            return "declared in java.lang";
-        case SAME_PACKAGE:
-        case SAME_FILE:
-            return "declared in the same package";
-        case SINGLE_IMPORT:
-        case IMPORT_ON_DEMAND:
-            return "imported in this file";
-        case INHERITED:
-            return "inherited by an enclosing type";
-        case ENCLOSING_TYPE_MEMBER:
-        case ENCLOSING_TYPE:
-            return "declared in an enclosing type";
-        default:
-            throw AssertionUtil.shouldNotReachHere("unknown constant ScopeInfo: " + scopeInfo);
+            case JAVA_LANG:
+                return "declared in java.lang";
+            case SAME_PACKAGE:
+            case SAME_FILE:
+                return "declared in the same package";
+            case SINGLE_IMPORT:
+            case IMPORT_ON_DEMAND:
+                return "imported in this file";
+            case INHERITED:
+                return "inherited by an enclosing type";
+            case ENCLOSING_TYPE_MEMBER:
+            case ENCLOSING_TYPE:
+                return "declared in an enclosing type";
+            default:
+                throw AssertionUtil.shouldNotReachHere("unknown constant ScopeInfo: " + scopeInfo);
         }
     }
 
     private static boolean isPartOfStaticInitialization(ASTBodyDeclaration decl) {
         return decl instanceof ASTFieldDeclaration && ((ASTFieldDeclaration) decl).isStatic()
-            || decl instanceof ASTInitializer && ((ASTInitializer) decl).isStatic()
-            || decl instanceof ASTEnumConstant;
+                || decl instanceof ASTInitializer && ((ASTInitializer) decl).isStatic()
+                || decl instanceof ASTEnumConstant;
     }
 
     /**
@@ -288,13 +287,13 @@ public class UnnecessaryFullyQualifiedNameRule extends AbstractJavaRulechainRule
             return false;
         }
         ASTBodyDeclaration enclosing = fieldAccess.ancestors(ASTBodyDeclaration.class)
-                                                  .first();
+                .first();
         if (isPartOfStaticInitialization(enclosing)
-            && enclosing.getParent().getParent() == fieldDecl.getEnclosingType()) {
+                && enclosing.getParent().getParent() == fieldDecl.getEnclosingType()) {
             // the access is made in the same class
 
             if (JavaAstUtils.isInStaticCtx(fieldDecl)
-                && !JavaAstUtils.isInStaticCtx(fieldAccess)) {
+                    && !JavaAstUtils.isInStaticCtx(fieldAccess)) {
                 // field is static but access is non-static: no problem
                 return false;
             }

@@ -106,10 +106,10 @@ public final class Attribute {
         } else {
             DeprecatedAttribute annot = method.getAnnotation(DeprecatedAttribute.class);
             return annot != null
-                   ? annot.replaceWith()
-                   : method.isAnnotationPresent(Deprecated.class)
-                     ? DeprecatedAttribute.NO_REPLACEMENT
-                     : null;
+                    ? annot.replaceWith()
+                    : method.isAnnotationPresent(Deprecated.class)
+                    ? DeprecatedAttribute.NO_REPLACEMENT
+                    : null;
         }
     }
 
@@ -166,8 +166,7 @@ public final class Attribute {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -176,17 +175,15 @@ public final class Attribute {
         }
         Attribute attribute = (Attribute) o;
         return Objects.equals(parent, attribute.parent)
-            && Objects.equals(name, attribute.name);
+                && Objects.equals(name, attribute.name);
     }
 
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return parent.hashCode() * 31 + name.hashCode();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return parent.getXPathNodeName() + "/@" + name + " = " + getValue();
     }
 }

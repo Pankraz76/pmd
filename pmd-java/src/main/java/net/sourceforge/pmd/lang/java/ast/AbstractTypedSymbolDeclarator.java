@@ -13,8 +13,8 @@ import net.sourceforge.pmd.lang.java.symbols.JElementSymbol;
  * Abstract class for type declarations nodes.
  */
 abstract class AbstractTypedSymbolDeclarator<T extends JElementSymbol>
-    extends AbstractJavaTypeNode
-    implements SymbolDeclaratorNode {
+        extends AbstractJavaTypeNode
+        implements SymbolDeclaratorNode {
 
     private T symbol;
 
@@ -22,9 +22,7 @@ abstract class AbstractTypedSymbolDeclarator<T extends JElementSymbol>
         super(i);
     }
 
-    @NonNull
-    @Override
-    public T getSymbol() {
+    @NonNull @Override public T getSymbol() {
         assertSymbolNotNull(symbol, this);
         return symbol;
     }

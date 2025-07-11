@@ -32,16 +32,14 @@ import net.sourceforge.pmd.util.StringUtil;
 
 class PrettyPrintingUtilTest extends BaseParserTest {
 
-    @Test
-    void displaySignatureTestWithExtraDimensions() {
+    @Test void displaySignatureTestWithExtraDimensions() {
         ASTCompilationUnit root = java.parse("class A { public void foo(String[] a[]) {} }");
         ASTMethodDeclaration m = root.descendants(ASTMethodDeclaration.class).firstOrThrow();
 
         assertEquals("foo(String[][])", displaySignature(m));
     }
 
-    @Test
-    void ppMethodCall() {
+    @Test void ppMethodCall() {
         ASTCompilationUnit root = java.parse("class A { { foo(1); this.foo(1); A.this.foo(); } }");
         List<ASTMethodCall> m = root.descendants(ASTMethodCall.class).toList();
 
@@ -50,65 +48,54 @@ class PrettyPrintingUtilTest extends BaseParserTest {
         assertThat(prettyPrint(m.get(2)), contentEquals("A.this.foo()"));
     }
 
-    @Test
-    void ppMethodCallArgsTooBig() {
+    @Test void ppMethodCallArgsTooBig() {
         testPrettyPrint("this.foo(\"a long string\", 12, 12, 12, 12, 12)",
-            ASTMethodCall.class, "this.foo(\"a long string\", 12...)");
+                ASTMethodCall.class, "this.foo(\"a long string\", 12...)");
     }
 
-    @Test
-    void ppMethodCallOnCast() {
+    @Test void ppMethodCallOnCast() {
         testPrettyPrintIdentity("((Object) this).foo(12)", ASTMethodCall.class);
     }
 
-    @Test
-    void ppMethodRef() {
+    @Test void ppMethodRef() {
         testPrettyPrintIdentity("ASTW::meth", ASTMethodReference.class);
     }
 
-    @Test
-    void ppMethodRefWithTyArgs() {
+    @Test void ppMethodRefWithTyArgs() {
         testPrettyPrint("foo(ASTW::<String>meth)", ASTMethodReference.class,
-            "ASTW::<String>meth");
+                "ASTW::<String>meth");
     }
 
-    @Test
-    void ppCtorCall() {
+    @Test void ppCtorCall() {
         testPrettyPrintIdentity("new Foo(1)", ASTConstructorCall.class);
     }
 
-    @Test
-    void ppUnary() {
+    @Test void ppUnary() {
         testPrettyPrintIdentity("-+4", ASTUnaryExpression.class);
     }
 
 
-    @Test
-    void ppConditional() {
+    @Test void ppConditional() {
         testPrettyPrintIdentity("true ? false : 1", ASTConditionalExpression.class);
     }
 
-    @Test
-    void ppInfix() {
+    @Test void ppInfix() {
         // note: removes unnecessary parens
         testPrettyPrint("(1+2)+2", ASTInfixExpression.class, "1 + 2 + 2");
         testPrettyPrint("(1+2)*2", ASTInfixExpression.class, "(1 + 2) * 2");
     }
 
 
-
-    @Test
-    void ppLambdaExpr() {
+    @Test void ppLambdaExpr() {
         testPrettyPrintIdentity("(a, b) -> new Foo()", ASTLambdaExpression.class);
         testPrettyPrintIdentity("() -> new Foo()", ASTLambdaExpression.class);
         testPrettyPrintIdentity("x -> new Foo()", ASTLambdaExpression.class);
         testPrettyPrint("(x) -> new Foo()", ASTLambdaExpression.class, "x -> new Foo()");
     }
 
-    @Test
-    void ppLambdaBlock() {
+    @Test void ppLambdaBlock() {
         testPrettyPrint("(a, b) -> {return new Foo(); }", ASTLambdaExpression.class,
-            "(a, b) -> { ... }");
+                "(a, b) -> { ... }");
     }
 
     private <T extends ASTExpression> void testPrettyPrint(String expr, Class<T> nodeTy, String expected) {
@@ -123,13 +110,11 @@ class PrettyPrintingUtilTest extends BaseParserTest {
 
     private static Matcher<CharSequence> contentEquals(String str) {
         return new BaseMatcher<CharSequence>() {
-            @Override
-            public boolean matches(Object o) {
+            @Override public boolean matches(Object o) {
                 return o instanceof CharSequence && str.contentEquals((CharSequence) o);
             }
 
-            @Override
-            public void describeTo(Description description) {
+            @Override public void describeTo(Description description) {
                 description.appendText("a char sequence with content \"" + StringUtil.escapeJava(str) + "\"");
             }
         };

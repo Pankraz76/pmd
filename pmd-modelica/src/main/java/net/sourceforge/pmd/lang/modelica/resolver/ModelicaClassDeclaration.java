@@ -67,7 +67,7 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
                 ctx.markTtlExceeded();
             }
             resolvedExtends = new ArrayList<>();
-            for (ModelicaType decl: ctx.getTypes().getBestCandidates()) {
+            for (ModelicaType decl : ctx.getTypes().getBestCandidates()) {
                 if (decl instanceof ModelicaClassDeclaration) {
                     resolvedExtends.add(((ModelicaClassDeclaration) decl).getClassScope());
                 }
@@ -76,8 +76,7 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
         return resolvedExtends;
     }
 
-    @Override
-    public <T extends ResolvableEntity> ResolutionResult<T> safeResolveComponent(Class<T> clazz, ResolutionState state, CompositeName name) {
+    @Override public <T extends ResolvableEntity> ResolutionResult<T> safeResolveComponent(Class<T> clazz, ResolutionState state, CompositeName name) {
         ResolutionContext result = state.createContext();
         try {
             lookupInInstanceScope(result, name);
@@ -100,7 +99,7 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
         state.tick();
 
         ResolutionContext result = state.createContext();
-        for (final ModelicaImportClause importClause: imports) {
+        for (final ModelicaImportClause importClause : imports) {
             ResolutionContext subResult = state.createContext();
             if (InternalApiBridge.isQualifiedImport(importClause) == qualified) {
                 InternalApiBridge.resolveImportedSimpleName(importClause, subResult, firstName);
@@ -131,34 +130,34 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
 
         // Otherwise, lookup...
         // ... among declared names of the class
-        for (ModelicaDeclaration decl: ownScope.getDirectlyDeclared(firstName)) {
+        for (ModelicaDeclaration decl : ownScope.getDirectlyDeclared(firstName)) {
             lookupInInstanceScopeFurtherParts(result, decl, furtherParts);
         }
         result.markHidingPoint();
         // ... and from inherited, too
-        for (ModelicaClassScope extendedClass: getResolvedExtends(result.getState())) {
-            for (ModelicaDeclaration inheritedDecl: extendedClass.getDirectlyDeclared(firstName)) {
+        for (ModelicaClassScope extendedClass : getResolvedExtends(result.getState())) {
+            for (ModelicaDeclaration inheritedDecl : extendedClass.getDirectlyDeclared(firstName)) {
                 lookupInInstanceScopeFurtherParts(result, inheritedDecl, furtherParts);
             }
         }
         result.markHidingPoint();
         // ... using qualified imports
         ResolutionResult<ModelicaDeclaration> qualifiedImports = lookupImported(result.getState(), firstName, true);
-        for (ModelicaDeclaration importedDecl: qualifiedImports.getBestCandidates()) {
+        for (ModelicaDeclaration importedDecl : qualifiedImports.getBestCandidates()) {
             lookupInInstanceScopeFurtherParts(result, importedDecl, furtherParts);
         }
         result.markHidingPoint();
-        for (ModelicaDeclaration importedDecl: qualifiedImports.getHiddenCandidates()) {
+        for (ModelicaDeclaration importedDecl : qualifiedImports.getHiddenCandidates()) {
             lookupInInstanceScopeFurtherParts(result, importedDecl, furtherParts);
         }
         result.markHidingPoint();
         // ... then using unqualified imports
         ResolutionResult<ModelicaDeclaration> unqualifiedImports = lookupImported(result.getState(), firstName, false);
-        for (ModelicaDeclaration importedDecl: unqualifiedImports.getBestCandidates()) {
+        for (ModelicaDeclaration importedDecl : unqualifiedImports.getBestCandidates()) {
             lookupInInstanceScopeFurtherParts(result, importedDecl, furtherParts);
         }
         result.markHidingPoint();
-        for (ModelicaDeclaration importedDecl: unqualifiedImports.getHiddenCandidates()) {
+        for (ModelicaDeclaration importedDecl : unqualifiedImports.getHiddenCandidates()) {
             lookupInInstanceScopeFurtherParts(result, importedDecl, furtherParts);
         }
     }
@@ -210,38 +209,31 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
         ownScope = scope;
     }
 
-    @Override
-    public ModelicaClassSpecialization getSpecialization() {
+    @Override public ModelicaClassSpecialization getSpecialization() {
         return specialization;
     }
 
-    @Override
-    public boolean isConnectorLike() {
+    @Override public boolean isConnectorLike() {
         return specialization == ModelicaClassSpecialization.CONNECTOR || specialization == ModelicaClassSpecialization.EXPANDABLE_CONNECTOR;
     }
 
-    @Override
-    public boolean isEncapsulated() {
+    @Override public boolean isEncapsulated() {
         return encapsulated;
     }
 
-    @Override
-    public boolean isPartial() {
+    @Override public boolean isPartial() {
         return partial;
     }
 
-    @Override
-    public ModelicaScope getContainingScope() {
+    @Override public ModelicaScope getContainingScope() {
         return ownScope.getParent();
     }
 
-    @Override
-    public ModelicaClassScope getClassScope() {
+    @Override public ModelicaClassScope getClassScope() {
         return ownScope;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder sb = new StringBuilder();
         if (encapsulated) {
             sb.append("encapsulated ");
@@ -255,28 +247,23 @@ class ModelicaClassDeclaration extends AbstractModelicaDeclaration implements Mo
         return sb.toString();
     }
 
-    @Override
-    void resolveFurtherNameComponents(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
+    @Override void resolveFurtherNameComponents(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
         lookupInInstanceScope(result, name);
     }
 
-    @Override
-    public String getSimpleDeclarationName() {
+    @Override public String getSimpleDeclarationName() {
         return simpleName;
     }
 
-    @Override
-    public String getSimpleTypeName() {
+    @Override public String getSimpleTypeName() {
         return simpleName;
     }
 
-    @Override
-    public String getFullTypeName() {
+    @Override public String getFullTypeName() {
         return ownScope.getFullyQualifiedClassName();
     }
 
-    @Override
-    public String getDescriptiveName() {
+    @Override public String getDescriptiveName() {
         return getFullTypeName();
     }
 }

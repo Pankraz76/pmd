@@ -43,19 +43,19 @@ public class LambdaCanBeMethodReferenceRule extends AbstractJavaRulechainRule {
 
 
     private static final PropertyDescriptor<Boolean> IGNORE_IF_MAY_NPE =
-        PropertyFactory.booleanProperty("ignoreIfMayNPE")
-                       .desc("Ignore lambdas that may throw a null pointer exception (NPE) when converted to a method reference. "
-                           + "Those expressions will NPE at mref creation time, while the equivalent lambda would NPE only when invoked (which may be never).")
-                       .defaultValue(false)
-                       .build();
+            PropertyFactory.booleanProperty("ignoreIfMayNPE")
+                    .desc("Ignore lambdas that may throw a null pointer exception (NPE) when converted to a method reference. "
+                            + "Those expressions will NPE at mref creation time, while the equivalent lambda would NPE only when invoked (which may be never).")
+                    .defaultValue(false)
+                    .build();
 
 
     private static final PropertyDescriptor<Boolean> IGNORE_IF_RECEIVER_IS_METHOD =
-        PropertyFactory.booleanProperty("ignoreIfReceiverIsMethod")
-                       .desc("Ignore if the receiver of the method reference is a method call. "
-                           + "These may cause side effects that often should prevent the conversion to a method reference.")
-                       .defaultValue(true)
-                       .build();
+            PropertyFactory.booleanProperty("ignoreIfReceiverIsMethod")
+                    .desc("Ignore if the receiver of the method reference is a method call. "
+                            + "These may cause side effects that often should prevent the conversion to a method reference.")
+                    .defaultValue(true)
+                    .build();
 
     public LambdaCanBeMethodReferenceRule() {
         super(ASTLambdaExpression.class);
@@ -63,8 +63,7 @@ public class LambdaCanBeMethodReferenceRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(IGNORE_IF_RECEIVER_IS_METHOD);
     }
 
-    @Override
-    public Object visit(ASTLambdaExpression node, Object data) {
+    @Override public Object visit(ASTLambdaExpression node, Object data) {
         if (node.isExpressionBody()) {
             ASTExpression expression = node.getExpressionBody();
             processLambdaWithBody(node, asCtx(data), expression);
@@ -98,9 +97,9 @@ public class LambdaCanBeMethodReferenceRule extends AbstractJavaRulechainRule {
         JTypeMirror methodSource = info.getMethodType().getDeclaringType();
         JTypeDeclSymbol classSym = methodSource.getSymbol();
         assert classSym != null
-            : "null symbol for " + methodSource + ", method " + info.getMethodType();
+                : "null symbol for " + methodSource + ", method " + info.getMethodType();
         if (qualifier == null && info.getMethodType().isStatic()
-            || lambda.getParameters().size() != call.getArguments().size()) {
+                || lambda.getParameters().size() != call.getArguments().size()) {
             // this second condition corresponds to the case the first lambda
             // param is the receiver of the method call
             sb.append(classSym.getSimpleName());
@@ -167,17 +166,17 @@ public class LambdaCanBeMethodReferenceRule extends AbstractJavaRulechainRule {
             // with only one instance being created
             return false;
         } else if (qualifier instanceof ASTTypeExpression
-            || qualifier instanceof ASTSuperExpression
-            || qualifier instanceof ASTThisExpression
-            || qualifier instanceof ASTClassLiteral
-            || qualifier instanceof ASTLiteral
-            || qualifier == null) {
+                || qualifier instanceof ASTSuperExpression
+                || qualifier instanceof ASTThisExpression
+                || qualifier instanceof ASTClassLiteral
+                || qualifier instanceof ASTLiteral
+                || qualifier == null) {
             // these are always transformable
             return true;
         }
 
         boolean isIgnoredBecauseOfMethodCall =
-            qualifier instanceof ASTMethodCall && getProperty(IGNORE_IF_RECEIVER_IS_METHOD);
+                qualifier instanceof ASTMethodCall && getProperty(IGNORE_IF_RECEIVER_IS_METHOD);
 
         // if call uses first lambda parm as receiver, then the mref may not npe at creation time 
         boolean mayNPE = lambda.getParameters().size() == call.getArguments().size();

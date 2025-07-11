@@ -42,9 +42,9 @@ public class SymbolToStrings {
             attrs = "";
         } else {
             attrs = annot.getAttributeNames()
-                         .stream()
-                         .map(name -> name + "=" + annot.getAttribute(name))
-                         .collect(Collectors.joining(", ", "(", ")"));
+                    .stream()
+                    .map(name -> name + "=" + annot.getAttribute(name))
+                    .collect(Collectors.joining(", ", "(", ")"));
         }
         return "@" + annot.getBinaryName() + attrs;
     }
@@ -68,13 +68,11 @@ public class SymbolToStrings {
             return builder.append(')');
         }
 
-        @Override
-        public StringBuilder visitSymbol(JElementSymbol sym, StringBuilder builder) {
+        @Override public StringBuilder visitSymbol(JElementSymbol sym, StringBuilder builder) {
             throw new IllegalStateException("Unknown symbol " + sym.getClass());
         }
 
-        @Override
-        public StringBuilder visitClass(JClassSymbol sym, StringBuilder param) {
+        @Override public StringBuilder visitClass(JClassSymbol sym, StringBuilder param) {
             String kind;
             if (sym.isUnresolved()) {
                 kind = "unresolved";
@@ -91,46 +89,38 @@ public class SymbolToStrings {
             return withImpl(param, kind, sym.getBinaryName());
         }
 
-        @Override
-        public StringBuilder visitArray(JClassSymbol sym, JTypeDeclSymbol component, StringBuilder param) {
+        @Override public StringBuilder visitArray(JClassSymbol sym, JTypeDeclSymbol component, StringBuilder param) {
             param.append("array(");
             return component.acceptVisitor(this, param).append(")");
         }
 
-        @Override
-        public StringBuilder visitTypeParam(JTypeParameterSymbol sym, StringBuilder param) {
+        @Override public StringBuilder visitTypeParam(JTypeParameterSymbol sym, StringBuilder param) {
             return withImpl(param, "tparam", sym.getSimpleName(), sym.getDeclaringSymbol());
         }
 
-        @Override
-        public StringBuilder visitCtor(JConstructorSymbol sym, StringBuilder param) {
+        @Override public StringBuilder visitCtor(JConstructorSymbol sym, StringBuilder param) {
             return withImpl(param, "ctor", sym.getEnclosingClass());
         }
 
-        @Override
-        public StringBuilder visitMethod(JMethodSymbol sym, StringBuilder param) {
+        @Override public StringBuilder visitMethod(JMethodSymbol sym, StringBuilder param) {
             return withImpl(param, "method", sym.getSimpleName(), sym.getEnclosingClass());
         }
 
-        @Override
-        public StringBuilder visitField(JFieldSymbol sym, StringBuilder param) {
+        @Override public StringBuilder visitField(JFieldSymbol sym, StringBuilder param) {
             return withImpl(param, "field", sym.getSimpleName(), sym.getEnclosingClass());
         }
 
 
-        @Override
-        public StringBuilder visitRecordComponent(JRecordComponentSymbol sym, StringBuilder param) {
+        @Override public StringBuilder visitRecordComponent(JRecordComponentSymbol sym, StringBuilder param) {
             return withImpl(param, "record component", sym.getSimpleName(), sym.getEnclosingClass());
         }
 
 
-        @Override
-        public StringBuilder visitLocal(JLocalVariableSymbol sym, StringBuilder param) {
+        @Override public StringBuilder visitLocal(JLocalVariableSymbol sym, StringBuilder param) {
             return withImpl(param, "local", sym.getSimpleName());
         }
 
-        @Override
-        public StringBuilder visitFormal(JFormalParamSymbol sym, StringBuilder param) {
+        @Override public StringBuilder visitFormal(JFormalParamSymbol sym, StringBuilder param) {
             return withImpl(param, "formal", sym.getSimpleName());
         }
     }

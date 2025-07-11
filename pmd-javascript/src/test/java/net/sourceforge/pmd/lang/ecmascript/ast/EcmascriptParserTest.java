@@ -25,8 +25,7 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
     /**
      * https://sourceforge.net/p/pmd/bugs/1043/
      */
-    @Test
-    void testLineNumbers() {
+    @Test void testLineNumbers() {
         final String SOURCE_CODE = "function a() {\n  alert('hello');\n}\n";
         EcmascriptNode<AstRoot> node = js.parse(SOURCE_CODE);
         assertEquals(1, node.getBeginLine());
@@ -50,15 +49,14 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
     /**
      * https://sourceforge.net/p/pmd/bugs/1149/
      */
-    @Test
-    void testLineNumbersWithinEcmascriptRules() {
+    @Test void testLineNumbersWithinEcmascriptRules() {
         String source =
-            "function f(x){\n"
-                + "   if (x) {\n"
-                + "       return 1;\n"
-                + "   } else {\n"
-                + "       return 0;\n" + "   }\n"
-                + "}";
+                "function f(x){\n"
+                        + "   if (x) {\n"
+                        + "       return 1;\n"
+                        + "   } else {\n"
+                        + "       return 0;\n" + "   }\n"
+                        + "}";
 
         class MyEcmascriptRule extends AbstractEcmascriptRule {
 
@@ -80,8 +78,7 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
     /**
      * Test bug https://sourceforge.net/p/pmd/bugs/1118/
      */
-    @Test
-    void testArrayAccess() {
+    @Test void testArrayAccess() {
         EcmascriptNode<AstRoot> node = js.parse("function a() { b['a'] = 1; c[1] = 2; }");
         List<ASTElementGet> arrays = node.descendants(ASTElementGet.class).toList();
         assertEquals("b", ((ASTName) arrays.get(0).getTarget()).getIdentifier());
@@ -94,11 +91,10 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
      * Test for bug #1136 ECAMScript: NullPointerException in getLeft() and
      * getRight()
      */
-    @Test
-    void testArrayMethod() {
+    @Test void testArrayMethod() {
         EcmascriptNode<AstRoot> rootNode = js.parse(
-            "function test(){\n" + "  a();      // OK\n" + "  b.c();    // OK\n" + "  d[0]();   // OK\n"
-                + "  e[0].f(); // OK\n" + "  y.z[0](); // FAIL ==> java.lang.NullPointerException\n" + "}");
+                "function test(){\n" + "  a();      // OK\n" + "  b.c();    // OK\n" + "  d[0]();   // OK\n"
+                        + "  e[0].f(); // OK\n" + "  y.z[0](); // FAIL ==> java.lang.NullPointerException\n" + "}");
 
         List<ASTFunctionCall> calls = rootNode.descendants(ASTFunctionCall.class).toList();
         List<String> results = new ArrayList<>();
@@ -129,8 +125,7 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
      * https://sourceforge.net/p/pmd/bugs/1150/ #1150 "EmptyExpression" for
      * valid statements!
      */
-    @Test
-    void testCaseAsIdentifier() {
+    @Test void testCaseAsIdentifier() {
         ASTAstRoot rootNode = js.parse("function f(a){\n" + "    a.case.flag = 1;\n" + "    return;\n" + "}");
         ASTBlock block = rootNode.descendants(ASTBlock.class).first();
         assertFalse(block.getChild(0) instanceof ASTEmptyExpression);
@@ -142,16 +137,15 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
      * https://sourceforge.net/p/pmd/bugs/1045/ #1045 //NOPMD not working (or
      * not implemented) with ECMAscript
      */
-    @Test
-    void testSuppressionComment() {
+    @Test void testSuppressionComment() {
         ASTAstRoot root = js.parse("function(x) {\n"
-                                       + "x = x; //NOPMD I know what I'm doing\n"
-                                       + "}\n");
+                + "x = x; //NOPMD I know what I'm doing\n"
+                + "}\n");
         assertEquals(" I know what I'm doing", root.getAstInfo().getSuppressionComments().get(2));
         assertEquals(1, root.getAstInfo().getSuppressionComments().size());
 
         root = js.withSuppressMarker("FOOOO")
-                 .parse("function(x) {\n" + "y = y; //NOPMD xyz\n" + "x = x; //FOOOO I know what I'm doing\n" + "}\n");
+                .parse("function(x) {\n" + "y = y; //NOPMD xyz\n" + "x = x; //FOOOO I know what I'm doing\n" + "}\n");
         assertEquals(" I know what I'm doing", root.getAstInfo().getSuppressionComments().get(3));
         assertEquals(1, root.getAstInfo().getSuppressionComments().size());
     }
@@ -159,11 +153,10 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
     /**
      * #1191 Ecmascript fails to parse "void(0)"
      */
-    @Test
-    void testVoidKeyword() {
+    @Test void testVoidKeyword() {
         ASTAstRoot rootNode = js.parse("function f(matchFn, fieldval, n){\n"
-                                           + "    return (matchFn)?(matcharray = eval(matchFn+\"('\"+fieldval+\"','\"+n.id+\"')\")):void(0);\n"
-                                           + "}\n");
+                + "    return (matchFn)?(matcharray = eval(matchFn+\"('\"+fieldval+\"','\"+n.id+\"')\")):void(0);\n"
+                + "}\n");
         ASTUnaryExpression unary = rootNode.descendants(ASTUnaryExpression.class).first();
         assertEquals("void", unary.getOperator());
     }
@@ -171,25 +164,24 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
     /**
      * #1192 Ecmascript fails to parse this operator " ^= "
      */
-    @Test
-    void testXorAssignment() {
+    @Test void testXorAssignment() {
         ASTAstRoot rootNode = js.parse(
                 "function f() {\n"
-                         + "  var x = 2;\n"
-                         + "  x ^= 2;\n"
-                         + "  x &= 2;\n"
-                         + "  x |= 2;\n"
-                         + "  x &&= true;\n"
-                         + "  x ||= false;\n"
-                         + "  x *= 2;\n"
-                         + "  x /= 2;\n"
-                         + "  x %= 2;\n"
-                         + "  x += 2;\n"
-                         + "  x -= 2;\n"
-                         + "  x <<= 2;\n"
-                         + "  x >>= 2;\n"
-                         + "  x >>>= 2;\n"
-                         + "}");
+                        + "  var x = 2;\n"
+                        + "  x ^= 2;\n"
+                        + "  x &= 2;\n"
+                        + "  x |= 2;\n"
+                        + "  x &&= true;\n"
+                        + "  x ||= false;\n"
+                        + "  x *= 2;\n"
+                        + "  x /= 2;\n"
+                        + "  x %= 2;\n"
+                        + "  x += 2;\n"
+                        + "  x -= 2;\n"
+                        + "  x <<= 2;\n"
+                        + "  x >>= 2;\n"
+                        + "  x >>>= 2;\n"
+                        + "}");
         ASTAssignment infix = rootNode.descendants(ASTAssignment.class).first();
         assertEquals("^=", infix.getOperator());
     }
@@ -197,22 +189,19 @@ class EcmascriptParserTest extends EcmascriptParserTestBase {
     /**
      * See  [js] Support unicode characters #2605
      */
-    @Test
-    void testUnicodeCjk() {
+    @Test void testUnicodeCjk() {
         // the first is u+4F60
         js.parse("import { Test } from 'test2'\n"
-                 + "define('element', class extends Test {\n"
-                 + "    <button onClick={this.clickHandler}>你好</button>\n"
-                 + "  }\n"
-                 + "})");
+                + "define('element', class extends Test {\n"
+                + "    <button onClick={this.clickHandler}>你好</button>\n"
+                + "  }\n"
+                + "})");
     }
 
     /**
      * [javascript] Failing with OutOfMemoryError parsing a Javascript file #2081
      */
-    @Test
-    @Timeout(5)
-    void shouldNotFailWithOutOfMemory() {
+    @Test @Timeout(5) void shouldNotFailWithOutOfMemory() {
         ASTAstRoot rootNode = js.parse("(``\n);");
         assertNotNull(rootNode);
     }

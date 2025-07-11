@@ -12,8 +12,7 @@ import net.sourceforge.pmd.lang.java.BaseParserTest;
 
 class EncodingTest extends BaseParserTest {
 
-    @Test
-    void testDecodingOfUTF8() {
+    @Test void testDecodingOfUTF8() {
         ASTCompilationUnit acu = java.parse("class Foo { void é() {} }");
         String methodName = acu.descendants(ASTMethodDeclaration.class).firstOrThrow().getName();
         assertEquals("é", methodName);

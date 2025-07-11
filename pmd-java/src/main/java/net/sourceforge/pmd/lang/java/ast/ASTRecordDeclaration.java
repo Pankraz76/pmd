@@ -33,19 +33,15 @@ public final class ASTRecordDeclaration extends AbstractTypeDeclaration {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public NodeStream<ASTBodyDeclaration> getDeclarations() {
+    @Override public NodeStream<ASTBodyDeclaration> getDeclarations() {
         return firstChild(ASTRecordBody.class).children(ASTBodyDeclaration.class);
     }
 
-    @Override
-    @NonNull
-    public ASTRecordComponentList getRecordComponents() {
+    @Override @NonNull public ASTRecordComponentList getRecordComponents() {
         return firstChild(ASTRecordComponentList.class);
     }
 }

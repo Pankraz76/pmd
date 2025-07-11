@@ -15,17 +15,13 @@ import picocli.CommandLine.Spec;
 
 public abstract class AbstractPmdSubcommand implements Callable<Integer> {
 
-    @Spec
-    protected CommandSpec spec; // injected by PicoCli, needed for validations
+    @Spec protected CommandSpec spec; // injected by PicoCli, needed for validations
 
-    @Option(names = { "-h", "--help" }, usageHelp = true, description = "Show this help message and exit.")
-    protected boolean helpRequested;
+    @Option(names = {"-h", "--help"}, usageHelp = true, description = "Show this help message and exit.") protected boolean helpRequested;
 
-    @Option(names = { "--debug", "--verbose", "-D", "-v" }, description = "Debug mode.")
-    protected boolean debug;
+    @Option(names = {"--debug", "--verbose", "-D", "-v"}, description = "Debug mode.") protected boolean debug;
 
-    @Override
-    public final Integer call() throws Exception {
+    @Override public final Integer call() throws Exception {
         validate();
         return execute().getExitCode();
     }

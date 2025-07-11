@@ -19,15 +19,13 @@ public abstract class JavaIntMetricTestRule extends AbstractMetricTestRule.OfInt
         super(metric);
     }
 
-    @Override
-    protected boolean reportOn(Node node) {
+    @Override protected boolean reportOn(Node node) {
         return super.reportOn(node)
-            && (node instanceof ASTExecutableDeclaration
-            || node instanceof ASTTypeDeclaration);
+                && (node instanceof ASTExecutableDeclaration
+                || node instanceof ASTTypeDeclaration);
     }
 
-    @Override
-    protected String violationMessage(Node node, Integer result) {
+    @Override protected String violationMessage(Node node, Integer result) {
         return AllMetricsTest.formatJavaMessage(node, result);
     }
 }

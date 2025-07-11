@@ -232,7 +232,6 @@ public interface JTypeMirror extends JTypeVisitable {
     }
 
 
-
     /**
      * Returns true if this type is reifiable. If so, its {@link #getSymbol() symbol}
      * will not be null (the reverse is not necessarily true).
@@ -349,7 +348,6 @@ public interface JTypeMirror extends JTypeVisitable {
     }
 
 
-
     /**
      * Returns true if this type is a generic class type.
      * This means, the symbol declares some type parameters,
@@ -363,7 +361,6 @@ public interface JTypeMirror extends JTypeVisitable {
     default boolean isGeneric() {
         return false;
     }
-
 
 
     /**
@@ -449,8 +446,7 @@ public interface JTypeMirror extends JTypeVisitable {
     }
 
 
-    @Override
-    JTypeMirror subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst);
+    @Override JTypeMirror subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst);
 
 
     /**
@@ -497,8 +493,7 @@ public interface JTypeMirror extends JTypeVisitable {
      *     {@link TypeOps#isSameType(JTypeMirror, JTypeMirror)},
      *     and perform no side-effects on inference variables.
      */
-    @Override
-    boolean equals(Object o);
+    @Override boolean equals(Object o);
 
 
     /**
@@ -506,7 +501,6 @@ public interface JTypeMirror extends JTypeVisitable {
      * but shouldn't be relied on anywhere, as it may change anytime.
      * Use {@link TypePrettyPrint} to display types.
      */
-    @Override
-    String toString();
+    @Override String toString();
 
 }

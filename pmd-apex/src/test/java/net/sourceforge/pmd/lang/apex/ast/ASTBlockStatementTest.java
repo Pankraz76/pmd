@@ -10,8 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 class ASTBlockStatementTest extends ApexParserTestBase {
-    @Test
-    void noCurlyBraces() {
+    @Test void noCurlyBraces() {
         ASTBlockStatement blockStatement = parse("class Foo { { if (true) methodCall(); } }")
                 .descendants(ASTIfBlockStatement.class)
                 .firstChild(ASTBlockStatement.class)
@@ -19,8 +18,7 @@ class ASTBlockStatementTest extends ApexParserTestBase {
         assertFalse(blockStatement.hasCurlyBrace());
     }
 
-    @Test
-    void withCurlyBraces() {
+    @Test void withCurlyBraces() {
         ASTBlockStatement blockStatement = parse("class Foo { { if (true) { methodCall(); } } }")
                 .descendants(ASTIfBlockStatement.class)
                 .firstChild(ASTBlockStatement.class)

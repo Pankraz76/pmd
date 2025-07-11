@@ -27,13 +27,11 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
  */
 public class AtLeastOneConstructorRule extends AbstractIgnoredAnnotationRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTClassDeclaration.class);
     }
 
-    @Override
-    protected Collection<String> defaultSuppressionAnnotations() {
+    @Override protected Collection<String> defaultSuppressionAnnotations() {
         return Arrays.asList("lombok.Data",
                 "lombok.Value",
                 "lombok.Builder",
@@ -42,19 +40,18 @@ public class AtLeastOneConstructorRule extends AbstractIgnoredAnnotationRule {
                 "lombok.AllArgsConstructor");
     }
 
-    @Override
-    public Object visit(final ASTClassDeclaration node, final Object data) {
+    @Override public Object visit(final ASTClassDeclaration node, final Object data) {
         // Ignore interfaces / static classes / classes that have a constructor / classes ignored through annotations
         if (!node.isRegularClass()
-            || node.isStatic()
-            || node.getDeclarations().any(it -> it instanceof ASTConstructorDeclaration)
-            || hasIgnoredAnnotation(node)) {
+                || node.isStatic()
+                || node.getDeclarations().any(it -> it instanceof ASTConstructorDeclaration)
+                || hasIgnoredAnnotation(node)) {
             return data;
         }
 
         NodeStream<ModifierOwner> members = node.getDeclarations()
-                                             .filterIs(ModifierOwner.class)
-                                             .filterNot(it -> it instanceof ASTTypeDeclaration);
+                .filterIs(ModifierOwner.class)
+                .filterNot(it -> it instanceof ASTTypeDeclaration);
         if (members.isEmpty() || members.any(it -> !it.hasModifiers(JModifier.STATIC))) {
             // Do we have any non-static members?
             asCtx(data).addViolation(node);

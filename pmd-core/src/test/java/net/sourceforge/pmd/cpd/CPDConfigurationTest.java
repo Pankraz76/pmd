@@ -22,8 +22,7 @@ import net.sourceforge.pmd.lang.LanguageRegistry;
 
 class CPDConfigurationTest {
 
-    @Test
-    void testRenderers() {
+    @Test void testRenderers() {
         Map<String, Class<? extends CPDReportRenderer>> renderersToTest = new HashMap<>();
         renderersToTest.put("csv", CSVRenderer.class);
         renderersToTest.put("xml", XMLRenderer.class);
@@ -38,8 +37,7 @@ class CPDConfigurationTest {
         }
     }
 
-    @Test
-    void testRendererEncoding() {
+    @Test void testRendererEncoding() {
         CPDConfiguration conf = new CPDConfiguration();
         conf.setRendererName("xml");
         conf.setSourceEncoding(StandardCharsets.UTF_16);
@@ -50,8 +48,7 @@ class CPDConfigurationTest {
         assertEquals(StandardCharsets.UTF_16.name(), ((XMLRenderer) renderer).getEncoding());
     }
 
-    @Test
-    void testRendererEncoding2() {
+    @Test void testRendererEncoding2() {
         CPDConfiguration conf = new CPDConfiguration();
         // here the order of these statements are reversed
         conf.setSourceEncoding(StandardCharsets.UTF_16);
@@ -64,15 +61,14 @@ class CPDConfigurationTest {
     }
 
 
-    @Test
-    void testCpdNotSupported() {
+    @Test void testCpdNotSupported() {
         DummyLanguageNoCapabilities lang = DummyLanguageNoCapabilities.getInstance();
         final CPDConfiguration configuration = new CPDConfiguration(LanguageRegistry.singleton(lang));
 
         assertThrows(UnsupportedOperationException.class,
-            () -> configuration.setOnlyRecognizeLanguage(lang));
+                () -> configuration.setOnlyRecognizeLanguage(lang));
         assertThrows(UnsupportedOperationException.class,
-            () -> configuration.setDefaultLanguageVersion(lang.getDefaultVersion()));
+                () -> configuration.setDefaultLanguageVersion(lang.getDefaultVersion()));
     }
 
 }

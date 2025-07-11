@@ -28,8 +28,7 @@ public class CloneMethodMustImplementCloneableRule extends AbstractJavaRulechain
         super(ASTMethodDeclaration.class);
     }
 
-    @Override
-    public Object visit(final ASTMethodDeclaration node, final Object data) {
+    @Override public Object visit(final ASTMethodDeclaration node, final Object data) {
         if (!JavaAstUtils.isCloneMethod(node)) {
             return data;
         }
@@ -49,11 +48,11 @@ public class CloneMethodMustImplementCloneableRule extends AbstractJavaRulechain
     private static boolean justThrowsCloneNotSupported(ASTBlock body) {
         return body.size() == 1
                 && body.getChild(0)
-                   .asStream()
-                   .filterIs(ASTThrowStatement.class)
-                   .map(ASTThrowStatement::getExpr)
-                   .filter(it -> TypeTestUtil.isA(CloneNotSupportedException.class, it))
-                   .nonEmpty();
+                .asStream()
+                .filterIs(ASTThrowStatement.class)
+                .map(ASTThrowStatement::getExpr)
+                .filter(it -> TypeTestUtil.isA(CloneNotSupportedException.class, it))
+                .nonEmpty();
     }
 
 }

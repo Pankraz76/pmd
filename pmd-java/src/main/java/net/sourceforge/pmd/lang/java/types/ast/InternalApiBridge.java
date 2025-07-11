@@ -26,7 +26,8 @@ import net.sourceforge.pmd.util.AssertionUtil;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static boolean canGiveContextToPoly(ExprContext exprContext, boolean lambdaOrMethodRef) {
         return exprContext.canGiveContextToPoly(lambdaOrMethodRef);

@@ -46,8 +46,7 @@ class ApexClassPropertyTypes extends SalesforceFieldTypes {
     /**
      * Looks in {@code apexDirectories} for an Apex property identified by {@code expression}.
      */
-    @Override
-    public void findDataType(String expression, List<Path> apexDirectories) {
+    @Override public void findDataType(String expression, List<Path> apexDirectories) {
         String[] parts = expression.split("\\.");
         if (parts.length >= 2) {
             // Load the class and parse it
@@ -95,8 +94,7 @@ class ApexClassPropertyTypes extends SalesforceFieldTypes {
         }
     }
 
-    @Override
-    protected DataType putDataType(String name, DataType dataType) {
+    @Override protected DataType putDataType(String name, DataType dataType) {
         DataType previousType = super.putDataType(name, dataType);
         if (previousType != null && !previousType.equals(dataType)) {
             // It is possible to have a property and method with different types that appear the same to this code. An

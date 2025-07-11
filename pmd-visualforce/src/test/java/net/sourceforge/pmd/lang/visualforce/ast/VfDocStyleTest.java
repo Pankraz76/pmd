@@ -29,8 +29,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Smoke test for VF parser.
      */
-    @Test
-    void testSimplestVf() {
+    @Test void testSimplestVf() {
         List<ASTElement> nodes = vf.getNodes(ASTElement.class, TEST_SIMPLEST_HTML);
         assertEquals(1, nodes.size(), "Exactly " + 1 + " element(s) expected");
     }
@@ -38,8 +37,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test the information on a Element and Attribute.
      */
-    @Test
-    void testElementAttributeAndNamespace() {
+    @Test void testElementAttributeAndNamespace() {
         ASTCompilationUnit root = vf.parse(TEST_ELEMENT_AND_NAMESPACE);
 
 
@@ -67,8 +65,7 @@ class VfDocStyleTest extends AbstractVfTest {
      * in an attribute value.
      *
      */
-    @Test
-    void testAttributeValueContainingHash() {
+    @Test void testAttributeValueContainingHash() {
 
         List<ASTAttribute> attributes = vf.getNodes(ASTAttribute.class, TEST_ATTRIBUTE_VALUE_CONTAINING_HASH);
         assertEquals(3, attributes.size(), "Three attributes expected!");
@@ -92,8 +89,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test correct parsing of CDATA.
      */
-    @Test
-    void testCData() {
+    @Test void testCData() {
         List<ASTCData> cdataNodes = vf.getNodes(ASTCData.class, TEST_CDATA);
 
         assertEquals(1, cdataNodes.size(), "One CDATA node expected!");
@@ -104,8 +100,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of Doctype declaration.
      */
-    @Test
-    void testDoctype() {
+    @Test void testDoctype() {
         ASTCompilationUnit root = vf.parse(TEST_DOCTYPE);
 
         List<ASTDoctypeDeclaration> docTypeDeclarations = root.descendants(ASTDoctypeDeclaration.class).toList();
@@ -125,8 +120,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of HTML &lt;script&gt; element.
      */
-    @Test
-    void testHtmlScript() {
+    @Test void testHtmlScript() {
         List<ASTHtmlScript> scripts = vf.getNodes(ASTHtmlScript.class, TEST_HTML_SCRIPT);
         assertEquals(1, scripts.size(), "One script expected!");
         ASTHtmlScript script = scripts.iterator().next();
@@ -137,8 +131,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of EL in attribute of an element.
      */
-    @Test
-    void testELInTagValue() {
+    @Test void testELInTagValue() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_EL_IN_TAG_ATTRIBUTE);
         assertEquals(1, elements.size(), "One element expected!");
         ASTElement element = elements.iterator().next();
@@ -151,8 +144,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of EL in attribute of an element that also has a comment.
      */
-    @Test
-    void testELInTagValueWithCommentDQ() {
+    @Test void testELInTagValueWithCommentDQ() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_EL_IN_TAG_ATTRIBUTE_WITH_COMMENT);
         assertEquals(1, elements.size(), "One element expected!");
         ASTElement element = elements.iterator().next();
@@ -164,8 +156,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of EL in attribute of an element that also has a comment.
      */
-    @Test
-    void testELInTagValueWithCommentSQ() {
+    @Test void testELInTagValueWithCommentSQ() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_EL_IN_TAG_ATTRIBUTE_WITH_COMMENT_SQ);
         assertEquals(1, elements.size(), "One element expected!");
         ASTElement element = elements.iterator().next();
@@ -178,8 +169,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of EL in HTML &lt;script&gt; element.
      */
-    @Test
-    void testELInHtmlScript() {
+    @Test void testELInHtmlScript() {
         List<ASTHtmlScript> scripts = vf.getNodes(ASTHtmlScript.class, TEST_EL_IN_HTML_SCRIPT);
         assertEquals(1, scripts.size(), "One script expected!");
         ASTHtmlScript script = scripts.iterator().next();
@@ -193,8 +183,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of inline comment in EL.
      */
-    @Test
-    void testInlineCommentInEL() {
+    @Test void testInlineCommentInEL() {
         List<ASTHtmlScript> scripts = vf.getNodes(ASTHtmlScript.class, TEST_EL_IN_HTML_SCRIPT_WITH_COMMENT);
         assertEquals(1, scripts.size(), "One script expected!");
         ASTHtmlScript script = scripts.iterator().next();
@@ -208,8 +197,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of quoted EL in HTML &lt;script&gt; element.
      */
-    @Test
-    void testQuotedELInHtmlScript() {
+    @Test void testQuotedELInHtmlScript() {
         List<ASTHtmlScript> scripts = vf.getNodes(ASTHtmlScript.class, TEST_QUOTED_EL_IN_HTML_SCRIPT);
         assertEquals(1, scripts.size(), "One script expected!");
         ASTHtmlScript script = scripts.iterator().next();
@@ -224,8 +212,7 @@ class VfDocStyleTest extends AbstractVfTest {
      * Test parsing of HTML &lt;script src="x"/&gt; element. It might not be
      * valid html but it is likely to appear in .page files.
      */
-    @Test
-    void testImportHtmlScript() {
+    @Test void testImportHtmlScript() {
         List<ASTHtmlScript> scripts = vf.getNodes(ASTHtmlScript.class, TEST_IMPORT_JAVASCRIPT);
         assertEquals(1, scripts.size(), "One script expected!");
         ASTHtmlScript script = scripts.iterator().next();
@@ -240,8 +227,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of HTML &lt;script&gt; element.
      */
-    @Test
-    void testHtmlScriptWithAttribute() {
+    @Test void testHtmlScriptWithAttribute() {
         List<ASTHtmlScript> scripts = vf.getNodes(ASTHtmlScript.class, TEST_HTML_SCRIPT_WITH_ATTRIBUTE);
         assertEquals(1, scripts.size(), "One script expected!");
         ASTHtmlScript script = scripts.iterator().next();
@@ -254,8 +240,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * A complex script containing HTML comments, escapes, quotes, etc.
      */
-    @Test
-    void testComplexHtmlScript() {
+    @Test void testComplexHtmlScript() {
         List<ASTHtmlScript> script = vf.getNodes(ASTHtmlScript.class, TEST_COMPLEX_SCRIPT);
         assertEquals(1, script.size(), "One script expected!");
         ASTHtmlScript next = script.iterator().next();
@@ -267,8 +252,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of HTML &lt;style&gt; element.
      */
-    @Test
-    void testInlineCss() {
+    @Test void testInlineCss() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_INLINE_STYLE);
         assertEquals(3, elements.size(), "Two elements expected!");
     }
@@ -276,8 +260,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of HTML text within element.
      */
-    @Test
-    void testTextInTag() {
+    @Test void testTextInTag() {
         List<ASTText> scripts = vf.getNodes(ASTText.class, TEST_TEXT_IN_TAG);
         assertEquals(1, scripts.size(), "One text chunk expected!");
         ASTText script = scripts.iterator().next();
@@ -288,8 +271,7 @@ class VfDocStyleTest extends AbstractVfTest {
      * Test parsing of HTML with no spaces between tags. Parser is likely in
      * this scenario.
      */
-    @Test
-    void noSpacesBetweenTags() {
+    @Test void noSpacesBetweenTags() {
         List<ASTElement> scripts = vf.getNodes(ASTElement.class, TEST_TAGS_NO_SPACE);
         assertEquals(2, scripts.size(), "Two tags expected!");
         Iterator<ASTElement> iterator = scripts.iterator();
@@ -303,8 +285,7 @@ class VfDocStyleTest extends AbstractVfTest {
      * the $ sign might trick the parser into thinking an EL is next. He should
      * be able to treat it as plain text
      */
-    @Test
-    void unclosedTagsWithDollar() {
+    @Test void unclosedTagsWithDollar() {
         List<ASTText> scripts = vf.getNodes(ASTText.class, TEST_TAGS_WITH_DOLLAR);
         assertEquals(2, scripts.size(), "Two text chunks expected!");
         ASTText script = scripts.iterator().next();
@@ -315,8 +296,7 @@ class VfDocStyleTest extends AbstractVfTest {
      * Make sure EL expressions aren't treated as plain text when they are
      * around unclosed tags.
      */
-    @Test
-    void unclosedTagsWithELWithin() {
+    @Test void unclosedTagsWithELWithin() {
         List<ASTElement> element = vf.getNodes(ASTElement.class, TEST_TAGS_WITH_EL_WITHIN);
         assertEquals(1, element.size(), "One element expected!");
 
@@ -338,8 +318,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * Test parsing of HTML &lt;script&gt; element.
      */
-    @Test
-    void textAfterOpenAndClosedTag() {
+    @Test void textAfterOpenAndClosedTag() {
         List<ASTElement> nodes = vf.getNodes(ASTElement.class, TEST_TEXT_AFTER_OPEN_AND_CLOSED_TAG);
         assertEquals(2, nodes.size(), "Two elements expected!");
         assertEquals("a", nodes.get(0).getName(), "First element should be a");
@@ -351,8 +330,7 @@ class VfDocStyleTest extends AbstractVfTest {
         assertEquals(2, text.size(), "Two text chunks expected!");
     }
 
-    @Test
-    void quoteEL() {
+    @Test void quoteEL() {
         List<ASTAttributeValue> attributes = vf.getNodes(ASTAttributeValue.class, TEST_QUOTE_EL);
         assertEquals(1, attributes.size(), "One attribute expected!");
         ASTAttributeValue attr = attributes.iterator().next();
@@ -366,8 +344,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * smoke test for a non-quoted attribute value
      */
-    @Test
-    void quoteAttrValue() {
+    @Test void quoteAttrValue() {
         List<ASTAttributeValue> attributes = vf.getNodes(ASTAttributeValue.class, TEST_ATTR);
         assertEquals(1, attributes.size(), "One attribute expected!");
         ASTAttributeValue attr = attributes.iterator().next();
@@ -378,8 +355,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * tests whether parse correctly interprets empty non quote attribute
      */
-    @Test
-    void noQuoteAttrEmpty() {
+    @Test void noQuoteAttrEmpty() {
         List<ASTAttributeValue> attributes = vf.getNodes(ASTAttributeValue.class, TEST_EMPTY_ATTR);
         assertEquals(2, attributes.size(), "two attributes expected!");
         Iterator<ASTAttributeValue> iterator = attributes.iterator();
@@ -395,8 +371,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * tests whether parse correctly interprets an tab instead of an attribute
      */
-    @Test
-    void singleQuoteAttrTab() {
+    @Test void singleQuoteAttrTab() {
         List<ASTAttributeValue> attributes = vf.getNodes(ASTAttributeValue.class, TEST_TAB_ATTR);
         assertEquals(1, attributes.size(), "One attribute expected!");
         Iterator<ASTAttributeValue> iterator = attributes.iterator();
@@ -406,8 +381,7 @@ class VfDocStyleTest extends AbstractVfTest {
 
     }
 
-    @Test
-    void unclosedTag() {
+    @Test void unclosedTag() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_UNCLOSED_SIMPLE);
         assertEquals(2, elements.size(), "2 tags expected");
         assertEquals("tag:someTag", elements.get(0).getName(), "Second element should be tag:someTag");
@@ -419,8 +393,7 @@ class VfDocStyleTest extends AbstractVfTest {
         assertFalse(elements.get(0).isUnclosed());
     }
 
-    @Test
-    void unclosedTagAndNoQuotesForAttribute() {
+    @Test void unclosedTagAndNoQuotesForAttribute() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_UNCLOSED_ATTR);
         assertEquals(2, elements.size(), "2 tags expected");
         assertEquals("tag:someTag", elements.get(0).getName(), "Second element should be tag:someTag");
@@ -432,8 +405,7 @@ class VfDocStyleTest extends AbstractVfTest {
         assertFalse(elements.get(0).isUnclosed());
     }
 
-    @Test
-    void unclosedTagMultipleLevels() {
+    @Test void unclosedTagMultipleLevels() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_UNCLOSED_MULTIPLE_LEVELS);
         List<ASTElement> sortedElmnts = sortNodesByName(elements);
         assertEquals(3, elements.size(), "3 tags expected");
@@ -454,8 +426,7 @@ class VfDocStyleTest extends AbstractVfTest {
     /**
      * &lt;html&gt; &lt;a1&gt; &lt;a2/&gt; &lt;b/&gt; &lt;/a1&gt; &lt;/html&gt;
      */
-    @Test
-    void nestedEmptyTags() {
+    @Test void nestedEmptyTags() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_MULTIPLE_EMPTY_TAGS);
         List<ASTElement> sortedElmnts = sortNodesByName(elements);
         assertEquals(4, elements.size(), "4 tags expected");
@@ -486,8 +457,7 @@ class VfDocStyleTest extends AbstractVfTest {
      * &lt;html&gt; &lt;a1&gt; &lt;a2&gt; &lt;a3&gt; &lt;/a2&gt; &lt;/a1&gt;
      * &lt;b/&gt; &lt;a4/&gt; &lt;/html&gt;
      */
-    @Test
-    void nestedMultipleTags() {
+    @Test void nestedMultipleTags() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_MULTIPLE_NESTED_TAGS);
         List<ASTElement> sortedElmnts = sortNodesByName(elements);
         assertEquals(6, elements.size(), "4 tags expected");
@@ -529,8 +499,7 @@ class VfDocStyleTest extends AbstractVfTest {
      * &lt;/x&gt; . Here x is the first tag to be closed thus rendering the next
      * close of a (&lt;/a&gt;) to be disregarded.
      */
-    @Test
-    void unclosedParentTagClosedBeforeChild() {
+    @Test void unclosedParentTagClosedBeforeChild() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_UNCLOSED_END_AFTER_PARENT_CLOSE);
         List<ASTElement> sortedElmnts = sortNodesByName(elements);
         assertEquals(4, elements.size(), "4 tags expected");
@@ -563,8 +532,7 @@ class VfDocStyleTest extends AbstractVfTest {
      * influenced. in other words &lt;/a&gt; should close the first &lt;a&gt;
      * tag , &lt;/x&gt; should close the first &lt;x&gt;, etc.
      */
-    @Test
-    void unmatchedTagDoesNotInfluenceStructure() {
+    @Test void unmatchedTagDoesNotInfluenceStructure() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_UNCLOSED_UNMATCHED_CLOSING_TAG);
         List<ASTElement> sortedElmnts = sortNodesByName(elements);
         assertEquals(4, elements.size(), "4 tags expected");
@@ -597,8 +565,7 @@ class VfDocStyleTest extends AbstractVfTest {
      * not be influenced. Also un unclosed &lt;a&gt; tag appears at the start of
      * the document
      */
-    @Test
-    void unclosedStartTagWithUnmatchedCloseOfDifferentTag() {
+    @Test void unclosedStartTagWithUnmatchedCloseOfDifferentTag() {
         List<ASTElement> elements = vf.getNodes(ASTElement.class, TEST_UNCLOSED_START_TAG_WITH_UNMATCHED_CLOSE);
         List<ASTElement> sortedElmnts = sortNodesByName(elements);
         assertEquals(5, elements.size(), "5 tags expected");
@@ -640,8 +607,7 @@ class VfDocStyleTest extends AbstractVfTest {
      */
     private List<ASTElement> sortNodesByName(List<ASTElement> elements) {
         Collections.sort(elements, new Comparator<ASTElement>() {
-            @Override
-            public int compare(ASTElement o1, ASTElement o2) {
+            @Override public int compare(ASTElement o1, ASTElement o2) {
                 if (o1.getName() == null) {
                     return Integer.MIN_VALUE;
                 }
@@ -659,8 +625,7 @@ class VfDocStyleTest extends AbstractVfTest {
         return elements;
     }
 
-    @Test
-    void noQuoteAttrWithJspEL() {
+    @Test void noQuoteAttrWithJspEL() {
         List<ASTAttributeValue> attributes = vf.getNodes(ASTAttributeValue.class, TEST_NO_QUOTE_ATTR_WITH_EL);
         assertEquals(1, attributes.size(), "One attribute expected!");
         Iterator<ASTAttributeValue> iterator = attributes.iterator();

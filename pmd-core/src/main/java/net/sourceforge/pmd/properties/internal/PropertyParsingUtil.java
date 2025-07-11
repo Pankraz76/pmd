@@ -29,13 +29,13 @@ public final class PropertyParsingUtil {
 
     public static final ValueSyntax<String> STRING = ValueSyntax.withDefaultToString(String::trim);
     public static final ValueSyntax<Character> CHARACTER =
-        ValueSyntax.partialFunction(
-            c -> Character.toString(c),
-            s -> s.charAt(0),
-            PropertyConstraint.fromPredicate(
-                s -> s.length() == 1,
-                "Should be exactly one character in length"
-            ));
+            ValueSyntax.partialFunction(
+                    c -> Character.toString(c),
+                    s -> s.charAt(0),
+                    PropertyConstraint.fromPredicate(
+                            s -> s.length() == 1,
+                            "Should be exactly one character in length"
+                    ));
 
     public static final ValueSyntax<Pattern> REGEX = ValueSyntax.withDefaultToString(Pattern::compile);
     public static final ValueSyntax<Integer> INTEGER = ValueSyntax.withDefaultToString(preTrim(Integer::valueOf));
@@ -70,13 +70,13 @@ public final class PropertyParsingUtil {
 
     public static <T> PropertySerializer<Optional<T>> toOptional(PropertySerializer<T> itemSyntax, String missingValue) {
         return ValueSyntax.create(
-            opt -> opt.map(itemSyntax::toString).orElse(missingValue),
-            str -> {
-                if (str.equals(missingValue)) {
-                    return Optional.empty();
+                opt -> opt.map(itemSyntax::toString).orElse(missingValue),
+                str -> {
+                    if (str.equals(missingValue)) {
+                        return Optional.empty();
+                    }
+                    return Optional.of(itemSyntax.fromString(str));
                 }
-                return Optional.of(itemSyntax.fromString(str));
-            }
         );
     }
 
@@ -124,11 +124,11 @@ public final class PropertyParsingUtil {
      * @throws IllegalArgumentException If the item syntax doesn't support string mapping
      */
     public static <T, C extends Iterable<T>> PropertySerializer<C> delimitedString(PropertySerializer<T> itemSyntax,
-                                                                                   Collector<? super T, ?, ? extends C> collector) {
+            Collector<? super T, ?, ? extends C> collector) {
         String delim = "" + PropertyFactory.DEFAULT_DELIMITER;
         return ValueSyntax.create(
-            coll -> IteratorUtil.toStream(coll.iterator()).map(itemSyntax::toString).collect(Collectors.joining(delim)),
-            string -> parseListWithEscapes(string, PropertyFactory.DEFAULT_DELIMITER, itemSyntax::fromString).stream().collect(collector)
+                coll -> IteratorUtil.toStream(coll.iterator()).map(itemSyntax::toString).collect(Collectors.joining(delim)),
+                string -> parseListWithEscapes(string, PropertyFactory.DEFAULT_DELIMITER, itemSyntax::fromString).stream().collect(collector)
         );
     }
 
@@ -190,12 +190,12 @@ public final class PropertyParsingUtil {
         }
 
         return ValueSyntax.partialFunction(
-            reverseFun,
-            mappings::get,
-            PropertyConstraint.fromPredicate(
-                mappings::containsKey,
-                "Should be " + XmlUtil.formatPossibleNames(XmlUtil.toConstants(mappings.keySet()))
-            )
+                reverseFun,
+                mappings::get,
+                PropertyConstraint.fromPredicate(
+                        mappings::containsKey,
+                        "Should be " + XmlUtil.formatPossibleNames(XmlUtil.toConstants(mappings.keySet()))
+                )
         );
     }
 }

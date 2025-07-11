@@ -29,10 +29,10 @@ public class YAHTMLRenderer extends AbstractAccumulatingRenderer {
 
     public static final String NAME = "yahtml";
     public static final PropertyDescriptor<String> OUTPUT_DIR =
-        PropertyFactory.stringProperty("outputDir")
-                       .desc("Output directory.")
-                       .defaultValue(".")
-                       .build();
+            PropertyFactory.stringProperty("outputDir")
+                    .desc("Output directory.")
+                    .defaultValue(".")
+                    .build();
 
     private SortedMap<String, ReportNode> reportNodesByPackage = new TreeMap<>();
 
@@ -42,8 +42,7 @@ public class YAHTMLRenderer extends AbstractAccumulatingRenderer {
         definePropertyDescriptor(OUTPUT_DIR);
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "html";
     }
 
@@ -88,8 +87,7 @@ public class YAHTMLRenderer extends AbstractAccumulatingRenderer {
         rootNode.incrementViolations();
     }
 
-    @Override
-    public void outputReport(Report report) throws IOException {
+    @Override public void outputReport(Report report) throws IOException {
         String outputDir = getProperty(OUTPUT_DIR);
 
         for (RuleViolation ruleViolation : report.getViolations()) {
@@ -195,11 +193,11 @@ public class YAHTMLRenderer extends AbstractAccumulatingRenderer {
 
     private String renderViolationRow(String name, String value) {
         return "<tr><td><b>"
-            + name
-            + "</b></td>"
-            + "<td>"
-            + value
-            + "</td></tr>";
+                + name
+                + "</b></td>"
+                + "<td>"
+                + value
+                + "</td></tr>";
     }
 
     private static class ReportNode {
@@ -249,13 +247,12 @@ public class YAHTMLRenderer extends AbstractAccumulatingRenderer {
             return !violations.isEmpty();
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "ReportNode[packageName=" + packageName
-                + ",className=" + className
-                + ",violationCount=" + violationCount
-                + ",violations=" + violations.size()
-                + "]";
+                    + ",className=" + className
+                    + ",violationCount=" + violationCount
+                    + ",violations=" + violations.size()
+                    + "]";
         }
     }
 }

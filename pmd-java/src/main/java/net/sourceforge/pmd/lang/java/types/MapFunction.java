@@ -30,11 +30,10 @@ abstract class MapFunction<T, R> implements Function<T, R> {
         return map.isEmpty();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return map.entrySet().stream()
-                  .sorted(Comparator.comparing(e -> e.getKey().toString()))
-                  .map(it -> it.getKey() + " => " + it.getValue())
-                  .collect(Collectors.joining("; ", getClass().getSimpleName() + "[", "]"));
+                .sorted(Comparator.comparing(e -> e.getKey().toString()))
+                .map(it -> it.getKey() + " => " + it.getValue())
+                .collect(Collectors.joining("; ", getClass().getSimpleName() + "[", "]"));
     }
 }

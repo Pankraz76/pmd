@@ -30,10 +30,10 @@ class NioTextFile extends BaseCloseable implements TextFile {
     private boolean readOnly;
 
     NioTextFile(Path path,
-                @Nullable FileId parentFsPath,
-                Charset charset,
-                LanguageVersion languageVersion,
-                boolean readOnly) {
+            @Nullable FileId parentFsPath,
+            Charset charset,
+            LanguageVersion languageVersion,
+            boolean readOnly) {
         AssertionUtil.requireParamNotNull("path", path);
         AssertionUtil.requireParamNotNull("charset", charset);
         AssertionUtil.requireParamNotNull("language version", languageVersion);
@@ -45,23 +45,19 @@ class NioTextFile extends BaseCloseable implements TextFile {
         this.fileId = FileId.fromPath(path, parentFsPath);
     }
 
-    @Override
-    public @NonNull LanguageVersion getLanguageVersion() {
+    @Override public @NonNull LanguageVersion getLanguageVersion() {
         return languageVersion;
     }
 
-    @Override
-    public FileId getFileId() {
+    @Override public FileId getFileId() {
         return fileId;
     }
 
-    @Override
-    public boolean isReadOnly() {
+    @Override public boolean isReadOnly() {
         return readOnly || !Files.isWritable(path);
     }
 
-    @Override
-    public void writeContents(TextFileContent content) throws IOException {
+    @Override public void writeContents(TextFileContent content) throws IOException {
         ensureOpen();
         if (isReadOnly()) {
             throw new ReadOnlyFileException(this);
@@ -78,8 +74,7 @@ class NioTextFile extends BaseCloseable implements TextFile {
         }
     }
 
-    @Override
-    public TextFileContent readContents() throws IOException {
+    @Override public TextFileContent readContents() throws IOException {
         ensureOpen();
 
         if (!Files.isRegularFile(path)) {
@@ -90,13 +85,11 @@ class NioTextFile extends BaseCloseable implements TextFile {
     }
 
 
-    @Override
-    protected void doClose() throws IOException {
+    @Override protected void doClose() throws IOException {
         // nothing to do.
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -107,13 +100,11 @@ class NioTextFile extends BaseCloseable implements TextFile {
         return path.equals(that.path);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return path.hashCode();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "NioTextFile[charset=" + charset + ", path=" + path + ']';
     }
 }

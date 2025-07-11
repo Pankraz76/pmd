@@ -30,20 +30,17 @@ public class AccessorMethodGenerationRule extends AbstractJavaRulechainRule {
         super(ASTFieldAccess.class, ASTVariableAccess.class, ASTMethodCall.class);
     }
 
-    @Override
-    public void end(RuleContext ctx) {
+    @Override public void end(RuleContext ctx) {
         super.end(ctx);
         reportedNodes.clear();
     }
 
-    @Override
-    public Object visit(ASTFieldAccess node, Object data) {
+    @Override public Object visit(ASTFieldAccess node, Object data) {
         checkMemberAccessIfConstValueIsNull(node, (RuleContext) data, node.getReferencedSym());
         return null;
     }
 
-    @Override
-    public Object visit(ASTVariableAccess node, Object data) {
+    @Override public Object visit(ASTVariableAccess node, Object data) {
         checkMemberAccessIfConstValueIsNull(node, (RuleContext) data, node.getReferencedSym());
         return null;
     }
@@ -54,8 +51,7 @@ public class AccessorMethodGenerationRule extends AbstractJavaRulechainRule {
         }
     }
 
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         checkMemberAccess((RuleContext) data, node, node.getMethodType().getSymbol());
         return null;
     }
@@ -66,8 +62,8 @@ public class AccessorMethodGenerationRule extends AbstractJavaRulechainRule {
 
     static void checkMemberAccess(RuleContext ruleContext, JavaNode refExpr, JAccessibleElementSymbol sym, Set<JavaNode> reportedNodes) {
         if (Modifier.isPrivate(sym.getModifiers())
-            && !Objects.equals(sym.getEnclosingClass(),
-                               refExpr.getEnclosingType().getSymbol())) {
+                && !Objects.equals(sym.getEnclosingClass(),
+                refExpr.getEnclosingType().getSymbol())) {
 
             JavaNode node = sym.tryGetNode();
             if (node == null && JConstructorSymbol.CTOR_NAME.equals(sym.getSimpleName())) {

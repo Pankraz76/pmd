@@ -20,8 +20,7 @@ abstract class KotlinRootNode extends KotlinInnerNode implements RootNode {
         super(parent, invokingStateNumber);
     }
 
-    @Override
-    public AstInfo<KtKotlinFile> getAstInfo() {
+    @Override public AstInfo<KtKotlinFile> getAstInfo() {
         return astInfo;
     }
 

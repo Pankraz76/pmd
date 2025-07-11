@@ -23,13 +23,11 @@ abstract class AbstractJavaExpr extends AbstractJavaTypeNode implements ASTExpre
         parenDepth++;
     }
 
-    @Override
-    public int getParenthesisDepth() {
+    @Override public int getParenthesisDepth() {
         return parenDepth;
     }
 
-    @Override
-    public @NonNull ConstResult getConstFoldingResult() {
+    @Override public @NonNull ConstResult getConstFoldingResult() {
         if (constValue == null) {
             constValue = ConstResult.NO_CONST_VALUE; // make non-null, so that we don't reenter on cycle
             constValue = doBuildConstValue();
@@ -46,8 +44,7 @@ abstract class AbstractJavaExpr extends AbstractJavaTypeNode implements ASTExpre
      * @deprecated Since 7.12.0. Kept for binary compatibility. This method should have been package-private from the start.
      *     Use {@link ASTExpression#getConstValue()} or {@link ASTExpression#getConstFoldingResult()} instead.
      */
-    @Deprecated
-    protected @Nullable Object buildConstValue() {
+    @Deprecated protected @Nullable Object buildConstValue() {
         return doBuildConstValue().getValue();
     }
 }

@@ -36,8 +36,7 @@ public final class ASTLambdaExpression extends AbstractJavaExpr implements Funct
      *
      * @see #getFunctionalMethod()
      */
-    @Override
-    public @NonNull JTypeMirror getTypeMirror() {
+    @Override public @NonNull JTypeMirror getTypeMirror() {
         return super.getTypeMirror();
     }
 
@@ -49,8 +48,7 @@ public final class ASTLambdaExpression extends AbstractJavaExpr implements Funct
      *
      * @see #getTypeMirror()
      */
-    @Override
-    public JMethodSig getFunctionalMethod() {
+    @Override public JMethodSig getFunctionalMethod() {
         forceTypeResolution();
         return assertNonNullAfterTypeRes(functionalMethod);
     }
@@ -88,8 +86,7 @@ public final class ASTLambdaExpression extends AbstractJavaExpr implements Funct
      *
      * @deprecated Use {@link #getBlockBody()}
      */
-    @Deprecated
-    public @Nullable ASTBlock getBlock() {
+    @Deprecated public @Nullable ASTBlock getBlock() {
         return getBlockBody();
     }
 
@@ -98,8 +95,7 @@ public final class ASTLambdaExpression extends AbstractJavaExpr implements Funct
      *
      * @deprecated Use {@link #getExpressionBody()}
      */
-    @Deprecated
-    public @Nullable ASTExpression getExpression() {
+    @Deprecated public @Nullable ASTExpression getExpression() {
         return getExpressionBody();
     }
 
@@ -114,8 +110,7 @@ public final class ASTLambdaExpression extends AbstractJavaExpr implements Funct
     /**
      * Returns the body of this lambda if it is a block.
      */
-    @Override
-    public @Nullable ASTBlock getBody() {
+    @Override public @Nullable ASTBlock getBody() {
         return getBlockBody();
     }
 
@@ -127,8 +122,7 @@ public final class ASTLambdaExpression extends AbstractJavaExpr implements Funct
         return AstImplUtil.getChildAs(this, 1, ASTExpression.class);
     }
 
-    @Override
-    public boolean isFindBoundary() {
+    @Override public boolean isFindBoundary() {
         return true;
     }
 
@@ -140,8 +134,7 @@ public final class ASTLambdaExpression extends AbstractJavaExpr implements Funct
         return getParameters().size();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

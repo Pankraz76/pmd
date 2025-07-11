@@ -30,51 +30,42 @@ class Java24PreviewTreeDumpTest extends BaseJavaTreeDumpTest {
                     .withResourceContext(Java24PreviewTreeDumpTest.class, "jdkversiontests/java24p/");
     private final JavaParsingHelper java24 = java24p.withDefaultVersion("24");
 
-    @Override
-    public BaseParsingHelper<?, ?> getParser() {
+    @Override public BaseParsingHelper<?, ?> getParser() {
         return java24p;
     }
 
-    @Test
-    void jep488PrimitiveTypesInPatternsInstanceofAndSwitch() {
+    @Test void jep488PrimitiveTypesInPatternsInstanceofAndSwitch() {
         doTest("Jep488_PrimitiveTypesInPatternsInstanceofAndSwitch");
     }
 
-    @Test
-    void jep488PrimitiveTypesInPatternsInstanceofAndSwitchBeforeJava24Preview() {
+    @Test void jep488PrimitiveTypesInPatternsInstanceofAndSwitchBeforeJava24Preview() {
         ParseException thrown = assertThrows(ParseException.class, () -> java24.parseResource("Jep488_PrimitiveTypesInPatternsInstanceofAndSwitch.java"));
         assertThat(thrown.getMessage(), containsString("Primitive types in patterns instanceof and switch is a preview feature of JDK 24, you should select your language version accordingly"));
     }
 
-    @Test
-    void jep492FlexibleConstructorBodies() {
+    @Test void jep492FlexibleConstructorBodies() {
         doTest("Jep492_FlexibleConstructorBodies");
     }
 
-    @Test
-    void jep492FlexibleConstructorBodiesBeforeJava24Preview() {
+    @Test void jep492FlexibleConstructorBodiesBeforeJava24Preview() {
         ParseException thrown = assertThrows(ParseException.class, () -> java24.parseResource("Jep492_FlexibleConstructorBodies.java"));
         assertThat(thrown.getMessage(), containsString("Flexible constructor bodies is a preview feature of JDK 24, you should select your language version accordingly"));
     }
 
-    @Test
-    void jep494ModuleImportDeclarations() {
+    @Test void jep494ModuleImportDeclarations() {
         doTest("Jep494_ModuleImportDeclarations");
     }
 
-    @Test
-    void jep494ModuleImportDeclarationsBeforeJava24Preview() {
+    @Test void jep494ModuleImportDeclarationsBeforeJava24Preview() {
         ParseException thrown = assertThrows(ParseException.class, () -> java24.parseResource("Jep494_ModuleImportDeclarations.java"));
         assertThat(thrown.getMessage(), containsString("Module import declarations is a preview feature of JDK 24, you should select your language version accordingly"));
     }
 
-    @Test
-    void jep495SimpleSourceFilesAndInstanceMainMethods() {
+    @Test void jep495SimpleSourceFilesAndInstanceMainMethods() {
         doTest("Jep495_SimpleSourceFilesAndInstanceMainMethods");
     }
 
-    @Test
-    void jep495SimpleSourceFilesAndInstanceMainMethodsVerifyTypes() {
+    @Test void jep495SimpleSourceFilesAndInstanceMainMethodsVerifyTypes() {
         int javaVersion = Integer.parseInt(System.getProperty("java.version").split("\\.")[0].replaceAll("-ea", ""));
         assumeTrue(javaVersion >= 23, "Java " + javaVersion + " doesn't support java.io.IO. At least Java 23 is needed for this test.");
 
@@ -99,8 +90,7 @@ class Java24PreviewTreeDumpTest extends BaseJavaTreeDumpTest {
         TypeTestUtil.isA("java.io.IO", javaIoPrintln.getMethodType().getDeclaringType());
     }
 
-    @Test
-    void jep495SimpleSourceFilesAndInstanceMainMethodsBeforeJava24Preview() {
+    @Test void jep495SimpleSourceFilesAndInstanceMainMethodsBeforeJava24Preview() {
         ParseException thrown = assertThrows(ParseException.class, () -> java24.parseResource("Jep495_SimpleSourceFilesAndInstanceMainMethods.java"));
         assertThat(thrown.getMessage(), containsString("Simple source files and instance main methods is a preview feature of JDK 24, you should select your language version accordingly"));
     }

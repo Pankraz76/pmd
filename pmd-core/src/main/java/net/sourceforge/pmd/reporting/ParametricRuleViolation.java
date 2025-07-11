@@ -38,28 +38,23 @@ class ParametricRuleViolation implements RuleViolation {
         }
     }
 
-    @Override
-    public Map<String, String> getAdditionalInfo() {
+    @Override public Map<String, String> getAdditionalInfo() {
         return additionalInfo;
     }
 
-    @Override
-    public Rule getRule() {
+    @Override public Rule getRule() {
         return rule;
     }
 
-    @Override
-    public String getDescription() {
+    @Override public String getDescription() {
         return description;
     }
 
-    @Override
-    public FileLocation getLocation() {
+    @Override public FileLocation getLocation() {
         return location;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getLocation().startPosToStringWithFile() + ':' + getRule() + ':' + getDescription();
     }
 }

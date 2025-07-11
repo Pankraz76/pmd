@@ -25,21 +25,18 @@ public final class ContextedStackOverflowError extends StackOverflowError implem
 
     public static ContextedStackOverflowError wrap(StackOverflowError e) {
         return e instanceof ContextedStackOverflowError ? (ContextedStackOverflowError) e
-                                                        : new ContextedStackOverflowError(e);
+                : new ContextedStackOverflowError(e);
     }
 
-    @Override
-    public String getMessage() {
+    @Override public String getMessage() {
         return getFormattedExceptionMessage(super.getMessage());
     }
 
-    @Override
-    public DefaultExceptionContext getExceptionContext() {
+    @Override public DefaultExceptionContext getExceptionContext() {
         return exceptionContext;
     }
 
-    @Override
-    public ContextedStackOverflowError getThrowable() {
+    @Override public ContextedStackOverflowError getThrowable() {
         return this;
     }
 }

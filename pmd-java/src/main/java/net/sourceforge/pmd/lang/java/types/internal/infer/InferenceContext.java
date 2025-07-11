@@ -322,19 +322,19 @@ final class InferenceContext {
      */
     void duplicateInto(final InferenceContext that) {
         boolean changedGraph = !that.freeVars.containsAll(this.freeVars)
-            || !this.instantiationConstraints.isEmpty();
+                || !this.instantiationConstraints.isEmpty();
         that.graphWasChanged |= changedGraph;
         that.inferenceVars.addAll(this.inferenceVars);
         that.freeVars.addAll(this.freeVars);
         that.incorporationActions.addAll(this.incorporationActions);
         that.instantiationListeners.putAll(this.instantiationListeners);
         CollectionUtil.mergeMaps(
-            that.instantiationConstraints,
-            this.instantiationConstraints,
-            (set1, set2) -> {
-                set1.addAll(set2);
-                return set1;
-            });
+                that.instantiationConstraints,
+                this.instantiationConstraints,
+                (set1, set2) -> {
+                    set1.addAll(set2);
+                    return set1;
+                });
 
         this.parent = that;
 
@@ -427,8 +427,7 @@ final class InferenceContext {
         logger.ivarInstantiated(this, ivar, ivar.getInst());
 
         incorporationActions.addFirst(new SubstituteInst(ivar, ivar.getInst()) {
-            @Override
-            public void apply(InferenceContext ctx) {
+            @Override public void apply(InferenceContext ctx) {
                 freeVars.removeIf(it -> it.getInst() != null);
                 super.apply(ctx);
             }
@@ -578,8 +577,7 @@ final class InferenceContext {
         return inferenceVars.isEmpty();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder sb = new StringBuilder("Inference context " + getId()).append('\n');
         for (InferenceVar ivar : inferenceVars) {
             sb.append(ivar);

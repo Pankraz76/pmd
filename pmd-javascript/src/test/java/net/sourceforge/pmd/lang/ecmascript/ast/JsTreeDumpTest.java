@@ -16,33 +16,27 @@ class JsTreeDumpTest extends BaseTreeDumpTest {
         super(NodePrintersKt.getSimpleNodePrinter(), ".js");
     }
 
-    @Override
-    public BaseParsingHelper<JsParsingHelper, ASTAstRoot> getParser() {
+    @Override public BaseParsingHelper<JsParsingHelper, ASTAstRoot> getParser() {
         return JsParsingHelper.DEFAULT.withResourceContext(JsTreeDumpTest.class, "testdata");
     }
 
-    @Test
-    void simpleJavascriptFile() {
+    @Test void simpleJavascriptFile() {
         doTest("SimpleJavascriptFile");
     }
 
-    @Test
-    void jquerySelector() {
+    @Test void jquerySelector() {
         doTest("jquery-selector");
     }
 
-    @Test
-    void decorators() {
+    @Test void decorators() {
         doTest("decorators");
     }
 
-    @Test
-    void templateStrings() {
+    @Test void templateStrings() {
         doTest("templateStrings");
     }
 
-    @Test
-    void issue3948() {
+    @Test void issue3948() {
         // https://github.com/pmd/pmd/issues/3948
         doTest("issue3948");
     }

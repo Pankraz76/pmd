@@ -16,28 +16,24 @@ import org.junit.jupiter.api.Test;
 
 class OptionalBoolTest {
 
-    @Test
-    void testDefinitely() {
+    @Test void testDefinitely() {
         assertEquals(YES, definitely(true));
         assertEquals(NO, definitely(false));
     }
 
-    @Test
-    void testIsKnown() {
+    @Test void testIsKnown() {
         assertTrue(YES.isKnown());
         assertTrue(NO.isKnown());
         assertFalse(UNKNOWN.isKnown());
     }
 
-    @Test
-    void testIsTrue() {
+    @Test void testIsTrue() {
         assertTrue(YES.isTrue());
         assertFalse(NO.isTrue());
         assertFalse(UNKNOWN.isTrue());
     }
 
-    @Test
-    void testComplement() {
+    @Test void testComplement() {
         assertEquals(YES, NO.complement());
         assertEquals(NO, YES.complement());
         assertEquals(UNKNOWN, UNKNOWN.complement());

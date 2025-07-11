@@ -41,13 +41,11 @@ public interface ViolationSuppressor {
      * Suppressor for the violationSuppressRegex property.
      */
     ViolationSuppressor REGEX_SUPPRESSOR = new ViolationSuppressor() {
-        @Override
-        public String getId() {
+        @Override public String getId() {
             return "Regex";
         }
 
-        @Override
-        public @Nullable SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node) {
+        @Override public @Nullable SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node) {
             Optional<Pattern> regex = rv.getRule().getProperty(Rule.VIOLATION_SUPPRESS_REGEX_DESCRIPTOR); // Regex
             if (regex.isPresent() && rv.getDescription() != null) {
                 if (regex.get().matcher(rv.getDescription()).matches()) {
@@ -62,13 +60,11 @@ public interface ViolationSuppressor {
      * Suppressor for the violationSuppressXPath property.
      */
     ViolationSuppressor XPATH_SUPPRESSOR = new ViolationSuppressor() {
-        @Override
-        public String getId() {
+        @Override public String getId() {
             return "XPath";
         }
 
-        @Override
-        public @Nullable SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node) {
+        @Override public @Nullable SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node) {
             // todo this should not be implemented via a rule property
             //  because the parsed xpath expression should be stored, not a random string
             //  this needs to be checked to be a valid xpath expression in the ruleset,
@@ -79,11 +75,11 @@ public interface ViolationSuppressor {
                 return null;
             }
             SaxonXPathRuleQuery rq = new SaxonXPathRuleQuery(
-                xpath.get(),
-                XPathVersion.DEFAULT,
-                rule.getPropertiesByPropertyDescriptor(),
-                node.getAstInfo().getLanguageProcessor().services().getXPathHandler(),
-                DeprecatedAttrLogger.createForSuppression(rv.getRule())
+                    xpath.get(),
+                    XPathVersion.DEFAULT,
+                    rule.getPropertiesByPropertyDescriptor(),
+                    node.getAstInfo().getLanguageProcessor().services().getXPathHandler(),
+                    DeprecatedAttrLogger.createForSuppression(rv.getRule())
             );
             if (!rq.evaluate(node).isEmpty()) {
                 return new SuppressedViolation(rv, this, xpath.get());
@@ -101,15 +97,13 @@ public interface ViolationSuppressor {
      */
     ViolationSuppressor NOPMD_COMMENT_SUPPRESSOR = new ViolationSuppressor() {
         private final SimpleDataKey<Set<SuppressionCommentWrapper>> usedSuppressionComments =
-            DataMap.simpleDataKey("pmd.core.comment.suppressor");
+                DataMap.simpleDataKey("pmd.core.comment.suppressor");
 
-        @Override
-        public String getId() {
+        @Override public String getId() {
             return "//NOPMD";
         }
 
-        @Override
-        public @Nullable SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node) {
+        @Override public @Nullable SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node) {
             AstInfo<? extends RootNode> astInfo = node.getAstInfo();
             SuppressionCommentWrapper wrapper = astInfo.getSuppressionComment(rv.getBeginLine());
             if (wrapper != null) {
@@ -119,32 +113,27 @@ public interface ViolationSuppressor {
             return null;
         }
 
-        @Override
-        public Set<UnusedSuppressorNode> getUnusedSuppressors(RootNode tree) {
+        @Override public Set<UnusedSuppressorNode> getUnusedSuppressors(RootNode tree) {
             Set<SuppressionCommentWrapper> usedSuppressors = tree.getAstInfo().getUserMap().getOrDefault(usedSuppressionComments, Collections.emptySet());
             Set<SuppressionCommentWrapper> allSuppressors = new HashSet<>(tree.getAstInfo().getAllSuppressionComments());
             allSuppressors.removeAll(usedSuppressors);
             return new AbstractSet<UnusedSuppressorNode>() {
-                @Override
-                public @NonNull Iterator<UnusedSuppressorNode> iterator() {
+                @Override public @NonNull Iterator<UnusedSuppressorNode> iterator() {
                     return IteratorUtil.map(
-                        allSuppressors.iterator(),
-                        comment -> new UnusedSuppressorNode() {
-                            @Override
-                            public Reportable getLocation() {
-                                return comment.getLocation();
-                            }
+                            allSuppressors.iterator(),
+                            comment -> new UnusedSuppressorNode() {
+                                @Override public Reportable getLocation() {
+                                    return comment.getLocation();
+                                }
 
-                            @Override
-                            public String unusedReason() {
-                                return "Unnecessary PMD suppression comment";
+                                @Override public String unusedReason() {
+                                    return "Unnecessary PMD suppression comment";
+                                }
                             }
-                        }
                     );
                 }
 
-                @Override
-                public int size() {
+                @Override public int size() {
                     return allSuppressors.size();
                 }
             };
@@ -163,8 +152,7 @@ public interface ViolationSuppressor {
      * suppressed by this object. The node and the rule are provided
      * for context. Returns null if the violation is not suppressed.
      */
-    @Nullable
-    SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node);
+    @Nullable SuppressedViolation suppressOrNull(RuleViolation rv, @NonNull Node node);
 
 
     /**
@@ -192,8 +180,8 @@ public interface ViolationSuppressor {
      * suppressor matches, then returns null.
      */
     static @Nullable SuppressedViolation suppressOrNull(List<ViolationSuppressor> suppressorList,
-                                                        RuleViolation rv,
-                                                        Node node) {
+            RuleViolation rv,
+            Node node) {
         for (ViolationSuppressor suppressor : suppressorList) {
             SuppressedViolation suppressed = suppressor.suppressOrNull(rv, node);
             if (suppressed != null) {

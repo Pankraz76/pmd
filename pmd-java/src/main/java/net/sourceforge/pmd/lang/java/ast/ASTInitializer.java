@@ -24,8 +24,7 @@ public final class ASTInitializer extends AbstractJavaNode implements ASTBodyDec
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -41,8 +40,7 @@ public final class ASTInitializer extends AbstractJavaNode implements ASTBodyDec
     /**
      * Returns the body of this initializer.
      */
-    @Override
-    public ASTBlock getBody() {
+    @Override public ASTBlock getBody() {
         return (ASTBlock) getChild(0);
     }
 

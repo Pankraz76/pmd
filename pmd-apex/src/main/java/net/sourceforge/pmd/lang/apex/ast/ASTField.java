@@ -27,8 +27,8 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
 
     ASTField(TypeRef typeRef, Identifier name, Optional<Expression> value) {
         super(value.isPresent()
-              ? Arrays.asList(typeRef, name, value.get())
-              : Arrays.asList(typeRef, name));
+                ? Arrays.asList(typeRef, name, value.get())
+                : Arrays.asList(typeRef, name));
         this.name = name;
         this.value = value;
         this.typeName = caseNormalizedTypeIfPrimitive(typeRef.asCodeString());
@@ -42,13 +42,11 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return getName();
     }
 
@@ -80,8 +78,7 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
         return null;
     }
 
-    @Override
-    public boolean hasRealLoc() {
+    @Override public boolean hasRealLoc() {
         if (!(nodes.get(0) instanceof TypeRef)) {
             return super.hasRealLoc();
         }
@@ -97,8 +94,7 @@ public final class ASTField extends AbstractApexNode.Many<Node> {
         return allHaveRealLoc;
     }
 
-    @Override
-    protected void calculateTextRegion(TextDocument sourceCode) {
+    @Override protected void calculateTextRegion(TextDocument sourceCode) {
         if (nodes.get(0) instanceof TypeRef) {
             super.calculateTextRegion(sourceCode);
         }

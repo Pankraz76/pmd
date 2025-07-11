@@ -16,8 +16,7 @@ public final class ASTUserClass extends BaseApexClass<ClassDeclaration> implemen
         super(userClass);
     }
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -42,7 +41,7 @@ public final class ASTUserClass extends BaseApexClass<ClassDeclaration> implemen
      */
     public List<String> getInterfaceNames() {
         return node.getImplementsTypes().stream()
-            .map(TypeRef::asTypeErasedString)
-            .collect(Collectors.toList());
+                .map(TypeRef::asTypeErasedString)
+                .collect(Collectors.toList());
     }
 }

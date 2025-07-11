@@ -10,8 +10,7 @@ public final class ASTCData extends AbstractVfNode {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

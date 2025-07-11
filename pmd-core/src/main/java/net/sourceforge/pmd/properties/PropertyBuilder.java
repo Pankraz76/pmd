@@ -114,8 +114,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
      *
      * @throws IllegalArgumentException If the description is null or whitespace
      */
-    @SuppressWarnings("unchecked")
-    public B desc(String desc) {
+    @SuppressWarnings("unchecked") public B desc(String desc) {
         if (StringUtils.isBlank(desc)) {
             throw new IllegalArgumentException("Description must be provided");
         }
@@ -123,8 +122,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         return (B) this;
     }
 
-    @SuppressWarnings("unchecked")
-    B typeId(PropertyTypeId typeId) {
+    @SuppressWarnings("unchecked") B typeId(PropertyTypeId typeId) {
         this.typeId = typeId;
         return (B) this;
     }
@@ -159,8 +157,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
      *
      * @see NumericConstraints
      */
-    @SuppressWarnings("unchecked")
-    public abstract B require(PropertyConstraint<? super T> constraint);
+    @SuppressWarnings("unchecked") public abstract B require(PropertyConstraint<? super T> constraint);
 
 
     /**
@@ -176,8 +173,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
      *
      * @throws IllegalArgumentException If the argument is null
      */
-    @SuppressWarnings("unchecked")
-    public B defaultValue(@NonNull T val) {
+    @SuppressWarnings("unchecked") public B defaultValue(@NonNull T val) {
         //noinspection ConstantConditions
         if (val == null) {
             throw new IllegalArgumentException("Property values may not be null.");
@@ -228,9 +224,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
             return parser;
         }
 
-        @SuppressWarnings("unchecked")
-        @Override
-        public B require(PropertyConstraint<? super T> constraint) {
+        @SuppressWarnings("unchecked") @Override public B require(PropertyConstraint<? super T> constraint) {
             parser = parser.withConstraint(constraint);
             return (B) this;
         }
@@ -303,9 +297,9 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
             AssertionUtil.requireParamNotNull("missingValue", missingValue);
 
             PropertySerializer<Optional<T>> serializer =
-                PropertyParsingUtil.toOptional(getParser(), missingValue);
+                    PropertyParsingUtil.toOptional(getParser(), missingValue);
             GenericPropertyBuilder<Optional<T>> result =
-                new GenericPropertyBuilder<>(this.getName(), serializer);
+                    new GenericPropertyBuilder<>(this.getName(), serializer);
 
             if (isDefaultValueSet()) {
                 result.defaultValue(Optional.of(getDefaultValue()));
@@ -319,15 +313,14 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
         }
 
 
-        @Override
-        public PropertyDescriptor<T> build() {
+        @Override public PropertyDescriptor<T> build() {
             return new PropertyDescriptor<>(
-                getName(),
-                getDescription(),
-                getDefaultValue(),
-                parser,
-                typeId,
-                isXPathAvailable);
+                    getName(),
+                    getDescription(),
+                    getDefaultValue(),
+                    parser,
+                    typeId,
+                    isXPathAvailable);
         }
     }
 
@@ -424,8 +417,8 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
          * Builds a new builder for a collection type. Package-private.
          */
         GenericCollectionPropertyBuilder(String name,
-                                         PropertySerializer<V> itemParser,
-                                         Collector<? super V, ?, ? extends C> collector) {
+                PropertySerializer<V> itemParser,
+                Collector<? super V, ?, ? extends C> collector) {
             super(name);
             this.itemParser = itemParser;
             this.collector = collector;
@@ -436,8 +429,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
             return IteratorUtil.toStream(list).collect(collector);
         }
 
-        @Override
-        public GenericCollectionPropertyBuilder<V, C> require(PropertyConstraint<? super C> constraint) {
+        @Override public GenericCollectionPropertyBuilder<V, C> require(PropertyConstraint<? super C> constraint) {
             collectionConstraints.add(constraint);
             return this;
         }
@@ -465,8 +457,7 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
          *
          * @return The same builder
          */
-        @SuppressWarnings("unchecked")
-        public GenericCollectionPropertyBuilder<V, C> defaultValues(V head, V... tail) {
+        @SuppressWarnings("unchecked") public GenericCollectionPropertyBuilder<V, C> defaultValues(V head, V... tail) {
             return this.defaultValue(listOf(head, tail));
         }
 
@@ -495,19 +486,18 @@ public abstract class PropertyBuilder<B extends PropertyBuilder<B, T>, T> {
             return this;
         }
 
-        @Override
-        public PropertyDescriptor<C> build() {
+        @Override public PropertyDescriptor<C> build() {
             PropertySerializer<C> syntax = PropertyParsingUtil.delimitedString(itemParser, collector);
             syntax = PropertyParsingUtil.withAllConstraints(syntax, CollectionUtil.map(itemParser.getConstraints(), PropertyConstraint::toCollectionConstraint));
             syntax = PropertyParsingUtil.withAllConstraints(syntax, collectionConstraints);
 
             return new PropertyDescriptor<>(
-                getName(),
-                getDescription(),
-                getDefaultValue(),
-                syntax,
-                typeId,
-                isXPathAvailable);
+                    getName(),
+                    getDescription(),
+                    getDefaultValue(),
+                    syntax,
+                    typeId,
+                    isXPathAvailable);
         }
     }
 }

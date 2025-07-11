@@ -31,8 +31,7 @@ public interface ASTType extends TypeNode, Annotatable, LeftRecursiveNode {
     /**
      * Returns true if this is the "void" pseudo-type, ie an {@link ASTVoidType}.
      */
-    @NoAttribute
-    default boolean isVoid() {
+    @NoAttribute default boolean isVoid() {
         return this instanceof ASTVoidType;
     }
 }

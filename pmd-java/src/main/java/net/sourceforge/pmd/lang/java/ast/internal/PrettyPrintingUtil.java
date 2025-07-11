@@ -133,10 +133,10 @@ public final class PrettyPrintingUtil {
             }
         } else if (t instanceof ASTUnionType) {
             CollectionUtil.joinOn(sb, ((ASTUnionType) t).getComponents(),
-                PrettyPrintingUtil::prettyPrintTypeNode, " | ");
+                    PrettyPrintingUtil::prettyPrintTypeNode, " | ");
         } else if (t instanceof ASTIntersectionType) {
             CollectionUtil.joinOn(sb, ((ASTIntersectionType) t).getComponents(),
-                PrettyPrintingUtil::prettyPrintTypeNode, " & ");
+                    PrettyPrintingUtil::prettyPrintTypeNode, " & ");
         } else if (t instanceof ASTAmbiguousName) {
             sb.append(((ASTAmbiguousName) t).getName());
         } else {
@@ -264,53 +264,45 @@ public final class PrettyPrintingUtil {
 
         private static final int MAX_ARG_LENGTH = 20;
 
-        @Override
-        public Void visitJavaNode(JavaNode node, StringBuilder data) {
+        @Override public Void visitJavaNode(JavaNode node, StringBuilder data) {
             data.append("<<NOT_IMPLEMENTED: ").append(node).append(">>");
             return null; // don't recurse
         }
 
-        @Override
-        public Void visit(ASTTypeExpression node, StringBuilder data) {
+        @Override public Void visit(ASTTypeExpression node, StringBuilder data) {
             node.getTypeNode().acceptVisitor(this, data);
             return null;
         }
 
-        @Override
-        public Void visit(ASTCastExpression node, StringBuilder data) {
+        @Override public Void visit(ASTCastExpression node, StringBuilder data) {
             ppInParens(data, node.getCastType()).append(' ');
             node.getOperand().acceptVisitor(this, data);
             return null;
         }
 
-        @Override
-        public Void visit(ASTClassLiteral node, StringBuilder data) {
+        @Override public Void visit(ASTClassLiteral node, StringBuilder data) {
             node.getTypeNode().acceptVisitor(this, data);
             data.append(".class");
             return null;
         }
 
-        @Override
-        public Void visitLiteral(ASTLiteral node, StringBuilder data) {
+        @Override public Void visitLiteral(ASTLiteral node, StringBuilder data) {
             data.append(node.getText());
             return null;
         }
 
-        @Override
-        public Void visit(ASTFieldAccess node, StringBuilder data) {
+        @Override public Void visit(ASTFieldAccess node, StringBuilder data) {
             addQualifier(node, data);
             data.append(node.getName());
             return null;
         }
 
-        @Override
-        public Void visit(ASTVariableAccess node, StringBuilder data) {
+        @Override public Void visit(ASTVariableAccess node, StringBuilder data) {
             data.append(node.getName());
             return null;
         }
 
-        @Override
-        public Void visit(ASTThisExpression node, StringBuilder data) {
+        @Override public Void visit(ASTThisExpression node, StringBuilder data) {
             if (node.getQualifier() != null) {
                 node.getQualifier().acceptVisitor(this, data);
                 data.append('.');
@@ -319,8 +311,7 @@ public final class PrettyPrintingUtil {
             return null;
         }
 
-        @Override
-        public Void visit(ASTSuperExpression node, StringBuilder data) {
+        @Override public Void visit(ASTSuperExpression node, StringBuilder data) {
             if (node.getQualifier() != null) {
                 node.getQualifier().acceptVisitor(this, data);
                 data.append('.');
@@ -329,8 +320,7 @@ public final class PrettyPrintingUtil {
             return null;
         }
 
-        @Override
-        public Void visit(ASTArrayAccess node, StringBuilder data) {
+        @Override public Void visit(ASTArrayAccess node, StringBuilder data) {
             node.getQualifier().acceptVisitor(this, data);
             data.append('[');
             node.getIndexExpression().acceptVisitor(this, data);
@@ -338,20 +328,17 @@ public final class PrettyPrintingUtil {
             return null;
         }
 
-        @Override
-        public Void visitType(ASTType node, StringBuilder data) {
+        @Override public Void visitType(ASTType node, StringBuilder data) {
             prettyPrintTypeNode(data, node);
             return null;
         }
 
-        @Override
-        public Void visit(ASTAmbiguousName node, StringBuilder data) {
+        @Override public Void visit(ASTAmbiguousName node, StringBuilder data) {
             data.append(node.getName());
             return null;
         }
 
-        @Override
-        public Void visit(ASTInfixExpression node, StringBuilder sb) {
+        @Override public Void visit(ASTInfixExpression node, StringBuilder sb) {
             printWithParensIfNecessary(node.getLeftOperand(), sb, node);
             sb.append(' ');
             sb.append(node.getOperator());
@@ -361,8 +348,7 @@ public final class PrettyPrintingUtil {
         }
 
 
-        @Override
-        public Void visit(ASTUnaryExpression node, StringBuilder sb) {
+        @Override public Void visit(ASTUnaryExpression node, StringBuilder sb) {
             sb.append(node.getOperator());
             printWithParensIfNecessary(node.getOperand(), sb, node);
             return null;
@@ -376,8 +362,7 @@ public final class PrettyPrintingUtil {
             }
         }
 
-        @Override
-        public Void visit(ASTConditionalExpression node, StringBuilder sb) {
+        @Override public Void visit(ASTConditionalExpression node, StringBuilder sb) {
             printWithParensIfNecessary(node.getCondition(), sb, node);
             sb.append(" ? ");
             printWithParensIfNecessary(node.getThenBranch(), sb, node);
@@ -386,8 +371,7 @@ public final class PrettyPrintingUtil {
             return null;
         }
 
-        @Override
-        public Void visit(ASTLambdaExpression node, StringBuilder sb) {
+        @Override public Void visit(ASTLambdaExpression node, StringBuilder sb) {
             node.getParameters().acceptVisitor(this, sb);
             sb.append(" -> ");
             ASTExpression exprBody = node.getExpressionBody();
@@ -399,8 +383,7 @@ public final class PrettyPrintingUtil {
             return null;
         }
 
-        @Override
-        public Void visit(ASTLambdaParameterList node, StringBuilder sb) {
+        @Override public Void visit(ASTLambdaParameterList node, StringBuilder sb) {
             if (node.size() == 1) {
                 sb.append(node.get(0).getVarId().getName());
                 return null;
@@ -420,8 +403,7 @@ public final class PrettyPrintingUtil {
             return null;
         }
 
-        @Override
-        public Void visit(ASTMethodCall node, StringBuilder sb) {
+        @Override public Void visit(ASTMethodCall node, StringBuilder sb) {
             addQualifier(node, sb);
             ppTypeArgs(sb, node.getExplicitTypeArguments());
             sb.append(node.getMethodName());
@@ -429,8 +411,7 @@ public final class PrettyPrintingUtil {
             return null;
         }
 
-        @Override
-        public Void visit(ASTConstructorCall node, StringBuilder sb) {
+        @Override public Void visit(ASTConstructorCall node, StringBuilder sb) {
             addQualifier(node, sb);
             sb.append("new ");
             ppTypeArgs(sb, node.getExplicitTypeArguments());
@@ -460,8 +441,7 @@ public final class PrettyPrintingUtil {
             }
         }
 
-        @Override
-        public Void visit(ASTMethodReference node, StringBuilder sb) {
+        @Override public Void visit(ASTMethodReference node, StringBuilder sb) {
             printWithParensIfNecessary(node.getQualifier(), sb, node);
             sb.append("::");
             ppTypeArgs(sb, node.getExplicitTypeArguments());

@@ -25,8 +25,7 @@ class SplitUnions extends SaxonExprVisitor {
 
     private final List<Expression> expressions = new ArrayList<>();
 
-    @Override
-    public Expression visit(VennExpression e) {
+    @Override public Expression visit(VennExpression e) {
         if (e.getOperator() == Token.UNION) {
             for (Expression operand : listOf(e.getLhsExpression(), e.getRhsExpression())) {
                 if (operand instanceof VennExpression) {
@@ -39,8 +38,7 @@ class SplitUnions extends SaxonExprVisitor {
         return e;
     }
 
-    @Override
-    public Expression visit(Expression e) {
+    @Override public Expression visit(Expression e) {
         // only flatten top level unions - skip sorters and let around it
         if (e instanceof VennExpression || e instanceof DocumentSorter || e instanceof LetExpression) {
             return super.visit(e);

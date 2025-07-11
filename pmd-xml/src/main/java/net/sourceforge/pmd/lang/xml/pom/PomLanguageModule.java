@@ -21,17 +21,16 @@ public class PomLanguageModule extends SimpleLanguageModuleBase {
 
     public PomLanguageModule() {
         super(LanguageMetadata.withId(ID).name("Maven POM")
-                              .extensions("pom")
-                              .addDefaultVersion("4.0.0"),
-              new XmlHandler());
+                        .extensions("pom")
+                        .addDefaultVersion("4.0.0"),
+                new XmlHandler());
     }
 
     public static PomLanguageModule getInstance() {
         return (PomLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new XmlCpdLexer();
     }
 }

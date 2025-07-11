@@ -37,17 +37,17 @@ public class AvoidUsingHardCodedIPRule extends AbstractJavaRulechainRule {
 
 
     private static final PropertyDescriptor<List<AddressKinds>> CHECK_ADDRESS_TYPES_DESCRIPTOR =
-        PropertyFactory.enumListProperty("checkAddressTypes", AddressKinds.class, k -> k.label)
-                       .desc("Check for IP address types.")
-                       .defaultValue(asList(AddressKinds.values()))
-                       .build();
+            PropertyFactory.enumListProperty("checkAddressTypes", AddressKinds.class, k -> k.label)
+                    .desc("Check for IP address types.")
+                    .defaultValue(asList(AddressKinds.values()))
+                    .build();
 
     // Provides 4 capture groups that can be used for additional validation
     private static final String IPV4_REGEXP = "([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})";
 
     // Uses IPv4 pattern, but changes the groups to be non-capture
     private static final String IPV6_REGEXP = "(?:(?:[0-9a-fA-F]{1,4})?\\:)+(?:[0-9a-fA-F]{1,4}|"
-        + IPV4_REGEXP.replace("(", "(?:") + ")?";
+            + IPV4_REGEXP.replace("(", "(?:") + ")?";
 
     private static final Pattern IPV4_PATTERN = Pattern.compile("^" + IPV4_REGEXP + "$");
     private static final Pattern IPV6_PATTERN = Pattern.compile("^" + IPV6_REGEXP + "$");
@@ -59,14 +59,12 @@ public class AvoidUsingHardCodedIPRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(CHECK_ADDRESS_TYPES_DESCRIPTOR);
     }
 
-    @Override
-    public void start(RuleContext ctx) {
+    @Override public void start(RuleContext ctx) {
         kindsToCheck.clear();
         kindsToCheck.addAll(getProperty(CHECK_ADDRESS_TYPES_DESCRIPTOR));
     }
 
-    @Override
-    public Object visit(ASTStringLiteral node, Object data) {
+    @Override public Object visit(ASTStringLiteral node, Object data) {
         final String image = node.getConstValue();
 
         // Note: We used to check the addresses using
@@ -199,8 +197,7 @@ public class AvoidUsingHardCodedIPRule extends AbstractJavaRulechainRule {
         }
     }
 
-    @Override
-    public String dysfunctionReason() {
+    @Override public String dysfunctionReason() {
         return !getProperty(CHECK_ADDRESS_TYPES_DESCRIPTOR).isEmpty() ? null : "No address types specified";
     }
 }

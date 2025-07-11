@@ -13,8 +13,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class ASTExtractExpressionTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void testXml() {
+    @Test void testXml() {
         ASTInput unit = plsql.parse("SELECT warehouse_name, EXTRACT(warehouse_spec, '/Warehouse/Docks', "
                 + "'xmlns:a=\"http://warehouse/1\" xmlns:b=\"http://warehouse/2\"') \"Number of Docks\" "
                 + " FROM warehouses WHERE warehouse_spec IS NOT NULL;");

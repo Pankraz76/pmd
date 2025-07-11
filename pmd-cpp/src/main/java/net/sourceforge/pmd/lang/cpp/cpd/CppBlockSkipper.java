@@ -30,8 +30,7 @@ class CppBlockSkipper extends EscapeTranslator {
         skipEnd = skipEndMarker;
     }
 
-    @Override
-    protected int gobbleMaxWithoutEscape(int maxOff) throws MalformedSourceException {
+    @Override protected int gobbleMaxWithoutEscape(int maxOff) throws MalformedSourceException {
         Matcher start = skipStart.matcher(input).region(this.bufpos, maxOff);
         if (start.find()) {
             Matcher end = skipEnd.matcher(input).region(start.end(), maxOff);

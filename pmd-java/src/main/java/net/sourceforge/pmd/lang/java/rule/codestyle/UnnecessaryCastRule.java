@@ -59,14 +59,13 @@ import net.sourceforge.pmd.util.OptionalBool;
 public class UnnecessaryCastRule extends AbstractJavaRulechainRule {
 
     private static final Set<BinaryOp> BINARY_PROMOTED_OPS =
-        EnumSet.of(LE, GE, GT, LT, ADD, SUB, MUL, DIV, MOD);
+            EnumSet.of(LE, GE, GT, LT, ADD, SUB, MUL, DIV, MOD);
 
     public UnnecessaryCastRule() {
         super(ASTCastExpression.class);
     }
 
-    @Override
-    public Object visit(ASTCastExpression castExpr, Object data) {
+    @Override public Object visit(ASTCastExpression castExpr, Object data) {
         ASTExpression operand = castExpr.getOperand();
 
         // eg in
@@ -77,7 +76,7 @@ public class UnnecessaryCastRule extends AbstractJavaRulechainRule {
         JTypeMirror operandType = operand.getTypeMirror();                      // int
 
         if (TypeOps.isUnresolvedOrNull(operandType)
-            || TypeOps.isUnresolvedOrNull(coercionType)) {
+                || TypeOps.isUnresolvedOrNull(coercionType)) {
             return null;
         }
 
@@ -124,12 +123,12 @@ public class UnnecessaryCastRule extends AbstractJavaRulechainRule {
             // then we have fewer violation conditions
 
             return !operandType.isBottom() // casts on a null literal are necessary
-                && operandType.isSubtypeOf(coercionType)
-                && !isCastToRawType(coercionType, operandType);
+                    && operandType.isSubtypeOf(coercionType)
+                    && !isCastToRawType(coercionType, operandType);
         }
 
         return !isCastDeterminingContext(castExpr, context, coercionType, operandType)
-            && castIsUnnecessaryToMatchContext(context, coercionType, operandType);
+                && castIsUnnecessaryToMatchContext(context, coercionType, operandType);
     }
 
     /**
@@ -149,8 +148,8 @@ public class UnnecessaryCastRule extends AbstractJavaRulechainRule {
     }
 
     private static boolean castIsUnnecessaryToMatchContext(ExprContext context,
-                                                           JTypeMirror coercionType,
-                                                           JTypeMirror operandType) {
+            JTypeMirror coercionType,
+            JTypeMirror operandType) {
         if (context.hasKind(ExprContextKind.INVOCATION)) {
             // todo unsupported for now, the cast may be disambiguating overloads
             return false;
@@ -188,7 +187,7 @@ public class UnnecessaryCastRule extends AbstractJavaRulechainRule {
 
             // inside string concatenation
             return !TypeTestUtil.isA(String.class, JavaAstUtils.getOtherOperandIfInInfixExpr(castExpr))
-                && !TypeTestUtil.isA(String.class, operandType);
+                    && !TypeTestUtil.isA(String.class, operandType);
 
         } else if (context.hasKind(ExprContextKind.NUMERIC) && castExpr.getParent() instanceof ASTInfixExpression) {
             // numeric expr
@@ -279,16 +278,16 @@ public class UnnecessaryCastRule extends AbstractJavaRulechainRule {
             // This is the method signature of the lambda, given the formal parameter type of the parent call.
             // The formal type is not instantiated, it may contain type variables of the parent method...
             JMethodSig expectedLambdaMethod = genericLambdaTy.getTypeSystem().sigOf(
-                lambda.getFunctionalMethod().getSymbol(),
-                lambdaTyCapture.getTypeParamSubst()
+                    lambda.getFunctionalMethod().getSymbol(),
+                    lambdaTyCapture.getTypeParamSubst()
             );
             // but if the return type does not contain such tvars, then the parent method type does
             // not depend on the lambda type :)
             return definitely(
-                TypeOps.mentionsAny(
-                    expectedLambdaMethod.getReturnType(),
-                    parentMethod.getTypeParameters()
-                )
+                    TypeOps.mentionsAny(
+                            expectedLambdaMethod.getReturnType(),
+                            parentMethod.getTypeParameters()
+                    )
             );
         }
         return UNKNOWN;

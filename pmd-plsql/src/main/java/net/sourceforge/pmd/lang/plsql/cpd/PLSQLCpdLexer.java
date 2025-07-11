@@ -32,18 +32,17 @@ public class PLSQLCpdLexer extends JavaccCpdLexer {
         ignoreLiterals = properties.getProperty(CpdLanguageProperties.CPD_ANONYMIZE_LITERALS);
     }
 
-    @Override
-    protected String getImage(JavaccToken plsqlToken) {
+    @Override protected String getImage(JavaccToken plsqlToken) {
         String image;
 
         if (ignoreIdentifiers && plsqlToken.kind == PLSQLTokenKinds.IDENTIFIER) {
             image = "<identifier>";
         } else if (ignoreLiterals && (plsqlToken.kind == PLSQLTokenKinds.UNSIGNED_NUMERIC_LITERAL
-            || plsqlToken.kind == PLSQLTokenKinds.FLOAT_LITERAL
-            || plsqlToken.kind == PLSQLTokenKinds.INTEGER_LITERAL
-            || plsqlToken.kind == PLSQLTokenKinds.CHARACTER_LITERAL
-            || plsqlToken.kind == PLSQLTokenKinds.STRING_LITERAL
-            || plsqlToken.kind == PLSQLTokenKinds.QUOTED_LITERAL)) {
+                || plsqlToken.kind == PLSQLTokenKinds.FLOAT_LITERAL
+                || plsqlToken.kind == PLSQLTokenKinds.INTEGER_LITERAL
+                || plsqlToken.kind == PLSQLTokenKinds.CHARACTER_LITERAL
+                || plsqlToken.kind == PLSQLTokenKinds.STRING_LITERAL
+                || plsqlToken.kind == PLSQLTokenKinds.QUOTED_LITERAL)) {
             // the token kind is preserved
             image = PLSQLTokenKinds.describe(plsqlToken.kind);
         } else {
@@ -52,8 +51,7 @@ public class PLSQLCpdLexer extends JavaccCpdLexer {
         return image;
     }
 
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
         return InternalApiBridge.newTokenManager(doc);
     }
 }

@@ -29,15 +29,13 @@ public interface InvocationNode extends TypeNode, MethodUsage {
      * passed to the invocation. Can be null if this is an
      * {@link ASTEnumConstant}.
      */
-    @Nullable
-    ASTArgumentList getArguments();
+    @Nullable ASTArgumentList getArguments();
 
 
     /**
      * Returns the explicit type arguments if they exist.
      */
-    @Nullable
-    ASTTypeArguments getExplicitTypeArguments();
+    @Nullable ASTTypeArguments getExplicitTypeArguments();
 
 
     /**

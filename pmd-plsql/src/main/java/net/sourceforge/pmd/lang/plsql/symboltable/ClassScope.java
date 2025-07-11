@@ -28,8 +28,7 @@ public class ClassScope extends AbstractScope {
 
     // FIXME - this breaks given sufficiently nested code
     private static ThreadLocal<Integer> anonymousInnerClassCounter = new ThreadLocal<Integer>() {
-        @Override
-        protected Integer initialValue() {
+        @Override protected Integer initialValue() {
             return 1;
         }
     };
@@ -56,16 +55,14 @@ public class ClassScope extends AbstractScope {
         anonymousInnerClassCounter.set(v + 1);
     }
 
-    @Override
-    public void addDeclaration(NameDeclaration declaration) {
+    @Override public void addDeclaration(NameDeclaration declaration) {
         if (declaration instanceof VariableNameDeclaration && getDeclarations().keySet().contains(declaration)) {
             throw new RuntimeException(declaration + " is already in the symbol table");
         }
         super.addDeclaration(declaration);
     }
 
-    @Override
-    public Set<NameDeclaration> addNameOccurrence(NameOccurrence occ) {
+    @Override public Set<NameDeclaration> addNameOccurrence(NameOccurrence occ) {
         PLSQLNameOccurrence occurrence = (PLSQLNameOccurrence) occ;
         Set<NameDeclaration> declarations = findVariableHere(occurrence);
         Map<MethodNameDeclaration, List<NameOccurrence>> methodNames = getMethodDeclarations();
@@ -188,8 +185,7 @@ public class ClassScope extends AbstractScope {
         return result;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder res = new StringBuilder("ClassScope (").append(className).append("): ");
         Map<ClassNameDeclaration, List<NameOccurrence>> classNames = getClassDeclarations();
         Map<MethodNameDeclaration, List<NameOccurrence>> methodNames = getMethodDeclarations();

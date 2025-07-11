@@ -11,8 +11,7 @@ class PmdThreadFactory implements ThreadFactory {
 
     private final AtomicInteger counter = new AtomicInteger();
 
-    @Override
-    public Thread newThread(Runnable r) {
+    @Override public Thread newThread(Runnable r) {
         return new Thread(r, "PmdThread " + counter.incrementAndGet());
     }
 

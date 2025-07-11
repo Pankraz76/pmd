@@ -15,8 +15,7 @@ public final class JsParsingHelper extends BaseParsingHelper<JsParsingHelper, AS
         super(EcmascriptLanguageModule.getInstance(), ASTAstRoot.class, params);
     }
 
-    @Override
-    protected JsParsingHelper clone(Params params) {
+    @Override protected JsParsingHelper clone(Params params) {
         return new JsParsingHelper(params);
     }
 }

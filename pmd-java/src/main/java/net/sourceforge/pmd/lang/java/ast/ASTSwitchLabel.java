@@ -58,13 +58,11 @@ public final class ASTSwitchLabel extends AbstractJavaNode implements Iterable<A
         return children(ASTExpression.class);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public Iterator<ASTExpression> iterator() {
+    @Override public Iterator<ASTExpression> iterator() {
         return children(ASTExpression.class).iterator();
     }
 

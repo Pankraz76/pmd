@@ -13,8 +13,7 @@ public final class ASTNumberLiteral extends AbstractEcmascriptNode<NumberLiteral
         super(numberLiteral);
     }
 
-    @Override
-    protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptJsVisitor(EcmascriptVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

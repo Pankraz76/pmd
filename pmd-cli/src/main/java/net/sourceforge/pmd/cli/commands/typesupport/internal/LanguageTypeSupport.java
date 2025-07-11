@@ -23,8 +23,7 @@ public class LanguageTypeSupport implements ITypeConverter<Language>, Iterable<S
         this.languageRegistry = languageRegistry;
     }
 
-    @Override
-    public Language convert(final String value) {
+    @Override public Language convert(final String value) {
         Language lang = languageRegistry.getLanguageById(value);
         if (lang == null) {
             throw new TypeConversionException("Unknown language: " + value);
@@ -32,8 +31,7 @@ public class LanguageTypeSupport implements ITypeConverter<Language>, Iterable<S
         return lang;
     }
 
-    @Override
-    public Iterator<String> iterator() {
+    @Override public Iterator<String> iterator() {
         return languageRegistry.getLanguages().stream().map(Language::getId).iterator();
     }
 }

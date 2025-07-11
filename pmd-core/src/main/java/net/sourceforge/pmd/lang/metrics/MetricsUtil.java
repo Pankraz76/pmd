@@ -56,8 +56,8 @@ public final class MetricsUtil {
      * @return Statistics for the value of the metric over all the nodes
      */
     public static <O extends Node> DoubleSummaryStatistics computeStatistics(Metric<? super O, ?> key,
-                                                                             Iterable<? extends O> ops,
-                                                                             MetricOptions options) {
+            Iterable<? extends O> ops,
+            MetricOptions options) {
 
 
         Objects.requireNonNull(key, NULL_KEY_MESSAGE);
@@ -65,8 +65,8 @@ public final class MetricsUtil {
         Objects.requireNonNull(ops, NULL_NODE_MESSAGE);
 
         return StreamSupport.stream(ops.spliterator(), false)
-                            .filter(key::supports)
-                            .collect(Collectors.summarizingDouble(op -> computeMetric(key, op, options).doubleValue()));
+                .filter(key::supports)
+                .collect(Collectors.summarizingDouble(op -> computeMetric(key, op, options).doubleValue()));
     }
 
     /**

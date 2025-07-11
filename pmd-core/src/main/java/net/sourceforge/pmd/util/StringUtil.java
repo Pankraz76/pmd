@@ -303,8 +303,8 @@ public final class StringUtil {
     public static void trimIndentInPlace(List<Chars> lines) {
         int trimDepth = maxCommonLeadingWhitespaceForAll(lines);
         lines.replaceAll(chars -> chars.length() >= trimDepth
-                                  ? chars.subSequence(trimDepth).trimEnd()
-                                  : chars.trimEnd());
+                ? chars.subSequence(trimDepth).trimEnd()
+                : chars.trimEnd());
     }
 
     /**
@@ -343,7 +343,7 @@ public final class StringUtil {
      * @return <code>true</code> if the Strings are the same, <code>false</code> otherwise.
      */
     public static boolean isSame(String s1, String s2, boolean trim, boolean ignoreCase,
-                                 boolean standardizeWhitespace) {
+            boolean standardizeWhitespace) {
         if (s1 == null && s2 == null) {
             return true;
         } else if (s1 == null || s2 == null) {
@@ -403,8 +403,8 @@ public final class StringUtil {
      */
     public static String removeSurrounding(String string, char delimiter) {
         if (string.length() >= 2
-            && string.charAt(0) == delimiter
-            && string.charAt(string.length() - 1) == delimiter) {
+                && string.charAt(0) == delimiter
+                && string.charAt(string.length() - 1) == delimiter) {
             return string.substring(1, string.length() - 1);
         }
         return string;
@@ -446,40 +446,40 @@ public final class StringUtil {
         for (int i = 0; i < str.length(); i++) {
             final char ch = str.charAt(i);
             switch (ch) {
-            case 0:
-                break;
-            case '\b':
-                retval.append("\\b");
-                break;
-            case '\t':
-                retval.append("\\t");
-                break;
-            case '\n':
-                retval.append("\\n");
-                break;
-            case '\f':
-                retval.append("\\f");
-                break;
-            case '\r':
-                retval.append("\\r");
-                break;
-            case '\"':
-                retval.append("\\\"");
-                break;
-            case '\'':
-                retval.append("\\'");
-                break;
-            case '\\':
-                retval.append("\\\\");
-                break;
-            default:
-                if (ch < 0x20 || ch > 0x7e) {
-                    String s = "0000" + Integer.toString(ch, 16);
-                    retval.append("\\u").append(s.substring(s.length() - 4));
-                } else {
-                    retval.append(ch);
-                }
-                break;
+                case 0:
+                    break;
+                case '\b':
+                    retval.append("\\b");
+                    break;
+                case '\t':
+                    retval.append("\\t");
+                    break;
+                case '\n':
+                    retval.append("\\n");
+                    break;
+                case '\f':
+                    retval.append("\\f");
+                    break;
+                case '\r':
+                    retval.append("\\r");
+                    break;
+                case '\"':
+                    retval.append("\\\"");
+                    break;
+                case '\'':
+                    retval.append("\\'");
+                    break;
+                case '\\':
+                    retval.append("\\\\");
+                    break;
+                default:
+                    if (ch < 0x20 || ch > 0x7e) {
+                        String s = "0000" + Integer.toString(ch, 16);
+                        retval.append("\\u").append(s.substring(s.length() - 4));
+                    } else {
+                        retval.append(ch);
+                    }
+                    break;
             }
         }
         return retval.toString();
@@ -503,25 +503,21 @@ public final class StringUtil {
     public enum CaseConvention {
         /** SCREAMING_SNAKE_CASE. */
         SCREAMING_SNAKE_CASE {
-            @Override
-            List<String> toWords(String name) {
+            @Override List<String> toWords(String name) {
                 return CollectionUtil.map(name.split("_"), s -> s.toLowerCase(Locale.ROOT));
             }
 
-            @Override
-            String joinWords(List<String> words) {
+            @Override String joinWords(List<String> words) {
                 return words.stream().map(s -> s.toUpperCase(Locale.ROOT)).collect(Collectors.joining("_"));
             }
         },
         /** camelCase. */
         CAMEL_CASE {
-            @Override
-            List<String> toWords(String name) {
+            @Override List<String> toWords(String name) {
                 return PASCAL_CASE.toWords(name);
             }
 
-            @Override
-            String joinWords(List<String> words) {
+            @Override String joinWords(List<String> words) {
                 if (words.isEmpty()) {
                     return "";
                 }
@@ -530,25 +526,21 @@ public final class StringUtil {
         },
         /** PascalCase. */
         PASCAL_CASE {
-            @Override
-            List<String> toWords(String name) {
+            @Override List<String> toWords(String name) {
                 return CollectionUtil.map(name.split("(?<![A-Z])(?=[A-Z])"), s -> s.toLowerCase(Locale.ROOT));
             }
 
-            @Override
-            String joinWords(List<String> words) {
+            @Override String joinWords(List<String> words) {
                 return words.stream().map(StringUtils::capitalize).collect(Collectors.joining());
             }
         },
         /** space separated. */
         SPACE_SEPARATED {
-            @Override
-            List<String> toWords(String name) {
+            @Override List<String> toWords(String name) {
                 return CollectionUtil.map(name.split("\\s++"), s -> s.toLowerCase(Locale.ROOT));
             }
 
-            @Override
-            String joinWords(List<String> words) {
+            @Override String joinWords(List<String> words) {
                 return String.join(" ", words);
             }
         };

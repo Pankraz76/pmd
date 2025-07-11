@@ -28,14 +28,12 @@ public final class TimeTracker {
     private static final ConcurrentMap<TimedOperationKey, TimedResult> ACCUMULATED_RESULTS = new ConcurrentHashMap<>();
     private static final TimedOperation NOOP_TIMED_OPERATION = new TimedOperation() {
 
-        @Override
-        public void close() {
+        @Override public void close() {
             // noop
         }
 
-        @Override
-        public void close(final int count) {
-         // noop
+        @Override public void close(final int count) {
+            // noop
         }
     };
 
@@ -183,8 +181,7 @@ public final class TimeTracker {
             this.start = System.nanoTime();
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "TimerEntry for " + operation;
         }
     }
@@ -237,8 +234,7 @@ public final class TimeTracker {
             this.label = label;
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             final int prime = 31;
             int result = 1;
             result = prime * result + ((category == null) ? 0 : category.hashCode());
@@ -246,8 +242,7 @@ public final class TimeTracker {
             return result;
         }
 
-        @Override
-        public boolean equals(final Object obj) {
+        @Override public boolean equals(final Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -261,8 +256,7 @@ public final class TimeTracker {
             return category == other.category && Objects.equals(label, other.label);
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "TimedOperationKey [category=" + category + ", label=" + label + "]";
         }
     }
@@ -273,13 +267,11 @@ public final class TimeTracker {
     private static final class TimedOperationImpl implements TimedOperation {
         private boolean closed = false;
 
-        @Override
-        public void close() {
+        @Override public void close() {
             close(0);
         }
 
-        @Override
-        public void close(int extraDataCounter) {
+        @Override public void close(int extraDataCounter) {
             if (closed) {
                 return;
             }

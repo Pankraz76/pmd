@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.symboltable.ScopedNode;
 
 public interface PLSQLNode extends ScopedNode, JjtreeNode<PLSQLNode> {
 
-    @Override
-    Scope getScope();
+    @Override Scope getScope();
 
     /**
      * Return node image converted to the normal Oracle form.

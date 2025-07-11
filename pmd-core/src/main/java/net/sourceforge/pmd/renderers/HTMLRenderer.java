@@ -33,21 +33,21 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
     public static final String NAME = "html";
 
     public static final PropertyDescriptor<Optional<String>> LINE_PREFIX =
-        PropertyFactory.stringProperty("linePrefix")
-                       .desc("Prefix for line number anchor in the source file.")
-                       .toOptional("<none>")
-                       .defaultValue(Optional.empty())
-                       .build();
+            PropertyFactory.stringProperty("linePrefix")
+                    .desc("Prefix for line number anchor in the source file.")
+                    .toOptional("<none>")
+                    .defaultValue(Optional.empty())
+                    .build();
 
     public static final PropertyDescriptor<String> LINK_PREFIX =
-        PropertyFactory.stringProperty("linkPrefix").desc("Path to HTML source.").defaultValue("").build();
+            PropertyFactory.stringProperty("linkPrefix").desc("Path to HTML source.").defaultValue("").build();
 
     public static final PropertyDescriptor<Boolean> HTML_EXTENSION =
-        PropertyFactory.booleanProperty("htmlExtension")
-                       .desc("Replace file extension with .html for the links.")
-                       // default value is false - to have the old (pre 6.23.0) behavior, this needs to be set to true.
-                       .defaultValue(false)
-                       .build();
+            PropertyFactory.booleanProperty("htmlExtension")
+                    .desc("Replace file extension with .html for the links.")
+                    // default value is false - to have the old (pre 6.23.0) behavior, this needs to be set to true.
+                    .defaultValue(false)
+                    .build();
 
     private String linkPrefix;
     private String linePrefix;
@@ -63,8 +63,7 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
         definePropertyDescriptor(HTML_EXTENSION);
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "html";
     }
 
@@ -90,8 +89,7 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
         glomConfigurationErrors(writer, configErrors);
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         linkPrefix = getProperty(LINK_PREFIX);
         linePrefix = getProperty(LINE_PREFIX).orElse(null);
         replaceHtmlExtension = getProperty(HTML_EXTENSION);
@@ -103,13 +101,11 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
         writer.println("<th>#</th><th>File</th><th>Line</th><th>Problem</th></tr>");
     }
 
-    @Override
-    public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
+    @Override public void renderFileViolations(Iterator<RuleViolation> violations) throws IOException {
         glomRuleViolations(writer, violations);
     }
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         writer.write("</table>");
         glomProcessingErrors(writer, errors);
         if (showSuppressedViolations) {
@@ -135,9 +131,9 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
             buf.append("> ").append(System.lineSeparator());
             buf.append("<td align=\"center\">").append(violationCount).append("</td>").append(System.lineSeparator());
             buf.append("<td width=\"*%\">")
-               .append(renderFileName(rv.getFileId(), rv.getBeginLine()))
-               .append("</td>")
-                .append(System.lineSeparator());
+                    .append(renderFileName(rv.getFileId(), rv.getBeginLine()))
+                    .append("</td>")
+                    .append(System.lineSeparator());
             buf.append("<td align=\"center\" width=\"5%\">").append(rv.getBeginLine()).append("</td>").append(System.lineSeparator());
 
             String d = StringEscapeUtils.escapeHtml4(rv.getDescription());
@@ -147,11 +143,11 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
                 d = "<a href=\"" + infoUrl + "\">" + d + "</a>";
             }
             buf.append("<td width=\"*\">")
-               .append(d)
-               .append("</td>")
-               .append(System.lineSeparator())
-               .append("</tr>")
-                .append(System.lineSeparator());
+                    .append(d)
+                    .append("</td>")
+                    .append(System.lineSeparator())
+                    .append("</tr>")
+                    .append(System.lineSeparator());
             writer.write(buf.toString());
             violationCount++;
         }
@@ -274,6 +270,6 @@ public class HTMLRenderer extends AbstractIncrementingRenderer {
         }
 
         return "<a href=\"" + linkPrefix + newFileName + (replaceHtmlExtension ? ".html#" : "#") + line + "\">"
-            + newFileName + "</a>";
+                + newFileName + "</a>";
     }
 }

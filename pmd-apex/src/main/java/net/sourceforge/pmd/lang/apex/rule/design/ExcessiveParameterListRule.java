@@ -21,13 +21,11 @@ public class ExcessiveParameterListRule extends AbstractCounterCheckRule<ASTMeth
         super(ASTMethod.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 4;
     }
 
-    @Override
-    protected FileLocation getReportLocation(ASTMethod node) {
+    @Override protected FileLocation getReportLocation(ASTMethod node) {
         ApexNode<?> lastParameter = node.children(ASTParameter.class).last();
         if (lastParameter == null) {
             lastParameter = node;
@@ -38,8 +36,7 @@ public class ExcessiveParameterListRule extends AbstractCounterCheckRule<ASTMeth
         return FileLocation.range(node.getAstInfo().getTextDocument().getFileId(), textRange);
     }
 
-    @Override
-    protected int getMetric(ASTMethod node) {
+    @Override protected int getMetric(ASTMethod node) {
         return node.getArity();
     }
 }

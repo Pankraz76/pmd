@@ -26,8 +26,7 @@ public class RubyLanguageModule extends CpdOnlyLanguageModuleBase {
         return (RubyLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new AnyCpdLexer("#");
     }
 }

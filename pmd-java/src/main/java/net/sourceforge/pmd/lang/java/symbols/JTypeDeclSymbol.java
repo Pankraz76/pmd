@@ -49,8 +49,7 @@ public interface JTypeDeclSymbol extends JAccessibleElementSymbol {
      * scoped, so always resolvable), nor anonymous classes (can only be referenced
      * on their declaration site), type variables, etc.
      */
-    @Override
-    default boolean isUnresolved() {
+    @Override default boolean isUnresolved() {
         return false;
     }
 
@@ -59,9 +58,7 @@ public interface JTypeDeclSymbol extends JAccessibleElementSymbol {
      * Returns the simple name of this class, as specified by
      * {@link Class#getSimpleName()}.
      */
-    @Override
-    @NonNull
-    String getSimpleName();
+    @Override @NonNull String getSimpleName();
 
 
     /**

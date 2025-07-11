@@ -51,16 +51,15 @@ public class PMDExecutor {
         pb.command().addAll(arguments);
 
         pb.redirectErrorStream(false);
-        
+
         // Ensure no ANSI output so tests can properly look at it
         pb.environment().put("PMD_JAVA_OPTS", "-Dpicocli.ansi=false");
-        
+
         final Process process = pb.start();
         final ExecutionResult.Builder result = new ExecutionResult.Builder();
 
         Thread outputReader = new Thread(new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 String output;
                 try {
                     output = IOUtil.readToString(process.getInputStream(), StandardCharsets.UTF_8);
@@ -72,8 +71,7 @@ public class PMDExecutor {
         });
         outputReader.start();
         Thread errorReader = new Thread(new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 String error;
                 try {
                     error = IOUtil.readToString(process.getErrorStream(), StandardCharsets.UTF_8);
@@ -114,7 +112,7 @@ public class PMDExecutor {
 
     public static ExecutionResult runPMDRules(Path reportFile, Path tempDir, String sourceDirectory, String ruleset, String formatter) throws Exception {
         return runPMD(reportFile, tempDir, SOURCE_DIRECTORY_FLAG, sourceDirectory, RULESET_FLAG, ruleset,
-                    FORMAT_FLAG, formatter, NO_PROGRESSBAR_FLAG);
+                FORMAT_FLAG, formatter, NO_PROGRESSBAR_FLAG);
     }
 
     /**

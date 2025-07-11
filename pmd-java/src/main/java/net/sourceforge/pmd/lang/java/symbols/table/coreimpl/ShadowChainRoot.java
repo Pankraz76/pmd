@@ -19,59 +19,48 @@ import net.sourceforge.pmd.util.OptionalBool;
  */
 final class ShadowChainRoot<S, I> implements ShadowChain<S, I>, ShadowChainNode<S, I> {
 
-    @SuppressWarnings("rawtypes")
-    private static final ShadowChainRoot EMPTY = new ShadowChainRoot<>();
+    @SuppressWarnings("rawtypes") private static final ShadowChainRoot EMPTY = new ShadowChainRoot<>();
 
     private ShadowChainRoot() {
     }
 
-    @Override
-    public ShadowChain<S, I> asChain() {
+    @Override public ShadowChain<S, I> asChain() {
         return this;
     }
 
-    @Override
-    public ShadowChainNode<S, I> asNode() {
+    @Override public ShadowChainNode<S, I> asNode() {
         return this;
     }
 
-    @Override
-    public NameResolver<S> getResolver() {
+    @Override public NameResolver<S> getResolver() {
         return CoreResolvers.emptyResolver();
     }
 
-    @Override
-    public OptionalBool knowsSymbol(String name) {
+    @Override public OptionalBool knowsSymbol(String name) {
         return OptionalBool.NO;
     }
 
-    @Override
-    public @Nullable ShadowChainNode<S, I> getParent() {
+    @Override public @Nullable ShadowChainNode<S, I> getParent() {
         return null;
     }
 
-    @Override
-    public boolean isShadowBarrier() {
+    @Override public boolean isShadowBarrier() {
         return true;
     }
 
-    @Override
-    public @NonNull List<S> resolve(String name) {
+    @Override public @NonNull List<S> resolve(String name) {
         return emptyList();
     }
 
-    @Override
-    public S resolveFirst(String name) {
+    @Override public S resolveFirst(String name) {
         return null;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Root";
     }
 
-    @SuppressWarnings("unchecked")
-    static <S, I> ShadowChainNode<S, I> empty() {
+    @SuppressWarnings("unchecked") static <S, I> ShadowChainNode<S, I> empty() {
         return EMPTY;
     }
 }

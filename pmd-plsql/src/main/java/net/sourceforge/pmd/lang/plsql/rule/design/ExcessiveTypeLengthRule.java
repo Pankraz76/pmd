@@ -15,8 +15,7 @@ public class ExcessiveTypeLengthRule extends AbstractCounterCheckRule.AbstractLi
         super(ASTTypeSpecification.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 1000;
     }
 }

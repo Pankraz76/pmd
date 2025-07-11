@@ -29,17 +29,16 @@ public class TooManyFieldsRule extends AbstractPLSQLRule {
 
     private static final PropertyDescriptor<Integer> MAX_FIELDS_DESCRIPTOR
             = PropertyFactory.intProperty("maxfields")
-                             .desc("Max allowable fields")
-                             .defaultValue(DEFAULT_MAXFIELDS)
-                             .require(positive())
-                             .build();
+            .desc("Max allowable fields")
+            .defaultValue(DEFAULT_MAXFIELDS)
+            .require(positive())
+            .build();
 
     public TooManyFieldsRule() {
         definePropertyDescriptor(MAX_FIELDS_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTInput node, Object data) {
+    @Override public Object visit(ASTInput node, Object data) {
 
         stats = new HashMap<>(5);
         nodes = new HashMap<>(5);
@@ -47,8 +46,7 @@ public class TooManyFieldsRule extends AbstractPLSQLRule {
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTPackageSpecification node, Object data) {
+    @Override public Object visit(ASTPackageSpecification node, Object data) {
 
         int maxFields = getProperty(MAX_FIELDS_DESCRIPTOR);
 
@@ -67,8 +65,7 @@ public class TooManyFieldsRule extends AbstractPLSQLRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTTypeSpecification node, Object data) {
+    @Override public Object visit(ASTTypeSpecification node, Object data) {
 
         int maxFields = getProperty(MAX_FIELDS_DESCRIPTOR);
 

@@ -24,20 +24,18 @@ import net.sourceforge.pmd.util.OptionalBool;
 public class ImplicitSwitchFallThroughRule extends AbstractJavaRulechainRule {
 
     private static final Pattern IGNORED_COMMENT = Pattern.compile("/[/*].*\\bfalls?[ -]?thr(ough|u)\\b.*",
-                                                                   Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+            Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
     public ImplicitSwitchFallThroughRule() {
         super(ASTSwitchStatement.class, ASTSwitchExpression.class);
     }
 
-    @Override
-    public Object visit(ASTSwitchStatement node, Object data) {
+    @Override public Object visit(ASTSwitchStatement node, Object data) {
         checkSwitchLike(node, asCtx(data));
         return null;
     }
 
-    @Override
-    public Object visit(ASTSwitchExpression node, Object data) {
+    @Override public Object visit(ASTSwitchExpression node, Object data) {
         checkSwitchLike(node, asCtx(data));
         return null;
     }
@@ -67,7 +65,7 @@ public class ImplicitSwitchFallThroughRule extends AbstractJavaRulechainRule {
         }
         for (JavaccToken special : GenericToken.previousSpecials(nextBranch.getFirstToken())) {
             if (JavaAstUtils.isComment(special)
-                && IGNORED_COMMENT.matcher(special.getImageCs()).find()) {
+                    && IGNORED_COMMENT.matcher(special.getImageCs()).find()) {
                 return true;
             }
         }

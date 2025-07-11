@@ -22,10 +22,10 @@ public abstract class AbstractJavaCounterCheckRule<T extends JavaNode> extends A
 
 
     private final PropertyDescriptor<Integer> reportLevel =
-        CommonPropertyDescriptors.reportLevelProperty()
-                                 .desc("Threshold above which a node is reported")
-                                 .require(positive())
-                                 .defaultValue(defaultReportLevel()).build();
+            CommonPropertyDescriptors.reportLevelProperty()
+                    .desc("Threshold above which a node is reported")
+                    .require(positive())
+                    .defaultValue(defaultReportLevel()).build();
 
 
     public AbstractJavaCounterCheckRule(Class<T> nodeType) {
@@ -45,10 +45,8 @@ public abstract class AbstractJavaCounterCheckRule<T extends JavaNode> extends A
     protected abstract boolean isViolation(T node, int reportLevel);
 
 
-    @Override
-    public Object visitJavaNode(JavaNode node, Object data) {
-        @SuppressWarnings("unchecked")
-        T t = (T) node;
+    @Override public Object visitJavaNode(JavaNode node, Object data) {
+        @SuppressWarnings("unchecked") T t = (T) node;
         // since we only visit this node, it's ok
 
         if (!isIgnored(t)) {

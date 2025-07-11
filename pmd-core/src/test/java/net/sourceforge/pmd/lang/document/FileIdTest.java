@@ -20,8 +20,7 @@ import org.junit.jupiter.api.Test;
 class FileIdTest {
     // note we can't hardcode the expected paths because they look different on win and nix
 
-    @Test
-    void testFromPath() {
+    @Test void testFromPath() {
         Path path = Paths.get("/a");
         Path absPath = path.toAbsolutePath();
         FileId fileId = FileId.fromPath(path);
@@ -29,16 +28,14 @@ class FileIdTest {
     }
 
 
-    @Test
-    void testFromUri() {
+    @Test void testFromUri() {
         Path absPath = Paths.get("/a/b.c");
         String uriStr = absPath.toUri().toString();
         FileId fileId = FileId.fromURI(uriStr);
         checkId(fileId, absPath.toAbsolutePath().toString(), "b.c", uriStr, absPath.toAbsolutePath().toString());
     }
 
-    @Test
-    void testFromAsChild() {
+    @Test void testFromAsChild() {
         FileId parent = FileId.fromPathLikeString("bla");
         FileId child = FileId.fromPathLikeString("bla");
         FileId fileId = FileId.asChildOf(child, parent);
@@ -48,8 +45,7 @@ class FileIdTest {
         assertSame(fileId, FileId.asChildOf(fileId, parent));
     }
 
-    @Test
-    void testFromUriForJar() {
+    @Test void testFromUriForJar() {
         Path zipPath = Paths.get("/a/b.zip");
         String uriStr = "jar:" + zipPath.toUri() + "!/x/c.d";
         FileId fileId = FileId.fromURI(uriStr);

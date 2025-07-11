@@ -28,18 +28,18 @@ import net.sourceforge.pmd.properties.PropertyFactory;
 public class CyclomaticComplexityRule extends AbstractApexRule {
 
     private static final PropertyDescriptor<Integer> CLASS_LEVEL_DESCRIPTOR
-        = PropertyFactory.intProperty("classReportLevel")
-                         .desc("Total class complexity reporting threshold")
-                         .require(positive())
-                         .defaultValue(40)
-                         .build();
+            = PropertyFactory.intProperty("classReportLevel")
+            .desc("Total class complexity reporting threshold")
+            .require(positive())
+            .defaultValue(40)
+            .build();
 
     private static final PropertyDescriptor<Integer> METHOD_LEVEL_DESCRIPTOR
-        = PropertyFactory.intProperty("methodReportLevel")
-                         .desc("Cyclomatic complexity reporting threshold")
-                         .require(positive())
-                         .defaultValue(10)
-                         .build();
+            = PropertyFactory.intProperty("methodReportLevel")
+            .desc("Cyclomatic complexity reporting threshold")
+            .require(positive())
+            .defaultValue(10)
+            .build();
 
     private Deque<String> classNames = new ArrayDeque<>();
     private boolean inTrigger;
@@ -51,8 +51,7 @@ public class CyclomaticComplexityRule extends AbstractApexRule {
     }
 
 
-    @Override
-    public Object visit(ASTUserTrigger node, Object data) {
+    @Override public Object visit(ASTUserTrigger node, Object data) {
         inTrigger = true;
         super.visit(node, data);
         inTrigger = false;
@@ -60,8 +59,7 @@ public class CyclomaticComplexityRule extends AbstractApexRule {
     }
 
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
 
         classNames.push(node.getSimpleName());
         super.visit(node, data);
@@ -74,9 +72,9 @@ public class CyclomaticComplexityRule extends AbstractApexRule {
                 int classHighest = (int) MetricsUtil.computeStatistics(ApexMetrics.CYCLO, node.getMethods()).getMax();
 
                 String[] messageParams = {"class",
-                                          node.getSimpleName(),
-                                          " total",
-                                          classWmc + " (highest " + classHighest + ")", };
+                        node.getSimpleName(),
+                        " total",
+                        classWmc + " (highest " + classHighest + ")", };
 
                 asCtx(data).addViolation(node, (Object[]) messageParams);
             }
@@ -85,15 +83,14 @@ public class CyclomaticComplexityRule extends AbstractApexRule {
     }
 
 
-    @Override
-    public final Object visit(ASTMethod node, Object data) {
+    @Override public final Object visit(ASTMethod node, Object data) {
 
         if (ApexMetrics.CYCLO.supports(node)) {
             int cyclo = MetricsUtil.computeMetric(ApexMetrics.CYCLO, node);
             if (cyclo >= getProperty(METHOD_LEVEL_DESCRIPTOR)) {
                 String opType = inTrigger ? "trigger"
-                                          : node.getImage().equals(classNames.peek()) ? "constructor"
-                                                                                      : "method";
+                        : node.getImage().equals(classNames.peek()) ? "constructor"
+                        : "method";
 
                 asCtx(data).addViolation(node, opType,
                         node.getQualifiedName().getOperation(),

@@ -30,14 +30,12 @@ public class AvoidInstantiatingObjectsInLoopsRule extends AbstractJavaRulechainR
         super(ASTConstructorCall.class, ASTArrayAllocation.class);
     }
 
-    @Override
-    public Object visit(ASTConstructorCall node, Object data) {
+    @Override public Object visit(ASTConstructorCall node, Object data) {
         checkNode(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTArrayAllocation node, Object data) {
+    @Override public Object visit(ASTArrayAllocation node, Object data) {
         checkNode(node, data);
         return data;
     }
@@ -71,9 +69,9 @@ public class AvoidInstantiatingObjectsInLoopsRule extends AbstractJavaRulechainR
         // checks whether the given ConstructorCall/ArrayAllocation is
         // part of a MethodCall on a Collection.
         return node.ancestors(ASTArgumentList.class)
-            .filter(n -> n.getParent() instanceof ASTMethodCall)
-            .filter(n -> TypeTestUtil.isA(Collection.class, ((ASTMethodCall) n.getParent()).getQualifier()))
-            .isEmpty();
+                .filter(n -> n.getParent() instanceof ASTMethodCall)
+                .filter(n -> TypeTestUtil.isA(Collection.class, ((ASTMethodCall) n.getParent()).getQualifier()))
+                .isEmpty();
     }
 
     private boolean notBreakFollowing(JavaNode node) {

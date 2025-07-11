@@ -25,20 +25,16 @@ abstract class AbstractHtmlNode<T extends Node> extends AbstractNode<AbstractHtm
         return node.nodeName();
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         // note: this might return "#text" or "#comment" as well
         return node.nodeName();
     }
 
-    @Override
-    public TextRegion getTextRegion() {
+    @Override public TextRegion getTextRegion() {
         return TextRegion.fromBothOffsets(startOffset, endOffset);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override @SuppressWarnings("unchecked") public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof HtmlVisitor) {
             return this.acceptHtmlVisitor((HtmlVisitor<? super P, ? extends R>) visitor, data);
         }
@@ -48,8 +44,7 @@ abstract class AbstractHtmlNode<T extends Node> extends AbstractNode<AbstractHtm
     protected abstract <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data);
 
     // overridden to make them visible
-    @Override
-    protected void addChild(AbstractHtmlNode<?> child, int index) {
+    @Override protected void addChild(AbstractHtmlNode<?> child, int index) {
         super.addChild(child, index);
     }
 

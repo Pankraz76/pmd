@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.swift.ast.PmdSwiftParser;
 
 public class SwiftHandler extends AbstractPmdLanguageVersionHandler {
 
-    @Override
-    public Parser getParser() {
+    @Override public Parser getParser() {
         return new PmdSwiftParser();
     }
 }

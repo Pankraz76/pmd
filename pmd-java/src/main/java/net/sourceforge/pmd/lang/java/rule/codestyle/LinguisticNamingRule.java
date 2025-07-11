@@ -29,7 +29,7 @@ import net.sourceforge.pmd.properties.PropertyDescriptor;
 
 public class LinguisticNamingRule extends AbstractJavaRulechainRule {
     private static final PropertyDescriptor<List<String>> IGNORED_ANNOTS =
-        JavaPropertyUtil.ignoredAnnotationsDescriptor("java.lang.Override");
+            JavaPropertyUtil.ignoredAnnotationsDescriptor("java.lang.Override");
 
     private static final PropertyDescriptor<Boolean> CHECK_BOOLEAN_METHODS =
             booleanProperty("checkBooleanMethod").defaultValue(true).desc("Check method names and types for inconsistent naming.").build();
@@ -77,8 +77,7 @@ public class LinguisticNamingRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(BOOLEAN_FIELD_PREFIXES_PROPERTY);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         if (!hasIgnoredAnnotation(node)) {
             String nameOfMethod = node.getName();
 
@@ -116,7 +115,7 @@ public class LinguisticNamingRule extends AbstractJavaRulechainRule {
                 && prefixes.contains(splitMethodName[0].toLowerCase(Locale.ROOT))) {
             // "To" or any other configured prefix found
             asCtx(data).addViolationWithMessage(node, "Linguistics Antipattern - The transform method ''{0}'' should not return void linguistically",
-                                                nameOfMethod);
+                    nameOfMethod);
         }
     }
 
@@ -125,7 +124,7 @@ public class LinguisticNamingRule extends AbstractJavaRulechainRule {
             if (node.isVoid() && containsCamelCaseWord(nameOfMethod, StringUtils.capitalize(infix))) {
                 // "To" or any other configured infix in the middle somewhere
                 asCtx(data).addViolationWithMessage(node, "Linguistics Antipattern - The transform method ''{0}'' should not return void linguistically",
-                                                    nameOfMethod);
+                        nameOfMethod);
                 // the first violation is sufficient - it is still the same method we are analyzing here
                 break;
             }
@@ -135,14 +134,14 @@ public class LinguisticNamingRule extends AbstractJavaRulechainRule {
     private void checkGetters(ASTMethodDeclaration node, Object data, String nameOfMethod) {
         if (startsWithCamelCaseWord(nameOfMethod, "get") && node.isVoid()) {
             asCtx(data).addViolationWithMessage(node, "Linguistics Antipattern - The getter ''{0}'' should not return void linguistically",
-                                                nameOfMethod);
+                    nameOfMethod);
         }
     }
 
     private void checkSetters(ASTMethodDeclaration node, Object data, String nameOfMethod) {
         if (startsWithCamelCaseWord(nameOfMethod, "set") && !node.isVoid() && returnsEnclosingType(node)) {
             asCtx(data).addViolationWithMessage(node, "Linguistics Antipattern - The setter ''{0}'' should not return any type except void linguistically",
-                                                nameOfMethod);
+                    nameOfMethod);
         }
     }
 
@@ -162,7 +161,7 @@ public class LinguisticNamingRule extends AbstractJavaRulechainRule {
             for (String prefix : getProperty(BOOLEAN_METHOD_PREFIXES_PROPERTY)) {
                 if (startsWithCamelCaseWord(nameOfMethod, prefix) && !isBooleanType(t)) {
                     asCtx(data).addViolationWithMessage(node, "Linguistics Antipattern - The method ''{0}'' indicates linguistically it returns a boolean, but it returns ''{1}''",
-                                                        nameOfMethod, PrettyPrintingUtil.prettyPrintType(t));
+                            nameOfMethod, PrettyPrintingUtil.prettyPrintType(t));
                 }
             }
         }
@@ -172,7 +171,7 @@ public class LinguisticNamingRule extends AbstractJavaRulechainRule {
         for (String prefix : getProperty(BOOLEAN_FIELD_PREFIXES_PROPERTY)) {
             if (startsWithCamelCaseWord(node.getName(), prefix) && !isBooleanType(typeNode)) {
                 asCtx(data).addViolationWithMessage(node, "Linguistics Antipattern - The field ''{0}'' indicates linguistically it is a boolean, but it is ''{1}''",
-                                                    node.getName(), PrettyPrintingUtil.prettyPrintType(typeNode));
+                        node.getName(), PrettyPrintingUtil.prettyPrintType(typeNode));
             }
         }
     }
@@ -181,13 +180,12 @@ public class LinguisticNamingRule extends AbstractJavaRulechainRule {
         for (String prefix : getProperty(BOOLEAN_FIELD_PREFIXES_PROPERTY)) {
             if (startsWithCamelCaseWord(node.getName(), prefix) && !isBooleanType(typeNode)) {
                 asCtx(data).addViolationWithMessage(node, "Linguistics Antipattern - The variable ''{0}'' indicates linguistically it is a boolean, but it is ''{1}''",
-                                                    node.getName(), PrettyPrintingUtil.prettyPrintType(typeNode));
+                        node.getName(), PrettyPrintingUtil.prettyPrintType(typeNode));
             }
         }
     }
 
-    @Override
-    public Object visit(ASTFieldDeclaration node, Object data) {
+    @Override public Object visit(ASTFieldDeclaration node, Object data) {
         ASTType type = node.getTypeNode();
         if (type != null && getProperty(CHECK_FIELDS)) {
             for (ASTVariableDeclarator field : node.children(ASTVariableDeclarator.class)) {
@@ -197,8 +195,7 @@ public class LinguisticNamingRule extends AbstractJavaRulechainRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTLocalVariableDeclaration node, Object data) {
+    @Override public Object visit(ASTLocalVariableDeclaration node, Object data) {
         ASTType type = node.getTypeNode();
         if (type != null && getProperty(CHECK_VARIABLES)) {
             for (ASTVariableDeclarator variable : node.children(ASTVariableDeclarator.class)) {

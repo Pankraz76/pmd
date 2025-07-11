@@ -15,13 +15,11 @@ class TypeScriptCpdLexerTest extends CpdTextComparisonTest {
         super(TsLanguageModule.getInstance(), ".ts");
     }
 
-    @Test
-    void greeterTest() {
+    @Test void greeterTest() {
         doTest("greeter");
     }
 
-    @Test
-    void apiSampleWatchTest() {
+    @Test void apiSampleWatchTest() {
         doTest("APISample_Watch");
     }
 }

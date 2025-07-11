@@ -23,8 +23,7 @@ public class ConfusingArgumentToVarargsMethodRule extends AbstractJavaRulechainR
         super(ASTArgumentList.class);
     }
 
-    @Override
-    public Object visit(ASTArgumentList argList, Object data) {
+    @Override public Object visit(ASTArgumentList argList, Object data) {
         if (argList.isEmpty()) {
             return null;
         }
@@ -33,8 +32,8 @@ public class ConfusingArgumentToVarargsMethodRule extends AbstractJavaRulechainR
         InvocationNode call = (InvocationNode) argList.getParent();
         OverloadSelectionResult info = call.getOverloadSelectionInfo();
         if (info.isFailed()
-            || info.isVarargsCall()
-            || !info.getMethodType().isVarargs()) {
+                || info.isVarargsCall()
+                || !info.getMethodType().isVarargs()) {
             return null;
         }
 
@@ -46,8 +45,8 @@ public class ConfusingArgumentToVarargsMethodRule extends AbstractJavaRulechainR
         ASTExpression varargsArg = argList.getLastChild();
         assert varargsArg != null;
         if (varargsArg.getTypeMirror().isSubtypeOf(expectedComponent)
-            && !varargsArg.getTypeMirror().equals(lastFormal)
-            && !TypeOps.isSpecialUnresolvedOrArray(varargsArg.getTypeMirror())) {
+                && !varargsArg.getTypeMirror().equals(lastFormal)
+                && !TypeOps.isSpecialUnresolvedOrArray(varargsArg.getTypeMirror())) {
             // confusing
 
             String message;

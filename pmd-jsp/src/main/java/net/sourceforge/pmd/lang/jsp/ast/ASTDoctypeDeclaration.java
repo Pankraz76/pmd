@@ -23,8 +23,7 @@ public final class ASTDoctypeDeclaration extends AbstractJspNode {
         this.name = name;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

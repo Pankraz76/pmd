@@ -63,20 +63,19 @@ public class UseDiamondOperatorRule extends AbstractJavaRulechainRule {
         super(ASTConstructorCall.class);
     }
 
-    @Override
-    public Object visit(ASTConstructorCall ctorCall, Object data) {
+    @Override public Object visit(ASTConstructorCall ctorCall, Object data) {
         ASTClassType newTypeNode = ctorCall.getTypeNode();
         JTypeMirror newType = newTypeNode.getTypeMirror();
 
         ASTTypeArguments targs = newTypeNode.getTypeArguments();
         if (targs != null && targs.isDiamond()
-            // if unresolved we can't know whether the class is generic or not
-            || TypeOps.hasUnresolvedSymbol(newType)) {
+                // if unresolved we can't know whether the class is generic or not
+                || TypeOps.hasUnresolvedSymbol(newType)) {
             return null;
         }
 
         if (!newType.isGeneric() // targs may be null, in which case this would be a raw type
-            || ctorCall.isAnonymousClass() && !supportsDiamondOnAnonymousClass(ctorCall)) {
+                || ctorCall.isAnonymousClass() && !supportsDiamondOnAnonymousClass(ctorCall)) {
             return null;
         }
 
@@ -134,7 +133,7 @@ public class UseDiamondOperatorRule extends AbstractJavaRulechainRule {
         infer.inferInvocationRecursively(fakeCallSite);
 
         return mirror.isEquivalentToUnderlyingAst()
-            && topmostContext.acceptsType(mirror.getInferredType());
+                && topmostContext.acceptsType(mirror.getInferredType());
     }
 
 
@@ -184,101 +183,82 @@ public class UseDiamondOperatorRule extends AbstractJavaRulechainRule {
 
         // overridden methods
 
-        @Override
-        public @NonNull JTypeMirror getNewType() {
+        @Override public @NonNull JTypeMirror getNewType() {
             // see doc of CtorInvocationMirror#getNewType
             return ((JClassType) base.getNewType()).getGenericTypeDeclaration();
         }
 
-        @Override
-        public boolean isDiamond() {
+        @Override public boolean isDiamond() {
             return true; // pretend it is
         }
 
         // delegated methods
 
-        @Override
-        public List<JTypeMirror> getExplicitTypeArguments() {
+        @Override public List<JTypeMirror> getExplicitTypeArguments() {
             return base.getExplicitTypeArguments();
         }
 
-        @Override
-        public JavaNode getExplicitTargLoc(int i) {
+        @Override public JavaNode getExplicitTargLoc(int i) {
             return base.getExplicitTargLoc(i);
         }
 
-        @Override
-        public void setInferredType(JTypeMirror mirror) {
+        @Override public void setInferredType(JTypeMirror mirror) {
             base.setInferredType(mirror);
         }
 
-        @Override
-        public JTypeMirror getInferredType() {
+        @Override public JTypeMirror getInferredType() {
             return base.getInferredType();
         }
 
-        @Override
-        public void setCompileTimeDecl(MethodCtDecl methodType) {
+        @Override public void setCompileTimeDecl(MethodCtDecl methodType) {
             base.setCompileTimeDecl(methodType);
         }
 
-        @Override
-        public @Nullable MethodCtDecl getCtDecl() {
+        @Override public @Nullable MethodCtDecl getCtDecl() {
             return base.getCtDecl();
         }
 
-        @Override
-        public JavaNode getLocation() {
+        @Override public JavaNode getLocation() {
             return base.getLocation();
         }
 
-        @Override
-        public @NonNull JClassType getEnclosingType() {
+        @Override public @NonNull JClassType getEnclosingType() {
             return base.getEnclosingType();
         }
 
-        @Override
-        public boolean isAnonymous() {
+        @Override public boolean isAnonymous() {
             return base.isAnonymous();
         }
 
-        @Override
-        public Iterable<JMethodSig> getAccessibleCandidates(JTypeMirror newType) {
+        @Override public Iterable<JMethodSig> getAccessibleCandidates(JTypeMirror newType) {
             return base.getAccessibleCandidates(newType);
         }
 
-        @Override
-        public @Nullable JTypeMirror getReceiverType() {
+        @Override public @Nullable JTypeMirror getReceiverType() {
             return base.getReceiverType();
         }
 
-        @Override
-        public String getName() {
+        @Override public String getName() {
             return base.getName();
         }
 
-        @Override
-        public List<ExprMirror> getArgumentExpressions() {
+        @Override public List<ExprMirror> getArgumentExpressions() {
             return base.getArgumentExpressions();
         }
 
-        @Override
-        public int getArgumentCount() {
+        @Override public int getArgumentCount() {
             return base.getArgumentCount();
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return base.toString();
         }
 
-        @Override
-        public TypingContext getTypingContext() {
+        @Override public TypingContext getTypingContext() {
             return base.getTypingContext();
         }
 
-        @Override
-        public boolean isEquivalentToUnderlyingAst() {
+        @Override public boolean isEquivalentToUnderlyingAst() {
             return base.isEquivalentToUnderlyingAst();
         }
     }

@@ -57,7 +57,7 @@ public interface Node extends Reportable {
      * (see {@link Comparator}) as some nodes have the same location.
      */
     Comparator<Node> COORDS_COMPARATOR =
-        Comparator.comparing(Node::getReportLocation, FileLocation.COMPARATOR);
+            Comparator.comparing(Node::getReportLocation, FileLocation.COMPARATOR);
 
     /**
      * Returns a string token, usually filled-in by the parser, which describes some textual characteristic of this
@@ -112,8 +112,7 @@ public interface Node extends Reportable {
      *
      * <p>Use this instead of {@link #getBeginColumn()}/{@link #getBeginLine()}, etc.
      */
-    @Override
-    default FileLocation getReportLocation() {
+    @Override default FileLocation getReportLocation() {
         return getAstInfo().getTextDocument().toLocation(getTextRegion());
     }
 
@@ -157,8 +156,7 @@ public interface Node extends Reportable {
      *
      * @see DescendantNodeStream#crossFindBoundaries(boolean)
      */
-    @NoAttribute
-    default boolean isFindBoundary() {
+    @NoAttribute default boolean isFindBoundary() {
         return false;
     }
 

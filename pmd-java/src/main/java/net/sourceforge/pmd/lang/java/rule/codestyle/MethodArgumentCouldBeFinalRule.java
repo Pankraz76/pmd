@@ -18,8 +18,7 @@ public class MethodArgumentCouldBeFinalRule extends AbstractJavaRulechainRule {
         super(ASTExecutableDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration meth, Object data) {
+    @Override public Object visit(ASTMethodDeclaration meth, Object data) {
         if (meth.getBody() == null) {
             return data;
         }
@@ -27,8 +26,7 @@ public class MethodArgumentCouldBeFinalRule extends AbstractJavaRulechainRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTConstructorDeclaration constructor, Object data) {
+    @Override public Object visit(ASTConstructorDeclaration constructor, Object data) {
         lookForViolation(constructor, data);
         return data;
     }
@@ -37,8 +35,8 @@ public class MethodArgumentCouldBeFinalRule extends AbstractJavaRulechainRule {
         for (ASTFormalParameter param : node.getFormalParameters()) {
             ASTVariableId varId = param.getVarId();
             if (!param.isFinal()
-                && !JavaAstUtils.isNeverUsed(varId)
-                && JavaAstUtils.isEffectivelyFinal(varId)) {
+                    && !JavaAstUtils.isNeverUsed(varId)
+                    && JavaAstUtils.isEffectivelyFinal(varId)) {
                 asCtx(data).addViolation(varId, varId.getName());
             }
         }

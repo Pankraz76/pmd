@@ -17,13 +17,11 @@ public class ExcessiveClassLengthRule extends AbstractCounterCheckRule.AbstractL
         super(ASTUserClass.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 1000;
     }
 
-    @Override
-    protected boolean isIgnored(ASTUserClass node) {
+    @Override protected boolean isIgnored(ASTUserClass node) {
         return node.getModifiers().isTest();
     }
 }

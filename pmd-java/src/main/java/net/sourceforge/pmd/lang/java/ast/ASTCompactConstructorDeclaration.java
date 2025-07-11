@@ -39,8 +39,7 @@ public final class ASTCompactConstructorDeclaration extends AbstractJavaNode imp
     }
 
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         return identToken.getReportLocation();
     }
 
@@ -48,36 +47,30 @@ public final class ASTCompactConstructorDeclaration extends AbstractJavaNode imp
         this.identToken = identToken;
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return identToken.getImage();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public @NonNull ASTBlock getBody() {
+    @Override public @NonNull ASTBlock getBody() {
         return Objects.requireNonNull(firstChild(ASTBlock.class));
     }
 
     /**
      * @deprecated Since 7.14.0. This method just returns `this` and isn't useful.
      */
-    @Deprecated
-    public ASTCompactConstructorDeclaration getDeclarationNode() {
+    @Deprecated public ASTCompactConstructorDeclaration getDeclarationNode() {
         return this;
     }
 
-    @Override
-    public ASTRecordDeclaration getEnclosingType() {
+    @Override public ASTRecordDeclaration getEnclosingType() {
         return (ASTRecordDeclaration) super.getEnclosingType();
     }
 
-    @Override
-    public JConstructorSymbol getSymbol() {
+    @Override public JConstructorSymbol getSymbol() {
         return getEnclosingType().getRecordComponents().getSymbol();
     }
 }

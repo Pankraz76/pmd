@@ -37,7 +37,7 @@ public final class ModelicaSourceFileScope extends AbstractModelicaScope {
         String firstName = name.getHead();
         CompositeName furtherNames = name.getTail();
 
-        for (ModelicaDeclaration decl: getDirectlyDeclared(firstName)) {
+        for (ModelicaDeclaration decl : getDirectlyDeclared(firstName)) {
             ResolutionContext tmpContext = result.getState().createContext();
             ((ModelicaClassDeclaration) decl).lookupInInstanceScope(result, furtherNames);
             // According to "5.2 Enclosing classes" from MLS 3.4, the order of definitions inside the unnamed
@@ -57,8 +57,7 @@ public final class ModelicaSourceFileScope extends AbstractModelicaScope {
         }
     }
 
-    @Override
-    public void resolveLexically(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
+    @Override public void resolveLexically(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
         if (!isInDefaultPackage()) {
             // otherwise we would get it from the RootScope anyway
             lookupLocally(result, name);
@@ -66,8 +65,7 @@ public final class ModelicaSourceFileScope extends AbstractModelicaScope {
         ((AbstractModelicaScope) getParent()).resolveLexically(result, name);
     }
 
-    @Override
-    public String getRepresentation() {
+    @Override public String getRepresentation() {
         return "FILE";
     }
 

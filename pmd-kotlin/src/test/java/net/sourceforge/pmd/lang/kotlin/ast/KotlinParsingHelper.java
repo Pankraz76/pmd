@@ -21,9 +21,7 @@ public class KotlinParsingHelper extends BaseParsingHelper<KotlinParsingHelper, 
         super(KotlinLanguageModule.getInstance(), KotlinParser.KtKotlinFile.class, params);
     }
 
-    @NotNull
-    @Override
-    protected KotlinParsingHelper clone(@NotNull Params params) {
+    @NotNull @Override protected KotlinParsingHelper clone(@NotNull Params params) {
         return new KotlinParsingHelper(params);
     }
 }

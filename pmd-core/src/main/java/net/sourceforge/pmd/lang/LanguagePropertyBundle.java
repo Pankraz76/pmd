@@ -25,11 +25,11 @@ public class LanguagePropertyBundle extends AbstractPropertySource {
     //  as a suppression. I think it should disable suppression comments.
     //  #4846
     public static final PropertyDescriptor<String> SUPPRESS_MARKER
-        = PropertyFactory.stringProperty("suppressMarker")
-                         .desc("Marker to identify suppression comments. "
-                                   + "Eg a value of NOPMD will make `// NOPMD` a suppression comment in Java or JavaScript.")
-                         .defaultValue(PMDConfiguration.DEFAULT_SUPPRESS_MARKER)
-                         .build();
+            = PropertyFactory.stringProperty("suppressMarker")
+            .desc("Marker to identify suppression comments. "
+                    + "Eg a value of NOPMD will make `// NOPMD` a suppression comment in Java or JavaScript.")
+            .defaultValue(PMDConfiguration.DEFAULT_SUPPRESS_MARKER)
+            .build();
     public static final String LANGUAGE_VERSION = "version";
 
     private final PropertyDescriptor<LanguageVersion> languageVersion;
@@ -44,14 +44,14 @@ public class LanguagePropertyBundle extends AbstractPropertySource {
         definePropertyDescriptor(SUPPRESS_MARKER);
 
         languageVersion =
-            PropertyFactory.enumProperty(
-                               LANGUAGE_VERSION,
-                               CollectionUtil.associateBy(language.getVersions(), LanguageVersion::getVersion)
-                           )
-                           .desc("Language version to use for this language. See the --use-version CLI switch as well.")
+                PropertyFactory.enumProperty(
+                        LANGUAGE_VERSION,
+                        CollectionUtil.associateBy(language.getVersions(), LanguageVersion::getVersion)
+                )
+                .desc("Language version to use for this language. See the --use-version CLI switch as well.")
 
-                           .defaultValue(language.getDefaultVersion())
-                           .build();
+                        .defaultValue(language.getDefaultVersion())
+                        .build();
 
         definePropertyDescriptor(languageVersion);
     }
@@ -60,13 +60,11 @@ public class LanguagePropertyBundle extends AbstractPropertySource {
         setProperty(languageVersion, languageVersion.serializer().fromString(string));
     }
 
-    @Override
-    protected String getPropertySourceType() {
+    @Override protected String getPropertySourceType() {
         return "Language";
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return language.getName();
     }
 

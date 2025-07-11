@@ -86,8 +86,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         }
     }
 
-    @Override
-    public Void visit(ASTIfElseBlockStatement node, State state) {
+    @Override public Void visit(ASTIfElseBlockStatement node, State state) {
 
         boolean hasElseStatement = node.hasElseStatement();
         for (ApexNode<?> child : node.children()) {
@@ -110,8 +109,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         return null;
     }
 
-    @Override
-    public Void visit(ASTForLoopStatement node, State state) {
+    @Override public Void visit(ASTForLoopStatement node, State state) {
 
         state.structureComplexity();
         super.visit(node, state);
@@ -120,8 +118,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         return null;
     }
 
-    @Override
-    public Void visit(ASTForEachStatement node, State state) {
+    @Override public Void visit(ASTForEachStatement node, State state) {
         state.structureComplexity();
         super.visit(node, state);
         state.decreaseNestingLevel();
@@ -129,8 +126,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         return null;
     }
 
-    @Override
-    public Void visit(ASTWhileLoopStatement node, State state) {
+    @Override public Void visit(ASTWhileLoopStatement node, State state) {
         state.structureComplexity();
         super.visit(node, state);
         state.decreaseNestingLevel();
@@ -138,8 +134,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         return null;
     }
 
-    @Override
-    public Void visit(ASTCatchBlockStatement node, State state) {
+    @Override public Void visit(ASTCatchBlockStatement node, State state) {
         state.structureComplexity();
         super.visit(node, state);
         state.decreaseNestingLevel();
@@ -147,18 +142,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         return null;
     }
 
-    @Override
-    public Void visit(ASTDoLoopStatement node, State state) {
-
-        state.structureComplexity();
-        super.visit(node, state);
-        state.decreaseNestingLevel();
-
-        return null;
-    }
-
-    @Override
-    public Void visit(ASTTernaryExpression node, State state) {
+    @Override public Void visit(ASTDoLoopStatement node, State state) {
 
         state.structureComplexity();
         super.visit(node, state);
@@ -167,8 +151,16 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         return null;
     }
 
-    @Override
-    public Void visit(ASTBooleanExpression node, State state) {
+    @Override public Void visit(ASTTernaryExpression node, State state) {
+
+        state.structureComplexity();
+        super.visit(node, state);
+        state.decreaseNestingLevel();
+
+        return null;
+    }
+
+    @Override public Void visit(ASTBooleanExpression node, State state) {
 
         BooleanOperator op = node.getOp();
         if (op == BooleanOperator.LOGICAL_AND || op == BooleanOperator.LOGICAL_OR) {
@@ -178,8 +170,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         return super.visit(node, state);
     }
 
-    @Override
-    public Void visit(ASTPrefixExpression node, State state) {
+    @Override public Void visit(ASTPrefixExpression node, State state) {
 
         PrefixOperator op = node.getOp();
         if (op == PrefixOperator.LOGICAL_NOT) {
@@ -189,8 +180,7 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         return super.visit(node, state);
     }
 
-    @Override
-    public Void visit(ASTBlockStatement node, State state) {
+    @Override public Void visit(ASTBlockStatement node, State state) {
 
         for (ApexNode<?> child : node.children()) {
             // This needs to happen because the current 'run' of boolean operations is terminated
@@ -202,20 +192,17 @@ public class CognitiveComplexityVisitor extends ApexVisitorBase<State, Void> {
         return null;
     }
 
-    @Override
-    public Void visit(ASTMethod node, State state) {
+    @Override public Void visit(ASTMethod node, State state) {
         state.setMethodName(node.getCanonicalName());
         return super.visit(node, state);
     }
 
-    @Override
-    public Void visit(ASTMethodCallExpression node, State state) {
+    @Override public Void visit(ASTMethodCallExpression node, State state) {
         state.methodCall(node.getMethodName());
         return super.visit(node, state);
     }
 
-    @Override
-    public Void visit(ASTSwitchStatement node, State state) {
+    @Override public Void visit(ASTSwitchStatement node, State state) {
         state.structureComplexity();
         super.visit(node, state);
         state.decreaseNestingLevel();

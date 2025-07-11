@@ -28,13 +28,13 @@ public class TreeIndex {
 
 
     public TreeIndex(Set<String> namesToIndex,
-                     Set<Class<? extends Node>> classesToIndex) {
+            Set<Class<? extends Node>> classesToIndex) {
 
         byClass = new LatticeRelation<>(
-            TopoOrder.TYPE_HIERARCHY_ORDERING,
-            classesToIndex,
-            Class::getSimpleName,
-            Collectors.toSet()
+                TopoOrder.TYPE_HIERARCHY_ORDERING,
+                classesToIndex,
+                Class::getSimpleName,
+                Collectors.toSet()
         );
         this.interestingNames = namesToIndex;
         byName = new HashMap<>();

@@ -13,8 +13,7 @@ class Java24TreeDumpTest extends BaseJavaTreeDumpTest {
             JavaParsingHelper.DEFAULT.withDefaultVersion("24")
                     .withResourceContext(Java24TreeDumpTest.class, "jdkversiontests/java24/");
 
-    @Override
-    public BaseParsingHelper<?, ?> getParser() {
+    @Override public BaseParsingHelper<?, ?> getParser() {
         return java24;
     }
 

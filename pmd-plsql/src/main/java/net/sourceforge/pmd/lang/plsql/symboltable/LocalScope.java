@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.symboltable.NameOccurrence;
 
 public class LocalScope extends MethodOrLocalScope {
 
-    @Override
-    public Set<NameDeclaration> addNameOccurrence(NameOccurrence occ) {
+    @Override public Set<NameDeclaration> addNameOccurrence(NameOccurrence occ) {
         PLSQLNameOccurrence occurrence = (PLSQLNameOccurrence) occ;
         Set<NameDeclaration> declarations = findVariableHere(occurrence);
         if (!declarations.isEmpty() && !occurrence.isThisOrSuper()) {
@@ -32,8 +31,7 @@ public class LocalScope extends MethodOrLocalScope {
         return declarations;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "LocalScope:" + getVariableDeclarations().keySet();
     }
 }

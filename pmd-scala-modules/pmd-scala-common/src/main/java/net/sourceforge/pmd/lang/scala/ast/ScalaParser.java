@@ -20,8 +20,7 @@ import scala.meta.internal.parsers.ScalametaParser;
  */
 public final class ScalaParser implements Parser {
 
-    @Override
-    public ASTSource parse(ParserTask task) throws ParseException {
+    @Override public ASTSource parse(ParserTask task) throws ParseException {
         Input.VirtualFile virtualFile = new Input.VirtualFile(task.getFileId().getAbsolutePath(), task.getSourceText());
         Dialect dialect = ScalaDialect.dialectOf(task.getLanguageVersion());
         Source src = new ScalametaParser(virtualFile, dialect).parseSource();

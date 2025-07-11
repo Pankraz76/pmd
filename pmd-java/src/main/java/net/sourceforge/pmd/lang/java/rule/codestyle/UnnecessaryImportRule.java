@@ -106,7 +106,7 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
 
     /* // @link substring="a" target="package.class#member(param, param)" */
     private static final Pattern LINK_IN_SNIPPET = Pattern
-        .compile("//\\s*@link\\s+(?:.*?)?target=[\"']?" + TYPE_PART_GROUP + "[\"']?");
+            .compile("//\\s*@link\\s+(?:.*?)?target=[\"']?" + TYPE_PART_GROUP + "[\"']?");
 
     /*
      * Java 23, JEP 467: Markdown Documentation Comments
@@ -118,11 +118,10 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
      */
     private static final Pattern MARKDOWN_PATTERN = Pattern.compile("\\[" + TYPE_PART_GROUP + "]");
 
-    private static final Pattern[] PATTERNS = { SEE_PATTERN, LINK_PATTERNS, VALUE_PATTERN, THROWS_PATTERN,
-                                                EXCEPTION_PATTERN, LINK_IN_SNIPPET, MARKDOWN_PATTERN };
+    private static final Pattern[] PATTERNS = {SEE_PATTERN, LINK_PATTERNS, VALUE_PATTERN, THROWS_PATTERN,
+            EXCEPTION_PATTERN, LINK_IN_SNIPPET, MARKDOWN_PATTERN};
 
-    @Override
-    public Object visit(ASTCompilationUnit node, Object data) {
+    @Override public Object visit(ASTCompilationUnit node, Object data) {
         this.moduleImports.clear();
         this.allSingleNameImports.clear();
         this.staticImportsOnDemand.clear();
@@ -184,7 +183,7 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
 
     private boolean isJavaLangImportNecessary(ASTCompilationUnit node, ImportWrapper wrapper) {
         ShadowChainIterator<JTypeMirror, ScopeInfo> iter =
-            node.getSymbolTable().types().iterateResults(wrapper.node.getImportedSimpleName());
+                node.getSymbolTable().types().iterateResults(wrapper.node.getImportedSimpleName());
         if (iter.hasNext()) {
             iter.next();
             if (iter.getScopeTag() == ScopeInfo.SINGLE_IMPORT) {
@@ -266,22 +265,20 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
         asCtx(data).addViolationWithMessage(node, message, PrettyPrintingUtil.prettyImport(node));
     }
 
-    @Override
-    public Object visit(ASTClassType node, Object data) {
+    @Override public Object visit(ASTClassType node, Object data) {
         if (node.getQualifier() == null
-            && !node.isFullyQualified()
-            && node.getTypeMirror().isClassOrInterface()) {
+                && !node.isFullyQualified()
+                && node.getTypeMirror().isClassOrInterface()) {
 
             JClassSymbol symbol = ((JClassType) node.getTypeMirror()).getSymbol();
             ShadowChainIterator<JTypeMirror, ScopeInfo> scopeIter =
-                node.getSymbolTable().types().iterateResults(node.getSimpleName());
+                    node.getSymbolTable().types().iterateResults(node.getSimpleName());
             checkScopeChain(false, symbol, scopeIter, ts -> true, false);
         }
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTAmbiguousName node, Object data) {
+    @Override public Object visit(ASTAmbiguousName node, Object data) {
         // ambiguous name means the symbol table could not resolve the first name
 
         // only consider static imports
@@ -294,8 +291,8 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
         String target = onlyStatics ? "static " : "";
         LOG.debug("UnnecessaryImport: Failed type res for {} will cause all {}imports named {} to be marked as used", location, target, name);
         boolean foundNamedImport = allSingleNameImports.removeIf(
-            decl -> (!onlyStatics || decl.isStatic())
-                && name.equals(decl.node.getImportedSimpleName()));
+                decl -> (!onlyStatics || decl.isStatic())
+                        && name.equals(decl.node.getImportedSimpleName()));
         if (!foundNamedImport) {
             LOG.debug("+ Since no such named import can be found, all {}on-demand-imports will be marked as used", target);
 
@@ -307,8 +304,7 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
         }
     }
 
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         if (node.getQualifier() == null) {
             OverloadSelectionResult overload = node.getOverloadSelectionInfo();
             if (overload.isFailed()) {
@@ -318,28 +314,27 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
             }
 
             ShadowChainIterator<JMethodSig, ScopeInfo> scopeIter =
-                node.getSymbolTable().methods().iterateResults(node.getMethodName());
+                    node.getSymbolTable().methods().iterateResults(node.getMethodName());
 
 
             JExecutableSymbol symbol = overload.getMethodType().getSymbol();
             checkScopeChain(true,
-                            symbol,
-                            scopeIter,
-                            methods -> CollectionUtil.any(methods, m -> m.getSymbol().equals(symbol)),
-                            true);
+                    symbol,
+                    scopeIter,
+                    methods -> CollectionUtil.any(methods, m -> m.getSymbol().equals(symbol)),
+                    true);
         }
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTVariableAccess node, Object data) {
+    @Override public Object visit(ASTVariableAccess node, Object data) {
         JVariableSymbol sym = node.getReferencedSym();
         if (sym != null
-            && sym.isField()
-            && ((JFieldSymbol) sym).isStatic()) {
+                && sym.isField()
+                && ((JFieldSymbol) sym).isStatic()) {
 
             if (node.getParent() instanceof ASTSwitchLabel
-                && node.ancestors(ASTSwitchLike.class).take(1).any(ASTSwitchLike::isEnumSwitch)) {
+                    && node.ancestors(ASTSwitchLike.class).take(1).any(ASTSwitchLike::isEnumSwitch)) {
                 // special scoping rules, see JSymbolTable#variables doc
                 return null;
             }
@@ -354,10 +349,10 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
     }
 
     private <T> void checkScopeChain(boolean recursive,
-                                     JAccessibleElementSymbol symbol,
-                                     ShadowChainIterator<T, ScopeInfo> scopeIter,
-                                     Predicate<List<T>> containsTarget,
-                                     boolean onlyStatic) {
+            JAccessibleElementSymbol symbol,
+            ShadowChainIterator<T, ScopeInfo> scopeIter,
+            Predicate<List<T>> containsTarget,
+            boolean onlyStatic) {
         while (scopeIter.hasNext()) {
             scopeIter.next();
             // must be the first result
@@ -369,8 +364,8 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
                 if (scopeIter.getScopeTag() == ScopeInfo.SINGLE_IMPORT) {
 
                     allSingleNameImports.removeIf(
-                        it -> (it.isStatic() || !onlyStatic)
-                            && symbol.getSimpleName().equals(it.node.getImportedSimpleName())
+                            it -> (it.isStatic() || !onlyStatic)
+                                    && symbol.getSimpleName().equals(it.node.getImportedSimpleName())
                     );
 
                 } else if (scopeIter.getScopeTag() == ScopeInfo.IMPORT_ON_DEMAND) {
@@ -434,7 +429,7 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
             TypeSystem ts = symbolOwner.getTypeSystem();
             JClassSymbol importedContainer = ts.getClassSymbol(it.node.getImportedName());
             return importedContainer == null // insufficient classpath, err towards FNs
-                || TypeTestUtil.isA(ts.rawType(symbolOwner), ts.rawType(importedContainer));
+                    || TypeTestUtil.isA(ts.rawType(symbolOwner), ts.rawType(importedContainer));
         }
     }
 
@@ -475,8 +470,7 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
             this.node = node;
         }
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             if (this == o) {
                 return true;
             }
@@ -485,15 +479,14 @@ public class UnnecessaryImportRule extends AbstractJavaRule {
             }
             ImportWrapper that = (ImportWrapper) o;
             return node.getImportedName().equals(that.node.getImportedName())
-                && node.isImportOnDemand() == that.node.isImportOnDemand()
-                && this.isStatic() == that.isStatic();
+                    && node.isImportOnDemand() == that.node.isImportOnDemand()
+                    && this.isStatic() == that.isStatic();
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return node.getImportedName().hashCode() * 31
-                + Boolean.hashCode(node.isStatic())
-                + 37 * Boolean.hashCode(node.isImportOnDemand());
+                    + Boolean.hashCode(node.isStatic())
+                    + 37 * Boolean.hashCode(node.isImportOnDemand());
         }
 
         private boolean isStatic() {

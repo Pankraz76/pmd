@@ -203,7 +203,6 @@ public interface NodeStream<@NonNull T extends Node> extends Iterable<@NonNull T
     NodeStream<T> peek(Consumer<? super @NonNull T> action);
 
 
-
     /**
      * Returns a new node stream that contains all the elements of this stream, then
      * all the elements of the given stream.
@@ -573,8 +572,7 @@ public interface NodeStream<@NonNull T extends Node> extends Iterable<@NonNull T
      * @see #filter(Predicate)
      * @see #asInstanceOf(Class, Class[])
      */
-    @SuppressWarnings("unchecked")
-    default <R extends Node> NodeStream<R> filterIs(Class<? extends R> rClass) {
+    @SuppressWarnings("unchecked") default <R extends Node> NodeStream<R> filterIs(Class<? extends R> rClass) {
         return (NodeStream<R>) filter(rClass::isInstance);
     }
 
@@ -599,8 +597,7 @@ public interface NodeStream<@NonNull T extends Node> extends Iterable<@NonNull T
     // "terminal" operations
 
 
-    @Override
-    void forEach(Consumer<? super @NonNull T> action);
+    @Override void forEach(Consumer<? super @NonNull T> action);
 
 
     /**
@@ -776,8 +773,7 @@ public interface NodeStream<@NonNull T extends Node> extends Iterable<@NonNull T
      * @see #first(Class)
      * @see #firstOpt()
      */
-    @NonNull
-    default T firstOrThrow() {
+    @NonNull default T firstOrThrow() {
         T first = first();
         if (first == null) {
             throw new NoSuchElementException("Empty node stream");
@@ -1016,8 +1012,7 @@ public interface NodeStream<@NonNull T extends Node> extends Iterable<@NonNull T
      *
      * @return A new node stream
      */
-    @SafeVarargs
-    static <T extends Node> NodeStream<T> of(T... nodes) {
+    @SafeVarargs static <T extends Node> NodeStream<T> of(T... nodes) {
         return fromIterable(Arrays.asList(nodes));
     }
 
@@ -1031,8 +1026,7 @@ public interface NodeStream<@NonNull T extends Node> extends Iterable<@NonNull T
      *
      * @return the concatenation of the input streams
      */
-    @SafeVarargs
-    static <T extends Node> NodeStream<T> union(NodeStream<? extends T>... streams) {
+    @SafeVarargs static <T extends Node> NodeStream<T> union(NodeStream<? extends T>... streams) {
         return union(Arrays.asList(streams));
     }
 
@@ -1078,9 +1072,9 @@ public interface NodeStream<@NonNull T extends Node> extends Iterable<@NonNull T
      */
     @SafeVarargs // this method is static because of the generic varargs
     static <T extends Node, R extends Node> NodeStream<R> forkJoin(NodeStream<? extends T> upstream,
-                                                                   Function<? super @NonNull T, ? extends NodeStream<? extends R>> fst,
-                                                                   Function<? super @NonNull T, ? extends NodeStream<? extends R>> snd,
-                                                                   Function<? super @NonNull T, ? extends NodeStream<? extends R>>... rest) {
+            Function<? super @NonNull T, ? extends NodeStream<? extends R>> fst,
+            Function<? super @NonNull T, ? extends NodeStream<? extends R>> snd,
+            Function<? super @NonNull T, ? extends NodeStream<? extends R>>... rest) {
         Objects.requireNonNull(fst);
         Objects.requireNonNull(snd);
 
@@ -1090,7 +1084,7 @@ public interface NodeStream<@NonNull T extends Node> extends Iterable<@NonNull T
         mappers.addAll(Arrays.asList(rest));
 
         Function<? super T, NodeStream<R>> aggregate =
-            t -> NodeStream.<R>union(mappers.stream().map(f -> f.apply(t)).collect(Collectors.toList()));
+                t -> NodeStream.<R>union(mappers.stream().map(f -> f.apply(t)).collect(Collectors.toList()));
 
         // with forkJoin we know that the stream will be iterated more than twice so we cache the values
         return upstream.cached().flatMap(aggregate);
@@ -1134,8 +1128,7 @@ public interface NodeStream<@NonNull T extends Node> extends Iterable<@NonNull T
      * @see #firstNonNull(Function)
      */
     @SafeVarargs // this method is static because of the generic varargs
-    @SuppressWarnings("unchecked")
-    static <O> Function<@Nullable Object, @Nullable O> asInstanceOf(Class<? extends O> c1, Class<? extends O>... rest) {
+    @SuppressWarnings("unchecked") static <O> Function<@Nullable Object, @Nullable O> asInstanceOf(Class<? extends O> c1, Class<? extends O>... rest) {
         if (rest.length == 0) {
             return obj -> c1.isInstance(obj) ? (O) obj : null;
         }

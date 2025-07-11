@@ -13,7 +13,6 @@ package net.sourceforge.pmd.lang.ast;
 public interface RootNode extends Node {
 
 
-    @Override
-    AstInfo<? extends RootNode> getAstInfo();
+    @Override AstInfo<? extends RootNode> getAstInfo();
 
 }

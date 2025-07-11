@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.rule.Rule;
 class HasAnnotationXPathTest extends BaseXPathFunctionTest {
 
 
-    @Test
-    void testHasAnnotation() {
+    @Test void testHasAnnotation() {
         Rule rule = makeXpathRuleFromXPath("//MethodDeclaration[pmd-java:hasAnnotation('java.lang.Override')]");
         String code = "interface O { @Override void foo(); }";
 
@@ -24,8 +23,7 @@ class HasAnnotationXPathTest extends BaseXPathFunctionTest {
     }
 
 
-    @Test
-    void testHasAnnotationNonQual() {
+    @Test void testHasAnnotationNonQual() {
         Rule rule = makeXpathRuleFromXPath("//MethodDeclaration[pmd-java:hasAnnotation('Override')]");
         String code = "interface O { @Override void foo(); }";
 
@@ -33,8 +31,7 @@ class HasAnnotationXPathTest extends BaseXPathFunctionTest {
         assertFinds(rule, 0, code);
     }
 
-    @Test
-    void testWrongTypeReturnsFalse() {
+    @Test void testWrongTypeReturnsFalse() {
         Rule rule = makeXpathRuleFromXPath("//ClassBody[pmd-java:hasAnnotation('java.lang.Override')]");
         String code = "interface O { @Override void foo(); }";
 

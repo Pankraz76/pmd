@@ -46,7 +46,7 @@ public class NameFinder {
         }
         if (node.getNumChildren() > 0 && node.getChild(0) instanceof ASTName) {
             ASTName grandchild = (ASTName) node.getChild(0);
-            for (StringTokenizer st = new StringTokenizer(grandchild.getImage(), "."); st.hasMoreTokens();) {
+            for (StringTokenizer st = new StringTokenizer(grandchild.getImage(), "."); st.hasMoreTokens(); ) {
                 add(new PLSQLNameOccurrence(grandchild, st.nextToken()));
             }
         }
@@ -74,8 +74,7 @@ public class NameFinder {
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder result = new StringBuilder();
         for (PLSQLNameOccurrence occ : names) {
             result.append(occ.getImage());

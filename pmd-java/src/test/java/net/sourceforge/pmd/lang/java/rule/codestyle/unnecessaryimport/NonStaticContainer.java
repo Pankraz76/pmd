@@ -16,7 +16,9 @@ public class NonStaticContainer {
     public static void foo() {
     }
 
-    public class NonStatic { }
+    public class NonStatic {
+    }
 
-    public static class Static { }
+    public static class Static {
+    }
 }

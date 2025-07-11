@@ -22,8 +22,7 @@ public interface FunctionalExpression extends ASTExpression {
      *
      * @see #getFunctionalMethod()
      */
-    @Override
-    @NonNull JTypeMirror getTypeMirror();
+    @Override @NonNull JTypeMirror getTypeMirror();
 
     /**
      * Returns the method that is overridden in the functional interface.

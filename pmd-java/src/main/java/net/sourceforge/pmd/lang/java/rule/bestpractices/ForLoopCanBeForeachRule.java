@@ -54,8 +54,7 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
         super(ASTForStatement.class);
     }
 
-    @Override
-    public Object visit(ASTForStatement forLoop, Object data) {
+    @Override public Object visit(ASTForStatement forLoop, Object data) {
 
         final @Nullable ASTStatement init = forLoop.getInit();
         final @Nullable ASTStatementExpressionList update = forLoop.getUpdate();
@@ -76,7 +75,7 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
             ASTNamedReferenceExpr iterable = findIterableFromCondition(guardCondition, index);
             if (iterable != null) {
                 if (isReplaceableArrayLoop(forLoop, index, iterable)
-                    || isReplaceableListLoop(forLoop, index, iterable)) {
+                        || isReplaceableListLoop(forLoop, index, iterable)) {
                     asCtx(data).addViolation(forLoop);
                 }
             }
@@ -102,7 +101,7 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
             if (varIds.count() == 1) {
                 ASTVariableId first = varIds.firstOrThrow();
                 if (ITERATOR_CALL.matchesCall(first.getInitializer())
-                    || JavaAstUtils.isLiteralInt(first.getInitializer(), 0)) {
+                        || JavaAstUtils.isLiteralInt(first.getInitializer(), 0)) {
                     return first;
                 }
             }
@@ -117,34 +116,34 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
      */
     private @Nullable ASTVariableId guessIndexVarFromUpdate(ASTStatementExpressionList update) {
         return NodeStream.of(update)
-                         .filter(it -> it.getNumChildren() == 1)
-                         .map(it -> it.getFirstChild())
-                         .map(it -> {
-                             if (it instanceof ASTUnaryExpression) {
-                                 return asIPlusPlus(it);
-                             } else if (JavaAstUtils.isAssignmentExprWithOperator(it, AssignmentOp.ADD_ASSIGN)
-                                 && JavaAstUtils.isLiteralInt(((ASTAssignmentExpression) it).getRightOperand(), 1)) {
-                                 // x += 1
-                                 ASTAssignableExpr lhs = ((ASTAssignmentExpression) it).getLeftOperand();
-                                 JVariableSymbol sym = lhs instanceof ASTNamedReferenceExpr
-                                     ? ((ASTNamedReferenceExpr) lhs).getReferencedSym() : null;
-                                 return sym == null ? null : sym.tryGetNode();
-                             }
-                             return null;
-                         })
-                         .first();
+                .filter(it -> it.getNumChildren() == 1)
+                .map(it -> it.getFirstChild())
+                .map(it -> {
+                    if (it instanceof ASTUnaryExpression) {
+                        return asIPlusPlus(it);
+                    } else if (JavaAstUtils.isAssignmentExprWithOperator(it, AssignmentOp.ADD_ASSIGN)
+                            && JavaAstUtils.isLiteralInt(((ASTAssignmentExpression) it).getRightOperand(), 1)) {
+                        // x += 1
+                        ASTAssignableExpr lhs = ((ASTAssignmentExpression) it).getLeftOperand();
+                        JVariableSymbol sym = lhs instanceof ASTNamedReferenceExpr
+                                ? ((ASTNamedReferenceExpr) lhs).getReferencedSym() : null;
+                        return sym == null ? null : sym.tryGetNode();
+                    }
+                    return null;
+                })
+                .first();
     }
 
     private @Nullable ASTVariableId asIPlusPlus(ASTExpression update) {
         return NodeStream.of(update)
-                         .filterIs(ASTUnaryExpression.class)
-                         .filter(it -> it.getOperator().isIncrement())
-                         .map(ASTUnaryExpression::getOperand)
-                         .filterIs(ASTVariableAccess.class)
-                         .firstOpt()
-                         .map(ASTNamedReferenceExpr::getReferencedSym)
-                         .map(JVariableSymbol::tryGetNode)
-                         .orElse(null);
+                .filterIs(ASTUnaryExpression.class)
+                .filter(it -> it.getOperator().isIncrement())
+                .map(ASTUnaryExpression::getOperand)
+                .filterIs(ASTVariableAccess.class)
+                .firstOpt()
+                .map(ASTNamedReferenceExpr::getReferencedSym)
+                .map(JVariableSymbol::tryGetNode)
+                .orElse(null);
     }
 
 
@@ -173,10 +172,10 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
         } else if (op == BinaryOp.LE) {
             // i <= rhs - 1
             rhs = NodeStream.of(condition.getRightOperand())
-                            .filterIs(ASTInfixExpression.class)
-                            .filter(it -> it.getOperator() == BinaryOp.SUB)
-                            .filter(it -> JavaAstUtils.isLiteralInt(it.getRightOperand(), 1))
-                            .map(ASTInfixExpression::getLeftOperand);
+                    .filterIs(ASTInfixExpression.class)
+                    .filter(it -> it.getOperator() == BinaryOp.SUB)
+                    .filter(it -> JavaAstUtils.isLiteralInt(it.getRightOperand(), 1))
+                    .map(ASTInfixExpression::getLeftOperand);
 
         }
 
@@ -193,7 +192,7 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
         }
 
         if (!(iterableExpr instanceof ASTNamedReferenceExpr)
-            || ((ASTNamedReferenceExpr) iterableExpr).getReferencedSym() == null) {
+                || ((ASTNamedReferenceExpr) iterableExpr).getReferencedSym() == null) {
             return null;
         }
 
@@ -207,23 +206,23 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
     }
 
     private boolean isReplaceableArrayLoop(ASTForStatement loop,
-                                           ASTVariableId index,
-                                           ASTNamedReferenceExpr arrayDeclaration) {
+            ASTVariableId index,
+            ASTNamedReferenceExpr arrayDeclaration) {
 
         return arrayDeclaration.getTypeMirror().isArray()
-            && isSimpleIncrementUpdate(loop.getUpdate(), index)
-            && occurrencesMatch(loop, index, arrayDeclaration, (i, iterable, expr) -> isArrayAccessIndex(expr, iterable));
+                && isSimpleIncrementUpdate(loop.getUpdate(), index)
+                && occurrencesMatch(loop, index, arrayDeclaration, (i, iterable, expr) -> isArrayAccessIndex(expr, iterable));
 
     }
 
 
     private boolean isReplaceableListLoop(ASTForStatement loop,
-                                          ASTVariableId index,
-                                          ASTNamedReferenceExpr listDeclaration) {
+            ASTVariableId index,
+            ASTNamedReferenceExpr listDeclaration) {
 
         return TypeTestUtil.isA(List.class, listDeclaration.getTypeMirror())
-            && isSimpleIncrementUpdate(loop.getUpdate(), index)
-            && occurrencesMatch(loop, index, listDeclaration, (i, iterable, expr) -> isListGetIndex(expr, iterable));
+                && isSimpleIncrementUpdate(loop.getUpdate(), index)
+                && occurrencesMatch(loop, index, listDeclaration, (i, iterable, expr) -> isListGetIndex(expr, iterable));
     }
 
     private boolean isArrayAccessIndex(ASTNamedReferenceExpr usage, ASTNamedReferenceExpr arrayVar) {
@@ -232,14 +231,14 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
         }
         ASTArrayAccess arrayAccess = (ASTArrayAccess) usage.getParent();
         return arrayAccess.getAccessType() == AccessType.READ
-            && JavaAstUtils.isReferenceToSameVar(arrayAccess.getQualifier(), arrayVar);
+                && JavaAstUtils.isReferenceToSameVar(arrayAccess.getQualifier(), arrayVar);
     }
 
 
     private boolean isListGetIndex(ASTNamedReferenceExpr usage, ASTNamedReferenceExpr listVar) {
         return usage.getParent() instanceof ASTArgumentList
-            && LIST_GET.matchesCall(usage.getParent().getParent())
-            && JavaAstUtils.isReferenceToSameVar(((ASTMethodCall) usage.getParent().getParent()).getQualifier(), listVar);
+                && LIST_GET.matchesCall(usage.getParent().getParent())
+                && JavaAstUtils.isReferenceToSameVar(((ASTMethodCall) usage.getParent().getParent()).getQualifier(), listVar);
     }
 
 
@@ -249,15 +248,15 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
     }
 
     private boolean occurrencesMatch(ASTForStatement loop,
-                                     ASTVariableId index,
-                                     ASTNamedReferenceExpr collection,
-                                     OccurrenceMatcher getMatcher) {
+            ASTVariableId index,
+            ASTNamedReferenceExpr collection,
+            OccurrenceMatcher getMatcher) {
 
         for (ASTNamedReferenceExpr usage : index.getLocalUsages()) {
             ASTExpression toplevel = JavaAstUtils.getTopLevelExpr(usage);
             boolean isInUpdateOrCond =
-                loop.getUpdate() == toplevel.getParent()
-                    || loop.getCondition() == toplevel;
+                    loop.getUpdate() == toplevel.getParent()
+                            || loop.getCondition() == toplevel;
 
             if (!isInUpdateOrCond && !getMatcher.matches(index, collection, usage)) {
                 return false;
@@ -274,7 +273,7 @@ public class ForLoopCanBeForeachRule extends AbstractJavaRulechainRule {
         ASTNamedReferenceExpr u1 = usages.get(0);
         ASTNamedReferenceExpr u2 = usages.get(1);
         return isHasNextInCondition(u1, stmt) && isNextInLoop(u2, stmt)
-            || isNextInLoop(u1, stmt) && isHasNextInCondition(u2, stmt);
+                || isNextInLoop(u1, stmt) && isHasNextInCondition(u2, stmt);
     }
 
     private static boolean isNextInLoop(ASTNamedReferenceExpr u1, ASTForStatement stmt) {

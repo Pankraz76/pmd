@@ -63,8 +63,7 @@ public interface ListenerInitializer extends AutoCloseable {
      *
      * @throws Exception If an exception occurs, eg IOException when writing to a renderer
      */
-    @Override
-    default void close() throws Exception {
+    @Override default void close() throws Exception {
         // by default do nothing
     }
 
@@ -87,8 +86,7 @@ public interface ListenerInitializer extends AutoCloseable {
      * @throws IllegalArgumentException If the parameter is empty
      * @throws NullPointerException     If the parameter or any of its elements is null
      */
-    @SuppressWarnings("PMD.CloseResource")
-    static ListenerInitializer tee(Collection<? extends ListenerInitializer> listeners) {
+    @SuppressWarnings("PMD.CloseResource") static ListenerInitializer tee(Collection<? extends ListenerInitializer> listeners) {
         AssertionUtil.requireParamNotNull("Listeners", listeners);
         AssertionUtil.requireNotEmpty("Listeners", listeners);
         AssertionUtil.requireContainsNoNullValue("Listeners", listeners);
@@ -104,37 +102,32 @@ public interface ListenerInitializer extends AutoCloseable {
 
         class TeeListener implements ListenerInitializer {
 
-            @Override
-            public void setNumberOfFilesToAnalyze(int totalFiles) {
+            @Override public void setNumberOfFilesToAnalyze(int totalFiles) {
                 for (ListenerInitializer initializer : list) {
                     initializer.setNumberOfFilesToAnalyze(totalFiles);
                 }
             }
 
-            @Override
-            public void setFilesToAnalyze(List<FileId> files) {
+            @Override public void setFilesToAnalyze(List<FileId> files) {
                 for (ListenerInitializer initializer : list) {
                     initializer.setFilesToAnalyze(files);
                 }
             }
 
-            @Override
-            public void setFileNameRenderer(FileNameRenderer fileNameRenderer) {
+            @Override public void setFileNameRenderer(FileNameRenderer fileNameRenderer) {
                 for (ListenerInitializer initializer : list) {
                     initializer.setFileNameRenderer(fileNameRenderer);
                 }
             }
 
-            @Override
-            public void close() throws Exception {
+            @Override public void close() throws Exception {
                 Exception composed = IOUtil.closeAll(list);
                 if (composed != null) {
                     throw composed;
                 }
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "Tee" + list;
             }
         }

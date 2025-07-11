@@ -26,8 +26,8 @@ import net.sourceforge.pmd.util.CollectionUtil;
  * @author Clément Fournier
  */
 abstract class AbstractAstExecSymbol<T extends ASTExecutableDeclaration>
-    extends AbstractAstTParamOwner<T>
-    implements JExecutableSymbol {
+        extends AbstractAstTParamOwner<T>
+        implements JExecutableSymbol {
 
     private final JClassSymbol owner;
     private final List<JFormalParamSymbol> formals;
@@ -39,32 +39,28 @@ abstract class AbstractAstExecSymbol<T extends ASTExecutableDeclaration>
         this.owner = owner;
 
         this.formals = CollectionUtil.map(
-            node.getFormalParameters(),
-            p -> new AstFormalParamSym(p.getVarId(), factory, this)
+                node.getFormalParameters(),
+                p -> new AstFormalParamSym(p.getVarId(), factory, this)
         );
     }
 
-    @Override
-    public List<JFormalParamSymbol> getFormalParameters() {
+    @Override public List<JFormalParamSymbol> getFormalParameters() {
         return formals;
     }
 
 
-    @Override
-    public List<JTypeMirror> getFormalParameterTypes(Substitution subst) {
+    @Override public List<JTypeMirror> getFormalParameterTypes(Substitution subst) {
         return CollectionUtil.map(getFormalParameters(), i -> i.getTypeMirror(subst));
     }
 
-    @Override
-    public List<JTypeMirror> getThrownExceptionTypes(Substitution subst) {
+    @Override public List<JTypeMirror> getThrownExceptionTypes(Substitution subst) {
         return CollectionUtil.map(
-            ASTList.orEmpty(node.getThrowsList()),
-            t -> t.getTypeMirror().subst(subst)
+                ASTList.orEmpty(node.getThrowsList()),
+                t -> t.getTypeMirror().subst(subst)
         );
     }
 
-    @Override
-    public @Nullable JTypeMirror getAnnotatedReceiverType(Substitution subst) {
+    @Override public @Nullable JTypeMirror getAnnotatedReceiverType(Substitution subst) {
         if (!this.hasReceiver()) {
             return null;
         }
@@ -75,15 +71,14 @@ abstract class AbstractAstExecSymbol<T extends ASTExecutableDeclaration>
         return receiver.getReceiverType().getTypeMirror().subst(subst);
     }
 
-    @Override
-    public final JTypeMirror getReturnType(Substitution subst) {
+    @Override public final JTypeMirror getReturnType(Substitution subst) {
         JTypeMirror mirror = makeReturnType(subst);
         if (returnTypeAnnots == null) {
             returnTypeAnnots =
-                SymbolResolutionPass.buildSymbolicAnnotations(node.getDeclaredAnnotations())
-                                    .stream()
-                                    .filter(it -> it.getAnnotationSymbol().annotationAppliesTo(ElementType.TYPE_USE))
-                                    .collect(CollectionUtil.toPersistentSet());
+                    SymbolResolutionPass.buildSymbolicAnnotations(node.getDeclaredAnnotations())
+                            .stream()
+                            .filter(it -> it.getAnnotationSymbol().annotationAppliesTo(ElementType.TYPE_USE))
+                            .collect(CollectionUtil.toPersistentSet());
         }
         if (returnTypeAnnots.isEmpty()) {
             return mirror;
@@ -93,19 +88,16 @@ abstract class AbstractAstExecSymbol<T extends ASTExecutableDeclaration>
 
     protected abstract JTypeMirror makeReturnType(Substitution subst);
 
-    @Override
-    public @NonNull JClassSymbol getEnclosingClass() {
+    @Override public @NonNull JClassSymbol getEnclosingClass() {
         return owner;
     }
 
 
-    @Override
-    public boolean isVarargs() {
+    @Override public boolean isVarargs() {
         return node.isVarargs();
     }
 
-    @Override
-    public int getArity() {
+    @Override public int getArity() {
         return formals.size();
     }
 

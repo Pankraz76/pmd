@@ -23,15 +23,13 @@ interface VarWalkStrategy extends Iterator<Set<InferenceVar>> {
      * Picks the next batch of inference vars to resolve.
      * Interdependent variables must be solved together.
      */
-    @Override
-    Set<InferenceVar> next();
+    @Override Set<InferenceVar> next();
 
 
     /**
      * Returns true if there is no more batch to process.
      */
-    @Override
-    boolean hasNext();
+    @Override boolean hasNext();
 
 
     /**
@@ -50,13 +48,11 @@ interface VarWalkStrategy extends Iterator<Set<InferenceVar>> {
             this.iterator = IteratorUtil.singletonIterator(Collections.singleton(var));
         }
 
-        @Override
-        public boolean hasNext() {
+        @Override public boolean hasNext() {
             return iterator.hasNext();
         }
 
-        @Override
-        public Set<InferenceVar> next() {
+        @Override public Set<InferenceVar> next() {
             return iterator.next();
         }
 

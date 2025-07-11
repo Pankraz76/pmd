@@ -28,13 +28,11 @@ public class LuaCpdLexer extends AntlrCpdLexer {
         ignoreLiteralSequences = bundle.getProperty(CpdLanguageProperties.CPD_IGNORE_LITERAL_SEQUENCES);
     }
 
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new LuaLexer(charStream);
     }
 
-    @Override
-    protected TokenManager<AntlrToken> filterTokenStream(TokenManager<AntlrToken> tokenManager) {
+    @Override protected TokenManager<AntlrToken> filterTokenStream(TokenManager<AntlrToken> tokenManager) {
         return new LuaTokenFilter(tokenManager, ignoreLiteralSequences);
     }
 
@@ -60,13 +58,11 @@ public class LuaCpdLexer extends AntlrCpdLexer {
             this.ignoreLiteralSequences = ignoreLiteralSequences;
         }
 
-        @Override
-        protected void analyzeToken(final AntlrToken currentToken) {
+        @Override protected void analyzeToken(final AntlrToken currentToken) {
             skipNewLines(currentToken);
         }
 
-        @Override
-        protected void analyzeTokens(final AntlrToken currentToken, final Iterable<AntlrToken> remainingTokens) {
+        @Override protected void analyzeTokens(final AntlrToken currentToken, final Iterable<AntlrToken> remainingTokens) {
             discardCurrent = false;
             skipRequires(currentToken);
             skipLiteralSequences(currentToken, remainingTokens);
@@ -95,8 +91,8 @@ public class LuaCpdLexer extends AntlrCpdLexer {
                         discardCurrent = true;
                     }
                 } else if (type == LuaLexer.OPEN_BRACE
-                    || type == LuaLexer.OPEN_BRACKET
-                    || type == LuaLexer.OPEN_PARENS) {
+                        || type == LuaLexer.OPEN_BRACKET
+                        || type == LuaLexer.OPEN_PARENS) {
                     discardingLiteralsUntil = findEndOfSequenceOfLiterals(remainingTokens);
                 }
             }
@@ -109,64 +105,64 @@ public class LuaCpdLexer extends AntlrCpdLexer {
             int parenCount = 0;
             for (final AntlrToken token : remainingTokens) {
                 switch (token.getKind()) {
-                case LuaLexer.INT:
-                case LuaLexer.NORMAL_STRING:
-                case LuaLexer.INTERPOLATED_STRING:
-                case LuaLexer.LONG_STRING:
-                case LuaLexer.HEX_FLOAT:
-                case LuaLexer.HEX:
-                case LuaLexer.FLOAT:
-                case LuaLexer.NIL:
-                case LuaLexer.BOOLEAN:
-                    seenLiteral = true;
-                    break; // can be skipped; continue to the next token
-                case LuaLexer.COMMA:
-                    break; // can be skipped; continue to the next token
-                case LuaLexer.NL:
-                    // this helps skip large multi-line data table sequences in Lua
-                    break; // can be skipped; continue to the next token
-                case LuaLexer.ASSIGNMENT:
-                    // this helps skip large data table sequences in Lua: { ["bob"] = "uncle", ["alice"] = "enby" }
-                    break; // can be skipped; continue to the next token
-                case LuaLexer.OPEN_BRACE:
-                    braceCount++;
-                    break; // curly braces are allowed, as long as they're balanced
-                case LuaLexer.CLOSE_BRACE:
-                    braceCount--;
-                    if (braceCount < 0) {
-                        // end of the list in the braces; skip all contents
-                        return seenLiteral ? token : null;
-                    } else {
-                        // curly braces are not yet balanced; continue to the next token
-                        break;
-                    }
-                case LuaLexer.OPEN_BRACKET:
-                    bracketCount++;
-                    break; // brackets are allowed, as long as they're balanced
-                case LuaLexer.CLOSE_BRACKET:
-                    bracketCount--;
-                    if (bracketCount < 0) {
-                        // end of the list in the brackets; skip all contents
-                        return seenLiteral ? token : null;
-                    } else {
-                        // brackets are not yet balanced; continue to the next token
-                        break;
-                    }
-                case LuaLexer.OPEN_PARENS:
-                    parenCount++;
-                    break; // parens are allowed, as long as they're balanced
-                case LuaLexer.CLOSE_PARENS:
-                    parenCount--;
-                    if (parenCount < 0) {
-                        // end of the list in the parens; skip all contents
-                        return seenLiteral ? token : null;
-                    } else {
-                        // parens are not yet balanced; continue to the next token
-                        break;
-                    }
-                default:
-                    // some other token than the expected ones; this is not a sequence of literals
-                    return null;
+                    case LuaLexer.INT:
+                    case LuaLexer.NORMAL_STRING:
+                    case LuaLexer.INTERPOLATED_STRING:
+                    case LuaLexer.LONG_STRING:
+                    case LuaLexer.HEX_FLOAT:
+                    case LuaLexer.HEX:
+                    case LuaLexer.FLOAT:
+                    case LuaLexer.NIL:
+                    case LuaLexer.BOOLEAN:
+                        seenLiteral = true;
+                        break; // can be skipped; continue to the next token
+                    case LuaLexer.COMMA:
+                        break; // can be skipped; continue to the next token
+                    case LuaLexer.NL:
+                        // this helps skip large multi-line data table sequences in Lua
+                        break; // can be skipped; continue to the next token
+                    case LuaLexer.ASSIGNMENT:
+                        // this helps skip large data table sequences in Lua: { ["bob"] = "uncle", ["alice"] = "enby" }
+                        break; // can be skipped; continue to the next token
+                    case LuaLexer.OPEN_BRACE:
+                        braceCount++;
+                        break; // curly braces are allowed, as long as they're balanced
+                    case LuaLexer.CLOSE_BRACE:
+                        braceCount--;
+                        if (braceCount < 0) {
+                            // end of the list in the braces; skip all contents
+                            return seenLiteral ? token : null;
+                        } else {
+                            // curly braces are not yet balanced; continue to the next token
+                            break;
+                        }
+                    case LuaLexer.OPEN_BRACKET:
+                        bracketCount++;
+                        break; // brackets are allowed, as long as they're balanced
+                    case LuaLexer.CLOSE_BRACKET:
+                        bracketCount--;
+                        if (bracketCount < 0) {
+                            // end of the list in the brackets; skip all contents
+                            return seenLiteral ? token : null;
+                        } else {
+                            // brackets are not yet balanced; continue to the next token
+                            break;
+                        }
+                    case LuaLexer.OPEN_PARENS:
+                        parenCount++;
+                        break; // parens are allowed, as long as they're balanced
+                    case LuaLexer.CLOSE_PARENS:
+                        parenCount--;
+                        if (parenCount < 0) {
+                            // end of the list in the parens; skip all contents
+                            return seenLiteral ? token : null;
+                        } else {
+                            // parens are not yet balanced; continue to the next token
+                            break;
+                        }
+                    default:
+                        // some other token than the expected ones; this is not a sequence of literals
+                        return null;
                 }
             }
             return null;
@@ -176,8 +172,7 @@ public class LuaCpdLexer extends AntlrCpdLexer {
             return discardingLiteralsUntil != null;
         }
 
-        @Override
-        protected boolean isLanguageSpecificDiscarding() {
+        @Override protected boolean isLanguageSpecificDiscarding() {
             return discardingRequires || discardingNL || isDiscardingLiterals() || discardCurrent;
         }
     }

@@ -13,8 +13,7 @@ public final class ASTHtmlXmlDeclaration extends AbstractHtmlNode<XmlDeclaration
         super(node);
     }
 
-    @Override
-    protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

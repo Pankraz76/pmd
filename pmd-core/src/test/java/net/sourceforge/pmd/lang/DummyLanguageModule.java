@@ -48,32 +48,30 @@ public class DummyLanguageModule extends SimpleLanguageModuleBase implements Cpd
 
     public DummyLanguageModule() {
         super(LanguageMetadata.withId(TERSE_NAME).name(NAME).extensions("dummy", "txt")
-                              .addVersion("1.0")
-                              .addVersion("1.1")
-                              .addVersion("1.2")
-                              .addVersion("1.3")
-                              .addVersion("1.4")
-                              .addVersion("1.5", "5")
-                              .addVersion("1.6", "6")
-                              .addDefaultVersion("1.7", "7")
-                              .addVersion(PARSER_THROWS)
-                              .addVersion("1.8", "8"), new Handler());
+                .addVersion("1.0")
+                .addVersion("1.1")
+                .addVersion("1.2")
+                .addVersion("1.3")
+                .addVersion("1.4")
+                .addVersion("1.5", "5")
+                .addVersion("1.6", "6")
+                .addDefaultVersion("1.7", "7")
+                .addVersion(PARSER_THROWS)
+                .addVersion("1.8", "8"), new Handler());
     }
 
     public static DummyLanguageModule getInstance() {
         return (DummyLanguageModule) Objects.requireNonNull(LanguageRegistry.PMD.getLanguageByFullName(NAME));
     }
 
-    @Override
-    public LanguagePropertyBundle newPropertyBundle() {
+    @Override public LanguagePropertyBundle newPropertyBundle() {
         LanguagePropertyBundle bundle = super.newPropertyBundle();
         bundle.definePropertyDescriptor(CpdLanguageProperties.CPD_ANONYMIZE_LITERALS);
         bundle.definePropertyDescriptor(CpdLanguageProperties.CPD_ANONYMIZE_IDENTIFIERS);
         return bundle;
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         CpdLexer base = new AnyCpdLexer();
         return (doc, tokens) -> {
             Chars text = doc.getText();
@@ -101,8 +99,7 @@ public class DummyLanguageModule extends SimpleLanguageModuleBase implements Cpd
 
     public static class Handler extends AbstractPmdLanguageVersionHandler {
 
-        @Override
-        public Parser getParser() {
+        @Override public Parser getParser() {
             return task -> {
                 if (PARSER_THROWS.equals(task.getLanguageVersion().getVersion())) {
                     throw new ParseException("ohio");
@@ -111,21 +108,18 @@ public class DummyLanguageModule extends SimpleLanguageModuleBase implements Cpd
             };
         }
 
-        @Override
-        public ViolationDecorator getViolationDecorator() {
+        @Override public ViolationDecorator getViolationDecorator() {
             return (node, data) -> data.put(RuleViolation.PACKAGE_NAME, "foo");
         }
 
-        @Override
-        public XPathHandler getXPathHandler() {
+        @Override public XPathHandler getXPathHandler() {
             return XPathHandler.getHandlerForFunctionDefs(imageIsFunction());
         }
 
-        @Override
-        public LanguageMetricsProvider getLanguageMetricsProvider() {
+        @Override public LanguageMetricsProvider getLanguageMetricsProvider() {
             return () -> CollectionUtil.setOf(
                     Metric.of((node, options) -> 1, (node) -> node,
-                    "Constant value metric", "const1"));
+                            "Constant value metric", "const1"));
         }
     }
 
@@ -196,21 +190,17 @@ public class DummyLanguageModule extends SimpleLanguageModuleBase implements Cpd
         return root;
     }
 
-    @NonNull
-    public static XPathFunctionDefinition imageIsFunction() {
+    @NonNull public static XPathFunctionDefinition imageIsFunction() {
         return new XPathFunctionDefinition("imageIs", DummyLanguageModule.getInstance()) {
-            @Override
-            public Type[] getArgumentTypes() {
-                return new Type[] {Type.SINGLE_STRING};
+            @Override public Type[] getArgumentTypes() {
+                return new Type[]{Type.SINGLE_STRING};
             }
 
-            @Override
-            public Type getResultType() {
+            @Override public Type getResultType() {
                 return Type.SINGLE_BOOLEAN;
             }
 
-            @Override
-            public FunctionCall makeCallExpression() {
+            @Override public FunctionCall makeCallExpression() {
                 return (contextNode, arguments) -> StringUtils.equals(arguments[0].toString(), contextNode.getImage());
             }
         };

@@ -17,16 +17,14 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public interface JFieldSymbol extends JVariableSymbol, JAccessibleElementSymbol {
 
-    @Override
-    default boolean isField() {
+    @Override default boolean isField() {
         return true;
     }
 
     /** Returns true if this field is an enum constant. */
     boolean isEnumConstant();
 
-    @Override
-    default boolean isFinal() {
+    @Override default boolean isFinal() {
         return Modifier.isFinal(getModifiers());
     }
 
@@ -39,19 +37,15 @@ public interface JFieldSymbol extends JVariableSymbol, JAccessibleElementSymbol 
         return null;
     }
 
-    @Override
-    @NonNull JClassSymbol getEnclosingClass();
+    @Override @NonNull JClassSymbol getEnclosingClass();
 
 
-    @Override
-    @NonNull
-    default String getPackageName() {
+    @Override @NonNull default String getPackageName() {
         return getEnclosingClass().getPackageName();
     }
 
 
-    @Override
-    default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitField(this, param);
     }
 }

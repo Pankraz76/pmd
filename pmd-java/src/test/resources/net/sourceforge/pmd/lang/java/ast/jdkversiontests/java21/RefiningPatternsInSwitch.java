@@ -7,14 +7,22 @@
  */
 public class RefiningPatternsInSwitch {
 
-    static class Shape {}
-    static class Rectangle extends Shape {}
+    static class Shape {
+    }
+
+    static class Rectangle extends Shape {
+    }
+
     static class Triangle  extends Shape {
         private int area;
+
         Triangle(int area) {
             this.area = area;
         }
-        int calculateArea() { return area; }
+
+        int calculateArea() {
+            return area;
+        }
     }
 
     static void testTriangle(Shape s) {
@@ -30,13 +38,15 @@ public class RefiningPatternsInSwitch {
                 System.out.println("A shape, possibly a small triangle");
         }
     }
-    
+
     static void testTriangleRefined(Shape s) {
         switch (s) {
             case null ->
-                { break; }
+            {
+                break;
+            }
             case Triangle t
-            when t.calculateArea() > 100 ->
+                when t.calculateArea() > 100 ->
                 System.out.println("Large triangle");
             default ->
                 System.out.println("A shape, possibly a small triangle");
@@ -46,9 +56,11 @@ public class RefiningPatternsInSwitch {
     static void testTriangleRefined2(Shape s) {
         switch (s) {
             case null ->
-                { break; }
+            {
+                break;
+            }
             case Triangle t
-            when t.calculateArea() > 100 ->
+                when t.calculateArea() > 100 ->
                 System.out.println("Large triangle");
             case Triangle t ->
                 System.out.println("Small triangle");

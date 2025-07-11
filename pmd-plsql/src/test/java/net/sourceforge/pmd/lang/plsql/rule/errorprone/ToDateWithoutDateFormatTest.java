@@ -13,8 +13,7 @@ import net.sourceforge.pmd.test.PmdRuleTst;
 class ToDateWithoutDateFormatTest extends PmdRuleTst {
     // No additional unit tests
 
-    @Override
-    protected List<Rule> getRules() {
+    @Override protected List<Rule> getRules() {
         Rule rule = findRule("category/plsql/errorprone.xml", "TO_DATEWithoutDateFormat");
         return Collections.singletonList(rule);
     }

@@ -31,8 +31,7 @@ public abstract class CpdLexerBase<T extends GenericToken<T>> implements CpdLexe
         return token.getImage();
     }
 
-    @Override
-    public final void tokenize(TextDocument document, TokenFactory tokens) throws IOException {
+    @Override public final void tokenize(TextDocument document, TokenFactory tokens) throws IOException {
         TokenManager<T> tokenManager = filterTokenStream(makeLexerImpl(document));
         T currentToken = tokenManager.getNextToken();
         while (currentToken != null) {

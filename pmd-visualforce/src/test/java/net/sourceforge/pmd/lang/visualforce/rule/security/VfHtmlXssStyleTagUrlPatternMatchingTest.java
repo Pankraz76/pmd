@@ -15,44 +15,37 @@ import org.junit.jupiter.api.Test;
 class VfHtmlXssStyleTagUrlPatternMatchingTest {
 
 
-    @Test
-    void testUrlMethodPatternMatchForPositive() {
+    @Test void testUrlMethodPatternMatchForPositive() {
         final String sampleString = "div {  background: url(blah";
         assertTrue(VfHtmlStyleTagXssRule.isWithinUrlMethod(sampleString), "Sample should be considered as starting a URL method: " + sampleString);
     }
 
-    @Test
-    void testUrlMethodPatternMatchForCaseInsensitive() {
+    @Test void testUrlMethodPatternMatchForCaseInsensitive() {
         final String sampleString = "div {  background: uRl(";
         assertTrue(VfHtmlStyleTagXssRule.isWithinUrlMethod(sampleString), "Sample should be considered as starting a URL method: " + sampleString);
     }
 
-    @Test
-    void testUrlMethodPatternMatchForWhitespaceAfterUrl() {
+    @Test void testUrlMethodPatternMatchForWhitespaceAfterUrl() {
         final String sampleString = "div {  background: url (";
         assertTrue(VfHtmlStyleTagXssRule.isWithinUrlMethod(sampleString), "Sample should be considered as starting a URL method: " + sampleString);
     }
 
-    @Test
-    void testUrlMethodPatternMatchForClosedUrl() {
+    @Test void testUrlMethodPatternMatchForClosedUrl() {
         final String sampleString = "div {  background: url('myUrl')";
         assertFalse(VfHtmlStyleTagXssRule.isWithinUrlMethod(sampleString), "Sample should not be considered as starting a URL method: " + sampleString);
     }
 
-    @Test
-    void testUrlMethodPatternMatchForClosedUrlWithNoContent() {
+    @Test void testUrlMethodPatternMatchForClosedUrlWithNoContent() {
         final String sampleString = "div {  background: url() ";
         assertFalse(VfHtmlStyleTagXssRule.isWithinUrlMethod(sampleString), "Sample should not be considered as starting a URL method: " + sampleString);
     }
 
-    @Test
-    void testUrlMethodPatternMatchForUrlNoBracket() {
+    @Test void testUrlMethodPatternMatchForUrlNoBracket() {
         final String sampleString = "div {  background: url";
         assertFalse(VfHtmlStyleTagXssRule.isWithinUrlMethod(sampleString), "Sample should not be considered as starting a URL method: " + sampleString);
     }
 
-    @Test
-    void testUrlMethodPatternMatchForNoUrl() {
+    @Test void testUrlMethodPatternMatchForNoUrl() {
         final String sampleString = "div {  background: myStyle('";
         assertFalse(VfHtmlStyleTagXssRule.isWithinUrlMethod(sampleString), "Sample should not be considered as starting a URL method: " + sampleString);
     }

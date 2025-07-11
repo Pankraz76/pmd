@@ -13,8 +13,7 @@ import net.sourceforge.pmd.cli.internal.PmdBanner;
 import picocli.CommandLine;
 
 class PMDVersionProvider implements CommandLine.IVersionProvider {
-    @Override
-    public String[] getVersion() throws Exception {
+    @Override public String[] getVersion() throws Exception {
         List<String> lines = new ArrayList<>(PmdBanner.loadBanner());
         lines.add(PMDVersion.getFullVersionName());
         lines.add("Java version: " + System.getProperty("java.version") + ", vendor: " + System.getProperty("java.vendor") + ", runtime: " + System.getProperty("java.home"));

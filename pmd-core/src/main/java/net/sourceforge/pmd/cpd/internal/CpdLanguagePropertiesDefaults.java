@@ -5,7 +5,8 @@
 package net.sourceforge.pmd.cpd.internal;
 
 public final class CpdLanguagePropertiesDefaults {
-    private CpdLanguagePropertiesDefaults() {}
+    private CpdLanguagePropertiesDefaults() {
+    }
 
     /**
      * Default value for the option "cpdSkipBlocksPattern", which is only supported by the

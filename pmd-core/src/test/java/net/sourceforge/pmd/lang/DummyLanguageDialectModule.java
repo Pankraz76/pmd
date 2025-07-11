@@ -27,7 +27,7 @@ public class DummyLanguageDialectModule extends SimpleDialectLanguageModuleBase 
 
     public static final Metric<Node, Number> DUMMY_DIALECT_METRIC =
             Metric.of((node, options) -> null, (node) -> node,
-            "Constant NULL metric", "null");
+                    "Constant NULL metric", "null");
 
     public static final PropertyDescriptor<Boolean> DUMMY_DIALECT_PROP =
             PropertyFactory.booleanProperty("dummyDialectProperty")
@@ -45,8 +45,7 @@ public class DummyLanguageDialectModule extends SimpleDialectLanguageModuleBase 
         return (DummyLanguageDialectModule) Objects.requireNonNull(LanguageRegistry.PMD.getLanguageByFullName(NAME));
     }
 
-    @Override
-    protected @NonNull LanguagePropertyBundle newDialectPropertyBundle() {
+    @Override protected @NonNull LanguagePropertyBundle newDialectPropertyBundle() {
         LanguagePropertyBundle bundle = super.newDialectPropertyBundle();
         bundle.definePropertyDescriptor(DUMMY_DIALECT_PROP);
         return bundle;
@@ -54,32 +53,26 @@ public class DummyLanguageDialectModule extends SimpleDialectLanguageModuleBase 
 
     public static class Handler extends BasePmdDialectLanguageVersionHandler {
 
-        @Override
-        public XPathHandler getXPathHandler() {
+        @Override public XPathHandler getXPathHandler() {
             return XPathHandler.getHandlerForFunctionDefs(dummyDialectFunction());
         }
 
-        @Override
-        public LanguageMetricsProvider getLanguageMetricsProvider() {
+        @Override public LanguageMetricsProvider getLanguageMetricsProvider() {
             return () -> CollectionUtil.setOf(DUMMY_DIALECT_METRIC);
         }
     }
 
-    @NonNull
-    public static XPathFunctionDefinition dummyDialectFunction() {
+    @NonNull public static XPathFunctionDefinition dummyDialectFunction() {
         return new XPathFunctionDefinition("dummyDialectFn", DummyLanguageDialectModule.getInstance()) {
-            @Override
-            public Type[] getArgumentTypes() {
-                return new Type[] {Type.SINGLE_STRING};
+            @Override public Type[] getArgumentTypes() {
+                return new Type[]{Type.SINGLE_STRING};
             }
 
-            @Override
-            public Type getResultType() {
+            @Override public Type getResultType() {
                 return Type.SINGLE_BOOLEAN;
             }
 
-            @Override
-            public FunctionCall makeCallExpression() {
+            @Override public FunctionCall makeCallExpression() {
                 return (contextNode, arguments) -> StringUtils.equals(arguments[0].toString(), contextNode.getImage());
             }
         };

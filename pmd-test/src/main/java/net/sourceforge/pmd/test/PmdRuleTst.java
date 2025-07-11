@@ -11,13 +11,11 @@ import net.sourceforge.pmd.lang.rule.Rule;
 
 public class PmdRuleTst extends RuleTst {
 
-    @Override
-    protected void setUp() {
+    @Override protected void setUp() {
         // empty, nothing to do
     }
 
-    @Override
-    protected List<Rule> getRules() {
+    @Override protected List<Rule> getRules() {
         String[] packages = getClass().getPackage().getName().split("\\.");
         String categoryName = packages[packages.length - 1];
         String language = packages[packages.length - 3];

@@ -15,8 +15,7 @@ class VfPageStyleTest extends AbstractVfTest {
     /**
      * Test parsing of a EL expression.
      */
-    @Test
-    void testElExpression() {
+    @Test void testElExpression() {
         List<ASTElExpression> expressions = vf.getNodes(ASTElExpression.class, VF_EL_EXPRESSION);
         assertEquals(1, expressions.size(), "One expression expected!");
         ASTElExpression expression = expressions.iterator().next();
@@ -35,8 +34,7 @@ class VfPageStyleTest extends AbstractVfTest {
     /**
      * Test parsing of a EL expression in an attribute.
      */
-    @Test
-    void testElExpressionInAttribute() {
+    @Test void testElExpressionInAttribute() {
         List<ASTElExpression> expressions = vf.getNodes(ASTElExpression.class, VF_EL_EXPRESSION_IN_ATTRIBUTE);
         assertEquals(1, expressions.size(), "One expression expected!");
         ASTElExpression expression = expressions.iterator().next();

@@ -10,14 +10,15 @@ public class SwitchStatements {
         }
 
         // empty switch statement
-        switch (a) { }
+        switch (a) {
+        }
 
         // last label without block statement
         switch (a) {
-        case 1:
-            System.out.println("1");
-            break;
-        default:
+            case 1:
+                System.out.println("1");
+                break;
+            default:
         }
     }
 }

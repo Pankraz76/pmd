@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.ast.Node;
  */
 public class ScalaVisitorBase<D, R> extends AstVisitorBase<D, R> implements ScalaVisitor<D, R> {
 
-    @Override
-    public R visitNode(Node node, D param) {
+    @Override public R visitNode(Node node, D param) {
         return visitChildren(node, param);
     }
 }

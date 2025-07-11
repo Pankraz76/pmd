@@ -28,8 +28,7 @@ public class MatlabLanguageModule extends CpdOnlyLanguageModuleBase {
         return (MatlabLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new MatlabCpdLexer();
     }
 }

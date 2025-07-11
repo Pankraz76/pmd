@@ -22,8 +22,7 @@ class CharStreamTest {
 
     private LanguageVersion dummyVersion = DummyLanguageModule.getInstance().getDefaultVersion();
 
-    @Test
-    void testReadZeroChars() throws IOException {
+    @Test void testReadZeroChars() throws IOException {
 
         CharStream stream = simpleCharStream("");
 
@@ -33,8 +32,7 @@ class CharStreamTest {
         assertEquals(stream.getEndOffset(), 0);
     }
 
-    @Test
-    void testMultipleEofReads() throws IOException {
+    @Test void testMultipleEofReads() throws IOException {
 
         CharStream stream = simpleCharStream("");
 
@@ -44,8 +42,7 @@ class CharStreamTest {
 
     }
 
-    @Test
-    void testReadStuff() throws IOException {
+    @Test void testReadStuff() throws IOException {
 
         CharStream stream = simpleCharStream("abcd");
 
@@ -57,8 +54,7 @@ class CharStreamTest {
         assertThrows(EOFException.class, stream::readChar);
     }
 
-    @Test
-    void testReadBacktrack() throws IOException {
+    @Test void testReadBacktrack() throws IOException {
 
         CharStream stream = simpleCharStream("abcd");
 
@@ -77,8 +73,7 @@ class CharStreamTest {
         assertThrows(EOFException.class, stream::readChar);
     }
 
-    @Test
-    void testReadBacktrackWithEscapes() throws IOException {
+    @Test void testReadBacktrackWithEscapes() throws IOException {
 
         CharStream stream = javaCharStream("__\\u00a0_\\u00a0_");
 
@@ -105,8 +100,7 @@ class CharStreamTest {
         assertThrows(EOFException.class, stream::readChar);
     }
 
-    @Test
-    void testBacktrackTooMuch() throws IOException {
+    @Test void testBacktrackTooMuch() throws IOException {
 
         CharStream stream = simpleCharStream("abcd");
 
@@ -120,8 +114,7 @@ class CharStreamTest {
         assertThrows(IllegalArgumentException.class, () -> stream.backup(1));
     }
 
-    @Test
-    void testBacktrackTooMuch2() throws IOException {
+    @Test void testBacktrackTooMuch2() throws IOException {
 
         CharStream stream = simpleCharStream("abcd");
 
@@ -140,13 +133,12 @@ class CharStreamTest {
 
     CharStream javaCharStream(String abcd) {
         return CharStream.create(
-            TextDocument.readOnlyString(abcd, dummyVersion),
-            new TokenDocumentBehavior(Collections.emptyList()) {
-                @Override
-                public TextDocument translate(TextDocument text) throws MalformedSourceException {
-                    return new JavaEscapeTranslator(text).translateDocument();
-                }
-            });
+                TextDocument.readOnlyString(abcd, dummyVersion),
+                new TokenDocumentBehavior(Collections.emptyList()) {
+                    @Override public TextDocument translate(TextDocument text) throws MalformedSourceException {
+                        return new JavaEscapeTranslator(text).translateDocument();
+                    }
+                });
     }
 
 }

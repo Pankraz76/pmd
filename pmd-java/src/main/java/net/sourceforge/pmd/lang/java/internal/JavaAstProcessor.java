@@ -48,9 +48,9 @@ public final class JavaAstProcessor {
 
 
     private JavaAstProcessor(JavaLanguageProcessor globalProc,
-                             SemanticErrorReporter logger,
-                             TypeInferenceLogger typeInfLogger,
-                             ASTCompilationUnit acu) {
+            SemanticErrorReporter logger,
+            TypeInferenceLogger typeInfLogger,
+            ASTCompilationUnit acu) {
 
         this.symResolver = globalProc.getTypeSystem().bootstrapResolver();
         this.globalProc = globalProc;
@@ -150,22 +150,22 @@ public final class JavaAstProcessor {
 
 
     public static void process(JavaLanguageProcessor globalProcessor,
-                                          SemanticErrorReporter semanticErrorReporter,
-                                           ASTCompilationUnit ast) {
+            SemanticErrorReporter semanticErrorReporter,
+            ASTCompilationUnit ast) {
         process(globalProcessor, semanticErrorReporter, globalProcessor.newTypeInfLogger(), ast);
     }
 
     public static void process(JavaLanguageProcessor globalProcessor,
-                                          SemanticErrorReporter semanticErrorReporter,
-                                          TypeInferenceLogger typeInfLogger,
-                                           ASTCompilationUnit ast) {
+            SemanticErrorReporter semanticErrorReporter,
+            TypeInferenceLogger typeInfLogger,
+            ASTCompilationUnit ast) {
 
 
         JavaAstProcessor astProc = new JavaAstProcessor(
-            globalProcessor,
-            semanticErrorReporter,
-            typeInfLogger,
-            ast
+                globalProcessor,
+                semanticErrorReporter,
+                typeInfLogger,
+                ast
         );
 
         astProc.process();

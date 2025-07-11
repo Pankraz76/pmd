@@ -111,7 +111,7 @@ public final class FileCollectionUtil {
             try {
                 addRoot(collector, rootLocation);
             } catch (IOException e) {
-                collector.getReporter().errorEx("Error collecting {0}", new Object[]{ rootLocation }, e);
+                collector.getReporter().errorEx("Error collecting {0}", new Object[]{rootLocation}, e);
             }
         }
     }
@@ -127,7 +127,7 @@ public final class FileCollectionUtil {
         try {
             filePaths = FileUtil.readFilelistEntries(fileList);
         } catch (IOException e) {
-            collector.getReporter().errorEx("Error reading {0}", new Object[] { fileList }, e);
+            collector.getReporter().errorEx("Error reading {0}", new Object[]{fileList}, e);
             return;
         }
         collectFiles(collector, filePaths);
@@ -170,14 +170,14 @@ public final class FileCollectionUtil {
                     collector.addSourceFile(FileId.fromPathLikeString(falseFilePath), source);
                 } catch (SQLException ex) {
                     collector.getReporter().warnEx("Cannot get SourceCode for {0}  - skipping ...",
-                                                   new Object[] { falseFilePath },
-                                                   ex);
+                            new Object[]{falseFilePath},
+                            ex);
                 }
             }
         } catch (ClassNotFoundException e) {
             collector.getReporter().errorEx("Cannot get files from DB - probably missing database JDBC driver", e);
         } catch (Exception e) {
-            collector.getReporter().errorEx("Cannot get files from DB - ''{0}''", new Object[] { uri }, e);
+            collector.getReporter().errorEx("Cannot get files from DB - ''{0}''", new Object[]{uri}, e);
         }
     }
 }

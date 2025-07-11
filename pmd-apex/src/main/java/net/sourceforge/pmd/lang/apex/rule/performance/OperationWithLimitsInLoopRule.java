@@ -28,89 +28,81 @@ public class OperationWithLimitsInLoopRule extends AbstractAvoidNodeInLoopsRule 
     private static final String MESSAGING_CLASS_NAME = "Messaging";
     private static final String SYSTEM_CLASS_NAME = "System";
 
-    private static final String[] MESSAGING_LIMIT_METHODS = new String[] { "renderEmailTemplate", "renderStoredEmailTemplate", "sendEmail" };
-    private static final String[] SYSTEM_LIMIT_METHODS = new String[] { "enqueueJob", "schedule", "scheduleBatch" };
+    private static final String[] MESSAGING_LIMIT_METHODS = new String[]{"renderEmailTemplate", "renderStoredEmailTemplate", "sendEmail"};
+    private static final String[] SYSTEM_LIMIT_METHODS = new String[]{"enqueueJob", "schedule", "scheduleBatch"};
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(
-            // DML
-            ASTDmlDeleteStatement.class,
-            ASTDmlInsertStatement.class,
-            ASTDmlMergeStatement.class,
-            ASTDmlUndeleteStatement.class,
-            ASTDmlUpdateStatement.class,
-            ASTDmlUpsertStatement.class,
-            // SOQL
-            ASTSoqlExpression.class,
-            // SOSL
-            ASTSoslExpression.class,
-            // Other limit consuming methods
-            ASTMethodCallExpression.class,
-            ASTRunAsBlockStatement.class
+                // DML
+                ASTDmlDeleteStatement.class,
+                ASTDmlInsertStatement.class,
+                ASTDmlMergeStatement.class,
+                ASTDmlUndeleteStatement.class,
+                ASTDmlUpdateStatement.class,
+                ASTDmlUpsertStatement.class,
+                // SOQL
+                ASTSoqlExpression.class,
+                // SOSL
+                ASTSoslExpression.class,
+                // Other limit consuming methods
+                ASTMethodCallExpression.class,
+                ASTRunAsBlockStatement.class
         );
     }
 
 
     // Begin DML Statements
-    @Override
-    public Object visit(ASTDmlDeleteStatement node, Object data) {
+    @Override public Object visit(ASTDmlDeleteStatement node, Object data) {
         return checkForViolation(node, data);
     }
 
-    @Override
-    public Object visit(ASTDmlInsertStatement node, Object data) {
+    @Override public Object visit(ASTDmlInsertStatement node, Object data) {
         return checkForViolation(node, data);
     }
 
-    @Override
-    public Object visit(ASTDmlMergeStatement node, Object data) {
+    @Override public Object visit(ASTDmlMergeStatement node, Object data) {
         return checkForViolation(node, data);
     }
 
-    @Override
-    public Object visit(ASTDmlUndeleteStatement node, Object data) {
+    @Override public Object visit(ASTDmlUndeleteStatement node, Object data) {
         return checkForViolation(node, data);
     }
 
-    @Override
-    public Object visit(ASTDmlUpdateStatement node, Object data) {
+    @Override public Object visit(ASTDmlUpdateStatement node, Object data) {
         return checkForViolation(node, data);
     }
 
-    @Override
-    public Object visit(ASTDmlUpsertStatement node, Object data) {
+    @Override public Object visit(ASTDmlUpsertStatement node, Object data) {
         return checkForViolation(node, data);
     }
+
     // End DML Statements
 
     // Begin SOQL method invocations
-    @Override
-    public Object visit(ASTSoqlExpression node, Object data) {
+    @Override public Object visit(ASTSoqlExpression node, Object data) {
         return checkForViolation(node, data);
     }
+
     // End SOQL method invocations
 
     // Begin SOSL method invocations
-    @Override
-    public Object visit(ASTSoslExpression node, Object data) {
+    @Override public Object visit(ASTSoslExpression node, Object data) {
         return checkForViolation(node, data);
     }
+
     // End SOSL method invocations
 
     // Begin general method invocations
 
-    @Override
-    public Object visit(ASTRunAsBlockStatement node, Object data) {
+    @Override public Object visit(ASTRunAsBlockStatement node, Object data) {
         return checkForViolation(node, data);
     }
 
-    @Override
-    public Object visit(ASTMethodCallExpression node, Object data) {
+    @Override public Object visit(ASTMethodCallExpression node, Object data) {
         if (Helper.isAnyDatabaseMethodCall(node)
-            || Helper.isMethodName(node, APPROVAL_CLASS_NAME, Helper.ANY_METHOD)
-            || checkLimitClassMethods(node, MESSAGING_CLASS_NAME, MESSAGING_LIMIT_METHODS)
-            || checkLimitClassMethods(node, SYSTEM_CLASS_NAME, SYSTEM_LIMIT_METHODS)) {
+                || Helper.isMethodName(node, APPROVAL_CLASS_NAME, Helper.ANY_METHOD)
+                || checkLimitClassMethods(node, MESSAGING_CLASS_NAME, MESSAGING_LIMIT_METHODS)
+                || checkLimitClassMethods(node, SYSTEM_CLASS_NAME, SYSTEM_LIMIT_METHODS)) {
 
             return checkForViolation(node, data);
         } else {

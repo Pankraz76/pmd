@@ -42,8 +42,7 @@ public class ConfigurableFileNameRenderer implements FileNameRenderer {
         this.relativizeRootPaths.sort(Comparator.naturalOrder());
     }
 
-    @Override
-    public String getDisplayName(@NonNull FileId fileId) {
+    @Override public String getDisplayName(@NonNull FileId fileId) {
         String localDisplayName = getLocalDisplayName(fileId);
         FileId parent = fileId.getParentFsPath();
         if (parent != null) {
@@ -81,8 +80,8 @@ public class ConfigurableFileNameRenderer implements FileNameRenderer {
         // with the empty string.
         int maxi = Math.min(base.getNameCount(), otherSegments.length - 1);
         while (prefixLength < maxi
-            // here we add 1 for the same reason                          vvvvvvvvvvvvvvvv
-            && base.getName(prefixLength).toString().equals(otherSegments[prefixLength + 1])) {
+                // here we add 1 for the same reason                          vvvvvvvvvvvvvvvv
+                && base.getName(prefixLength).toString().equals(otherSegments[prefixLength + 1])) {
             prefixLength++;
         }
 

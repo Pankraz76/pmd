@@ -1,3 +1,3 @@
 public class Test {
-  int y = x > 32;
+    int y = x > 32;
 }

@@ -254,8 +254,7 @@ public class DBType {
         return properties;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((characterSet == null) ? 0 : characterSet.hashCode());
@@ -268,8 +267,7 @@ public class DBType {
         return result;
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -405,8 +403,7 @@ public class DBType {
 
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return DBType.class.getCanonicalName() + "@" + propertiesSource;
     }
 }

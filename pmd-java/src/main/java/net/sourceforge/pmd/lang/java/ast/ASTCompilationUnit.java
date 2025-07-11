@@ -63,8 +63,7 @@ public final class ASTCompilationUnit extends AbstractJavaNode implements RootNo
         this.astInfo = task;
     }
 
-    @Override
-    public AstInfo<ASTCompilationUnit> getAstInfo() {
+    @Override public AstInfo<ASTCompilationUnit> getAstInfo() {
         return astInfo;
     }
 
@@ -103,8 +102,7 @@ public final class ASTCompilationUnit extends AbstractJavaNode implements RootNo
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -141,8 +139,7 @@ public final class ASTCompilationUnit extends AbstractJavaNode implements RootNo
         return firstChild(ASTModuleDeclaration.class);
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         assert lazyTypeResolver != null : "Type resolution not initialized";
         return lazyTypeResolver.getTypeSystem();
     }
@@ -156,9 +153,7 @@ public final class ASTCompilationUnit extends AbstractJavaNode implements RootNo
         return lazyTypeResolver;
     }
 
-    @Experimental("Implicitly Declared Classes and Instance Main Methods is a Java 22 / Java 23 Preview feature")
-    @NoAttribute
-    public boolean isSimpleCompilationUnit() {
+    @Experimental("Implicitly Declared Classes and Instance Main Methods is a Java 22 / Java 23 Preview feature") @NoAttribute public boolean isSimpleCompilationUnit() {
         return children(ASTImplicitClassDeclaration.class).nonEmpty();
     }
 }

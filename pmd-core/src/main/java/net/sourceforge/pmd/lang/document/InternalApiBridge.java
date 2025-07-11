@@ -21,7 +21,8 @@ import net.sourceforge.pmd.util.log.PmdReporter;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static FileCollector newCollector(LanguageVersionDiscoverer discoverer, PmdReporter reporter) {
         return FileCollector.newCollector(discoverer, reporter);

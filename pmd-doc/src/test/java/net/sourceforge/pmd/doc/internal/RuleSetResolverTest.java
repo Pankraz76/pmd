@@ -26,8 +26,7 @@ class RuleSetResolverTest {
             IOUtil.normalizePath("pmd-test/src/main/resources/rulesets/dummy/basic.xml")
     );
 
-    @Test
-    void resolveAllRulesets() {
+    @Test void resolveAllRulesets() {
         Path basePath = FileSystems.getDefault().getPath(".").resolve("..").toAbsolutePath().normalize();
         List<String> additionalRulesets = GenerateRuleDocsCmd.findAdditionalRulesets(basePath);
 
@@ -42,8 +41,7 @@ class RuleSetResolverTest {
         }
     }
 
-    @Test
-    void testAdditionalRulesetPattern() {
+    @Test void testAdditionalRulesetPattern() {
         String filePath = IOUtil.normalizePath("/home/foo/pmd/pmd-java/src/main/resources/rulesets/java/quickstart.xml");
         assertTrue(GenerateRuleDocsCmd.ADDITIONAL_RULESET_PATTERN.matcher(filePath).matches());
     }

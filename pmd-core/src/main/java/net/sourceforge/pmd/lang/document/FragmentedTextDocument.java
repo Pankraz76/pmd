@@ -34,19 +34,16 @@ final class FragmentedTextDocument extends BaseMappedDocument implements TextDoc
         return Chars.wrap(sb);
     }
 
-    @Override
-    public Chars getText() {
+    @Override public Chars getText() {
         return text;
     }
 
 
-    @Override
-    public LanguageVersion getLanguageVersion() {
+    @Override public LanguageVersion getLanguageVersion() {
         return base.getLanguageVersion();
     }
 
-    @Override
-    protected int localOffsetTransform(int outOffset, boolean inclusive) {
+    @Override protected int localOffsetTransform(int outOffset, boolean inclusive) {
         // caching the last accessed fragment instead of doing
         // a linear search is critical for performance.
         Fragment f = this.lastAccessedFragment;
@@ -57,7 +54,7 @@ final class FragmentedTextDocument extends BaseMappedDocument implements TextDoc
         // Whether the fragment contains the offset we're looking for.
         // Will be true most of the time.
         boolean containsOffset =
-            f.outStart() <= outOffset && outOffset < f.outEnd();
+                f.outStart() <= outOffset && outOffset < f.outEnd();
 
         if (!containsOffset) {
             // Slow path, we must search for the fragment
@@ -153,8 +150,7 @@ final class FragmentedTextDocument extends BaseMappedDocument implements TextDoc
             return inOffset - inStart() + outStart();
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "Fragment[" + inStart() + ".." + inEnd() + " -> " + outStart() + ".." + outEnd() + "]" + chars;
         }
     }

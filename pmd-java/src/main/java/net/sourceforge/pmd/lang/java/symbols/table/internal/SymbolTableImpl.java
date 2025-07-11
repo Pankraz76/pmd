@@ -22,35 +22,31 @@ final class SymbolTableImpl implements JSymbolTable {
     private final ShadowChainNode<JMethodSig, ScopeInfo> methods;
 
     SymbolTableImpl(ShadowChainNode<JVariableSig, ScopeInfo> vars,
-                    ShadowChainNode<JTypeMirror, ScopeInfo> types,
-                    ShadowChainNode<JMethodSig, ScopeInfo> methods) {
+            ShadowChainNode<JTypeMirror, ScopeInfo> types,
+            ShadowChainNode<JMethodSig, ScopeInfo> methods) {
         this.vars = vars;
         this.types = types;
         this.methods = methods;
     }
 
-    @Override
-    public ShadowChain<JVariableSig, ScopeInfo> variables() {
+    @Override public ShadowChain<JVariableSig, ScopeInfo> variables() {
         return vars.asChain();
     }
 
-    @Override
-    public ShadowChain<JTypeMirror, ScopeInfo> types() {
+    @Override public ShadowChain<JTypeMirror, ScopeInfo> types() {
         return types.asChain();
     }
 
-    @Override
-    public ShadowChain<JMethodSig, ScopeInfo> methods() {
+    @Override public ShadowChain<JMethodSig, ScopeInfo> methods() {
         return methods.asChain();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "NSymTableImpl{"
-            + "vars=" + vars
-            + ", types=" + types
-            + ", methods=" + methods
-            + '}';
+                + "vars=" + vars
+                + ", types=" + types
+                + ", methods=" + methods
+                + '}';
     }
 
     static JSymbolTable withVars(JSymbolTable parent, ShadowChainNode<JVariableSig, ScopeInfo> vars) {

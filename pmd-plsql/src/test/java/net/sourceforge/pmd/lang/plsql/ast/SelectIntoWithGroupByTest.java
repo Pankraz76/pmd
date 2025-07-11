@@ -10,23 +10,19 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class SelectIntoWithGroupByTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void testExample1() {
+    @Test void testExample1() {
         doTest("SelectIntoWithGroupBy1");
     }
 
-    @Test
-    void testExample2() {
+    @Test void testExample2() {
         doTest("SelectIntoWithGroupBy2");
     }
 
-    @Test
-    void testExample3WithCube() {
+    @Test void testExample3WithCube() {
         doTest("SelectIntoWithGroupBy3");
     }
 
-    @Test
-    void testExample4WithGroupingSets() {
+    @Test void testExample4WithGroupingSets() {
         doTest("SelectIntoWithGroupBy4");
     }
 }

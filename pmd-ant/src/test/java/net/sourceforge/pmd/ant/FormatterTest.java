@@ -19,8 +19,7 @@ import net.sourceforge.pmd.renderers.XMLRenderer;
 
 class FormatterTest {
 
-    @Test
-    void testType() {
+    @Test void testType() {
         Formatter f = new Formatter();
         f.setType("xml");
         assertTrue(f.createRenderer() instanceof XMLRenderer);
@@ -39,8 +38,7 @@ class FormatterTest {
         }
     }
 
-    @Test
-    void testNull() {
+    @Test void testNull() {
         Formatter f = new Formatter();
         assertTrue(f.isNoOutputSupplied(), "Formatter toFile should start off null!");
         f.setToFile(new File("foo"));

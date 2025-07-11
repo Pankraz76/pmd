@@ -22,8 +22,7 @@ abstract class AbstractLiteral extends AbstractJavaExpr {
         super(i);
     }
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
         // Note that in this method, if the literal is parenthesized,
         // its parentheses have not yet been set yet so the text is
@@ -33,9 +32,7 @@ abstract class AbstractLiteral extends AbstractJavaExpr {
         literalToken = getFirstToken();
     }
 
-    @Override
-    @NoAttribute
-    public final Chars getText() {
+    @Override @NoAttribute public final Chars getText() {
         JavaccToken firstToken = getFirstToken();
         // this literal has parentheses, the text includes them
         if (firstToken.kind == JavaTokenKinds.LPAREN) {
@@ -54,8 +51,7 @@ abstract class AbstractLiteral extends AbstractJavaExpr {
         return literalToken.getImageCs();
     }
 
-    @Override
-    public boolean isCompileTimeConstant() {
+    @Override public boolean isCompileTimeConstant() {
         return true; // note: NullLiteral overrides this to false
     }
 }

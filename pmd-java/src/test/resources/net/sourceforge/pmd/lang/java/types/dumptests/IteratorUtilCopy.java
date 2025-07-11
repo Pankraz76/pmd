@@ -3,6 +3,7 @@
  */
 
 
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 
-
 public final class IteratorUtilCopy {
 
     private static final int MATCH_ANY = 0;
@@ -35,12 +35,12 @@ public final class IteratorUtilCopy {
     }
 
     @Target(ElementType.TYPE_USE)
-    @interface Nullable {}
+    @interface Nullable {
+    }
 
     public static <T> Iterator<T> takeWhile(Iterator<T> iter, Predicate<? super T> predicate) {
         return new AbstractIterator<T>() {
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 T next = iter.next();
                 if (predicate.test(next)) {
                     setNext(next);
@@ -61,8 +61,7 @@ public final class IteratorUtilCopy {
         return new AbstractIterator<R>() {
             private Iterator<? extends R> current = null;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (current != null && current.hasNext()) {
                     setNext(current.next());
                 } else {
@@ -85,8 +84,7 @@ public final class IteratorUtilCopy {
         return new AbstractIterator<R>() {
             private Iterator<? extends R> current = null;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (current != null && current.hasNext()) {
                     setNext(current.next());
                 } else {
@@ -110,8 +108,7 @@ public final class IteratorUtilCopy {
 
     public static <T, R> Iterator<R> mapNotNull(Iterator<? extends T> it, Function<? super T, ? extends R> mapper) {
         return new AbstractIterator<R>() {
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 while (it.hasNext()) {
                     T next = it.next();
                     if (next != null) {
@@ -129,8 +126,7 @@ public final class IteratorUtilCopy {
 
     public static <T> Iterator<T> filter(Iterator<? extends T> it, Predicate<? super T> filter) {
         return new AbstractIterator<T>() {
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 while (it.hasNext()) {
                     T next = it.next();
                     if (filter.test(next)) {
@@ -152,13 +148,11 @@ public final class IteratorUtilCopy {
 
     public static <T, R> Iterator<R> map(Iterator<? extends T> iter, Function<? super T, ? extends R> mapper) {
         return new Iterator<R>() {
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return iter.hasNext();
             }
 
-            @Override
-            public R next() {
+            @Override public R next() {
                 return mapper.apply(iter.next());
             }
         };
@@ -169,8 +163,7 @@ public final class IteratorUtilCopy {
         return () -> mapper.apply(iter.iterator());
     }
 
-    @SafeVarargs
-    public static <T> Iterator<T> iterate(T... elements) {
+    @SafeVarargs public static <T> Iterator<T> iterate(T... elements) {
         return Arrays.asList(elements).iterator();
     }
 
@@ -182,13 +175,11 @@ public final class IteratorUtilCopy {
         }
         return new Iterator<T>() {
 
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return as.hasNext() || bs.hasNext();
             }
 
-            @Override
-            public T next() {
+            @Override public T next() {
                 return as.hasNext() ? as.next() : bs.next();
             }
         };
@@ -247,7 +238,6 @@ public final class IteratorUtilCopy {
     }
 
 
-
     public static void advance(Iterator<?> iterator, int n) {
         while (n > 0 && iterator.hasNext()) {
             iterator.next();
@@ -264,8 +254,7 @@ public final class IteratorUtilCopy {
         return new AbstractIterator<T>() {
             private int yielded = 0;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (yielded >= n || !iterator.hasNext()) {
                     done();
                 } else {
@@ -285,8 +274,7 @@ public final class IteratorUtilCopy {
         return new AbstractIterator<T>() {
             private int yielded = 0;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 while (yielded++ < n && source.hasNext()) {
                     source.next();
                 }
@@ -305,8 +293,7 @@ public final class IteratorUtilCopy {
         return new AbstractIterator<T>() {
             T next = seed;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (next == null) {
                     done();
                     return;
@@ -350,13 +337,11 @@ public final class IteratorUtilCopy {
         class SingletonIterator implements Iterator<T> {
             private boolean done;
 
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return !done;
             }
 
-            @Override
-            public T next() {
+            @Override public T next() {
                 if (done) {
                     throw new NoSuchElementException();
                 }
@@ -364,8 +349,7 @@ public final class IteratorUtilCopy {
                 return value;
             }
 
-            @Override
-            public void forEachRemaining(Consumer<? super T> action) {
+            @Override public void forEachRemaining(Consumer<? super T> action) {
                 action.accept(value);
             }
         }
@@ -380,20 +364,17 @@ public final class IteratorUtilCopy {
             ListIterator<T> li = lst.listIterator(lst.size());
 
 
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return li.hasPrevious();
             }
 
 
-            @Override
-            public T next() {
+            @Override public T next() {
                 return li.previous();
             }
 
 
-            @Override
-            public void remove() {
+            @Override public void remove() {
                 li.remove();
             }
         };
@@ -409,25 +390,23 @@ public final class IteratorUtilCopy {
         private T next = null;
 
 
-        @Override
-        public boolean hasNext() {
+        @Override public boolean hasNext() {
             switch (state) {
-            case DONE:
-                return false;
-            case READY:
-                return true;
-            default:
-                state = null;
-                computeNext();
-                if (state == null) {
-                    throw new IllegalStateException("Should have called done or setNext");
-                }
-                return state == State.READY;
+                case DONE:
+                    return false;
+                case READY:
+                    return true;
+                default:
+                    state = null;
+                    computeNext();
+                    if (state == null) {
+                        throw new IllegalStateException("Should have called done or setNext");
+                    }
+                    return state == State.READY;
             }
         }
 
-        @Override
-        public T next() {
+        @Override public T next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
@@ -450,9 +429,7 @@ public final class IteratorUtilCopy {
             READY, NOT_READY, DONE
         }
 
-        @Deprecated
-        @Override
-        public final void remove() {
+        @Deprecated @Override public final void remove() {
             throw new UnsupportedOperationException();
         }
 
@@ -463,8 +440,7 @@ public final class IteratorUtilCopy {
         private int numYielded = 0;
         private T currentValue;
 
-        @Override
-        public T next() {
+        @Override public T next() {
             T next = super.next();
             currentValue = next;
             prepareViewOn(next);

@@ -41,8 +41,7 @@ abstract class AbstractPMDProcessorTest {
 
     protected abstract Class<? extends AbstractPMDProcessor> getExpectedImplementation();
 
-    @Test
-    void shouldUseCorrectProcessorImpl() {
+    @Test void shouldUseCorrectProcessorImpl() {
         try (AbstractPMDProcessor processor = AbstractPMDProcessor.newFileProcessor(createTask(getThreads()))) {
             assertSame(getExpectedImplementation(), processor.getClass());
         }
@@ -52,8 +51,7 @@ abstract class AbstractPMDProcessorTest {
         return InternalApiBridge.createAnalysisTask(null, null, null, threads, null, Mockito.mock(PmdReporter.class), null);
     }
 
-    @Test
-    void exceptionsShouldBeLogged() {
+    @Test void exceptionsShouldBeLogged() {
         try (PmdAnalysis pmd = createPmdAnalysis()) {
             pmd.addRuleSet(RuleSet.forSingleRule(new RuleThatThrowsException()));
             pmd.performAnalysis();
@@ -99,8 +97,7 @@ abstract class AbstractPMDProcessorTest {
             setLanguage(DummyLanguageModule.getInstance().getDefaultVersion().getLanguage());
         }
 
-        @Override
-        public void apply(Node target, RuleContext ctx) {
+        @Override public void apply(Node target, RuleContext ctx) {
             throw new RuntimeException("test exception");
         }
     }
@@ -110,8 +107,7 @@ abstract class AbstractPMDProcessorTest {
             setLanguage(DummyLanguageModule.getInstance().getDefaultVersion().getLanguage());
         }
 
-        @Override
-        public void apply(Node target, RuleContext ctx) {
+        @Override public void apply(Node target, RuleContext ctx) {
             throw new Error("test error");
         }
     }
@@ -122,25 +118,21 @@ abstract class AbstractPMDProcessorTest {
         public AtomicInteger files = new AtomicInteger(0);
         public AtomicInteger errors = new AtomicInteger(0);
 
-        @Override
-        public FileAnalysisListener startFileAnalysis(TextFile file) {
+        @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
             files.incrementAndGet();
 
             return new FileAnalysisListener() {
-                @Override
-                public void onRuleViolation(RuleViolation violation) {
+                @Override public void onRuleViolation(RuleViolation violation) {
                     violations.incrementAndGet();
                 }
 
-                @Override
-                public void onError(Report.ProcessingError error) {
+                @Override public void onError(Report.ProcessingError error) {
                     errors.incrementAndGet();
                 }
             };
         }
 
-        @Override
-        public void close() throws Exception {
+        @Override public void close() throws Exception {
 
         }
     }

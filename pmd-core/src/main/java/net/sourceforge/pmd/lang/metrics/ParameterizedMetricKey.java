@@ -35,22 +35,19 @@ final class ParameterizedMetricKey<N extends Node, R extends Number> implements 
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ParameterizedMetricKey{key=" + metric.displayName() + ", options=" + options + '}';
     }
 
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return o instanceof ParameterizedMetricKey
-            && ((ParameterizedMetricKey<?, ?>) o).metric.equals(metric)
-            && ((ParameterizedMetricKey<?, ?>) o).options.equals(options);
+                && ((ParameterizedMetricKey<?, ?>) o).metric.equals(metric)
+                && ((ParameterizedMetricKey<?, ?>) o).options.equals(options);
     }
 
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return 31 * metric.hashCode() + options.hashCode();
     }
 
@@ -64,14 +61,12 @@ final class ParameterizedMetricKey<N extends Node, R extends Number> implements 
      *
      * @return An instance of parameterized metric key corresponding to the parameters
      */
-    @SuppressWarnings("PMD.SingletonClassReturningNewInstance")
-    public static <N extends Node, R extends Number> ParameterizedMetricKey<N, R> getInstance(Metric<N, R> key, MetricOptions options) {
+    @SuppressWarnings("PMD.SingletonClassReturningNewInstance") public static <N extends Node, R extends Number> ParameterizedMetricKey<N, R> getInstance(Metric<N, R> key, MetricOptions options) {
         // sharing instances allows using DataMap, which uses reference identity
         ParameterizedMetricKey<N, R> tmp = new ParameterizedMetricKey<>(key, options);
         POOL.putIfAbsent(tmp, tmp);
 
-        @SuppressWarnings("unchecked")
-        ParameterizedMetricKey<N, R> result = (ParameterizedMetricKey<N, R>) POOL.get(tmp);
+        @SuppressWarnings("unchecked") ParameterizedMetricKey<N, R> result = (ParameterizedMetricKey<N, R>) POOL.get(tmp);
         return result;
     }
 }

@@ -50,8 +50,8 @@ public final class UnresolvedClassStore {
      */
     public @NonNull JClassSymbol makeUnresolvedReference(@Nullable String canonicalName, int typeArity) {
         UnresolvedClassImpl unresolved = this.unresolved.computeIfAbsent(
-            canonicalName,
-            n -> new FlexibleUnresolvedClassImpl(this.ts, null, n)
+                canonicalName,
+                n -> new FlexibleUnresolvedClassImpl(this.ts, null, n)
         );
 
         unresolved.setTypeParameterCount(typeArity);

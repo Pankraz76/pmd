@@ -16,8 +16,7 @@ public class ExcessivePackageSpecificationLengthRule extends AbstractCounterChec
         super(ASTPackageSpecification.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 1000;
     }
 }

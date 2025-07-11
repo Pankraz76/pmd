@@ -19,21 +19,18 @@ public class DummyJavaRule extends AbstractJavaRule {
 
     public static class DummyRuleOneViolationPerFile extends DummyJavaRule {
 
-        @Override
-        public void apply(Node node, RuleContext ctx) {
+        @Override public void apply(Node node, RuleContext ctx) {
             ctx.addViolation(node);
         }
     }
 
     public static class DummyRulePrintsVars extends DummyJavaRule {
 
-        @Override
-        public void apply(Node node, RuleContext ctx) {
+        @Override public void apply(Node node, RuleContext ctx) {
             node.acceptVisitor(this, ctx);
         }
 
-        @Override
-        public Object visit(ASTVariableId node, Object data) {
+        @Override public Object visit(ASTVariableId node, Object data) {
             asCtx(data).addViolation(node, node.getName());
             return super.visit(node, data);
         }

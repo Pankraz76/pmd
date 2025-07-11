@@ -117,7 +117,7 @@ public final class AssertionUtil {
      */
     public static void assertValidStringRange(CharSequence string, int startInclusive, int endExclusive) {
         assert isValidRange(startInclusive, endExclusive, 0, string.length())
-            : invalidRangeMessage(startInclusive, endExclusive, 0, string.length());
+                : invalidRangeMessage(startInclusive, endExclusive, 0, string.length());
     }
 
     /**
@@ -218,8 +218,7 @@ public final class AssertionUtil {
         return exceptionMaker.apply(String.format("%s must be %s, got %s", name, condition, value));
     }
 
-    @NonNull
-    public static <T> T requireParamNotNull(String paramName, T obj) {
+    @NonNull public static <T> T requireParamNotNull(String paramName, T obj) {
         if (obj == null) {
             throw new NullPointerException("Parameter " + paramName + " is null");
         }
@@ -234,7 +233,7 @@ public final class AssertionUtil {
     public static @NonNull AssertionError shouldNotReachHere(String message, Throwable cause) {
         String prefix = "This should be unreachable";
         message = StringUtils.isBlank(message) ? prefix
-                                               : prefix + ": " + message;
+                : prefix + ": " + message;
         return new AssertionError(message, cause);
     }
 
@@ -248,7 +247,7 @@ public final class AssertionUtil {
 
     public static @NonNull ContextedRuntimeException contexted(RuntimeException e) {
         return e instanceof ContextedRuntimeException ? (ContextedRuntimeException) e
-                                                      : new ContextedRuntimeException(e);
+                : new ContextedRuntimeException(e);
     }
 
 }

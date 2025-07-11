@@ -36,8 +36,7 @@ public class TextTimingReportRenderer implements TimingReportRenderer {
     private static final int COLUMNS = LABEL_COLUMN_WIDTH + TIME_COLUMN_WIDTH
             + SELF_TIME_COLUMN_WIDTH + CALL_COLUMN_WIDTH + COUNTER_COLUMN_WIDTH;
 
-    @Override
-    public void render(final TimingReport report, final Writer writer0) throws IOException {
+    @Override public void render(final TimingReport report, final Writer writer0) throws IOException {
         PrintWriter writer = new PrintWriter(writer0);
         for (final TimedOperationCategory category : TimedOperationCategory.values()) {
             final Map<String, TimedResult> labeledMeasurements = report.getLabeledMeasurements(category);

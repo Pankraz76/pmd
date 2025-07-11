@@ -42,14 +42,12 @@ public abstract class AbstractJjtreeNode<B extends AbstractJjtreeNode<B, N>, N e
         this.image = image;
     }
 
-    @Override
-    public final TextRegion getTextRegion() {
+    @Override public final TextRegion getTextRegion() {
         return TextRegion.fromBothOffsets(getFirstToken().getStartOffset(),
-                                          getLastToken().getEndOffset());
+                getLastToken().getEndOffset());
     }
 
-    @Override
-    public final int compareLocation(Node other) {
+    @Override public final int compareLocation(Node other) {
         if (other instanceof JjtreeNode<?>) {
             return getTextRegion().compareTo(((JjtreeNode<?>) other).getTextRegion());
         }
@@ -77,8 +75,7 @@ public abstract class AbstractJjtreeNode<B extends AbstractJjtreeNode<B, N>, N e
     }
 
 
-    @Override
-    protected void insertChild(B child, int index) {
+    @Override protected void insertChild(B child, int index) {
         super.insertChild(child, index);
         fitTokensToChildren(index);
     }
@@ -113,13 +110,11 @@ public abstract class AbstractJjtreeNode<B extends AbstractJjtreeNode<B, N>, N e
         }
     }
 
-    @Override
-    public JavaccToken getFirstToken() {
+    @Override public JavaccToken getFirstToken() {
         return firstToken;
     }
 
-    @Override
-    public JavaccToken getLastToken() {
+    @Override public JavaccToken getLastToken() {
         return lastToken;
     }
 
@@ -136,10 +131,9 @@ public abstract class AbstractJjtreeNode<B extends AbstractJjtreeNode<B, N>, N e
     /**
      * This toString implementation is only meant for debugging purposes.
      */
-    @Override
-    public String toString() {
+    @Override public String toString() {
         FileLocation loc = getReportLocation();
         return "!debug only! [" + getXPathNodeName() + ":" + loc.getStartPos().toDisplayStringWithColon() + "]"
-            + StringUtil.elide(getText().toString(), 150, "(truncated)");
+                + StringUtil.elide(getText().toString(), 150, "(truncated)");
     }
 }

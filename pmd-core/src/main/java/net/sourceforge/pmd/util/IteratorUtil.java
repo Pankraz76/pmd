@@ -44,8 +44,7 @@ public final class IteratorUtil {
 
     public static <T> Iterator<T> takeWhile(Iterator<T> iter, Predicate<? super T> predicate) {
         return new AbstractIterator<T>() {
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (iter.hasNext()) {
                     T next = iter.next();
                     if (predicate.test(next)) {
@@ -68,8 +67,7 @@ public final class IteratorUtil {
         return new AbstractIterator<R>() {
             private Iterator<? extends R> current = null;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (current != null && current.hasNext()) {
                     setNext(current.next());
                 } else {
@@ -97,8 +95,7 @@ public final class IteratorUtil {
         return new AbstractIterator<R>() {
             private Iterator<? extends R> current = null;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (current != null && current.hasNext()) {
                     setNext(current.next());
                 } else {
@@ -122,8 +119,7 @@ public final class IteratorUtil {
 
     public static <T, R> Iterator<@NonNull R> mapNotNull(Iterator<? extends T> it, Function<@NonNull ? super T, @Nullable ? extends R> mapper) {
         return new AbstractIterator<R>() {
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 while (it.hasNext()) {
                     T next = it.next();
                     if (next != null) {
@@ -141,8 +137,7 @@ public final class IteratorUtil {
 
     public static <T> Iterator<T> filter(Iterator<? extends T> it, Predicate<? super T> filter) {
         return new AbstractIterator<T>() {
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 while (it.hasNext()) {
                     T next = it.next();
                     if (filter.test(next)) {
@@ -164,13 +159,11 @@ public final class IteratorUtil {
 
     public static <T, R> Iterator<R> map(Iterator<? extends T> iter, Function<? super T, ? extends R> mapper) {
         return new Iterator<R>() {
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return iter.hasNext();
             }
 
-            @Override
-            public R next() {
+            @Override public R next() {
                 return mapper.apply(iter.next());
             }
         };
@@ -183,8 +176,7 @@ public final class IteratorUtil {
         return () -> mapper.apply(iter.iterator());
     }
 
-    @SafeVarargs
-    public static <T> Iterator<T> iterate(T... elements) {
+    @SafeVarargs public static <T> Iterator<T> iterate(T... elements) {
         return Arrays.asList(elements).iterator();
     }
 
@@ -196,13 +188,11 @@ public final class IteratorUtil {
         }
         return new Iterator<T>() {
 
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return as.hasNext() || bs.hasNext();
             }
 
-            @Override
-            public T next() {
+            @Override public T next() {
                 return as.hasNext() ? as.next() : bs.next();
             }
         };
@@ -246,8 +236,7 @@ public final class IteratorUtil {
             return new AbstractIterator<T>() {
                 T next = it.next();
 
-                @Override
-                protected void computeNext() {
+                @Override protected void computeNext() {
                     if (it.hasNext()) {
                         setNext(next);
                         next = it.next();
@@ -271,8 +260,7 @@ public final class IteratorUtil {
         return new AbstractIterator<T>() {
             private int idx = 0;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (it.hasNext()) {
                     setNext((T) ringBuffer[idx]); // yield element X from the buffer
                     ringBuffer[idx] = it.next();  // overwrite with the element X+n
@@ -290,8 +278,7 @@ public final class IteratorUtil {
      * Coerce an iterator with a wildcard. This is safe because the Iterator
      * interface is covariant (not {@link ListIterator} though).
      */
-    @SuppressWarnings("unchecked")
-    public static <T> Iterator<T> coerceWildcard(final Iterator<? extends T> it) {
+    @SuppressWarnings("unchecked") public static <T> Iterator<T> coerceWildcard(final Iterator<? extends T> it) {
         return (Iterator<T>) it;
     }
 
@@ -349,8 +336,7 @@ public final class IteratorUtil {
         return new AbstractIterator<T>() {
             private int yielded = 0;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (yielded >= n || !iterator.hasNext()) {
                     done();
                 } else {
@@ -371,8 +357,7 @@ public final class IteratorUtil {
         return new AbstractIterator<T>() {
             private int yielded = 0;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 while (yielded++ < n && source.hasNext()) {
                     source.next();
                 }
@@ -399,8 +384,7 @@ public final class IteratorUtil {
         return new AbstractIterator<T>() {
             T next = seed;
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 if (next == null) {
                     done();
                     return;
@@ -453,13 +437,11 @@ public final class IteratorUtil {
         class SingletonIterator implements Iterator<T> {
             private boolean done;
 
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return !done;
             }
 
-            @Override
-            public T next() {
+            @Override public T next() {
                 if (done) {
                     throw new NoSuchElementException();
                 }
@@ -467,8 +449,7 @@ public final class IteratorUtil {
                 return value;
             }
 
-            @Override
-            public void forEachRemaining(Consumer<? super T> action) {
+            @Override public void forEachRemaining(Consumer<? super T> action) {
                 action.accept(value);
             }
         }
@@ -483,20 +464,17 @@ public final class IteratorUtil {
             ListIterator<T> li = lst.listIterator(lst.size());
 
 
-            @Override
-            public boolean hasNext() {
+            @Override public boolean hasNext() {
                 return li.hasPrevious();
             }
 
 
-            @Override
-            public T next() {
+            @Override public T next() {
                 return li.previous();
             }
 
 
-            @Override
-            public void remove() {
+            @Override public void remove() {
                 li.remove();
             }
         };
@@ -523,25 +501,23 @@ public final class IteratorUtil {
         private T next = null;
 
 
-        @Override
-        public boolean hasNext() {
+        @Override public boolean hasNext() {
             switch (state) {
-            case DONE:
-                return false;
-            case READY:
-                return true;
-            default:
-                state = null;
-                computeNext();
-                if (state == null) {
-                    throw new IllegalStateException("Should have called done or setNext");
-                }
-                return state == State.READY;
+                case DONE:
+                    return false;
+                case READY:
+                    return true;
+                default:
+                    state = null;
+                    computeNext();
+                    if (state == null) {
+                        throw new IllegalStateException("Should have called done or setNext");
+                    }
+                    return state == State.READY;
             }
         }
 
-        @Override
-        public T next() {
+        @Override public T next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
@@ -577,8 +553,7 @@ public final class IteratorUtil {
          * @throws UnsupportedOperationException always, as the {@code remove}
          *         operation is not supported by this iterator
          */
-        @Override
-        public final void remove() {
+        @Override public final void remove() {
             throw new UnsupportedOperationException("remove");
         }
 
@@ -589,8 +564,7 @@ public final class IteratorUtil {
         private int numYielded = 0;
         private T currentValue;
 
-        @Override
-        public T next() {
+        @Override public T next() {
             T next = super.next();
             currentValue = next;
             prepareViewOn(next);

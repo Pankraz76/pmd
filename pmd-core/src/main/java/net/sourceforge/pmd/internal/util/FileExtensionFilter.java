@@ -27,14 +27,13 @@ final class FileExtensionFilter implements Predicate<String> {
         }
     }
 
-    @Override
-    public boolean test(String path) {
+    @Override public boolean test(String path) {
         boolean accept = extensions == null;
         if (!accept) {
             for (String extension : extensions) {
                 boolean matches =
-                    ignoreCase ? StringUtils.endsWithIgnoreCase(path, extension)
-                               : path.endsWith(extension);
+                        ignoreCase ? StringUtils.endsWithIgnoreCase(path, extension)
+                                : path.endsWith(extension);
                 if (matches) {
                     accept = true;
                     break;

@@ -54,13 +54,11 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
  */
 public class DoubleCheckedLockingRule extends AbstractJavaRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTMethodDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         if (node.isVoid() || node.getResultTypeNode() instanceof ASTPrimitiveType || node.getBody() == null) {
             return data;
         }
@@ -79,7 +77,7 @@ public class DoubleCheckedLockingRule extends AbstractJavaRule {
         JVariableSymbol returnVariable = ((ASTNamedReferenceExpr) returnExpr).getReferencedSym();
         // With Java5 and volatile keyword, DCL is no longer an issue
         if (returnVariable instanceof JFieldSymbol
-            && Modifier.isVolatile(((JFieldSymbol) returnVariable).getModifiers())) {
+                && Modifier.isVolatile(((JFieldSymbol) returnVariable).getModifiers())) {
             return data;
         }
 
@@ -100,7 +98,7 @@ public class DoubleCheckedLockingRule extends AbstractJavaRule {
                     if (JavaRuleUtil.isNullCheck(is2.getCondition(), returnVariable)) {
                         List<ASTAssignmentExpression> assignments = is2.descendants(ASTAssignmentExpression.class).toList();
                         if (assignments.size() == 1
-                            && JavaAstUtils.isReferenceToVar(assignments.get(0).getLeftOperand(), returnVariable)) {
+                                && JavaAstUtils.isReferenceToVar(assignments.get(0).getLeftOperand(), returnVariable)) {
                             asCtx(data).addViolation(node);
 
                         }
@@ -125,9 +123,9 @@ public class DoubleCheckedLockingRule extends AbstractJavaRule {
         }
 
         return (initializer == null || isVolatileFieldReference(initializer))
-            && method.descendants(ASTAssignmentExpression.class)
-                     .filter(it -> JavaAstUtils.isReferenceToVar(it.getLeftOperand(), local))
-                     .all(it -> isVolatileFieldReference(it.getRightOperand()));
+                && method.descendants(ASTAssignmentExpression.class)
+                .filter(it -> JavaAstUtils.isReferenceToVar(it.getLeftOperand(), local))
+                .all(it -> isVolatileFieldReference(it.getRightOperand()));
     }
 
     private boolean isVolatileFieldReference(@Nullable ASTExpression initializer) {

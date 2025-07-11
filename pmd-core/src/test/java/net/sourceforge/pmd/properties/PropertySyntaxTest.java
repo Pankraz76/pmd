@@ -28,36 +28,34 @@ class PropertySyntaxTest extends RulesetFactoryTestBase {
 
         ArrayList<PropertyDescriptor<?>> descriptors = new ArrayList<>(rule.getPropertyDescriptors());
         descriptors.removeAll(setOf(Rule.VIOLATION_SUPPRESS_REGEX_DESCRIPTOR,
-                                    Rule.VIOLATION_SUPPRESS_XPATH_DESCRIPTOR));
+                Rule.VIOLATION_SUPPRESS_XPATH_DESCRIPTOR));
         return descriptors.get(0);
     }
 
     private static String contextForPropertyDef(String propDef) {
         return rulesetXml(
-            dummyRule(
-                properties(
-                    propDef
+                dummyRule(
+                        properties(
+                                propDef
+                        )
                 )
-            )
         );
     }
 
 
-    @Test
-    void testPropDefXml() {
+    @Test void testPropDefXml() {
         PropertyDescriptor<?> prop = defineProperty(
-            propertyDefWithValueAttr("pname", "pdesc", "String", "strvalue")
+                propertyDefWithValueAttr("pname", "pdesc", "String", "strvalue")
         );
 
         assertEquals("pname", prop.name());
         assertEquals("strvalue", prop.defaultValue());
     }
 
-    @Test
-    void testNumericPropDefWithoutBounds() {
+    @Test void testNumericPropDefWithoutBounds() {
         // https://github.com/pmd/pmd/issues/1204
         PropertyDescriptor<?> prop = defineProperty(
-            "<property name='pname' description='d' type='Integer' value='4' />"
+                "<property name='pname' description='d' type='Integer' value='4' />"
         );
 
         assertEquals("pname", prop.name());
@@ -65,11 +63,10 @@ class PropertySyntaxTest extends RulesetFactoryTestBase {
         assertEquals(emptyList(), prop.serializer().getConstraints());
     }
 
-    @Test
-    void testNumericPropDefWithMinBound() {
+    @Test void testNumericPropDefWithMinBound() {
         // https://github.com/pmd/pmd/issues/1204
         PropertyDescriptor<?> prop = defineProperty(
-            "<property name='pname' description='d' type='Integer' value='4' min='1' />"
+                "<property name='pname' description='d' type='Integer' value='4' min='1' />"
         );
 
         assertEquals("pname", prop.name());
@@ -79,55 +76,49 @@ class PropertySyntaxTest extends RulesetFactoryTestBase {
     }
 
 
-    @Test
-    void testNumericPropDefWithMaxBound() {
+    @Test void testNumericPropDefWithMaxBound() {
         // https://github.com/pmd/pmd/issues/1204
         PropertyDescriptor<?> prop = defineProperty(
-            "<property name='pname' description='d' type='Integer' value='4' max='6' />"
+                "<property name='pname' description='d' type='Integer' value='4' max='6' />"
         );
 
         assertEquals("Should be smaller or equal to 6", prop.serializer().getConstraints().get(0).getConstraintDescription());
     }
 
-    @Test
-    void testNumericPropDefWithMaxAndMin() {
+    @Test void testNumericPropDefWithMaxAndMin() {
         // https://github.com/pmd/pmd/issues/1204
         PropertyDescriptor<?> prop = defineProperty(
-            "<property name='pname' description='d' type='Integer' value='4' max='6' min='2' />"
+                "<property name='pname' description='d' type='Integer' value='4' max='6' min='2' />"
         );
 
         assertEquals("Should be between 2 and 6", prop.serializer().getConstraints().get(0).getConstraintDescription());
     }
 
-    @Test
-    void testNumericPropDefWithMaxAndMinUnordered() {
+    @Test void testNumericPropDefWithMaxAndMinUnordered() {
         assertCannotParse(
-            contextForPropertyDef(
-                "<property name='pname' description='d' type='Integer' value='4' max='6' min='12' />"
-            )
+                contextForPropertyDef(
+                        "<property name='pname' description='d' type='Integer' value='4' max='6' min='12' />"
+                )
         );
         verifyFoundAnErrorWithMessage(containing(XmlErrorMessages.ERR__INVALID_VALUE_RANGE));
     }
 
-    @Test
-    void testNumericPropConstraintViolated() {
+    @Test void testNumericPropConstraintViolated() {
         // https://github.com/pmd/pmd/issues/1204
         assertCannotParse(contextForPropertyDef(
-            "<property name='pname' description='d' type='Integer' value='4' max='1' />"
+                "<property name='pname' description='d' type='Integer' value='4' max='1' />"
         ));
         verifyFoundAnErrorWithMessage(containing("'4' should be smaller or equal to 1"));
 
     }
 
 
-    @Test
-    void testStringProp() {
+    @Test void testStringProp() {
         assertValueRoundTrip(PropertyParsingUtil.STRING, "ad", "ad");
         assertValueRoundTrip(PropertyParsingUtil.STRING, "", "");
     }
 
-    @Test
-    void testStringListProp() {
+    @Test void testStringListProp() {
         assertValueRoundTrip(PropertyParsingUtil.STRING_LIST, "ad,j", listOf("ad", "j"));
     }
 

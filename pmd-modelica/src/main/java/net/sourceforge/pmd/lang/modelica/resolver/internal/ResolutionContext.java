@@ -73,12 +73,12 @@ public class ResolutionContext {
         private final boolean timedOut;
 
         Result(Class<A> tpe, List<?> best, List<?> hidden, boolean timedOut) {
-            for (Object b: best) {
+            for (Object b : best) {
                 if (tpe.isInstance(b)) {
                     bestCandidates.add((A) b);
                 }
             }
-            for (Object h: hidden) {
+            for (Object h : hidden) {
                 if (tpe.isInstance(h)) {
                     hiddenCandidates.add((A) h);
                 }
@@ -86,33 +86,27 @@ public class ResolutionContext {
             this.timedOut = timedOut;
         }
 
-        @Override
-        public List<A> getBestCandidates() {
+        @Override public List<A> getBestCandidates() {
             return Collections.unmodifiableList(bestCandidates);
         }
 
-        @Override
-        public List<A> getHiddenCandidates() {
+        @Override public List<A> getHiddenCandidates() {
             return Collections.unmodifiableList(hiddenCandidates);
         }
 
-        @Override
-        public boolean isUnresolved() {
+        @Override public boolean isUnresolved() {
             return bestCandidates.isEmpty();
         }
 
-        @Override
-        public boolean isClashed() {
+        @Override public boolean isClashed() {
             return bestCandidates.size() > 1;
         }
 
-        @Override
-        public boolean hasHiddenResults() {
+        @Override public boolean hasHiddenResults() {
             return !hiddenCandidates.isEmpty();
         }
 
-        @Override
-        public boolean wasTimedOut() {
+        @Override public boolean wasTimedOut() {
             return timedOut;
         }
     }
@@ -129,8 +123,7 @@ public class ResolutionContext {
         return new Result<>(clazz, bestCandidates, hiddenCandidates, ttlExceeded);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Resolved[");
         sb.append(bestCandidates.size());

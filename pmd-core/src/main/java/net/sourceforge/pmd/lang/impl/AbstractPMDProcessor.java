@@ -29,8 +29,7 @@ abstract class AbstractPMDProcessor implements AutoCloseable {
      * Joins tasks and await completion of the analysis. After this, all
      * {@link TextFile}s must have been closed.
      */
-    @Override
-    public abstract void close();
+    @Override public abstract void close();
 
     /**
      * Returns a new file processor. The strategy used for threading is
@@ -40,8 +39,8 @@ abstract class AbstractPMDProcessor implements AutoCloseable {
      */
     public static AbstractPMDProcessor newFileProcessor(AnalysisTask analysisTask) {
         return analysisTask.getThreadCount() > 0
-               ? new MultiThreadProcessor(analysisTask)
-               : new MonoThreadProcessor(analysisTask);
+                ? new MultiThreadProcessor(analysisTask)
+                : new MonoThreadProcessor(analysisTask);
     }
 
 }

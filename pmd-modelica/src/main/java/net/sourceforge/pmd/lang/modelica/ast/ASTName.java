@@ -20,13 +20,11 @@ public final class ASTName extends AbstractModelicaNode implements ResolvableMod
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
 
         nameComponents = new String[getNumChildren()];
@@ -66,8 +64,7 @@ public final class ASTName extends AbstractModelicaNode implements ResolvableMod
      *
      * We do not decide on entity type on behalf of the rule code, since this may introduce false negatives.
      */
-    @Override
-    public ResolutionResult<ResolvableEntity> getResolutionCandidates() {
+    @Override public ResolutionResult<ResolvableEntity> getResolutionCandidates() {
         if (resolutionCandidates == null) {
             resolutionCandidates = getMostSpecificScope().safeResolveLexically(ResolvableEntity.class, ResolutionState.forType(), getCompositeName());
         }

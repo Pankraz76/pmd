@@ -19,17 +19,15 @@ import net.sourceforge.pmd.lang.java.ast.ASTVariableAccess;
 
 class JavaAstUtilTest extends BaseParserTest {
 
-    @Test
-    void testFlattenConcatOperands() {
+    @Test void testFlattenConcatOperands() {
         ASTExpression e = parseExpr("s1+s2+s3");
 
         assertTrue(isStringConcatExpr(e));
         assertEquals(e.descendants(ASTVariableAccess.class).toList(),
-                     flattenOperands(e).toList());
+                flattenOperands(e).toList());
     }
 
-    @Test
-    void testFlattenConcatOperandsRespectsTyping() {
+    @Test void testFlattenConcatOperandsRespectsTyping() {
         ASTInfixExpression e = (ASTInfixExpression) parseExpr("i+j+s2+s3");
         assertTrue(isStringConcatExpr(e));
         ASTInfixExpression left = (ASTInfixExpression) e.getLeftOperand();
@@ -38,7 +36,7 @@ class JavaAstUtilTest extends BaseParserTest {
         //                      This is (i+j)
         //                  vvvvvvvvvvvvvvvvvvvvv
         assertEquals(listOf(left.getLeftOperand(), left.getRightOperand(), e.getRightOperand()),
-                     flattenOperands(e).toList());
+                flattenOperands(e).toList());
     }
 
 }

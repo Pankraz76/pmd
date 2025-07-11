@@ -14,33 +14,27 @@ class PythonCpdLexerTest extends CpdTextComparisonTest {
         super("python", ".py");
     }
 
-    @Test
-    void sampleTest() {
+    @Test void sampleTest() {
         doTest("sample_python");
     }
 
-    @Test
-    void specialComments() {
+    @Test void specialComments() {
         doTest("special_comments");
     }
 
-    @Test
-    void testBackticks() {
+    @Test void testBackticks() {
         doTest("backticks");
     }
 
-    @Test
-    void testUnicode() {
+    @Test void testUnicode() {
         doTest("sample_unicode");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 
-    @Test
-    void testVarWithDollar() {
+    @Test void testVarWithDollar() {
         doTest("var_with_dollar");
     }
 

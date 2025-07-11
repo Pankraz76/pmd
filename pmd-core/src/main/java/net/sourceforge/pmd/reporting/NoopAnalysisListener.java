@@ -17,13 +17,11 @@ final class NoopAnalysisListener implements GlobalAnalysisListener {
 
     }
 
-    @Override
-    public FileAnalysisListener startFileAnalysis(TextFile file) {
+    @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
         return FileAnalysisListener.noop();
     }
 
-    @Override
-    public void close() {
+    @Override public void close() {
         // do nothing
     }
 }

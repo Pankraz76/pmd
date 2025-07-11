@@ -20,26 +20,22 @@ public final class ReportStatsListener extends BaseResultProducingCloseable<Repo
     private final AtomicInteger numErrors = new AtomicInteger(0);
     private final AtomicInteger numViolations = new AtomicInteger(0);
 
-    @Override
-    public FileAnalysisListener startFileAnalysis(TextFile file) {
+    @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
         return new FileAnalysisListener() {
             // this object does not need thread-safety so we avoid using atomics,
             // except during the merge.
             private int numErrors = 0;
             private int numViolations = 0;
 
-            @Override
-            public void onRuleViolation(RuleViolation violation) {
+            @Override public void onRuleViolation(RuleViolation violation) {
                 numViolations++;
             }
 
-            @Override
-            public void onError(ProcessingError error) {
+            @Override public void onError(ProcessingError error) {
                 numErrors++;
             }
 
-            @Override
-            public void close() {
+            @Override public void close() {
                 if (numErrors > 0) {
                     ReportStatsListener.this.numErrors.addAndGet(this.numErrors);
                 }
@@ -50,11 +46,10 @@ public final class ReportStatsListener extends BaseResultProducingCloseable<Repo
         };
     }
 
-    @Override
-    protected ReportStats getResultImpl() {
+    @Override protected ReportStats getResultImpl() {
         return new ReportStats(
-            numErrors.get(),
-            numViolations.get()
+                numErrors.get(),
+                numViolations.get()
         );
     }
 

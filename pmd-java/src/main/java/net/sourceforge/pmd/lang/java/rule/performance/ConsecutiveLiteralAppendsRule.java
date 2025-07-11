@@ -84,8 +84,8 @@ public class ConsecutiveLiteralAppendsRule extends AbstractJavaRulechainRule {
 
     private static final PropertyDescriptor<Integer> THRESHOLD_DESCRIPTOR
             = PropertyFactory.intProperty("threshold")
-                             .desc("Max consecutive appends")
-                             .require(inRange(1, 10)).defaultValue(1).build();
+            .desc("Max consecutive appends")
+            .require(inRange(1, 10)).defaultValue(1).build();
 
     private ConsecutiveCounter counter = new ConsecutiveCounter();
 
@@ -94,8 +94,7 @@ public class ConsecutiveLiteralAppendsRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(THRESHOLD_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTVariableId node, Object data) {
+    @Override public Object visit(ASTVariableId node, Object data) {
         if (!isStringBuilderOrBuffer(node)) {
             return data;
         }
@@ -273,7 +272,7 @@ public class ConsecutiveLiteralAppendsRule extends AbstractJavaRulechainRule {
 
     static boolean isStringBuilderOrBuffer(TypeNode node) {
         return TypeTestUtil.isA(StringBuffer.class, node)
-            || TypeTestUtil.isA(StringBuilder.class, node);
+                || TypeTestUtil.isA(StringBuilder.class, node);
     }
 
     private static final class ConsecutiveCounter {
@@ -309,8 +308,7 @@ public class ConsecutiveLiteralAppendsRule extends AbstractJavaRulechainRule {
             return reportNode;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "counter=" + counter + ",threshold=" + threshold + ",node=" + reportNode;
         }
     }

@@ -20,14 +20,12 @@ import net.sourceforge.pmd.lang.cpp.CppLanguageModule;
 class CppCpdTest {
     private Path testdir;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeEach void setUp() {
         String path = IOUtil.normalizePath("src/test/resources/net/sourceforge/pmd/lang/cpp/cpd/testdata");
         testdir = Paths.get(path);
     }
 
-    @Test
-    void testIssue2438() throws Exception {
+    @Test void testIssue2438() throws Exception {
         CPDConfiguration configuration = new CPDConfiguration();
         configuration.setMinimumTileSize(50);
         configuration.setOnlyRecognizeLanguage(CppLanguageModule.getInstance());

@@ -71,16 +71,14 @@ class SourceManager implements AutoCloseable {
     }
 
 
-    @Override
-    public void close() throws IOException {
+    @Override public void close() throws IOException {
         Exception exception = IOUtil.closeAll(textFiles);
         if (exception != null) {
             throw new IOException(exception);
         }
     }
 
-    @SuppressWarnings("PMD.CloseResource")
-    public Chars getSlice(Mark mark) {
+    @SuppressWarnings("PMD.CloseResource") public Chars getSlice(Mark mark) {
         TextFile textFile = fileByPathId.get(mark.getToken().getFileId());
         assert textFile != null : "No such file " + mark.getToken().getFileId();
         TextDocument doc = get(textFile);

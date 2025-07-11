@@ -14,16 +14,15 @@ import net.sourceforge.pmd.lang.java.BaseParserTest;
 
 class ASTClassTypeTest extends BaseParserTest {
 
-    @Test
-    void testGithub4990() {
+    @Test void testGithub4990() {
         ASTCompilationUnit acu = java.parse(
-            "import java.util.*;\n"
-                + "\n"
-                + "public class Test {\n"
-                + "  public void Test() {\n"
-                + "    boolean good4 = java.util.Collections.emptyList();  // Line 6\n"
-                + "  }\n"
-                + "}");
+                "import java.util.*;\n"
+                        + "\n"
+                        + "public class Test {\n"
+                        + "  public void Test() {\n"
+                        + "    boolean good4 = java.util.Collections.emptyList();  // Line 6\n"
+                        + "  }\n"
+                        + "}");
         List<ASTClassType> types = acu.descendants(ASTClassType.class).toList();
 
         ASTClassType ct = types.get(0);

@@ -16,8 +16,7 @@ class JspCpdLexerTest extends CpdTextComparisonTest {
         super(JspLanguageModule.getInstance(), ".jsp");
     }
 
-    @Test
-    void scriptletWithString() {
+    @Test void scriptletWithString() {
         doTest("scriptletWithString");
     }
 }

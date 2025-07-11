@@ -14,8 +14,8 @@ import net.sourceforge.pmd.util.IteratorUtil;
 import net.sourceforge.pmd.util.OptionalBool;
 
 class ShadowChainIteratorImpl<S, I>
-    extends IteratorUtil.AbstractPausingIterator<ShadowChainNode<S, I>>
-    implements ShadowChainIterator<S, I> {
+        extends IteratorUtil.AbstractPausingIterator<ShadowChainNode<S, I>>
+        implements ShadowChainIterator<S, I> {
 
     private ShadowChainNode<S, I> nextGroupToTest;
     private final String name;
@@ -27,8 +27,7 @@ class ShadowChainIteratorImpl<S, I>
 
     // FIXME cross shadow barrier
 
-    @Override
-    protected void computeNext() {
+    @Override protected void computeNext() {
         ShadowChainNode<S, I> next = nextGroupThatKnows(nextGroupToTest, name);
         if (next == null) {
             done();
@@ -39,8 +38,7 @@ class ShadowChainIteratorImpl<S, I>
     }
 
 
-    @Override
-    protected void prepareViewOn(ShadowChainNode<S, I> current) {
+    @Override protected void prepareViewOn(ShadowChainNode<S, I> current) {
         if (current instanceof ShadowChainNodeBase) {
             nextGroupToTest = current.getParent();
         } else {
@@ -48,13 +46,11 @@ class ShadowChainIteratorImpl<S, I>
         }
     }
 
-    @Override
-    public I getScopeTag() {
+    @Override public I getScopeTag() {
         return ((ShadowChainNodeBase<S, I>) getCurrentValue()).getScopeTag();
     }
 
-    @Override
-    public List<S> getResults() {
+    @Override public List<S> getResults() {
         return getCurrentValue().resolveHere(name);
     }
 

@@ -16,8 +16,7 @@ import net.sourceforge.pmd.lang.java.BaseParserTest;
 
 class JavaRuleUtilTest extends BaseParserTest {
 
-    @Test
-    void testCamelCaseWords() {
+    @Test void testCamelCaseWords() {
         assertFalse(startsWithCamelCaseWord("getter", "get"), "no word boundary");
         assertFalse(startsWithCamelCaseWord("get", "get"), "no following word");
         assertTrue(startsWithCamelCaseWord("getX", "get"), "ok prefix");
@@ -27,8 +26,7 @@ class JavaRuleUtilTest extends BaseParserTest {
         assertThrows(NullPointerException.class, () -> startsWithCamelCaseWord("fnei", null));
     }
 
-    @Test
-    void testContainsCamelCaseWords() {
+    @Test void testContainsCamelCaseWords() {
 
         assertFalse(containsCamelCaseWord("isABoolean", "Bool"), "no word boundary");
         assertTrue(containsCamelCaseWord("isABoolean", "A"), "ok word in the middle");

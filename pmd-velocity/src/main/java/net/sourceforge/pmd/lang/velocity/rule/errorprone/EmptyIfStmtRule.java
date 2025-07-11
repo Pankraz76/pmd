@@ -12,20 +12,17 @@ import net.sourceforge.pmd.lang.velocity.ast.VtlNode;
 import net.sourceforge.pmd.lang.velocity.rule.AbstractVtlRule;
 
 public class EmptyIfStmtRule extends AbstractVtlRule {
-    @Override
-    public Object visit(final ASTIfStatement node, final Object data) {
+    @Override public Object visit(final ASTIfStatement node, final Object data) {
         handleIf(node, data);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(final ASTElseIfStatement node, final Object data) {
+    @Override public Object visit(final ASTElseIfStatement node, final Object data) {
         handleIf(node, data);
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(final ASTElseStatement node, final Object data) {
+    @Override public Object visit(final ASTElseStatement node, final Object data) {
         handleIf(node, data);
         return super.visit(node, data);
     }

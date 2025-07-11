@@ -182,15 +182,15 @@ public abstract class RuleTst {
         List<String> expectedMessages = test.getExpectedMessages();
         if (report.getViolations().size() != expectedMessages.size()) {
             throw new RuntimeException("Test setup error: number of expected messages doesn't match "
-                                           + "number of violations for test case '" + test.getDescription() + "'");
+                    + "number of violations for test case '" + test.getDescription() + "'");
         }
 
         int index = 0;
         for (RuleViolation violation : report.getViolations()) {
             String actual = violation.getDescription();
             assertEquals(expectedMessages.get(index), actual,
-                         '"' + test.getDescription() + "\" produced wrong message on violation number " + (index + 1)
-                             + ".");
+                    '"' + test.getDescription() + "\" produced wrong message on violation number " + (index + 1)
+                            + ".");
             index++;
         }
     }
@@ -204,9 +204,9 @@ public abstract class RuleTst {
         List<Integer> expectedEndLines = test.getExpectedEndLineNumbers();
         if (report.getViolations().size() != expected.size()) {
             throw new RuntimeException("Test setup error: number of expected line numbers " + expected.size()
-                                           + " doesn't match number of violations " + report.getViolations().size()
-                                           + " for test case '"
-                                           + test.getDescription() + "'");
+                    + " doesn't match number of violations " + report.getViolations().size()
+                    + " for test case '"
+                    + test.getDescription() + "'");
         }
 
         int index = 0;
@@ -215,12 +215,12 @@ public abstract class RuleTst {
             Integer actualEndLine = violation.getEndLine();
 
             assertEquals(expected.get(index), actualBeginLine,
-                         '"' + test.getDescription() + "\" violation on wrong line number: violation number "
-                             + (index + 1) + ".");
+                    '"' + test.getDescription() + "\" violation on wrong line number: violation number "
+                            + (index + 1) + ".");
             if (!expectedEndLines.isEmpty()) {
                 assertEquals(expectedEndLines.get(index), actualEndLine,
                         '"' + test.getDescription() + "\" violation on wrong end line number: violation number "
-                            + (index + 1) + ".");
+                                + (index + 1) + ".");
             }
             index++;
         }
@@ -239,8 +239,8 @@ public abstract class RuleTst {
         }
 
         System.out.println(
-            " -> Expected " + test.getExpectedProblems() + " problem(s), " + report.getViolations().size()
-                + " problem(s) found.");
+                " -> Expected " + test.getExpectedProblems() + " problem(s), " + report.getViolations().size()
+                        + " problem(s) found.");
         System.out.println(" -> Expected messages: " + test.getExpectedMessages());
         System.out.println(" -> Expected begin line numbers: " + test.getExpectedLineNumbers());
         if (!test.getExpectedEndLineNumbers().isEmpty()) {
@@ -400,8 +400,7 @@ public abstract class RuleTst {
         }
     }
 
-    @TestFactory
-    Collection<DynamicTest> ruleTests() {
+    @TestFactory Collection<DynamicTest> ruleTests() {
         setUp();
         final List<Rule> rules = new ArrayList<>(getRules());
         rules.sort(Comparator.comparing(Rule::getName));
@@ -422,14 +421,15 @@ public abstract class RuleTst {
 
     private DynamicTest toDynamicTest(RuleTestCollection collection, RuleTestDescriptor testDescriptor) {
         URI testSourceUri = URI.create(
-            collection.getAbsoluteUriToTestXmlFile() + "?line=" + testDescriptor.getLineNumber());
+                collection.getAbsoluteUriToTestXmlFile() + "?line=" + testDescriptor.getLineNumber());
         if (testDescriptor.isDisabled()) {
             return DynamicTest.dynamicTest("[IGNORED] " + testDescriptor.getDescription(),
-                                           testSourceUri,
-                                           () -> { });
+                    testSourceUri,
+                    () -> {
+                    });
         }
         return DynamicTest.dynamicTest(testDescriptor.getDescription(),
-                                       testSourceUri,
-                                       () -> runTest(testDescriptor));
+                testSourceUri,
+                () -> runTest(testDescriptor));
     }
 }

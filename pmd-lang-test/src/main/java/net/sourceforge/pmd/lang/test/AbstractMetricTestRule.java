@@ -33,16 +33,16 @@ import net.sourceforge.pmd.reporting.RuleContext;
 public abstract class AbstractMetricTestRule<N extends Number & Comparable<N>> extends AbstractRule {
 
     private final PropertyDescriptor<List<MetricOption>> optionsDescriptor =
-        PropertyFactory.enumListProperty("metricOptions", optionMappings())
-                       .desc("Choose a variant of the metric or the standard")
-                       .emptyDefaultValue()
-                       .build();
+            PropertyFactory.enumListProperty("metricOptions", optionMappings())
+                    .desc("Choose a variant of the metric or the standard")
+                    .emptyDefaultValue()
+                    .build();
 
     private final PropertyDescriptor<String> reportLevelDescriptor =
-        PropertyFactory.stringProperty("reportLevel")
-                       .desc("Minimum value required to report")
-                       .defaultValue("" + defaultReportLevel())
-                       .build();
+            PropertyFactory.stringProperty("reportLevel")
+                    .desc("Minimum value required to report")
+                    .defaultValue("" + defaultReportLevel())
+                    .build();
 
     private final Metric<?, N> metric;
 
@@ -80,8 +80,7 @@ public abstract class AbstractMetricTestRule<N extends Number & Comparable<N>> e
         return MessageFormat.format("At line {0} level {1}", node.getBeginLine(), result);
     }
 
-    @Override
-    public void apply(Node target, RuleContext ctx) {
+    @Override public void apply(Node target, RuleContext ctx) {
         if (reportOn(target)) {
             MetricOptions options = MetricOptions.ofOptions(getProperty(optionsDescriptor));
             N reportLevel = parseReportLevel(getProperty(reportLevelDescriptor));
@@ -105,13 +104,11 @@ public abstract class AbstractMetricTestRule<N extends Number & Comparable<N>> e
             super(metric);
         }
 
-        @Override
-        protected Integer parseReportLevel(String value) {
+        @Override protected Integer parseReportLevel(String value) {
             return Integer.parseInt(value);
         }
 
-        @Override
-        protected Integer defaultReportLevel() {
+        @Override protected Integer defaultReportLevel() {
             return 0;
         }
     }
@@ -122,13 +119,11 @@ public abstract class AbstractMetricTestRule<N extends Number & Comparable<N>> e
             super(metric);
         }
 
-        @Override
-        protected Double parseReportLevel(String value) {
+        @Override protected Double parseReportLevel(String value) {
             return Double.parseDouble(value);
         }
 
-        @Override
-        protected Double defaultReportLevel() {
+        @Override protected Double defaultReportLevel() {
             return 0.;
         }
     }

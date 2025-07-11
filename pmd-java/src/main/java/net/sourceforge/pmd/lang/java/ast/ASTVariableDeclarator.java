@@ -29,8 +29,7 @@ public class ASTVariableDeclarator extends AbstractJavaNode implements InternalI
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -46,9 +45,7 @@ public class ASTVariableDeclarator extends AbstractJavaNode implements InternalI
     /**
      * Returns the id of the declared variable.
      */
-    @Override
-    @NonNull
-    public ASTVariableId getVarId() {
+    @Override @NonNull public ASTVariableId getVarId() {
         return (ASTVariableId) getChild(0);
     }
 
@@ -65,8 +62,7 @@ public class ASTVariableDeclarator extends AbstractJavaNode implements InternalI
     /**
      * Returns the initializer, of the variable, or null if it doesn't exist.
      */
-    @Nullable
-    public ASTExpression getInitializer() {
+    @Nullable public ASTExpression getInitializer() {
         return hasInitializer() ? (ASTExpression) getLastChild() : null;
     }
 

@@ -17,28 +17,23 @@ class PLSQLCpdLexerTest extends CpdTextComparisonTest {
         super(PLSQLLanguageModule.getInstance(), ".sql");
     }
 
-    @Test
-    void testSimple() {
+    @Test void testSimple() {
         doTest("sample-plsql");
     }
 
-    @Test
-    void testSpecialComments() {
+    @Test void testSpecialComments() {
         doTest("specialComments");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 
-    @Test
-    void testIdentifiers() {
+    @Test void testIdentifiers() {
         doTest("identifiers");
     }
 
-    @Test
-    void anonymizeLiterals() {
+    @Test void anonymizeLiterals() {
         doTest("sample-plsql", "_ignore-literals", ignoreLiterals());
     }
 

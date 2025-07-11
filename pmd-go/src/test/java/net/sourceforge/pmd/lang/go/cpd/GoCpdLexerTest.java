@@ -14,23 +14,19 @@ class GoCpdLexerTest extends CpdTextComparisonTest {
         super("go", ".go");
     }
 
-    @Test
-    void simpleTest() {
+    @Test void simpleTest() {
         doTest("hello");
     }
 
-    @Test
-    void bigFileTest() {
+    @Test void bigFileTest() {
         doTest("btrfs");
     }
 
-    @Test
-    void testIssue1751() {
+    @Test void testIssue1751() {
         doTest("issue-1751");
     }
 
-    @Test
-    void testUnicode() {
+    @Test void testUnicode() {
         // https://github.com/pmd/pmd/issues/2752
         doTest("sample_unicode");
     }

@@ -15,8 +15,7 @@ import net.sourceforge.pmd.lang.go.ast.GolangLexer;
  */
 public class GoCpdLexer extends AntlrCpdLexer {
 
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new GolangLexer(charStream);
     }
 }

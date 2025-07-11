@@ -30,44 +30,43 @@ public final class ASTAnnotation extends AbstractApexNode.Single<AnnotationModif
      * for backward compatibility.
      */
     private static final NavigableSet<String> NORMALIZED_ANNOTATION_NAMES =
-        ImmutableSortedSet.orderedBy(String.CASE_INSENSITIVE_ORDER).add(
-            "AllowCertifiedApex",
-            "AuraEnabled",
-            "Deprecated",
-            "Future",
-            "HiddenFromDoc",
-            "HttpDelete",
-            "HttpGet",
-            "HttpPatch",
-            "HttpPost",
-            "HttpPut",
-            "InvocableMethod",
-            "InvocableVariable",
-            "IsTest",
-            "JsonAccess",
-            "NamespaceAccessible",
-            "NamespaceGuard",
-            "PermGuard",
-            "PrivateApi",
-            "ReadOnly",
-            "RemoteAction",
-            "RestResource",
-            "SfdcOnly",
-            "SuppressWarnings",
-            "TestSetup",
-            "TestVisible",
-            "UseConnectDeserializer",
-            "UseConnectSerializer",
-            "VisibleApiVersion"
-    ).build();
+            ImmutableSortedSet.orderedBy(String.CASE_INSENSITIVE_ORDER).add(
+                    "AllowCertifiedApex",
+                    "AuraEnabled",
+                    "Deprecated",
+                    "Future",
+                    "HiddenFromDoc",
+                    "HttpDelete",
+                    "HttpGet",
+                    "HttpPatch",
+                    "HttpPost",
+                    "HttpPut",
+                    "InvocableMethod",
+                    "InvocableVariable",
+                    "IsTest",
+                    "JsonAccess",
+                    "NamespaceAccessible",
+                    "NamespaceGuard",
+                    "PermGuard",
+                    "PrivateApi",
+                    "ReadOnly",
+                    "RemoteAction",
+                    "RestResource",
+                    "SfdcOnly",
+                    "SuppressWarnings",
+                    "TestSetup",
+                    "TestVisible",
+                    "UseConnectDeserializer",
+                    "UseConnectSerializer",
+                    "VisibleApiVersion"
+            ).build();
 
     ASTAnnotation(AnnotationModifier annotationModifier) {
         super(annotationModifier);
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -97,8 +96,7 @@ public final class ASTAnnotation extends AbstractApexNode.Single<AnnotationModif
         return node.getName().getString();
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return getName();
     }
 

@@ -29,10 +29,10 @@ public abstract class AbstractCounterCheckRule<T extends ApexNode<?>> extends Ab
 
 
     private final PropertyDescriptor<Integer> reportLevel =
-        CommonPropertyDescriptors.reportLevelProperty()
-                                 .desc("Threshold above which a node is reported")
-                                 .require(positive())
-                                 .defaultValue(defaultReportLevel()).build();
+            CommonPropertyDescriptors.reportLevelProperty()
+                    .desc("Threshold above which a node is reported")
+                    .require(positive())
+                    .defaultValue(defaultReportLevel()).build();
     private final Class<T> nodeType;
 
 
@@ -41,8 +41,7 @@ public abstract class AbstractCounterCheckRule<T extends ApexNode<?>> extends Ab
         definePropertyDescriptor(reportLevel);
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(nodeType);
     }
 
@@ -50,7 +49,7 @@ public abstract class AbstractCounterCheckRule<T extends ApexNode<?>> extends Ab
     protected abstract int defaultReportLevel();
 
     protected Object[] getViolationParameters(T node, int metric, int limit) {
-        return new Object[] {metric, limit};
+        return new Object[]{metric, limit};
     }
 
 
@@ -65,10 +64,8 @@ public abstract class AbstractCounterCheckRule<T extends ApexNode<?>> extends Ab
         return node.getReportLocation();
     }
 
-    @Override
-    public Object visitApexNode(ApexNode<?> node, Object data) {
-        @SuppressWarnings("unchecked")
-        T t = (T) node;
+    @Override public Object visitApexNode(ApexNode<?> node, Object data) {
+        @SuppressWarnings("unchecked") T t = (T) node;
         // since we only visit this node, it's ok
 
         if (!isIgnored(t)) {
@@ -88,8 +85,7 @@ public abstract class AbstractCounterCheckRule<T extends ApexNode<?>> extends Ab
             super(nodeType);
         }
 
-        @Override
-        protected int getMetric(T node) {
+        @Override protected int getMetric(T node) {
             Node measured = node;
             if (node instanceof ASTUserClass && node.getParent() instanceof ASTApexFile) {
                 measured = node.getParent();

@@ -13,7 +13,9 @@ public class LocalClassAndInterfaceDeclarations {
             static final int constantField = 1;
             // static members in local classes are allowed with Java16
             static int staticField;
-            static void staticMethod() { }
+
+            static void staticMethod() {
+            }
         }
 
         // static local classes are not allowed (neither Java16 nor Java16 Preview)
@@ -21,10 +23,12 @@ public class LocalClassAndInterfaceDeclarations {
         //static class MyLocalStaticClass {}
 
         // local interfaces are allowed with Java16
-        interface MyLocalInterface {}
+        interface MyLocalInterface {
+        }
 
         // local enums are allowed with Java16
-        enum MyLocalEnum { A }
+        enum MyLocalEnum { A
+        }
 
         // local annotation types are not allowed in Java16 (have been with Java15 Preview)
         //@interface MyLocalAnnotation {}

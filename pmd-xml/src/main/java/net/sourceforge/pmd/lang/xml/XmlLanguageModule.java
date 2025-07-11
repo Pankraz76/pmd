@@ -18,9 +18,9 @@ public class XmlLanguageModule extends SimpleLanguageModuleBase {
 
     public XmlLanguageModule() {
         super(LanguageMetadata.withId(ID).name("XML")
-                              .extensions("xml")
-                              .addVersion("1.0")
-                              .addDefaultVersion("1.1"),
+                        .extensions("xml")
+                        .addVersion("1.0")
+                        .addDefaultVersion("1.1"),
                 new XmlHandler());
     }
 
@@ -28,8 +28,7 @@ public class XmlLanguageModule extends SimpleLanguageModuleBase {
         return (XmlLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new XmlCpdLexer();
     }
 }

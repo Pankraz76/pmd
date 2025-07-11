@@ -33,19 +33,17 @@ public abstract class MessageReporterBase implements PmdReporter {
         this.minLevel = minLevel;
     }
 
-    @Override
-    public final boolean isLoggable(Level level) {
+    @Override public final boolean isLoggable(Level level) {
         return minLevel != null
-            && minLevel.compareTo(level) >= 0
-            && isLoggableImpl(level);
+                && minLevel.compareTo(level) >= 0
+                && isLoggableImpl(level);
     }
 
     protected boolean isLoggableImpl(Level level) {
         return true;
     }
 
-    @Override
-    public void logEx(Level level, @Nullable String message, Object[] formatArgs, @Nullable Throwable error) {
+    @Override public void logEx(Level level, @Nullable String message, Object[] formatArgs, @Nullable Throwable error) {
         if (isLoggable(level)) {
             if (error == null) {
                 Objects.requireNonNull(message, "cannot call this method with null message and error");
@@ -81,8 +79,7 @@ public abstract class MessageReporterBase implements PmdReporter {
         return errorMessage;
     }
 
-    @Override
-    public final void log(Level level, String message, Object... formatArgs) {
+    @Override public final void log(Level level, String message, Object... formatArgs) {
         if (level == Level.ERROR) {
             this.numErrors++;
         }
@@ -97,8 +94,7 @@ public abstract class MessageReporterBase implements PmdReporter {
     protected abstract void logImpl(Level level, String message);
 
 
-    @Override
-    public int numErrors() {
+    @Override public int numErrors() {
         return numErrors;
     }
 }

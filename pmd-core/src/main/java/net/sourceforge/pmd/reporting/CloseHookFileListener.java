@@ -22,23 +22,19 @@ public abstract class CloseHookFileListener<T extends FileAnalysisListener> impl
         this.delegate = delegate;
     }
 
-    @Override
-    public void onRuleViolation(RuleViolation violation) {
+    @Override public void onRuleViolation(RuleViolation violation) {
         delegate.onRuleViolation(violation);
     }
 
-    @Override
-    public void onSuppressedRuleViolation(SuppressedViolation violation) {
+    @Override public void onSuppressedRuleViolation(SuppressedViolation violation) {
         delegate.onSuppressedRuleViolation(violation);
     }
 
-    @Override
-    public void onError(ProcessingError error) {
+    @Override public void onError(ProcessingError error) {
         delegate.onError(error);
     }
 
-    @Override
-    public final void close() throws Exception {
+    @Override public final void close() throws Exception {
         Exception e = null;
         try {
             delegate.close();
@@ -48,8 +44,7 @@ public abstract class CloseHookFileListener<T extends FileAnalysisListener> impl
         doClose(delegate, e);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "CloseHookFileListener [delegate=" + delegate + "]";
     }
 

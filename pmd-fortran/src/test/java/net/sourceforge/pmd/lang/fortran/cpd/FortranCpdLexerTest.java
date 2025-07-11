@@ -18,8 +18,7 @@ class FortranCpdLexerTest extends CpdTextComparisonTest {
         super("fortran", ".for");
     }
 
-    @Test
-    void testSample() {
+    @Test void testSample() {
         doTest("sample");
     }
 }

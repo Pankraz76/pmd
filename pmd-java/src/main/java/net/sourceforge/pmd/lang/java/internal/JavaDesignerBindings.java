@@ -52,8 +52,7 @@ public final class JavaDesignerBindings extends DefaultDesignerBindings {
 
     }
 
-    @Override
-    public Attribute getMainAttribute(Node node) {
+    @Override public Attribute getMainAttribute(Node node) {
         if (node instanceof JavaNode) {
             Attribute attr = node.acceptVisitor(MainAttrVisitor.INSTANCE, null);
             if (attr != null) {
@@ -64,8 +63,7 @@ public final class JavaDesignerBindings extends DefaultDesignerBindings {
         return super.getMainAttribute(node);
     }
 
-    @Override
-    public TreeIconId getIcon(Node node) {
+    @Override public TreeIconId getIcon(Node node) {
         if (node instanceof ASTFieldDeclaration) {
             return TreeIconId.FIELD;
         } else if (node instanceof ASTTypeDeclaration) {
@@ -73,7 +71,7 @@ public final class JavaDesignerBindings extends DefaultDesignerBindings {
         } else if (node instanceof ASTMethodDeclaration) {
             return TreeIconId.METHOD;
         } else if (node instanceof ASTConstructorDeclaration
-            || node instanceof ASTCompactConstructorDeclaration) {
+                || node instanceof ASTCompactConstructorDeclaration) {
             return TreeIconId.CONSTRUCTOR;
         } else if (node instanceof ASTVariableId) {
             return TreeIconId.VARIABLE;
@@ -81,8 +79,7 @@ public final class JavaDesignerBindings extends DefaultDesignerBindings {
         return super.getIcon(node);
     }
 
-    @Override
-    public Collection<AdditionalInfo> getAdditionalInfo(Node node) {
+    @Override public Collection<AdditionalInfo> getAdditionalInfo(Node node) {
         List<AdditionalInfo> info = new ArrayList<>(super.getAdditionalInfo(node));
         if (node instanceof ASTLambdaExpression) {
             ASTLambdaExpression lambda = (ASTLambdaExpression) node;
@@ -113,13 +110,11 @@ public final class JavaDesignerBindings extends DefaultDesignerBindings {
         return info;
     }
 
-    @NonNull
-    private String formatModifierSet(Set<JModifier> modifierSet) {
+    @NonNull private String formatModifierSet(Set<JModifier> modifierSet) {
         return modifierSet.stream().map(JModifier::toString).collect(Collectors.joining(", ", "(", ")"));
     }
 
-    @Override
-    public RelatedNodesSelector getRelatedNodesSelector() {
+    @Override public RelatedNodesSelector getRelatedNodesSelector() {
         return n -> {
             if (n instanceof ASTNamedReferenceExpr) {
                 JVariableSymbol sym = ((ASTNamedReferenceExpr) n).getReferencedSym();
@@ -137,74 +132,60 @@ public final class JavaDesignerBindings extends DefaultDesignerBindings {
 
         private static final MainAttrVisitor INSTANCE = new MainAttrVisitor();
 
-        @Override
-        public Attribute visitJavaNode(JavaNode node, Void data) {
+        @Override public Attribute visitJavaNode(JavaNode node, Void data) {
             return null; // don't recurse
         }
 
-        @Override
-        public Attribute visit(ASTInfixExpression node, Void data) {
+        @Override public Attribute visit(ASTInfixExpression node, Void data) {
             return new Attribute(node, "Operator", node.getOperator().toString());
         }
 
-        @Override
-        public Attribute visitTypeDecl(ASTTypeDeclaration node, Void data) {
+        @Override public Attribute visitTypeDecl(ASTTypeDeclaration node, Void data) {
             return new Attribute(node, "SimpleName", node.getSimpleName());
         }
 
-        @Override
-        public Attribute visit(ASTAnnotation node, Void data) {
+        @Override public Attribute visit(ASTAnnotation node, Void data) {
             return new Attribute(node, "SimpleName", node.getSimpleName());
         }
 
-        @Override
-        public Attribute visit(ASTClassType node, Void data) {
+        @Override public Attribute visit(ASTClassType node, Void data) {
             return new Attribute(node, "SimpleName", node.getSimpleName());
         }
 
-        @Override
-        public Attribute visit(ASTPrimitiveType node, Void data) {
+        @Override public Attribute visit(ASTPrimitiveType node, Void data) {
             return new Attribute(node, "Kind", node.getKind().getSimpleName());
         }
 
-        @Override
-        public Attribute visit(ASTMethodCall node, Void data) {
+        @Override public Attribute visit(ASTMethodCall node, Void data) {
             return new Attribute(node, "MethodName", node.getMethodName());
         }
 
-        @Override
-        public Attribute visit(ASTMethodReference node, Void data) {
+        @Override public Attribute visit(ASTMethodReference node, Void data) {
             return new Attribute(node, "MethodName", node.getMethodName());
         }
 
-        @Override
-        public Attribute visit(ASTFieldAccess node, Void data) {
+        @Override public Attribute visit(ASTFieldAccess node, Void data) {
             return new Attribute(node, "Name", node.getName());
         }
 
-        @Override
-        public Attribute visit(ASTVariableAccess node, Void data) {
+        @Override public Attribute visit(ASTVariableAccess node, Void data) {
             return new Attribute(node, "Name", node.getName());
         }
 
 
-        @Override
-        public Attribute visit(ASTMethodDeclaration node, Void data) {
+        @Override public Attribute visit(ASTMethodDeclaration node, Void data) {
             return new Attribute(node, "Name", node.getName());
         }
 
-        @Override
-        public Attribute visit(ASTVariableId node, Void data) {
+        @Override public Attribute visit(ASTVariableId node, Void data) {
             return new Attribute(node, "Name", node.getName());
         }
 
-        @Override
-        public Attribute visit(ASTAssignmentExpression node, Void data) {
+        @Override public Attribute visit(ASTAssignmentExpression node, Void data) {
             return new Attribute(node, "Operator", node.getOperator().getToken());
         }
 
-        @Override
-        public Attribute visit(ASTUnaryExpression node, Void data) {
+        @Override public Attribute visit(ASTUnaryExpression node, Void data) {
             return new Attribute(node, "Operator", node.getOperator().getToken());
         }
     }

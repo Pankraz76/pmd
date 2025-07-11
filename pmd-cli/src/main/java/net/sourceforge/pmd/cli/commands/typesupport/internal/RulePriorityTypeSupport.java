@@ -14,8 +14,7 @@ import picocli.CommandLine.ITypeConverter;
 import picocli.CommandLine.TypeConversionException;
 
 public class RulePriorityTypeSupport implements ITypeConverter<RulePriority>, Iterable<String> {
-    @Override
-    public RulePriority convert(String value) {
+    @Override public RulePriority convert(String value) {
         for (RulePriority rulePriority : RulePriority.values()) {
             String descriptiveName = rulePriority.getName();
             String name = rulePriority.name();
@@ -27,8 +26,7 @@ public class RulePriorityTypeSupport implements ITypeConverter<RulePriority>, It
         throw new TypeConversionException("Invalid priority: " + value);
     }
 
-    @Override
-    public Iterator<String> iterator() {
+    @Override public Iterator<String> iterator() {
         List<String> completionValues = new ArrayList<>();
         for (RulePriority rulePriority : RulePriority.values()) {
             completionValues.add(rulePriority.name());

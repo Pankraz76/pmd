@@ -14,8 +14,7 @@ class JuliaCpdLexerTest extends CpdTextComparisonTest {
         super(JuliaLanguageModule.getInstance(), ".jl");
     }
 
-    @Test
-    void testMathExample() {
+    @Test void testMathExample() {
         doTest("mathExample");
     }
 }

@@ -10,8 +10,7 @@ public final class ASTJspScriptlet extends AbstractContentNode {
         super(id);
     }
 
-    @Override
-    public <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
+    @Override public <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

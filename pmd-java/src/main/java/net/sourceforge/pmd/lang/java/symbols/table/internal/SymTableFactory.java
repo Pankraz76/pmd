@@ -63,8 +63,7 @@ final class SymTableFactory {
 
     static final ShadowChainBuilder<JTypeMirror, ScopeInfo> TYPES = new ShadowChainBuilder<JTypeMirror, ScopeInfo>() {
 
-        @Override
-        public String getSimpleName(JTypeMirror type) {
+        @Override public String getSimpleName(JTypeMirror type) {
             if (type instanceof JClassType) {
                 return ((JClassType) type).getSymbol().getSimpleName();
             } else if (type instanceof JTypeVar) {
@@ -77,15 +76,13 @@ final class SymTableFactory {
     };
 
     static final ShadowChainBuilder<JVariableSig, ScopeInfo> VARS = new ShadowChainBuilder<JVariableSig, ScopeInfo>() {
-        @Override
-        public String getSimpleName(JVariableSig sym) {
+        @Override public String getSimpleName(JVariableSig sym) {
             return sym.getSymbol().getSimpleName();
         }
     };
 
     static final ShadowChainBuilder<JMethodSig, ScopeInfo> METHODS = new ShadowChainBuilder<JMethodSig, ScopeInfo>() {
-        @Override
-        public String getSimpleName(JMethodSig sym) {
+        @Override public String getSimpleName(JMethodSig sym) {
             return sym.getName();
         }
     };
@@ -117,17 +114,16 @@ final class SymTableFactory {
     }
 
     /** @see SymbolResolver#resolveClassFromCanonicalName(String) */
-    @Nullable
-    JClassSymbol loadClassOrFail(String fqcn) {
+    @Nullable JClassSymbol loadClassOrFail(String fqcn) {
         return processor.getSymResolver().resolveClassFromCanonicalName(fqcn);
     }
 
     // </editor-fold>
 
     private @NonNull JSymbolTable buildTable(JSymbolTable parent,
-                                             ShadowChainNode<JVariableSig, ScopeInfo> vars,
-                                             ShadowChainNode<JMethodSig, ScopeInfo> methods,
-                                             ShadowChainNode<JTypeMirror, ScopeInfo> types) {
+            ShadowChainNode<JVariableSig, ScopeInfo> vars,
+            ShadowChainNode<JMethodSig, ScopeInfo> methods,
+            ShadowChainNode<JTypeMirror, ScopeInfo> types) {
         if (vars == parent.variables() && methods == parent.methods() && types == parent.types()) { // NOPMD CompareObjectsWithEquals
             return parent;
         } else {
@@ -161,7 +157,7 @@ final class SymTableFactory {
         fillImportOnDemands(importsOnDemand, importedTypes, importedFields, importedMethodContainers, lazyImportedPackagesAndTypes);
 
         NameResolver<JMethodSig> methodResolver =
-            NameResolver.composite(CollectionUtil.map(importedMethodContainers, c -> JavaResolvers.staticImportOnDemandMethodResolver(c, thisPackage)));
+                NameResolver.composite(CollectionUtil.map(importedMethodContainers, c -> JavaResolvers.staticImportOnDemandMethodResolver(c, thisPackage)));
 
         ShadowChainNode<JVariableSig, ScopeInfo> vars = VARS.shadow(varNode(parent), ScopeInfo.IMPORT_ON_DEMAND, importedFields);
         ShadowChainNode<JMethodSig, ScopeInfo> methods = METHODS.shadow(methodNode(parent), ScopeInfo.IMPORT_ON_DEMAND, methodResolver);
@@ -171,10 +167,10 @@ final class SymTableFactory {
             types = TYPES.shadow(typeNode(parent), ScopeInfo.IMPORT_ON_DEMAND, importedTypes);
         } else {
             types = TYPES.shadowWithCache(
-                typeNode(parent),
-                ScopeInfo.IMPORT_ON_DEMAND,
-                importedTypes.getMutableMap(),
-                JavaResolvers.importedOnDemand(lazyImportedPackagesAndTypes, processor.getSymResolver(), thisPackage)
+                    typeNode(parent),
+                    ScopeInfo.IMPORT_ON_DEMAND,
+                    importedTypes.getMutableMap(),
+                    JavaResolvers.importedOnDemand(lazyImportedPackagesAndTypes, processor.getSymResolver(), thisPackage)
             );
         }
 
@@ -182,10 +178,10 @@ final class SymTableFactory {
     }
 
     private void fillImportOnDemands(Iterable<ASTImportDeclaration> importsOnDemand,
-                                     ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder importedTypes,
-                                     ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder importedFields,
-                                     List<JClassType> importedMethodContainers,
-                                     Set<String> importedPackagesAndTypes) {
+            ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder importedTypes,
+            ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder importedFields,
+            List<JClassType> importedMethodContainers,
+            Set<String> importedPackagesAndTypes) {
 
         for (ASTImportDeclaration anImport : importsOnDemand) {
             assert anImport.isImportOnDemand() : "Expected import on demand: " + anImport;
@@ -202,9 +198,9 @@ final class SymTableFactory {
     }
 
     private void fillStaticImportOnDemand(Optional<JavaNode> reportLocation, String importedName,
-                                          ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder importedTypes,
-                                          ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder importedFields,
-                                          List<JClassType> importedMethodContainers) {
+            ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder importedTypes,
+            ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder importedFields,
+            List<JClassType> importedMethodContainers) {
         // Static-Import-on-Demand Declaration
         // A static-import-on-demand declaration allows all accessible static members of a named type to be imported as needed.
         // includes types members, methods & fields
@@ -271,22 +267,22 @@ final class SymTableFactory {
         fillSingleStaticImports(singleImports, importedStaticTypes, importedStaticFields, importedStaticMethods);
 
         return buildTable(
-            parent,
-            VARS.shadow(varNode(parent), ScopeInfo.SINGLE_IMPORT, NameResolver.composite(importedStaticFields)),
-            METHODS.shadow(methodNode(parent), ScopeInfo.SINGLE_IMPORT, NameResolver.composite(importedStaticMethods)),
-            TYPES.augment(
-                TYPES.shadow(typeNode(parent), ScopeInfo.SINGLE_IMPORT, importedTypes.build()),
-                false,
-                ScopeInfo.SINGLE_IMPORT,
-                NameResolver.composite(importedStaticTypes)
-            )
+                parent,
+                VARS.shadow(varNode(parent), ScopeInfo.SINGLE_IMPORT, NameResolver.composite(importedStaticFields)),
+                METHODS.shadow(methodNode(parent), ScopeInfo.SINGLE_IMPORT, NameResolver.composite(importedStaticMethods)),
+                TYPES.augment(
+                        TYPES.shadow(typeNode(parent), ScopeInfo.SINGLE_IMPORT, importedTypes.build()),
+                        false,
+                        ScopeInfo.SINGLE_IMPORT,
+                        NameResolver.composite(importedStaticTypes)
+                )
         );
 
     }
 
 
     private void fillSingleImports(Iterable<ASTImportDeclaration> singleImports,
-                                   ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder importedTypes) {
+            ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder importedTypes) {
 
         for (ASTImportDeclaration anImport : singleImports) {
             if (anImport.isImportOnDemand()) {
@@ -302,9 +298,9 @@ final class SymTableFactory {
     }
 
     private void fillSingleStaticImports(Iterable<ASTImportDeclaration> singleImports,
-                                         List<NameResolver<? extends JTypeMirror>> importedTypes,
-                                         List<NameResolver<? extends JVariableSig>> importedFields,
-                                         List<NameResolver<? extends JMethodSig>> importedStaticMethods) {
+            List<NameResolver<? extends JTypeMirror>> importedTypes,
+            List<NameResolver<? extends JVariableSig>> importedFields,
+            List<NameResolver<? extends JMethodSig>> importedStaticMethods) {
         for (ASTImportDeclaration anImport : singleImports) {
             if (anImport.isImportOnDemand()) {
                 throw new IllegalArgumentException(anImport.toString());
@@ -380,13 +376,12 @@ final class SymTableFactory {
         return typesInPackage(parent, thisPackage, ScopeInfo.SAME_PACKAGE);
     }
 
-    @NonNull
-    private JSymbolTable typesInPackage(JSymbolTable parent, String packageName, ScopeInfo scopeTag) {
+    @NonNull private JSymbolTable typesInPackage(JSymbolTable parent, String packageName, ScopeInfo scopeTag) {
         assert isValidJavaPackageName(packageName) : "Not a package name: " + packageName;
 
         return SymbolTableImpl.withTypes(
-            parent,
-            TYPES.augmentWithCache(typeNode(parent), true, scopeTag, JavaResolvers.packageResolver(processor.getSymResolver(), packageName))
+                parent,
+                TYPES.augmentWithCache(typeNode(parent), true, scopeTag, JavaResolvers.packageResolver(processor.getSymResolver(), packageName))
         );
     }
 
@@ -435,16 +430,16 @@ final class SymTableFactory {
      */
     JSymbolTable bodyDeclaration(JSymbolTable parent, JClassType enclosing, @Nullable ASTFormalParameters formals, @Nullable ASTTypeParameters tparams) {
         return new SymbolTableImpl(
-            VARS.shadow(varNode(parent), ScopeInfo.FORMAL_PARAM, VARS.groupByName(ASTList.orEmptyStream(formals), fp -> {
-                ASTVariableId varId = fp.getVarId();
-                if (varId.isUnnamed()) {
-                    return null;
-                }
-                JVariableSymbol sym = varId.getSymbol();
-                return sym.getTypeSystem().sigOf(enclosing, (JFormalParamSymbol) sym);
-            })),
-            TYPES.shadow(typeNode(parent), ScopeInfo.TYPE_PARAM, TYPES.groupByName(ASTList.orEmptyStream(tparams), ASTTypeParameter::getTypeMirror)),
-            methodNode(parent)
+                VARS.shadow(varNode(parent), ScopeInfo.FORMAL_PARAM, VARS.groupByName(ASTList.orEmptyStream(formals), fp -> {
+                    ASTVariableId varId = fp.getVarId();
+                    if (varId.isUnnamed()) {
+                        return null;
+                    }
+                    JVariableSymbol sym = varId.getSymbol();
+                    return sym.getTypeSystem().sigOf(enclosing, (JFormalParamSymbol) sym);
+                })),
+                TYPES.shadow(typeNode(parent), ScopeInfo.TYPE_PARAM, TYPES.groupByName(ASTList.orEmptyStream(tparams), ASTTypeParameter::getTypeMirror)),
+                methodNode(parent)
         );
     }
 

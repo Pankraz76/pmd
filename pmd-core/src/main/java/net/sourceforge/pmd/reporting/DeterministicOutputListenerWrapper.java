@@ -55,11 +55,9 @@ public class DeterministicOutputListenerWrapper implements GlobalAnalysisListene
         this.listener = Objects.requireNonNull(listener);
     }
 
-    @Override
-    public ListenerInitializer initializer() {
+    @Override public ListenerInitializer initializer() {
         return ListenerInitializer.tee(listOf(new ListenerInitializer() {
-            @Override
-            public void setFilesToAnalyze(List<FileId> files) {
+            @Override public void setFilesToAnalyze(List<FileId> files) {
                 for (int i = 0; i < files.size(); i++) {
                     filesToIdx.put(files.get(i), i);
                 }
@@ -67,14 +65,12 @@ public class DeterministicOutputListenerWrapper implements GlobalAnalysisListene
         }, listener.initializer()));
     }
 
-    @Override
-    public FileAnalysisListener startFileAnalysis(TextFile file) {
+    @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
         Integer fileIdx = filesToIdx.get(file.getFileId());
         Objects.requireNonNull(fileIdx, "File " + file.getFileId() + " was not declared when starting the analysis");
 
         return new CloseHookFileListener<ReportBuilderListener>(new ReportBuilderListener()) {
-            @Override
-            protected void doClose(ReportBuilderListener delegate, @Nullable Exception ignored) throws Exception {
+            @Override protected void doClose(ReportBuilderListener delegate, @Nullable Exception ignored) throws Exception {
                 Report result = delegate.getResult();
                 ReportWrapper wrapper = new ReportWrapper(result, file, fileIdx);
                 synchronized (lock) {
@@ -122,8 +118,7 @@ public class DeterministicOutputListenerWrapper implements GlobalAnalysisListene
         }
     }
 
-    @Override
-    public void close() throws Exception {
+    @Override public void close() throws Exception {
         synchronized (lock) {
             tryToFlushBuffer();
             if (!reportBuffer.isEmpty()) {
@@ -134,8 +129,7 @@ public class DeterministicOutputListenerWrapper implements GlobalAnalysisListene
         listener.close();
     }
 
-    @Override
-    public void onConfigError(ConfigurationError error) {
+    @Override public void onConfigError(ConfigurationError error) {
         listener.onConfigError(error);
     }
 
@@ -154,8 +148,7 @@ public class DeterministicOutputListenerWrapper implements GlobalAnalysisListene
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "DeterministicOutputListenerWrapper [listener=" + listener + ", bufferSize=" + reportBuffer.size() + "]";
     }
 
@@ -170,8 +163,7 @@ public class DeterministicOutputListenerWrapper implements GlobalAnalysisListene
             this.idx = idx;
         }
 
-        @Override
-        public int compareTo(ReportWrapper o) {
+        @Override public int compareTo(ReportWrapper o) {
             return Integer.compare(this.idx, o.idx);
         }
     }

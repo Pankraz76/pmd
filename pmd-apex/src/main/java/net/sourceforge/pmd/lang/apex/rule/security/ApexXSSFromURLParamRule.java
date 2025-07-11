@@ -29,28 +29,27 @@ import net.sourceforge.pmd.lang.apex.rule.internal.Helper;
  *
  */
 public class ApexXSSFromURLParamRule extends AbstractApexRule {
-    private static final String[] URL_PARAMETER_METHOD = new String[] { "ApexPages", "currentPage", "getParameters",
-        "get", };
-    private static final String[] HTML_ESCAPING = new String[] { "ESAPI", "encoder", "SFDC_HTMLENCODE" };
-    private static final String[] JS_ESCAPING = new String[] { "ESAPI", "encoder", "SFDC_JSENCODE" };
-    private static final String[] JSINHTML_ESCAPING = new String[] { "ESAPI", "encoder", "SFDC_JSINHTMLENCODE" };
-    private static final String[] URL_ESCAPING = new String[] { "ESAPI", "encoder", "SFDC_URLENCODE" };
-    private static final String[] STRING_HTML3 = new String[] { "String", "escapeHtml3" };
-    private static final String[] STRING_HTML4 = new String[] { "String", "escapeHtml4" };
-    private static final String[] STRING_XML = new String[] { "String", "escapeXml" };
-    private static final String[] STRING_ECMASCRIPT = new String[] { "String", "escapeEcmaScript" };
-    private static final String[] INTEGER_VALUEOF = new String[] { "Integer", "valueOf" };
-    private static final String[] ID_VALUEOF = new String[] { "ID", "valueOf" };
-    private static final String[] DOUBLE_VALUEOF = new String[] { "Double", "valueOf" };
-    private static final String[] BOOLEAN_VALUEOF = new String[] { "Boolean", "valueOf" };
-    private static final String[] STRING_ISEMPTY = new String[] { "String", "isEmpty" };
-    private static final String[] STRING_ISBLANK = new String[] { "String", "isBlank" };
-    private static final String[] STRING_ISNOTBLANK = new String[] { "String", "isNotBlank" };
+    private static final String[] URL_PARAMETER_METHOD = new String[]{"ApexPages", "currentPage", "getParameters",
+            "get", };
+    private static final String[] HTML_ESCAPING = new String[]{"ESAPI", "encoder", "SFDC_HTMLENCODE"};
+    private static final String[] JS_ESCAPING = new String[]{"ESAPI", "encoder", "SFDC_JSENCODE"};
+    private static final String[] JSINHTML_ESCAPING = new String[]{"ESAPI", "encoder", "SFDC_JSINHTMLENCODE"};
+    private static final String[] URL_ESCAPING = new String[]{"ESAPI", "encoder", "SFDC_URLENCODE"};
+    private static final String[] STRING_HTML3 = new String[]{"String", "escapeHtml3"};
+    private static final String[] STRING_HTML4 = new String[]{"String", "escapeHtml4"};
+    private static final String[] STRING_XML = new String[]{"String", "escapeXml"};
+    private static final String[] STRING_ECMASCRIPT = new String[]{"String", "escapeEcmaScript"};
+    private static final String[] INTEGER_VALUEOF = new String[]{"Integer", "valueOf"};
+    private static final String[] ID_VALUEOF = new String[]{"ID", "valueOf"};
+    private static final String[] DOUBLE_VALUEOF = new String[]{"Double", "valueOf"};
+    private static final String[] BOOLEAN_VALUEOF = new String[]{"Boolean", "valueOf"};
+    private static final String[] STRING_ISEMPTY = new String[]{"String", "isEmpty"};
+    private static final String[] STRING_ISBLANK = new String[]{"String", "isBlank"};
+    private static final String[] STRING_ISNOTBLANK = new String[]{"String", "isNotBlank"};
 
     private final Set<String> urlParameterStrings = new HashSet<>();
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         if (Helper.isTestMethodOrClass(node) || Helper.isSystemLevelClass(node)) {
             return data; // stops all the rules
         }
@@ -58,36 +57,31 @@ public class ApexXSSFromURLParamRule extends AbstractApexRule {
         return super.visit(node, data);
     }
 
-    @Override
-    public Object visit(ASTAssignmentExpression node, Object data) {
+    @Override public Object visit(ASTAssignmentExpression node, Object data) {
         findTaintedVariables(node, data);
         processVariableAssignments(node, data, false);
         return data;
     }
 
-    @Override
-    public Object visit(ASTVariableDeclaration node, Object data) {
+    @Override public Object visit(ASTVariableDeclaration node, Object data) {
         findTaintedVariables(node, data);
         processVariableAssignments(node, data, true);
         return data;
     }
 
-    @Override
-    public Object visit(ASTFieldDeclaration node, Object data) {
+    @Override public Object visit(ASTFieldDeclaration node, Object data) {
         findTaintedVariables(node, data);
         processVariableAssignments(node, data, true);
         return data;
     }
 
-    @Override
-    public Object visit(ASTMethodCallExpression node, Object data) {
+    @Override public Object visit(ASTMethodCallExpression node, Object data) {
         processEscapingMethodCalls(node, data);
         processInlineMethodCalls(node, data, false);
         return data;
     }
 
-    @Override
-    public Object visit(ASTReturnStatement node, Object data) {
+    @Override public Object visit(ASTReturnStatement node, Object data) {
         ASTBinaryExpression binaryExpression = node.firstChild(ASTBinaryExpression.class);
         if (binaryExpression != null) {
             processBinaryExpression(binaryExpression, data);
@@ -220,28 +214,28 @@ public class ApexXSSFromURLParamRule extends AbstractApexRule {
         List<ASTVariableExpression> nodes = node.children(ASTVariableExpression.class).toList();
 
         switch (nodes.size()) {
-        case 1: {
-            // Look for: foo + bar
-            final List<ASTBinaryExpression> ops = node.children(ASTBinaryExpression.class).toList();
-            if (!ops.isEmpty()) {
-                for (ASTBinaryExpression o : ops) {
-                    processBinaryExpression(o, data);
+            case 1: {
+                // Look for: foo + bar
+                final List<ASTBinaryExpression> ops = node.children(ASTBinaryExpression.class).toList();
+                if (!ops.isEmpty()) {
+                    for (ASTBinaryExpression o : ops) {
+                        processBinaryExpression(o, data);
+                    }
+                }
+
+            }
+                break;
+            case 2: {
+                // Look for: foo = bar;
+                final ASTVariableExpression right = reverseOrder ? nodes.get(0) : nodes.get(1);
+
+                if (urlParameterStrings.contains(Helper.getFQVariableName(right))) {
+                    asCtx(data).addViolation(right);
                 }
             }
-
-        }
-            break;
-        case 2: {
-            // Look for: foo = bar;
-            final ASTVariableExpression right = reverseOrder ? nodes.get(0) : nodes.get(1);
-
-            if (urlParameterStrings.contains(Helper.getFQVariableName(right))) {
-                asCtx(data).addViolation(right);
-            }
-        }
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
         }
 
     }

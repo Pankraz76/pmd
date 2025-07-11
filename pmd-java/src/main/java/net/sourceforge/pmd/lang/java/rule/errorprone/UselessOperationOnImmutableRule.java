@@ -27,8 +27,7 @@ public class UselessOperationOnImmutableRule extends AbstractJavaRulechainRule {
         super(ASTMethodCall.class);
     }
 
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         ASTExpression qualifier = node.getQualifier();
         boolean returnsVoid = node.getTypeMirror().isVoid();
         if (node.getParent() instanceof ASTExpressionStatement && qualifier != null && !returnsVoid) {
@@ -40,11 +39,11 @@ public class UselessOperationOnImmutableRule extends AbstractJavaRulechainRule {
                     asCtx(data).addViolation(node);
                 }
             } else if (TypeTestUtil.isA(BigDecimal.class, qualifier)
-                || TypeTestUtil.isA(BigInteger.class, qualifier)) {
+                    || TypeTestUtil.isA(BigInteger.class, qualifier)) {
                 asCtx(data).addViolation(node);
             } else if (TypeTestUtil.isA(Temporal.class, qualifier)
-                || TypeTestUtil.isA(Duration.class, qualifier)
-                || TypeTestUtil.isA(Period.class, qualifier)) {
+                    || TypeTestUtil.isA(Duration.class, qualifier)
+                    || TypeTestUtil.isA(Period.class, qualifier)) {
                 asCtx(data).addViolation(node);
             }
         }

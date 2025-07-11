@@ -126,7 +126,7 @@ public class PMDTaskImpl {
         ReportStats stats;
         try (PmdAnalysis pmd = PmdAnalysis.create(configuration)) {
             RuleSetLoader rulesetLoader =
-                pmd.newRuleSetLoader().loadResourcesWith(setupResourceLoader());
+                    pmd.newRuleSetLoader().loadResourcesWith(setupResourceLoader());
             pmd.addRuleSets(loadRuleSetsWithoutException(rulesetLoader, ruleSetPaths));
 
             for (FileSet fileset : filesets) {
@@ -137,8 +137,7 @@ public class PMDTaskImpl {
             }
 
 
-            @SuppressWarnings("PMD.CloseResource")
-            ReportStatsListener reportStatsListener = new ReportStatsListener();
+            @SuppressWarnings("PMD.CloseResource") ReportStatsListener reportStatsListener = new ReportStatsListener();
             pmd.addListener(getListener(reportStatsListener));
 
             pmd.performAnalysis();
@@ -192,15 +191,13 @@ public class PMDTaskImpl {
     private GlobalAnalysisListener makeLogListener() {
         return new GlobalAnalysisListener() {
 
-            @Override
-            public FileAnalysisListener startFileAnalysis(TextFile dataSource) {
+            @Override public FileAnalysisListener startFileAnalysis(TextFile dataSource) {
                 String name = dataSource.getFileId().getUriString();
                 project.log("Processing file " + name, Project.MSG_VERBOSE);
                 return FileAnalysisListener.noop();
             }
 
-            @Override
-            public void close() {
+            @Override public void close() {
                 // nothing to do
             }
         };
@@ -224,7 +221,7 @@ public class PMDTaskImpl {
         // and exist in multiple class loaders
         final boolean parentFirst = true;
         return new AntClassLoader(Thread.currentThread().getContextClassLoader(),
-                                  project, classpath, parentFirst);
+                project, classpath, parentFirst);
     }
 
     private void setupClassLoader() {

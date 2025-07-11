@@ -32,18 +32,15 @@ public final class ASTAnonymousClassDeclaration extends AbstractTypeDeclaration 
     }
 
 
-    @Override
-    public @NonNull String getSimpleName() {
+    @Override public @NonNull String getSimpleName() {
         return "";
     }
 
-    @Override
-    public boolean isFindBoundary() {
+    @Override public boolean isFindBoundary() {
         return true;
     }
 
-    @Override
-    public @NonNull NodeStream<ASTClassType> getSuperInterfaceTypeNodes() {
+    @Override public @NonNull NodeStream<ASTClassType> getSuperInterfaceTypeNodes() {
         if (getParent() instanceof ASTConstructorCall) {
             ASTConstructorCall ctor = (ASTConstructorCall) getParent();
             @NonNull JTypeMirror type = ctor.getTypeMirror();
@@ -54,8 +51,7 @@ public final class ASTAnonymousClassDeclaration extends AbstractTypeDeclaration 
         return NodeStream.empty();
     }
 
-    @Override
-    public @Nullable ASTClassType getSuperClassTypeNode() {
+    @Override public @Nullable ASTClassType getSuperClassTypeNode() {
         if (getParent() instanceof ASTConstructorCall) {
             ASTConstructorCall ctor = (ASTConstructorCall) getParent();
             @NonNull JTypeMirror type = ctor.getTypeMirror();
@@ -66,13 +62,11 @@ public final class ASTAnonymousClassDeclaration extends AbstractTypeDeclaration 
         return null;
     }
 
-    @Override
-    public Visibility getVisibility() {
+    @Override public Visibility getVisibility() {
         return Visibility.V_ANONYMOUS;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -38,8 +38,7 @@ public final class DataMap<K> {
      *
      * @return Previous value associated with the key (nullable)
      */
-    @SuppressWarnings("unchecked")
-    public <T> @Nullable T set(DataKey<? extends K, ? super T> key, T data) {
+    @SuppressWarnings("unchecked") public <T> @Nullable T set(DataKey<? extends K, ? super T> key, T data) {
         return (T) getMap().put(key, data);
     }
 
@@ -51,13 +50,11 @@ public final class DataMap<K> {
      *
      * @return Value associated with the key (nullable)
      */
-    @SuppressWarnings("unchecked")
-    public <T> @Nullable T get(DataKey<? extends K, ? extends T> key) {
+    @SuppressWarnings("unchecked") public <T> @Nullable T get(DataKey<? extends K, ? extends T> key) {
         return map == null ? null : (T) map.get(key);
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> T getOrDefault(DataKey<? extends K, ? extends T> key, T defaultValue) {
+    @SuppressWarnings("unchecked") public <T> T getOrDefault(DataKey<? extends K, ? extends T> key, T defaultValue) {
         return map == null ? defaultValue : (T) map.getOrDefault(key, defaultValue);
     }
 
@@ -70,8 +67,7 @@ public final class DataMap<K> {
      *
      * @return Value associated with the key (as nullable as the
      */
-    @SuppressWarnings("unchecked")
-    public <T> T computeIfAbsent(DataKey<? extends K, T> key, Supplier<? extends T> supplier) {
+    @SuppressWarnings("unchecked") public <T> T computeIfAbsent(DataKey<? extends K, T> key, Supplier<? extends T> supplier) {
         return (T) getMap().computeIfAbsent(key, k -> supplier.get());
     }
 
@@ -85,16 +81,14 @@ public final class DataMap<K> {
      *
      * @return Value returned by the parameter function
      */
-    @SuppressWarnings("unchecked")
-    public <T> T compute(DataKey<? extends K, T> key, Function<? super @Nullable T, ? extends T> function) {
+    @SuppressWarnings("unchecked") public <T> T compute(DataKey<? extends K, T> key, Function<? super @Nullable T, ? extends T> function) {
         return (T) getMap().compute(key, (k, v) -> function.apply((T) v));
     }
 
     /**
      * @see Map#merge(Object, Object, BiFunction)
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public <T> T merge(DataKey<? extends K, T> key, T value, BiFunction<? super @NonNull T, ? super T, ? extends T> function) {
+    @SuppressWarnings({"unchecked", "rawtypes"}) public <T> T merge(DataKey<? extends K, T> key, T value, BiFunction<? super @NonNull T, ? super T, ? extends T> function) {
         return (T) getMap().merge(key, value, (BiFunction) function);
     }
 
@@ -150,8 +144,7 @@ public final class DataMap<K> {
             this.name = name;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return name;
         }
     }

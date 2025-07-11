@@ -24,10 +24,10 @@ import net.sourceforge.pmd.lang.java.types.TypeSystem;
  * </pre>
  */
 public final class ASTMethodReference extends AbstractJavaExpr
-    implements QualifiableExpression,
-               LeftRecursiveNode,
-               MethodUsage,
-               FunctionalExpression {
+        implements QualifiableExpression,
+        LeftRecursiveNode,
+        MethodUsage,
+        FunctionalExpression {
 
     private JMethodSig functionalMethod;
     private OverloadSelectionResult compileTimeDecl;
@@ -39,8 +39,7 @@ public final class ASTMethodReference extends AbstractJavaExpr
     }
 
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
         JavaNode lhs = getChild(0);
         // if constructor ref, then the LHS is unambiguously a type.
@@ -77,8 +76,7 @@ public final class ASTMethodReference extends AbstractJavaExpr
      * <p>Note that if this is a {@linkplain #isConstructorReference() constructor reference},
      * then this can only return a {@linkplain ASTTypeExpression type expression}.
      */
-    @Override
-    public @NonNull ASTExpression getQualifier() {
+    @Override public @NonNull ASTExpression getQualifier() {
         return (ASTExpression) getChild(0);
     }
 
@@ -97,8 +95,7 @@ public final class ASTMethodReference extends AbstractJavaExpr
      * Returns the method name, or an {@link JConstructorSymbol#CTOR_NAME}
      * if this is a {@linkplain #isConstructorReference() constructor reference}.
      */
-    @Override
-    public @NonNull String getMethodName() {
+    @Override public @NonNull String getMethodName() {
         assert methodName != null : "method name was null";
         return methodName;
     }
@@ -107,8 +104,7 @@ public final class ASTMethodReference extends AbstractJavaExpr
         this.methodName = methodName;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -120,8 +116,7 @@ public final class ASTMethodReference extends AbstractJavaExpr
      * @see #getFunctionalMethod()
      * @see #getReferencedMethod()
      */
-    @Override
-    public @NonNull JTypeMirror getTypeMirror() {
+    @Override public @NonNull JTypeMirror getTypeMirror() {
         return super.getTypeMirror();
     }
 
@@ -133,8 +128,7 @@ public final class ASTMethodReference extends AbstractJavaExpr
      * @see #getReferencedMethod()
      * @see #getTypeMirror()
      */
-    @Override
-    public JMethodSig getFunctionalMethod() {
+    @Override public JMethodSig getFunctionalMethod() {
         forceTypeResolution();
         return assertNonNullAfterTypeRes(functionalMethod);
     }
@@ -156,8 +150,7 @@ public final class ASTMethodReference extends AbstractJavaExpr
         return getOverloadSelectionInfo().getMethodType();
     }
 
-    @Override
-    public OverloadSelectionResult getOverloadSelectionInfo() {
+    @Override public OverloadSelectionResult getOverloadSelectionInfo() {
         forceTypeResolution();
         return assertNonNullAfterTypeRes(compileTimeDecl);
     }

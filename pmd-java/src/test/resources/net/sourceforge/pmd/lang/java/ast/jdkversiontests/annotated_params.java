@@ -1,3 +1,4 @@
 public class Foo {
- void bar(@SuppressWarnings("foo") int x) {}
+    void bar(@SuppressWarnings("foo") int x) {
+    }
 }

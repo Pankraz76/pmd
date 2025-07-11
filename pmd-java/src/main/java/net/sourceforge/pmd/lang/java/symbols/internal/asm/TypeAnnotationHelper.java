@@ -81,8 +81,7 @@ final class TypeAnnotationHelper {
             return acc;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return pathAndAnnot.toString();
         }
 
@@ -118,40 +117,40 @@ final class TypeAnnotationHelper {
 
     private static JTypeMirror resolvePathStepNoInner(JTypeMirror t, @Nullable TypePath path, int i, SymAnnot annot) {
         assert path == null || path.getLength() == i
-            || path.getStep(i) != TypePath.INNER_TYPE;
+                || path.getStep(i) != TypePath.INNER_TYPE;
 
         if (path == null || i == path.getLength()) {
             return t.addAnnotation(annot);
         }
 
         switch (path.getStep(i)) {
-        case TypePath.TYPE_ARGUMENT:
-            if (t instanceof JClassType) {
-                int typeArgIndex = path.getStepArgument(i);
-                JTypeMirror arg = ((JClassType) t).getTypeArgs().get(typeArgIndex);
-                JTypeMirror newArg = resolvePathStep(arg, path, i + 1, annot);
-                List<JTypeMirror> newArgs = replaceAtIndex(((JClassType) t).getTypeArgs(), typeArgIndex, newArg);
-                return ((JClassType) t).withTypeArguments(newArgs);
-            }
-            throw new IllegalArgumentException("Expected class type: " + t);
-        case TypePath.ARRAY_ELEMENT:
-            if (t instanceof JArrayType) {
-                JTypeMirror component = ((JArrayType) t).getComponentType();
-                JTypeMirror newComponent = resolvePathStep(component, path, i + 1, annot);
-                return t.getTypeSystem().arrayType(newComponent).withAnnotations(t.getTypeAnnotations());
-            }
-            throw new IllegalArgumentException("Expected array type: " + t);
-        case TypePath.INNER_TYPE:
-            throw new IllegalStateException("Should be handled elsewhere"); // there's an assert above too
-        case TypePath.WILDCARD_BOUND:
-            if (t instanceof JWildcardType) {
-                JWildcardType wild = (JWildcardType) t;
-                JTypeMirror newBound = resolvePathStep(wild.getBound(), path, i + 1, annot);
-                return wild.getTypeSystem().wildcard(wild.isUpperBound(), newBound).withAnnotations(wild.getTypeAnnotations());
-            }
-            throw new IllegalArgumentException("Expected wilcard type: " + t);
-        default:
-            throw new IllegalArgumentException("Illegal path step for annotation TypePath" + i);
+            case TypePath.TYPE_ARGUMENT:
+                if (t instanceof JClassType) {
+                    int typeArgIndex = path.getStepArgument(i);
+                    JTypeMirror arg = ((JClassType) t).getTypeArgs().get(typeArgIndex);
+                    JTypeMirror newArg = resolvePathStep(arg, path, i + 1, annot);
+                    List<JTypeMirror> newArgs = replaceAtIndex(((JClassType) t).getTypeArgs(), typeArgIndex, newArg);
+                    return ((JClassType) t).withTypeArguments(newArgs);
+                }
+                throw new IllegalArgumentException("Expected class type: " + t);
+            case TypePath.ARRAY_ELEMENT:
+                if (t instanceof JArrayType) {
+                    JTypeMirror component = ((JArrayType) t).getComponentType();
+                    JTypeMirror newComponent = resolvePathStep(component, path, i + 1, annot);
+                    return t.getTypeSystem().arrayType(newComponent).withAnnotations(t.getTypeAnnotations());
+                }
+                throw new IllegalArgumentException("Expected array type: " + t);
+            case TypePath.INNER_TYPE:
+                throw new IllegalStateException("Should be handled elsewhere"); // there's an assert above too
+            case TypePath.WILDCARD_BOUND:
+                if (t instanceof JWildcardType) {
+                    JWildcardType wild = (JWildcardType) t;
+                    JTypeMirror newBound = resolvePathStep(wild.getBound(), path, i + 1, annot);
+                    return wild.getTypeSystem().wildcard(wild.isUpperBound(), newBound).withAnnotations(wild.getTypeAnnotations());
+                }
+                throw new IllegalArgumentException("Expected wilcard type: " + t);
+            default:
+                throw new IllegalArgumentException("Illegal path step for annotation TypePath" + i);
         }
     }
 

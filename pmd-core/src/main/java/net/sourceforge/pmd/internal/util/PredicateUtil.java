@@ -79,7 +79,7 @@ public final class PredicateUtil {
      * @return A predicate for strings.
      */
     public static Predicate<String> buildRegexFilterIncludeOverExclude(@NonNull Collection<Pattern> includeRegexes,
-                                                                       @NonNull Collection<Pattern> excludeRegexes) {
+            @NonNull Collection<Pattern> excludeRegexes) {
         AssertionUtil.requireParamNotNull("includeRegexes", includeRegexes);
         AssertionUtil.requireParamNotNull("excludeRegexes", includeRegexes);
 

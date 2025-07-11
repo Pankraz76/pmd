@@ -34,8 +34,7 @@ public final class ASTAnnotationMemberList extends ASTMaybeEmptyListOf<ASTMember
         return toStream().filter(it -> it.getName().equals(attrName)).map(ASTMemberValuePair::getValue).first();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -21,8 +21,7 @@ import net.sourceforge.pmd.lang.java.ast.JavaNode;
 interface BoundToNode<N extends JavaNode> extends JElementSymbol {
 
 
-    @Override
-    default @Nullable N tryGetNode() {
+    @Override default @Nullable N tryGetNode() {
         return null;
     }
 }

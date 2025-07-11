@@ -26,18 +26,15 @@ public abstract class AbstractJavaRulechainRule extends AbstractJavaRule {
      * @param first  The first node, there must be at least one
      * @param visits The rest
      */
-    @SafeVarargs
-    public AbstractJavaRulechainRule(Class<? extends JavaNode> first, Class<? extends JavaNode>... visits) {
+    @SafeVarargs public AbstractJavaRulechainRule(Class<? extends JavaNode> first, Class<? extends JavaNode>... visits) {
         selector = RuleTargetSelector.forTypes(first, visits);
     }
 
-    @Override
-    protected final @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected final @NonNull RuleTargetSelector buildTargetSelector() {
         return selector;
     }
 
-    @Override
-    public Object visitJavaNode(JavaNode node, Object data) {
+    @Override public Object visitJavaNode(JavaNode node, Object data) {
         return data;
     }
 }

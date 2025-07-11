@@ -20,7 +20,7 @@ public interface ClasspathEntryFingerprinter {
      * @return True if this fingerprinter applies, false otherwise
      */
     boolean appliesTo(String fileExtension);
-    
+
     /**
      * Adds the given entry fingerprint to the current checksum.
      * 

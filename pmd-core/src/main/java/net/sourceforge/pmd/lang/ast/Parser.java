@@ -90,9 +90,9 @@ public interface Parser {
 
         public ParserTask withTextDocument(TextDocument textDocument) {
             return new ParserTask(
-                textDocument,
-                this.reporter,
-                this.lpRegistry
+                    textDocument,
+                    this.reporter,
+                    this.lpRegistry
             );
         }
     }

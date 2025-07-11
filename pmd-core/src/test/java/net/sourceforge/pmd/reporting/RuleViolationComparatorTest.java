@@ -24,8 +24,7 @@ import net.sourceforge.pmd.lang.rule.Rule;
 
 class RuleViolationComparatorTest {
 
-    @Test
-    void testComparator() {
+    @Test void testComparator() {
         Rule rule1 = setDummyLanguage(new MockRule("name1", "desc", "msg", "rulesetname1"));
         Rule rule2 = setDummyLanguage(new MockRule("name2", "desc", "msg", "rulesetname2"));
 
@@ -71,7 +70,7 @@ class RuleViolationComparatorTest {
     }
 
     private RuleViolation createJavaRuleViolation(Rule rule, String fileName, int beginLine, String description,
-                                                  int beginColumn, int endLine, int endColumn) {
+            int beginColumn, int endLine, int endColumn) {
         FileLocation loc = FileLocation.range(FileId.fromPathLikeString(fileName), TextRange2d.range2d(beginLine, beginColumn, endLine, endColumn));
         return new ParametricRuleViolation(rule, loc, description, Collections.emptyMap());
     }

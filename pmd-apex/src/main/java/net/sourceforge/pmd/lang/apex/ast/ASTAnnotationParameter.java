@@ -19,8 +19,7 @@ public final class ASTAnnotationParameter extends AbstractApexNode.Single<Elemen
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -48,8 +47,7 @@ public final class ASTAnnotationParameter extends AbstractApexNode.Single<Elemen
         return false;
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return getValue();
     }
 

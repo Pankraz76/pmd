@@ -22,43 +22,35 @@ class InferenceVarSym implements JTypeDeclSymbol {
         this.var = var;
     }
 
-    @Override
-    public @NonNull String getSimpleName() {
+    @Override public @NonNull String getSimpleName() {
         return var.getName();
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return ts;
     }
 
-    @Override
-    public <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override public <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitTypeDecl(this, param);
     }
 
-    @Override
-    public int getModifiers() {
+    @Override public int getModifiers() {
         return 0;
     }
 
-    @Override
-    public @Nullable JClassSymbol getEnclosingClass() {
+    @Override public @Nullable JClassSymbol getEnclosingClass() {
         return null;
     }
 
-    @Override
-    public @NonNull String getPackageName() {
+    @Override public @NonNull String getPackageName() {
         return "";
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "InferenceVar(" + getSimpleName() + ')';
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -69,8 +61,7 @@ class InferenceVarSym implements JTypeDeclSymbol {
         return var.equals(that.var);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return var.hashCode();
     }
 }

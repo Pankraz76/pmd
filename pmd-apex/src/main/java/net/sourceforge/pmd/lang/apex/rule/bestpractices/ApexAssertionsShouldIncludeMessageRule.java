@@ -21,8 +21,7 @@ public class ApexAssertionsShouldIncludeMessageRule extends AbstractApexUnitTest
     private static final String IS_NULL = "Assert.isNull";
     private static final String IS_TRUE = "Assert.isTrue";
 
-    @Override
-    public Object visit(ASTMethodCallExpression node, Object data) {
+    @Override public Object visit(ASTMethodCallExpression node, Object data) {
         String methodName = node.getFullMethodName();
 
         if (FAIL.equalsIgnoreCase(methodName) && node.getNumChildren() == 1) {

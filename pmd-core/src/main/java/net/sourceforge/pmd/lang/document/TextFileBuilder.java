@@ -60,14 +60,12 @@ public abstract class TextFileBuilder {
             this.charset = AssertionUtil.requireParamNotNull("charset", charset);
         }
 
-        @Override
-        public TextFileBuilder asReadOnly() {
+        @Override public TextFileBuilder asReadOnly() {
             readOnly = true;
             return this;
         }
 
-        @Override
-        public TextFile build() {
+        @Override public TextFile build() {
             return new NioTextFile(path, parentFsId, charset, languageVersion, readOnly);
         }
     }
@@ -83,14 +81,12 @@ public abstract class TextFileBuilder {
             this.fileId = AssertionUtil.requireParamNotNull("path ID", fileId);
         }
 
-        @Override
-        public TextFileBuilder setParentFsPath(@Nullable FileId fileId) {
+        @Override public TextFileBuilder setParentFsPath(@Nullable FileId fileId) {
             this.fileId = FileId.asChildOf(this.fileId, fileId);
             return super.setParentFsPath(fileId);
         }
 
-        @Override
-        public TextFile build() {
+        @Override public TextFile build() {
             return new StringTextFile(charSequence, fileId, languageVersion);
         }
     }
@@ -106,15 +102,13 @@ public abstract class TextFileBuilder {
             this.fileId = AssertionUtil.requireParamNotNull("path ID", fileId);
         }
 
-        @Override
-        public TextFileBuilder setParentFsPath(@Nullable FileId fileId) {
+        @Override public TextFileBuilder setParentFsPath(@Nullable FileId fileId) {
             this.fileId = FileId.asChildOf(this.fileId, fileId);
             return super.setParentFsPath(fileId);
         }
 
 
-        @Override
-        public TextFile build() {
+        @Override public TextFile build() {
             return new ReaderTextFile(reader, fileId, languageVersion);
         }
     }

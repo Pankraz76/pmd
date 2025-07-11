@@ -80,8 +80,7 @@ public class CSVRenderer implements CPDReportRenderer {
         this.lineCountPerFile = lineCountPerFile;
     }
 
-    @Override
-    public void render(CPDReport report, Writer writer) throws IOException {
+    @Override public void render(CPDReport report, Writer writer) throws IOException {
         if (!lineCountPerFile) {
             writer.append("lines").append(separator);
         }
@@ -92,8 +91,8 @@ public class CSVRenderer implements CPDReportRenderer {
                 writer.append(String.valueOf(match.getLineCount())).append(separator);
             }
             writer.append(String.valueOf(match.getTokenCount())).append(separator)
-                  .append(String.valueOf(match.getMarkCount())).append(separator);
-            for (Iterator<Mark> marks = match.iterator(); marks.hasNext();) {
+                    .append(String.valueOf(match.getMarkCount())).append(separator);
+            for (Iterator<Mark> marks = match.iterator(); marks.hasNext(); ) {
                 Mark mark = marks.next();
                 FileLocation loc = mark.getLocation();
 

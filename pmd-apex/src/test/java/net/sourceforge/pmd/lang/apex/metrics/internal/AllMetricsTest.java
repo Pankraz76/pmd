@@ -18,8 +18,7 @@ class AllMetricsTest extends SimpleAggregatorTst {
 
     private static final String RULESET = "rulesets/apex/metrics_test.xml";
 
-    @Override
-    public void setUp() {
+    @Override public void setUp() {
         addRule(RULESET, "CycloTest");
         addRule(RULESET, "WmcTest");
         addRule(RULESET, "CognitiveComplexityTest");

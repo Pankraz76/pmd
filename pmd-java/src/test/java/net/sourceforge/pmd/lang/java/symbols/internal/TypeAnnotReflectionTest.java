@@ -31,9 +31,7 @@ import net.sourceforge.pmd.lang.java.types.JWildcardType;
 class TypeAnnotReflectionTest {
 
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotsOnFields(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotsOnFields(SymImplementation impl) {
 
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsInside.class);
 
@@ -53,9 +51,7 @@ class TypeAnnotReflectionTest {
     }
 
 
-    @ParameterizedTest
-    @EnumSource
-    void testArrayTypeAnnotsOnFields(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testArrayTypeAnnotsOnFields(SymImplementation impl) {
 
         /*
 
@@ -103,9 +99,7 @@ class TypeAnnotReflectionTest {
     }
 
 
-    @ParameterizedTest
-    @EnumSource
-    void testInnerTypeAnnotsOnFields(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testInnerTypeAnnotsOnFields(SymImplementation impl) {
 
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsInside.class);
 
@@ -150,9 +144,7 @@ class TypeAnnotReflectionTest {
     }
 
 
-    @ParameterizedTest
-    @EnumSource
-    void testInnerTypeAnnotsWithGenerics(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testInnerTypeAnnotsWithGenerics(SymImplementation impl) {
 
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsInside.class);
 
@@ -203,9 +195,7 @@ class TypeAnnotReflectionTest {
     }
 
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotOnMultipleGenericsAndInner(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotOnMultipleGenericsAndInner(SymImplementation impl) {
 
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsInside.class);
 
@@ -226,9 +216,7 @@ class TypeAnnotReflectionTest {
     }
 
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotOnWildcards(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotOnWildcards(SymImplementation impl) {
 
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsInside.class);
 

@@ -23,7 +23,8 @@ import net.sourceforge.pmd.lang.modelica.resolver.internal.Watchdog;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static void setNodeOwnScope(ModelicaNode node, ModelicaScope scope) {
         ((AbstractModelicaNode) node).setOwnScope(scope);

@@ -11,8 +11,7 @@ import net.sourceforge.pmd.lang.html.ast.HtmlParser;
 
 class HtmlHandler extends AbstractPmdLanguageVersionHandler {
 
-    @Override
-    public Parser getParser() {
+    @Override public Parser getParser() {
         return new HtmlParser();
     }
 

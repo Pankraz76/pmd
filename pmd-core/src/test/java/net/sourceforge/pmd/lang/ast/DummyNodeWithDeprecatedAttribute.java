@@ -17,20 +17,17 @@ import net.sourceforge.pmd.lang.rule.xpath.impl.AttributeAxisIterator;
 public class DummyNodeWithDeprecatedAttribute extends DummyNode {
 
     // this is the deprecated attribute
-    @Deprecated
-    public int getSize() {
+    @Deprecated public int getSize() {
         return 2;
     }
 
     // this is a attribute that is deprecated for xpath, because it will be removed.
     // it should still be available via Java.
-    @DeprecatedAttribute(replaceWith = "@Image")
-    public String getName() {
+    @DeprecatedAttribute(replaceWith = "@Image") public String getName() {
         return "foo";
     }
 
-    @Override
-    public Iterator<Attribute> getXPathAttributesIterator() {
+    @Override public Iterator<Attribute> getXPathAttributesIterator() {
         return new AttributeAxisIterator(this);
     }
 }

@@ -15,20 +15,17 @@ public class GenericWithOverloadsImpl implements GenericInterfaceWithOverloads<S
     // a bridge method is generated for each of these that implement an interface method
 
 
-    @Override
-    public String visit(ASTCompilationUnit node, String data) {
+    @Override public String visit(ASTCompilationUnit node, String data) {
         return null;
     }
 
 
-    @Override
-    public String visit(ASTPackageDeclaration node, String data) {
+    @Override public String visit(ASTPackageDeclaration node, String data) {
         return null;
     }
 
 
-    @Override
-    public String multi(ASTImportDeclaration node, String data, Integer integer) {
+    @Override public String multi(ASTImportDeclaration node, String data, Integer integer) {
         return null;
     }
 
@@ -39,8 +36,7 @@ public class GenericWithOverloadsImpl implements GenericInterfaceWithOverloads<S
     }
 
 
-    @Override
-    public String multi(ASTPackageDeclaration node, String data, Integer integer) {
+    @Override public String multi(ASTPackageDeclaration node, String data, Integer integer) {
         return null;
     }
 

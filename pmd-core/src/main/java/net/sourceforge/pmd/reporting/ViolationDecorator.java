@@ -50,6 +50,7 @@ public interface ViolationDecorator {
     }
 
     static ViolationDecorator noop() {
-        return (node, map) -> { };
+        return (node, map) -> {
+        };
     }
 }

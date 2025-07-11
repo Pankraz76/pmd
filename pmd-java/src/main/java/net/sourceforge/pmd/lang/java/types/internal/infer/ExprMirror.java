@@ -157,8 +157,7 @@ public interface ExprMirror {
         @NonNull JClassType getEnclosingType();
 
 
-        @Override
-        default @Nullable JTypeMirror getStandaloneType() {
+        @Override default @Nullable JTypeMirror getStandaloneType() {
             return null;
         }
 
@@ -199,8 +198,7 @@ public interface ExprMirror {
         }
 
 
-        @Override
-        default boolean isEquivalentToUnderlyingAst() {
+        @Override default boolean isEquivalentToUnderlyingAst() {
             return branchesMatch(ExprMirror::isEquivalentToUnderlyingAst);
         }
     }
@@ -218,8 +216,7 @@ public interface ExprMirror {
          *
          * <p>May be null if we're resetting some partial data.
          */
-        @Override
-        void setInferredType(@Nullable JTypeMirror mirror);
+        @Override void setInferredType(@Nullable JTypeMirror mirror);
 
 
         /**
@@ -278,8 +275,7 @@ public interface ExprMirror {
          * , except it may also return an array type (the jls makes an exception for it,
          * while we don't).
          */
-        @Override
-        JTypeMirror getTypeToSearch();
+        @Override JTypeMirror getTypeToSearch();
 
 
         /**
@@ -291,8 +287,7 @@ public interface ExprMirror {
          * TypeName.super :: [TypeArguments] Identifier
          * </pre>
          */
-        @Nullable
-        JTypeMirror getLhsIfType();
+        @Nullable JTypeMirror getLhsIfType();
 
 
         /**
@@ -310,16 +305,14 @@ public interface ExprMirror {
          * E.g. in {@code stringStream.map(String::isEmpty)}, this is
          * {@code java.lang.String.isEmpty() -> boolean}
          */
-        @Override
-        void setCompileTimeDecl(InvocationMirror.MethodCtDecl methodType);
+        @Override void setCompileTimeDecl(InvocationMirror.MethodCtDecl methodType);
 
 
         /**
          * UNRESOLVED_METHOD if not yet computed, null if computed but
          * inexact, otherwise the real method.
          */
-        @Nullable
-        JMethodSig getCachedExactMethod();
+        @Nullable JMethodSig getCachedExactMethod();
 
 
         void setCachedExactMethod(@Nullable JMethodSig sig);
@@ -460,8 +453,7 @@ public interface ExprMirror {
          * @implSpec Should cache this value and return it when {@link #getCtDecl()}
          * is called.
          */
-        @Override
-        void setCompileTimeDecl(MethodCtDecl methodType);
+        @Override void setCompileTimeDecl(MethodCtDecl methodType);
 
 
         /**
@@ -471,8 +463,7 @@ public interface ExprMirror {
          */
         @Nullable MethodCtDecl getCtDecl();
 
-        @Override
-        default @Nullable JTypeMirror getTypeToSearch() {
+        @Override default @Nullable JTypeMirror getTypeToSearch() {
             return getReceiverType();
         }
 
@@ -492,11 +483,11 @@ public interface ExprMirror {
             private final @Nullable MethodUsageMirror expr;
 
             MethodCtDecl(JMethodSig methodType,
-                         MethodResolutionPhase resolvePhase,
-                         boolean canSkipInvocation,
-                         OptionalBool needsUncheckedConversion,
-                         boolean failed,
-                         @Nullable MethodUsageMirror expr) {
+                    MethodResolutionPhase resolvePhase,
+                    boolean canSkipInvocation,
+                    OptionalBool needsUncheckedConversion,
+                    boolean failed,
+                    @Nullable MethodUsageMirror expr) {
                 this.methodType = methodType;
                 this.resolvePhase = resolvePhase;
                 this.canSkipInvocation = canSkipInvocation;
@@ -538,33 +529,27 @@ public interface ExprMirror {
             // public:
 
 
-            @Override
-            public JMethodSig getMethodType() {
+            @Override public JMethodSig getMethodType() {
                 return methodType;
             }
 
-            @Override
-            public boolean needsUncheckedConversion() {
+            @Override public boolean needsUncheckedConversion() {
                 return needsUncheckedConversion.isTrue();
             }
 
-            @Override
-            public boolean isVarargsCall() {
+            @Override public boolean isVarargsCall() {
                 return resolvePhase.requiresVarargs();
             }
 
-            @Override
-            public boolean isFailed() {
+            @Override public boolean isFailed() {
                 return failed;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "CtDecl[phase=" + resolvePhase + ", method=" + methodType + ']';
             }
 
-            @Override
-            public @Nullable JTypeMirror getTypeToSearch() {
+            @Override public @Nullable JTypeMirror getTypeToSearch() {
                 return expr != null ? expr.getTypeToSearch() : null;
             }
         }
@@ -624,8 +609,7 @@ public interface ExprMirror {
          * <p>This default implementation uses {@link #getAccessibleCandidates(JTypeMirror)},
          * which should be implemented instead.
          */
-        @Override
-        default Iterable<JMethodSig> getAccessibleCandidates() {
+        @Override default Iterable<JMethodSig> getAccessibleCandidates() {
             return getAccessibleCandidates(getNewType());
         }
 
@@ -641,8 +625,7 @@ public interface ExprMirror {
 
 
         /** Must return {@link JConstructorSymbol#CTOR_NAME}. */
-        @Override
-        default String getName() {
+        @Override default String getName() {
             return JConstructorSymbol.CTOR_NAME;
         }
 

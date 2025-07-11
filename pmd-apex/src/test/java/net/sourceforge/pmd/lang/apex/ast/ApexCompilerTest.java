@@ -12,8 +12,7 @@ import net.sourceforge.pmd.lang.ast.ParseException;
 
 class ApexCompilerTest extends ApexParserTestBase {
 
-    @Test
-    void compileShouldFail() {
+    @Test void compileShouldFail() {
         assertThrows(ParseException.class, () -> apex.parse("public class Foo { private String myField = \"a\"; }"));
     }
 }

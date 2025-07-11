@@ -28,15 +28,14 @@ import net.sourceforge.pmd.lang.java.types.JMethodSig;
  * @since 5.8.1
  */
 public interface ASTExecutableDeclaration
-    extends ModifierOwner,
-            ASTBodyDeclaration,
-            TypeParamOwnerNode,
-            JavadocCommentOwner,
-            ReturnScopeNode {
+        extends ModifierOwner,
+        ASTBodyDeclaration,
+        TypeParamOwnerNode,
+        JavadocCommentOwner,
+        ReturnScopeNode {
 
 
-    @Override
-    JExecutableSymbol getSymbol();
+    @Override JExecutableSymbol getSymbol();
 
 
     /**
@@ -71,8 +70,7 @@ public interface ASTExecutableDeclaration
     /**
      * Returns the formal parameters node of this method or constructor.
      */
-    @NonNull
-    default ASTFormalParameters getFormalParameters() {
+    @NonNull default ASTFormalParameters getFormalParameters() {
         return firstChild(ASTFormalParameters.class);
     }
 
@@ -89,8 +87,7 @@ public interface ASTExecutableDeclaration
      * Returns the body of this method or constructor. Returns null if
      * this is the declaration of an abstract method.
      */
-    @Override
-    default @Nullable ASTBlock getBody() {
+    @Override default @Nullable ASTBlock getBody() {
         JavaNode last = getLastChild();
         return last instanceof ASTBlock ? (ASTBlock) last : null;
     }
@@ -99,8 +96,7 @@ public interface ASTExecutableDeclaration
      * Returns the {@code throws} clause of this declaration, or null
      * if there is none.
      */
-    @Nullable
-    default ASTThrowsList getThrowsList() {
+    @Nullable default ASTThrowsList getThrowsList() {
         return firstChild(ASTThrowsList.class);
     }
 

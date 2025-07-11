@@ -19,54 +19,47 @@ import net.sourceforge.pmd.util.CollectionUtil;
 
 class PmdCommandTest extends BaseCommandTest<PmdCommand> {
 
-    @Test
-    void testVersionGiven() throws Exception {
+    @Test void testVersionGiven() throws Exception {
         final PmdCommand cmd = setupAndParse("--use-version", "dummy-1.2", "-d", "a", "-R", "x.xml");
         final LanguageVersion dummyLatest = cmd.toConfiguration().getLanguageVersionOfFile("foo.dummy");
-        
+
         // LanguageVersion do not implement equals, but we can check their string representations
         assertEquals(DummyLanguageModule.getInstance().getVersion("1.2").toString(), dummyLatest.toString());
     }
 
-    @Test
-    void testMultipleDirsAndRuleSets() {
+    @Test void testMultipleDirsAndRuleSets() {
         final PmdCommand cmd = setupAndParse(
-            "-d", "a", "b", "-R", "x.xml", "y.xml"
+                "-d", "a", "b", "-R", "x.xml", "y.xml"
         );
         assertMultipleDirsAndRulesets(cmd);
     }
 
-    @Test
-    void testMultipleDirsAndRuleSetsWithCommas() {
+    @Test void testMultipleDirsAndRuleSetsWithCommas() {
         final PmdCommand cmd = setupAndParse(
-            "-d", "a,b", "-R", "x.xml,y.xml"
+                "-d", "a,b", "-R", "x.xml,y.xml"
         );
         assertMultipleDirsAndRulesets(cmd);
     }
 
-    @Test
-    void testMultipleDirsAndRuleSetsWithRepeatedOption() {
+    @Test void testMultipleDirsAndRuleSetsWithRepeatedOption() {
         final PmdCommand cmd = setupAndParse(
-            "-d", "a", "-d", "b", "-R", "x.xml", "-R", "y.xml"
+                "-d", "a", "-d", "b", "-R", "x.xml", "-R", "y.xml"
         );
         assertMultipleDirsAndRulesets(cmd);
     }
 
-    @Test
-    void testNoPositionalParametersAllowed() {
+    @Test void testNoPositionalParametersAllowed() {
         final PmdCommand cmd = setupAndParse(
-            "-R", "x.xml", "-R", "y.xml", "-d", "a", "--", "b"
+                "-R", "x.xml", "-R", "y.xml", "-d", "a", "--", "b"
         );
         assertMultipleDirsAndRulesets(cmd);
     }
 
-    @Test
-    void testEmptyDirOption() {
+    @Test void testEmptyDirOption() {
         assertError("-d", "-R", "y.xml");
     }
 
-    @Test
-    void testEmptyRulesetOption() {
+    @Test void testEmptyRulesetOption() {
         assertError("-R", "-d", "something");
     }
 
@@ -76,13 +69,11 @@ class PmdCommandTest extends BaseCommandTest<PmdCommand> {
         assertEquals(listOf("x.xml", "y.xml"), config.getRuleSetPaths());
     }
 
-    @Override
-    protected PmdCommand createCommand() {
+    @Override protected PmdCommand createCommand() {
         return new PmdCommand();
     }
 
-    @Override
-    protected void addStandardParams(final List<String> argList) {
+    @Override protected void addStandardParams(final List<String> argList) {
         // If no language provided, set dummy latest
         if (!argList.contains("--use-version")) {
             argList.add(0, "--use-version");

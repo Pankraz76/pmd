@@ -19,28 +19,23 @@ public class EmptyRenderer extends AbstractRenderer {
         super(NAME, "Empty, nothing.");
     }
 
-    @Override
-    public String defaultFileExtension() {
+    @Override public String defaultFileExtension() {
         return "";
     }
 
-    @Override
-    public void start() throws IOException {
+    @Override public void start() throws IOException {
         // deliberately does nothing
     }
 
-    @Override
-    public void startFileAnalysis(TextFile dataSource) {
+    @Override public void startFileAnalysis(TextFile dataSource) {
         // deliberately does nothing
     }
 
-    @Override
-    public void renderFileReport(Report report) throws IOException {
+    @Override public void renderFileReport(Report report) throws IOException {
         // deliberately does nothing
     }
 
-    @Override
-    public void end() throws IOException {
+    @Override public void end() throws IOException {
         // deliberately does nothing
     }
 }

@@ -25,8 +25,7 @@ final class SupertypeCheckCache {
         // TODO refresh numbers using a real codebase
         private static final int MAX_SIZE = 50;
 
-        @Override
-        protected boolean removeEldestEntry(Entry<JTypeMirror, Set<JTypeMirror>> eldest) {
+        @Override protected boolean removeEldestEntry(Entry<JTypeMirror, Set<JTypeMirror>> eldest) {
             return size() > MAX_SIZE;
         }
     };

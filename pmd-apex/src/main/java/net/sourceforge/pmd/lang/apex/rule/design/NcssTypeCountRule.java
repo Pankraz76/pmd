@@ -21,8 +21,7 @@ public class NcssTypeCountRule extends AbstractNcssCountRule {
         super(ASTUserClass.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 500;
     }
 

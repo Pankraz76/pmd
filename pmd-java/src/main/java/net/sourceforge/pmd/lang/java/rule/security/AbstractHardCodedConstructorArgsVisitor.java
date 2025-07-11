@@ -27,8 +27,7 @@ abstract class AbstractHardCodedConstructorArgsVisitor extends AbstractJavaRulec
         this.type = constructorType;
     }
 
-    @Override
-    public Object visit(ASTConstructorCall node, Object data) {
+    @Override public Object visit(ASTConstructorCall node, Object data) {
         if (TypeTestUtil.isA(type, node)) {
             ASTArgumentList arguments = node.getArguments();
             if (arguments.size() > 0) {
@@ -85,11 +84,11 @@ abstract class AbstractHardCodedConstructorArgsVisitor extends AbstractJavaRulec
 
     private void validateVarUsages(Object data, ASTVariableId varDecl) {
         varDecl.getLocalUsages().stream()
-            .filter(u -> u.getAccessType() == AccessType.WRITE)
-            .filter(u -> u.getParent() instanceof ASTAssignmentExpression)
-            .forEach(usage -> {
-                ASTAssignmentExpression assignment = (ASTAssignmentExpression) usage.getParent();
-                validateProperKeyArgument(data, assignment.getRightOperand());
-            });
+                .filter(u -> u.getAccessType() == AccessType.WRITE)
+                .filter(u -> u.getParent() instanceof ASTAssignmentExpression)
+                .forEach(usage -> {
+                    ASTAssignmentExpression assignment = (ASTAssignmentExpression) usage.getParent();
+                    validateProperKeyArgument(data, assignment.getRightOperand());
+                });
     }
 }

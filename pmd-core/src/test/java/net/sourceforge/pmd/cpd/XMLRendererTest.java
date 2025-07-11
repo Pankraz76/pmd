@@ -50,8 +50,7 @@ class XMLRendererTest {
     private static final String FORM_FEED = "\u000C"; // this character is invalid in XML 1.0 documents
     private static final String FORM_FEED_ENTITY = "&#12;"; // this is also not allowed in XML 1.0 documents
 
-    @Test
-    void testWithNoDuplication() throws IOException, ParserConfigurationException, SAXException {
+    @Test void testWithNoDuplication() throws IOException, ParserConfigurationException, SAXException {
         CPDReportRenderer renderer = new XMLRenderer();
         StringWriter sw = new StringWriter();
         renderer.render(CpdTestUtils.makeReport(Collections.emptyList()), sw);
@@ -70,15 +69,14 @@ class XMLRendererTest {
                 "namespace is missing or wrong");
 
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                                             .parse(new ByteArrayInputStream(report.getBytes(ENCODING)));
+                .parse(new ByteArrayInputStream(report.getBytes(ENCODING)));
         NodeList nodes = doc.getChildNodes();
         Node n = nodes.item(0);
         assertEquals("pmd-cpd", n.getNodeName());
         assertEquals(0, doc.getElementsByTagName("duplication").getLength());
     }
 
-    @Test
-    void testWithOneDuplication() throws Exception {
+    @Test void testWithOneDuplication() throws Exception {
         CPDReportRenderer renderer = new XMLRenderer();
         CpdReportBuilder builder = new CpdReportBuilder();
         int lineCount = 6;
@@ -93,7 +91,7 @@ class XMLRendererTest {
         assertReportIsValidSchema(report);
 
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                                             .parse(new ByteArrayInputStream(report.getBytes(ENCODING)));
+                .parse(new ByteArrayInputStream(report.getBytes(ENCODING)));
         NodeList dupes = doc.getElementsByTagName("duplication");
         assertEquals(1, dupes.getLength());
         Node file = dupes.item(0).getFirstChild();
@@ -121,8 +119,7 @@ class XMLRendererTest {
         assertEquals(CpdTestUtils.generateDummyContent(lineCount), doc.getElementsByTagName("codefragment").item(0).getTextContent());
     }
 
-    @Test
-    void testRenderWithMultipleMatch() throws Exception {
+    @Test void testRenderWithMultipleMatch() throws Exception {
         CPDReportRenderer renderer = new XMLRenderer();
         CpdReportBuilder builder = new CpdReportBuilder();
         int lineCount1 = 6;
@@ -143,13 +140,12 @@ class XMLRendererTest {
         assertReportIsValidSchema(report);
 
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                                             .parse(new ByteArrayInputStream(report.getBytes(ENCODING)));
+                .parse(new ByteArrayInputStream(report.getBytes(ENCODING)));
         assertEquals(2, doc.getElementsByTagName("duplication").getLength());
         assertEquals(4, doc.getElementsByTagName("file").getLength());
     }
 
-    @Test
-    void testWithOneDuplicationWithColumns() throws Exception {
+    @Test void testWithOneDuplicationWithColumns() throws Exception {
         CPDReportRenderer renderer = new XMLRenderer();
         int lineCount = 2;
         CpdReportBuilder builder = new CpdReportBuilder();
@@ -164,7 +160,7 @@ class XMLRendererTest {
         assertReportIsValidSchema(report);
 
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                                             .parse(new ByteArrayInputStream(report.getBytes(ENCODING)));
+                .parse(new ByteArrayInputStream(report.getBytes(ENCODING)));
         NodeList dupes = doc.getElementsByTagName("duplication");
         assertEquals(1, dupes.getLength());
         Node file = dupes.item(0).getFirstChild();
@@ -192,8 +188,7 @@ class XMLRendererTest {
         assertEquals(CpdTestUtils.generateDummyContent(2), doc.getElementsByTagName("codefragment").item(0).getTextContent());
     }
 
-    @Test
-    void testRendererEncodedPath() throws Exception {
+    @Test void testRendererEncodedPath() throws Exception {
         CPDReportRenderer renderer = new XMLRenderer();
         CpdReportBuilder builder = new CpdReportBuilder();
         final String escapeChar = "&amp;";
@@ -208,8 +203,7 @@ class XMLRendererTest {
         assertThat(report, containsString(escapeChar));
     }
 
-    @Test
-    void testFilesWithNumberOfTokens() throws IOException, ParserConfigurationException, SAXException {
+    @Test void testFilesWithNumberOfTokens() throws IOException, ParserConfigurationException, SAXException {
         final CPDReportRenderer renderer = new XMLRenderer();
         CpdReportBuilder builder = new CpdReportBuilder();
         final FileId filename = CpdTestUtils.FOO_FILE_ID;
@@ -226,7 +220,7 @@ class XMLRendererTest {
         final String xmlOutput = writer.toString();
         assertReportIsValidSchema(xmlOutput);
         final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                                                   .parse(new ByteArrayInputStream(xmlOutput.getBytes(ENCODING)));
+                .parse(new ByteArrayInputStream(xmlOutput.getBytes(ENCODING)));
         final NodeList files = doc.getElementsByTagName("file");
         final Node file = files.item(0);
         final NamedNodeMap attributes = file.getAttributes();
@@ -234,8 +228,7 @@ class XMLRendererTest {
         assertEquals("888", attributes.getNamedItem("totalNumberOfTokens").getNodeValue());
     }
 
-    @Test
-    void testGetDuplicationStartEnd() throws IOException, ParserConfigurationException, SAXException {
+    @Test void testGetDuplicationStartEnd() throws IOException, ParserConfigurationException, SAXException {
         final CPDReportRenderer renderer = new XMLRenderer();
         CpdReportBuilder builder = new CpdReportBuilder();
         final FileId filename = CpdTestUtils.FOO_FILE_ID;
@@ -252,7 +245,7 @@ class XMLRendererTest {
         final String xmlOutput = writer.toString();
         assertReportIsValidSchema(xmlOutput);
         final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                                                   .parse(new ByteArrayInputStream(xmlOutput.getBytes(ENCODING)));
+                .parse(new ByteArrayInputStream(xmlOutput.getBytes(ENCODING)));
         final NodeList files = doc.getElementsByTagName("file");
         final Node dup_1 = files.item(1);
         final NamedNodeMap attrs_1 = dup_1.getAttributes();
@@ -265,10 +258,9 @@ class XMLRendererTest {
         assertEquals("3", attrs_2.getNamedItem("endtoken").getNodeValue());
     }
 
-    @Test
-    void testRendererXMLEscaping() throws Exception {
+    @Test void testRendererXMLEscaping() throws Exception {
         String codefragment = "code fragment" + FORM_FEED
-            + "\nline2\nline3\nno & escaping necessary in CDATA\nx=\"]]>\";";
+                + "\nline2\nline3\nno & escaping necessary in CDATA\nx=\"]]>\";";
         CPDReportRenderer renderer = new XMLRenderer();
 
         CpdReportBuilder builder = new CpdReportBuilder();
@@ -291,8 +283,7 @@ class XMLRendererTest {
         assertThat(report, not(containsString("x=\"]]>\";"))); // must be escaped
     }
 
-    @Test
-    void reportContainsProcessingError() throws Exception {
+    @Test void reportContainsProcessingError() throws Exception {
         FileId fileId = FileId.fromPathLikeString("file1.txt");
         Report.ProcessingError processingError = new Report.ProcessingError(
                 new LexException(2, 1, fileId, "test exception", new RuntimeException("cause exception")),
@@ -325,8 +316,7 @@ class XMLRendererTest {
      *
      * @see <a href="https://github.com/pmd/pmd/issues/5059">[core] xml output doesn't escape CDATA inside its own CDATA</a>
      */
-    @Test
-    void cdataSectionInError() throws Exception {
+    @Test void cdataSectionInError() throws Exception {
         FileId fileId = FileId.fromPathLikeString("file1.txt");
         Report.ProcessingError processingError = new Report.ProcessingError(
                 new LexException(2, 1, fileId, "test exception", new RuntimeException("Invalid source: '<![CDATA[ ... ]]> ...'")),
@@ -352,13 +342,11 @@ class XMLRendererTest {
 
         SAXParser saxParser = saxParserFactory.newSAXParser();
         saxParser.parse(new InputSource(new StringReader(report)), new DefaultHandler() {
-            @Override
-            public void error(SAXParseException e) throws SAXException {
+            @Override public void error(SAXParseException e) throws SAXException {
                 throw e;
             }
 
-            @Override
-            public void warning(SAXParseException e) throws SAXException {
+            @Override public void warning(SAXParseException e) throws SAXException {
                 throw e;
             }
         });

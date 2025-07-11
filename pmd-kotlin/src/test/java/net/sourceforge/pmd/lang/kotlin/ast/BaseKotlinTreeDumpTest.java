@@ -18,9 +18,7 @@ public class BaseKotlinTreeDumpTest extends BaseTreeDumpTest {
         super(NodePrintersKt.getSimpleNodePrinter(), ".kt");
     }
 
-    @NonNull
-    @Override
-    public KotlinParsingHelper getParser() {
+    @NonNull @Override public KotlinParsingHelper getParser() {
         return KotlinParsingHelper.DEFAULT.withResourceContext(getClass(), "testdata");
     }
 }

@@ -509,8 +509,7 @@ public class DBURI {
 
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return uri.toASCIIString();
     }
 }

@@ -17,50 +17,42 @@ import net.sourceforge.pmd.lang.test.ast.BaseParsingHelper;
 class Java17TreeDumpTest extends BaseJavaTreeDumpTest {
     private final JavaParsingHelper java17 =
             JavaParsingHelper.DEFAULT.withDefaultVersion("17")
-                                     .withResourceContext(Java17TreeDumpTest.class, "jdkversiontests/java17/");
+                    .withResourceContext(Java17TreeDumpTest.class, "jdkversiontests/java17/");
     private final JavaParsingHelper java16 = java17.withDefaultVersion("16");
 
-    @Override
-    public BaseParsingHelper<?, ?> getParser() {
+    @Override public BaseParsingHelper<?, ?> getParser() {
         return java17;
     }
 
-    @Test
-    void sealedClassBeforeJava17() {
+    @Test void sealedClassBeforeJava17() {
         ParseException thrown = assertThrows(ParseException.class, () -> java16.parseResource("geometry/Shape.java"));
         assertTrue(thrown.getMessage().contains("Sealed classes are a feature of Java 17, you should select your language version accordingly"),
                 "Unexpected message: " + thrown.getMessage());
     }
 
-    @Test
-    void sealedClass() {
+    @Test void sealedClass() {
         doTest("geometry/Shape");
     }
 
-    @Test
-    void nonSealedClass() {
+    @Test void nonSealedClass() {
         doTest("geometry/Square");
     }
 
-    @Test
-    void sealedQualifiedPermitClass() {
+    @Test void sealedQualifiedPermitClass() {
         doTest("SealedInnerClasses");
     }
 
-    @Test
-    void sealedInterfaceBeforeJava17() {
+    @Test void sealedInterfaceBeforeJava17() {
         ParseException thrown = assertThrows(ParseException.class, () -> java16.parseResource("expression/Expr.java"));
         assertTrue(thrown.getMessage().contains("Sealed classes are a feature of Java 17, you should select your language version accordingly"),
                 "Unexpected message: " + thrown.getMessage());
     }
 
-    @Test
-    void sealedInterface() {
+    @Test void sealedInterface() {
         doTest("expression/Expr");
     }
 
-    @Test
-    void localVars() {
+    @Test void localVars() {
         doTest("LocalVars");
     }
 }

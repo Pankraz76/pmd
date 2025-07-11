@@ -35,8 +35,7 @@ public class BaseTokenFilter<T extends GenericToken<T>> implements TokenManager<
         this.remainingTokens = new RemainingTokens();
     }
 
-    @Override
-    public final T getNextToken() {
+    @Override public final T getNextToken() {
         currentToken = null;
         if (!unprocessedTokens.isEmpty()) {
             currentToken = unprocessedTokens.poll();
@@ -127,8 +126,7 @@ public class BaseTokenFilter<T extends GenericToken<T>> implements TokenManager<
 
     private final class RemainingTokens implements Iterable<T> {
 
-        @Override
-        public Iterator<T> iterator() {
+        @Override public Iterator<T> iterator() {
             return new RemainingTokensIterator(currentToken);
         }
 
@@ -141,8 +139,7 @@ public class BaseTokenFilter<T extends GenericToken<T>> implements TokenManager<
                 this.startToken = startToken;
             }
 
-            @Override
-            protected void computeNext() {
+            @Override protected void computeNext() {
                 assert index >= 0;
                 if (startToken != currentToken) {
                     throw new ConcurrentModificationException("Using iterator after next token has been requested.");

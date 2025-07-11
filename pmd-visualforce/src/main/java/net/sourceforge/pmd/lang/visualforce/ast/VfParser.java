@@ -23,13 +23,11 @@ public final class VfParser extends JjtreeParserAdapter<ASTCompilationUnit> {
 
     private static final TokenDocumentBehavior TOKEN_BEHAVIOR = new TokenDocumentBehavior(VfTokenKinds.TOKEN_NAMES);
 
-    @Override
-    protected TokenDocumentBehavior tokenBehavior() {
+    @Override protected TokenDocumentBehavior tokenBehavior() {
         return TOKEN_BEHAVIOR;
     }
 
-    @Override
-    protected ASTCompilationUnit parseImpl(CharStream cs, ParserTask task) throws ParseException {
+    @Override protected ASTCompilationUnit parseImpl(CharStream cs, ParserTask task) throws ParseException {
         ASTCompilationUnit root = new VfParserImpl(cs).CompilationUnit().makeTaskInfo(task);
 
         // Add type information to the AST

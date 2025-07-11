@@ -24,135 +24,121 @@ class SuppressWarningsTest extends ApexParserTestBase {
 
     private static class BarRule extends AbstractApexRule {
 
-        @Override
-        public String getMessage() {
+        @Override public String getMessage() {
             return "a message";
         }
 
-        @Override
-        public Object visit(ASTUserClass clazz, Object ctx) {
+        @Override public Object visit(ASTUserClass clazz, Object ctx) {
             if ("bar".equalsIgnoreCase(clazz.getSimpleName())) {
                 asCtx(ctx).addViolation(clazz);
             }
             return super.visit(clazz, ctx);
         }
 
-        @Override
-        public String getName() {
+        @Override public String getName() {
             return "NoBar";
         }
     }
 
-    @Test
-    void testClassLevelSuppression() {
+    @Test void testClassLevelSuppression() {
         assertNoWarningsWithFoo("@SuppressWarnings('PMD')\n"
-                                    + "public class Foo {}");
+                + "public class Foo {}");
     }
 
     private void assertNoWarningsWithFoo(String code) {
         assertWarningsWithFoo(0, code);
     }
 
-    @Test
-    void testClassLevelSuppression2() {
+    @Test void testClassLevelSuppression2() {
         assertNoWarningsWithFoo("@SuppressWarnings('PMD')\n"
-            + "public class Foo {" + "\n"
-            + " void bar() {\n"
-            + "  Integer foo;\n"
-            + " }\n"
-            + "}");
+                + "public class Foo {" + "\n"
+                + " void bar() {\n"
+                + "  Integer foo;\n"
+                + " }\n"
+                + "}");
     }
 
-    @Test
-    void testInheritedSuppression() {
+    @Test void testInheritedSuppression() {
         assertNoWarningsWithFoo("public class Baz {\n"
-            + " @SuppressWarnings('PMD')" + "\n"
-            + " public class Bar {\n"
-            + "  void bar() {\n"
-            + "   Integer foo;\n"
-            + "  }" + "\n"
-            + " }\n"
-            + "}");
+                + " @SuppressWarnings('PMD')" + "\n"
+                + " public class Bar {\n"
+                + "  void bar() {\n"
+                + "   Integer foo;\n"
+                + "  }" + "\n"
+                + " }\n"
+                + "}");
     }
 
-    @Test
-    void testMethodLevelSuppression() {
+    @Test void testMethodLevelSuppression() {
         assertWarningsWithFoo(1, "public class Foo {\n"
-            + " @SuppressWarnings('PMD')\n"
-            + " void bar() {\n"
-            + "  Integer foo;\n"
-            + " }\n"
-            + "}");
+                + " @SuppressWarnings('PMD')\n"
+                + " void bar() {\n"
+                + "  Integer foo;\n"
+                + " }\n"
+                + "}");
     }
 
-    @Test
-    void testConstructorLevelSuppression() {
+    @Test void testConstructorLevelSuppression() {
         assertNoWarningsWithFoo("public class Bar {\n"
-            + " @SuppressWarnings('PMD')" + "\n"
-            + " public Bar() {\n"
-            + "  Integer foo;\n"
-            + " }\n"
-            + "}");
+                + " @SuppressWarnings('PMD')" + "\n"
+                + " public Bar() {\n"
+                + "  Integer foo;\n"
+                + " }\n"
+                + "}");
     }
 
-    @Test
-    void testFieldLevelSuppression() {
+    @Test void testFieldLevelSuppression() {
         assertWarningsWithFoo(1, "public class Bar {\n"
-            + " @SuppressWarnings('PMD')" + "\n"
-            + " Integer foo;\n"
-            + " void bar() {\n"
-            + "  Integer foo;\n"
-            + " }\n"
-            + "}");
+                + " @SuppressWarnings('PMD')" + "\n"
+                + " Integer foo;\n"
+                + " void bar() {\n"
+                + "  Integer foo;\n"
+                + " }\n"
+                + "}");
     }
 
-    @Test
-    void testParameterLevelSuppression() {
+    @Test void testParameterLevelSuppression() {
         assertWarningsWithFoo(1, "public class Bar {\n"
-            + " Integer foo;" + "\n"
-            + " void bar(@SuppressWarnings('PMD') Integer foo) {}\n"
-            + "}");
+                + " Integer foo;" + "\n"
+                + " void bar(@SuppressWarnings('PMD') Integer foo) {}\n"
+                + "}");
     }
 
-    @Test
-    void testLocalVariableLevelSuppression() {
+    @Test void testLocalVariableLevelSuppression() {
         assertWarningsWithFoo(1, "public class Bar {\n"
-            + " Integer foo;\n"
-            + " void bar() {"
-            + "\n" + "  @SuppressWarnings('PMD') Integer foo;\n"
-            + " }\n"
-            + "}");
+                + " Integer foo;\n"
+                + " void bar() {"
+                + "\n" + "  @SuppressWarnings('PMD') Integer foo;\n"
+                + " }\n"
+                + "}");
     }
 
-    @Test
-    void testSpecificSuppression() {
+    @Test void testSpecificSuppression() {
         assertWarningsWithFoo(1, "public class Bar {\n"
-            + " Integer foo;\n"
-            + " void bar() {"
-            + "\n" + "  @SuppressWarnings('PMD.NoFoo') Integer foo;\n"
-            + " }\n"
-            + "}");
+                + " Integer foo;\n"
+                + " void bar() {"
+                + "\n" + "  @SuppressWarnings('PMD.NoFoo') Integer foo;\n"
+                + " }\n"
+                + "}");
     }
 
-    @Test
-    void testSpecificSuppressionMulitpleValues() {
+    @Test void testSpecificSuppressionMulitpleValues() {
         assertNoWarningsWithFoo("@SuppressWarnings('PMD.NoFoo, PMD.NoBar')"
-            + "\n" + "public class Bar {\n"
-            + " Integer foo;\n"
-            + " void bar() {" + "\n"
-            + "  Integer foo;\n"
-            + " }\n"
-            + "}");
+                + "\n" + "public class Bar {\n"
+                + " Integer foo;\n"
+                + " void bar() {" + "\n"
+                + "  Integer foo;\n"
+                + " }\n"
+                + "}");
     }
 
-    @Test
-    void testNoSuppressionBlank() {
+    @Test void testNoSuppressionBlank() {
         assertWarningsWithFoo(2, "public class Bar {\n"
-            + " Integer foo;\n"
-            + " void bar() {"
-            + "\n" + "  @SuppressWarnings('') Integer foo;\n"
-            + " }\n"
-            + "}");
+                + " Integer foo;\n"
+                + " void bar() {"
+                + "\n" + "  @SuppressWarnings('') Integer foo;\n"
+                + " }\n"
+                + "}");
     }
 
     private void assertWarningsWithFoo(int size, String code) {
@@ -160,45 +146,40 @@ class SuppressWarningsTest extends ApexParserTestBase {
         assertSize(rpt, size);
     }
 
-    @Test
-    void testNoSuppressionSomethingElseS() {
+    @Test void testNoSuppressionSomethingElseS() {
         assertWarningsWithFoo(2, "public class Bar {\n"
-            + " Integer foo;\n"
-            + " void bar() {"
-            + "\n" + "  @SuppressWarnings('SomethingElse') Integer foo;\n"
-            + " }\n"
-            + "}");
+                + " Integer foo;\n"
+                + " void bar() {"
+                + "\n" + "  @SuppressWarnings('SomethingElse') Integer foo;\n"
+                + " }\n"
+                + "}");
     }
 
-    @Test
-    void testSuppressAll() {
+    @Test void testSuppressAll() {
         assertNoWarningsWithFoo("public class Bar {\n"
-            + " @SuppressWarnings('all') Integer foo;"
-            + "\n" + "}");
+                + " @SuppressWarnings('all') Integer foo;"
+                + "\n" + "}");
     }
 
-    @Test
-    void testSpecificSuppressionAtTopLevel() {
+    @Test void testSpecificSuppressionAtTopLevel() {
         Report rpt = apex.executeRule(new BarRule(), "@SuppressWarnings('PMD.NoBar')\n"
-            + "public class Bar {" + "\n"
-            + "}");
+                + "public class Bar {" + "\n"
+                + "}");
         assertSize(rpt, 0);
     }
 
-    @Test
-    void testCommentSuppression() {
+    @Test void testCommentSuppression() {
         Report rpt = apex.executeRule(new FooRule(), "public class Bar {\n"
-            + "Integer foo; // NOPMD\n"
-            + "}");
+                + "Integer foo; // NOPMD\n"
+                + "}");
         assertSize(rpt, 0);
         assertSuppressed(rpt, 1);
     }
 
-    @Test
-    void testMessageWithCommentSuppression() {
+    @Test void testMessageWithCommentSuppression() {
         Report rpt = apex.executeRule(new FooRule(), "public class Bar {\n"
-            + "Integer foo; //NOPMD We allow foo here\n"
-            + "}");
+                + "Integer foo; //NOPMD We allow foo here\n"
+                + "}");
         assertSize(rpt, 0);
 
         List<Report.SuppressedViolation> suppressions = assertSuppressed(rpt, 1);

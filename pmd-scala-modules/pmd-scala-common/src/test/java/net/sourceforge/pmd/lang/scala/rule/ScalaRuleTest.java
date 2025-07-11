@@ -22,13 +22,11 @@ class ScalaRuleTest extends BaseScalaTest {
 
     private static final String SCALA_TEST = "/parserFiles/helloworld.scala";
 
-    @Test
-    void testRuleVisits() {
+    @Test void testRuleVisits() {
         final AtomicInteger visited = new AtomicInteger();
         ScalaRule rule = new ScalaRule() {
 
-            @Override
-            public RuleContext visit(ScalaNode<?> node, RuleContext data) {
+            @Override public RuleContext visit(ScalaNode<?> node, RuleContext data) {
                 visited.incrementAndGet();
                 return super.visit(node, data);
             }
@@ -38,16 +36,13 @@ class ScalaRuleTest extends BaseScalaTest {
         assertEquals(12, visited.get());
     }
 
-    @Test
-    void testDummyRule() {
+    @Test void testDummyRule() {
         ScalaRule rule = new ScalaRule() {
-            @Override
-            public String getMessage() {
+            @Override public String getMessage() {
                 return "a message";
             }
 
-            @Override
-            public RuleContext visit(ASTTermApply node, RuleContext ruleContext) {
+            @Override public RuleContext visit(ASTTermApply node, RuleContext ruleContext) {
                 ASTTermName child = node.firstChild(ASTTermName.class);
                 if (child != null && "println".equals(child.getValue())) {
                     ruleContext.addViolation(node);

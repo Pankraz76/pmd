@@ -20,13 +20,11 @@ import net.sourceforge.pmd.lang.kotlin.ast.KotlinLexer;
  */
 public class KotlinCpdLexer extends AntlrCpdLexer {
 
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new KotlinLexer(charStream);
     }
 
-    @Override
-    protected TokenManager<AntlrToken> filterTokenStream(TokenManager<AntlrToken> tokenManager) {
+    @Override protected TokenManager<AntlrToken> filterTokenStream(TokenManager<AntlrToken> tokenManager) {
         return new KotlinTokenFilter(tokenManager);
     }
 
@@ -46,8 +44,7 @@ public class KotlinCpdLexer extends AntlrCpdLexer {
             super(tokenManager);
         }
 
-        @Override
-        protected void analyzeToken(final AntlrToken currentToken) {
+        @Override protected void analyzeToken(final AntlrToken currentToken) {
             skipPackageAndImport(currentToken);
             skipNewLines(currentToken);
         }
@@ -65,8 +62,7 @@ public class KotlinCpdLexer extends AntlrCpdLexer {
             discardingNL = currentToken.getKind() == KotlinLexer.NL;
         }
 
-        @Override
-        protected boolean isLanguageSpecificDiscarding() {
+        @Override protected boolean isLanguageSpecificDiscarding() {
             return discardingPackageAndImport || discardingNL;
         }
     }

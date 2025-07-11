@@ -73,8 +73,7 @@ public enum RulePriority {
      * @return descriptive name of the priority
      * @see #getName()
      */
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return name;
     }
 

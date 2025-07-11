@@ -31,28 +31,23 @@ class ReaderTextFile implements TextFile {
         this.fileId = fileId;
     }
 
-    @Override
-    public FileId getFileId() {
+    @Override public FileId getFileId() {
         return fileId;
     }
 
-    @Override
-    public @NonNull LanguageVersion getLanguageVersion() {
+    @Override public @NonNull LanguageVersion getLanguageVersion() {
         return languageVersion;
     }
 
-    @Override
-    public TextFileContent readContents() throws IOException {
+    @Override public TextFileContent readContents() throws IOException {
         return TextFileContent.fromReader(reader); // this closes the reader
     }
 
-    @Override
-    public void close() throws IOException {
+    @Override public void close() throws IOException {
         reader.close();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "ReaderTextFile[" + fileId.getAbsolutePath() + "]";
     }
 

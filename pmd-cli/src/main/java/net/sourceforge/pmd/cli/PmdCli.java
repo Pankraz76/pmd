@@ -10,7 +10,8 @@ import picocli.CommandLine;
 
 public final class PmdCli {
 
-    private PmdCli() { }
+    private PmdCli() {
+    }
 
     // package private for test only without calling System.exit
     static int mainWithoutExit(String[] args) {

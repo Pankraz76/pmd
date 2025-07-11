@@ -20,21 +20,21 @@ import org.slf4j.event.Level;
 import net.sourceforge.pmd.internal.Slf4jSimpleConfiguration;
 
 public final class Slf4jSimpleConfigurationForAnt {
-    private Slf4jSimpleConfigurationForAnt() { }
+    private Slf4jSimpleConfigurationForAnt() {
+    }
 
     private static final Level DEFAULT_LEVEL = Level.INFO;
 
     // Maps from ant's Project.MSG_* to org.slf4j.event.Level
     private static final Level[] LOG_LEVELS = {
-        Level.ERROR,   // Project.MSG_ERR=0
-        Level.WARN,    // Project.MSG_WARN=1
-        Level.INFO,    // Project.MSG_INFO=2
-        Level.DEBUG,   // Project.MSG_VERBOSE=3
-        Level.TRACE,   // Project.MSG_DEBUG=4
+            Level.ERROR,   // Project.MSG_ERR=0
+            Level.WARN,    // Project.MSG_WARN=1
+            Level.INFO,    // Project.MSG_INFO=2
+            Level.DEBUG,   // Project.MSG_VERBOSE=3
+            Level.TRACE,   // Project.MSG_DEBUG=4
     };
 
-    @SuppressWarnings("PMD.CloseResource")
-    public static Level reconfigureLoggingForAnt(Project antProject) {
+    @SuppressWarnings("PMD.CloseResource") public static Level reconfigureLoggingForAnt(Project antProject) {
         if (!Slf4jSimpleConfiguration.isSimpleLogger()) {
             // do nothing, not even set system properties, if not Simple Logger is in use
             return DEFAULT_LEVEL;
@@ -83,13 +83,11 @@ public final class Slf4jSimpleConfigurationForAnt {
             this.antProject = antProject;
         }
 
-        @Override
-        public void println(String x) {
+        @Override public void println(String x) {
             buffer.append(x).append(System.lineSeparator());
         }
 
-        @Override
-        public void flush() {
+        @Override public void flush() {
             String logLevel = determineLogLevel();
             int antLogLevel = ANT_LOG_LEVELS.getOrDefault(logLevel, Project.MSG_INFO);
             antProject.log(buffer.toString(), antLogLevel);
@@ -162,13 +160,13 @@ public final class Slf4jSimpleConfigurationForAnt {
 
             Object[] logLevels = gradleLogLevel.getEnumConstants();
             // the log levels in gradle are declared in the order DEBUG, INFO, LIFECYCLE, WARN, QUIET, ERROR
-            Level[] mapping = new Level[] {
-                Level.TRACE,   // DEBUG
-                Level.DEBUG,   // INFO
-                Level.INFO,     // LIFECYCLE
-                Level.WARN,  // WARN
-                Level.ERROR,   // QUIET
-                Level.ERROR,   // ERROR
+            Level[] mapping = new Level[]{
+                    Level.TRACE,   // DEBUG
+                    Level.DEBUG,   // INFO
+                    Level.INFO,     // LIFECYCLE
+                    Level.WARN,  // WARN
+                    Level.ERROR,   // QUIET
+                    Level.ERROR,   // ERROR
             };
 
             for (int i = 0; i < Math.min(logLevels.length, mapping.length); i++) {

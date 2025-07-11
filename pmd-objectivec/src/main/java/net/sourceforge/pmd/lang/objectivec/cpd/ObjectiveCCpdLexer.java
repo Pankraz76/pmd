@@ -18,8 +18,7 @@ import net.sourceforge.pmd.lang.objectivec.ast.ObjectiveCTokenKinds;
  */
 public class ObjectiveCCpdLexer extends JavaccCpdLexer {
 
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
         return ObjectiveCTokenKinds.newTokenManager(CharStream.create(doc));
     }
 }

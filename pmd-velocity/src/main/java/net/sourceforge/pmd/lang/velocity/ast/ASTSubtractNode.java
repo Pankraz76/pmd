@@ -1,4 +1,3 @@
-
 package net.sourceforge.pmd.lang.velocity.ast;
 
 /*
@@ -40,8 +39,7 @@ public final class ASTSubtractNode extends ASTMathNode {
     }
 
 
-    @Override
-    protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

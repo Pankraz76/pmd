@@ -34,8 +34,8 @@ public final class NumericConstraints {
      */
     public static <N extends Comparable<N>> PropertyConstraint<N> inRange(final N minInclusive, final N maxInclusive) {
         return PropertyConstraint.fromPredicate(
-            t -> minInclusive.compareTo(t) <= 0 && maxInclusive.compareTo(t) >= 0,
-            "Should be between " + minInclusive + " and " + maxInclusive,
+                t -> minInclusive.compareTo(t) <= 0 && maxInclusive.compareTo(t) >= 0,
+                "Should be between " + minInclusive + " and " + maxInclusive,
                 mapOf(SchemaConstants.PROPERTY_MIN.xmlName(), String.valueOf(minInclusive),
                         SchemaConstants.PROPERTY_MAX.xmlName(), String.valueOf(maxInclusive))
         );
@@ -51,8 +51,8 @@ public final class NumericConstraints {
      */
     public static <N extends Comparable<N>> PropertyConstraint<N> above(final N minInclusive) {
         return PropertyConstraint.fromPredicate(
-            t -> minInclusive.compareTo(t) <= 0,
-            "Should be greater or equal to " + minInclusive,
+                t -> minInclusive.compareTo(t) <= 0,
+                "Should be greater or equal to " + minInclusive,
                 mapOf(SchemaConstants.PROPERTY_MIN.xmlName(), String.valueOf(minInclusive))
         );
     }
@@ -66,8 +66,8 @@ public final class NumericConstraints {
      */
     public static <N extends Comparable<N>> PropertyConstraint<N> below(final N maxInclusive) {
         return PropertyConstraint.fromPredicate(
-            t -> maxInclusive.compareTo(t) >= 0,
-            "Should be smaller or equal to " + maxInclusive,
+                t -> maxInclusive.compareTo(t) >= 0,
+                "Should be smaller or equal to " + maxInclusive,
                 mapOf(SchemaConstants.PROPERTY_MAX.xmlName(), String.valueOf(maxInclusive))
         );
     }
@@ -87,7 +87,7 @@ public final class NumericConstraints {
      */
     public static <N extends Number> PropertyConstraint<N> positive() {
         return PropertyConstraint.fromPredicate(
-            t -> t.intValue() > 0,
+                t -> t.intValue() > 0,
                 "Should be positive"
         );
     }

@@ -22,24 +22,22 @@ import net.sourceforge.pmd.internal.util.IOUtil;
  * Base fingerprinter for raw files.
  */
 public class RawFileFingerprinter implements ClasspathEntryFingerprinter {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(RawFileFingerprinter.class);
-    
+
     private static final Set<String> SUPPORTED_EXTENSIONS;
-    
+
     static {
         final Set<String> extensions = new HashSet<>();
         extensions.add("class"); // Java class files
         SUPPORTED_EXTENSIONS = Collections.unmodifiableSet(extensions);
     }
 
-    @Override
-    public boolean appliesTo(String fileExtension) {
+    @Override public boolean appliesTo(String fileExtension) {
         return SUPPORTED_EXTENSIONS.contains(fileExtension);
     }
 
-    @Override
-    public void fingerprint(URL entry, Checksum checksum) throws IOException {
+    @Override public void fingerprint(URL entry, Checksum checksum) throws IOException {
         try (CheckedInputStream inputStream = new CheckedInputStream(entry.openStream(), checksum)) {
             // Just read it, the CheckedInputStream will update the checksum on its own
             while (IOUtil.skipFully(inputStream, Long.MAX_VALUE) == Long.MAX_VALUE) {

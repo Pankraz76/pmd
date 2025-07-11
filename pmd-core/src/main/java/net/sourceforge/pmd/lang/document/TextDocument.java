@@ -238,8 +238,7 @@ public interface TextDocument extends Closeable {
      *                               exception is thrown. This indicates a programming
      *                               mistake.
      */
-    @Override
-    void close() throws IOException;
+    @Override void close() throws IOException;
 
     /**
      * Create a new text document for the given text file. The document's

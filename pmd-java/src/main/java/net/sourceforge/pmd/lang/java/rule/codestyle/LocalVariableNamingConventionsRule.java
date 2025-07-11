@@ -35,9 +35,7 @@ public final class LocalVariableNamingConventionsRule extends AbstractNamingConv
     }
 
 
-
-    @Override
-    public Object visit(ASTVariableId node, Object data) {
+    @Override public Object visit(ASTVariableId node, Object data) {
         if (node.isUnnamed()) {
             // unnamed variables do not have to match the regexes.
             return null;
@@ -53,20 +51,17 @@ public final class LocalVariableNamingConventionsRule extends AbstractNamingConv
     }
 
 
-    @Override
-    String defaultConvention() {
+    @Override String defaultConvention() {
         return CAMEL_CASE;
     }
 
 
-    @Override
-    String nameExtractor(ASTVariableId node) {
+    @Override String nameExtractor(ASTVariableId node) {
         return node.getName();
     }
 
 
-    @Override
-    String kindDisplayName(ASTVariableId node, PropertyDescriptor<Pattern> descriptor) {
+    @Override String kindDisplayName(ASTVariableId node, PropertyDescriptor<Pattern> descriptor) {
         if (node.isExceptionBlockParameter()) {
             return "exception block parameter";
         } else if (node.isLocalVariable()) {

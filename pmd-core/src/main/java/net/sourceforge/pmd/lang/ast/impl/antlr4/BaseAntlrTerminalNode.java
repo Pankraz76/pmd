@@ -18,7 +18,7 @@ import net.sourceforge.pmd.lang.ast.impl.antlr4.BaseAntlrTerminalNode.AntlrTermi
  * Base class for terminal nodes (they wrap a {@link TerminalNode}).
  */
 public abstract class BaseAntlrTerminalNode<N extends AntlrNode<N>>
-    extends BaseAntlrNode<AntlrTerminalPmdAdapter<N>, N> {
+        extends BaseAntlrNode<AntlrTerminalPmdAdapter<N>, N> {
 
     private final AntlrTerminalPmdAdapter<N> antlrNode;
 
@@ -42,23 +42,19 @@ public abstract class BaseAntlrTerminalNode<N extends AntlrNode<N>>
      */
     public abstract @NonNull String getText();
 
-    @Override
-    protected AntlrTerminalPmdAdapter<N> asAntlrNode() {
+    @Override protected AntlrTerminalPmdAdapter<N> asAntlrNode() {
         return antlrNode;
     }
 
-    @Override
-    public Token getFirstAntlrToken() {
+    @Override public Token getFirstAntlrToken() {
         return antlrNode.symbol;
     }
 
-    @Override
-    public Token getLastAntlrToken() {
+    @Override public Token getLastAntlrToken() {
         return antlrNode.symbol;
     }
 
-    @Override
-    public int getNumChildren() {
+    @Override public int getNumChildren() {
         return 0;
     }
 
@@ -66,8 +62,7 @@ public abstract class BaseAntlrTerminalNode<N extends AntlrNode<N>>
         return antlrNode.symbol.getTokenIndex();
     }
 
-    @Override
-    public N getChild(int index) {
+    @Override public N getChild(int index) {
         throw new IndexOutOfBoundsException("Index " + index + " for terminal node");
     }
 
@@ -80,19 +75,16 @@ public abstract class BaseAntlrTerminalNode<N extends AntlrNode<N>>
             this.pmdNode = pmdNode;
         }
 
-        @Override
-        public AntlrToPmdParseTreeAdapter<N> getParent() {
+        @Override public AntlrToPmdParseTreeAdapter<N> getParent() {
             return (AntlrToPmdParseTreeAdapter<N>) super.getParent();
         }
 
-        @Override
-        public void setParent(RuleContext parent) {
+        @Override public void setParent(RuleContext parent) {
             assert parent instanceof BaseAntlrNode.AntlrToPmdParseTreeAdapter;
             super.setParent(parent);
         }
 
-        @Override
-        public BaseAntlrNode<?, N> getPmdNode() {
+        @Override public BaseAntlrNode<?, N> getPmdNode() {
             return pmdNode;
         }
     }
@@ -103,8 +95,7 @@ public abstract class BaseAntlrTerminalNode<N extends AntlrNode<N>>
             super(pmdNode, symbol);
         }
 
-        @Override
-        public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+        @Override public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
             return visitor.visitErrorNode(this);
         }
     }

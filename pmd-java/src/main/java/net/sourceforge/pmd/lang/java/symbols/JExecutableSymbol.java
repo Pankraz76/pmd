@@ -48,8 +48,8 @@ public interface JExecutableSymbol extends JTypeParameterOwnerSymbol {
         // Default methods are public non-abstract instance methods
         // declared in an interface.
         return this instanceof JMethodSymbol
-            && (getModifiers() & (Modifier.ABSTRACT | Modifier.PUBLIC | Modifier.STATIC)) == Modifier.PUBLIC
-            && getEnclosingClass().isInterface();
+                && (getModifiers() & (Modifier.ABSTRACT | Modifier.PUBLIC | Modifier.STATIC)) == Modifier.PUBLIC
+                && getEnclosingClass().isInterface();
     }
 
 
@@ -87,7 +87,7 @@ public interface JExecutableSymbol extends JTypeParameterOwnerSymbol {
         }
         if (this instanceof JConstructorSymbol) {
             return !getEnclosingClass().isStatic()
-                && getEnclosingClass().getEnclosingClass() != null;
+                    && getEnclosingClass().getEnclosingClass() != null;
         }
         return true;
     }
@@ -98,13 +98,10 @@ public interface JExecutableSymbol extends JTypeParameterOwnerSymbol {
      * This is similar to {@link Constructor#getDeclaringClass()}, resp.
      * {@link Method#getDeclaringClass()}. Never null.
      */
-    @Override
-    @NonNull
-    JClassSymbol getEnclosingClass();
+    @Override @NonNull JClassSymbol getEnclosingClass();
 
 
-    @Override
-    default @NonNull String getPackageName() {
+    @Override default @NonNull String getPackageName() {
         return getEnclosingClass().getPackageName();
     }
 

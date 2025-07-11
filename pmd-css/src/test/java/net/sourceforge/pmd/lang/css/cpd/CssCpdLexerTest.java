@@ -15,8 +15,7 @@ class CssCpdLexerTest extends CpdTextComparisonTest {
         super(CssLanguageModule.getInstance(), ".css");
     }
 
-    @Test
-    void testLiterals() {
+    @Test void testLiterals() {
         doTest("literals");
     }
 }

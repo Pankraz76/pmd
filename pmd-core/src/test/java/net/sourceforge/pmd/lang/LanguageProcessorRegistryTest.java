@@ -16,8 +16,7 @@ import net.sourceforge.pmd.properties.PropertyFactory;
 import net.sourceforge.pmd.util.log.PmdReporter;
 
 class LanguageProcessorRegistryTest {
-    @Test
-    void loadEnvironmentVariables() throws Exception {
+    @Test void loadEnvironmentVariables() throws Exception {
         Map<String, String> env = new HashMap<>();
         env.put("PMD_DUMMY_ROOT_DIRECTORY", "theValue");
 

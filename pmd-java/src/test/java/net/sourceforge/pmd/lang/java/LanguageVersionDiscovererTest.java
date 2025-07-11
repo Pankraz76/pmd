@@ -23,8 +23,7 @@ class LanguageVersionDiscovererTest {
      * Test on Java file with default options.
      * Always the latest non-preview version will be the default version.
      */
-    @Test
-    void testJavaFileUsingDefaults() {
+    @Test void testJavaFileUsingDefaults() {
         LanguageVersionDiscoverer discoverer = new LanguageVersionDiscoverer(LanguageRegistry.PMD);
         File javaFile = new File("/path/to/MyClass.java");
 
@@ -47,8 +46,7 @@ class LanguageVersionDiscovererTest {
     /**
      * Test on Java file with Java version set to 1.4.
      */
-    @Test
-    void testJavaFileUsing14() {
+    @Test void testJavaFileUsing14() {
         LanguageVersionDiscoverer discoverer = new LanguageVersionDiscoverer(LanguageRegistry.PMD);
         Language java = JavaLanguageModule.getInstance();
         discoverer.setDefaultLanguageVersion(java.getVersion("1.4"));
@@ -58,18 +56,17 @@ class LanguageVersionDiscovererTest {
         assertEquals(java.getVersion("1.4"), languageVersion);
     }
 
-    @Test
-    void testLanguageVersionDiscoverer() {
+    @Test void testLanguageVersionDiscoverer() {
         PMDConfiguration configuration = new PMDConfiguration();
         LanguageVersionDiscoverer languageVersionDiscoverer = configuration.getLanguageVersionDiscoverer();
         Language java = JavaLanguageModule.getInstance();
         assertEquals(determineLatestNonPreviewVersion(),
-                     languageVersionDiscoverer.getDefaultLanguageVersion(java),
-                     "Default Java version");
+                languageVersionDiscoverer.getDefaultLanguageVersion(java),
+                "Default Java version");
         configuration
                 .setDefaultLanguageVersion(java.getVersion("1.5"));
         assertEquals(java.getVersion("1.5"),
-                     languageVersionDiscoverer.getDefaultLanguageVersion(java),
-                     "Modified Java version");
+                languageVersionDiscoverer.getDefaultLanguageVersion(java),
+                "Modified Java version");
     }
 }

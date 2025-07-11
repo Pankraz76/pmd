@@ -24,7 +24,8 @@ import net.sourceforge.pmd.lang.modelica.resolver.internal.Watchdog;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static void addImportToClass(ModelicaClassType classTypeDeclaration, Visibility visibility, ModelicaImportClause clause) {
         ((ModelicaClassDeclaration) classTypeDeclaration).addImport(visibility, clause);
@@ -39,7 +40,8 @@ public final class InternalApiBridge {
     }
 
     public static final class ModelicaSymbolFacade {
-        private ModelicaSymbolFacade() {}
+        private ModelicaSymbolFacade() {
+        }
 
         public static void process(ASTStoredDefinition node) {
             ScopeAndDeclarationFinder sc = new ScopeAndDeclarationFinder();

@@ -25,22 +25,21 @@ import net.sourceforge.pmd.lang.java.types.TypeTestUtil;
 public class UseUtilityClassRule extends AbstractJavaRulechainRule {
 
     private static final Set<String> IGNORED_CLASS_ANNOT = setOf(
-        "lombok.experimental.UtilityClass",
-        "org.junit.runner.RunWith" // for suites and such
+            "lombok.experimental.UtilityClass",
+            "org.junit.runner.RunWith" // for suites and such
     );
 
     public UseUtilityClassRule() {
         super(ASTClassDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTClassDeclaration klass, Object data) {
+    @Override public Object visit(ASTClassDeclaration klass, Object data) {
         if (JavaAstUtils.hasAnyAnnotation(klass, IGNORED_CLASS_ANNOT)
-            || TypeTestUtil.isA("junit.framework.TestSuite", klass) // suite method is ok
-            || klass.isInterface()
-            || klass.isAbstract()
-            || klass.getSuperClassTypeNode() != null
-            || klass.getSuperInterfaceTypeNodes().nonEmpty()
+                || TypeTestUtil.isA("junit.framework.TestSuite", klass) // suite method is ok
+                || klass.isInterface()
+                || klass.isAbstract()
+                || klass.getSuperClassTypeNode() != null
+                || klass.getSuperInterfaceTypeNodes().nonEmpty()
         ) {
             return data;
         }
@@ -50,7 +49,7 @@ public class UseUtilityClassRule extends AbstractJavaRulechainRule {
         boolean hasAnyCtor = false;
         for (ASTBodyDeclaration declaration : klass.getDeclarations()) {
             if (declaration instanceof ASTFieldDeclaration
-                && !((ASTFieldDeclaration) declaration).isStatic()) {
+                    && !((ASTFieldDeclaration) declaration).isStatic()) {
                 return null;
             }
             if (declaration instanceof ASTConstructorDeclaration) {
@@ -72,8 +71,8 @@ public class UseUtilityClassRule extends AbstractJavaRulechainRule {
 
         // account for default ctor
         hasNonPrivateCtor |= !hasAnyCtor
-            && klass.getVisibility() != Visibility.V_PRIVATE
-            && !hasLombokPrivateCtor(klass);
+                && klass.getVisibility() != Visibility.V_PRIVATE
+                && !hasLombokPrivateCtor(klass);
 
 
         String message;
@@ -88,13 +87,13 @@ public class UseUtilityClassRule extends AbstractJavaRulechainRule {
         // check if there's a lombok no arg private constructor, if so skip the rest of the rules
 
         return parent.getDeclaredAnnotations()
-                     .filter(t -> TypeTestUtil.isA("lombok.NoArgsConstructor", t))
-                     .flatMap(ASTAnnotation::getMembers)
-                     // to set the access level of a constructor in lombok, you set the access property on the annotation
-                     .filterMatching(ASTMemberValuePair::getName, "access")
-                     // This is from the AccessLevel enum in Lombok
-                     // if the constructor is found and the accesslevel is private no need to check anything else
-                     .any(it -> isAccessToVarWithName(it.getValue(), "PRIVATE"));
+                .filter(t -> TypeTestUtil.isA("lombok.NoArgsConstructor", t))
+                .flatMap(ASTAnnotation::getMembers)
+                // to set the access level of a constructor in lombok, you set the access property on the annotation
+                .filterMatching(ASTMemberValuePair::getName, "access")
+                // This is from the AccessLevel enum in Lombok
+                // if the constructor is found and the accesslevel is private no need to check anything else
+                .any(it -> isAccessToVarWithName(it.getValue(), "PRIVATE"));
     }
 
     private static boolean isAccessToVarWithName(JavaNode node, String name) {

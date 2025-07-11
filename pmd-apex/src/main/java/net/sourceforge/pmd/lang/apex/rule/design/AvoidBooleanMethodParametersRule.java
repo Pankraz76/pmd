@@ -45,8 +45,7 @@ public class AvoidBooleanMethodParametersRule extends AbstractApexRule {
      *            the rule context data
      * @return the rule context data
      */
-    @Override
-    public Object visit(ASTMethod theMethod, Object data) {
+    @Override public Object visit(ASTMethod theMethod, Object data) {
         if (!isPublicOrGlobal(theMethod)) {
             return data;
         }
@@ -65,8 +64,7 @@ public class AvoidBooleanMethodParametersRule extends AbstractApexRule {
      * 
      * @return a rule target selector configured for ASTMethod nodes
      */
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTMethod.class);
     }
 

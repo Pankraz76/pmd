@@ -15,8 +15,7 @@ class PMDTaskTest extends AbstractAntTestHelper {
         super.antTestScriptFilename = "pmdtasktest.xml";
     }
 
-    @Test
-    void testEcmascript() {
+    @Test void testEcmascript() {
         executeTarget("testEcmascript");
         assertOutputContaining("A 'return', 'break', 'continue', or 'throw' statement should be the last in a block.");
         assertOutputContaining("Avoid using global variables");

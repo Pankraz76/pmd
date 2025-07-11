@@ -75,8 +75,7 @@ public final class CompositeName {
         return matchPrefix(prefix, 0);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         if (isEmpty()) {
             return "Nil";
         } else {

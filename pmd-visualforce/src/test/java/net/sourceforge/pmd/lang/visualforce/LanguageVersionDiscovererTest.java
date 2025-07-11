@@ -25,16 +25,14 @@ class LanguageVersionDiscovererTest extends AbstractVfTest {
     /**
      * Test on VF file.
      */
-    @Test
-    void testVFFile() {
+    @Test void testVFFile() {
         LanguageVersionDiscoverer discoverer = new LanguageVersionDiscoverer(LanguageRegistry.PMD);
         File vfFile = new File("/path/to/MyPage.page");
         LanguageVersion languageVersion = discoverer.getDefaultLanguageVersionForFile(vfFile);
         assertEquals(vf.getLanguage().getDefaultVersion(), languageVersion, "LanguageVersion must be VF!");
     }
 
-    @Test
-    void testComponentFile() {
+    @Test void testComponentFile() {
         LanguageVersionDiscoverer discoverer = new LanguageVersionDiscoverer(new LanguageRegistry(singleton(vf.getLanguage())));
         File vfFile = new File("/path/to/MyPage.component");
         LanguageVersion languageVersion = discoverer.getDefaultLanguageVersionForFile(vfFile);

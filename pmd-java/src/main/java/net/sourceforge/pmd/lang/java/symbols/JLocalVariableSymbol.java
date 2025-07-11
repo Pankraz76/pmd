@@ -16,8 +16,7 @@ import net.sourceforge.pmd.lang.java.ast.ASTVariableId;
  */
 public interface JLocalVariableSymbol extends JVariableSymbol {
 
-    @Override
-    default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
+    @Override default <R, P> R acceptVisitor(SymbolVisitor<R, P> visitor, P param) {
         return visitor.visitLocal(this, param);
     }
 }

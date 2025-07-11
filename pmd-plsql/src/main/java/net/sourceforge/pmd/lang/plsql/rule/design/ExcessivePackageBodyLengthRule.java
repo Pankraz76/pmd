@@ -15,8 +15,7 @@ public class ExcessivePackageBodyLengthRule extends AbstractCounterCheckRule.Abs
         super(ASTPackageBody.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 1000;
     }
 }

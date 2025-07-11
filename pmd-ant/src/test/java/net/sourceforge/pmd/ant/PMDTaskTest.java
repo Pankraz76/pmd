@@ -25,13 +25,11 @@ import net.sourceforge.pmd.internal.util.IOUtil;
 
 class PMDTaskTest extends AbstractAntTest {
 
-    @BeforeEach
-    void setUp() {
+    @BeforeEach void setUp() {
         configureProject("src/test/resources/net/sourceforge/pmd/ant/xml/pmdtasktest.xml");
     }
 
-    @Test
-    void testFormatterWithNoToFileAttribute() {
+    @Test void testFormatterWithNoToFileAttribute() {
         try {
             executeTarget("testFormatterWithNoToFileAttribute");
             fail("This should throw an exception");
@@ -40,8 +38,7 @@ class PMDTaskTest extends AbstractAntTest {
         }
     }
 
-    @Test
-    void testNoRuleSets() {
+    @Test void testNoRuleSets() {
         try {
             executeTarget("testNoRuleSets");
             fail("This should throw an exception");
@@ -50,13 +47,11 @@ class PMDTaskTest extends AbstractAntTest {
         }
     }
 
-    @Test
-    void testBasic() {
+    @Test void testBasic() {
         executeTarget("testBasic");
     }
 
-    @Test
-    void testInvalidLanguageVersion() {
+    @Test void testInvalidLanguageVersion() {
         try {
             executeTarget("testInvalidLanguageVersion");
             assertEquals(
@@ -70,8 +65,7 @@ class PMDTaskTest extends AbstractAntTest {
         }
     }
 
-    @Test
-    void testRelativizeWith() throws IOException {
+    @Test void testRelativizeWith() throws IOException {
         executeTarget("testRelativizeWith");
 
         try (InputStream in = Files.newInputStream(Paths.get("target/pmd-ant-test.txt"))) {
@@ -82,8 +76,7 @@ class PMDTaskTest extends AbstractAntTest {
         }
     }
 
-    @Test
-    void testXmlFormatter() throws IOException {
+    @Test void testXmlFormatter() throws IOException {
         executeTarget("testXmlFormatter");
 
         try (InputStream in = Files.newInputStream(Paths.get("target/pmd-ant-xml.xml"));

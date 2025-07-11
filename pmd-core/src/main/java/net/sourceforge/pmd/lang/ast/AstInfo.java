@@ -47,9 +47,9 @@ public final class AstInfo<T extends RootNode> {
     }
 
     private AstInfo(TextDocument textDocument,
-                    T rootNode,
-                    LanguageProcessorRegistry lpReg,
-                    Map<Integer, SuppressionCommentWrapper> suppressionComments) {
+            T rootNode,
+            LanguageProcessorRegistry lpReg,
+            Map<Integer, SuppressionCommentWrapper> suppressionComments) {
         this.textDocument = AssertionUtil.requireParamNotNull("text document", textDocument);
         this.rootNode = AssertionUtil.requireParamNotNull("root node", rootNode);
         this.lpReg = lpReg;
@@ -88,8 +88,7 @@ public final class AstInfo<T extends RootNode> {
      * @return map of the suppressed lines with the corresponding review comments.
      * @deprecated Since 7.14.0. Use {@link #getAllSuppressionComments()} or {@link #getSuppressionComment(int)}
      */
-    @Deprecated
-    public Map<Integer, String> getSuppressionComments() {
+    @Deprecated public Map<Integer, String> getSuppressionComments() {
         return CollectionUtil.mapView(suppressionComments, ViolationSuppressor.SuppressionCommentWrapper::getUserMessage);
     }
 
@@ -130,20 +129,17 @@ public final class AstInfo<T extends RootNode> {
     /**
      * @deprecated Since 7.14.0. Use {@link #withSuppressionComments(Collection)}
      */
-    @Deprecated
-    public AstInfo<T> withSuppressMap(Map<Integer, String> map) {
+    @Deprecated public AstInfo<T> withSuppressMap(Map<Integer, String> map) {
         Set<SuppressionCommentWrapper> comments = new HashSet<>();
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
             String comment = entry.getValue();
             int line = entry.getKey();
             comments.add(new SuppressionCommentWrapper() {
-                @Override
-                public String getUserMessage() {
+                @Override public String getUserMessage() {
                     return comment;
                 }
 
-                @Override
-                public Reportable getLocation() {
+                @Override public Reportable getLocation() {
                     return () -> FileLocation.caret(textDocument.getFileId(), line, 1);
                 }
             });
@@ -161,10 +157,10 @@ public final class AstInfo<T extends RootNode> {
             suppressMap.put(comment.getLocation().getReportLocation().getStartLine(), comment);
         }
         return new AstInfo<>(
-            textDocument,
-            rootNode,
-            lpReg,
-            Collections.unmodifiableMap(suppressMap)
+                textDocument,
+                rootNode,
+                lpReg,
+                Collections.unmodifiableMap(suppressMap)
         );
     }
 

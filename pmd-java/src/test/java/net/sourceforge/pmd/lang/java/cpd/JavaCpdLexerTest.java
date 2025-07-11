@@ -25,90 +25,74 @@ class JavaCpdLexerTest extends CpdTextComparisonTest {
         super(JavaLanguageModule.getInstance(), ".java");
     }
 
-    @Test
-    void testSimpleClass() {
+    @Test void testSimpleClass() {
         doTest("SimpleClass");
     }
 
-    @Test
-    void testStringTemplateReduction() {
+    @Test void testStringTemplateReduction() {
         doTest("StringTemplateReduction");
     }
 
-    @Test
-    void testLexExceptionLocation() {
+    @Test void testLexExceptionLocation() {
         CpdLexer cpdLexer = newCpdLexer(defaultProperties());
         LexException lexException = assertThrows(LexException.class, () ->
-            CpdLexer.tokenize(cpdLexer,
-                    // note: the source deliberately contains an unbalanced quote, unterminated string literal
-                    TextDocument.readOnlyString("class F {\n    String s=\"abc\";\"\n}\n", FileId.UNKNOWN, getLanguage().getDefaultVersion()))
+                CpdLexer.tokenize(cpdLexer,
+                        // note: the source deliberately contains an unbalanced quote, unterminated string literal
+                        TextDocument.readOnlyString("class F {\n    String s=\"abc\";\"\n}\n", FileId.UNKNOWN, getLanguage().getDefaultVersion()))
         );
         // this shouldn't throw a IllegalArgumentException
         assertThat(lexException.getMessage(), containsString("at line 3, column 1"));
     }
 
-    @Test
-    void testStringTemplateReduction2() {
+    @Test void testStringTemplateReduction2() {
         doTest("StringTemplateReduction2");
     }
 
-    @Test
-    void testCommentsIgnored() {
+    @Test void testCommentsIgnored() {
         doTest("simpleClassWithComments");
     }
 
-    @Test
-    void testDiscardedElements() {
+    @Test void testDiscardedElements() {
         doTest("discardedElements", "_ignore_annots", ignoreAnnotations());
     }
 
-    @Test
-    void testDiscardedElementsExceptAnnots() {
+    @Test void testDiscardedElementsExceptAnnots() {
         doTest("discardedElements", "_no_ignore_annots");
     }
 
-    @Test
-    void testIgnoreBetweenSpecialComments() {
+    @Test void testIgnoreBetweenSpecialComments() {
         doTest("specialComments");
     }
 
-    @Test
-    void testIgnoreBetweenSpecialAnnotation() {
+    @Test void testIgnoreBetweenSpecialAnnotation() {
         doTest("ignoreSpecialAnnotations");
     }
 
-    @Test
-    void testIgnoreBetweenSpecialAnnotationAndIgnoreAnnotations() {
+    @Test void testIgnoreBetweenSpecialAnnotationAndIgnoreAnnotations() {
         doTest("ignoreSpecialAnnotations", "_ignore_annots", ignoreAnnotations());
     }
 
-    @Test
-    void testIgnoreIdentifiersDontAffectConstructors() {
+    @Test void testIgnoreIdentifiersDontAffectConstructors() {
         doTest("ignoreIdentsPreservesCtor", "", ignoreIdents());
     }
 
-    @Test
-    void testIgnoreIdentifiersHandlesEnums() {
+    @Test void testIgnoreIdentifiersHandlesEnums() {
         doTest("ignoreIdentsPreservesEnum", "", ignoreIdents());
     }
 
-    @Test
-    void testIgnoreIdentifiersWithClassKeyword() {
+    @Test void testIgnoreIdentifiersWithClassKeyword() {
         doTest("ignoreIdentsPreservesClassLiteral", "", ignoreIdents());
     }
 
-    @Test
-    void testIgnoreLiterals() {
+    @Test void testIgnoreLiterals() {
         doTest("ignoreLiterals", "", ignoreLiterals());
     }
 
-    @Test
-    void testNoIgnoreLiterals() {
+    @Test void testNoIgnoreLiterals() {
         doTest("ignoreLiterals", "_noignore");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 
@@ -126,14 +110,13 @@ class JavaCpdLexerTest extends CpdTextComparisonTest {
     }
 
 
-    @Override
-    public LanguagePropertyConfig defaultProperties() {
+    @Override public LanguagePropertyConfig defaultProperties() {
         return properties(false, false, false);
     }
 
     private static LanguagePropertyConfig properties(boolean ignoreAnnotations,
-                                                     boolean ignoreLiterals,
-                                                     boolean ignoreIdents) {
+            boolean ignoreLiterals,
+            boolean ignoreIdents) {
         return properties -> {
             properties.setProperty(CpdLanguageProperties.CPD_IGNORE_METADATA, ignoreAnnotations);
             properties.setProperty(CpdLanguageProperties.CPD_ANONYMIZE_IDENTIFIERS, ignoreIdents);

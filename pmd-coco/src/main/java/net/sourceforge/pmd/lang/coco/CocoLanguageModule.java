@@ -24,8 +24,7 @@ public class CocoLanguageModule extends CpdOnlyLanguageModuleBase {
         return (CocoLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new CocoCpdLexer();
     }
 }

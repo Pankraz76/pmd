@@ -32,13 +32,11 @@ public final class AvoidStatefulDatabaseResultRule extends AbstractApexRule {
             "database.deleteresult", "database.emptyrecyclebinresult", "database.mergeresult", "database.saveresult",
             "database.undeleteresult", "database.upsertresult");
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
-    @Override
-    public Object visit(ASTUserClass theClass, Object data) {
+    @Override public Object visit(ASTUserClass theClass, Object data) {
         if (!implementsDatabaseStateful(theClass)) {
             return data;
         }

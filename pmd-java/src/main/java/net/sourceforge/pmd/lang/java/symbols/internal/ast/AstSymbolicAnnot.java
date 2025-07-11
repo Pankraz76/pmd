@@ -37,8 +37,7 @@ class AstSymbolicAnnot implements SymbolicValue.SymAnnot {
         this.sym = Objects.requireNonNull(sym);
     }
 
-    @Override
-    public @Nullable SymbolicValue getAttribute(String attrName) {
+    @Override public @Nullable SymbolicValue getAttribute(String attrName) {
         ASTMemberValue explicitAttr = node.getAttribute(attrName);
         if (explicitAttr != null) {
             return ofNode(explicitAttr);
@@ -46,29 +45,24 @@ class AstSymbolicAnnot implements SymbolicValue.SymAnnot {
         return getAnnotationSymbol().getDefaultAnnotationAttributeValue(attrName);
     }
 
-    @Override
-    public @NonNull JClassSymbol getAnnotationSymbol() {
+    @Override public @NonNull JClassSymbol getAnnotationSymbol() {
         return sym;
 
     }
 
-    @Override
-    public String getSimpleName() {
+    @Override public String getSimpleName() {
         return node.getSimpleName();
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return SymbolEquality.ANNOTATION.equals(this, o);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.ANNOTATION.hash(this);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return SymbolToStrings.AST.toString(this);
     }
 
@@ -107,8 +101,8 @@ class AstSymbolicAnnot implements SymbolicValue.SymAnnot {
             JTypeMirror t = refExpr.getTypeMirror();
             if (t instanceof JClassType && ((JClassType) t).getSymbol().isEnum()) {
                 return SymEnum.fromBinaryName(t.getTypeSystem(),
-                                              ((JClassType) t).getSymbol().getBinaryName(),
-                                              refExpr.getName());
+                        ((JClassType) t).getSymbol().getBinaryName(),
+                        refExpr.getName());
             }
         }
         return null;

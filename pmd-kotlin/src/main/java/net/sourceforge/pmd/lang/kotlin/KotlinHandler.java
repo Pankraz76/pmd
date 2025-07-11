@@ -14,13 +14,11 @@ public class KotlinHandler extends AbstractPmdLanguageVersionHandler {
 
     private static final XPathHandler XPATH_HANDLER = XPathHandler.noFunctionDefinitions();
 
-    @Override
-    public XPathHandler getXPathHandler() {
+    @Override public XPathHandler getXPathHandler() {
         return XPATH_HANDLER;
     }
 
-    @Override
-    public Parser getParser() {
+    @Override public Parser getParser() {
         return new PmdKotlinParser();
     }
 }

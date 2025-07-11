@@ -73,8 +73,8 @@ class ClassTypeImpl implements JClassType {
         this.typeArgs = typeArgs;
 
         this.enclosingType = enclosing != null
-                             ? enclosing
-                             : makeEnclosingOf(symbol);
+                ? enclosing
+                : makeEnclosingOf(symbol);
 
         this.genericity = computeGenericity(isRaw);
 
@@ -125,35 +125,30 @@ class ClassTypeImpl implements JClassType {
         return (JClassType) ts.typeOf(enclosing, false);
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return ts;
     }
 
-    @Override
-    public PSet<SymAnnot> getTypeAnnotations() {
+    @Override public PSet<SymAnnot> getTypeAnnotations() {
         return typeAnnotations;
     }
 
-    @Override
-    public JClassType withAnnotations(PSet<SymAnnot> newTypeAnnots) {
+    @Override public JClassType withAnnotations(PSet<SymAnnot> newTypeAnnots) {
         if (newTypeAnnots.isEmpty() && this.typeAnnotations.isEmpty()) {
             return this;
         }
         return new ClassTypeImpl(ts, enclosingType, symbol, typeArgs, newTypeAnnots, isRaw());
     }
 
-    @Override
-    public List<JTypeVar> getFormalTypeParams() {
+    @Override public List<JTypeVar> getFormalTypeParams() {
         return symbol.getTypeParameters();
     }
 
-    @Override
-    public Substitution getTypeParamSubst() {
+    @Override public Substitution getTypeParamSubst() {
         if (subst == null) {
             Substitution enclSubst = getEnclosingType() == null
-                                     ? Substitution.EMPTY
-                                     : getEnclosingType().getTypeParamSubst();
+                    ? Substitution.EMPTY
+                    : getEnclosingType().getTypeParamSubst();
             subst = enclSubst.andThen(localSubst());
         }
         return subst;
@@ -205,62 +200,51 @@ class ClassTypeImpl implements JClassType {
         }
     }
 
-    @Override
-    public final JClassType selectInner(JClassSymbol symbol, List<? extends JTypeMirror> targs, PSet<SymAnnot> typeAnnotations) {
+    @Override public final JClassType selectInner(JClassSymbol symbol, List<? extends JTypeMirror> targs, PSet<SymAnnot> typeAnnotations) {
         return new ClassTypeImpl(ts,
-                                 this,
-                                 symbol,
-                                 CollectionUtil.defensiveUnmodifiableCopy(targs),
-                                 typeAnnotations,
-                                 isRaw());
+                this,
+                symbol,
+                CollectionUtil.defensiveUnmodifiableCopy(targs),
+                typeAnnotations,
+                isRaw());
     }
 
-    @Override
-    public final boolean isRaw() {
+    @Override public final boolean isRaw() {
         return genericity == TypeGenericity.RAW;
     }
 
-    @Override
-    public final boolean isGenericTypeDeclaration() {
+    @Override public final boolean isGenericTypeDeclaration() {
         return genericity == TypeGenericity.GENERIC_TYPEDECL;
     }
 
-    @Override
-    public final boolean isParameterizedType() {
+    @Override public final boolean isParameterizedType() {
         return genericity == TypeGenericity.GENERIC_PARAMETERIZED;
     }
 
-    @Override
-    public final boolean isGeneric() {
+    @Override public final boolean isGeneric() {
         return genericity != TypeGenericity.NON_GENERIC;
     }
 
-    @Override
-    public JClassType getGenericTypeDeclaration() {
+    @Override public JClassType getGenericTypeDeclaration() {
         if (isGenericTypeDeclaration() || !isGeneric()) {
             return this;
         }
         return new ClassTypeImpl(ts, symbol, emptyList(), false, typeAnnotations);
     }
 
-    @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public List<JTypeMirror> getTypeArgs() {
+    @Override @SuppressWarnings({"unchecked", "rawtypes"}) public List<JTypeMirror> getTypeArgs() {
         return isGenericTypeDeclaration() ? (List) getFormalTypeParams() : typeArgs;
     }
 
-    @Override
-    public @Nullable JClassType getEnclosingType() {
+    @Override public @Nullable JClassType getEnclosingType() {
         return enclosingType;
     }
 
-    @Override
-    public boolean hasErasedSuperTypes() {
+    @Override public boolean hasErasedSuperTypes() {
         return isRaw();
     }
 
-    @Override
-    public JClassType getErasure() {
+    @Override public JClassType getErasure() {
         if ((!isGeneric() || isRaw()) && enclosingType == null) {
             return this;
         }
@@ -268,8 +252,7 @@ class ClassTypeImpl implements JClassType {
         return new ErasedClassType(ts, symbol, typeAnnotations);
     }
 
-    @Override
-    public JClassType withTypeArguments(List<? extends JTypeMirror> typeArgs) {
+    @Override public JClassType withTypeArguments(List<? extends JTypeMirror> typeArgs) {
         if (enclosingType != null) {
             return enclosingType.selectInner(this.symbol, typeArgs, this.typeAnnotations);
         }
@@ -281,8 +264,7 @@ class ClassTypeImpl implements JClassType {
         return new ClassTypeImpl(ts, symbol, CollectionUtil.defensiveUnmodifiableCopy(typeArgs), true, typeAnnotations);
     }
 
-    @Override
-    public @Nullable JClassType getSuperClass() {
+    @Override public @Nullable JClassType getSuperClass() {
         if (superClass == null && !isTop()) {
             if (hasErasedSuperTypes()) {
                 superClass = ts.erasedType(symbol.getSuperclass());
@@ -293,8 +275,7 @@ class ClassTypeImpl implements JClassType {
         return superClass;
     }
 
-    @Override
-    public List<JClassType> getSuperInterfaces() {
+    @Override public List<JClassType> getSuperInterfaces() {
         if (interfaces == null) {
             if (hasErasedSuperTypes()) {
                 interfaces = map(symbol.getSuperInterfaces(), ts::erasedType);
@@ -305,13 +286,11 @@ class ClassTypeImpl implements JClassType {
         return interfaces;
     }
 
-    @Override
-    public List<FieldSig> getDeclaredFields() {
+    @Override public List<FieldSig> getDeclaredFields() {
         return CollectionUtil.map(symbol.getDeclaredFields(), it -> JVariableSig.forField(this, it));
     }
 
-    @Override
-    public List<JClassType> getDeclaredClasses() {
+    @Override public List<JClassType> getDeclaredClasses() {
         return CollectionUtil.map(symbol.getDeclaredClasses(), this::getDeclaredClass);
     }
 
@@ -323,8 +302,7 @@ class ClassTypeImpl implements JClassType {
         }
     }
 
-    @Override
-    public @Nullable FieldSig getDeclaredField(String simpleName) {
+    @Override public @Nullable FieldSig getDeclaredField(String simpleName) {
         @Nullable JFieldSymbol declaredField = symbol.getDeclaredField(simpleName);
         if (declaredField != null) {
             return JVariableSig.forField(this, declaredField);
@@ -332,8 +310,7 @@ class ClassTypeImpl implements JClassType {
         return null;
     }
 
-    @Override
-    public @Nullable JClassType getDeclaredClass(String simpleName) {
+    @Override public @Nullable JClassType getDeclaredClass(String simpleName) {
         JClassSymbol declaredClass = symbol.getDeclaredClass(simpleName);
         if (declaredClass != null) {
             if (Modifier.isStatic(declaredClass.getModifiers())) {
@@ -345,29 +322,25 @@ class ClassTypeImpl implements JClassType {
         return null;
     }
 
-    @Override
-    public List<JMethodSig> getConstructors() {
+    @Override public List<JMethodSig> getConstructors() {
         return map(
-            symbol.getConstructors(),
-            it -> new ClassMethodSigImpl(this, it)
+                symbol.getConstructors(),
+                it -> new ClassMethodSigImpl(this, it)
         );
     }
 
-    @Override
-    public Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
+    @Override public Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
         return SuperTypesEnumerator.ALL_SUPERTYPES_INCLUDING_SELF.stream(this)
-                                                                 .flatMap(sup -> sup.streamDeclaredMethods(prefilter));
+                .flatMap(sup -> sup.streamDeclaredMethods(prefilter));
     }
 
-    @Override
-    public Stream<JMethodSig> streamDeclaredMethods(Predicate<? super JMethodSymbol> prefilter) {
+    @Override public Stream<JMethodSig> streamDeclaredMethods(Predicate<? super JMethodSymbol> prefilter) {
         return getSymbol().getDeclaredMethods().stream()
-                          .filter(prefilter)
-                          .map(m -> new ClassMethodSigImpl(this, m));
+                .filter(prefilter)
+                .map(m -> new ClassMethodSigImpl(this, m));
     }
 
-    @Override
-    public @Nullable JMethodSig getDeclaredMethod(JExecutableSymbol sym) {
+    @Override public @Nullable JMethodSig getDeclaredMethod(JExecutableSymbol sym) {
         if (sym.getEnclosingClass().equals(getSymbol())) {
             return new ClassMethodSigImpl(this, sym);
         }
@@ -375,18 +348,15 @@ class ClassTypeImpl implements JClassType {
     }
 
 
-    @Override
-    public final @NonNull JClassSymbol getSymbol() {
+    @Override public final @NonNull JClassSymbol getSymbol() {
         return symbol;
     }
 
-    @Override
-    public final boolean isTop() {
+    @Override public final boolean isTop() {
         return this.getSymbol().equals(ts.OBJECT.getSymbol());
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -399,16 +369,14 @@ class ClassTypeImpl implements JClassType {
         return TypeOps.isSameType(this, that);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         if (hash == 0) { // hash collision is harmless
             hash = typeArgs.hashCode() * 31 + symbol.hashCode();
         }
         return hash;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return TypePrettyPrint.prettyPrint(this);
     }
 
@@ -428,8 +396,8 @@ class ClassTypeImpl implements JClassType {
 
     protected static @NonNull IllegalArgumentException invalidTypeArgs(JClassSymbol symbol, List<? extends JTypeMirror> typeArgs) {
         return new IllegalArgumentException("Cannot parameterize " + symbol + " with " + typeArgs
-                                                + ", expecting  " + symbol.getTypeParameterCount()
-                                                + " type arguments");
+                + ", expecting  " + symbol.getTypeParameterCount()
+                + " type arguments");
     }
 
     private static void checkTypeArg(JClassSymbol symbol, List<JTypeMirror> typeArgs, JTypeMirror arg) {
@@ -442,8 +410,8 @@ class ClassTypeImpl implements JClassType {
 
     private static boolean typeArgsAreOk(JClassSymbol symbol, List<? extends JTypeMirror> typeArgs) {
         return typeArgs.isEmpty() // always ok (raw/ decl/ non-generic)
-            || symbol.isUnresolved()
-            || symbol.getTypeParameterCount() == typeArgs.size();
+                || symbol.isUnresolved()
+                || symbol.getTypeParameterCount() == typeArgs.size();
     }
 
     private static void checkUserEnclosingTypeIsOk(@Nullable JClassType enclosing, JClassSymbol symbol) {

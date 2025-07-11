@@ -26,8 +26,7 @@ class JavaQualifiedNameTest {
         return JavaParsingHelper.DEFAULT.withDefaultVersion("15").getNodes(target, code);
     }
 
-    @Test
-    void testEmptyPackage() {
+    @Test void testEmptyPackage() {
         final String TEST = "class Foo {}";
         List<ASTClassDeclaration> nodes = getNodes(ASTClassDeclaration.class, TEST);
         for (ASTClassDeclaration coid : nodes) {
@@ -37,8 +36,7 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testPackage() {
+    @Test void testPackage() {
         final String TEST = "package foo.bar; class Bzaz{}";
 
         List<ASTClassDeclaration> nodes = getNodes(ASTClassDeclaration.class, TEST);
@@ -48,8 +46,7 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testNestedClass() {
+    @Test void testNestedClass() {
         final String TEST = "package foo.bar; class Bzaz{ class Bor{ class Foo{}}}";
 
         List<ASTClassDeclaration> nodes = getNodes(ASTClassDeclaration.class, TEST);
@@ -62,8 +59,7 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testNestedEnum() {
+    @Test void testNestedEnum() {
         final String TEST = "package foo.bar; class Foo { enum Bzaz{HOO;}}";
 
         List<ASTEnumDeclaration> nodes = getNodes(ASTEnumDeclaration.class, TEST);
@@ -76,8 +72,7 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testEnum() {
+    @Test void testEnum() {
         final String TEST = "package foo.bar; enum Bzaz{HOO;}";
 
         List<ASTEnumDeclaration> nodes = getNodes(ASTEnumDeclaration.class, TEST);
@@ -90,8 +85,7 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testNestedEmptyPackage() {
+    @Test void testNestedEmptyPackage() {
         final String TEST = "class Bzaz{ class Bor{ class Foo{}}}";
 
         List<ASTClassDeclaration> nodes = getNodes(ASTClassDeclaration.class, TEST);
@@ -104,8 +98,7 @@ class JavaQualifiedNameTest {
         }
     }
 
-    @Test
-    void testSimpleLocalClass() {
+    @Test void testSimpleLocalClass() {
         final String TEST = "package bar; class Boron { public void foo(String j) { class Local {} } }";
 
         List<ASTClassDeclaration> classes = getNodes(ASTClassDeclaration.class, TEST);
@@ -114,33 +107,31 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testLocalClassNameClash() {
+    @Test void testLocalClassNameClash() {
         final String TEST = "package bar; class Bzaz{ void foo() { class Local {} } {// initializer\n class Local {}}}";
 
         List<ASTClassDeclaration> classes
-            = getNodes(ASTClassDeclaration.class, TEST);
+                = getNodes(ASTClassDeclaration.class, TEST);
 
         assertEquals("bar.Bzaz$1Local", classes.get(1).getBinaryName());
         assertEquals("bar.Bzaz$2Local", classes.get(2).getBinaryName());
     }
 
 
-    @Test
-    void testLocalClassDeepNesting() {
+    @Test void testLocalClassDeepNesting() {
         final String TEST
-            = "class Bzaz{ void foo() { "
-            + "  class Local { "
-            + "    class Nested {"
-            + "      {"
-            + "        class InnerLocal{}"
-            + "      }"
-            + "    }"
-            + "  }"
-            + "}}";
+                = "class Bzaz{ void foo() { "
+                + "  class Local { "
+                + "    class Nested {"
+                + "      {"
+                + "        class InnerLocal{}"
+                + "      }"
+                + "    }"
+                + "  }"
+                + "}}";
 
         List<ASTClassDeclaration> classes
-            = getNodes(ASTClassDeclaration.class, TEST);
+                = getNodes(ASTClassDeclaration.class, TEST);
 
         assertEquals("Bzaz$1Local", classes.get(1).getBinaryName());
         assertEquals("Local", classes.get(1).getSimpleName());
@@ -157,14 +148,13 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testAnonymousClass() {
+    @Test void testAnonymousClass() {
         final String TEST
-            = "class Bzaz{ void foo() { "
-            + "  new Runnable() {"
-            + "      public void run() {}"
-            + "  };"
-            + "}}";
+                = "class Bzaz{ void foo() { "
+                + "  new Runnable() {"
+                + "      public void run() {}"
+                + "  };"
+                + "}}";
 
         List<ASTAnonymousClassDeclaration> classes = getNodes(ASTAnonymousClassDeclaration.class, TEST);
 
@@ -175,17 +165,16 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testMultipleAnonymousClasses() {
+    @Test void testMultipleAnonymousClasses() {
         final String TEST
-            = "class Bzaz{ void foo() { "
-            + "  new Runnable() {"
-            + "      public void run() {}"
-            + "  };"
-            + "  new Runnable() {"
-            + "      public void run() {}"
-            + "  };"
-            + "}}";
+                = "class Bzaz{ void foo() { "
+                + "  new Runnable() {"
+                + "      public void run() {}"
+                + "  };"
+                + "  new Runnable() {"
+                + "      public void run() {}"
+                + "  };"
+                + "}}";
 
         List<ASTAnonymousClassDeclaration> classes = getNodes(ASTAnonymousClassDeclaration.class, TEST);
 
@@ -195,18 +184,17 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testNestedAnonymousClass() {
+    @Test void testNestedAnonymousClass() {
         final String TEST
-            = "class Bzaz{ void foo() {"
-            + "  new Runnable() {"
-            + "    public void run() {"
-            + "      new Runnable() {"
-            + "        public void run() {}"
-            + "      };"
-            + "    }"
-            + "  };"
-            + "}}";
+                = "class Bzaz{ void foo() {"
+                + "  new Runnable() {"
+                + "    public void run() {"
+                + "      new Runnable() {"
+                + "        public void run() {}"
+                + "      };"
+                + "    }"
+                + "  };"
+                + "}}";
 
         List<ASTAnonymousClassDeclaration> classes = getNodes(ASTAnonymousClassDeclaration.class, TEST);
 
@@ -216,8 +204,7 @@ class JavaQualifiedNameTest {
     }
 
 
-    @Test
-    void testLocalInAnonymousClass() {
+    @Test void testLocalInAnonymousClass() {
         final String TEST
                 = "class Bzaz{ void foo() {"
                 + "  new Runnable() {"

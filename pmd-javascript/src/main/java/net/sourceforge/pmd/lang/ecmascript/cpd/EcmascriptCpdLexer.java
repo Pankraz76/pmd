@@ -18,16 +18,14 @@ import net.sourceforge.pmd.lang.ecmascript5.ast.Ecmascript5TokenKinds;
  */
 public class EcmascriptCpdLexer extends JavaccCpdLexer {
 
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
         return Ecmascript5TokenKinds.newTokenManager(CharStream.create(doc));
     }
 
-    @Override
-    protected String getImage(JavaccToken jsToken) {
+    @Override protected String getImage(JavaccToken jsToken) {
         // Remove line continuation characters from string literals
         if (jsToken.kind == Ecmascript5TokenKinds.STRING_LITERAL
-            || jsToken.kind == Ecmascript5TokenKinds.UNTERMINATED_STRING_LITERAL) {
+                || jsToken.kind == Ecmascript5TokenKinds.UNTERMINATED_STRING_LITERAL) {
             return jsToken.getImage().replaceAll("(?<!\\\\)\\\\(\\r\\n|\\r|\\n)", "");
         }
         return jsToken.getImage();

@@ -68,8 +68,7 @@ public class PMDTask extends Task {
     private boolean noCache;
     private final Collection<RuleSetWrapper> nestedRules = new ArrayList<>();
 
-    @Override
-    public void execute() throws BuildException {
+    @Override public void execute() throws BuildException {
         validate();
 
         ClassLoader oldClassloader = Thread.currentThread().getContextClassLoader();
@@ -108,7 +107,7 @@ public class PMDTask extends Task {
 
     private String getNestedRuleSetFiles() {
         final StringBuilder sb = new StringBuilder();
-        for (Iterator<RuleSetWrapper> it = nestedRules.iterator(); it.hasNext();) {
+        for (Iterator<RuleSetWrapper> it = nestedRules.iterator(); it.hasNext(); ) {
             RuleSetWrapper rs = it.next();
             sb.append(rs.getFile());
             if (it.hasNext()) {

@@ -14,39 +14,32 @@ class MatlabCpdLexerTest extends CpdTextComparisonTest {
         super("matlab", ".m");
     }
 
-    @Test
-    void testLongSample() {
+    @Test void testLongSample() {
         doTest("sample-matlab");
     }
 
-    @Test
-    void testIgnoreBetweenSpecialComments() {
+    @Test void testIgnoreBetweenSpecialComments() {
         doTest("specialComments");
 
     }
 
-    @Test
-    void testComments() {
+    @Test void testComments() {
         doTest("comments");
     }
 
-    @Test
-    void testBlockComments() {
+    @Test void testBlockComments() {
         doTest("multilineComments");
     }
 
-    @Test
-    void testQuestionMark() {
+    @Test void testQuestionMark() {
         doTest("questionMark");
     }
 
-    @Test
-    void testDoubleQuotedStrings() {
+    @Test void testDoubleQuotedStrings() {
         doTest("doubleQuotedStrings");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 }

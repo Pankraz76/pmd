@@ -21,23 +21,21 @@ public class VfLanguageModule extends SimpleLanguageModuleBase implements CpdCap
 
     public VfLanguageModule() {
         super(LanguageMetadata.withId(ID).name(NAME)
-                              .extensions("page", "component")
-                              .dependsOnLanguage(ApexLanguageModule.getInstance().getId())
-                              .addAllVersionsOf(ApexLanguageModule.getInstance()),
-              p -> new VfHandler((VfLanguageProperties) p));
+                        .extensions("page", "component")
+                        .dependsOnLanguage(ApexLanguageModule.getInstance().getId())
+                        .addAllVersionsOf(ApexLanguageModule.getInstance()),
+                p -> new VfHandler((VfLanguageProperties) p));
     }
 
     public static VfLanguageModule getInstance() {
         return (VfLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new VfCpdLexer();
     }
 
-    @Override
-    public LanguagePropertyBundle newPropertyBundle() {
+    @Override public LanguagePropertyBundle newPropertyBundle() {
         return new VfLanguageProperties();
     }
 }

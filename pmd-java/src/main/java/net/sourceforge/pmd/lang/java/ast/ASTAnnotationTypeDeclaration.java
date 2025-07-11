@@ -31,14 +31,12 @@ public final class ASTAnnotationTypeDeclaration extends AbstractTypeDeclaration 
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
 
-    @Override
-    public boolean isInterface() {
+    @Override public boolean isInterface() {
         return true;
     }
 }

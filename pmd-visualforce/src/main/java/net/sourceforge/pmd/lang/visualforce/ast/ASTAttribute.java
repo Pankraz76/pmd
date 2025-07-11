@@ -48,8 +48,7 @@ public final class ASTAttribute extends AbstractVfNode {
         return colonIndex >= 0 ? name.substring(colonIndex + 1) : name;
     }
 
-    @Override
-    protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

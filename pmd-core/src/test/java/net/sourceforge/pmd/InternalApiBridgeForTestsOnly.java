@@ -20,7 +20,8 @@ import net.sourceforge.pmd.cache.internal.AnalysisCache;
  */
 @InternalApi
 public final class InternalApiBridgeForTestsOnly {
-    private InternalApiBridgeForTestsOnly() {}
+    private InternalApiBridgeForTestsOnly() {
+    }
 
     public static void setAnalysisCache(PMDConfiguration pmdConfiguration, AnalysisCache cache) {
         pmdConfiguration.setAnalysisCache(cache);

@@ -29,8 +29,7 @@ public class FortranLanguageModule extends CpdOnlyLanguageModuleBase {
         return (FortranLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new AnyCpdLexer("!");
     }
 }

@@ -22,44 +22,42 @@ public class SimpleMessageReporter extends MessageReporterBase implements PmdRep
         this.backend = backend;
     }
 
-    @Override
-    protected boolean isLoggableImpl(Level level) {
+    @Override protected boolean isLoggableImpl(Level level) {
         switch (level) {
-        case ERROR:
-            return backend.isErrorEnabled();
-        case WARN:
-            return backend.isWarnEnabled();
-        case INFO:
-            return backend.isInfoEnabled();
-        case DEBUG:
-            return backend.isDebugEnabled();
-        case TRACE:
-            return backend.isTraceEnabled();
-        default:
-            return false;
+            case ERROR:
+                return backend.isErrorEnabled();
+            case WARN:
+                return backend.isWarnEnabled();
+            case INFO:
+                return backend.isInfoEnabled();
+            case DEBUG:
+                return backend.isDebugEnabled();
+            case TRACE:
+                return backend.isTraceEnabled();
+            default:
+                return false;
         }
     }
 
-    @Override
-    protected void logImpl(Level level, String message) {
+    @Override protected void logImpl(Level level, String message) {
         switch (level) {
-        case ERROR:
-            backend.error(message);
-            break;
-        case WARN:
-            backend.warn(message);
-            break;
-        case INFO:
-            backend.info(message);
-            break;
-        case DEBUG:
-            backend.debug(message);
-            break;
-        case TRACE:
-            backend.trace(message);
-            break;
-        default:
-            throw new AssertionError("Invalid log level: " + level);
+            case ERROR:
+                backend.error(message);
+                break;
+            case WARN:
+                backend.warn(message);
+                break;
+            case INFO:
+                backend.info(message);
+                break;
+            case DEBUG:
+                backend.debug(message);
+                break;
+            case TRACE:
+                backend.trace(message);
+                break;
+            default:
+                throw new AssertionError("Invalid log level: " + level);
         }
     }
 }

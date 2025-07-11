@@ -92,16 +92,13 @@ public enum PropertyTypeId {
      * Returns the object used to create new properties with the type
      * of this constant.
      */
-    @SuppressWarnings("rawtypes")
-    public BuilderAndMapper<?> getBuilderUtils() {
+    @SuppressWarnings("rawtypes") public BuilderAndMapper<?> getBuilderUtils() {
         return new BuilderAndMapper() {
-            @Override
-            public PropertySerializer<?> getXmlMapper() {
+            @Override public PropertySerializer<?> getXmlMapper() {
                 return propertySerializer;
             }
 
-            @Override
-            public PropertyBuilder<?, ?> newBuilder(String name) {
+            @Override public PropertyBuilder<?, ?> newBuilder(String name) {
                 PropertyBuilder<?, ?> builder = factory.apply(name);
                 builder = InternalApiBridge.withTypeId(builder, PropertyTypeId.this);
                 return builder.availableInXPath(true);

@@ -26,21 +26,18 @@ class SourceDistributionIT {
         return new File(".", "target/pmd-dist-" + PMDVersion.VERSION + "-src.zip");
     }
 
-    @Test
-    void testFileExistence() {
+    @Test void testFileExistence() {
         assertTrue(getSourceDistribution().exists());
     }
 
-    @Test
-    void mavenWrapperShouldBeExecutable() throws Exception {
+    @Test void mavenWrapperShouldBeExecutable() throws Exception {
         try (ZipFile zip = ZipFile.builder().setFile(getSourceDistribution()).get()) {
             ZipArchiveEntry mavenWrapper = zip.getEntry(BASE_PATH + "/mvnw");
             assertEquals(ZipFileExtractor.OWNER_EXECUTABLE, mavenWrapper.getUnixMode() & ZipFileExtractor.OWNER_EXECUTABLE);
         }
     }
 
-    @Test
-    void verifyExclusions() throws Exception {
+    @Test void verifyExclusions() throws Exception {
         Set<String> exclusions = new HashSet<>();
         exclusions.add(BASE_PATH + "/.ci/files/id_rsa");
         exclusions.add(BASE_PATH + "/.ci/files/private-env");

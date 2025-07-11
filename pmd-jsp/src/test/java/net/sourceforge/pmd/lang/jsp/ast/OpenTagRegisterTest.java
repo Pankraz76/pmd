@@ -16,16 +16,14 @@ class OpenTagRegisterTest {
 
     private int elmId = 0;
 
-    @BeforeEach
-    public void newRegister() {
+    @BeforeEach public void newRegister() {
         tagList = new OpenTagRegister();
     }
 
     /**
      * &lt;a&gt; &lt;b&gt; &lt;/a&gt;
      */
-    @Test
-    void testSimpleNesting() {
+    @Test void testSimpleNesting() {
         ASTElement elm = element("a");
         ASTElement elm2 = element("b");
 
@@ -40,8 +38,7 @@ class OpenTagRegisterTest {
     /**
      * &lt;a&gt; &lt;b&gt; &lt;b&gt; &lt;/a&gt;
      */
-    @Test
-    void doubleNesting() {
+    @Test void doubleNesting() {
         ASTElement elm = element("a");
         ASTElement elm2 = element("b");
         ASTElement elm3 = element("b");
@@ -59,8 +56,7 @@ class OpenTagRegisterTest {
     /**
      * &lt;x&gt; &lt;a&gt; &lt;b&gt; &lt;b&gt; &lt;/x&gt; &lt;/a&gt; &lt;/x&gt;
      */
-    @Test
-    void unopenedTags() {
+    @Test void unopenedTags() {
         ASTElement elm = element("x");
         ASTElement elm2 = element("a");
         ASTElement elm3 = element("b");
@@ -85,8 +81,7 @@ class OpenTagRegisterTest {
      * &lt;x&gt; &lt;a&gt; &lt;b&gt; &lt;b&gt; &lt;/z&gt; &lt;/a&gt; &lt;/x&gt;
      *
      */
-    @Test
-    void interleavedTags() {
+    @Test void interleavedTags() {
         ASTElement elm = element("x");
         ASTElement elm2 = element("a");
         ASTElement elm3 = element("b");
@@ -111,8 +106,7 @@ class OpenTagRegisterTest {
     /**
      * &lt;a&gt; &lt;x&gt; &lt;a&gt; &lt;b&gt; &lt;b&gt; &lt;/z&gt; &lt;/a&gt; &lt;/x&gt;
      */
-    @Test
-    void openedIsolatedTag() {
+    @Test void openedIsolatedTag() {
         ASTElement a = element("a");
         ASTElement x = element("x");
         ASTElement a2 = element("a");

@@ -15,13 +15,11 @@ class PositionTest extends BaseTreeDumpTest {
         super(CoordinatesPrinter.INSTANCE, ".html");
     }
 
-    @Override
-    public BaseParsingHelper<HtmlParsingHelper, ASTHtmlDocument> getParser() {
+    @Override public BaseParsingHelper<HtmlParsingHelper, ASTHtmlDocument> getParser() {
         return HtmlParsingHelper.DEFAULT.withResourceContext(HtmlTreeDumpTest.class, "testdata");
     }
 
-    @Test
-    void testPositions() {
+    @Test void testPositions() {
         doTest("SimpleHtmlFile2");
     }
 }

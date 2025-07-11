@@ -128,10 +128,10 @@ public final class TypeConversion {
 
         if (isCastContext) {
             return t.isPrimitive() ? t.box().isConvertibleTo(s).bySubtyping()
-                                   : t.isConvertibleTo(s.box()).bySubtyping();
+                    : t.isConvertibleTo(s.box()).bySubtyping();
         } else {
             return t.isPrimitive() ? t.box().isConvertibleTo(s).somehow()
-                                   : t.unbox().isConvertibleTo(s).somehow();
+                    : t.unbox().isConvertibleTo(s).somehow();
         }
     }
 

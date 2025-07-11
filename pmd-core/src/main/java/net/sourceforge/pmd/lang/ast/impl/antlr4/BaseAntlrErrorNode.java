@@ -13,19 +13,16 @@ public abstract class BaseAntlrErrorNode<N extends AntlrNode<N>> extends BaseAnt
         super(symbol, true);
     }
 
-    @Override
-    protected final AntlrErrorPmdAdapter<N> asAntlrNode() {
+    @Override protected final AntlrErrorPmdAdapter<N> asAntlrNode() {
         return (AntlrErrorPmdAdapter<N>) super.asAntlrNode();
     }
 
 
-    @Override
-    public @NonNull String getText() {
+    @Override public @NonNull String getText() {
         return getFirstAntlrToken().getText();
     }
 
-    @Override
-    public final String getXPathNodeName() {
+    @Override public final String getXPathNodeName() {
         return "Error";
     }
 }

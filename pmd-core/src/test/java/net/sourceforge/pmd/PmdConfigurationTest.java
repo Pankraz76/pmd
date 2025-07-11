@@ -39,24 +39,21 @@ import net.sourceforge.pmd.renderers.Renderer;
 
 class PmdConfigurationTest {
 
-    @Test
-    void testSuppressMarker() {
+    @Test void testSuppressMarker() {
         PMDConfiguration configuration = new PMDConfiguration();
         assertEquals(PMDConfiguration.DEFAULT_SUPPRESS_MARKER, configuration.getSuppressMarker(), "Default suppress marker");
         configuration.setSuppressMarker("CUSTOM_MARKER");
         assertEquals("CUSTOM_MARKER", configuration.getSuppressMarker(), "Changed suppress marker");
     }
 
-    @Test
-    void testThreads() {
+    @Test void testThreads() {
         PMDConfiguration configuration = new PMDConfiguration();
         assertEquals(Runtime.getRuntime().availableProcessors(), configuration.getThreads(), "Default threads");
         configuration.setThreads(0);
         assertEquals(0, configuration.getThreads(), "Changed threads");
     }
 
-    @Test
-    void testClassLoader() {
+    @Test void testClassLoader() {
         PMDConfiguration configuration = new PMDConfiguration();
         assertEquals(PMDConfiguration.class.getClassLoader(), configuration.getClassLoader(), "Default ClassLoader");
         configuration.prependAuxClasspath("some.jar");
@@ -72,8 +69,7 @@ class PmdConfigurationTest {
                 "Revert to default ClassLoader");
     }
 
-    @Test
-    void auxClasspathWithRelativeFileEmpty() {
+    @Test void auxClasspathWithRelativeFileEmpty() {
         String relativeFilePath = "src/test/resources/net/sourceforge/pmd/auxclasspath-empty.cp";
         PMDConfiguration configuration = new PMDConfiguration();
         configuration.prependAuxClasspath("file:" + relativeFilePath);
@@ -81,8 +77,7 @@ class PmdConfigurationTest {
         assertEquals(0, urls.length);
     }
 
-    @Test
-    void auxClasspathWithRelativeFileEmpty2() {
+    @Test void auxClasspathWithRelativeFileEmpty2() {
         String relativeFilePath = "./src/test/resources/net/sourceforge/pmd/auxclasspath-empty.cp";
         PMDConfiguration configuration = new PMDConfiguration();
         configuration.prependAuxClasspath("file:" + relativeFilePath);
@@ -90,8 +85,7 @@ class PmdConfigurationTest {
         assertEquals(0, urls.length);
     }
 
-    @Test
-    void auxClasspathWithRelativeFile() throws URISyntaxException {
+    @Test void auxClasspathWithRelativeFile() throws URISyntaxException {
         final String FILE_SCHEME = "file";
 
         String currentWorkingDirectory = new File("").getAbsoluteFile().toURI().getPath();
@@ -103,21 +97,20 @@ class PmdConfigurationTest {
         for (int i = 0; i < urls.length; i++) {
             uris[i] = urls[i].toURI();
         }
-        URI[] expectedUris = new URI[] {
-            new URI(FILE_SCHEME, null, currentWorkingDirectory + "lib1.jar", null),
-            new URI(FILE_SCHEME, null, currentWorkingDirectory + "other/directory/lib2.jar", null),
-            new URI(FILE_SCHEME, null, new File("/home/jondoe/libs/lib3.jar").getAbsoluteFile().toURI().getPath(), null),
-            new URI(FILE_SCHEME, null, currentWorkingDirectory + "classes", null),
-            new URI(FILE_SCHEME, null, currentWorkingDirectory + "classes2", null),
-            new URI(FILE_SCHEME, null, new File("/home/jondoe/classes").getAbsoluteFile().toURI().getPath(), null),
-            new URI(FILE_SCHEME, null, currentWorkingDirectory, null),
-            new URI(FILE_SCHEME, null, currentWorkingDirectory + "relative source dir/bar", null),
+        URI[] expectedUris = new URI[]{
+                new URI(FILE_SCHEME, null, currentWorkingDirectory + "lib1.jar", null),
+                new URI(FILE_SCHEME, null, currentWorkingDirectory + "other/directory/lib2.jar", null),
+                new URI(FILE_SCHEME, null, new File("/home/jondoe/libs/lib3.jar").getAbsoluteFile().toURI().getPath(), null),
+                new URI(FILE_SCHEME, null, currentWorkingDirectory + "classes", null),
+                new URI(FILE_SCHEME, null, currentWorkingDirectory + "classes2", null),
+                new URI(FILE_SCHEME, null, new File("/home/jondoe/classes").getAbsoluteFile().toURI().getPath(), null),
+                new URI(FILE_SCHEME, null, currentWorkingDirectory, null),
+                new URI(FILE_SCHEME, null, currentWorkingDirectory + "relative source dir/bar", null),
         };
         assertArrayEquals(expectedUris, uris);
     }
 
-    @Test
-    void testRuleSets() {
+    @Test void testRuleSets() {
         PMDConfiguration configuration = new PMDConfiguration();
         assertThat(configuration.getRuleSetPaths(), empty());
         configuration.setRuleSets(listOf("/rulesets/basic.xml"));
@@ -131,32 +124,28 @@ class PmdConfigurationTest {
         assertEquals(listOf("foo.xml"), configuration.getRuleSetPaths());
     }
 
-    @Test
-    void testMinimumPriority() {
+    @Test void testMinimumPriority() {
         PMDConfiguration configuration = new PMDConfiguration();
         assertEquals(RulePriority.LOW, configuration.getMinimumPriority(), "Default minimum priority");
         configuration.setMinimumPriority(RulePriority.HIGH);
         assertEquals(RulePriority.HIGH, configuration.getMinimumPriority(), "Changed minimum priority");
     }
 
-    @Test
-    void testSourceEncoding() {
+    @Test void testSourceEncoding() {
         PMDConfiguration configuration = new PMDConfiguration();
         assertEquals(System.getProperty("file.encoding"), configuration.getSourceEncoding().name(), "Default source encoding");
         configuration.setSourceEncoding(StandardCharsets.UTF_16LE);
         assertEquals(StandardCharsets.UTF_16LE, configuration.getSourceEncoding(), "Changed source encoding");
     }
 
-    @Test
-    void testReportFormat() {
+    @Test void testReportFormat() {
         PMDConfiguration configuration = new PMDConfiguration();
         assertEquals(null, configuration.getReportFormat(), "Default report format");
         configuration.setReportFormat("csv");
         assertEquals("csv", configuration.getReportFormat(), "Changed report format");
     }
 
-    @Test
-    void testCreateRenderer() {
+    @Test void testCreateRenderer() {
         PMDConfiguration configuration = new PMDConfiguration();
         configuration.setReportFormat("csv");
         Renderer renderer = configuration.createRenderer();
@@ -169,16 +158,14 @@ class PmdConfigurationTest {
         assertEquals(true, renderer.isShowSuppressedViolations(), "Changed renderer show suppressed violations");
     }
 
-    @Test
-    void testShowSuppressedViolations() {
+    @Test void testShowSuppressedViolations() {
         PMDConfiguration configuration = new PMDConfiguration();
         assertEquals(false, configuration.isShowSuppressedViolations(), "Default show suppressed violations");
         configuration.setShowSuppressedViolations(true);
         assertEquals(true, configuration.isShowSuppressedViolations(), "Changed show suppressed violations");
     }
 
-    @Test
-    void testReportProperties() {
+    @Test void testReportProperties() {
         PMDConfiguration configuration = new PMDConfiguration();
         assertEquals(0, configuration.getReportProperties().size(), "Default report properties size");
         configuration.getReportProperties().put("key", "value");
@@ -188,8 +175,7 @@ class PmdConfigurationTest {
         assertEquals(0, configuration.getReportProperties().size(), "Replaced report properties size");
     }
 
-    @Test
-    void testAnalysisCache(@TempDir Path folder) throws IOException {
+    @Test void testAnalysisCache(@TempDir Path folder) throws IOException {
         final PMDConfiguration configuration = new PMDConfiguration();
         assertNotNull(configuration.getAnalysisCache(), "Default cache is null");
         assertTrue(configuration.getAnalysisCache() instanceof NoopAnalysisCache, "Default cache is not a noop");
@@ -203,8 +189,7 @@ class PmdConfigurationTest {
         assertSame(analysisCache, configuration.getAnalysisCache(), "Configured cache not stored");
     }
 
-    @Test
-    void testAnalysisCacheLocation() {
+    @Test void testAnalysisCacheLocation() {
         final PMDConfiguration configuration = new PMDConfiguration();
 
         configuration.setAnalysisCacheLocation(null);
@@ -218,8 +203,7 @@ class PmdConfigurationTest {
     }
 
 
-    @Test
-    void testIgnoreIncrementalAnalysis(@TempDir Path folder) throws IOException {
+    @Test void testIgnoreIncrementalAnalysis(@TempDir Path folder) throws IOException {
         final PMDConfiguration configuration = new PMDConfiguration();
 
         // set dummy cache location
@@ -234,13 +218,12 @@ class PmdConfigurationTest {
         assertTrue(configuration.getAnalysisCache() instanceof NoopAnalysisCache, "Ignoring incremental analysis should turn the cache into a noop");
     }
 
-    @Test
-    void testCpdOnlyLanguage() {
+    @Test void testCpdOnlyLanguage() {
         final PMDConfiguration configuration = new PMDConfiguration(LanguageRegistry.CPD);
 
         assertThrows(UnsupportedOperationException.class,
-            () -> configuration.setOnlyRecognizeLanguage(CpdOnlyDummyLanguage.getInstance()));
+                () -> configuration.setOnlyRecognizeLanguage(CpdOnlyDummyLanguage.getInstance()));
         assertThrows(UnsupportedOperationException.class,
-            () -> configuration.setDefaultLanguageVersion(CpdOnlyDummyLanguage.getInstance().getDefaultVersion()));
+                () -> configuration.setDefaultLanguageVersion(CpdOnlyDummyLanguage.getInstance().getDefaultVersion()));
     }
 }

@@ -26,8 +26,7 @@ abstract class AbstractModelicaScope implements ModelicaScope {
         parent = scope;
     }
 
-    @Override
-    public ModelicaScope getParent() {
+    @Override public ModelicaScope getParent() {
         return parent;
     }
 
@@ -40,8 +39,7 @@ abstract class AbstractModelicaScope implements ModelicaScope {
         declarationsByName.get(name).add(declaration);
     }
 
-    @Override
-    public List<ModelicaDeclaration> getContainedDeclarations() {
+    @Override public List<ModelicaDeclaration> getContainedDeclarations() {
         return Collections.unmodifiableList(declarations);
     }
 
@@ -59,8 +57,7 @@ abstract class AbstractModelicaScope implements ModelicaScope {
      */
     abstract void resolveLexically(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException;
 
-    @Override
-    public <T extends ResolvableEntity> ResolutionResult<T> safeResolveLexically(Class<T> clazz, ResolutionState state, CompositeName name) {
+    @Override public <T extends ResolvableEntity> ResolutionResult<T> safeResolveLexically(Class<T> clazz, ResolutionState state, CompositeName name) {
         ResolutionContext result = state.createContext();
         try {
             resolveLexically(result, name);
@@ -82,13 +79,11 @@ abstract class AbstractModelicaScope implements ModelicaScope {
         return prefix + "#" + getRepresentation();
     }
 
-    @Override
-    public RootScope getRoot() {
+    @Override public RootScope getRoot() {
         return getParent().getRoot();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getRepresentation();
     }
 }

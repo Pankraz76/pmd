@@ -37,21 +37,19 @@ abstract class AbstractApexNode extends AbstractNode<AbstractApexNode, ApexNode<
             this.node = node;
         }
 
-        @Override
-        protected void calculateTextRegion(TextDocument sourceCode) {
+        @Override protected void calculateTextRegion(TextDocument sourceCode) {
             SourceLocation loc = node.getSourceLocation();
             if (loc.isUnknown()) {
                 return;
             }
             // Column+1 because Summit columns are 0-based and PMD are 1-based
             setRegion(TextRegion.fromBothOffsets(
-                sourceCode.offsetAtLineColumn(TextPos2d.pos2d(loc.getStartLine(), loc.getStartColumn() + 1)),
-                sourceCode.offsetAtLineColumn(TextPos2d.pos2d(loc.getEndLine(), loc.getEndColumn() + 1))
+                    sourceCode.offsetAtLineColumn(TextPos2d.pos2d(loc.getStartLine(), loc.getStartColumn() + 1)),
+                    sourceCode.offsetAtLineColumn(TextPos2d.pos2d(loc.getEndLine(), loc.getEndColumn() + 1))
             ));
         }
 
-        @Override
-        public boolean hasRealLoc() {
+        @Override public boolean hasRealLoc() {
             return !node.getSourceLocation().isUnknown();
         }
     }
@@ -67,8 +65,7 @@ abstract class AbstractApexNode extends AbstractNode<AbstractApexNode, ApexNode<
             this.nodes = nodes;
         }
 
-        @Override
-        protected void calculateTextRegion(TextDocument sourceCode) {
+        @Override protected void calculateTextRegion(TextDocument sourceCode) {
             // from all nodes, use the earliest location and the latest location.
             // this assumes, that these nodes form a contiguous code snippet.
 
@@ -92,14 +89,13 @@ abstract class AbstractApexNode extends AbstractNode<AbstractApexNode, ApexNode<
             if (!union.isUnknown()) {
                 // Column+1 because Summit columns are 0-based and PMD are 1-based
                 setRegion(TextRegion.fromBothOffsets(
-                    sourceCode.offsetAtLineColumn(TextPos2d.pos2d(union.getStartLine(), union.getStartColumn() + 1)),
-                    sourceCode.offsetAtLineColumn(TextPos2d.pos2d(union.getEndLine(), union.getEndColumn() + 1))
+                        sourceCode.offsetAtLineColumn(TextPos2d.pos2d(union.getStartLine(), union.getStartColumn() + 1)),
+                        sourceCode.offsetAtLineColumn(TextPos2d.pos2d(union.getEndLine(), union.getEndColumn() + 1))
                 ));
             }
         }
 
-        @Override
-        public boolean hasRealLoc() {
+        @Override public boolean hasRealLoc() {
             return !nodes.isEmpty() && nodes.stream().noneMatch(n -> n.getSourceLocation().isUnknown());
         }
     }
@@ -109,36 +105,29 @@ abstract class AbstractApexNode extends AbstractNode<AbstractApexNode, ApexNode<
      */
     abstract static class Empty extends AbstractApexNode {
 
-        @Override
-        protected void calculateTextRegion(TextDocument sourceCode) {
+        @Override protected void calculateTextRegion(TextDocument sourceCode) {
             // no location
         }
 
-        @Override
-        public boolean hasRealLoc() {
+        @Override public boolean hasRealLoc() {
             return false;
         }
     }
 
     // overridden to make them visible
-    @Override
-    protected void addChild(AbstractApexNode child, int index) {
+    @Override protected void addChild(AbstractApexNode child, int index) {
         super.addChild(child, index);
     }
 
-    @Override
-    protected void insertChild(AbstractApexNode child, int index) {
+    @Override protected void insertChild(AbstractApexNode child, int index) {
         super.insertChild(child, index);
     }
 
-    @Override
-    protected void setChild(AbstractApexNode child, int index) {
+    @Override protected void setChild(AbstractApexNode child, int index) {
         super.setChild(child, index);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override @SuppressWarnings("unchecked") public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof ApexVisitor) {
             return this.acceptApexVisitor((ApexVisitor<? super P, ? extends R>) visitor, data);
         }
@@ -147,15 +136,13 @@ abstract class AbstractApexNode extends AbstractNode<AbstractApexNode, ApexNode<
 
     protected abstract <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data);
 
-    @Override
-    public @NonNull ASTApexFile getRoot() {
+    @Override public @NonNull ASTApexFile getRoot() {
         return getParent().getRoot();
     }
 
     abstract void calculateTextRegion(TextDocument sourceCode);
 
-    @Override
-    public @NonNull TextRegion getTextRegion() {
+    @Override public @NonNull TextRegion getTextRegion() {
         if (region == null) {
             if (!hasRealLoc()) {
                 AbstractApexNode parent = (AbstractApexNode) getParent();
@@ -170,20 +157,17 @@ abstract class AbstractApexNode extends AbstractNode<AbstractApexNode, ApexNode<
         return region;
     }
 
-    @Override
-    public final String getXPathNodeName() {
+    @Override public final String getXPathNodeName() {
         return this.getClass().getSimpleName().replaceFirst("^AST", "");
     }
 
     protected void setRegion(TextRegion region) {
         this.region = region;
     }
-    
-    @Override
-    public abstract boolean hasRealLoc();
 
-    @Override
-    public String getDefiningType() {
+    @Override public abstract boolean hasRealLoc();
+
+    @Override public String getDefiningType() {
         BaseApexClass<?> baseNode = this instanceof BaseApexClass ? (BaseApexClass<?>) this : ancestors(BaseApexClass.class).first();
         if (baseNode != null) {
             return baseNode.getQualifiedName().toString();
@@ -214,23 +198,23 @@ abstract class AbstractApexNode extends AbstractNode<AbstractApexNode, ApexNode<
     }
 
     private static NavigableSet<String> caseNormalizedTypeNames =
-        new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+            new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
     static {
         caseNormalizedTypeNames.addAll(Arrays.asList(
-            "Blob",
-            "Boolean",
-            "Currency",
-            "Date",
-            "Datetime",
-            "Decimal",
-            "Double",
-            "Id",
-            "Integer",
-            "Long",
-            "Object",
-            "String",
-            "Time"
+                "Blob",
+                "Boolean",
+                "Currency",
+                "Date",
+                "Datetime",
+                "Decimal",
+                "Double",
+                "Id",
+                "Integer",
+                "Long",
+                "Object",
+                "String",
+                "Time"
         ));
     }
 }

@@ -71,8 +71,7 @@ public final class IOUtil {
      */
     private static Charset getDefaultCharset() {
         String csn = AccessController.doPrivileged(new PrivilegedAction<String>() {
-            @Override
-            public String run() {
+            @Override public String run() {
                 return System.getProperty("file.encoding");
             }
         });
@@ -113,8 +112,7 @@ public final class IOUtil {
         try {
             if (StringUtils.isBlank(reportFile)) {
                 return new OutputStreamWriter(new FilterOutputStream(System.out) {
-                    @Override
-                    public void close() {
+                    @Override public void close() {
                         // avoid closing stdout, simply flush
                         try {
                             out.flush();
@@ -122,9 +120,8 @@ public final class IOUtil {
                             // Nothing left to do
                         }
                     }
-                    
-                    @Override
-                    public void write(byte[] b, int off, int len) throws IOException {
+
+                    @Override public void write(byte[] b, int off, int len) throws IOException {
                         /*
                          * FilterOutputStream iterates over each byte, asking subclasses to provide more efficient implementations
                          * It therefore negates any such optimizations that the underlying stream actually may implement.
@@ -181,7 +178,7 @@ public final class IOUtil {
      * list of the other, and throws that one.
      */
     public static void ensureClosed(List<? extends AutoCloseable> toClose,
-                                    @Nullable Exception pendingException) throws Exception {
+            @Nullable Exception pendingException) throws Exception {
         Exception closeException = closeAll(toClose);
         if (closeException != null) {
             if (pendingException != null) {
@@ -334,8 +331,7 @@ public final class IOUtil {
                 byteBuffer.flip(); // byte buffer is empty at the beginning, no bytes read yet
             }
 
-            @Override
-            public int read() throws IOException {
+            @Override public int read() throws IOException {
                 if (!byteBuffer.hasRemaining()) {
                     if (charBuffer.hasRemaining() && !eof) {
                         int count = reader.read(charBuffer);
@@ -355,13 +351,11 @@ public final class IOUtil {
                 return -1;
             }
 
-            @Override
-            public int available() throws IOException {
+            @Override public int available() throws IOException {
                 return byteBuffer.remaining();
             }
 
-            @Override
-            public void close() throws IOException {
+            @Override public void close() throws IOException {
                 reader.close();
             }
         }
@@ -386,16 +380,14 @@ public final class IOUtil {
                 charBuffer.clear();
             }
 
-            @Override
-            public void write(int b) throws IOException {
+            @Override public void write(int b) throws IOException {
                 if (!byteBuffer.hasRemaining()) {
                     decodeByteBuffer(false);
                 }
                 byteBuffer.put((byte) b);
             }
 
-            @Override
-            public void flush() throws IOException {
+            @Override public void flush() throws IOException {
                 decodeByteBuffer(false);
             }
 
@@ -408,8 +400,7 @@ public final class IOUtil {
                 byteBuffer.compact();
             }
 
-            @Override
-            public void close() throws IOException {
+            @Override public void close() throws IOException {
                 flush();
                 decodeByteBuffer(true);
                 writer.close();
@@ -452,10 +443,10 @@ public final class IOUtil {
                     return new byte[0]; // skip all 3 bytes
                 } else if (count >= 2 && bytes[0] == (byte) 0xfe && bytes[1] == (byte) 0xff) {
                     charset = StandardCharsets.UTF_16BE.name();
-                    return new byte[] { bytes[2] };
+                    return new byte[]{bytes[2]};
                 } else if (count >= 2 && bytes[0] == (byte) 0xff && bytes[1] == (byte) 0xfe) {
                     charset = StandardCharsets.UTF_16LE.name();
-                    return new byte[] { bytes[2] };
+                    return new byte[]{bytes[2]};
                 } else if (count == 3) {
                     return bytes;
                 }
@@ -474,16 +465,14 @@ public final class IOUtil {
             }
         }
 
-        @Override
-        public int read() throws IOException {
+        @Override public int read() throws IOException {
             if (beginIndex < begin.length) {
                 return begin[beginIndex++];
             }
             return super.read();
         }
 
-        @Override
-        public int read(byte[] b, int off, int len) throws IOException {
+        @Override public int read(byte[] b, int off, int len) throws IOException {
             if (beginIndex < begin.length) {
                 int count = 0;
                 for (; count < len && beginIndex < begin.length; beginIndex++) {

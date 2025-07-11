@@ -16,8 +16,7 @@ import net.sourceforge.pmd.lang.symboltable.NameDeclaration;
 import net.sourceforge.pmd.lang.symboltable.NameOccurrence;
 
 abstract class MethodOrLocalScope extends AbstractScope {
-    @Override
-    public void addDeclaration(NameDeclaration declaration) {
+    @Override public void addDeclaration(NameDeclaration declaration) {
         if (declaration instanceof VariableNameDeclaration && getDeclarations().keySet().contains(declaration)) {
             throw new RuntimeException(declaration + " is already in the symbol table");
         }

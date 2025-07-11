@@ -29,12 +29,12 @@ public class AnyCpdLexer implements CpdLexer {
 
     private static Pattern makePattern(String singleLineCommentStart) {
         return Pattern.compile(
-            "\\w++" // either a word
-                + eolCommentFragment(singleLineCommentStart) // a comment
-                + "|[^\"'\\s]" // a single separator char
-                + "|\"(?:[^\"\\\\]++|\\\\.)*+\"" // a double-quoted string
-                + "|'(?:[^'\\\\]++|\\\\.)*+'" // a single-quoted string
-                + "|\n" // or a newline (to count lines), note that sourcecode normalizes line endings
+                "\\w++" // either a word
+                        + eolCommentFragment(singleLineCommentStart) // a comment
+                        + "|[^\"'\\s]" // a single separator char
+                        + "|\"(?:[^\"\\\\]++|\\\\.)*+\"" // a double-quoted string
+                        + "|'(?:[^'\\\\]++|\\\\.)*+'" // a single-quoted string
+                        + "|\n" // or a newline (to count lines), note that sourcecode normalizes line endings
         );
     }
 
@@ -62,8 +62,7 @@ public class AnyCpdLexer implements CpdLexer {
         }
     }
 
-    @Override
-    public void tokenize(TextDocument document, TokenFactory tokens) {
+    @Override public void tokenize(TextDocument document, TokenFactory tokens) {
         Chars text = document.getText();
         Matcher matcher = pattern.matcher(text);
         int lineNo = 1;

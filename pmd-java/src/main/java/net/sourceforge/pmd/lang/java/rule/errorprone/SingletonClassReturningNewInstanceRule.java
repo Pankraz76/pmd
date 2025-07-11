@@ -22,8 +22,7 @@ public class SingletonClassReturningNewInstanceRule extends AbstractJavaRulechai
         super(ASTMethodDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
         if (node.isVoid() || !"getInstance".equals(node.getName())) {
             return data;
         }
@@ -77,7 +76,7 @@ public class SingletonClassReturningNewInstanceRule extends AbstractJavaRulechai
                             variant1 = fromConstructor && fromRightToLeft && leftIsField;
                         }
 
-                    // check variant 2: localVar = field = new Singleton()
+                        // check variant 2: localVar = field = new Singleton()
                     } else if (v.getNextSibling() instanceof ASTAssignmentExpression) {
                         if (v.getParent() instanceof ASTAssignmentExpression) {
                             ASTAssignmentExpression leftAssignment = (ASTAssignmentExpression) v.getParent();

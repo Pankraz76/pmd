@@ -109,8 +109,7 @@ public final class XMLRenderer implements CPDReportRenderer {
     }
 
 
-    @Override
-    public void render(final CPDReport report, final Writer writer) throws IOException {
+    @Override public void render(final CPDReport report, final Writer writer) throws IOException {
         final Document doc = createDocument();
         final Element root = createElement(doc, "pmd-cpd");
 

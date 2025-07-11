@@ -15,13 +15,11 @@ import net.sourceforge.pmd.reporting.RuleContext;
 
 public class UseAltAttributeForImagesRule extends AbstractHtmlRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forXPathNames(Arrays.asList("img"));
     }
 
-    @Override
-    public Object visit(ASTHtmlElement node, Object data) {
+    @Override public Object visit(ASTHtmlElement node, Object data) {
         if (!node.hasAttribute("alt")) {
             RuleContext ctx = (RuleContext) data;
             ctx.addViolation(node);

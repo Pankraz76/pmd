@@ -18,8 +18,7 @@ public class WmcTestRule extends AbstractMetricTestRule.OfInt {
     }
 
 
-    @Override
-    protected String violationMessage(Node node, Integer result) {
+    @Override protected String violationMessage(Node node, Integer result) {
         return AllMetricsTest.formatApexMessage(node, result, super.violationMessage(node, result));
     }
 

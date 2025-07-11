@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
 import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class UpdateStatementTest extends AbstractPLSQLParserTst {
-    @Test
-    void parseUpdateStatementExample() {
+    @Test void parseUpdateStatementExample() {
         ASTInput input = plsql.parseResource("UpdateStatementExample.pls");
         List<ASTUpdateStatement> updateStatements = input.descendants(ASTUpdateStatement.class).toList();
         assertEquals(2, updateStatements.size());
@@ -23,14 +22,12 @@ class UpdateStatementTest extends AbstractPLSQLParserTst {
                 .children(ASTColumn.class).count());
     }
 
-    @Test
-    void parseUpdateStatementExample2() {
+    @Test void parseUpdateStatementExample2() {
         ASTInput input = plsql.parseResource("UpdateStatementExample2.pls");
         assertNotNull(input);
     }
 
-    @Test
-    void parseUpdateStatementRef() {
+    @Test void parseUpdateStatementRef() {
         ASTInput input = plsql.parseResource("UpdateStatementRef.pls");
         assertNotNull(input);
     }

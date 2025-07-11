@@ -16,8 +16,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class ASTFetchStatementTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void testBulkCollectLimit() {
+    @Test void testBulkCollectLimit() {
         ASTInput input = plsql.parseResource("FetchStatementBulkCollectLimit.pls");
         List<ASTFetchStatement> fetchStatements = input.descendants(ASTFetchStatement.class).toList();
         assertEquals(1, fetchStatements.size());
@@ -26,8 +25,7 @@ class ASTFetchStatementTest extends AbstractPLSQLParserTst {
         assertTrue(fetch.isLimit());
     }
 
-    @Test
-    void testFetch() {
+    @Test void testFetch() {
         ASTInput input = plsql.parseResource("FetchStatement.pls");
         List<ASTFetchStatement> fetchStatements = input.descendants(ASTFetchStatement.class).toList();
         assertEquals(1, fetchStatements.size());

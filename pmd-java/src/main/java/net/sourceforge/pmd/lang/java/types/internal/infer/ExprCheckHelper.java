@@ -53,10 +53,10 @@ final class ExprCheckHelper {
     private final TypeSystem ts;
 
     ExprCheckHelper(InferenceContext infCtx,
-                    MethodResolutionPhase phase,
-                    ExprChecker checker,
-                    @Nullable MethodCallSite site,
-                    Infer infer) {
+            MethodResolutionPhase phase,
+            ExprChecker checker,
+            @Nullable MethodCallSite site,
+            Infer infer) {
 
         this.infCtx = infCtx;
         this.phase = phase;
@@ -194,12 +194,12 @@ final class ExprCheckHelper {
 
         if (!argCtDecl.isFailed() && mayMutateExpr()) {
             infCtx.addInstantiationListener(
-                infCtx.freeVarsIn(mostSpecific),
-                solved -> {
-                    JMethodSig ground = solved.ground(mostSpecific);
-                    invoc.setInferredType(ground.getReturnType());
-                    invoc.setCompileTimeDecl(argCtDecl.withMethod(ground));
-                }
+                    infCtx.freeVarsIn(mostSpecific),
+                    solved -> {
+                        JMethodSig ground = solved.ground(mostSpecific);
+                        invoc.setInferredType(ground.getReturnType());
+                        invoc.setCompileTimeDecl(argCtDecl.withMethod(ground));
+                    }
             );
         }
         return true;
@@ -227,7 +227,7 @@ final class ExprCheckHelper {
         }
 
         if (asClass == null && TypeOps.isUnresolved(targetType)
-            || asClass != null && TypeOps.isUnresolved(asClass)) {
+                || asClass != null && TypeOps.isUnresolved(asClass)) {
             // The type is unresolved, meaning classpath is incomplete.
             // We will treat the lambda/mref as if it is compatible with this
             // unresolved type. This is usually the right thing to do but
@@ -249,7 +249,7 @@ final class ExprCheckHelper {
             List<JTypeMirror> paramTypes;
             List<JTypeMirror> explicit = lambda.getExplicitParameterTypes();
             paramTypes = explicit != null
-                         ? explicit : Collections.nCopies(lambda.getParamCount(), ts.UNKNOWN);
+                    ? explicit : Collections.nCopies(lambda.getParamCount(), ts.UNKNOWN);
             // we need to set the parameter types
             lambda.updateTypingContext(paramTypes);
             // And add a constraint on the free variables in the target type.
@@ -262,8 +262,8 @@ final class ExprCheckHelper {
         }
         if (mayMutateExpr()) {
             infCtx.addInstantiationListener(
-                infCtx.freeVarsIn(targetType),
-                ctx -> expr.finishFailedInference(ctx.ground(targetType)));
+                    infCtx.freeVarsIn(targetType),
+                    ctx -> expr.finishFailedInference(ctx.ground(targetType)));
         }
     }
 
@@ -273,8 +273,7 @@ final class ExprCheckHelper {
     // Eg Function<String, R>, where R is not yet instantiated at the time
     // we check the argument, should not be ground: we want the lambda to
     // add a constraint on R according to its return expressions.
-    @SuppressWarnings("PMD.CompareObjectsWithEquals")
-    private @Nullable JTypeMirror softSolve(JTypeMirror t) {
+    @SuppressWarnings("PMD.CompareObjectsWithEquals") private @Nullable JTypeMirror softSolve(JTypeMirror t) {
         if (!(t instanceof InferenceVar)) {
             return t;
         }
@@ -393,8 +392,8 @@ final class ExprCheckHelper {
 
             // here we defer the check until the variables are ground
             infCtx.addInstantiationListener(
-                infCtx.freeVarsIn(fun.getFormalParameters()),
-                solvedCtx -> solveInexactMethodRefCompatibility(mref, solvedCtx.ground(nonWildcard), solvedCtx.ground(fun))
+                    infCtx.freeVarsIn(fun.getFormalParameters()),
+                    solvedCtx -> solveInexactMethodRefCompatibility(mref, solvedCtx.ground(nonWildcard), solvedCtx.ground(fun))
             );
         }
         return true;
@@ -482,12 +481,12 @@ final class ExprCheckHelper {
             // if exact, then the arg is relevant to applicability and there
             // may not be an invocation round
             infCtx.addInstantiationListener(
-                infCtx.freeVarsIn(groundTargetType),
-                solved -> {
-                    mref.setInferredType(solved.ground(groundTargetType));
-                    mref.setFunctionalMethod(cast(solved.ground(functionalMethod)).withOwner(solved.ground(functionalMethod.getDeclaringType())));
-                    mref.setCompileTimeDecl(ctDecl.withMethod(solved.ground(ctDecl.getMethodType())));
-                }
+                    infCtx.freeVarsIn(groundTargetType),
+                    solved -> {
+                        mref.setInferredType(solved.ground(groundTargetType));
+                        mref.setFunctionalMethod(cast(solved.ground(functionalMethod)).withOwner(solved.ground(functionalMethod.getDeclaringType())));
+                        mref.setCompileTimeDecl(ctDecl.withMethod(solved.ground(ctDecl.getMethodType())));
+                    }
             );
         }
     }
@@ -533,12 +532,12 @@ final class ExprCheckHelper {
             // set the final type when done
             if (phase.isInvocation()) {
                 infCtx.addInstantiationListener(
-                    infCtx.freeVarsIn(groundTargetType),
-                    solved -> {
-                        JClassType solvedGround = solved.ground(groundTargetType);
-                        lambda.setInferredType(solvedGround);
-                        lambda.setFunctionalMethod(cast(solved.ground(groundFun)).withOwner(solved.ground(groundFun.getDeclaringType())));
-                    }
+                        infCtx.freeVarsIn(groundTargetType),
+                        solved -> {
+                            JClassType solvedGround = solved.ground(groundTargetType);
+                            lambda.setInferredType(solvedGround);
+                            lambda.setFunctionalMethod(cast(solved.ground(groundFun)).withOwner(solved.ground(groundFun.getDeclaringType())));
+                        }
                 );
             }
         }
@@ -556,11 +555,10 @@ final class ExprCheckHelper {
 
     // functionalItf    = T
     // groundTargetType = T'
-    @SuppressWarnings("PMD.UnusedFormalParameter")
-    private boolean isLambdaCongruent(@NonNull JClassType functionalItf,
-                                      @NonNull JClassType groundTargetType,
-                                      @NonNull JMethodSig groundFun,
-                                      LambdaExprMirror lambda) {
+    @SuppressWarnings("PMD.UnusedFormalParameter") private boolean isLambdaCongruent(@NonNull JClassType functionalItf,
+            @NonNull JClassType groundTargetType,
+            @NonNull JMethodSig groundFun,
+            LambdaExprMirror lambda) {
 
         if (groundFun.isGeneric()) {
             throw ResolutionFailedException.lambdaCannotTargetGenericFunction(infer.LOG, groundFun, lambda);
@@ -592,7 +590,7 @@ final class ExprCheckHelper {
         // and the function type has parameter types G1, ..., Gn, then
         // i) for all i (1 ≤ i ≤ n), ‹Fi = Gi›
         if (lambda.isExplicitlyTyped()
-            && !areSameTypesInInference(groundFun.getFormalParameters(), lambda.getExplicitParameterTypes())) {
+                && !areSameTypesInInference(groundFun.getFormalParameters(), lambda.getExplicitParameterTypes())) {
             throw ResolutionFailedException.mismatchedLambdaParameters(infer.LOG, groundFun, lambda.getExplicitParameterTypes(), lambda);
         }
 
@@ -611,28 +609,28 @@ final class ExprCheckHelper {
             // below (in the listener), which is only triggered when the input ivars have been instantiated.
             infCtx.addInstantiationDependencies(infCtx.freeVarsIn(groundFun.getReturnType()), inputIvars);
             infCtx.addInstantiationListener(
-                inputIvars,
-                solvedCtx -> {
-                    if (mayMutateExpr()) {
-                        lambda.setInferredType(solvedCtx.ground(groundTargetType));
-                        JMethodSig solvedGroundFun = solvedCtx.ground(groundFun);
-                        lambda.setFunctionalMethod(solvedGroundFun);
-                        lambda.updateTypingContext(solvedGroundFun.getFormalParameters());
-                    }
-                    JTypeMirror groundResult = solvedCtx.ground(result);
-                    // We need to build another checker that uses the solved context.
-                    // This is because the free vars may have been adopted by a parent
-                    // context, so the solvedCtx may be that parent context. The checks
-                    // must use that context so that constraints and listeners are added
-                    // to the parent context, since that one is responsible for solving
-                    // the variables.
-                    ExprCheckHelper newChecker = new ExprCheckHelper(solvedCtx, phase, this.checker, site, infer);
-                    for (ExprMirror expr : lambda.getResultExpressions()) {
-                        if (!newChecker.isCompatible(groundResult, expr)) {
-                            return;
+                    inputIvars,
+                    solvedCtx -> {
+                        if (mayMutateExpr()) {
+                            lambda.setInferredType(solvedCtx.ground(groundTargetType));
+                            JMethodSig solvedGroundFun = solvedCtx.ground(groundFun);
+                            lambda.setFunctionalMethod(solvedGroundFun);
+                            lambda.updateTypingContext(solvedGroundFun.getFormalParameters());
                         }
-                    }
-                });
+                        JTypeMirror groundResult = solvedCtx.ground(result);
+                        // We need to build another checker that uses the solved context.
+                        // This is because the free vars may have been adopted by a parent
+                        // context, so the solvedCtx may be that parent context. The checks
+                        // must use that context so that constraints and listeners are added
+                        // to the parent context, since that one is responsible for solving
+                        // the variables.
+                        ExprCheckHelper newChecker = new ExprCheckHelper(solvedCtx, phase, this.checker, site, infer);
+                        for (ExprMirror expr : lambda.getResultExpressions()) {
+                            if (!newChecker.isCompatible(groundResult, expr)) {
+                                return;
+                            }
+                        }
+                    });
         }
 
         if (mayMutateExpr()) { // we know that the lambda matches now

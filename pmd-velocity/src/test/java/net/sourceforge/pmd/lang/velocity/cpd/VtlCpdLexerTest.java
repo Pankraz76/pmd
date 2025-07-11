@@ -14,8 +14,7 @@ class VtlCpdLexerTest extends CpdTextComparisonTest {
         super(VtlLanguageModule.getInstance(), ".vm");
     }
 
-    @Test
-    void sampleTest() {
+    @Test void sampleTest() {
         doTest("sample_vm");
     }
 }

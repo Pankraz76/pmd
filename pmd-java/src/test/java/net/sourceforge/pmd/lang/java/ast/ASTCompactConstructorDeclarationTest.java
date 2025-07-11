@@ -12,15 +12,14 @@ import net.sourceforge.pmd.lang.java.BaseParserTest;
 
 class ASTCompactConstructorDeclarationTest extends BaseParserTest {
 
-    @Test
-    void compactConstructorWithLambda() {
+    @Test void compactConstructorWithLambda() {
         ASTCompactConstructorDeclaration compactConstructor = java.getNodes(ASTCompactConstructorDeclaration.class,
                 "import java.util.Objects;"
-                    + "record RecordWithLambdaInCompactConstructor(String foo) {"
-                    + "     RecordWithLambdaInCompactConstructor {"
-                    + "         Objects.requireNonNull(foo, () -> \"foo\");"
-                    + "     }"
-                    + "}")
+                        + "record RecordWithLambdaInCompactConstructor(String foo) {"
+                        + "     RecordWithLambdaInCompactConstructor {"
+                        + "         Objects.requireNonNull(foo, () -> \"foo\");"
+                        + "     }"
+                        + "}")
                 .get(0);
         assertEquals(1, compactConstructor.getBody().getNumChildren());
     }

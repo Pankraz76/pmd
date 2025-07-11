@@ -46,32 +46,30 @@ public final class JIntersectionType implements JTypeMirror {
      * @param allBounds    including the superclass, unless Object
      */
     JIntersectionType(TypeSystem ts,
-                      JTypeMirror primaryBound,
-                      List<? extends JTypeMirror> allBounds) {
+            JTypeMirror primaryBound,
+            List<? extends JTypeMirror> allBounds) {
         this.primaryBound = primaryBound;
         this.components = Collections.unmodifiableList(allBounds);
         this.ts = ts;
 
         assert Lub.isExclusiveIntersectionBound(primaryBound)
-            : "Wrong primary intersection bound: " + toString(primaryBound, allBounds);
+                : "Wrong primary intersection bound: " + toString(primaryBound, allBounds);
         assert primaryBound != ts.OBJECT || allBounds.size() > 1
-            : "Intersection of a single bound: " + toString(primaryBound, allBounds); // should be caught by GLB
+                : "Intersection of a single bound: " + toString(primaryBound, allBounds); // should be caught by GLB
 
         checkWellFormed(primaryBound, allBounds);
 
     }
 
-    @Override
-    public PSet<SymAnnot> getTypeAnnotations() {
+    @Override public PSet<SymAnnot> getTypeAnnotations() {
         return HashTreePSet.empty();
     }
 
-    @Override
-    public JTypeMirror withAnnotations(PSet<SymAnnot> newTypeAnnots) {
+    @Override public JTypeMirror withAnnotations(PSet<SymAnnot> newTypeAnnots) {
         return new JIntersectionType(
-            ts,
-            primaryBound.withAnnotations(newTypeAnnots),
-            CollectionUtil.map(components, c -> c.withAnnotations(newTypeAnnots))
+                ts,
+                primaryBound.withAnnotations(newTypeAnnots),
+                CollectionUtil.map(components, c -> c.withAnnotations(newTypeAnnots))
         );
     }
 
@@ -102,7 +100,7 @@ public final class JIntersectionType implements JTypeMirror {
     @SuppressWarnings({"unchecked", "rawtypes"}) // safe because of checkWellFormed
     public @NonNull List<JClassType> getInterfaces() {
         return (List) (primaryBound == ts.OBJECT ? components
-                                                 : components.subList(1, components.size()));
+                : components.subList(1, components.size()));
     }
 
     /**
@@ -130,51 +128,43 @@ public final class JIntersectionType implements JTypeMirror {
         return induced;
     }
 
-    @Override
-    public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
+    @Override public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
         return visitor.visitIntersection(this, p);
     }
 
 
-    @Override
-    public Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
+    @Override public Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
         return getComponents().stream().flatMap(it -> it.streamMethods(prefilter));
     }
 
 
-    @Override
-    public JIntersectionType subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
+    @Override public JIntersectionType subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
         JTypeMirror newPrimary = primaryBound.subst(subst);
         List<JClassType> myItfs = getInterfaces();
         List<JClassType> newBounds = TypeOps.substClasses(myItfs, subst);
         return newPrimary == getPrimaryBound() && newBounds == myItfs
-               ? this
-               : new JIntersectionType(ts, newPrimary, newBounds);
+                ? this
+                : new JIntersectionType(ts, newPrimary, newBounds);
     }
 
-    @Override
-    public @Nullable JTypeDeclSymbol getSymbol() {
+    @Override public @Nullable JTypeDeclSymbol getSymbol() {
         return null; // the induced type may have a symbol though
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return ts;
     }
 
 
-    @Override
-    public JTypeMirror getErasure() {
+    @Override public JTypeMirror getErasure() {
         return getPrimaryBound().getErasure();
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return TypePrettyPrint.prettyPrint(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -185,14 +175,13 @@ public final class JIntersectionType implements JTypeMirror {
         return TypeOps.isSameType(this, that);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hash(components);
     }
 
     private static void checkWellFormed(JTypeMirror primary, List<? extends JTypeMirror> flattened) {
         assert flattened.get(0) == primary || primary == primary.getTypeSystem().OBJECT
-            : "Not a well-formed intersection " + flattened;
+                : "Not a well-formed intersection " + flattened;
         for (int i = 0; i < flattened.size(); i++) {
             JTypeMirror ci = flattened.get(i);
             Objects.requireNonNull(ci, "Null intersection component");
@@ -211,13 +200,13 @@ public final class JIntersectionType implements JTypeMirror {
 
     private static RuntimeException malformedIntersection(JTypeMirror primary, List<? extends JTypeMirror> flattened) {
         return new IllegalArgumentException(
-            "Malformed intersection: " + toString(primary, flattened)
+                "Malformed intersection: " + toString(primary, flattened)
         );
     }
 
     private static String toString(JTypeMirror primary, List<? extends JTypeMirror> flattened) {
         return flattened.stream().map(JTypeMirror::toString).collect(Collectors.joining(" & ",
-                                                                                        primary.toString() + " & ",
-                                                                                        ""));
+                primary.toString() + " & ",
+                ""));
     }
 }

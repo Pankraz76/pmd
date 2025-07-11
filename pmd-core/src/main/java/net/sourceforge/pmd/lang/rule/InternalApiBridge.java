@@ -26,7 +26,8 @@ import net.sourceforge.pmd.util.log.PmdReporter;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static boolean ruleSetApplies(Rule rule, LanguageVersion languageVersion) {
         return RuleSet.applies(rule, languageVersion);

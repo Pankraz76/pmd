@@ -9,8 +9,7 @@ public final class ASTJspDeclaration extends AbstractContentNode {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

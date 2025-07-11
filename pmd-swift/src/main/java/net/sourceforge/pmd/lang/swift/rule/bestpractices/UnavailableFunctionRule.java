@@ -28,17 +28,14 @@ public class UnavailableFunctionRule extends AbstractSwiftRule {
     private static final Pattern AVAILABLE_UNAVAILABLE = Pattern.compile("^\\s*@available\\s*\\(\\s*\\*\\s*,\\s*unavailable\\s*\\)\\s*$", Pattern.CASE_INSENSITIVE);
     private static final String FATAL_ERROR = "fatalError";
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(SwFunctionDeclaration.class, SwInitializerDeclaration.class);
     }
 
-    @Override
-    public SwiftVisitor<RuleContext, ?> buildVisitor() {
+    @Override public SwiftVisitor<RuleContext, ?> buildVisitor() {
         return new SwiftVisitorBase<RuleContext, Void>() {
 
-            @Override
-            public Void visitFunctionDeclaration(final SwFunctionDeclaration ctx, RuleContext ruleCtx) {
+            @Override public Void visitFunctionDeclaration(final SwFunctionDeclaration ctx, RuleContext ruleCtx) {
                 if (ctx == null) {
                     return null;
                 }
@@ -53,8 +50,7 @@ public class UnavailableFunctionRule extends AbstractSwiftRule {
                 return null;
             }
 
-            @Override
-            public Void visitInitializerDeclaration(final SwInitializerDeclaration ctx, RuleContext ruleCtx) {
+            @Override public Void visitInitializerDeclaration(final SwInitializerDeclaration ctx, RuleContext ruleCtx) {
                 if (ctx == null) {
                     return null;
                 }
@@ -81,10 +77,10 @@ public class UnavailableFunctionRule extends AbstractSwiftRule {
 
             private boolean hasUnavailableModifier(final List<SwAttribute> attributes) {
                 return attributes.stream().anyMatch(attr -> {
-                        Chars text = attr.getTextDocument().sliceTranslatedText(attr.getTextRegion());
-                        Matcher matcher = AVAILABLE_UNAVAILABLE.matcher(text);
-                        return matcher.matches();
-                    }
+                            Chars text = attr.getTextDocument().sliceTranslatedText(attr.getTextRegion());
+                            Matcher matcher = AVAILABLE_UNAVAILABLE.matcher(text);
+                            return matcher.matches();
+                        }
                 );
             }
         };

@@ -75,24 +75,21 @@ final class JavaAnnotationSuppressor extends AbstractAnnotationSuppressor<ASTAnn
     }
 
 
-    @Override
-    protected NodeStream<ASTAnnotation> getAnnotations(Node n) {
+    @Override protected NodeStream<ASTAnnotation> getAnnotations(Node n) {
         if (n instanceof Annotatable) {
             return ((Annotatable) n).getDeclaredAnnotations();
         }
         return NodeStream.empty();
     }
 
-    @Override
-    protected boolean annotationParamSuppresses(String stringVal, Rule rule) {
+    @Override protected boolean annotationParamSuppresses(String stringVal, Rule rule) {
         return super.annotationParamSuppresses(stringVal, rule)
-            || "serial".equals(stringVal) && SERIAL_RULES.contains(rule.getName())
-            || "unused".equals(stringVal) && UNUSED_RULES.contains(rule.getName())
-            || "fallthrough".equals(stringVal) && rule instanceof ImplicitSwitchFallThroughRule;
+                || "serial".equals(stringVal) && SERIAL_RULES.contains(rule.getName())
+                || "unused".equals(stringVal) && UNUSED_RULES.contains(rule.getName())
+                || "fallthrough".equals(stringVal) && rule instanceof ImplicitSwitchFallThroughRule;
     }
 
-    @Override
-    protected boolean walkAnnotation(ASTAnnotation annotation, AnnotationWalkCallbacks callbacks) {
+    @Override protected boolean walkAnnotation(ASTAnnotation annotation, AnnotationWalkCallbacks callbacks) {
         if (TypeTestUtil.isA(SuppressWarnings.class, annotation)) {
             for (ASTMemberValue value : annotation.getFlatValue(ASTMemberValuePair.VALUE_ATTR)) {
                 Object constVal = value.getConstValue();
@@ -113,14 +110,12 @@ final class JavaAnnotationSuppressor extends AbstractAnnotationSuppressor<ASTAnn
         return null;
     }
 
-    @SuppressWarnings("unused")
-    public static void foo1(int i) {
+    @SuppressWarnings("unused") public static void foo1(int i) {
         i = 2;
         foo2(i);
     }
 
-    @SuppressWarnings("unused")
-    private static void foo2(int i) {
+    @SuppressWarnings("unused") private static void foo2(int i) {
         System.out.println("i = " + i);
     }
 
@@ -180,8 +175,7 @@ final class JavaAnnotationSuppressor extends AbstractAnnotationSuppressor<ASTAnn
         // be declared before they are used (in tree order)
         Set<JTypeVar> unusedTypeParams = new HashSet<>();
         node.acceptVisitor(new JavaVisitorBase<Void, Void>() {
-            @Override
-            public Void visit(ASTTypeParameters node, Void p) {
+            @Override public Void visit(ASTTypeParameters node, Void p) {
                 // add all params before visiting bounds
                 for (ASTTypeParameter parm : node) {
                     unusedTypeParams.add(parm.getTypeMirror());
@@ -189,8 +183,7 @@ final class JavaAnnotationSuppressor extends AbstractAnnotationSuppressor<ASTAnn
                 return super.visit(node, p);
             }
 
-            @Override
-            public Void visit(ASTClassType node, Void data) {
+            @Override public Void visit(ASTClassType node, Void data) {
                 JTypeMirror ty = node.getTypeMirror();
                 if (ty instanceof JTypeVar) {
                     unusedTypeParams.remove(ty);
@@ -198,8 +191,7 @@ final class JavaAnnotationSuppressor extends AbstractAnnotationSuppressor<ASTAnn
                 return super.visit(node, data);
             }
 
-            @Override
-            public Void visit(ASTModifierList node, Void data) {
+            @Override public Void visit(ASTModifierList node, Void data) {
                 // no need to visit those
                 return data;
             }
@@ -233,8 +225,7 @@ final class JavaAnnotationSuppressor extends AbstractAnnotationSuppressor<ASTAnn
         // }
     }
 
-    @Override
-    protected OptionalBool isSuppressingNonPmdWarnings(String stringVal, ASTAnnotation annotation) {
+    @Override protected OptionalBool isSuppressingNonPmdWarnings(String stringVal, ASTAnnotation annotation) {
         if ("unused".equals(stringVal)) {
             JavaNode scope = getAnnotationScope(annotation);
             if (hasUnusedWarning(scope) == OptionalBool.NO) {

@@ -22,18 +22,16 @@ abstract class AbstractJavaNode extends AbstractJjtreeNode<AbstractJavaNode, Jav
     }
 
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
         if (this instanceof LeftRecursiveNode && getNumChildren() > 0) {
             fitTokensToChildren(0);
         }
     }
+
     // override those to make them accessible in this package
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override @SuppressWarnings("unchecked") public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof JavaVisitor) {
             return this.acceptVisitor((JavaVisitor<? super P, ? extends R>) visitor, data);
         }
@@ -44,8 +42,7 @@ abstract class AbstractJavaNode extends AbstractJjtreeNode<AbstractJavaNode, Jav
 
     // override those to make them accessible in this package
 
-    @Override
-    protected void addChild(AbstractJavaNode child, int index) {
+    @Override protected void addChild(AbstractJavaNode child, int index) {
         super.addChild(child, index);
     }
 
@@ -54,34 +51,28 @@ abstract class AbstractJavaNode extends AbstractJjtreeNode<AbstractJavaNode, Jav
         super.insertChild(child, index);
     }
 
-    @Override
-    protected void removeChildAtIndex(int childIndex) {
+    @Override protected void removeChildAtIndex(int childIndex) {
         super.removeChildAtIndex(childIndex);
     }
 
-    @Override
-    protected void setImage(String image) {
+    @Override protected void setImage(String image) {
         super.setImage(image);
     }
 
 
-    @Override
-    protected void setFirstToken(JavaccToken token) {
+    @Override protected void setFirstToken(JavaccToken token) {
         super.setFirstToken(token);
     }
 
-    @Override
-    protected void setLastToken(JavaccToken token) {
+    @Override protected void setLastToken(JavaccToken token) {
         super.setLastToken(token);
     }
 
-    @Override
-    protected void enlargeLeft(JavaccToken child) {
+    @Override protected void enlargeLeft(JavaccToken child) {
         super.enlargeLeft(child);
     }
 
-    @Override
-    protected void setChild(AbstractJavaNode child, int index) {
+    @Override protected void setChild(AbstractJavaNode child, int index) {
         super.setChild(child, index);
     }
 
@@ -89,8 +80,7 @@ abstract class AbstractJavaNode extends AbstractJjtreeNode<AbstractJavaNode, Jav
         this.symbolTable = table;
     }
 
-    @Override
-    public @NonNull JSymbolTable getSymbolTable() {
+    @Override public @NonNull JSymbolTable getSymbolTable() {
         AbstractJavaNode parent = (AbstractJavaNode) getParent();
         JSymbolTable table = symbolTable;
         while (parent != null && table == null) {
@@ -101,15 +91,12 @@ abstract class AbstractJavaNode extends AbstractJjtreeNode<AbstractJavaNode, Jav
         return table;
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return getRoot().getTypeSystem();
     }
 
 
-
-    @Override
-    public final @NonNull ASTCompilationUnit getRoot() {
+    @Override public final @NonNull ASTCompilationUnit getRoot() {
         // storing a reference on each node ensures that each path is roamed
         // at most once.
         if (root == null) {
@@ -150,8 +137,7 @@ abstract class AbstractJavaNode extends AbstractJjtreeNode<AbstractJavaNode, Jav
         setLastToken(copy.getLastToken());
     }
 
-    @Override
-    public final String getXPathNodeName() {
+    @Override public final String getXPathNodeName() {
         return JavaParserImplTreeConstants.jjtNodeName[id];
     }
 

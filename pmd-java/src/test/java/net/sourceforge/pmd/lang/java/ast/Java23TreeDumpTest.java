@@ -26,13 +26,11 @@ class Java23TreeDumpTest extends BaseJavaTreeDumpTest {
             JavaParsingHelper.DEFAULT.withDefaultVersion("23")
                     .withResourceContext(Java21TreeDumpTest.class, "jdkversiontests/java23/");
 
-    @Override
-    public BaseParsingHelper<?, ?> getParser() {
+    @Override public BaseParsingHelper<?, ?> getParser() {
         return java23;
     }
 
-    @Test
-    void jep467MarkdownDocumentationComments() {
+    @Test void jep467MarkdownDocumentationComments() {
         doTest("Jep467_MarkdownDocumentationComments");
         ASTCompilationUnit unit = java23.parseResource("Jep467_MarkdownDocumentationComments.java");
         List<JavaComment> comments = unit.getComments();

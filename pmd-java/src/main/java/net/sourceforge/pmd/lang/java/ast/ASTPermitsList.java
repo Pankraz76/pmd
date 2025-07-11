@@ -26,8 +26,7 @@ public final class ASTPermitsList extends ASTNonEmptyList<ASTClassType> {
         super(id, ASTClassType.class);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -20,13 +20,11 @@ class AnnotationBuilderVisitor extends SymbolicValueBuilder {
         this.owner = owner;
     }
 
-    @Override
-    protected void acceptValue(String name, SymbolicValue v) {
+    @Override protected void acceptValue(String name, SymbolicValue v) {
         annot.addAttribute(name, v);
     }
 
-    @Override
-    public void visitEnd() {
+    @Override public void visitEnd() {
         owner.addAnnotation(annot);
     }
 
@@ -38,11 +36,11 @@ class AnnotationBuilderVisitor extends SymbolicValueBuilder {
         private final SymbolicAnnotationImpl annot;
 
         TypeAnnotBuilderImpl(AsmSymbolResolver resolver,
-                             TypeAnnotationReceiver owner,
-                             int typeRef,
-                             @Nullable TypePath path,
-                             boolean visible,
-                             String descriptor) {
+                TypeAnnotationReceiver owner,
+                int typeRef,
+                @Nullable TypePath path,
+                boolean visible,
+                String descriptor) {
             super(resolver);
             this.owner = owner;
             this.typeRef = typeRef;
@@ -50,13 +48,11 @@ class AnnotationBuilderVisitor extends SymbolicValueBuilder {
             this.annot = new SymbolicAnnotationImpl(resolver, visible, descriptor);
         }
 
-        @Override
-        protected void acceptValue(String name, SymbolicValue v) {
+        @Override protected void acceptValue(String name, SymbolicValue v) {
             annot.addAttribute(name, v);
         }
 
-        @Override
-        public void visitEnd() {
+        @Override public void visitEnd() {
             owner.acceptTypeAnnotation(typeRef, path, annot);
         }
     }

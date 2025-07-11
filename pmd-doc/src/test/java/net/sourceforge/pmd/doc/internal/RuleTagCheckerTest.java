@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class RuleTagCheckerTest {
 
-    @Test
-    void testAllChecks() throws Exception {
+    @Test void testAllChecks() throws Exception {
         RuleTagChecker checker = new RuleTagChecker(FileSystems.getDefault().getPath("src/test/resources/ruletagchecker"));
         List<String> issues = checker.check();
 

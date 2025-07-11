@@ -16,18 +16,17 @@ public final class HtmlLanguageModule extends SimpleLanguageModuleBase {
 
     public HtmlLanguageModule() {
         super(LanguageMetadata.withId(ID).name(NAME)
-                              .extensions("html", "htm", "xhtml", "xht", "shtml")
-                              .addVersion("4")
-                              .addDefaultVersion("5"),
-              new HtmlHandler());
+                        .extensions("html", "htm", "xhtml", "xht", "shtml")
+                        .addVersion("4")
+                        .addDefaultVersion("5"),
+                new HtmlHandler());
     }
 
     public static HtmlLanguageModule getInstance() {
         return (HtmlLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new HtmlCpdLexer();
     }
 }

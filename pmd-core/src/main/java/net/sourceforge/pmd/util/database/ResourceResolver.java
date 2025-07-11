@@ -10,8 +10,7 @@ import javax.xml.transform.URIResolver;
 import javax.xml.transform.stream.StreamSource;
 
 public class ResourceResolver implements URIResolver {
-    @Override
-    public Source resolve(String href, String base) throws TransformerException {
+    @Override public Source resolve(String href, String base) throws TransformerException {
         if (null == href || href.length() == 0) {
             return null; // will make Oracle XSLT processor explode,
             // even though it's correct

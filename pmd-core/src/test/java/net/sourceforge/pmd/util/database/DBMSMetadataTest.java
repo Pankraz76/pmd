@@ -116,8 +116,7 @@ class DBMSMetadataTest {
     /**
      * Verify getConnection method, of class DBMSMetadata.
      */
-    @Test
-    void testGetConnection() throws Exception {
+    @Test void testGetConnection() throws Exception {
         System.out.println("getConnection");
         String driverClass = dbURI.getDriverClass();
         System.out.println("driverClass==" + driverClass);
@@ -140,8 +139,7 @@ class DBMSMetadataTest {
     /**
      * Verify getConnection method, of class DBMSMetadata.
      */
-    @Test
-    void testGetConnectionWithConnectionParameters() throws Exception {
+    @Test void testGetConnectionWithConnectionParameters() throws Exception {
         System.out.println("getConnection");
         String driverClass = dbURI5.getDriverClass();
         System.out.println("driverClass==" + driverClass);
@@ -163,8 +161,7 @@ class DBMSMetadataTest {
     /**
      * Test of getSourceCode method, of class DBMSMetadata.
      */
-    @Test
-    void testGetSourceCode() throws Exception {
+    @Test void testGetSourceCode() throws Exception {
         System.out.println("getSourceCode");
         // String objectType = "PACKAGE";
         // String name = "DBMS_REPCAT_AUTH";
@@ -206,8 +203,7 @@ class DBMSMetadataTest {
     /**
      * Verify getSchemas method, of class DBMSMetadata.
      */
-    @Test
-    void testGetSchemas() throws Exception {
+    @Test void testGetSchemas() throws Exception {
         System.out.println("getSchemas");
         DBURI testURI = dbURI4;
         String driverClass = testURI.getDriverClass();
@@ -254,8 +250,7 @@ class DBMSMetadataTest {
     /**
      * Verify getSchemas method, of class DBMSMetadata.
      */
-    @Test
-    void testGetSourceObjectList() throws Exception {
+    @Test void testGetSourceObjectList() throws Exception {
         System.out.println("getConnection");
         DBURI testURI = dbURI4;
         String driverClass = testURI.getDriverClass();

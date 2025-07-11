@@ -35,8 +35,7 @@ public class SimplifiableTestAssertionRule extends AbstractJavaRulechainRule {
         super(ASTMethodCall.class);
     }
 
-    @Override
-    public Object visit(ASTMethodCall node, Object data) {
+    @Override public Object visit(ASTMethodCall node, Object data) {
         final boolean isAssertTrue = isAssertionCall(node, "assertTrue");
         final boolean isAssertFalse = isAssertionCall(node, "assertFalse");
 
@@ -48,7 +47,7 @@ public class SimplifiableTestAssertionRule extends AbstractJavaRulechainRule {
                 boolean isPositive = isPositiveEqualityExpr(eq) == isAssertTrue;
                 final String suggestion;
                 if (JavaAstUtils.isNullLiteral(eq.getLeftOperand())
-                    || JavaAstUtils.isNullLiteral(eq.getRightOperand())) {
+                        || JavaAstUtils.isNullLiteral(eq.getRightOperand())) {
                     // use assertNull/assertNonNull
                     suggestion = isPositive ? "assertNull" : "assertNonNull";
                 } else {
@@ -123,8 +122,8 @@ public class SimplifiableTestAssertionRule extends AbstractJavaRulechainRule {
 
     private boolean isAssertionCall(ASTMethodCall call, String methodName) {
         return call.getMethodName().equals(methodName)
-            && !call.getOverloadSelectionInfo().isFailed()
-            && TestFrameworksUtil.isCallOnAssertionContainer(call);
+                && !call.getOverloadSelectionInfo().isFailed()
+                && TestFrameworksUtil.isCallOnAssertionContainer(call);
     }
 
 

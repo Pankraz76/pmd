@@ -17,13 +17,11 @@ import org.slf4j.LoggerFactory;
 public class NoopFingerprinter implements ClasspathEntryFingerprinter {
     private static final Logger LOG = LoggerFactory.getLogger(NoopFingerprinter.class);
 
-    @Override
-    public boolean appliesTo(String fileExtension) {
+    @Override public boolean appliesTo(String fileExtension) {
         return true;
     }
 
-    @Override
-    public void fingerprint(URL entry, Checksum checksum) throws IOException {
+    @Override public void fingerprint(URL entry, Checksum checksum) throws IOException {
         // noop
         LOG.debug("Ignoring classpath entry {}", entry);
     }

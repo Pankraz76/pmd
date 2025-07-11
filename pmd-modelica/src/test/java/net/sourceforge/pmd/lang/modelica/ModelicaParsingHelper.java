@@ -17,8 +17,7 @@ public class ModelicaParsingHelper extends BaseParsingHelper<ModelicaParsingHelp
         super(ModelicaLanguageModule.getInstance(), ASTStoredDefinition.class, params);
     }
 
-    @Override
-    protected ModelicaParsingHelper clone(Params params) {
+    @Override protected ModelicaParsingHelper clone(Params params) {
         return new ModelicaParsingHelper(params);
     }
 

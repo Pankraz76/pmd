@@ -14,21 +14,21 @@ import org.junit.platform.suite.api.Suite;
  */
 @Suite
 @SelectClasses({
-    CodeClimateRendererTest.class,
-    CSVRendererTest.class,
-    EmacsRendererTest.class,
-    HTMLRendererTest.class,
-    IDEAJRendererTest.class,
-    JsonRendererTest.class,
-    TextColorRendererTest.class,
-    SarifRendererTest.class,
-    SummaryHTMLRendererTest.class,
-    TextPadRendererTest.class,
-    TextRendererTest.class,
-    VBHTMLRendererTest.class,
-    XMLRendererTest.class,
-    XSLTRendererTest.class,
-    YAHTMLRendererTest.class
+        CodeClimateRendererTest.class,
+        CSVRendererTest.class,
+        EmacsRendererTest.class,
+        HTMLRendererTest.class,
+        IDEAJRendererTest.class,
+        JsonRendererTest.class,
+        TextColorRendererTest.class,
+        SarifRendererTest.class,
+        SummaryHTMLRendererTest.class,
+        TextPadRendererTest.class,
+        TextRendererTest.class,
+        VBHTMLRendererTest.class,
+        XMLRendererTest.class,
+        XSLTRendererTest.class,
+        YAHTMLRendererTest.class
 })
 class RenderersTests {
 }

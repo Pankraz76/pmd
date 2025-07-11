@@ -37,9 +37,7 @@ public abstract class BaseAntlrInnerNode<N extends AntlrNode<N>> extends BaseAnt
         antlrNode = new PmdAsAntlrInnerNode<>(this, (PmdAsAntlrInnerNode<N>) parent, invokingStateNumber);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public N getChild(int index) {
+    @Override @SuppressWarnings("unchecked") public N getChild(int index) {
         if (0 <= index && index < getNumChildren()) {
             N pmdNode = (N) antlrNode.getChild(index).getPmdNode();
             assert pmdNode.getIndexInParent() == index;
@@ -48,26 +46,22 @@ public abstract class BaseAntlrInnerNode<N extends AntlrNode<N>> extends BaseAnt
         throw new IndexOutOfBoundsException("Index " + index + ", numChildren " + getNumChildren());
     }
 
-    @Override
-    public int getNumChildren() {
+    @Override public int getNumChildren() {
         return antlrNode.getChildCount();
     }
 
-    @Override
-    protected PmdAsAntlrInnerNode<N> asAntlrNode() {
+    @Override protected PmdAsAntlrInnerNode<N> asAntlrNode() {
         return antlrNode;
     }
 
     protected abstract int getRuleIndex();
 
 
-    @Override
-    public Token getFirstAntlrToken() {
+    @Override public Token getFirstAntlrToken() {
         return asAntlrNode().start;
     }
 
-    @Override
-    public Token getLastAntlrToken() {
+    @Override public Token getLastAntlrToken() {
         return asAntlrNode().stop;
     }
 
@@ -80,18 +74,17 @@ public abstract class BaseAntlrInnerNode<N extends AntlrNode<N>> extends BaseAnt
     }
 
     protected TerminalNode getToken(int kind, int idx) {
-        @SuppressWarnings("rawtypes")
-        BaseAntlrTerminalNode pmdWrapper =
-            children(BaseAntlrTerminalNode.class)
-                .filter(it -> it.getTokenKind() == kind)
-                .get(idx);
+        @SuppressWarnings("rawtypes") BaseAntlrTerminalNode pmdWrapper =
+                children(BaseAntlrTerminalNode.class)
+                        .filter(it -> it.getTokenKind() == kind)
+                        .get(idx);
         return pmdWrapper != null ? pmdWrapper.asAntlrNode() : null;
     }
 
     protected List<TerminalNode> getTokens(int kind) {
         return children(BaseAntlrTerminalNode.class)
-            .filter(it -> it.getTokenKind() == kind)
-            .toList(BaseAntlrTerminalNode::asAntlrNode);
+                .filter(it -> it.getTokenKind() == kind)
+                .toList(BaseAntlrTerminalNode::asAntlrNode);
     }
 
     protected void copyFrom(BaseAntlrInnerNode<N> other) {
@@ -121,39 +114,31 @@ public abstract class BaseAntlrInnerNode<N extends AntlrNode<N>> extends BaseAnt
             this.pmdNode = node;
         }
 
-        @Override
-        public BaseAntlrInnerNode<N> getPmdNode() {
+        @Override public BaseAntlrInnerNode<N> getPmdNode() {
             return pmdNode;
         }
 
-        @Override
-        @SuppressWarnings("unchecked")
-        public PmdAsAntlrInnerNode<N> getParent() {
+        @Override @SuppressWarnings("unchecked") public PmdAsAntlrInnerNode<N> getParent() {
             return (PmdAsAntlrInnerNode<N>) super.getParent();
         }
 
-        @Override
-        @SuppressWarnings("unchecked")
-        public AntlrToPmdParseTreeAdapter<N> getChild(int i) {
+        @Override @SuppressWarnings("unchecked") public AntlrToPmdParseTreeAdapter<N> getChild(int i) {
             return (AntlrToPmdParseTreeAdapter<N>) super.getChild(i);
         }
 
-        @Override
-        public <T extends ParseTree> T addAnyChild(T t) {
+        @Override public <T extends ParseTree> T addAnyChild(T t) {
             assert t instanceof AntlrToPmdParseTreeAdapter;
             BaseAntlrNode<?, ?> pmdNode = ((AntlrToPmdParseTreeAdapter<?>) t).getPmdNode();
             pmdNode.setIndexInParent(getChildCount());
             return super.addAnyChild(t);
         }
 
-        @Override
-        public void setParent(RuleContext parent) {
+        @Override public void setParent(RuleContext parent) {
             assert parent instanceof PmdAsAntlrInnerNode;
             super.setParent(parent);
         }
 
-        @Override
-        public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+        @Override public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
             throw new UnsupportedOperationException("Cannot visit the underlying antlr nodes");
         }
     }

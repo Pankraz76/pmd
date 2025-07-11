@@ -15,15 +15,13 @@ public final class SwiftTerminalNode extends BaseAntlrTerminalNode<SwiftNode> im
         super(token);
     }
 
-    @Override
-    public @NonNull String getText() {
+    @Override public @NonNull String getText() {
         String constImage = SwiftParser.DICO.getConstantImageOfToken(getFirstAntlrToken());
         return constImage == null ? getFirstAntlrToken().getText()
-                                  : constImage;
+                : constImage;
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return SwiftParser.DICO.getXPathNameOfToken(getFirstAntlrToken().getType());
     }
 

@@ -42,10 +42,10 @@ abstract class AbstractCounterCheckRule<T extends PLSQLNode> extends AbstractPLS
     private final Class<T> nodeType;
 
     private final PropertyDescriptor<Integer> reportLevel =
-        CommonPropertyDescriptors.reportLevelProperty()
-                                 .desc("Threshold above which a node is reported")
-                                 .require(positive())
-                                 .defaultValue(defaultReportLevel()).build();
+            CommonPropertyDescriptors.reportLevelProperty()
+                    .desc("Threshold above which a node is reported")
+                    .require(positive())
+                    .defaultValue(defaultReportLevel()).build();
 
 
     AbstractCounterCheckRule(Class<T> nodeType) {
@@ -53,8 +53,7 @@ abstract class AbstractCounterCheckRule<T extends PLSQLNode> extends AbstractPLS
         definePropertyDescriptor(reportLevel);
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         if (!(Modifier.isAbstract(nodeType.getModifiers()) || nodeType.isInterface())) {
             return RuleTargetSelector.forTypes(nodeType);
         }
@@ -91,16 +90,14 @@ abstract class AbstractCounterCheckRule<T extends PLSQLNode> extends AbstractPLS
     }
 
     protected Object[] getViolationParameters(T node, int metric) {
-        return new Object[] {metric};
+        return new Object[]{metric};
     }
 
 
     protected abstract int getMetric(T node);
 
-    @Override
-    public Object visitPlsqlNode(PLSQLNode node, Object data) {
-        @SuppressWarnings("unchecked")
-        T t = (T) node;
+    @Override public Object visitPlsqlNode(PLSQLNode node, Object data) {
+        @SuppressWarnings("unchecked") T t = (T) node;
         // since we only visit this node, it's ok
 
         if (!isIgnored(t)) {
@@ -120,8 +117,7 @@ abstract class AbstractCounterCheckRule<T extends PLSQLNode> extends AbstractPLS
         }
 
 
-        @Override
-        protected int getMetric(T node) {
+        @Override protected int getMetric(T node) {
             return node.getEndLine() - node.getBeginLine();
         }
     }

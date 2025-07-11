@@ -20,13 +20,11 @@ public class NcssConstructorCountRule extends AbstractNcssCountRule<ASTMethod> {
         super(ASTMethod.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 20;
     }
 
-    @Override
-    protected boolean isIgnored(ASTMethod node) {
+    @Override protected boolean isIgnored(ASTMethod node) {
         return !node.isConstructor();
     }
 }

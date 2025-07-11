@@ -53,8 +53,7 @@ class ObjectFieldTypesTest {
     /**
      * Verify that CustomFields stored in sfdx project format are correctly parsed
      */
-    @Test
-    void testSfdxAccountIsProperlyParsed() {
+    @Test void testSfdxAccountIsProperlyParsed() {
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf).resolve("SomePage.page");
 
         ObjectFieldTypes objectFieldTypes = new ObjectFieldTypes();
@@ -64,8 +63,7 @@ class ObjectFieldTypesTest {
     /**
      * Verify that CustomFields stored in mdapi format are correctly parsed
      */
-    @Test
-    void testMdapiAccountIsProperlyParsed() {
+    @Test void testMdapiAccountIsProperlyParsed() {
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.MDAPI, VFTestUtils.MetadataType.Vf).resolve("SomePage.page");
 
         ObjectFieldTypes objectFieldTypes = new ObjectFieldTypes();
@@ -75,14 +73,13 @@ class ObjectFieldTypesTest {
     /**
      * Verify that fields are found across multiple directories
      */
-    @Test
-    void testFieldsAreFoundInMultipleDirectories() {
+    @Test void testFieldsAreFoundInMultipleDirectories() {
         ObjectFieldTypes objectFieldTypes;
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf)
-            .resolve("SomePage.page");
+                .resolve("SomePage.page");
 
         List<String> paths = Arrays.asList(VfLanguageProperties.OBJECTS_DIRECTORIES_DESCRIPTOR.defaultValue().get(0),
-                                           VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.MDAPI, VFTestUtils.MetadataType.Objects).toString());
+                VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.MDAPI, VFTestUtils.MetadataType.Objects).toString());
         objectFieldTypes = new ObjectFieldTypes();
         validateSfdxAccount(objectFieldTypes, vfPagePath, paths);
         validateMDAPIAccount(objectFieldTypes, vfPagePath, paths);
@@ -93,8 +90,7 @@ class ObjectFieldTypesTest {
         validateMDAPIAccount(objectFieldTypes, vfPagePath, paths);
     }
 
-    @Test
-    void testInvalidDirectoryDoesNotCauseAnException() {
+    @Test void testInvalidDirectoryDoesNotCauseAnException() {
         Path vfPagePath = VFTestUtils.getMetadataPath(this, VFTestUtils.MetadataFormat.SFDX, VFTestUtils.MetadataType.Vf).resolve("SomePage.page");
         FileId vfFileName = FileId.fromPath(vfPagePath);
 
@@ -122,7 +118,7 @@ class ObjectFieldTypesTest {
      * {@code expectedDataTypes} matches the values of {@code expectedDataTypes}
      */
     static void validateDataTypes(Map<String, DataType> expectedDataTypes, SalesforceFieldTypes fieldTypes,
-                                         Path vfPagePath, List<String> paths) {
+            Path vfPagePath, List<String> paths) {
         FileId vfFileName = FileId.fromPath(vfPagePath);
 
         for (Map.Entry<String, DataType> entry : expectedDataTypes.entrySet()) {

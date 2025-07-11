@@ -17,8 +17,7 @@ class XPathRuleTest extends BaseScalaTest {
 
     private static final String SCALA_TEST = "/parserFiles/helloworld.scala";
 
-    @Test
-    void testPrintHelloWorld() {
+    @Test void testPrintHelloWorld() {
         Report report = evaluate(SCALA_TEST, "//TermApply/TermName[@Value=\"println\"]");
         RuleViolation rv = report.getViolations().get(0);
         assertEquals(2, rv.getBeginLine());

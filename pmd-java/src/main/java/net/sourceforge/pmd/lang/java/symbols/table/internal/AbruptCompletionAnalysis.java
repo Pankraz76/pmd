@@ -86,8 +86,7 @@ final class AbruptCompletionAnalysis {
             static final VisitAbortedException INSTANCE = new VisitAbortedException();
         }
 
-        @Override
-        public Boolean visit(ASTBlock node, SubtreeState data) {
+        @Override public Boolean visit(ASTBlock node, SubtreeState data) {
             recordReachableNode(node, data);
             return blockCanCompleteNormally(node, data);
         }
@@ -103,95 +102,82 @@ final class AbruptCompletionAnalysis {
             return true;
         }
 
-        @Override
-        public Boolean visitJavaNode(JavaNode node, SubtreeState data) {
+        @Override public Boolean visitJavaNode(JavaNode node, SubtreeState data) {
             throw AssertionUtil.shouldNotReachHere("Cannot visit non-statements: " + node);
         }
 
-        @Override
-        public Boolean visitStatement(ASTStatement node, SubtreeState data) {
+        @Override public Boolean visitStatement(ASTStatement node, SubtreeState data) {
             // assert, empty stmt
             recordReachableNode(node, data);
             return true;
         }
 
-        @Override
-        public Boolean visit(ASTThrowStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTThrowStatement node, SubtreeState data) {
             recordReachableNode(node, data);
             return false;
         }
 
-        @Override
-        public Boolean visit(ASTReturnStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTReturnStatement node, SubtreeState data) {
             recordReachableNode(node, data);
             return false;
         }
 
-        @Override
-        public Boolean visit(ASTBreakStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTBreakStatement node, SubtreeState data) {
             recordReachableNode(node, data);
             data.addBreak(node);
             return false;
         }
 
-        @Override
-        public Boolean visit(ASTYieldStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTYieldStatement node, SubtreeState data) {
             recordReachableNode(node, data);
             data.addYield(node);
             return false;
         }
 
-        @Override
-        public Boolean visit(ASTContinueStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTContinueStatement node, SubtreeState data) {
             recordReachableNode(node, data);
             data.addContinue(node);
             return false;
         }
 
-        @Override
-        public Boolean visit(ASTIfStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTIfStatement node, SubtreeState data) {
             recordReachableNode(node, data);
 
             boolean thenCanCompleteNormally = node.getThenBranch().acceptVisitor(this, data);
             boolean elseCanCompleteNormally = node.getElseBranch() == null
-                || node.getElseBranch().acceptVisitor(this, data);
+                    || node.getElseBranch().acceptVisitor(this, data);
 
             return thenCanCompleteNormally || elseCanCompleteNormally;
         }
 
-        @Override
-        public Boolean visit(ASTSynchronizedStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTSynchronizedStatement node, SubtreeState data) {
             recordReachableNode(node, data);
             return node.getBody().acceptVisitor(this, data);
         }
 
-        @Override
-        public Boolean visit(ASTLabeledStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTLabeledStatement node, SubtreeState data) {
             recordReachableNode(node, data);
             boolean stmtCanCompleteNormally = node.getStatement().acceptVisitor(this, data);
             return stmtCanCompleteNormally || data.containsBreak(node);
         }
 
-        @Override
-        public Boolean visit(ASTForeachStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTForeachStatement node, SubtreeState data) {
             recordReachableNode(node, data);
             node.getBody().acceptVisitor(this, data);
             return true;
         }
 
-        @Override
-        public Boolean visit(ASTDoStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTDoStatement node, SubtreeState data) {
             recordReachableNode(node, data);
             boolean bodyCompletesNormally = node.getBody().acceptVisitor(this, data);
 
             boolean isNotDoWhileTrue = !JavaAstUtils.isBooleanLiteral(node.getCondition(), true);
 
             return isNotDoWhileTrue && (bodyCompletesNormally || data.containsContinue(node))
-                || data.containsBreak(node);
+                    || data.containsBreak(node);
         }
 
-        @Override
-        public Boolean visit(ASTSwitchStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTSwitchStatement node, SubtreeState data) {
 
             // note: exhaustive enum switches are NOT considered exhaustive
             // for the purposes of liveness analysis, only the presence of a
@@ -212,7 +198,7 @@ final class AbruptCompletionAnalysis {
                     NodeStream<ASTStatement> statements = ((ASTSwitchFallthroughBranch) branch).getStatements();
                     SubtreeState branchState = new SubtreeState(data);
                     branchCompletesNormally = blockCanCompleteNormally(statements, branchState)
-                        || branchState.containsBreak(node);
+                            || branchState.containsBreak(node);
                 } else {
                     throw AssertionUtil.shouldNotReachHere("Not a branch type: " + branch);
                 }
@@ -241,8 +227,7 @@ final class AbruptCompletionAnalysis {
             }
         }
 
-        @Override
-        public Boolean visit(ASTWhileStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTWhileStatement node, SubtreeState data) {
             recordReachableNode(node, data);
 
             node.getBody().acceptVisitor(this, data);
@@ -252,20 +237,18 @@ final class AbruptCompletionAnalysis {
         }
 
 
-        @Override
-        public Boolean visit(ASTForStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTForStatement node, SubtreeState data) {
             recordReachableNode(node, data);
 
             node.getBody().acceptVisitor(this, data);
             boolean isNotForTrue = node.getCondition() != null
-                && !JavaAstUtils.isBooleanLiteral(node.getCondition(), true);
+                    && !JavaAstUtils.isBooleanLiteral(node.getCondition(), true);
 
             return isNotForTrue || data.containsBreak(node);
         }
 
 
-        @Override
-        public Boolean visit(ASTTryStatement node, SubtreeState data) {
+        @Override public Boolean visit(ASTTryStatement node, SubtreeState data) {
             recordReachableNode(node, data);
 
             ASTFinallyClause finallyClause = node.getFinallyClause();
@@ -297,7 +280,7 @@ final class AbruptCompletionAnalysis {
             }
 
             return finallyCompletesNormally
-                && (bodyCompletesNormally || anyCatchClauseCompletesNormally);
+                    && (bodyCompletesNormally || anyCatchClauseCompletesNormally);
         }
 
         private SubtreeState tryClauseState(SubtreeState data, boolean finallyCompletesNormally) {

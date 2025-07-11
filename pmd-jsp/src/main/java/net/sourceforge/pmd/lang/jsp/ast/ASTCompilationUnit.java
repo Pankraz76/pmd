@@ -16,8 +16,7 @@ public final class ASTCompilationUnit extends AbstractJspNode implements RootNod
         super(id);
     }
 
-    @Override
-    public AstInfo<ASTCompilationUnit> getAstInfo() {
+    @Override public AstInfo<ASTCompilationUnit> getAstInfo() {
         return astInfo;
     }
 
@@ -26,8 +25,7 @@ public final class ASTCompilationUnit extends AbstractJspNode implements RootNod
         return this;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JspVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -102,7 +102,7 @@ final class ApexCommentBuilder {
             }
 
             if (docToken.nearestNode == null
-                || nodeRegion.compareTo(docToken.nearestNode.getTextRegion()) < 0) {
+                    || nodeRegion.compareTo(docToken.nearestNode.getTextRegion()) < 0) {
 
                 docToken.nearestNode = node;
             }
@@ -114,8 +114,7 @@ final class ApexCommentBuilder {
         ApexLexer lexer = new ApexLexer(new CaseInsensitiveInputStream(CharStreams.fromString(source)));
         lexer.removeErrorListeners();
         lexer.addErrorListener(new BaseErrorListener() {
-            @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+            @Override public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
                 throw new LexException(line, charPositionInLine, sourceCode.getFileId(), msg, e);
             }
         });
@@ -131,7 +130,7 @@ final class ApexCommentBuilder {
             // Keep track of all comment tokens
             if (token.getChannel() == ApexLexer.COMMENT_CHANNEL) {
                 assert lastStartIndex < token.getStartIndex()
-                    : "Comments should be sorted";
+                        : "Comments should be sorted";
                 allCommentTokens.add(token);
             }
 
@@ -142,9 +141,9 @@ final class ApexCommentBuilder {
                 if (trimmedCommentText.startsWith(suppressMarker)) {
                     String userMessage = trimmedCommentText.substring(suppressMarker.length()).trim();
                     FileLocation loc = FileLocation.caret(
-                        sourceCode.getFileId(),
-                        token.getLine(),
-                        token.getCharPositionInLine() + 1
+                            sourceCode.getFileId(),
+                            token.getLine(),
+                            token.getCharPositionInLine() + 1
                     );
                     suppressionComments.add(new SuppressionCommentImpl<>(() -> loc, userMessage));
                 }
@@ -166,9 +165,9 @@ final class ApexCommentBuilder {
         CommentInformation(Collection<SuppressionCommentWrapper> suppressMap, List<Token> allCommentTokens) {
             this.suppressionComments = suppressMap;
             this.docTokens = allCommentTokens.stream()
-                .filter(token -> token.getType() == ApexLexer.DOC_COMMENT)
-                .map(ApexDocToken::new)
-                .collect(toList());
+                    .filter(token -> token.getType() == ApexLexer.DOC_COMMENT)
+                    .map(ApexDocToken::new)
+                    .collect(toList());
             this.allCommentsByStartIndex = new TokenListByStartIndex(new ArrayList<>(allCommentTokens));
         }
     }
@@ -188,13 +187,11 @@ final class ApexCommentBuilder {
             this.tokens = tokens;
         }
 
-        @Override
-        public Integer get(int index) {
+        @Override public Integer get(int index) {
             return tokens.get(index).getStartIndex();
         }
 
-        @Override
-        public int size() {
+        @Override public int size() {
             return tokens.size();
         }
     }

@@ -41,13 +41,11 @@ public abstract class AntlrGeneratedParserBase<N extends AntlrNode<N>> extends P
     }
 
 
-    @Override
-    public TerminalNode createTerminalNode(ParserRuleContext parent, Token t) {
+    @Override public TerminalNode createTerminalNode(ParserRuleContext parent, Token t) {
         return createPmdTerminal(parent, t).asAntlrNode();
     }
 
-    @Override
-    public ErrorNode createErrorNode(ParserRuleContext parent, Token t) {
+    @Override public ErrorNode createErrorNode(ParserRuleContext parent, Token t) {
         return createPmdError(parent, t).asAntlrNode();
     }
 

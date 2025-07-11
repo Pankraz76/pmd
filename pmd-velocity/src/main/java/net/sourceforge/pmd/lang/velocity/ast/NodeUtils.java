@@ -1,4 +1,3 @@
-
 package net.sourceforge.pmd.lang.velocity.ast;
 
 import net.sourceforge.pmd.lang.ast.impl.javacc.JavaccToken;
@@ -30,7 +29,8 @@ import net.sourceforge.pmd.lang.ast.impl.javacc.JavaccToken;
  * @version $Id: NodeUtils.java 687386 2008-08-20 16:57:07Z nbubna $
  */
 final class NodeUtils {
-    private NodeUtils() { }
+    private NodeUtils() {
+    }
 
     /**
      * Collect all the &lt;SPECIAL_TOKEN&gt;s that are carried along with a token.

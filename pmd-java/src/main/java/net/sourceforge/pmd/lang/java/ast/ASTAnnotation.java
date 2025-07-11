@@ -35,8 +35,7 @@ public final class ASTAnnotation extends AbstractJavaTypeNode implements ASTMemb
         return (ASTClassType) getChild(0);
     }
 
-    @Override
-    public @NonNull JClassType getTypeMirror() {
+    @Override public @NonNull JClassType getTypeMirror() {
         return (JClassType) super.getTypeMirror();
     }
 
@@ -63,8 +62,7 @@ public final class ASTAnnotation extends AbstractJavaTypeNode implements ASTMemb
     }
 
 
-    @Override
-    public Iterator<ASTMemberValuePair> iterator() {
+    @Override public Iterator<ASTMemberValuePair> iterator() {
         return children(ASTMemberValuePair.class).iterator();
     }
 
@@ -81,7 +79,7 @@ public final class ASTAnnotation extends AbstractJavaTypeNode implements ASTMemb
      */
     public NodeStream<ASTMemberValue> getFlatValue(String attrName) {
         return NodeStream.of(getAttribute(attrName))
-                         .flatMap(ASTAnnotation::flatValue);
+                .flatMap(ASTAnnotation::flatValue);
     }
 
     /**
@@ -97,13 +95,13 @@ public final class ASTAnnotation extends AbstractJavaTypeNode implements ASTMemb
      */
     public NodeStream<ASTMemberValue> getFlatValues() {
         return getMembers().map(ASTMemberValuePair::getValue)
-                           .flatMap(ASTAnnotation::flatValue);
+                .flatMap(ASTAnnotation::flatValue);
     }
 
     private static NodeStream<ASTMemberValue> flatValue(ASTMemberValue value) {
         return value instanceof ASTMemberValueArrayInitializer
-            ? value.children(ASTMemberValue.class)
-            : NodeStream.of(value);
+                ? value.children(ASTMemberValue.class)
+                : NodeStream.of(value);
     }
 
     /**
@@ -121,13 +119,12 @@ public final class ASTAnnotation extends AbstractJavaTypeNode implements ASTMemb
      */
     public @Nullable ASTMemberValue getAttribute(String attrName) {
         return getMembers().filter(pair -> pair.getName().equals(attrName))
-                           .map(ASTMemberValuePair::getValue)
-                           .first();
+                .map(ASTMemberValuePair::getValue)
+                .first();
     }
 
 
-    @Override
-    public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

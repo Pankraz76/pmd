@@ -29,8 +29,7 @@ public abstract class SimpleAggregatorTst extends RuleTst {
      *
      * @see #addRule(String, String)
      */
-    @Override
-    protected void setUp() {
+    @Override protected void setUp() {
         // empty, to be overridden.
     }
 
@@ -47,8 +46,7 @@ public abstract class SimpleAggregatorTst extends RuleTst {
      *
      * @return all configured rules.
      */
-    @Override
-    protected List<Rule> getRules() {
+    @Override protected List<Rule> getRules() {
         return rules;
     }
 }

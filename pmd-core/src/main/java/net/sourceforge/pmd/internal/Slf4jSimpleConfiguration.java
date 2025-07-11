@@ -20,7 +20,8 @@ public final class Slf4jSimpleConfiguration {
     private static final String SIMPLE_LOGGER_CONFIGURATION = "org.slf4j.impl.SimpleLoggerConfiguration";
     private static final String PMD_ROOT_LOGGER = "net.sourceforge.pmd";
 
-    private Slf4jSimpleConfiguration() { }
+    private Slf4jSimpleConfiguration() {
+    }
 
     public static void reconfigureDefaultLogLevel(Level level) {
         if (!isSimpleLogger()) {
@@ -69,11 +70,10 @@ public final class Slf4jSimpleConfiguration {
             loggerMapField.setAccessible(true);
             // we checked previously, that loggerFactory instanceof SimpleLoggerFactory
             // see #isSimpleLogger()
-            @SuppressWarnings("unchecked")
-            Map<String, Logger> loggerMap = (Map<String, Logger>) loggerMapField.get(loggerFactory);
+            @SuppressWarnings("unchecked") Map<String, Logger> loggerMap = (Map<String, Logger>) loggerMapField.get(loggerFactory);
             for (Logger logger : loggerMap.values()) {
                 if (logger.getName().startsWith(PMD_ROOT_LOGGER)
-                    && simpleLoggerClass.isAssignableFrom(logger.getClass())) {
+                        && simpleLoggerClass.isAssignableFrom(logger.getClass())) {
                     String newConfiguredLevel = (String) levelStringMethod.invoke(logger);
                     int newLogLevel = newDefaultLogLevel;
                     if (newConfiguredLevel != null) {

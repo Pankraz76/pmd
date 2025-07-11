@@ -38,8 +38,7 @@ class XPathRuleTest {
         return JavaParsingHelper.DEFAULT.newXpathRule(expression);
     }
 
-    @Test
-    void testImageIsAccessibleAsFormatArgument() {
+    @Test void testImageIsAccessibleAsFormatArgument() {
         XPathRule rule = makeXPath("//VariableId[string-length(@Name) < 3]");
         rule.setMessage("{0}");
         Report report = getReportForTestString(rule, TEST1);
@@ -48,16 +47,15 @@ class XPathRuleTest {
     }
 
 
-    @Test
-    void testXPathMultiProperty() throws Exception {
+    @Test void testXPathMultiProperty() throws Exception {
         XPathRule rule = makeXPath("//VariableId[@Name=$forbiddenNames]");
         rule.setMessage("Avoid vars");
         PropertyDescriptor<List<String>> varDescriptor
-            = PropertyFactory.stringListProperty("forbiddenNames")
-                             .desc("Forbidden names")
-                             .defaultValues("forbid1", "forbid2")
-                             .availableInXPath(true)
-                             .build();
+                = PropertyFactory.stringListProperty("forbiddenNames")
+                .desc("Forbidden names")
+                .defaultValues("forbid1", "forbid2")
+                .availableInXPath(true)
+                .build();
 
         rule.definePropertyDescriptor(varDescriptor);
 
@@ -66,12 +64,11 @@ class XPathRuleTest {
     }
 
 
-    @Test
-    void testVariables() throws Exception {
+    @Test void testVariables() throws Exception {
         XPathRule rule = makeXPath("//VariableId[@Name=$var]");
         rule.setMessage("Avoid vars");
         PropertyDescriptor<String> varDescriptor =
-            PropertyFactory.stringProperty("var").desc("Test var").defaultValue("").availableInXPath(true).build();
+                PropertyFactory.stringProperty("var").desc("Test var").defaultValue("").availableInXPath(true).build();
         rule.definePropertyDescriptor(varDescriptor);
         rule.setProperty(varDescriptor, "fiddle");
         Report report = getReportForTestString(rule, TEST2);
@@ -79,30 +76,26 @@ class XPathRuleTest {
         assertEquals(3, rv.getBeginLine());
     }
 
-    @Test
-    void testFnPrefixOnSaxon() throws Exception {
+    @Test void testFnPrefixOnSaxon() throws Exception {
         XPathRule rule = makeXPath("//VariableId[fn:matches(@Name, 'fiddle')]");
         Report report = getReportForTestString(rule, TEST2);
         RuleViolation rv = report.getViolations().get(0);
         assertEquals(3, rv.getBeginLine());
     }
 
-    @Test
-    void testNoFnPrefixOnSaxon() {
+    @Test void testNoFnPrefixOnSaxon() {
         XPathRule rule = makeXPath("//VariableId[matches(@Name, 'fiddle')]");
         Report report = getReportForTestString(rule, TEST2);
         RuleViolation rv = report.getViolations().get(0);
         assertEquals(3, rv.getBeginLine());
     }
 
-    @Test
-    void testSimpleQueryIsRuleChain() {
+    @Test void testSimpleQueryIsRuleChain() {
         // ((/)/descendant::element(Q{}VariableId))[matches(convertUntyped(data(@Name)), "fiddle", "")]
         assertIsRuleChain("//VariableId[matches(@Name, 'fiddle')]");
     }
 
-    @Test
-    void testSimpleQueryIsRuleChain2() {
+    @Test void testSimpleQueryIsRuleChain2() {
         // docOrder(((/)/descendant-or-self::node())/(child::element(ClassType)[typeIs("java.util.Vector")]))
         assertIsRuleChain("//ClassType[pmd-java:typeIs('java.util.Vector')]");
     }
@@ -123,8 +116,7 @@ class XPathRuleTest {
      *
      * @throws Exception any error
      */
-    @Test
-    void testFollowingSibling() throws Exception {
+    @Test void testFollowingSibling() throws Exception {
         final String source = "public interface dummy extends Foo, Bar, Baz {}";
         ASTCompilationUnit cu = JavaParsingHelper.DEFAULT.parse(source);
 
@@ -132,10 +124,10 @@ class XPathRuleTest {
 
 
         SaxonXPathRuleQuery xpathRuleQuery = new SaxonXPathRuleQuery(xpath,
-                                                                     XPathVersion.DEFAULT,
-                                                                     new HashMap<>(),
-                                                                     XPathHandler.noFunctionDefinitions(),
-                                                                     DeprecatedAttrLogger.noop());
+                XPathVersion.DEFAULT,
+                new HashMap<>(),
+                XPathHandler.noFunctionDefinitions(),
+                DeprecatedAttrLogger.noop());
         List<Node> nodes = xpathRuleQuery.evaluate(cu);
         assertEquals(2, nodes.size());
         assertEquals("Bar", ((JavaNode) nodes.get(0)).getText().toString());
@@ -148,17 +140,17 @@ class XPathRuleTest {
 
 
     private static final String TEST1 = "public class Foo {\n"
-        + " int a;\n"
-        + "}";
+            + " int a;\n"
+            + "}";
 
     private static final String TEST2 = "public class Foo {\n"
-        + " int faddle;\n"
-        + " int fiddle;\n"
-        + "}";
+            + " int faddle;\n"
+            + " int fiddle;\n"
+            + "}";
 
 
     private static final String TEST3 = "public class Foo {\n"
-        + " int forbid1; int forbid2; int forbid1$forbid2;\n"
-        + "}";
+            + " int forbid1; int forbid2; int forbid1$forbid2;\n"
+            + "}";
 
 }

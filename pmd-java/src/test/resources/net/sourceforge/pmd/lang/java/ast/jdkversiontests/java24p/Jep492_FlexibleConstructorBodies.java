@@ -2,6 +2,8 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
+
+
 import java.math.BigInteger;
 import java.security.cert.Certificate;
 import java.security.interfaces.DSAPublicKey;
@@ -22,8 +24,10 @@ public class Jep492_FlexibleConstructorBodies {
 
     // Example: Preparing superclass constructor arguments
     public class Super {
-        public Super(byte[] bytes) {}
+        public Super(byte[] bytes) {
+        }
     }
+
     public class Sub extends Super {
         public Sub(Certificate certificate) {
             var publicKey = certificate.getPublicKey();
@@ -40,18 +44,22 @@ public class Jep492_FlexibleConstructorBodies {
     // Example: Sharing superclass constructor arguments
     public class C {
         private final int i;
+
         public C(int i) {
             this.i = i;
         }
     }
+
     public class Super2 {
         private final C x;
         private final C y;
+
         public Super2(C x, C y) {
             this.x = x;
             this.y = y;
         }
     }
+
     public class Sub2 extends Super2 {
         public Sub2(int i) {
             var x = new C(i);
@@ -62,7 +70,10 @@ public class Jep492_FlexibleConstructorBodies {
     // Using enclosing instances in early construction contexts
     class Outer {
         int i;
-        void hello() { System.out.println("Hello"); }
+
+        void hello() {
+            System.out.println("Hello");
+        }
 
         class Inner {
             int j;
@@ -79,9 +90,15 @@ public class Jep492_FlexibleConstructorBodies {
 
     // Early assignment to fields
     class Super3 {
-        Super3() { overriddenMethod(); }
-        void overriddenMethod() { System.out.println("hello"); }
+        Super3() {
+            overriddenMethod();
+        }
+
+        void overriddenMethod() {
+            System.out.println("hello");
+        }
     }
+
     class Sub3 extends Super3 {
         final int x;
 
@@ -90,8 +107,9 @@ public class Jep492_FlexibleConstructorBodies {
             super();       // Then invoke the Super constructor explicitly
         }
 
-        @Override
-        void overriddenMethod() { System.out.println(x); }
+        @Override void overriddenMethod() {
+            System.out.println(x);
+        }
     }
 
 

@@ -26,9 +26,7 @@ public interface JWildcardType extends JTypeMirror {
 
 
     /** Returns the bound. Interpretation is given by {@link #isUpperBound()}. */
-    @NonNull
-    JTypeMirror getBound();
-
+    @NonNull JTypeMirror getBound();
 
 
     /** Returns true if this is an "extends" wildcard, with no bound ("?"). */
@@ -64,24 +62,19 @@ public interface JWildcardType extends JTypeMirror {
      * wildcard type is undefined and useless. This is because they can
      * only occur in type arguments, which are erased themselves.
      */
-    @Override
-    default JTypeMirror getErasure() {
+    @Override default JTypeMirror getErasure() {
         return this;
     }
 
-    @Override
-    default Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
+    @Override default Stream<JMethodSig> streamMethods(Predicate<? super JMethodSymbol> prefilter) {
         return asUpperBound().streamMethods(prefilter);
     }
 
-    @Override
-    JWildcardType subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst);
+    @Override JWildcardType subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst);
 
-    @Override
-    JWildcardType withAnnotations(PSet<SymAnnot> newTypeAnnots);
+    @Override JWildcardType withAnnotations(PSet<SymAnnot> newTypeAnnots);
 
-    @Override
-    default <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
+    @Override default <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
         return visitor.visitWildcard(this, p);
     }
 

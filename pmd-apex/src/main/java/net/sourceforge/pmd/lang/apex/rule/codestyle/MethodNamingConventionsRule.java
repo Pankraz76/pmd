@@ -35,14 +35,12 @@ public class MethodNamingConventionsRule extends AbstractNamingConventionsRule {
     }
 
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTMethod.class);
     }
 
 
-    @Override
-    public Object visit(ASTMethod node, Object data) {
+    @Override public Object visit(ASTMethod node, Object data) {
         if (isOverriddenMethod(node) || isPropertyAccessor(node) || isConstructor(node)) {
             return data;
         }
@@ -66,8 +64,7 @@ public class MethodNamingConventionsRule extends AbstractNamingConventionsRule {
         return data;
     }
 
-    @Override
-    protected String displayName(String name) {
+    @Override protected String displayName(String name) {
         return DESCRIPTOR_TO_DISPLAY_NAME.get(name);
     }
 

@@ -19,9 +19,7 @@ public class SwiftParsingHelper extends BaseParsingHelper<SwiftParsingHelper, Sw
         super(SwiftLanguageModule.getInstance(), SwTopLevel.class, params);
     }
 
-    @NonNull
-    @Override
-    protected SwiftParsingHelper clone(@NonNull Params params) {
+    @NonNull @Override protected SwiftParsingHelper clone(@NonNull Params params) {
         return new SwiftParsingHelper(params);
     }
 }

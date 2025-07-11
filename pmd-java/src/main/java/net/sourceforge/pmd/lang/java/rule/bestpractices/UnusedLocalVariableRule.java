@@ -15,16 +15,14 @@ import net.sourceforge.pmd.lang.rule.RuleTargetSelector;
 
 public class UnusedLocalVariableRule extends AbstractJavaRule {
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTLocalVariableDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTLocalVariableDeclaration decl, Object data) {
+    @Override public Object visit(ASTLocalVariableDeclaration decl, Object data) {
         for (ASTVariableId varId : decl.getVarIds()) {
             if (JavaAstUtils.isNeverUsed(varId)
-                && !JavaRuleUtil.isExplicitUnusedVarName(varId.getName())) {
+                    && !JavaRuleUtil.isExplicitUnusedVarName(varId.getName())) {
                 asCtx(data).addViolation(varId, varId.getName());
             }
         }

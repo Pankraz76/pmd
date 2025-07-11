@@ -173,12 +173,12 @@ public final class Helper {
 
     private static boolean isAllowed(String identifier) {
         switch (identifier.toLowerCase(Locale.ROOT)) {
-        case "queueable":
-        case "database.batchable":
-        case "installhandler":
-            return true;
-        default:
-            break;
+            case "queueable":
+            case "database.batchable":
+            case "installhandler":
+                return true;
+            default:
+                break;
         }
         return false;
     }

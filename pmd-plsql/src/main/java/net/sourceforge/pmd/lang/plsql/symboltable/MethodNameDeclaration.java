@@ -68,8 +68,7 @@ public class MethodNameDeclaration extends AbstractNameDeclaration {
         return sb.toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (!(o instanceof MethodNameDeclaration)) {
             return false;
         }
@@ -136,23 +135,21 @@ public class MethodNameDeclaration extends AbstractNameDeclaration {
         return true;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         try {
             // SRT node.getImage().hashCode() + ((ASTMethodDeclarator)node).getParameterCount();
             return node.hashCode();
         } catch (Exception e) {
             LOG.trace(
                     "MethodNameDeclaration problem for {} of class {} => {}/{}",
-                            node, node.getClass().getCanonicalName(),
-                            node.getBeginLine(), node.getBeginColumn());
+                    node, node.getClass().getCanonicalName(),
+                    node.getBeginLine(), node.getBeginColumn());
             // @TODO SRT restore the thrown exception - throw e;
             return 0;
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         // SRT return "Method " + node.getImage() + ", line " +
         // node.getBeginLine() + ", params = " + ((ASTMethodDeclarator)
         // node).getParameterCount();

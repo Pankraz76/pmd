@@ -16,8 +16,7 @@ public final class ASTCompilationUnit extends AbstractVfNode implements RootNode
         super(id);
     }
 
-    @Override
-    public AstInfo<ASTCompilationUnit> getAstInfo() {
+    @Override public AstInfo<ASTCompilationUnit> getAstInfo() {
         return astInfo;
     }
 
@@ -26,8 +25,7 @@ public final class ASTCompilationUnit extends AbstractVfNode implements RootNode
         return this;
     }
 
-    @Override
-    protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

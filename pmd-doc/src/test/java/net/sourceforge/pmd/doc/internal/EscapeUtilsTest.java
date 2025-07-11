@@ -13,8 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class EscapeUtilsTest {
 
-    @Test
-    void testEscapeMarkdown() {
+    @Test void testEscapeMarkdown() {
         assertEquals("This is a \\\\backslash", EscapeUtils.escapeMarkdown("This is a \\backslash"));
         assertEquals("This \"\\*\" is not a emphasis", EscapeUtils.escapeMarkdown("This \"*\" is not a emphasis"));
         assertEquals("This \"\\*\\*\" is not a strong style", EscapeUtils.escapeMarkdown("This \"**\" is not a strong style"));
@@ -24,8 +23,7 @@ class EscapeUtilsTest {
         assertEquals("This \"\\_\" is just a underscore", EscapeUtils.escapeMarkdown("This \"_\" is just a underscore"));
     }
 
-    @Test
-    void testEscapeHtmlWithinMarkdownSingleLine() {
+    @Test void testEscapeHtmlWithinMarkdownSingleLine() {
         assertEquals("a &lt;script&gt; tag outside of `<script>` backticks should be escaped",
                 EscapeUtils.escapeSingleLine("a <script> tag outside of `<script>` backticks should be escaped"));
         assertEquals("a &lt;script&gt; &quot;tag&quot; outside of `<script>` backticks should be escaped &lt;multiple&gt; times `<strong>`.",
@@ -44,8 +42,7 @@ class EscapeUtilsTest {
                 EscapeUtils.escapeSingleLine("combination of URLs and backticks: `<script>` <strong>escaped</strong> but <https://pmd.github.io>"));
     }
 
-    @Test
-    void testEscapeHtmlWithinMarkdownBlocks() {
+    @Test void testEscapeHtmlWithinMarkdownBlocks() {
         String text = "paragraph\n\n> quote <script>\n> quote line \"2\"\n>quote line `<script>` 3\n\n"
                 + "next paragraph\n\n    code <script> \"a < b\"\n    code line 2\n\n"
                 + "next paragraph\n\n```\ncode <script> \"a < b\"\ncode line 2\n```\n\n"

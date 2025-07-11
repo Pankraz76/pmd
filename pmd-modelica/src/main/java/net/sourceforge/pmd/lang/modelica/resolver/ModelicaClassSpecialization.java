@@ -40,8 +40,7 @@ public enum ModelicaClassSpecialization {
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return name;
     }
 }

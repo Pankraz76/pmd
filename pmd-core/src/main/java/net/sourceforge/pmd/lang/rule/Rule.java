@@ -35,22 +35,22 @@ public interface Rule extends PropertySource {
      * matching a regular expression.
      */
     PropertyDescriptor<Optional<Pattern>> VIOLATION_SUPPRESS_REGEX_DESCRIPTOR =
-        PropertyFactory.regexProperty("violationSuppressRegex")
-                       .desc("Suppress violations with messages matching a regular expression")
-                       .toOptional("")
-                       .defaultValue(Optional.empty())
-                       .build();
+            PropertyFactory.regexProperty("violationSuppressRegex")
+                    .desc("Suppress violations with messages matching a regular expression")
+                    .toOptional("")
+                    .defaultValue(Optional.empty())
+                    .build();
 
     /**
      * Name of the property to universally suppress violations on nodes which
      * match a given relative XPath expression.
      */
     PropertyDescriptor<Optional<String>> VIOLATION_SUPPRESS_XPATH_DESCRIPTOR =
-        PropertyFactory.stringProperty("violationSuppressXPath")
-                       .desc("Suppress violations on nodes which match a given relative XPath expression.")
-                       .toOptional("")
-                       .defaultValue(Optional.empty())
-                       .build();
+            PropertyFactory.stringProperty("violationSuppressXPath")
+                    .desc("Suppress violations on nodes which match a given relative XPath expression.")
+                    .toOptional("")
+                    .defaultValue(Optional.empty())
+                    .build();
 
     /**
      * Get the Language of this Rule.
@@ -126,8 +126,7 @@ public interface Rule extends PropertySource {
      *
      * @return the name
      */
-    @Override
-    String getName();
+    @Override String getName();
 
     /**
      * Set the name of this Rule.
@@ -273,7 +272,7 @@ public interface Rule extends PropertySource {
      * @param languageProcessor The processor for the rule's language
      */
     default void initialize(LanguageProcessor languageProcessor) {
-         // by default do nothing
+        // by default do nothing
     }
 
     /**

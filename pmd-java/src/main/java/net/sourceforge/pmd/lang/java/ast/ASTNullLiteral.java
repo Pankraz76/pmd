@@ -20,18 +20,15 @@ public final class ASTNullLiteral extends AbstractLiteral implements ASTLiteral 
         super(id);
     }
 
-    @Override
-    public boolean isCompileTimeConstant() {
+    @Override public boolean isCompileTimeConstant() {
         return false;
     }
 
-    @Override
-    public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override public <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public Chars getLiteralText() {
+    @Override public Chars getLiteralText() {
         return super.getLiteralText();
     }
 }

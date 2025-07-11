@@ -16,8 +16,7 @@ public final class ASTInput extends AbstractPLSQLNode implements RootNode {
         super(id);
     }
 
-    @Override
-    public AstInfo<ASTInput> getAstInfo() {
+    @Override public AstInfo<ASTInput> getAstInfo() {
         return astInfo;
     }
 
@@ -27,8 +26,7 @@ public final class ASTInput extends AbstractPLSQLNode implements RootNode {
     }
 
 
-    @Override
-    protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 

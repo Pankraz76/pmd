@@ -47,36 +47,30 @@ public final class JPrimitiveType implements JTypeMirror {
         this.superTypes = pType.superTypes; // Shared instance
     }
 
-    @Override
-    public PSet<SymAnnot> getTypeAnnotations() {
+    @Override public PSet<SymAnnot> getTypeAnnotations() {
         return typeAnnots;
     }
 
-    @Override
-    public JTypeMirror withAnnotations(PSet<SymAnnot> newTypeAnnots) {
+    @Override public JTypeMirror withAnnotations(PSet<SymAnnot> newTypeAnnots) {
         if (newTypeAnnots.isEmpty() && this.typeAnnots.isEmpty()) {
             return this;
         }
         return new JPrimitiveType(this, newTypeAnnots);
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return ts;
     }
 
-    @Override
-    public JClassType box() {
+    @Override public JClassType box() {
         return box;
     }
 
-    @Override
-    public JPrimitiveType unbox() {
+    @Override public JPrimitiveType unbox() {
         return this;
     }
 
-    @Override
-    public JTypeMirror getErasure() {
+    @Override public JTypeMirror getErasure() {
         return this;
     }
 
@@ -84,54 +78,44 @@ public final class JPrimitiveType implements JTypeMirror {
      * Returns the type of the primitive class, eg {@link Integer#TYPE}.
      * The returned type {@link Class#isPrimitive()} is true.
      */
-    @Override
-    public @NonNull JClassSymbol getSymbol() {
+    @Override public @NonNull JClassSymbol getSymbol() {
         return type;
     }
 
-    @Override
-    public boolean isNumeric() {
+    @Override public boolean isNumeric() {
         return kind != PrimitiveTypeKind.BOOLEAN;
     }
 
 
-    @Override
-    public boolean isPrimitive(PrimitiveTypeKind kind) {
+    @Override public boolean isPrimitive(PrimitiveTypeKind kind) {
         return this.kind == Objects.requireNonNull(kind, "null kind");
     }
 
-    @Override
-    public boolean isFloatingPoint() {
+    @Override public boolean isFloatingPoint() {
         return kind == PrimitiveTypeKind.DOUBLE || kind == PrimitiveTypeKind.FLOAT;
     }
 
-    @Override
-    public boolean isIntegral() {
+    @Override public boolean isIntegral() {
         return kind != PrimitiveTypeKind.BOOLEAN && !isFloatingPoint();
     }
 
-    @Override
-    public boolean isPrimitive() {
+    @Override public boolean isPrimitive() {
         return true;
     }
 
-    @Override
-    public Set<JTypeMirror> getSuperTypeSet() {
+    @Override public Set<JTypeMirror> getSuperTypeSet() {
         return superTypes;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return TypePrettyPrint.prettyPrint(this);
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         return obj instanceof JPrimitiveType && ((JPrimitiveType) obj).kind == this.kind;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return kind.hashCode();
     }
 
@@ -147,13 +131,11 @@ public final class JPrimitiveType implements JTypeMirror {
         return kind;
     }
 
-    @Override
-    public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
+    @Override public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
         return visitor.visitPrimitive(this, p);
     }
 
-    @Override
-    public JTypeMirror subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
+    @Override public JTypeMirror subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
         return this;
     }
 
@@ -178,8 +160,7 @@ public final class JPrimitiveType implements JTypeMirror {
             return name;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return name;
         }
 
@@ -199,16 +180,16 @@ public final class JPrimitiveType implements JTypeMirror {
          */
         public static @Nullable PrimitiveTypeKind fromName(String token) {
             switch (token) {
-            case "boolean": return BOOLEAN;
-            case "char": return CHAR;
-            case "byte": return BYTE;
-            case "short": return SHORT;
-            case "int": return INT;
-            case "long": return LONG;
-            case "float": return FLOAT;
-            case "double": return DOUBLE;
-            default:
-                return null;
+                case "boolean": return BOOLEAN;
+                case "char": return CHAR;
+                case "byte": return BYTE;
+                case "short": return SHORT;
+                case "int": return INT;
+                case "long": return LONG;
+                case "float": return FLOAT;
+                case "double": return DOUBLE;
+                default:
+                    return null;
             }
         }
     }

@@ -19,8 +19,7 @@ public final class ASTOuterJoinType extends AbstractPLSQLNode {
         return type;
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return String.valueOf(type);
     }
 
@@ -36,10 +35,10 @@ public final class ASTOuterJoinType extends AbstractPLSQLNode {
         return type == Type.FULL;
     }
 
-    @Override
-    protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    public enum Type { FULL, LEFT, RIGHT }
+    public enum Type { FULL, LEFT, RIGHT
+    }
 }

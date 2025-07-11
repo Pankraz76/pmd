@@ -14,8 +14,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class MultipleDDLStatementsTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseDDLCommands() throws Exception {
+    @Test void parseDDLCommands() throws Exception {
         ASTInput input = plsql.parseResource("DDLCommands.sql");
         List<ASTDDLCommand> ddlcommands = input.descendants(ASTDDLCommand.class).toList();
         assertEquals(6, ddlcommands.size());

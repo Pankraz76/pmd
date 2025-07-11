@@ -24,21 +24,18 @@ class CppCharStreamTest {
         return tokenizer.newCharStream(textDoc);
     }
 
-    @Test
-    void testContinuationUnix() throws IOException {
+    @Test void testContinuationUnix() throws IOException {
         CharStream stream = charStreamFor("a\\\nb");
         assertStream(stream, "ab");
     }
 
-    @Test
-    void testContinuationWindows() throws IOException {
+    @Test void testContinuationWindows() throws IOException {
         // note that the \r is normalized to a \n by the TextFile
         CharStream stream = charStreamFor("a\\\r\nb");
         assertStream(stream, "ab");
     }
 
-    @Test
-    void testBackup() throws IOException {
+    @Test void testBackup() throws IOException {
         // note that the \r is normalized to a \n by the TextFile
         CharStream stream = charStreamFor("a\\b\\qc");
         assertStream(stream, "a\\b\\qc");

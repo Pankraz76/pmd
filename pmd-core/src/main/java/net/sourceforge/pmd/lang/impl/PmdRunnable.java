@@ -51,8 +51,7 @@ abstract class PmdRunnable implements Runnable {
      */
     protected abstract RuleSets getRulesets();
 
-    @Override
-    public void run() throws FileAnalysisException {
+    @Override public void run() throws FileAnalysisException {
         TimeTracker.initThread();
 
         try (TimedOperation ignored = TimeTracker.startOperation(TimedOperationCategory.FILE_PROCESSING);
@@ -66,8 +65,7 @@ abstract class PmdRunnable implements Runnable {
                 try (TextDocument textDocument = TextDocument.create(textFile);
                      FileAnalysisListener cacheListener = analysisCache.startFileAnalysis(textDocument)) {
 
-                    @SuppressWarnings("PMD.CloseResource")
-                    FileAnalysisListener completeListener = FileAnalysisListener.tee(listOf(listener, cacheListener));
+                    @SuppressWarnings("PMD.CloseResource") FileAnalysisListener completeListener = FileAnalysisListener.tee(listOf(listener, cacheListener));
 
                     if (analysisCache.isUpToDate(textDocument)) {
                         LOG.trace("Skipping file (lang: {}) because it was found in the cache: {}", textFile.getLanguageVersion(), textFile.getFileId().getAbsolutePath());
@@ -115,15 +113,14 @@ abstract class PmdRunnable implements Runnable {
 
 
     private void processSource(FileAnalysisListener listener,
-                               TextDocument textDocument,
-                               RuleSets ruleSets) throws FileAnalysisException {
+            TextDocument textDocument,
+            RuleSets ruleSets) throws FileAnalysisException {
 
         SemanticErrorReporter reporter = SemanticErrorReporter.reportToLogger(task.getMessageReporter());
-        @SuppressWarnings("PMD.CloseResource")
-        LanguageProcessor processor = task.getLpRegistry().getProcessor(textDocument.getLanguageVersion().getLanguage());
+        @SuppressWarnings("PMD.CloseResource") LanguageProcessor processor = task.getLpRegistry().getProcessor(textDocument.getLanguageVersion().getLanguage());
         ParserTask parserTask = new ParserTask(textDocument,
-                                               reporter,
-                                               task.getLpRegistry());
+                reporter,
+                task.getLpRegistry());
 
         LanguageVersionHandler handler = processor.services();
 

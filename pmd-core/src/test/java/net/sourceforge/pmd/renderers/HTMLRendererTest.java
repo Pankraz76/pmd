@@ -16,8 +16,7 @@ import net.sourceforge.pmd.reporting.Report.ProcessingError;
 
 class HTMLRendererTest extends AbstractRendererTest {
 
-    @Override
-    protected String getSourceCodeFilename() {
+    @Override protected String getSourceCodeFilename() {
         // note: the file name should still be a valid file name on both win and nix.
         // This precludes using chars like <> to test escaping (https://stackoverflow.com/questions/1976007/what-characters-are-forbidden-in-windows-and-linux-directory-names)
         return "someFilename\u00A0thatNeedsEscaping.ext";
@@ -27,13 +26,11 @@ class HTMLRendererTest extends AbstractRendererTest {
         return "someFilename&nbsp;thatNeedsEscaping.ext";
     }
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         return new HTMLRenderer();
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return getExpected(null, null);
     }
 
@@ -49,14 +46,12 @@ class HTMLRendererTest extends AbstractRendererTest {
                 + "<td width=\"*\">blah</td>" + EOL + "</tr>" + EOL + "</table></body></html>" + EOL;
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return getHeader()
                 + "</table></body></html>" + EOL;
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return getHeader()
                 + "<tr bgcolor=\"lightgrey\"> " + EOL + "<td align=\"center\">1</td>" + EOL
                 + "<td width=\"*%\">" + getEscapedFilename() + "</td>" + EOL + "<td align=\"center\" width=\"5%\">1</td>" + EOL
@@ -66,8 +61,7 @@ class HTMLRendererTest extends AbstractRendererTest {
                 + EOL + "</table></body></html>" + EOL;
     }
 
-    @Override
-    String getExpectedError(ProcessingError error) {
+    @Override String getExpectedError(ProcessingError error) {
         return getHeader()
                 + "</table><hr/><center><h3>Processing errors</h3></center><table align=\"center\" cellspacing=\"0\" cellpadding=\"3\"><tr>"
                 + EOL + "<th>File</th><th>Problem</th></tr>" + EOL + "<tr bgcolor=\"lightgrey\"> " + EOL
@@ -75,8 +69,7 @@ class HTMLRendererTest extends AbstractRendererTest {
                 + EOL;
     }
 
-    @Override
-    String getExpectedError(ConfigurationError error) {
+    @Override String getExpectedError(ConfigurationError error) {
         return getHeader()
                 + "</table><hr/><center><h3>Configuration errors</h3></center><table align=\"center\" cellspacing=\"0\" cellpadding=\"3\"><tr>"
                 + EOL + "<th>Rule</th><th>Problem</th></tr>" + EOL + "<tr bgcolor=\"lightgrey\"> " + EOL
@@ -90,8 +83,7 @@ class HTMLRendererTest extends AbstractRendererTest {
                 + EOL + "<th>#</th><th>File</th><th>Line</th><th>Problem</th></tr>" + EOL;
     }
 
-    @Test
-    void testLinkPrefix() throws IOException {
+    @Test void testLinkPrefix() throws IOException {
         final HTMLRenderer renderer = new HTMLRenderer();
         final String linkPrefix = "https://github.com/pmd/pmd/blob/main/";
         final String linePrefix = "L";
@@ -103,8 +95,7 @@ class HTMLRendererTest extends AbstractRendererTest {
         assertEquals(filter(getExpected(linkPrefix, "L1")), filter(actual));
     }
 
-    @Test
-    void testLinePrefixNotSet() throws IOException {
+    @Test void testLinePrefixNotSet() throws IOException {
         final HTMLRenderer renderer = new HTMLRenderer();
         final String linkPrefix = "https://github.com/pmd/pmd/blob/main/";
         renderer.setProperty(HTMLRenderer.LINK_PREFIX, linkPrefix);
@@ -115,8 +106,7 @@ class HTMLRendererTest extends AbstractRendererTest {
         assertEquals(filter(getExpected(linkPrefix, "")), filter(actual));
     }
 
-    @Test
-    void testEmptyLinePrefix() throws IOException {
+    @Test void testEmptyLinePrefix() throws IOException {
         final HTMLRenderer renderer = new HTMLRenderer();
         final String linkPrefix = "https://github.com/pmd/pmd/blob/main/";
         renderer.setProperty(HTMLRenderer.LINK_PREFIX, linkPrefix);

@@ -10,18 +10,15 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class SelectExpressionsTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseSelectSimpleExpression() {
+    @Test void parseSelectSimpleExpression() {
         doTest("SelectSimpleExpression");
     }
 
-    @Test
-    void parseSelectCount() {
+    @Test void parseSelectCount() {
         doTest("SelectCount");
     }
 
-    @Test
-    void parseSelectSubqueryExpression() {
+    @Test void parseSelectSubqueryExpression() {
         doTest("SelectSubqueryExpressions");
     }
 }

@@ -52,31 +52,31 @@ public final class JavaRuleUtil {
 
     // this is a hacky way to do it, but let's see where this goes
     private static final CompoundInvocationMatcher KNOWN_PURE_METHODS = InvocationMatcher.parseAll(
-        "_#toString()",
-        "_#hashCode()",
-        "_#equals(java.lang.Object)",
-        "java.lang.String#_(_*)",
-        // actually not all of them, probs only stream of some type
-        // arg which doesn't implement Closeable...
-        "java.util.stream.Stream#_(_*)",
-        "java.util.Collection#size()",
-        "java.util.List#get(int)",
-        "java.util.Map#get(_)",
-        "java.lang.Iterable#iterator()",
-        "java.lang.Comparable#compareTo(_)"
+            "_#toString()",
+            "_#hashCode()",
+            "_#equals(java.lang.Object)",
+            "java.lang.String#_(_*)",
+            // actually not all of them, probs only stream of some type
+            // arg which doesn't implement Closeable...
+            "java.util.stream.Stream#_(_*)",
+            "java.util.Collection#size()",
+            "java.util.List#get(int)",
+            "java.util.Map#get(_)",
+            "java.lang.Iterable#iterator()",
+            "java.lang.Comparable#compareTo(_)"
     );
 
     public static final Set<String> LOMBOK_ANNOTATIONS = immutableSetOf(
-        "lombok.Data",
-        "lombok.Getter",
-        "lombok.Setter",
-        "lombok.Value",
-        "lombok.RequiredArgsConstructor",
-        "lombok.AllArgsConstructor",
-        "lombok.NoArgsConstructor",
-        "lombok.Builder",
-        "lombok.EqualsAndHashCode",
-        "lombok.experimental.Delegate"
+            "lombok.Data",
+            "lombok.Getter",
+            "lombok.Setter",
+            "lombok.Value",
+            "lombok.RequiredArgsConstructor",
+            "lombok.AllArgsConstructor",
+            "lombok.NoArgsConstructor",
+            "lombok.Builder",
+            "lombok.EqualsAndHashCode",
+            "lombok.experimental.Delegate"
     );
 
     private JavaRuleUtil() {
@@ -150,7 +150,7 @@ public final class JavaRuleUtil {
 
     private static boolean isStringBufferOrBuilder(TypeNode node) {
         return TypeTestUtil.isExactlyA(StringBuilder.class, node)
-            || TypeTestUtil.isExactlyA(StringBuffer.class, node);
+                || TypeTestUtil.isExactlyA(StringBuffer.class, node);
     }
 
     /**
@@ -166,7 +166,7 @@ public final class JavaRuleUtil {
 
         // A class with a superclass or interfaces should not be considered
         if (classNode.getSuperClassTypeNode() != null
-            || !classNode.getSuperInterfaceTypeNodes().isEmpty()) {
+                || !classNode.getSuperInterfaceTypeNodes().isEmpty()) {
             return false;
         }
 
@@ -175,7 +175,7 @@ public final class JavaRuleUtil {
 
         for (ASTBodyDeclaration declNode : classNode.getDeclarations()) {
             if (declNode instanceof ASTFieldDeclaration
-                || declNode instanceof ASTMethodDeclaration) {
+                    || declNode instanceof ASTMethodDeclaration) {
 
                 hasAny = isNonPrivate(declNode) && !JavaAstUtils.isMainMethod(declNode);
                 if (!((ModifierOwner) declNode).hasModifiers(JModifier.STATIC)) {
@@ -201,10 +201,10 @@ public final class JavaRuleUtil {
      */
     public static boolean isExplicitUnusedVarName(String name) {
         return name.startsWith("ignored")
-            || name.startsWith("unused")
-            // before java 9 it's ok, after that, "_" is a reserved keyword
-            // with Java 21 Preview (JEP 443), "_" means explicitly unused
-            || "_".equals(name);
+                || name.startsWith("unused")
+                // before java 9 it's ok, after that, "_" is a reserved keyword
+                // with Java 21 Preview (JEP 443), "_" means explicitly unused
+                || "_".equals(name);
     }
 
     /**
@@ -222,8 +222,8 @@ public final class JavaRuleUtil {
      */
     public static boolean startsWithCamelCaseWord(String camelCaseString, String prefixWord) {
         return camelCaseString.startsWith(prefixWord)
-            && camelCaseString.length() > prefixWord.length()
-            && Character.isUpperCase(camelCaseString.charAt(prefixWord.length()));
+                && camelCaseString.length() > prefixWord.length()
+                && Character.isUpperCase(camelCaseString.charAt(prefixWord.length()));
     }
 
 
@@ -244,7 +244,7 @@ public final class JavaRuleUtil {
      */
     public static boolean containsCamelCaseWord(String camelCaseString, String capitalizedWord) {
         assert capitalizedWord.length() > 0 && Character.isUpperCase(capitalizedWord.charAt(0))
-            : "Not a capitalized string \"" + capitalizedWord + "\"";
+                : "Not a capitalized string \"" + capitalizedWord + "\"";
 
         int index = camelCaseString.indexOf(capitalizedWord);
         if (index >= 0 && camelCaseString.length() > index + capitalizedWord.length()) {
@@ -263,8 +263,8 @@ public final class JavaRuleUtil {
 
     public static boolean isGetterCall(ASTMethodCall call) {
         return call.getArguments().size() == 0
-            && (startsWithCamelCaseWord(call.getMethodName(), "get")
-            || startsWithCamelCaseWord(call.getMethodName(), "is"));
+                && (startsWithCamelCaseWord(call.getMethodName(), "get")
+                || startsWithCamelCaseWord(call.getMethodName(), "is"));
     }
 
 
@@ -314,7 +314,7 @@ public final class JavaRuleUtil {
      */
     public static boolean isSerialPersistentFields(final ASTFieldDeclaration field) {
         return field.hasModifiers(JModifier.FINAL, JModifier.STATIC, JModifier.PRIVATE)
-            && field.getVarIds().any(it -> "serialPersistentFields".equals(it.getName()) && TypeTestUtil.isA(ObjectStreamField[].class, it));
+                && field.getVarIds().any(it -> "serialPersistentFields".equals(it.getName()) && TypeTestUtil.isA(ObjectStreamField[].class, it));
     }
 
     /**
@@ -323,7 +323,7 @@ public final class JavaRuleUtil {
      */
     public static boolean isSerialVersionUID(ASTFieldDeclaration field) {
         return field.hasModifiers(JModifier.FINAL, JModifier.STATIC)
-            && field.getVarIds().any(it -> "serialVersionUID".equals(it.getName()) && it.getTypeMirror().isPrimitive(LONG));
+                && field.getVarIds().any(it -> "serialVersionUID".equals(it.getName()) && it.getTypeMirror().isPrimitive(LONG));
     }
 
     /**
@@ -331,9 +331,9 @@ public final class JavaRuleUtil {
      */
     public static boolean isSerializationReadObject(ASTMethodDeclaration node) {
         return node.getVisibility() == Visibility.V_PRIVATE
-            && "readObject".equals(node.getName())
-            && JavaAstUtils.hasExceptionList(node, InvalidObjectException.class)
-            && JavaAstUtils.hasParameters(node, ObjectInputStream.class);
+                && "readObject".equals(node.getName())
+                && JavaAstUtils.hasExceptionList(node, InvalidObjectException.class)
+                && JavaAstUtils.hasParameters(node, ObjectInputStream.class);
     }
 
 
@@ -351,8 +351,8 @@ public final class JavaRuleUtil {
      */
     public static boolean hasSideEffect(@Nullable JavaNode node, Set<? extends JVariableSymbol> localVarsToTrack) {
         return node != null && node.descendantsOrSelf()
-                                   .filterIs(ASTExpression.class)
-                                   .any(e -> hasSideEffectNonRecursive(e, localVarsToTrack));
+                .filterIs(ASTExpression.class)
+                .any(e -> hasSideEffectNonRecursive(e, localVarsToTrack));
     }
 
     /**
@@ -367,7 +367,7 @@ public final class JavaRuleUtil {
             ASTUnaryExpression unary = (ASTUnaryExpression) e;
             ASTExpression lhs = unary.getOperand();
             return !unary.getOperator().isPure()
-                && (isNonLocalLhs(lhs) || JavaAstUtils.isReferenceToVar(lhs, localVarsToTrack));
+                    && (isNonLocalLhs(lhs) || JavaAstUtils.isReferenceToVar(lhs, localVarsToTrack));
         }
 
         // when there are throw statements,
@@ -375,7 +375,7 @@ public final class JavaRuleUtil {
         // because control flow jumps out of the method
         return e.ancestors(ASTThrowStatement.class).isEmpty()
                 && (e instanceof ASTMethodCall && !isPure((ASTMethodCall) e)
-                        || e instanceof ASTConstructorCall);
+                || e instanceof ASTConstructorCall);
     }
 
     private static boolean isNonLocalLhs(ASTExpression lhs) {

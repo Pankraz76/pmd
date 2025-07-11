@@ -18,10 +18,10 @@ public class WsdlDialectModule extends SimpleDialectLanguageModuleBase {
 
     public WsdlDialectModule() {
         super(LanguageMetadata.withId(ID).name("WSDL")
-                              .extensions("wsdl")
-                              .addVersion("1.1")
-                              .addDefaultVersion("2.0")
-                              .asDialectOf("xml"));
+                .extensions("wsdl")
+                .addVersion("1.1")
+                .addDefaultVersion("2.0")
+                .asDialectOf("xml"));
     }
 
     public static WsdlDialectModule getInstance() {

@@ -15,15 +15,13 @@ import net.sourceforge.pmd.lang.java.BaseParserTest;
 
 class ASTBooleanLiteralTest extends BaseParserTest {
 
-    @Test
-    void testTrue() {
+    @Test void testTrue() {
         List<ASTBooleanLiteral> ops = java.getNodes(ASTBooleanLiteral.class, TEST1);
         ASTBooleanLiteral b = ops.get(0);
         assertTrue(b.isTrue());
     }
 
-    @Test
-    void testFalse() {
+    @Test void testFalse() {
         List<ASTBooleanLiteral> ops = java.getNodes(ASTBooleanLiteral.class, TEST2);
         ASTBooleanLiteral b = ops.get(0);
         assertFalse(b.isTrue());

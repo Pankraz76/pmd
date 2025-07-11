@@ -18,15 +18,14 @@ public class DartLanguageModule extends CpdOnlyLanguageModuleBase {
 
     public DartLanguageModule() {
         super(LanguageMetadata.withId(ID).name("Dart").extensions("dart")
-                              .addDefaultVersion("2"));
+                .addDefaultVersion("2"));
     }
 
     public DartLanguageModule getInstance() {
         return (DartLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new DartCpdLexer();
     }
 }

@@ -29,9 +29,7 @@ import net.sourceforge.pmd.lang.java.types.JMethodSig;
 class TypeAnnotReflectionOnMethodsTest {
 
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotOnParameter(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotOnParameter(SymImplementation impl) {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
@@ -53,9 +51,7 @@ class TypeAnnotReflectionOnMethodsTest {
     }
 
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotOnReturn(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotOnReturn(SymImplementation impl) {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
@@ -71,13 +67,11 @@ class TypeAnnotReflectionOnMethodsTest {
         {
             JMethodSig t = getMethodType(sym, "abOnReturnInArg");
             assertHasTypeAnnots(((JClassType) t.getReturnType()).getTypeArgs().get(0),
-                                ANNOT_A);
+                    ANNOT_A);
         }
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotOnThrows(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotOnThrows(SymImplementation impl) {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
@@ -91,9 +85,7 @@ class TypeAnnotReflectionOnMethodsTest {
         }
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotOnTParam(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotOnTParam(SymImplementation impl) {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
@@ -120,9 +112,7 @@ class TypeAnnotReflectionOnMethodsTest {
         }
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotOnTParamBound(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotOnTParamBound(SymImplementation impl) {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
@@ -156,9 +146,7 @@ class TypeAnnotReflectionOnMethodsTest {
         }
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotOnReceiver(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotOnReceiver(SymImplementation impl) {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.class);
 
         /*
@@ -172,9 +160,7 @@ class TypeAnnotReflectionOnMethodsTest {
         }
     }
 
-    @ParameterizedTest
-    @EnumSource
-    void testTypeAnnotOnCtor(SymImplementation impl) {
+    @ParameterizedTest @EnumSource void testTypeAnnotOnCtor(SymImplementation impl) {
         JClassType sym = impl.getDeclaration(ClassWithTypeAnnotationsOnMethods.CtorOwner.class);
 
         /*

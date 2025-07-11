@@ -10,73 +10,59 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class PlsqlTreeDumpTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void sqlPlusLexicalVariables() {
+    @Test void sqlPlusLexicalVariables() {
         doTest("SqlPlusLexicalVariablesIssue195");
     }
 
-    @Test
-    void parseParsingExclusion() {
+    @Test void parseParsingExclusion() {
         doTest("ParsingExclusion");
     }
 
-    @Test
-    void parseOpenForStatement() {
+    @Test void parseOpenForStatement() {
         doTest("OpenForStatement");
     }
 
-    @Test
-    void parseSelectIntoAssociativeArrayType() {
+    @Test void parseSelectIntoAssociativeArrayType() {
         doTest("SelectIntoArray");
     }
 
-    @Test
-    void parseMergeStatement() {
+    @Test void parseMergeStatement() {
         doTest("MergeStatementIssue1934");
     }
-  
-    @Test
-    void errorLoggingClause() {
+
+    @Test void errorLoggingClause() {
         doTest("ErrorLoggingClause2779");
     }
 
-    @Test
-    void compoundTriggerWithAdditionalDeclarations() {
+    @Test void compoundTriggerWithAdditionalDeclarations() {
         doTest("CompoundTriggerWithAdditionalDeclarations4270");
     }
 
-    @Test
-    void exceptionHandlerTomKytesDespair() {
+    @Test void exceptionHandlerTomKytesDespair() {
         doTest("ExceptionHandlerTomKytesDespair");
     }
 
-    @Test
-    void sqlMacroClause() {
+    @Test void sqlMacroClause() {
         doTest("SqlMacroClause");
     }
 
-    @Test
-    void parseSelectExpression() {
+    @Test void parseSelectExpression() {
         doTest("SelectExpressions");
     }
 
-    @Test
-    void issue5133SubTypeDefinition() {
+    @Test void issue5133SubTypeDefinition() {
         doTest("Issue5133SubTypeDefinition");
     }
 
-    @Test
-    void trimFunction() {
+    @Test void trimFunction() {
         doTest("TrimFunction");
     }
 
-    @Test
-    void trimWithRecordType() {
+    @Test void trimWithRecordType() {
         doTest("TrimWithRecordType");
     }
 
-    @Test
-    void trimCollectionFunction() {
+    @Test void trimCollectionFunction() {
         doTest("TrimCollectionFunction");
     }
 }

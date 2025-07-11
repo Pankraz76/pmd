@@ -12,16 +12,14 @@ import org.junit.jupiter.api.Test;
 
 class DataTypeTest {
 
-    @Test
-    void testFromString() {
+    @Test void testFromString() {
         assertEquals(DataType.AutoNumber, DataType.fromString("AutoNumber"));
         assertEquals(DataType.AutoNumber, DataType.fromString("autonumber"));
         assertEquals(DataType.Unknown, DataType.fromString(""));
         assertEquals(DataType.Unknown, DataType.fromString(null));
     }
 
-    @Test
-    void testFromTypeName() {
+    @Test void testFromTypeName() {
         assertEquals(DataType.Checkbox, DataType.fromTypeName("Boolean"));
         assertEquals(DataType.Currency, DataType.fromTypeName("Currency"));
         assertEquals(DataType.DateTime, DataType.fromTypeName("Datetime"));
@@ -32,8 +30,7 @@ class DataTypeTest {
         assertEquals(DataType.Unknown, DataType.fromTypeName(null));
     }
 
-    @Test
-    void testRequiresEncoding() {
+    @Test void testRequiresEncoding() {
         assertFalse(DataType.AutoNumber.requiresEscaping);
         assertTrue(DataType.Text.requiresEscaping);
     }

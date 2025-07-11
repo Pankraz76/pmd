@@ -29,8 +29,7 @@ class ASTTryStatementTest extends EcmascriptParserTestBase {
         return tryStmt;
     }
 
-    @Test
-    void testFinallyBlockOnly() {
+    @Test void testFinallyBlockOnly() {
         ASTTryStatement tryStmt = getTryStmt("function() { try { } finally { } }");
         assertNull(tryStmt.getCatchClause(0));
         assertFalse(tryStmt.hasCatch());
@@ -39,8 +38,7 @@ class ASTTryStatementTest extends EcmascriptParserTestBase {
         assertTrue(tryStmt.hasFinally());
     }
 
-    @Test
-    void testCatchBlockOnly() {
+    @Test void testCatchBlockOnly() {
         ASTTryStatement tryStmt = getTryStmt("function() { try { } catch (error) { } }");
         assertNotNull(tryStmt.getCatchClause(0));
         assertTrue(tryStmt.hasCatch());
@@ -49,8 +47,7 @@ class ASTTryStatementTest extends EcmascriptParserTestBase {
         assertFalse(tryStmt.hasFinally());
     }
 
-    @Test
-    void testCatchAndFinallyBlock() {
+    @Test void testCatchAndFinallyBlock() {
         ASTTryStatement tryStmt = getTryStmt("function() { try { } catch (error) { } finally { } }");
         assertNotNull(tryStmt.getCatchClause(0));
         assertTrue(tryStmt.hasCatch());
@@ -59,8 +56,7 @@ class ASTTryStatementTest extends EcmascriptParserTestBase {
         assertTrue(tryStmt.hasFinally());
     }
 
-    @Test
-    void testMultipleCatchAndFinallyBlock() {
+    @Test void testMultipleCatchAndFinallyBlock() {
         ASTTryStatement tryStmt = getTryStmt(
                 "function() { " + "try { } " + "catch (error if error instanceof BadError) { } "
                         + "catch (error2 if error2 instanceof OtherError) { } " + "finally { } }");

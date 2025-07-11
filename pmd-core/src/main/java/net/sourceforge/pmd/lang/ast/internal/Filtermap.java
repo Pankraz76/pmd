@@ -33,12 +33,10 @@ interface Filtermap<I, O> extends Function<@NonNull I, @Nullable O>, Predicate<@
      * Returns a null value if the filter accepts the value. Otherwise
      * returns the transformed value. MUST return null for null parameter.
      */
-    @Override
-    @Nullable O apply(@Nullable I i);
+    @Override @Nullable O apply(@Nullable I i);
 
 
-    @Override
-    default boolean test(@Nullable I i) {
+    @Override default boolean test(@Nullable I i) {
         return apply(i) != null;
     }
 
@@ -72,25 +70,19 @@ interface Filtermap<I, O> extends Function<@NonNull I, @Nullable O>, Predicate<@
 
     static <I> Filtermap<I, I> identityFilter() {
         return new Filtermap<I, I>() {
-            @Override
-            public I apply(@Nullable I i) {
+            @Override public I apply(@Nullable I i) {
                 return i;
             }
 
-            @Override
-            @SuppressWarnings("unchecked")
-            public <R> Filtermap<I, R> thenApply(Function<@NonNull ? super I, @Nullable ? extends R> then) {
+            @Override @SuppressWarnings("unchecked") public <R> Filtermap<I, R> thenApply(Function<@NonNull ? super I, @Nullable ? extends R> then) {
                 return then instanceof Filtermap ? (Filtermap<I, R>) then : Filtermap.super.thenApply(then);
             }
 
-            @Override
-            @SuppressWarnings("unchecked")
-            public Iterator<I> filterMap(Iterator<? extends I> iter) {
+            @Override @SuppressWarnings("unchecked") public Iterator<I> filterMap(Iterator<? extends I> iter) {
                 return (Iterator<I>) iter;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "IdentityFilter";
             }
         };
@@ -108,14 +100,11 @@ interface Filtermap<I, O> extends Function<@NonNull I, @Nullable O>, Predicate<@
         }
 
         return new Filtermap<I, O>() {
-            @Override
-            @SuppressWarnings("unchecked")
-            public @Nullable O apply(@Nullable I i) {
+            @Override @SuppressWarnings("unchecked") public @Nullable O apply(@Nullable I i) {
                 return oClass.isInstance(i) ? (O) i : null;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "IsInstance[" + oClass + "]";
             }
         };

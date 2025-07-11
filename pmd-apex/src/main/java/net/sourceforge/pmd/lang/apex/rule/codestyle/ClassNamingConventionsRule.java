@@ -50,13 +50,11 @@ public class ClassNamingConventionsRule extends AbstractNamingConventionsRule {
         definePropertyDescriptor(ENUM_REGEX);
     }
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class, ASTUserInterface.class, ASTUserEnum.class);
     }
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         if (node.isNested()) {
             checkMatches(INNER_CLASS_REGEX, node, data);
         } else if (node.getModifiers().isTest()) {
@@ -70,8 +68,7 @@ public class ClassNamingConventionsRule extends AbstractNamingConventionsRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTUserInterface node, Object data) {
+    @Override public Object visit(ASTUserInterface node, Object data) {
         if (node.isNested()) {
             checkMatches(INNER_INTERFACE_REGEX, node, data);
         } else {
@@ -81,14 +78,12 @@ public class ClassNamingConventionsRule extends AbstractNamingConventionsRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTUserEnum node, Object data) {
+    @Override public Object visit(ASTUserEnum node, Object data) {
         checkMatches(ENUM_REGEX, node, data);
         return data;
     }
 
-    @Override
-    protected String displayName(String name) {
+    @Override protected String displayName(String name) {
         return DESCRIPTOR_TO_DISPLAY_NAME.get(name);
     }
 }

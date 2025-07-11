@@ -24,8 +24,7 @@ public class PhpLanguageModule extends CpdOnlyLanguageModuleBase {
         return (PhpLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new AnyCpdLexer("#|//");
     }
 }

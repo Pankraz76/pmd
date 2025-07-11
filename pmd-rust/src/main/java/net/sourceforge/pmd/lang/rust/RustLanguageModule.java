@@ -21,9 +21,8 @@ public class RustLanguageModule extends CpdOnlyLanguageModuleBase {
         return (RustLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new RustCpdLexer();
     }
-  
+
 }

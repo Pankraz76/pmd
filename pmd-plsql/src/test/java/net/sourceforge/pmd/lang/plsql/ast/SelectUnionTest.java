@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class SelectUnionTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseSelectUnion() {
+    @Test void parseSelectUnion() {
         plsql.parseResource("SelectUnion.pls");
     }
 

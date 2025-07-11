@@ -20,18 +20,15 @@ public class NcssMethodCountRule extends AbstractNcssCountRule<ASTMethod> {
         super(ASTMethod.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 40;
     }
 
-    @Override
-    protected boolean isIgnored(ASTMethod node) {
+    @Override protected boolean isIgnored(ASTMethod node) {
         return node.isConstructor();
     }
 
-    @Override
-    protected Object[] getViolationParameters(ASTMethod node, int metric, int limit) {
-        return new Object[]{ node.getImage(), metric, limit };
+    @Override protected Object[] getViolationParameters(ASTMethod node, int metric, int limit) {
+        return new Object[]{node.getImage(), metric, limit};
     }
 }

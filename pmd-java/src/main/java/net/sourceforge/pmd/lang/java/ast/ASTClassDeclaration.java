@@ -34,23 +34,19 @@ public final class ASTClassDeclaration extends AbstractTypeDeclaration {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public boolean isInterface() {
+    @Override public boolean isInterface() {
         return this.isInterface;
     }
 
-    @Override
-    public boolean isRegularClass() {
+    @Override public boolean isRegularClass() {
         return !isInterface;
     }
 
-    @Override
-    public boolean isRegularInterface() {
+    @Override public boolean isRegularInterface() {
         return isInterface;
     }
 
@@ -62,8 +58,7 @@ public final class ASTClassDeclaration extends AbstractTypeDeclaration {
     /**
      * @deprecated Use {@link #getPermitsClause()} or {@link JClassSymbol#getPermittedSubtypes()}
      */
-    @Deprecated
-    public List<ASTClassType> getPermittedSubclasses() {
+    @Deprecated public List<ASTClassType> getPermittedSubclasses() {
         return ASTList.orEmpty(children(ASTPermitsList.class).first());
     }
 }

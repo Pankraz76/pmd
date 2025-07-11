@@ -42,8 +42,7 @@ public final class ASTComponentReference extends AbstractModelicaNode implements
      *
      * We do not decide on entity type on behalf of the rule code, since this may introduce false negatives.
      */
-    @Override
-    public ResolutionResult<ResolvableEntity> getResolutionCandidates() {
+    @Override public ResolutionResult<ResolvableEntity> getResolutionCandidates() {
         if (resolutionCandidates == null) {
             resolutionCandidates = getMostSpecificScope().safeResolveLexically(ResolvableEntity.class, ResolutionState.forComponentReference(), getCompositeNameWithoutSubscripts());
         }
@@ -55,13 +54,11 @@ public final class ASTComponentReference extends AbstractModelicaNode implements
         return Helper.getResolvedTo(getResolutionCandidates());
     }
 
-    @Override
-    protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
 
         nameComponentsWithoutSubscripts = new String[getNumChildren()];

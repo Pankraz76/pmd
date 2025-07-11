@@ -25,28 +25,23 @@ public class FakeSymAnnot implements SymAnnot {
         assert annotationClass.isAnnotation() : "Not an annotation " + annotationClass;
     }
 
-    @Override
-    public @Nullable SymbolicValue getAttribute(String attrName) {
+    @Override public @Nullable SymbolicValue getAttribute(String attrName) {
         return annotationClass.getDefaultAnnotationAttributeValue(attrName);
     }
 
-    @Override
-    public @NonNull JClassSymbol getAnnotationSymbol() {
+    @Override public @NonNull JClassSymbol getAnnotationSymbol() {
         return annotationClass;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return SymbolToStrings.FAKE.toString(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return SymbolEquality.ANNOTATION.equals(this, o);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.ANNOTATION.hash(this);
     }
 }

@@ -12,8 +12,7 @@ import net.sourceforge.pmd.lang.scala.ast.ScalaParser;
  */
 public class ScalaLanguageHandler extends AbstractPmdLanguageVersionHandler {
 
-    @Override
-    public ScalaParser getParser() {
+    @Override public ScalaParser getParser() {
         return new ScalaParser();
     }
 }

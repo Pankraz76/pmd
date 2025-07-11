@@ -10,7 +10,7 @@ public class ScopeOfPatternVariableDeclarations {
     static void testSwitchBlock(Object obj) {
         switch (obj) {
             case Character c
-                    when c.charValue() == 7:
+                when c.charValue() == 7:
                 System.out.println("Ding!");
                 break;
             default:

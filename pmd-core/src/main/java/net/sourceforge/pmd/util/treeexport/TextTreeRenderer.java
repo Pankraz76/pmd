@@ -50,28 +50,25 @@ public class TextTreeRenderer implements TreeRenderer {
     static final TreeRendererDescriptor DESCRIPTOR = new TreeRendererDescriptor() {
 
         private final PropertyDescriptor<Boolean> onlyAscii =
-            PropertyFactory.booleanProperty("onlyAsciiChars")
-                           .defaultValue(false)
-                           .desc("Use only ASCII characters in the structure")
-                           .build();
+                PropertyFactory.booleanProperty("onlyAsciiChars")
+                        .defaultValue(false)
+                        .desc("Use only ASCII characters in the structure")
+                        .build();
 
         private final PropertyDescriptor<Integer> maxLevel =
-            PropertyFactory.intProperty("maxLevel")
-                           .defaultValue(-1)
-                           .desc("Max level on which to recurse. Negative means unbounded")
-                           .build();
+                PropertyFactory.intProperty("maxLevel")
+                        .defaultValue(-1)
+                        .desc("Max level on which to recurse. Negative means unbounded")
+                        .build();
 
-        @Override
-        public PropertySource newPropertyBundle() {
+        @Override public PropertySource newPropertyBundle() {
 
             PropertySource bundle = new AbstractPropertySource() {
-                @Override
-                protected String getPropertySourceType() {
+                @Override protected String getPropertySourceType() {
                     return "tree renderer";
                 }
 
-                @Override
-                public String getName() {
+                @Override public String getName() {
                     return "text";
                 }
             };
@@ -82,18 +79,15 @@ public class TextTreeRenderer implements TreeRenderer {
             return bundle;
         }
 
-        @Override
-        public String id() {
+        @Override public String id() {
             return "text";
         }
 
-        @Override
-        public String description() {
+        @Override public String description() {
             return "Text renderer";
         }
 
-        @Override
-        public TreeRenderer produceRenderer(PropertySource properties) {
+        @Override public TreeRenderer produceRenderer(PropertySource properties) {
             return new TextTreeRenderer(properties.getProperty(onlyAscii), properties.getProperty(maxLevel));
         }
     };
@@ -117,8 +111,7 @@ public class TextTreeRenderer implements TreeRenderer {
         this.maxLevel = maxLevel;
     }
 
-    @Override
-    public void renderSubtree(Node node, Appendable out) throws IOException {
+    @Override public void renderSubtree(Node node, Appendable out) throws IOException {
         printInnerNode(node, out, 0, "", true);
     }
 
@@ -142,10 +135,10 @@ public class TextTreeRenderer implements TreeRenderer {
 
 
     private void printInnerNode(Node node,
-                                Appendable out,
-                                int level,
-                                String prefix,
-                                boolean isTail) throws IOException {
+            Appendable out,
+            int level,
+            String prefix,
+            boolean isTail) throws IOException {
 
         appendIndent(out, prefix, isTail);
         appendNodeInfoLn(out, node);
@@ -179,16 +172,16 @@ public class TextTreeRenderer implements TreeRenderer {
     private static final class Strings {
 
         private static final Strings ASCII = new Strings(
-            "+- ",
-            "+- ",
-            "|  ",
-            "   "
+                "+- ",
+                "+- ",
+                "|  ",
+                "   "
         );
         private static final Strings UNICODE = new Strings(
-            "└─ ",
-            "├─ ",
-            "│  ",
-            "   "
+                "└─ ",
+                "├─ ",
+                "│  ",
+                "   "
         );
 
         private final String tailFork;

@@ -19,14 +19,12 @@ public final class VfParsingHelper extends BaseParsingHelper<VfParsingHelper, AS
         super(VfLanguageModule.getInstance(), ASTCompilationUnit.class, params);
     }
 
-    @Override
-    protected @NonNull LanguageProcessorRegistry loadLanguages(@NonNull Params params) {
+    @Override protected @NonNull LanguageProcessorRegistry loadLanguages(@NonNull Params params) {
         // We need to register both apex and VF, the default is just to register VF
         return VFTestUtils.fakeLpRegistry();
     }
 
-    @Override
-    protected VfParsingHelper clone(Params params) {
+    @Override protected VfParsingHelper clone(Params params) {
         return new VfParsingHelper(params);
     }
 }

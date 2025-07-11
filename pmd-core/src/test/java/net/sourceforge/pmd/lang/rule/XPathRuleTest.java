@@ -27,11 +27,9 @@ import com.github.stefanbirkner.systemlambda.SystemLambda;
 
 class XPathRuleTest {
 
-    @RegisterExtension
-    private final DummyParsingHelper helper = new DummyParsingHelper();
+    @RegisterExtension private final DummyParsingHelper helper = new DummyParsingHelper();
 
-    @Test
-    void testAttributeDeprecation() throws Exception {
+    @Test void testAttributeDeprecation() throws Exception {
         testDeprecation(XPathVersion.DEFAULT);
     }
 
@@ -93,42 +91,37 @@ class XPathRuleTest {
         return xpr;
     }
 
-    @Test
-    void testFileNameInXpath() {
+    @Test void testFileNameInXpath() {
         Report report = executeRule(makeXPath("//*[pmd:fileName() = 'Foo.cls']"),
-                                    newRoot("src/Foo.cls"));
+                newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }
 
-    @Test
-    void testBeginLine() {
+    @Test void testBeginLine() {
         Report report = executeRule(makeXPath("//*[pmd:startLine(.)=1]"),
-                                    newRoot("src/Foo.cls"));
+                newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }
 
-    @Test
-    void testBeginCol() {
+    @Test void testBeginCol() {
         Report report = executeRule(makeXPath("//*[pmd:startColumn(.)=1]"),
-                                    newRoot("src/Foo.cls"));
+                newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }
 
-    @Test
-    void testEndLine() {
+    @Test void testEndLine() {
         Report report = executeRule(makeXPath("//*[pmd:endLine(.)=1]"),
-                                    newRoot("src/Foo.cls"));
+                newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }
 
-    @Test
-    void testEndColumn() {
+    @Test void testEndColumn() {
         Report report = executeRule(makeXPath("//*[pmd:endColumn(.)>1]"),
-                                    newRoot("src/Foo.cls"));
+                newRoot("src/Foo.cls"));
 
         assertThat(report.getViolations(), hasSize(1));
     }

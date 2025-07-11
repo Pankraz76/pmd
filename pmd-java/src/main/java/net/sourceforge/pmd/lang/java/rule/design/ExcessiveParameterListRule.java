@@ -21,13 +21,11 @@ public class ExcessiveParameterListRule extends AbstractJavaCounterCheckRule<AST
         super(ASTFormalParameters.class);
     }
 
-    @Override
-    protected int defaultReportLevel() {
+    @Override protected int defaultReportLevel() {
         return 10;
     }
 
-    @Override
-    protected boolean isIgnored(ASTFormalParameters node) {
+    @Override protected boolean isIgnored(ASTFormalParameters node) {
         return areParametersOfPrivateConstructor(node);
     }
 
@@ -37,8 +35,7 @@ public class ExcessiveParameterListRule extends AbstractJavaCounterCheckRule<AST
                 && ((ASTConstructorDeclaration) parent).getVisibility() == Visibility.V_PRIVATE;
     }
 
-    @Override
-    protected boolean isViolation(ASTFormalParameters node, int reportLevel) {
+    @Override protected boolean isViolation(ASTFormalParameters node, int reportLevel) {
         return node.size() > reportLevel;
     }
 }

@@ -18,19 +18,17 @@ public final class ASTHtmlDocument extends ASTHtmlElement implements RootNode {
     private final AstInfo<ASTHtmlDocument> astInfo;
 
     ASTHtmlDocument(Document document,
-                    Parser.ParserTask task,
-                    Map<Integer, String> suppressMap) {
+            Parser.ParserTask task,
+            Map<Integer, String> suppressMap) {
         super(document);
         this.astInfo = new AstInfo<>(task, this).withSuppressMap(suppressMap);
     }
 
-    @Override
-    protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public AstInfo<ASTHtmlDocument> getAstInfo() {
+    @Override public AstInfo<ASTHtmlDocument> getAstInfo() {
         return astInfo;
     }
 }

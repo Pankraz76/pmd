@@ -21,22 +21,20 @@ import net.sourceforge.pmd.util.CollectionUtil;
 public class OperationWithHighCostInLoopRule extends AbstractAvoidNodeInLoopsRule {
 
     private static final Set<String> SCHEMA_PERFORMANCE_METHODS = CollectionUtil.setOf(
-                    "System.Schema.getGlobalDescribe",
-                    "Schema.getGlobalDescribe",
-                    "System.Schema.describeSObjects",
-                    "Schema.describeSObjects")
+            "System.Schema.getGlobalDescribe",
+            "Schema.getGlobalDescribe",
+            "System.Schema.describeSObjects",
+            "Schema.describeSObjects")
             .stream().map(s -> s.toLowerCase(Locale.ROOT)).collect(Collectors.toSet());
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(
                 // performance consuming methods
                 ASTMethodCallExpression.class);
     }
 
     // Begin general method invocations
-    @Override
-    public Object visit(ASTMethodCallExpression node, Object data) {
+    @Override public Object visit(ASTMethodCallExpression node, Object data) {
         if (checkHighCostClassMethods(node)) {
             return checkForViolation(node, data);
         } else {

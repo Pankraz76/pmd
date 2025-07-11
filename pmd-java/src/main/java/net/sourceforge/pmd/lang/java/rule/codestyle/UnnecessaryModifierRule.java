@@ -36,28 +36,28 @@ public class UnnecessaryModifierRule extends AbstractJavaRulechainRule {
 
     public UnnecessaryModifierRule() {
         super(ASTTypeDeclaration.class,
-              ASTMethodDeclaration.class,
-              ASTResource.class,
-              ASTFieldDeclaration.class,
-              ASTConstructorDeclaration.class);
+                ASTMethodDeclaration.class,
+                ASTResource.class,
+                ASTFieldDeclaration.class,
+                ASTConstructorDeclaration.class);
     }
 
 
     private void reportUnnecessaryModifiers(Object data, JavaNode node,
-                                            JModifier unnecessaryModifier, String explanation) {
+            JModifier unnecessaryModifier, String explanation) {
         reportUnnecessaryModifiers(data, node, EnumSet.of(unnecessaryModifier), explanation);
     }
 
 
     private void reportUnnecessaryModifiers(Object data, JavaNode node,
-                                            Set<JModifier> unnecessaryModifiers, String explanation) {
+            Set<JModifier> unnecessaryModifiers, String explanation) {
         if (unnecessaryModifiers.isEmpty()) {
             return;
         }
         asCtx(data).addViolation(node, formatUnnecessaryModifiers(unnecessaryModifiers),
-                                 PrettyPrintingUtil.getPrintableNodeKind(node),
-                                 PrettyPrintingUtil.getNodeName(node),
-                                 explanation.isEmpty() ? "" : ": " + explanation);
+                PrettyPrintingUtil.getPrintableNodeKind(node),
+                PrettyPrintingUtil.getNodeName(node),
+                explanation.isEmpty() ? "" : ": " + explanation);
     }
 
 
@@ -68,8 +68,7 @@ public class UnnecessaryModifierRule extends AbstractJavaRulechainRule {
     }
 
 
-    @Override
-    public Object visit(ASTEnumDeclaration node, Object data) {
+    @Override public Object visit(ASTEnumDeclaration node, Object data) {
 
         if (node.hasExplicitModifiers(PUBLIC)) {
             checkDeclarationInInterfaceType(data, node, EnumSet.of(PUBLIC));
@@ -84,8 +83,7 @@ public class UnnecessaryModifierRule extends AbstractJavaRulechainRule {
     }
 
 
-    @Override
-    public Object visit(ASTAnnotationTypeDeclaration node, Object data) {
+    @Override public Object visit(ASTAnnotationTypeDeclaration node, Object data) {
         if (node.hasExplicitModifiers(ABSTRACT)) {
             // may have several violations, with different explanations
             reportUnnecessaryModifiers(data, node, ABSTRACT, "annotations types are implicitly abstract");
@@ -114,8 +112,7 @@ public class UnnecessaryModifierRule extends AbstractJavaRulechainRule {
     }
 
 
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
 
         if (node.isInterface() && node.hasExplicitModifiers(ABSTRACT)) {
             // an abstract interface
@@ -136,8 +133,7 @@ public class UnnecessaryModifierRule extends AbstractJavaRulechainRule {
         return data;
     }
 
-    @Override
-    public Object visit(final ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(final ASTMethodDeclaration node, Object data) {
 
         checkDeclarationInInterfaceType(data, node, EnumSet.of(PUBLIC, ABSTRACT));
 
@@ -162,8 +158,7 @@ public class UnnecessaryModifierRule extends AbstractJavaRulechainRule {
         return data;
     }
 
-    @Override
-    public Object visit(final ASTResource node, final Object data) {
+    @Override public Object visit(final ASTResource node, final Object data) {
         if (!node.isConciseResource() && node.asLocalVariableDeclaration().hasExplicitModifiers(FINAL)) {
             reportUnnecessaryModifiers(data, node, FINAL, "resource specifications are implicitly final");
         }
@@ -171,22 +166,19 @@ public class UnnecessaryModifierRule extends AbstractJavaRulechainRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTFieldDeclaration node, Object data) {
+    @Override public Object visit(ASTFieldDeclaration node, Object data) {
         checkDeclarationInInterfaceType(data, node, EnumSet.of(PUBLIC, STATIC, FINAL));
         return data;
     }
 
-    @Override
-    public Object visit(ASTConstructorDeclaration node, Object data) {
+    @Override public Object visit(ASTConstructorDeclaration node, Object data) {
         if (node.getEnclosingType().isEnum() && node.hasExplicitModifiers(PRIVATE)) {
             reportUnnecessaryModifiers(data, node, PRIVATE, "enum constructors are implicitly private");
         }
         return data;
     }
 
-    @Override
-    public Object visit(ASTRecordDeclaration node, Object data) {
+    @Override public Object visit(ASTRecordDeclaration node, Object data) {
         if (node.hasExplicitModifiers(STATIC)) {
             reportUnnecessaryModifiers(data, node, STATIC, "records are implicitly static");
         }
@@ -210,7 +202,7 @@ public class UnnecessaryModifierRule extends AbstractJavaRulechainRule {
             unnecessary.removeIf(mod -> !member.hasExplicitModifiers(mod));
 
             String explanation = "the " + PrettyPrintingUtil.getPrintableNodeKind(member)
-                + " is declared in an " + PrettyPrintingUtil.getPrintableNodeKind(parent) + " type";
+                    + " is declared in an " + PrettyPrintingUtil.getPrintableNodeKind(parent) + " type";
             reportUnnecessaryModifiers(data, member, unnecessary, explanation);
         }
     }

@@ -16,39 +16,32 @@ public interface ExceptionContextDefaultImpl<T extends Throwable & ExceptionCont
 
     T getThrowable();
 
-    @Override
-    default T addContextValue(String label, Object value) {
+    @Override default T addContextValue(String label, Object value) {
         getExceptionContext().addContextValue(label, value);
         return getThrowable();
     }
 
-    @Override
-    default ExceptionContext setContextValue(String label, Object value) {
+    @Override default ExceptionContext setContextValue(String label, Object value) {
         return getExceptionContext().addContextValue(label, value);
     }
 
-    @Override
-    default List<Object> getContextValues(String label) {
+    @Override default List<Object> getContextValues(String label) {
         return getExceptionContext().getContextValues(label);
     }
 
-    @Override
-    default Object getFirstContextValue(String label) {
+    @Override default Object getFirstContextValue(String label) {
         return getExceptionContext().getFirstContextValue(label);
     }
 
-    @Override
-    default Set<String> getContextLabels() {
+    @Override default Set<String> getContextLabels() {
         return getExceptionContext().getContextLabels();
     }
 
-    @Override
-    default List<Pair<String, Object>> getContextEntries() {
+    @Override default List<Pair<String, Object>> getContextEntries() {
         return getExceptionContext().getContextEntries();
     }
 
-    @Override
-    default String getFormattedExceptionMessage(String baseMessage) {
+    @Override default String getFormattedExceptionMessage(String baseMessage) {
         return getExceptionContext().getFormattedExceptionMessage(baseMessage);
     }
 }

@@ -29,19 +29,21 @@ class DeadlockTest {
     abstract static class Outer<T> implements GenericInterface<Outer<T>, GenericClass<T>> {
         // must be a nested class, that is reusing the type param T of the outer class
         abstract static class Inner<T> {
-            Inner(Outer<T> grid) { }
+            Inner(Outer<T> grid) {
+            }
         }
     }
 
-    static class GenericBaseClass<T> { }
+    static class GenericBaseClass<T> {
+    }
 
-    interface GenericInterface<T, S> { }
+    interface GenericInterface<T, S> {
+    }
 
-    abstract static class GenericClass<T> extends GenericBaseClass<Outer.Inner<T>> { }
+    abstract static class GenericClass<T> extends GenericBaseClass<Outer.Inner<T>> {
+    }
 
-    @Timeout(2)
-    @RepeatedTest(50)
-    void parseWithoutDeadlock() throws InterruptedException {
+    @Timeout(2) @RepeatedTest(50) void parseWithoutDeadlock() throws InterruptedException {
         /*
          Deadlock:
          t1 -> locks parse for Outer.Inner and waits for parse lock for Outer
@@ -141,9 +143,9 @@ class DeadlockTest {
         t2.join();
 
         assertAll(exceptions.stream()
-                        .map(e -> () -> {
-                            throw e;
-                        }));
+                .map(e -> () -> {
+                    throw e;
+                }));
     }
 
     private static void assertGenericClassType(ASTClassType classType, String simpleName, String actualTypeParamName, String originalTypeParamName) {

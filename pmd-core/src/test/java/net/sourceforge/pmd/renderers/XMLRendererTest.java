@@ -41,28 +41,23 @@ import com.github.stefanbirkner.systemlambda.SystemLambda;
 
 class XMLRendererTest extends AbstractRendererTest {
 
-    @TempDir
-    private Path folder;
+    @TempDir private Path folder;
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         return new XMLRenderer();
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return getHeader() + "<file name=\"" + getSourceCodeFilename() + "\">" + EOL
                 + "<violation beginline=\"1\" endline=\"1\" begincolumn=\"1\" endcolumn=\"1\" rule=\"Foo\" ruleset=\"RuleSet\" priority=\"5\">"
                 + EOL + "blah" + EOL + "</violation>" + EOL + "</file>" + EOL + "</pmd>" + EOL;
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return getHeader() + "</pmd>" + EOL;
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return getHeader() + "<file name=\"" + getSourceCodeFilename() + "\">" + EOL
                 + "<violation beginline=\"1\" endline=\"1\" begincolumn=\"1\" endcolumn=\"1\" rule=\"Foo\" ruleset=\"RuleSet\" priority=\"5\">"
                 + EOL + "blah" + EOL + "</violation>" + EOL
@@ -70,32 +65,28 @@ class XMLRendererTest extends AbstractRendererTest {
                 + EOL + "blah" + EOL + "</violation>" + EOL + "</file>" + EOL + "</pmd>" + EOL;
     }
 
-    @Override
-    String getExpectedError(ProcessingError error) {
+    @Override String getExpectedError(ProcessingError error) {
         return getHeader() + "<error filename=\"file\" msg=\"RuntimeException: Error\">"
                 + EOL + "<![CDATA[" + error.getDetail() + "]]>" + EOL + "</error>" + EOL + "</pmd>" + EOL;
     }
 
-    @Override
-    String getExpectedErrorWithoutMessage(ProcessingError error) {
+    @Override String getExpectedErrorWithoutMessage(ProcessingError error) {
         return getHeader() + "<error filename=\"file\" msg=\"NullPointerException: null\">"
                 + EOL + "<![CDATA[" + error.getDetail() + "]]>" + EOL + "</error>" + EOL + "</pmd>" + EOL;
     }
 
-    @Override
-    String getExpectedError(ConfigurationError error) {
+    @Override String getExpectedError(ConfigurationError error) {
         return getHeader() + "<configerror rule=\"Foo\" msg=\"a configuration error\"/>"
                 + EOL + "</pmd>" + EOL;
     }
 
-    @Override
-    String filter(String expected) {
+    @Override String filter(String expected) {
         return expected.replaceAll(" timestamp=\"[^\"]+\">", " timestamp=\"\">");
     }
 
     private RuleViolation createRuleViolation(String description) {
         FileLocation loc = FileLocation.range(FileId.fromPathLikeString(getSourceCodeFilename()),
-                                              TextRange2d.range2d(1, 1, 1, 1));
+                TextRange2d.range2d(1, 1, 1, 1));
         return newRuleViolation(new FooRule(), loc, description);
     }
 
@@ -113,20 +104,17 @@ class XMLRendererTest extends AbstractRendererTest {
         assertEquals(msg, violations.item(0).getTextContent().trim());
     }
 
-    @Test
-    void testXMLEscapingWithUTF8() throws Exception {
+    @Test void testXMLEscapingWithUTF8() throws Exception {
         Renderer renderer = getRenderer();
         verifyXmlEscaping(renderer, "\ud801\udc1c", StandardCharsets.UTF_8);
     }
 
-    @Test
-    void testXMLEscapingWithUTF16() throws Exception {
+    @Test void testXMLEscapingWithUTF16() throws Exception {
         Renderer renderer = getRenderer();
         verifyXmlEscaping(renderer, "&#x1041c;", StandardCharsets.UTF_16);
     }
 
-    @Test
-    void testXMLEscapingWithoutUTF8() throws Exception {
+    @Test void testXMLEscapingWithoutUTF8() throws Exception {
         Renderer renderer = getRenderer();
         verifyXmlEscaping(renderer, "&#x1041c;", StandardCharsets.ISO_8859_1);
     }
@@ -139,8 +127,7 @@ class XMLRendererTest extends AbstractRendererTest {
                 + " version=\"" + PMDVersion.VERSION + "\" timestamp=\"2014-10-06T19:30:51.262\">" + EOL;
     }
 
-    @Test
-    void testCorrectCharset() throws Exception {
+    @Test void testCorrectCharset() throws Exception {
         SystemLambda.restoreSystemProperties(() -> {
             System.setProperty("file.encoding", StandardCharsets.ISO_8859_1.name());
 
@@ -167,8 +154,7 @@ class XMLRendererTest extends AbstractRendererTest {
     /**
      * @see <a href="https://github.com/pmd/pmd/issues/5059">[core] xml output doesn't escape CDATA inside its own CDATA</a>
      */
-    @Test
-    void cdataSectionInError() throws Exception {
+    @Test void cdataSectionInError() throws Exception {
         ProcessingError processingError = new ProcessingError(new ParseException("Invalid source: '<![CDATA[ ... ]]> ...'"),
                 FileId.fromPathLikeString("dummy.txt"));
         String result = renderReport(getRenderer(), it -> it.onError(processingError), StandardCharsets.UTF_8);

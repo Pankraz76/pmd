@@ -6,5 +6,6 @@ package com.example.geometry;
 /**
  * @see <a href="https://openjdk.java.net/jeps/409">JEP 409: Sealed Classes</a>
  */
-public final class TransparentRectangle extends Rectangle { }
+public final class TransparentRectangle extends Rectangle {
+}
 

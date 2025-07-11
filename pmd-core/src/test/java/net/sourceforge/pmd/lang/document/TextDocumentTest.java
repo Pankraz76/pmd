@@ -21,8 +21,7 @@ import net.sourceforge.pmd.lang.LanguageVersion;
 
 class TextDocumentTest {
 
-    @Test
-    void testSingleLineRegion() {
+    @Test void testSingleLineRegion() {
         TextDocument doc = TextDocument.readOnlyString("bonjour\ntristesse", dummyVersion());
 
         TextRegion region = TextRegion.fromOffsetLength(0, "bonjour".length());
@@ -40,8 +39,7 @@ class TextDocumentTest {
         assertEquals("bonjour".length(), withLines.getEndColumn() - withLines.getStartColumn());
     }
 
-    @Test
-    void testRegionAtEol() {
+    @Test void testRegionAtEol() {
         TextDocument doc = TextDocument.readOnlyString("bonjour\ntristesse", dummyVersion());
 
         TextRegion region = TextRegion.fromOffsetLength(0, "bonjour\n".length());
@@ -55,8 +53,7 @@ class TextDocumentTest {
         assertEquals("bonjour\n".length(), withLines.getEndColumn() - withLines.getStartColumn());
     }
 
-    @Test
-    void testEmptyRegionAtEol() {
+    @Test void testEmptyRegionAtEol() {
         TextDocument doc = TextDocument.readOnlyString("bonjour\ntristesse", dummyVersion());
         //                                                             ^ The caret position right after the \n
         //                                                               We consider it's part of the next line
@@ -72,8 +69,7 @@ class TextDocumentTest {
         assertEquals(1, withLines.getEndColumn());
     }
 
-    @Test
-    void testRegionForEol() {
+    @Test void testRegionForEol() {
         TextDocument doc = TextDocument.readOnlyString("bonjour\ntristesse", dummyVersion());
         //                                                           [ [ The region containing the \n
         //                                                               We consider it ends on the same line, not the next one
@@ -90,8 +86,7 @@ class TextDocumentTest {
         assertEquals(1 + "bonjour\n".length(), withLines.getEndColumn());
     }
 
-    @Test
-    void testRegionAtEndOfFile() {
+    @Test void testRegionAtEndOfFile() {
         TextDocument doc = TextDocument.readOnlyString("flemme", dummyVersion());
 
         TextRegion region = TextRegion.fromOffsetLength(0, doc.getLength());
@@ -105,8 +100,7 @@ class TextDocumentTest {
         assertEquals(1 + doc.getLength(), withLines.getEndColumn());
     }
 
-    @Test
-    void testMultiLineRegion() {
+    @Test void testMultiLineRegion() {
         TextDocument doc = TextDocument.readOnlyString("bonjour\noha\ntristesse", dummyVersion());
 
         TextRegion region = TextRegion.fromOffsetLength("bonjou".length(), "r\noha\ntri".length());
@@ -124,8 +118,7 @@ class TextDocumentTest {
     }
 
 
-    @Test
-    void testLineColumnFromOffset() {
+    @Test void testLineColumnFromOffset() {
         TextDocument doc = TextDocument.readOnlyString("ab\ncd\n", dummyVersion());
 
         assertPos2dEqualsAt(doc, 0, "a", pos2d(1, 1), true);
@@ -147,8 +140,7 @@ class TextDocumentTest {
         assertEquals(pos, doc.lineColumnAtOffset(offset, inclusive));
     }
 
-    @Test
-    void testEmptyRegion() {
+    @Test void testEmptyRegion() {
         TextDocument doc = TextDocument.readOnlyString("bonjour\noha\ntristesse", dummyVersion());
 
         TextRegion region = TextRegion.fromOffsetLength("bonjour".length(), 0);
@@ -166,8 +158,7 @@ class TextDocumentTest {
     }
 
 
-    @Test
-    void testLineRange() {
+    @Test void testLineRange() {
         TextDocument doc = TextDocument.readOnlyString("bonjour\noha\ntristesse", dummyVersion());
 
         assertEquals(Chars.wrap("bonjour\n"), doc.sliceTranslatedText(doc.createLineRange(1, 1)));
@@ -179,39 +170,33 @@ class TextDocumentTest {
         assertThrows(IndexOutOfBoundsException.class, () -> doc.createLineRange(0, 2));
     }
 
-    @ParameterizedTest
-    @MethodSource("documentProvider")
-    void testEntireRegion(TextDocument doc) {
+    @ParameterizedTest @MethodSource("documentProvider") void testEntireRegion(TextDocument doc) {
         assertEquals(TextRegion.fromOffsetLength(0, doc.getLength()),
                 doc.getEntireRegion(),
                 "getEntireRegion should return something based on length");
     }
 
-    @ParameterizedTest
-    @MethodSource("documentProvider")
-    void testReader(TextDocument doc) throws IOException {
+    @ParameterizedTest @MethodSource("documentProvider") void testReader(TextDocument doc) throws IOException {
 
         assertEquals(doc.getText().toString(),
-                     IOUtil.readToString(doc.newReader()),
-                    "NewReader should read the text");
+                IOUtil.readToString(doc.newReader()),
+                "NewReader should read the text");
 
     }
 
-    @Test
-    void testRegionOutOfBounds() {
+    @Test void testRegionOutOfBounds() {
         TextDocument doc = TextDocument.readOnlyString("bonjour\noha\ntristesse", dummyVersion());
 
         assertThrows(AssertionError.class, () -> TextRegion.isValidRegion(0, 40, doc));
     }
 
-    @SuppressWarnings("resource")
-    static Object[] documentProvider() {
+    @SuppressWarnings("resource") static Object[] documentProvider() {
         LanguageVersion dummyVersion = DummyLanguageModule.getInstance().getDefaultVersion();
-        return new TextDocument[] {
-            TextDocument.readOnlyString("bonjour\noha\ntristesse", dummyVersion),
-            TextDocument.readOnlyString("bonjour\n", dummyVersion),
-            TextDocument.readOnlyString("\n", dummyVersion),
-            TextDocument.readOnlyString("", dummyVersion),
+        return new TextDocument[]{
+                TextDocument.readOnlyString("bonjour\noha\ntristesse", dummyVersion),
+                TextDocument.readOnlyString("bonjour\n", dummyVersion),
+                TextDocument.readOnlyString("\n", dummyVersion),
+                TextDocument.readOnlyString("", dummyVersion),
             };
     }
 

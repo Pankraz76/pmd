@@ -37,10 +37,10 @@ final class CachedRuleViolation implements RuleViolation {
     private final FileLocation location;
 
     private CachedRuleViolation(final CachedRuleMapper mapper, final String description,
-                                final FileId fileFileId, final String ruleClassName, final String ruleName,
-                                final String ruleTargetLanguage, final int beginLine, final int beginColumn,
-                                final int endLine, final int endColumn,
-                                final Map<String, String> additionalInfo) {
+            final FileId fileFileId, final String ruleClassName, final String ruleName,
+            final String ruleTargetLanguage, final int beginLine, final int beginColumn,
+            final int endLine, final int endColumn,
+            final Map<String, String> additionalInfo) {
         this.mapper = mapper;
         this.description = description;
         this.location = FileLocation.range(fileFileId, TextRange2d.range2d(beginLine, beginColumn, endLine, endColumn));
@@ -49,25 +49,21 @@ final class CachedRuleViolation implements RuleViolation {
         this.ruleTargetLanguage = ruleTargetLanguage;
         this.additionalInfo = additionalInfo;
     }
-    
-    @Override
-    public Rule getRule() {
+
+    @Override public Rule getRule() {
         // The mapper may be initialized after cache is loaded, so use it lazily
         return mapper.getRuleForClass(ruleClassName, ruleName, ruleTargetLanguage);
     }
 
-    @Override
-    public String getDescription() {
+    @Override public String getDescription() {
         return description;
     }
 
-    @Override
-    public FileLocation getLocation() {
+    @Override public FileLocation getLocation() {
         return location;
     }
 
-    @Override
-    public Map<String, String> getAdditionalInfo() {
+    @Override public Map<String, String> getAdditionalInfo() {
         return additionalInfo;
     }
 
@@ -82,8 +78,8 @@ final class CachedRuleViolation implements RuleViolation {
      */
     /* package */
     static CachedRuleViolation loadFromStream(
-        DataInputStream stream,
-        FileId fileFileId, CachedRuleMapper mapper) throws IOException {
+            DataInputStream stream,
+            FileId fileFileId, CachedRuleMapper mapper) throws IOException {
 
         String description = stream.readUTF();
         String ruleClassName = stream.readUTF();
@@ -95,7 +91,7 @@ final class CachedRuleViolation implements RuleViolation {
         int endColumn = stream.readInt();
         Map<String, String> additionalInfo = readAdditionalInfo(stream);
         return new CachedRuleViolation(mapper, description, fileFileId, ruleClassName, ruleName, ruleTargetLanguage,
-                                       beginLine, beginColumn, endLine, endColumn, additionalInfo);
+                beginLine, beginColumn, endLine, endColumn, additionalInfo);
     }
 
     private static @NonNull Map<String, String> readAdditionalInfo(DataInputStream stream) throws IOException {

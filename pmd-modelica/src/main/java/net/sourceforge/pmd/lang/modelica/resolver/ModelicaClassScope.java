@@ -22,8 +22,7 @@ public final class ModelicaClassScope extends AbstractModelicaScope {
         return classDeclaration;
     }
 
-    @Override
-    public void resolveLexically(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
+    @Override public void resolveLexically(ResolutionContext result, CompositeName name) throws Watchdog.CountdownException {
         InternalApiBridge.resolveFurtherNameComponents(classDeclaration, result, name);
         if (classDeclaration.isEncapsulated()) {
             getRoot().resolveBuiltin(result, name);
@@ -32,8 +31,7 @@ public final class ModelicaClassScope extends AbstractModelicaScope {
         }
     }
 
-    @Override
-    public String getRepresentation() {
+    @Override public String getRepresentation() {
         return "Class:" + classDeclaration.getSimpleTypeName();
     }
 

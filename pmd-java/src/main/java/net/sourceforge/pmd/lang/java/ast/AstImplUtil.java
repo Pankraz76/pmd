@@ -31,8 +31,7 @@ final class AstImplUtil {
         return lastIdx < 0 ? nameWithDots : nameWithDots.substring(0, lastIdx);
     }
 
-    @Nullable
-    public static <T extends Node> T getChildAs(JavaNode javaNode, int idx, Class<T> type) {
+    @Nullable public static <T extends Node> T getChildAs(JavaNode javaNode, int idx, Class<T> type) {
         if (javaNode.getNumChildren() <= idx || idx < 0) {
             return null;
         }
@@ -43,7 +42,7 @@ final class AstImplUtil {
 
     static void bumpParenDepth(ASTExpression expression) {
         assert expression instanceof AbstractJavaExpr
-            : expression.getClass() + " doesn't have parenDepth attribute!";
+                : expression.getClass() + " doesn't have parenDepth attribute!";
 
         ((AbstractJavaExpr) expression).bumpParenDepth();
     }

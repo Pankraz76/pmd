@@ -77,8 +77,7 @@ public final class ASTElement extends AbstractVfNode {
         this.empty = empty;
     }
 
-    @Override
-    protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVfVisitor(VfVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

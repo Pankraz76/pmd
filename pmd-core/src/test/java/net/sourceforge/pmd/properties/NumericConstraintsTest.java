@@ -13,8 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class NumericConstraintsTest {
 
-    @Test
-    void testInRangeInteger() {
+    @Test void testInRangeInteger() {
         PropertyConstraint<Integer> constraint = NumericConstraints.inRange(1, 10);
         assertNull(errorAsString(constraint, 1));
         assertNull(errorAsString(constraint, 5));
@@ -34,8 +33,7 @@ class NumericConstraintsTest {
         }
     }
 
-    @Test
-    void testInRangeDouble() {
+    @Test void testInRangeDouble() {
         PropertyConstraint<Double> constraint = NumericConstraints.inRange(1.0, 10.0);
         assertNull(errorAsString(constraint, 1.0));
         assertNull(errorAsString(constraint, 5.5));
@@ -46,8 +44,7 @@ class NumericConstraintsTest {
         assertNotNull(errorAsString(constraint, 100.0));
     }
 
-    @Test
-    void testPositive() {
+    @Test void testPositive() {
         PropertyConstraint<Number> constraint = NumericConstraints.positive();
         assertNull(errorAsString(constraint, 1));
         assertNull(errorAsString(constraint, 1.5f));
@@ -62,8 +59,7 @@ class NumericConstraintsTest {
         assertNotNull(errorAsString(constraint, -0.1d));
     }
 
-    @Test
-    void testBelow() {
+    @Test void testBelow() {
         PropertyConstraint<Integer> constraint = NumericConstraints.below(5);
         assertNull(errorAsString(constraint, 5));
         assertNull(errorAsString(constraint, 3));
@@ -74,8 +70,7 @@ class NumericConstraintsTest {
         assertNotNull(errorAsString(constraint, 10));
     }
 
-    @Test
-    void testAbove() {
+    @Test void testAbove() {
         PropertyConstraint<Double> constraint = NumericConstraints.above(2.5);
         assertNull(errorAsString(constraint, 2.5));
         assertNull(errorAsString(constraint, 3d));

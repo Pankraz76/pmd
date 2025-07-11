@@ -17,8 +17,7 @@ public class CheckSkipResultRule extends AbstractJavaRulechainRule {
         super(ASTMethodCall.class);
     }
 
-    @Override
-    public Object visit(ASTMethodCall call, Object data) {
+    @Override public Object visit(ASTMethodCall call, Object data) {
         if (SKIP_METHOD.matchesCall(call) && !isResultUsed(call)) {
             asCtx(data).addViolation(call);
         }

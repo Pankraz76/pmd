@@ -29,11 +29,9 @@ class RuleDocGeneratorTest {
     private MockedFileWriter writer = new MockedFileWriter();
     private Path root;
 
-    @TempDir
-    public Path folder;
+    @TempDir public Path folder;
 
-    @BeforeEach
-    void setup() throws IOException {
+    @BeforeEach void setup() throws IOException {
         writer.reset();
 
         root = Files.createTempDirectory(folder, null);
@@ -54,8 +52,7 @@ class RuleDocGeneratorTest {
                 IOUtil.readToString(RuleDocGeneratorTest.class.getResourceAsStream(name), StandardCharsets.UTF_8));
     }
 
-    @Test
-    void testSingleRuleset() throws IOException {
+    @Test void testSingleRuleset() throws IOException {
         RuleDocGenerator generator = new RuleDocGenerator(writer, root);
 
         RuleSetLoader rsl = new RuleSetLoader().includeDeprecatedRuleReferences(true);

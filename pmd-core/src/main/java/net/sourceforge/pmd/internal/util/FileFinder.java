@@ -44,8 +44,7 @@ public class FileFinder {
         }
 
         Arrays.sort(candidates, new Comparator<File>() {
-            @Override
-            public int compare(File o1, File o2) {
+            @Override public int compare(File o1, File o2) {
                 return o1.getPath().compareToIgnoreCase(o2.getPath());
             }
         });

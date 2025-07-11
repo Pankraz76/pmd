@@ -13,28 +13,23 @@ class LuaCpdLexerTest extends CpdTextComparisonTest {
         super("lua", ".lua");
     }
 
-    @Test
-    void testSimple() {
+    @Test void testSimple() {
         doTest("helloworld");
     }
 
-    @Test
-    void testFactorial() {
+    @Test void testFactorial() {
         doTest("factorial");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 
-    @Test
-    void testLuauTypes() {
+    @Test void testLuauTypes() {
         doTest("luauTypes");
     }
 
-    @Test
-    void testComment() {
+    @Test void testComment() {
         doTest("comment");
     }
 }

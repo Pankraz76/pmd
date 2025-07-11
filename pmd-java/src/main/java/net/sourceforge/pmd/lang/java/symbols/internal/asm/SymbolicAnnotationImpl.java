@@ -40,8 +40,7 @@ final class SymbolicAnnotationImpl implements SymAnnot {
         explicitAttrs.put(name, value);
     }
 
-    @Override
-    public @Nullable SymbolicValue getAttribute(String attrName) {
+    @Override public @Nullable SymbolicValue getAttribute(String attrName) {
         SymbolicValue value = explicitAttrs.get(attrName);
         if (value != null) {
             return value;
@@ -49,29 +48,24 @@ final class SymbolicAnnotationImpl implements SymAnnot {
         return typeStub.getDefaultAnnotationAttributeValue(attrName);
     }
 
-    @Override
-    public RetentionPolicy getRetention() {
+    @Override public RetentionPolicy getRetention() {
         return runtimeVisible ? RetentionPolicy.RUNTIME
-                              : RetentionPolicy.CLASS;
+                : RetentionPolicy.CLASS;
     }
 
-    @Override
-    public @NonNull JClassSymbol getAnnotationSymbol() {
+    @Override public @NonNull JClassSymbol getAnnotationSymbol() {
         return typeStub;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return SymbolEquality.ANNOTATION.equals(this, o);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.ANNOTATION.hash(this);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return SymbolToStrings.ASM.toString(this);
     }
 }

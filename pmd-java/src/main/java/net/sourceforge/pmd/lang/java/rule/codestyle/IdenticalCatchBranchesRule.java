@@ -42,17 +42,17 @@ public class IdenticalCatchBranchesRule extends AbstractJavaRulechainRule {
         String e2Name = st2.getParameter().getName();
 
         return JavaAstUtils.tokenEquals(st1.getBody(), st2.getBody(), name -> name.equals(e1Name) ? e2Name : name)
-            && areStructurallyEquivalent(st1.getBody(), st2.getBody(),
-                                         (n1, n2) -> {
-                                             if (n1 instanceof InvocationNode) {
-                                                 JExecutableSymbol sym1 = ((InvocationNode) n1).getMethodType().getSymbol();
-                                                 JExecutableSymbol sym2 = ((InvocationNode) n2).getMethodType().getSymbol();
-                                                 if (!Objects.equals(sym1, sym2)) {
-                                                     return OptionalBool.NO;
-                                                 }
-                                             }
-                                             return OptionalBool.UNKNOWN;
-                                         });
+                && areStructurallyEquivalent(st1.getBody(), st2.getBody(),
+                (n1, n2) -> {
+                    if (n1 instanceof InvocationNode) {
+                        JExecutableSymbol sym1 = ((InvocationNode) n1).getMethodType().getSymbol();
+                        JExecutableSymbol sym2 = ((InvocationNode) n2).getMethodType().getSymbol();
+                        if (!Objects.equals(sym1, sym2)) {
+                            return OptionalBool.NO;
+                        }
+                    }
+                    return OptionalBool.UNKNOWN;
+                });
     }
 
     /**
@@ -62,8 +62,8 @@ public class IdenticalCatchBranchesRule extends AbstractJavaRulechainRule {
      */
     private static boolean areStructurallyEquivalent(JavaNode n1, JavaNode n2, PartialEquivalenceRel<JavaNode> areEquivalent) {
         if (n1.getNumChildren() != n2.getNumChildren()
-            || !n1.getClass().equals(n2.getClass())
-            || areEquivalent.test(n1, n2) == OptionalBool.NO) {
+                || !n1.getClass().equals(n2.getClass())
+                || areEquivalent.test(n1, n2) == OptionalBool.NO) {
             return false;
         }
 
@@ -117,8 +117,7 @@ public class IdenticalCatchBranchesRule extends AbstractJavaRulechainRule {
     }
 
 
-    @Override
-    public Object visit(ASTTryStatement node, Object data) {
+    @Override public Object visit(ASTTryStatement node, Object data) {
 
         List<ASTCatchClause> catchStatements = node.getCatchClauses().toList();
         Set<List<ASTCatchClause>> equivClasses = equivalenceClasses(catchStatements);

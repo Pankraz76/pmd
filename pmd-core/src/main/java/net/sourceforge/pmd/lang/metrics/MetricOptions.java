@@ -38,21 +38,20 @@ public final class MetricOptions {
     private MetricOptions(Set<? extends MetricOption> opts) {
 
         switch (opts.size()) {
-        case 0:
-            options = Collections.emptySet();
-            break;
-        case 1:
-            options = Collections.<MetricOption>singleton(opts.iterator().next());
-            break;
-        default:
-            options = Collections.unmodifiableSet(opts);
-            break;
+            case 0:
+                options = Collections.emptySet();
+                break;
+            case 1:
+                options = Collections.<MetricOption>singleton(opts.iterator().next());
+                break;
+            default:
+                options = Collections.unmodifiableSet(opts);
+                break;
         }
     }
 
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -66,8 +65,7 @@ public final class MetricOptions {
     }
 
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return options.hashCode();
     }
 
@@ -92,11 +90,10 @@ public final class MetricOptions {
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "MetricOptions{"
-            + "options=" + options
-            + '}';
+                + "options=" + options
+                + '}';
     }
 
 

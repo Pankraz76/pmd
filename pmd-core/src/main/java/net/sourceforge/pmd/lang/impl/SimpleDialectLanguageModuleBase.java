@@ -80,8 +80,7 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
      * To define dialect-specific properties to be added to this bundle, override {@link #newDialectPropertyBundle()}
      * @return A new set of properties
      */
-    @Override
-    public final LanguagePropertyBundle newPropertyBundle() {
+    @Override public final LanguagePropertyBundle newPropertyBundle() {
         LanguagePropertyBundle baseBundle = getBaseLanguageFromRegistry(LanguageRegistry.PMD).newPropertyBundle();
         LanguagePropertyBundle dialectBundle = newDialectPropertyBundle();
 
@@ -98,16 +97,14 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
         return new LanguagePropertyBundle(this);
     }
 
-    @Override
-    public final LanguageProcessor createProcessor(LanguagePropertyBundle bundle) {
+    @Override public final LanguageProcessor createProcessor(LanguagePropertyBundle bundle) {
         final PmdCapableLanguage baseLanguage = (PmdCapableLanguage) getBaseLanguageFromRegistry(LanguageRegistry.PMD);
         final BasePmdDialectLanguageVersionHandler dialectHandler = handler.apply(bundle);
 
         return new DialectLanguageProcessor(baseLanguage, dialectHandler, bundle);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         final CpdCapableLanguage baseLanguage = (CpdCapableLanguage) getBaseLanguageFromRegistry(LanguageRegistry.CPD);
         return baseLanguage.createCpdLexer(bundle);
     }
@@ -126,18 +123,15 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
             this.combinedHandler = new SimpleDialectLanguageVersionHandler(baseLanguageProcessor.services(), dialectHandler);
         }
 
-        @Override
-        public @NonNull LanguageVersionHandler services() {
+        @Override public @NonNull LanguageVersionHandler services() {
             return combinedHandler;
         }
 
-        @Override
-        public @NonNull AutoCloseable launchAnalysis(@NonNull AnalysisTask analysisTask) {
+        @Override public @NonNull AutoCloseable launchAnalysis(@NonNull AnalysisTask analysisTask) {
             return baseLanguageProcessor.launchAnalysis(analysisTask);
         }
 
-        @Override
-        public void close() throws Exception {
+        @Override public void close() throws Exception {
             super.close();
             baseLanguageProcessor.close();
         }
@@ -156,35 +150,30 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
             this.dialectLanguageVersionHandler = dialectLanguageVersionHandler;
         }
 
-        @Override
-        public XPathHandler getXPathHandler() {
+        @Override public XPathHandler getXPathHandler() {
             // Add dialect-specific XPath functions
             return baseLanguageVersionHandler.getXPathHandler()
                     .combine(dialectLanguageVersionHandler.getXPathHandler());
         }
 
-        @Override
-        public Parser getParser() {
+        @Override public Parser getParser() {
             // Always the base language parser for full compatibility (same AST)
             return baseLanguageVersionHandler.getParser();
         }
 
-        @Override
-        public ViolationDecorator getViolationDecorator() {
+        @Override public ViolationDecorator getViolationDecorator() {
             return ViolationDecorator.chain(
                     Arrays.asList(baseLanguageVersionHandler.getViolationDecorator(),
                             dialectLanguageVersionHandler.getViolationDecorator()));
         }
 
-        @Override
-        public List<ViolationSuppressor> getExtraViolationSuppressors() {
+        @Override public List<ViolationSuppressor> getExtraViolationSuppressors() {
             return CollectionUtil.concatView(
                     baseLanguageVersionHandler.getExtraViolationSuppressors(),
                     dialectLanguageVersionHandler.getExtraViolationSuppressors());
         }
 
-        @Override
-        public LanguageMetricsProvider getLanguageMetricsProvider() {
+        @Override public LanguageMetricsProvider getLanguageMetricsProvider() {
             if (baseLanguageVersionHandler.getLanguageMetricsProvider() == null) {
                 return dialectLanguageVersionHandler.getLanguageMetricsProvider();
             }
@@ -202,8 +191,7 @@ public class SimpleDialectLanguageModuleBase extends LanguageModuleBase implemen
             };
         }
 
-        @Override
-        public DesignerBindings getDesignerBindings() {
+        @Override public DesignerBindings getDesignerBindings() {
             // if the dialect set something it has priority
             if (DesignerBindings.DefaultDesignerBindings.getInstance().equals(dialectLanguageVersionHandler.getDesignerBindings())) {
                 return baseLanguageVersionHandler.getDesignerBindings();

@@ -43,8 +43,7 @@ import net.sourceforge.pmd.util.log.PmdReporter;
  */
 class PmdAnalysisTest {
 
-    @Test
-    void testPmdAnalysisWithEmptyConfig() {
+    @Test void testPmdAnalysisWithEmptyConfig() {
         PMDConfiguration config = new PMDConfiguration();
         try (PmdAnalysis pmd = PmdAnalysis.create(config)) {
             assertThat(pmd.files().getCollectedFiles(), empty());
@@ -53,8 +52,7 @@ class PmdAnalysisTest {
         }
     }
 
-    @Test
-    void testRendererInteractions() throws IOException {
+    @Test void testRendererInteractions() throws IOException {
         PMDConfiguration config = new PMDConfiguration();
         config.addInputPath(Paths.get("sample-source/dummy"));
         Renderer renderer = spy(Renderer.class);
@@ -70,8 +68,7 @@ class PmdAnalysisTest {
         verify(renderer, times(1)).flush();
     }
 
-    @Test
-    void testRulesetLoading() {
+    @Test void testRulesetLoading() {
         PMDConfiguration config = new PMDConfiguration();
         config.addRuleSet("rulesets/dummy/basic.xml");
         try (PmdAnalysis pmd = PmdAnalysis.create(config)) {
@@ -79,8 +76,7 @@ class PmdAnalysisTest {
         }
     }
 
-    @Test
-    void testRulesetWhenSomeoneHasAnError() {
+    @Test void testRulesetWhenSomeoneHasAnError() {
         PMDConfiguration config = new PMDConfiguration();
         config.addRuleSet("rulesets/dummy/basic.xml");
         config.addRuleSet("rulesets/xxxe/notaruleset.xml");
@@ -90,8 +86,7 @@ class PmdAnalysisTest {
         }
     }
 
-    @Test
-    void testParseException() {
+    @Test void testParseException() {
         PMDConfiguration config = new PMDConfiguration();
         config.setThreads(1);
         config.setForceLanguageVersion(DummyLanguageModule.getInstance().getVersionWhereParserThrows());
@@ -105,8 +100,7 @@ class PmdAnalysisTest {
         }
     }
 
-    @Test
-    void testRuleFailureDuringInitialization() {
+    @Test void testRuleFailureDuringInitialization() {
         PMDConfiguration config = new PMDConfiguration();
         config.setThreads(1);
         PmdReporter mockReporter = spy(PmdReporter.quiet());
@@ -114,8 +108,7 @@ class PmdAnalysisTest {
 
         try (PmdAnalysis pmd = PmdAnalysis.create(config)) {
             pmd.addRuleSet(RuleSet.forSingleRule(new MockRule() {
-                @Override
-                public void initialize(LanguageProcessor languageProcessor) {
+                @Override public void initialize(LanguageProcessor languageProcessor) {
                     throw new IllegalStateException();
                 }
             }));
@@ -132,8 +125,7 @@ class PmdAnalysisTest {
         }
     }
 
-    @Test
-    void testFileWithSpecificLanguage() {
+    @Test void testFileWithSpecificLanguage() {
         final Language language = Dummy2LanguageModule.getInstance();
         PMDConfiguration config = new PMDConfiguration();
         config.setIgnoreIncrementalAnalysis(true);
@@ -151,8 +143,7 @@ class PmdAnalysisTest {
         }
     }
 
-    @Test
-    void testTextFileWithSpecificLanguage() {
+    @Test void testTextFileWithSpecificLanguage() {
         final Language language = Dummy2LanguageModule.getInstance();
         PMDConfiguration config = new PMDConfiguration();
         config.setIgnoreIncrementalAnalysis(true);
@@ -176,8 +167,7 @@ class PmdAnalysisTest {
             setMessage("dummy 2 test rule");
         }
 
-        @Override
-        public void apply(Node node, RuleContext ctx) {
+        @Override public void apply(Node node, RuleContext ctx) {
             ctx.addViolation(node);
         }
     }

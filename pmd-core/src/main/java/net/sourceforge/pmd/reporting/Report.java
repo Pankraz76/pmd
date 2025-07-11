@@ -278,28 +278,23 @@ public final class Report {
             this.report = report;
         }
 
-        @Override
-        protected Report getResultImpl() {
+        @Override protected Report getResultImpl() {
             return report;
         }
 
-        @Override
-        public void onRuleViolation(RuleViolation violation) {
+        @Override public void onRuleViolation(RuleViolation violation) {
             report.addRuleViolation(violation);
         }
 
-        @Override
-        public void onSuppressedRuleViolation(SuppressedViolation violation) {
+        @Override public void onSuppressedRuleViolation(SuppressedViolation violation) {
             report.addSuppressedViolation(violation);
         }
 
-        @Override
-        public void onError(ProcessingError error) {
+        @Override public void onError(ProcessingError error) {
             report.addError(error);
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return "ReportBuilderListener";
         }
     }
@@ -312,19 +307,16 @@ public final class Report {
 
         private final Report report = new Report();
 
-        @Override
-        public FileAnalysisListener startFileAnalysis(TextFile file) {
+        @Override public FileAnalysisListener startFileAnalysis(TextFile file) {
             // note that the report is shared, but Report is now thread-safe
             return new ReportBuilderListener(this.report);
         }
 
-        @Override
-        public void onConfigError(ConfigurationError error) {
+        @Override public void onConfigError(ConfigurationError error) {
             report.addConfigError(error);
         }
 
-        @Override
-        public Report getResultImpl() {
+        @Override public Report getResultImpl() {
             return report;
         }
     }

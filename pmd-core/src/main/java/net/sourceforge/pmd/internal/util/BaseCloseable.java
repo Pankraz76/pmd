@@ -27,8 +27,7 @@ public abstract class BaseCloseable implements Closeable {
     /**
      * Noop if called several times. Thread-safe.
      */
-    @Override
-    public void close() throws IOException {
+    @Override public void close() throws IOException {
         if (open) {
             synchronized (this) {
                 if (open) {

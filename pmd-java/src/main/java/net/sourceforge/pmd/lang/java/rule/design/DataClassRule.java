@@ -33,8 +33,7 @@ public class DataClassRule extends AbstractJavaRulechainRule {
         super(ASTTypeDeclaration.class);
     }
 
-    @Override
-    public Object visitJavaNode(JavaNode node, Object data) {
+    @Override public Object visitJavaNode(JavaNode node, Object data) {
         visitTypeDecl((ASTTypeDeclaration) node, (RuleContext) data);
         return null;
     }
@@ -54,8 +53,8 @@ public class DataClassRule extends AbstractJavaRulechainRule {
             int wmc = MetricsUtil.computeMetric(WEIGHED_METHOD_COUNT, node);
 
             asCtx(data).addViolation(node, node.getSimpleName(),
-                                     StringUtil.percentageString(woc, 3),
-                                     nopa, noam, wmc);
+                    StringUtil.percentageString(woc, 3),
+                    nopa, noam, wmc);
         }
     }
 
@@ -72,7 +71,7 @@ public class DataClassRule extends AbstractJavaRulechainRule {
         int wmc = MetricsUtil.computeMetric(WEIGHED_METHOD_COUNT, node);
 
         return nopa + noam > ACCESSOR_OR_FIELD_FEW_LEVEL && wmc < WMC_HIGH_LEVEL
-            || nopa + noam > ACCESSOR_OR_FIELD_MANY_LEVEL && wmc < WMC_VERY_HIGH_LEVEL;
+                || nopa + noam > ACCESSOR_OR_FIELD_MANY_LEVEL && wmc < WMC_VERY_HIGH_LEVEL;
     }
 
 }

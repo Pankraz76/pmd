@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class SelectHierarchicalTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseSelectHierarchicalQueries() {
+    @Test void parseSelectHierarchicalQueries() {
         doTest("SelectHierarchical");
     }
 }

@@ -22,8 +22,7 @@ public class UnnecessaryVarargsArrayCreationRule extends AbstractJavaRulechainRu
         super(ASTArrayAllocation.class);
     }
 
-    @Override
-    public Object visit(ASTArrayAllocation array, Object data) {
+    @Override public Object visit(ASTArrayAllocation array, Object data) {
         if (array.getArrayInitializer() == null) {
             return null;
         }
@@ -34,7 +33,7 @@ public class UnnecessaryVarargsArrayCreationRule extends AbstractJavaRulechainRu
             InvocationNode call = (InvocationNode) parent.getParent();
             OverloadSelectionResult info = call.getOverloadSelectionInfo();
             if (info.isFailed() || info.isVarargsCall()
-                || !info.getMethodType().isVarargs()) {
+                    || !info.getMethodType().isVarargs()) {
                 return null;
             }
 

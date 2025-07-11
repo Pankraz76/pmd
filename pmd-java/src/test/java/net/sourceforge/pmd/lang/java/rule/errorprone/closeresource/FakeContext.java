@@ -16,8 +16,7 @@ public class FakeContext implements Closeable, AutoCloseable {
         return null;
     }
 
-    @Override
-    public void close() throws IOException {
+    @Override public void close() throws IOException {
 
     }
 }

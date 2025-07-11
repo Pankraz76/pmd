@@ -30,12 +30,11 @@ import net.sourceforge.pmd.util.IteratorUtil;
 class CtorInvocMirror extends BaseInvocMirror<ASTConstructorCall> implements CtorInvocationMirror {
 
     CtorInvocMirror(JavaExprMirrors mirrors, ASTConstructorCall call,
-                    boolean mustBeStandalone, ExprMirror parent, MirrorMaker subexprMaker) {
+            boolean mustBeStandalone, ExprMirror parent, MirrorMaker subexprMaker) {
         super(mirrors, call, mustBeStandalone, parent, subexprMaker);
     }
 
-    @Override
-    public @NonNull JClassType getEnclosingType() {
+    @Override public @NonNull JClassType getEnclosingType() {
         if (myNode.isAnonymousClass()) {
             // protected constructors are visible when building
             // an anonymous class instance todo is that tested?
@@ -45,8 +44,7 @@ class CtorInvocMirror extends BaseInvocMirror<ASTConstructorCall> implements Cto
         return super.getEnclosingType();
     }
 
-    @Override
-    public JTypeMirror getStandaloneType() {
+    @Override public JTypeMirror getStandaloneType() {
         if (isDiamond()) {
             // todo if the expr must be standalone then we
             // should infer this from the provided arguments.
@@ -55,20 +53,17 @@ class CtorInvocMirror extends BaseInvocMirror<ASTConstructorCall> implements Cto
         return getNewType();
     }
 
-    @Override
-    public void finishStandaloneInference(@NonNull JTypeMirror standaloneType) {
+    @Override public void finishStandaloneInference(@NonNull JTypeMirror standaloneType) {
         if (mayMutateAst()) {
             setCompileTimeDecl(getStandaloneCtdecl());
         }
     }
 
-    @Override
-    public @NonNull TypeSpecies getStandaloneSpecies() {
+    @Override public @NonNull TypeSpecies getStandaloneSpecies() {
         return TypeSpecies.REFERENCE;
     }
 
-    @Override
-    public @Nullable JTypeMirror unresolvedType() {
+    @Override public @Nullable JTypeMirror unresolvedType() {
         JTypeMirror newT = getNewType();
         if (myNode.usesDiamondTypeArgs()) {
             if (myNode.getParent() instanceof ASTVariableDeclarator) {
@@ -92,19 +87,17 @@ class CtorInvocMirror extends BaseInvocMirror<ASTConstructorCall> implements Cto
     private List<JMethodSig> getVisibleCandidates(@NonNull JTypeMirror newType) {
         if (myNode.isAnonymousClass()) {
             return newType.isInterface() ? myNode.getTypeSystem().OBJECT.getConstructors()
-                                         : newType.getConstructors();
+                    : newType.getConstructors();
         }
         return newType.getConstructors();
     }
 
-    @Override
-    public Iterable<JMethodSig> getAccessibleCandidates(JTypeMirror newType) {
+    @Override public Iterable<JMethodSig> getAccessibleCandidates(JTypeMirror newType) {
         List<JMethodSig> visibleCandidates = getVisibleCandidates(newType);
         return lazyFilterAccessible(visibleCandidates, getEnclosingType().getSymbol());
     }
 
-    @Override
-    public @NonNull JTypeMirror getNewType() {
+    @Override public @NonNull JTypeMirror getNewType() {
         JTypeMirror typeMirror = myNode.getTypeNode().getTypeMirror();
         if (typeMirror instanceof JClassType) {
             JClassType classTypeMirror = (JClassType) typeMirror;
@@ -119,13 +112,11 @@ class CtorInvocMirror extends BaseInvocMirror<ASTConstructorCall> implements Cto
         }
     }
 
-    @Override
-    public boolean isDiamond() {
+    @Override public boolean isDiamond() {
         return myNode.usesDiamondTypeArgs();
     }
 
-    @Override
-    public boolean isAnonymous() {
+    @Override public boolean isAnonymous() {
         return myNode.isAnonymousClass();
     }
 
@@ -136,28 +127,23 @@ class CtorInvocMirror extends BaseInvocMirror<ASTConstructorCall> implements Cto
             super(mirrors, call, false, parent, subexprMaker);
         }
 
-        @Override
-        public Iterable<JMethodSig> getAccessibleCandidates(JTypeMirror newType) {
+        @Override public Iterable<JMethodSig> getAccessibleCandidates(JTypeMirror newType) {
             return newType.getConstructors();
         }
 
-        @Override
-        public @NonNull JClassType getNewType() {
+        @Override public @NonNull JClassType getNewType() {
             return getEnclosingType();
         }
 
-        @Override
-        public boolean isAnonymous() {
+        @Override public boolean isAnonymous() {
             return myNode.isAnonymousClass();
         }
 
-        @Override
-        public boolean isDiamond() {
+        @Override public boolean isDiamond() {
             return false;
         }
 
-        @Override
-        public @Nullable JTypeMirror unresolvedType() {
+        @Override public @Nullable JTypeMirror unresolvedType() {
             return getNewType();
         }
     }
@@ -169,19 +155,17 @@ class CtorInvocMirror extends BaseInvocMirror<ASTConstructorCall> implements Cto
             super(mirrors, call, false, parent, subexprMaker);
         }
 
-        @Override
-        public Iterable<JMethodSig> getAccessibleCandidates(JTypeMirror newType) {
+        @Override public Iterable<JMethodSig> getAccessibleCandidates(JTypeMirror newType) {
             if (myNode.isThis()) {
                 return getEnclosingType().getConstructors();
             }
             return IteratorUtil.mapIterator(
-                newType.getConstructors(),
-                iter -> IteratorUtil.filter(iter, ctor -> JavaResolvers.isAccessibleIn(getEnclosingType().getSymbol().getNestRoot(), ctor.getSymbol(), true))
+                    newType.getConstructors(),
+                    iter -> IteratorUtil.filter(iter, ctor -> JavaResolvers.isAccessibleIn(getEnclosingType().getSymbol().getNestRoot(), ctor.getSymbol(), true))
             );
         }
 
-        @Override
-        public @NonNull JClassType getNewType() {
+        @Override public @NonNull JClassType getNewType() {
             // note that actually, for a qualified super ctor call,
             // the new type should be reparameterized using the LHS.
             // In valid code though, both are equivalent, todo unless the superclass is raw
@@ -190,8 +174,7 @@ class CtorInvocMirror extends BaseInvocMirror<ASTConstructorCall> implements Cto
             return myNode.isThis() ? encl : encl.getSuperClass();
         }
 
-        @Override
-        public @Nullable JTypeMirror unresolvedType() {
+        @Override public @Nullable JTypeMirror unresolvedType() {
             if (myNode.isThis()) {
                 return myNode.getEnclosingType().getTypeMirror();
             } else {
@@ -199,13 +182,11 @@ class CtorInvocMirror extends BaseInvocMirror<ASTConstructorCall> implements Cto
             }
         }
 
-        @Override
-        public boolean isAnonymous() {
+        @Override public boolean isAnonymous() {
             return false;
         }
 
-        @Override
-        public boolean isDiamond() {
+        @Override public boolean isDiamond() {
             return false;
         }
 

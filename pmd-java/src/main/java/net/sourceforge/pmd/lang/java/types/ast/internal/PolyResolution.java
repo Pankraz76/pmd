@@ -142,9 +142,9 @@ public final class PolyResolution {
                 // safe cast because ASTSwitchExpression doesn't exist pre java 13
                 ASTConditionalExpression conditional = (ASTConditionalExpression) e;
                 return computeStandaloneConditionalType(
-                    this.ts,
-                    conditional.getThenBranch().getTypeMirror(),
-                    conditional.getElseBranch().getTypeMirror()
+                        this.ts,
+                        conditional.getThenBranch().getTypeMirror(),
+                        conditional.getElseBranch().getTypeMirror()
                 );
             }
 
@@ -319,10 +319,10 @@ public final class PolyResolution {
      */
     private static boolean canBePoly(TypeNode e) {
         return e instanceof ASTLambdaExpression
-            || e instanceof ASTMethodReference
-            || e instanceof ASTConditionalExpression
-            || e instanceof ASTSwitchExpression
-            || e instanceof InvocationNode;
+                || e instanceof ASTMethodReference
+                || e instanceof ASTConditionalExpression
+                || e instanceof ASTSwitchExpression
+                || e instanceof InvocationNode;
     }
 
     /**
@@ -380,7 +380,7 @@ public final class PolyResolution {
         } else if (methodDecl instanceof ASTMethodDeclaration) {
             @NonNull ASTType resultType = ((ASTMethodDeclaration) methodDecl).getResultTypeNode();
             return resultType instanceof ASTVoidType ? null // (this is an error)
-                                                     : resultType.getTypeMirror();
+                    : resultType.getTypeMirror();
         }
         // Return within ctor or initializer or the like,
         // return with value is disallowed. This is an error.
@@ -454,9 +454,9 @@ public final class PolyResolution {
                 // We want to fetch the outermost invocation node, but not further
                 ExprContext outerCtx = contextOf(papi, /*onlyInvoc:*/true, internalUse);
                 return canGiveContextToPoly(outerCtx, false)
-                       ? outerCtx
-                       // otherwise we're done, this is the outermost context
-                       : newInvocContext(papi, node.getIndexInParent());
+                        ? outerCtx
+                        // otherwise we're done, this is the outermost context
+                        : newInvocContext(papi, node.getIndexInParent());
             }
         } else if (doesCascadesContext(papa, node, internalUse)) {
             // switch/conditional
@@ -488,7 +488,7 @@ public final class PolyResolution {
 
 
         } else if (papa instanceof ASTVariableDeclarator
-            && !((ASTVariableDeclarator) papa).getVarId().isTypeInferred()) {
+                && !((ASTVariableDeclarator) papa).getVarId().isTypeInferred()) {
 
             return newAssignmentCtx(((ASTVariableDeclarator) papa).getVarId().getTypeMirror());
 
@@ -499,7 +499,7 @@ public final class PolyResolution {
             return contextOf(owner, false, internalUse);
 
         } else if (node instanceof ASTExplicitConstructorInvocation
-            && ((ASTExplicitConstructorInvocation) node).isSuper()) {
+                && ((ASTExplicitConstructorInvocation) node).isSuper()) {
 
             // the superclass type is taken as a target type for inference,
             // when the super ctor is generic/ the superclass is generic
@@ -528,7 +528,7 @@ public final class PolyResolution {
         } else if (papa instanceof ASTAssertStatement) {
 
             return node.getIndexInParent() == 0 ? booleanCtx // condition
-                                                : stringCtx; // message
+                    : stringCtx; // message
 
         } else if (papa instanceof ASTLambdaExpression && node.getIndexInParent() == 1) {
             // lambda expression body
@@ -544,7 +544,7 @@ public final class PolyResolution {
 
 
         } else if (papa instanceof ASTIfStatement
-            || papa instanceof ASTLoopStatement && !(papa instanceof ASTForeachStatement)) {
+                || papa instanceof ASTLoopStatement && !(papa instanceof ASTForeachStatement)) {
 
             return booleanCtx; // condition
 
@@ -558,7 +558,7 @@ public final class PolyResolution {
                     return ExprContext.getMissingInstance();
                 }
                 assert InternalApiBridge.isStandaloneInternal((ASTConditionalExpression) papa)
-                    : "Expected standalone ternary, otherwise doesCascadeContext(..) would have returned true";
+                        : "Expected standalone ternary, otherwise doesCascadeContext(..) would have returned true";
 
                 return newStandaloneTernaryCtx(((ASTConditionalExpression) papa).getTypeMirror());
             }
@@ -570,67 +570,67 @@ public final class PolyResolution {
             JTypeMirror otherType = JavaAstUtils.getOtherOperandIfInInfixExpr(node).getTypeMirror();
             JTypeMirror ctxType = ((ASTInfixExpression) papa).getTypeMirror();
             switch (op) {
-            case CONDITIONAL_OR:
-            case CONDITIONAL_AND:
-                return booleanCtx;
-            case OR:
-            case XOR:
-            case AND:
-                return ctxType == ts.BOOLEAN ? booleanCtx : getNumericContext(ctxType);
-            case LEFT_SHIFT:
-            case RIGHT_SHIFT:
-            case UNSIGNED_RIGHT_SHIFT:
-                return node.getIndexInParent() == 1 ? intCtx
-                                                    : getNumericContext(nodeType.unbox());
-            case EQ:
-            case NE:
-                if (otherType.isNumeric() || nodeType.isNumeric()) {
-                    JTypeMirror prom = TypeConversion.binaryNumericPromotion(otherType.unbox(), nodeType.unbox());
-                    if (prom == ts.ERROR) {
-                        // cannot be promoted
-                        return ExprContext.getMissingInstance();
-                    }
-                    return getNumericContext(prom);
-                } else if (otherType.isPrimitive(PrimitiveTypeKind.BOOLEAN)
-                    || nodeType.isPrimitive(PrimitiveTypeKind.BOOLEAN)) {
+                case CONDITIONAL_OR:
+                case CONDITIONAL_AND:
                     return booleanCtx;
-                }
+                case OR:
+                case XOR:
+                case AND:
+                    return ctxType == ts.BOOLEAN ? booleanCtx : getNumericContext(ctxType);
+                case LEFT_SHIFT:
+                case RIGHT_SHIFT:
+                case UNSIGNED_RIGHT_SHIFT:
+                    return node.getIndexInParent() == 1 ? intCtx
+                            : getNumericContext(nodeType.unbox());
+                case EQ:
+                case NE:
+                    if (otherType.isNumeric() || nodeType.isNumeric()) {
+                        JTypeMirror prom = TypeConversion.binaryNumericPromotion(otherType.unbox(), nodeType.unbox());
+                        if (prom == ts.ERROR) {
+                            // cannot be promoted
+                            return ExprContext.getMissingInstance();
+                        }
+                        return getNumericContext(prom);
+                    } else if (otherType.isPrimitive(PrimitiveTypeKind.BOOLEAN)
+                            || nodeType.isPrimitive(PrimitiveTypeKind.BOOLEAN)) {
+                        return booleanCtx;
+                    }
 
-                return ExprContext.getMissingInstance();
-            case ADD:
-                if (TypeTestUtil.isA(String.class, ctxType)) {
-                    // string concat expr
-                    return stringCtx;
-                }
+                    return ExprContext.getMissingInstance();
+                case ADD:
+                    if (TypeTestUtil.isA(String.class, ctxType)) {
+                        // string concat expr
+                        return stringCtx;
+                    }
                 // fallthrough
             case SUB:
-            case MUL:
-            case DIV:
-            case MOD:
-                return getNumericContext(ctxType); // binary promoted by LazyTypeResolver
-            case LE:
-            case GE:
-            case GT:
-            case LT:
-                return getNumericContext(TypeConversion.binaryNumericPromotion(nodeType, otherType));
-            default:
-                return ExprContext.getMissingInstance();
+                case MUL:
+                case DIV:
+                case MOD:
+                    return getNumericContext(ctxType); // binary promoted by LazyTypeResolver
+                case LE:
+                case GE:
+                case GT:
+                case LT:
+                    return getNumericContext(TypeConversion.binaryNumericPromotion(nodeType, otherType));
+                default:
+                    return ExprContext.getMissingInstance();
             }
         } else if (papa instanceof ASTUnaryExpression) {
             switch (((ASTUnaryExpression) papa).getOperator()) {
-            case UNARY_PLUS:
-            case UNARY_MINUS:
-            case COMPLEMENT:
-                JTypeMirror parentType = ((ASTUnaryExpression) papa).getTypeMirror();
-                if (parentType == ts.ERROR) {
+                case UNARY_PLUS:
+                case UNARY_MINUS:
+                case COMPLEMENT:
+                    JTypeMirror parentType = ((ASTUnaryExpression) papa).getTypeMirror();
+                    if (parentType == ts.ERROR) {
+                        break;
+                    }
+                    // this was already unary promoted
+                    return getNumericContext(parentType);
+                case NEGATION:
+                    return booleanCtx;
+                default:
                     break;
-                }
-                // this was already unary promoted
-                return getNumericContext(parentType);
-            case NEGATION:
-                return booleanCtx;
-            default:
-                break;
             }
             return ExprContext.getMissingInstance();
         } else if (papa instanceof ASTSwitchLike && node.getIndexInParent() == 0) {
@@ -653,16 +653,16 @@ public final class PolyResolution {
             // in java < 8, context doesn't flow through ternaries
             return false;
         } else if (!internalUse
-            && node instanceof ASTConditionalExpression
-            && child.getIndexInParent() != 0) {
+                && node instanceof ASTConditionalExpression
+                && child.getIndexInParent() != 0) {
             // conditional branch
             ((ASTConditionalExpression) node).getTypeMirror(); // force resolution
             return !InternalApiBridge.isStandaloneInternal((ASTConditionalExpression) node);
         }
         return node instanceof ASTSwitchExpression && child.getIndexInParent() != 0 // not the condition
-            || node instanceof ASTSwitchArrowBranch
-            || node instanceof ASTConditionalExpression && child.getIndexInParent() != 0 // not the condition
-            || internalUse && node instanceof ASTLambdaExpression && child.getIndexInParent() == 1;
+                || node instanceof ASTSwitchArrowBranch
+                || node instanceof ASTConditionalExpression && child.getIndexInParent() != 0 // not the condition
+                || internalUse && node instanceof ASTLambdaExpression && child.getIndexInParent() == 1;
     }
 
 

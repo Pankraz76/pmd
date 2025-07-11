@@ -23,36 +23,31 @@ class ApexLanguageHandler implements LanguageVersionHandler {
 
     private final ApexMetricsProvider myMetricsProvider = new ApexMetricsProvider();
 
-    @Override
-    public Parser getParser() {
+    @Override public Parser getParser() {
         return new ApexParser();
     }
 
-    @Override
-    public List<ViolationSuppressor> getExtraViolationSuppressors() {
+    @Override public List<ViolationSuppressor> getExtraViolationSuppressors() {
         return ApexAnnotationSuppressor.ALL_APEX_SUPPRESSORS;
     }
 
-    @Override
-    public LanguageMetricsProvider getLanguageMetricsProvider() {
+    @Override public LanguageMetricsProvider getLanguageMetricsProvider() {
         return myMetricsProvider;
     }
 
-    @Override
-    public DesignerBindings getDesignerBindings() {
+    @Override public DesignerBindings getDesignerBindings() {
         return ApexDesignerBindings.INSTANCE;
     }
 
     private static final class ApexMetricsProvider implements LanguageMetricsProvider {
 
         private final Set<Metric<?, ?>> metrics = setOf(
-            ApexMetrics.COGNITIVE_COMPLEXITY,
-            ApexMetrics.CYCLO,
-            ApexMetrics.WEIGHED_METHOD_COUNT
+                ApexMetrics.COGNITIVE_COMPLEXITY,
+                ApexMetrics.CYCLO,
+                ApexMetrics.WEIGHED_METHOD_COUNT
         );
 
-        @Override
-        public Set<Metric<?, ?>> getMetrics() {
+        @Override public Set<Metric<?, ?>> getMetrics() {
             return metrics;
         }
     }

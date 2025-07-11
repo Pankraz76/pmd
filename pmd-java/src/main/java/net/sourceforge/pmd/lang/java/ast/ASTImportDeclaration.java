@@ -76,8 +76,7 @@ public final class ASTImportDeclaration extends AbstractJavaNode implements ASTT
     }
 
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         // the image was null before 7.0, best keep it that way
         return null;
     }
@@ -123,8 +122,7 @@ public final class ASTImportDeclaration extends AbstractJavaNode implements ASTT
         return importName.substring(0, lastDot);
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -141,8 +139,7 @@ public final class ASTImportDeclaration extends AbstractJavaNode implements ASTT
      * @see <a href="https://openjdk.org/jeps/476">JEP 476: Module Import Declarations (Preview)</a> (Java 23)
      * @see <a href="https://openjdk.org/jeps/494">JEP 494: Module Import Declarations (Second Preview)</a> (Java 24)
      */
-    @Experimental
-    public boolean isModuleImport() {
+    @Experimental public boolean isModuleImport() {
         return moduleImport;
     }
 }

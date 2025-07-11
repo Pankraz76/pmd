@@ -15,7 +15,7 @@ import net.sourceforge.pmd.lang.java.symbols.SymbolicValue.SymAnnot;
  * @author Clément Fournier
  */
 abstract class AbstractAstAnnotableSym<T extends SymbolDeclaratorNode & Annotatable>
-    extends AbstractAstBackedSymbol<T> implements AnnotableSymbol {
+        extends AbstractAstBackedSymbol<T> implements AnnotableSymbol {
 
     private PSet<SymAnnot> annots;
 
@@ -24,8 +24,7 @@ abstract class AbstractAstAnnotableSym<T extends SymbolDeclaratorNode & Annotata
         super(node, factory);
     }
 
-    @Override
-    public PSet<SymAnnot> getDeclaredAnnotations() {
+    @Override public PSet<SymAnnot> getDeclaredAnnotations() {
         if (annots == null) {
             // todo filter out type annotations
             annots = SymbolResolutionPass.buildSymbolicAnnotations(node.getDeclaredAnnotations());

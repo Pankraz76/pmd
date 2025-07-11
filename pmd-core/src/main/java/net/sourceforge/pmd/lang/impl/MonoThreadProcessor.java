@@ -20,16 +20,14 @@ final class MonoThreadProcessor extends AbstractPMDProcessor {
         task.getMessageReporter().log(Level.DEBUG, "Using main thread for analysis");
     }
 
-    @Override
-    @SuppressWarnings("PMD.CloseResource") // closed by the PMDRunnable
+    @Override @SuppressWarnings("PMD.CloseResource") // closed by the PMDRunnable
     public void processFiles() {
         for (TextFile file : task.getFiles()) {
             new MonothreadRunnable(file, task).run();
         }
     }
 
-    @Override
-    public void close() {
+    @Override public void close() {
         // nothing to do
     }
 
@@ -43,8 +41,7 @@ final class MonoThreadProcessor extends AbstractPMDProcessor {
         }
 
 
-        @Override
-        protected RuleSets getRulesets() {
+        @Override protected RuleSets getRulesets() {
             return ruleSets;
         }
     }

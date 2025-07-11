@@ -33,11 +33,9 @@ class YAHTMLRendererTest extends AbstractRendererTest {
 
     private File outputDir;
 
-    @TempDir
-    private Path folder;
+    @TempDir private Path folder;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeEach void setUp() {
         outputDir = folder.resolve("pmdtest").toFile();
         assertTrue(outputDir.mkdir());
     }
@@ -45,17 +43,15 @@ class YAHTMLRendererTest extends AbstractRendererTest {
     private RuleViolation newRuleViolation(int beginLine, int beginColumn, int endLine, int endColumn, final String packageNameArg, final String classNameArg) {
         FileLocation loc = createLocation(beginLine, beginColumn, endLine, endColumn);
         Map<String, String> additionalInfo = CollectionUtil.mapOf(RuleViolation.PACKAGE_NAME, packageNameArg,
-                                                                  RuleViolation.CLASS_NAME, classNameArg);
+                RuleViolation.CLASS_NAME, classNameArg);
         return InternalApiBridge.createRuleViolation(new FooRule(), loc, "blah", additionalInfo);
     }
 
-    @Override
-    protected RuleViolation newRuleViolation(int beginLine, int beginColumn, int endLine, int endColumn, Rule rule) {
+    @Override protected RuleViolation newRuleViolation(int beginLine, int beginColumn, int endLine, int endColumn, Rule rule) {
         return newRuleViolation(beginLine, beginColumn, endLine, endColumn, "net.sf.pmd.test", "YAHTMLSampleClass");
     }
 
-    @Test
-    void testReportMultipleViolations() throws Exception {
+    @Test void testReportMultipleViolations() throws Exception {
         String actual = renderReport(getRenderer(), it -> {
             it.onRuleViolation(newRuleViolation(1, 1, 1, 1, "net.sf.pmd.test", "YAHTMLSampleClass1"));
             it.onRuleViolation(newRuleViolation(1, 1, 1, 2, "net.sf.pmd.test", "YAHTMLSampleClass1"));
@@ -72,7 +68,7 @@ class YAHTMLRendererTest extends AbstractRendererTest {
 
         for (String file : htmlFiles) {
             try (FileInputStream in = new FileInputStream(new File(outputDir, file));
-                    InputStream expectedIn = YAHTMLRendererTest.class.getResourceAsStream("yahtml/" + file)) {
+                 InputStream expectedIn = YAHTMLRendererTest.class.getResourceAsStream("yahtml/" + file)) {
                 String data = IOUtil.readToString(in, StandardCharsets.UTF_8);
                 String expected = normalizeLineSeparators(IOUtil.readToString(expectedIn, StandardCharsets.UTF_8));
 
@@ -85,35 +81,29 @@ class YAHTMLRendererTest extends AbstractRendererTest {
         return s.replaceAll("\\R", System.lineSeparator());
     }
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         Renderer result = new YAHTMLRenderer();
         result.setProperty(YAHTMLRenderer.OUTPUT_DIR, outputDir.getAbsolutePath());
         return result;
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return "<h3 align=\"center\">The HTML files are located in '" + outputDir + "'.</h3>" + System.lineSeparator();
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return getExpected();
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return getExpected();
     }
 
-    @Override
-    String getExpectedError(ProcessingError error) {
+    @Override String getExpectedError(ProcessingError error) {
         return getExpected();
     }
 
-    @Override
-    String getExpectedError(ConfigurationError error) {
+    @Override String getExpectedError(ConfigurationError error) {
         return getExpected();
     }
 }

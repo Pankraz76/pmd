@@ -31,8 +31,7 @@ class ApexLexerTest {
             + "   }\n"
             + "}\n";
 
-    @Test
-    void testLexer() {
+    @Test void testLexer() {
         CharStream in = CharStreams.fromString(CODE);
         ApexLexer lexer = new ApexLexer(in);
 
@@ -45,8 +44,7 @@ class ApexLexerTest {
         assertEquals(35, tokenCount);
     }
 
-    @Test
-    void testParser() {
+    @Test void testParser() {
         CharStream in = CharStreams.fromString(CODE);
         ApexLexer lexer = new ApexLexer(in);
         ApexParser parser = new ApexParser(new CommonTokenStream(lexer));
@@ -54,8 +52,7 @@ class ApexLexerTest {
         assertNotNull(compilationUnit);
     }
 
-    @Test
-    void testLexerUnicodeEscapes() {
+    @Test void testLexerUnicodeEscapes() {
         String s = "'Fran\\u00E7ois'";
         // note: with apex-parser 4.3.1, no errors are reported anymore
         assertEquals(0, getLexingErrors(CharStreams.fromString(s)));
@@ -75,9 +72,8 @@ class ApexLexerTest {
     private static class ErrorListener extends BaseErrorListener {
         private int errorCount = 0;
 
-        @Override
-        public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line,
-            int charPositionInLine, String msg, RecognitionException e) {
+        @Override public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line,
+                int charPositionInLine, String msg, RecognitionException e) {
             ++errorCount;
         }
 

@@ -20,84 +20,68 @@ class CsCpdLexerTest extends CpdTextComparisonTest {
         super("cs", ".cs");
     }
 
-    @Test
-    void testSimpleClass() {
+    @Test void testSimpleClass() {
         doTest("simpleClass");
     }
 
-    @Test
-    void testSimpleClassMethodMultipleLines() {
+    @Test void testSimpleClassMethodMultipleLines() {
         doTest("simpleClassMethodMultipleLines");
     }
 
-    @Test
-    void testStrings() {
+    @Test void testStrings() {
         doTest("strings");
     }
 
-    @Test
-    void testOpenString() {
+    @Test void testOpenString() {
         assertThrows(LexException.class, () -> doTest("unlexable_string"));
     }
 
-    @Test
-    void testCommentsIgnored1() {
+    @Test void testCommentsIgnored1() {
         doTest("comments");
     }
 
-    @Test
-    void testIgnoreBetweenSpecialComments() {
+    @Test void testIgnoreBetweenSpecialComments() {
         doTest("specialComments");
     }
 
-    @Test
-    void testOperators() {
+    @Test void testOperators() {
         doTest("operatorsAndStuff");
     }
 
 
-    @Test
-    void testLineNumberAfterMultilineString() {
+    @Test void testLineNumberAfterMultilineString() {
         doTest("strings");
     }
 
-    @Test
-    void testDoNotIgnoreUsingDirectives() {
+    @Test void testDoNotIgnoreUsingDirectives() {
         doTest("usingDirectives");
     }
 
-    @Test
-    void testIgnoreUsingDirectives() {
+    @Test void testIgnoreUsingDirectives() {
         doTest("usingDirectives", "_ignored", ignoreUsings());
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 
-    @Test
-    void testLongListsOfNumbersAreNotIgnored() {
+    @Test void testLongListsOfNumbersAreNotIgnored() {
         doTest("listOfNumbers");
     }
 
-    @Test
-    void testLongListsOfNumbersAreIgnored() {
+    @Test void testLongListsOfNumbersAreIgnored() {
         doTest("listOfNumbers", "_ignored", skipLiteralSequences());
     }
 
-    @Test
-    void testCSharp7And8Additions() {
+    @Test void testCSharp7And8Additions() {
         doTest("csharp7And8Additions");
     }
 
-    @Test
-    void testAttributesAreNotIgnored() {
+    @Test void testAttributesAreNotIgnored() {
         doTest("attributes");
     }
 
-    @Test
-    void testAttributesAreIgnored() {
+    @Test void testAttributesAreIgnored() {
         doTest("attributes", "_ignored", skipAttributes());
     }
 
@@ -113,8 +97,7 @@ class CsCpdLexerTest extends CpdTextComparisonTest {
         return properties(false, false, true);
     }
 
-    @Override
-    public @NonNull LanguagePropertyConfig defaultProperties() {
+    @Override public @NonNull LanguagePropertyConfig defaultProperties() {
         return properties(false, false, false);
     }
 

@@ -14,8 +14,7 @@ class RustCpdLexerTest extends CpdTextComparisonTest {
         super("rust", ".rs");
     }
 
-    @Test
-    void testHelloWorld() {
+    @Test void testHelloWorld() {
         doTest("helloworld");
     }
 

@@ -62,7 +62,7 @@ public abstract class ExprContext {
                 // todo there's a gritty detail about compound assignment operators
                 //  with a primitive LHS, see https://github.com/pmd/pmd/issues/2023
                 || (kind == CAST ? TypeConversion.isConvertibleInCastContext(type, targetType)
-                            : TypeConversion.isConvertibleUsingBoxing(type, targetType));
+                : TypeConversion.isConvertibleUsingBoxing(type, targetType));
     }
 
     /**
@@ -80,8 +80,8 @@ public abstract class ExprContext {
 
     final boolean canGiveContextToPoly(boolean lambdaOrMethodRef) {
         return this.hasKind(ASSIGNMENT)
-            || this.hasKind(INVOCATION)
-            || this.hasKind(CAST) && lambdaOrMethodRef;
+                || this.hasKind(INVOCATION)
+                || this.hasKind(CAST) && lambdaOrMethodRef;
     }
 
     public @Nullable InvocationNode getInvocNodeIfInvocContext() {

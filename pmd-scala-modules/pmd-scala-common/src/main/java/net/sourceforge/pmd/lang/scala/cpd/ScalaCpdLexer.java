@@ -41,8 +41,7 @@ public class ScalaCpdLexer implements CpdLexer {
         dialect = ScalaDialect.dialectOf(langVer);
     }
 
-    @Override
-    public void tokenize(TextDocument document, TokenFactory tokenEntries) {
+    @Override public void tokenize(TextDocument document, TokenFactory tokenEntries) {
 
 
         try {
@@ -64,7 +63,7 @@ public class ScalaCpdLexer implements CpdLexer {
                     continue;
                 }
                 tokenEntries.recordToken(token.getImage(),
-                                         token.getReportLocation());
+                        token.getReportLocation());
             }
         } catch (Exception e) {
             if (e instanceof TokenizeException) { // NOPMD
@@ -72,7 +71,7 @@ public class ScalaCpdLexer implements CpdLexer {
                 TokenizeException tokE = (TokenizeException) e;
                 Position pos = tokE.pos();
                 throw tokenEntries.makeLexException(
-                    pos.startLine() + 1, pos.startColumn() + 1, "Scalameta threw", tokE);
+                        pos.startLine() + 1, pos.startColumn() + 1, "Scalameta threw", tokE);
             } else {
                 throw e;
             }
@@ -92,8 +91,8 @@ public class ScalaCpdLexer implements CpdLexer {
         private final Iterator<Token> tokenIter;
         private final TextDocument textDocument;
         private static final Class<?>[] SKIPPABLE_TOKENS = {
-            Token.Space.class, Token.Tab.class, Token.CR.class,
-            Token.LF.class, Token.FF.class, Token.LFLF.class, Token.EOF.class, Token.Comment.class };
+                Token.Space.class, Token.Tab.class, Token.CR.class,
+                Token.LF.class, Token.FF.class, Token.LFLF.class, Token.EOF.class, Token.Comment.class};
 
         private ScalaTokenAdapter previousComment = null;
 
@@ -102,8 +101,7 @@ public class ScalaCpdLexer implements CpdLexer {
             this.textDocument = textDocument;
         }
 
-        @Override
-        public ScalaTokenAdapter getNextToken() {
+        @Override public ScalaTokenAdapter getNextToken() {
             if (!tokenIter.hasNext()) {
                 return null;
             }
@@ -139,8 +137,7 @@ public class ScalaCpdLexer implements CpdLexer {
             super(tokenManager);
         }
 
-        @Override
-        protected boolean shouldStopProcessing(ScalaTokenAdapter currentToken) {
+        @Override protected boolean shouldStopProcessing(ScalaTokenAdapter currentToken) {
             return currentToken == null;
         }
 

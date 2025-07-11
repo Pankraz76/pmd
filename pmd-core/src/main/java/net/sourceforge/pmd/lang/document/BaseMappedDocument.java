@@ -20,39 +20,32 @@ abstract class BaseMappedDocument implements TextDocument {
         this.base = base;
     }
 
-    @Override
-    public long getCheckSum() {
+    @Override public long getCheckSum() {
         return base.getCheckSum();
     }
 
-    @Override
-    public FileId getFileId() {
+    @Override public FileId getFileId() {
         return base.getFileId();
     }
 
-    @Override
-    public Chars sliceOriginalText(TextRegion region) {
+    @Override public Chars sliceOriginalText(TextRegion region) {
         return base.sliceOriginalText(inputRegion(region));
     }
 
-    @Override
-    public FileLocation toLocation(TextRegion region) {
+    @Override public FileLocation toLocation(TextRegion region) {
         return base.toLocation(inputRegion(region));
     }
 
-    @Override
-    public TextRegion createLineRange(int startLineInclusive, int endLineInclusive) {
+    @Override public TextRegion createLineRange(int startLineInclusive, int endLineInclusive) {
         // see the doc, lines do not need to be translated
         return base.createLineRange(startLineInclusive, endLineInclusive);
     }
 
-    @Override
-    public TextPos2d lineColumnAtOffset(int offset, boolean inclusive) {
+    @Override public TextPos2d lineColumnAtOffset(int offset, boolean inclusive) {
         return base.lineColumnAtOffset(inputOffset(offset, inclusive));
     }
 
-    @Override
-    public int offsetAtLineColumn(TextPos2d position) {
+    @Override public int offsetAtLineColumn(TextPos2d position) {
         // Here there is no translation happening, because
         // TextPos2d is always in the coordinate system of the root document.
         return base.offsetAtLineColumn(position);
@@ -74,7 +67,7 @@ abstract class BaseMappedDocument implements TextDocument {
             return TextRegion.caretAt(inputOffset(outputRegion.getStartOffset(), true));
         }
         return TextRegion.fromBothOffsets(inputOffset(outputRegion.getStartOffset(), true),
-                                          inputOffset(outputRegion.getEndOffset(), false));
+                inputOffset(outputRegion.getEndOffset(), false));
     }
 
     /**
@@ -111,8 +104,7 @@ abstract class BaseMappedDocument implements TextDocument {
     protected abstract int localOffsetTransform(int outOffset, boolean inclusive);
 
 
-    @Override
-    public void close() throws IOException {
+    @Override public void close() throws IOException {
         base.close();
     }
 }

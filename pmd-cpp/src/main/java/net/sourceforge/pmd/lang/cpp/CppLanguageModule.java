@@ -21,12 +21,12 @@ public class CppLanguageModule extends CpdOnlyLanguageModuleBase {
     private static final String ID = "cpp";
 
     public static final PropertyDescriptor<String> CPD_SKIP_BLOCKS =
-        PropertyFactory.stringProperty("cpdSkipBlocksPattern")
-                       .defaultValue(CpdLanguagePropertiesDefaults.DEFAULT_SKIP_BLOCKS_PATTERN)
-                       .desc("Specifies a start and end delimiter for CPD to completely ignore. "
-                                 + "The delimiters are separated by a pipe |. The default skips code "
-                                 + " that is conditionally compiled out. Set this property to empty to disable this.")
-                       .build();
+            PropertyFactory.stringProperty("cpdSkipBlocksPattern")
+                    .defaultValue(CpdLanguagePropertiesDefaults.DEFAULT_SKIP_BLOCKS_PATTERN)
+                    .desc("Specifies a start and end delimiter for CPD to completely ignore. "
+                            + "The delimiters are separated by a pipe |. The default skips code "
+                            + " that is conditionally compiled out. Set this property to empty to disable this.")
+                    .build();
 
     /**
      * Creates a new instance of {@link CppLanguageModule} with the default extensions
@@ -34,16 +34,15 @@ public class CppLanguageModule extends CpdOnlyLanguageModuleBase {
      */
     public CppLanguageModule() {
         super(LanguageMetadata.withId(ID)
-                              .name("C++")
-                              .extensions("h", "hpp", "hxx", "c", "cpp", "cxx", "cc", "C"));
+                .name("C++")
+                .extensions("h", "hpp", "hxx", "c", "cpp", "cxx", "cc", "C"));
     }
 
     public static CppLanguageModule getInstance() {
         return (CppLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public LanguagePropertyBundle newPropertyBundle() {
+    @Override public LanguagePropertyBundle newPropertyBundle() {
         LanguagePropertyBundle bundle = super.newPropertyBundle();
         bundle.definePropertyDescriptor(CpdLanguageProperties.CPD_IGNORE_LITERAL_SEQUENCES);
         bundle.definePropertyDescriptor(CpdLanguageProperties.CPD_IGNORE_LITERAL_AND_IDENTIFIER_SEQUENCES);
@@ -53,8 +52,7 @@ public class CppLanguageModule extends CpdOnlyLanguageModuleBase {
         return bundle;
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new CppCpdLexer(bundle);
     }
 }

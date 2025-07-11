@@ -51,13 +51,11 @@ class CpdAnalysisTest {
     private static final String BASE_TEST_RESOURCE_PATH = "src/test/resources/net/sourceforge/pmd/cpd/files/";
     private static final String TARGET_TEST_RESOURCE_PATH = "target/classes/net/sourceforge/pmd/cpd/files/";
 
-    @TempDir
-    private Path tempDir;
+    @TempDir private Path tempDir;
 
     private CPDConfiguration config = new CPDConfiguration();
 
-    @BeforeEach
-    void setup() {
+    @BeforeEach void setup() {
         config.setOnlyRecognizeLanguage(DummyLanguageModule.getInstance());
         config.setMinimumTileSize(10);
     }
@@ -72,12 +70,12 @@ class CpdAnalysisTest {
     private void prepareSymLinks() throws Exception {
         Runtime runtime = Runtime.getRuntime();
         if (!new File(TARGET_TEST_RESOURCE_PATH, "symlink-for-real-file.txt").exists()) {
-            runtime.exec(new String[] { "ln", "-s", BASE_TEST_RESOURCE_PATH + "real-file.txt",
-                TARGET_TEST_RESOURCE_PATH + "symlink-for-real-file.txt", }).waitFor();
+            runtime.exec(new String[]{"ln", "-s", BASE_TEST_RESOURCE_PATH + "real-file.txt",
+                    TARGET_TEST_RESOURCE_PATH + "symlink-for-real-file.txt", }).waitFor();
         }
         if (!new File(BASE_TEST_RESOURCE_PATH, "this-is-a-broken-sym-link-for-test").exists()) {
-            runtime.exec(new String[] { "ln", "-s", "broken-sym-link",
-                TARGET_TEST_RESOURCE_PATH + "this-is-a-broken-sym-link-for-test", }).waitFor();
+            runtime.exec(new String[]{"ln", "-s", "broken-sym-link",
+                    TARGET_TEST_RESOURCE_PATH + "this-is-a-broken-sym-link-for-test", }).waitFor();
         }
     }
 
@@ -88,8 +86,7 @@ class CpdAnalysisTest {
      * @throws Exception
      *             any error
      */
-    @Test
-    @EnabledOnOs(OS.LINUX) // Symlinks are not well supported under Windows
+    @Test @EnabledOnOs(OS.LINUX) // Symlinks are not well supported under Windows
     void testFileSectionWithBrokenSymlinks() throws Exception {
         prepareSymLinks();
 
@@ -110,8 +107,7 @@ class CpdAnalysisTest {
      * @throws Exception
      *             any error
      */
-    @Test
-    @EnabledOnOs(OS.LINUX) // Symlinks are not well supported under Windows
+    @Test @EnabledOnOs(OS.LINUX) // Symlinks are not well supported under Windows
     void testFileAddedAsSymlinkAndReal() throws Exception {
         prepareSymLinks();
 
@@ -129,8 +125,7 @@ class CpdAnalysisTest {
     /**
      * A file should be not be added via a sym link.
      */
-    @Test
-    @EnabledOnOs(OS.LINUX) // Symlinks are not well supported under Windows
+    @Test @EnabledOnOs(OS.LINUX) // Symlinks are not well supported under Windows
     void testNoFileAddedAsSymlink() throws Exception {
         prepareSymLinks();
 
@@ -151,8 +146,7 @@ class CpdAnalysisTest {
      * @throws Exception
      *             any error
      */
-    @Test
-    void testFileAddedWithRelativePath() throws Exception {
+    @Test void testFileAddedWithRelativePath() throws Exception {
         FileCountAssertListener listener = new FileCountAssertListener(1);
         try (CpdAnalysis cpd = CpdAnalysis.create(config)) {
             cpd.setCpdListener(listener);
@@ -168,8 +162,7 @@ class CpdAnalysisTest {
      * See also https://github.com/pmd/pmd/issues/1196
      * @throws Exception
      */
-    @Test
-    void testFileOrderRelevance() throws Exception {
+    @Test void testFileOrderRelevance() throws Exception {
         Path dup1 = Paths.get("./" + BASE_TEST_RESOURCE_PATH, "dup1.txt");
         Path dup2 = Paths.get("./" + BASE_TEST_RESOURCE_PATH, "dup2.txt");
 
@@ -202,8 +195,7 @@ class CpdAnalysisTest {
         }
     }
 
-    @Test
-    void testNoSkipLexicalErrors() throws IOException {
+    @Test void testNoSkipLexicalErrors() throws IOException {
         PmdReporter reporter = mock(PmdReporter.class);
         config.setReporter(reporter);
 
@@ -219,8 +211,7 @@ class CpdAnalysisTest {
         verifyNoMoreInteractions(reporter);
     }
 
-    @Test
-    void reportShouldContainProcessingErrors() throws IOException {
+    @Test void reportShouldContainProcessingErrors() throws IOException {
         AtomicReference<CPDReport> report = new AtomicReference<>();
         PmdReporter reporter = mock(PmdReporter.class);
         config.setReporter(reporter);
@@ -248,16 +239,14 @@ class CpdAnalysisTest {
         verifyNoMoreInteractions(reporter);
     }
 
-    @Test
-    void reportToNonExistentFile(@TempDir Path tmpDir) throws IOException {
+    @Test void reportToNonExistentFile(@TempDir Path tmpDir) throws IOException {
         Path reportFile = tmpDir.resolve("cpd.txt");
         assertFalse(Files.exists(reportFile), "Report file " + reportFile + " should not exist");
 
         testReportFile(reportFile);
     }
 
-    @Test
-    void reportToExistingFileShouldOverwrite(@TempDir Path tmpDir) throws IOException {
+    @Test void reportToExistingFileShouldOverwrite(@TempDir Path tmpDir) throws IOException {
         Path reportFile = tmpDir.resolve("cpd.txt");
         assertFalse(Files.exists(reportFile), "Report file " + reportFile + " should not exist");
         final String sentinel = "EMPTY_FILE";
@@ -293,8 +282,7 @@ class CpdAnalysisTest {
     }
 
 
-    @Test
-    void testSkipLexicalErrors() throws IOException {
+    @Test void testSkipLexicalErrors() throws IOException {
         PmdReporter reporter = mock(PmdReporter.class);
         config.setReporter(reporter);
 
@@ -308,8 +296,7 @@ class CpdAnalysisTest {
         verifyNoMoreInteractions(reporter);
     }
 
-    @Test
-    void duplicatedFilesShouldBeSkipped() throws IOException {
+    @Test void duplicatedFilesShouldBeSkipped() throws IOException {
         String filename = "file1.dummy";
         Path aFile1 = Files.createDirectory(tempDir.resolve("a")).resolve(filename).toAbsolutePath();
         Path bFile1 = Files.createDirectory(tempDir.resolve("b")).resolve(filename).toAbsolutePath();
@@ -343,16 +330,14 @@ class CpdAnalysisTest {
             this.files = 0;
         }
 
-        @Override
-        public void addedFile(int fileCount) {
+        @Override public void addedFile(int fileCount) {
             files++;
             if (files > expectedFilesCount) {
                 fail("File was added!");
             }
         }
 
-        @Override
-        public void phaseUpdate(int phase) {
+        @Override public void phaseUpdate(int phase) {
             // not needed for this test
         }
 

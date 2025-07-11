@@ -114,11 +114,11 @@ public final class FileUtil {
      */
     public static List<Path> readFilelistEntries(Path filelist) throws IOException {
         return Files.readAllLines(filelist).stream()
-                    .flatMap(it -> Arrays.stream(it.split(",")))
-                    .map(String::trim)
-                    .filter(StringUtils::isNotBlank)
-                    .map(Paths::get)
-                    .collect(Collectors.toList());
+                .flatMap(it -> Arrays.stream(it.split(",")))
+                .map(String::trim)
+                .filter(StringUtils::isNotBlank)
+                .map(Paths::get)
+                .collect(Collectors.toList());
     }
 
 

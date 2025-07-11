@@ -20,18 +20,17 @@ public class JspLanguageModule extends SimpleLanguageModuleBase implements CpdCa
 
     public JspLanguageModule() {
         super(LanguageMetadata.withId(ID).name("Java Server Pages").shortName("JSP")
-                              .extensions("jsp", "jspx", "jspf", "tag")
-                              .addVersion("2")
-                              .addDefaultVersion("3"),
-              new JspHandler());
+                        .extensions("jsp", "jspx", "jspf", "tag")
+                        .addVersion("2")
+                        .addDefaultVersion("3"),
+                new JspHandler());
     }
 
     public static JspLanguageModule getInstance() {
         return (JspLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new JspCpdLexer();
     }
 }

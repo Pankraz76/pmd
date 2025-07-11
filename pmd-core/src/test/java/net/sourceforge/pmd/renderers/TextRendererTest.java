@@ -9,39 +9,32 @@ import net.sourceforge.pmd.reporting.Report.ProcessingError;
 
 class TextRendererTest extends AbstractRendererTest {
 
-    @Override
-    Renderer getRenderer() {
+    @Override Renderer getRenderer() {
         return new TextRenderer();
     }
 
-    @Override
-    String getExpected() {
+    @Override String getExpected() {
         return getSourceCodeFilename() + ":1:\tFoo:\tblah" + EOL;
     }
 
-    @Override
-    String getExpectedEmpty() {
+    @Override String getExpectedEmpty() {
         return "";
     }
 
-    @Override
-    String getExpectedMultiple() {
+    @Override String getExpectedMultiple() {
         return getSourceCodeFilename() + ":1:\tFoo:\tblah" + EOL
                 + getSourceCodeFilename() + ":1:\tBoo:\tblah" + EOL;
     }
 
-    @Override
-    String getExpectedError(ProcessingError error) {
+    @Override String getExpectedError(ProcessingError error) {
         return "file\t-\tRuntimeException: Error" + EOL;
     }
 
-    @Override
-    String getExpectedErrorWithoutMessage(ProcessingError error) {
+    @Override String getExpectedErrorWithoutMessage(ProcessingError error) {
         return "file\t-\tNullPointerException: null" + EOL;
     }
 
-    @Override
-    String getExpectedError(ConfigurationError error) {
+    @Override String getExpectedError(ConfigurationError error) {
         return "Foo\t-\ta configuration error" + EOL;
     }
 }

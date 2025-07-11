@@ -22,49 +22,42 @@ class FieldStub extends MemberStubBase implements JFieldSymbol, TypeAnnotationRe
     private final @Nullable Object constValue;
 
     FieldStub(ClassStub classStub,
-              String name,
-              int accessFlags,
-              String descriptor,
-              String signature,
-              @Nullable Object constValue) {
+            String name,
+            int accessFlags,
+            String descriptor,
+            String signature,
+            @Nullable Object constValue) {
         super(classStub, name, accessFlags);
         this.type = new LazyTypeSig(classStub, descriptor, signature);
         this.constValue = constValue;
     }
 
-    @Override
-    public void acceptTypeAnnotation(int typeRef, @Nullable TypePath path, SymAnnot annot) {
+    @Override public void acceptTypeAnnotation(int typeRef, @Nullable TypePath path, SymAnnot annot) {
         assert new TypeReference(typeRef).getSort() == TypeReference.FIELD : typeRef;
         this.type.addTypeAnnotation(path, annot);
     }
 
-    @Override
-    public @Nullable Object getConstValue() {
+    @Override public @Nullable Object getConstValue() {
         return constValue;
     }
 
-    @Override
-    public boolean isEnumConstant() {
+    @Override public boolean isEnumConstant() {
         return (getModifiers() & Opcodes.ACC_ENUM) != 0;
     }
 
-    @Override
-    public JTypeMirror getTypeMirror(Substitution subst) {
+    @Override public JTypeMirror getTypeMirror(Substitution subst) {
         return type.get(subst);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return SymbolToStrings.ASM.toString(this);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return SymbolEquality.FIELD.hash(this);
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         return SymbolEquality.FIELD.equals(this, obj);
     }
 

@@ -21,10 +21,10 @@ public class XslLanguageModule extends SimpleLanguageModuleBase {
 
     public XslLanguageModule() {
         super(LanguageMetadata.withId(ID).name("XSL")
-                              .extensions("xsl", "xslt")
-                              .addVersion("1.0")
-                              .addVersion("2.0")
-                              .addDefaultVersion("3.0"),
+                        .extensions("xsl", "xslt")
+                        .addVersion("1.0")
+                        .addVersion("2.0")
+                        .addDefaultVersion("3.0"),
                 new XmlHandler());
     }
 
@@ -32,8 +32,7 @@ public class XslLanguageModule extends SimpleLanguageModuleBase {
         return (XslLanguageModule) LanguageRegistry.PMD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new XmlCpdLexer();
     }
 }

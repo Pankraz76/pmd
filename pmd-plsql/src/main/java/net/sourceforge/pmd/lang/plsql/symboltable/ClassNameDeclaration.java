@@ -33,8 +33,7 @@ public class ClassNameDeclaration extends AbstractNameDeclaration {
         super(node);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Object " + node.getImage();
     }
 

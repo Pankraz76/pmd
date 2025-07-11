@@ -9,7 +9,8 @@ public class LocalVariableSyntaxForLambdaParameters {
 
     @Target({ElementType.PARAMETER})
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface Nonnull { }
+    public @interface Nonnull {
+    }
 
     public void createLambdas() {
         //var lambda = (var x, var y) -> x.process(y);

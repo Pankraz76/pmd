@@ -15,8 +15,7 @@ public class AbstractClassWithoutAbstractMethodRule extends AbstractJavaRulechai
         super(ASTClassDeclaration.class);
     }
 
-    @Override
-    public Object visit(ASTClassDeclaration node, Object data) {
+    @Override public Object visit(ASTClassDeclaration node, Object data) {
         if (node.isInterface() || !node.isAbstract() || doesExtend(node) || doesImplement(node)) {
             return data;
         }

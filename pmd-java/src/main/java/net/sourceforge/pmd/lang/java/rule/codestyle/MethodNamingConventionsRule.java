@@ -37,8 +37,7 @@ public class MethodNamingConventionsRule extends AbstractNamingConventionRule<AS
         definePropertyDescriptor(junit5Regex);
     }
 
-    @Override
-    public Object visit(ASTMethodDeclaration node, Object data) {
+    @Override public Object visit(ASTMethodDeclaration node, Object data) {
 
         if (node.isOverridden()) {
             return data;
@@ -62,19 +61,16 @@ public class MethodNamingConventionsRule extends AbstractNamingConventionRule<AS
     }
 
 
-    @Override
-    String defaultConvention() {
+    @Override String defaultConvention() {
         return CAMEL_CASE;
     }
 
 
-    @Override
-    String nameExtractor(ASTMethodDeclaration node) {
+    @Override String nameExtractor(ASTMethodDeclaration node) {
         return node.getName();
     }
 
-    @Override
-    RegexPropertyBuilder defaultProp(String name, String displayName) {
+    @Override RegexPropertyBuilder defaultProp(String name, String displayName) {
         String display = (displayName + " method").trim();
         RegexPropertyBuilder prop = super.defaultProp(name.isEmpty() ? "method" : name, display);
 
@@ -84,8 +80,7 @@ public class MethodNamingConventionsRule extends AbstractNamingConventionRule<AS
     }
 
 
-    @Override
-    String kindDisplayName(ASTMethodDeclaration node, PropertyDescriptor<Pattern> descriptor) {
+    @Override String kindDisplayName(ASTMethodDeclaration node, PropertyDescriptor<Pattern> descriptor) {
         return descriptorToDisplayName.get(descriptor.name());
     }
 }

@@ -20,8 +20,7 @@ public final class AstLocalVarSym extends AbstractAstVariableSym implements JLoc
         super(node, factory);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) {
             return true;
         } else if (!(o instanceof AstLocalVarSym)) {
@@ -30,13 +29,11 @@ public final class AstLocalVarSym extends AbstractAstVariableSym implements JLoc
         return node.equals(((AstLocalVarSym) o).node);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return node.hashCode();
     }
 
-    @Override
-    public JTypeMirror getTypeMirror(Substitution subst) {
+    @Override public JTypeMirror getTypeMirror(Substitution subst) {
         return subst(node.getTypeMirror(), subst);
     }
 }

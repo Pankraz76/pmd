@@ -9,8 +9,7 @@ import net.sourceforge.pmd.lang.ast.Node;
 public interface TextNode extends Node {
     String getText();
 
-    @Override
-    default String getXPathNodeName() {
+    @Override default String getXPathNodeName() {
         return "#text";
     }
 }

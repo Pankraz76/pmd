@@ -21,13 +21,11 @@ import net.sourceforge.pmd.reporting.RuleContext;
 
 class MultiThreadProcessorTest extends AbstractPMDProcessorTest {
 
-    @Override
-    protected int getThreads() {
+    @Override protected int getThreads() {
         return 2;
     }
 
-    @Override
-    protected Class<? extends AbstractPMDProcessor> getExpectedImplementation() {
+    @Override protected Class<? extends AbstractPMDProcessor> getExpectedImplementation() {
         return MultiThreadProcessor.class;
     }
 
@@ -37,8 +35,7 @@ class MultiThreadProcessorTest extends AbstractPMDProcessorTest {
         return pmd;
     }
 
-    @Test
-    void errorsShouldBeThrown() {
+    @Test void errorsShouldBeThrown() {
         // in multithreading mode, the errors are detected when closing PmdAnalysis
         Error error = assertThrows(Error.class, () -> {
             try (PmdAnalysis pmd = createPmdAnalysis()) {
@@ -79,8 +76,7 @@ class MultiThreadProcessorTest extends AbstractPMDProcessorTest {
     //        assertFalse("More configuration errors found than expected", configErrors.hasNext());
     //    }
 
-    @Test
-    void testRulesThreadSafety() throws Exception {
+    @Test void testRulesThreadSafety() throws Exception {
         try (PmdAnalysis pmd = createPmdAnalysis("rulesets/MultiThreadProcessorTest/basic.xml")) {
             pmd.performAnalysis();
         }
@@ -96,10 +92,10 @@ class MultiThreadProcessorTest extends AbstractPMDProcessorTest {
     public static class NotThreadSafeRule extends AbstractRule {
         public static AtomicInteger count = new AtomicInteger(0);
         private boolean hasViolation; // this variable will be overridden
+
         // between the threads
 
-        @Override
-        public void apply(Node target, RuleContext ctx) {
+        @Override public void apply(Node target, RuleContext ctx) {
             count.incrementAndGet();
 
             if (target.getTextDocument().getFileId().getOriginalPath().contains("violation")) {
@@ -129,13 +125,11 @@ class MultiThreadProcessorTest extends AbstractPMDProcessorTest {
 
         public static final String DYSFUNCTIONAL_RULE_REASON = "dysfunctional rule is dysfunctional";
 
-        @Override
-        public void apply(Node target, RuleContext ctx) {
+        @Override public void apply(Node target, RuleContext ctx) {
             // noop
         }
 
-        @Override
-        public String dysfunctionReason() {
+        @Override public String dysfunctionReason() {
             return DYSFUNCTIONAL_RULE_REASON;
         }
     }

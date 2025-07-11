@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.rule.Rule;
  */
 class XPathMetricFunctionTest extends BaseXPathFunctionTest {
 
-    @Test
-    void testWellFormedClassMetricRule() {
+    @Test void testWellFormedClassMetricRule() {
         Rule rule = makeXpathRuleFromXPath("//ClassDeclaration[pmd-java:metric('NCSS') > 0]");
         String code = "class Foo { Foo() {} void bar() {}}";
 
@@ -26,8 +25,7 @@ class XPathMetricFunctionTest extends BaseXPathFunctionTest {
     }
 
 
-    @Test
-    void testWellFormedOperationMetricRule() {
+    @Test void testWellFormedOperationMetricRule() {
         Rule rule = makeXpathRuleFromXPath("//ConstructorDeclaration[pmd-java:metric('CYCLO') > 1]");
         String code = "class Goo { Goo() {if(true){}} }";
 
@@ -35,8 +33,7 @@ class XPathMetricFunctionTest extends BaseXPathFunctionTest {
     }
 
 
-    @Test
-    void testBadCase() {
+    @Test void testBadCase() {
         Rule rule = makeXpathRuleFromXPath("//ConstructorDeclaration[pmd-java:metric('cYclo') > 1]");
         String code = "class Hoo { Hoo() {if(true){}} }";
 
@@ -44,17 +41,15 @@ class XPathMetricFunctionTest extends BaseXPathFunctionTest {
     }
 
 
-    @Test
-    void testNonexistentMetric() {
+    @Test void testNonexistentMetric() {
         testWithExpectedException(
-            "//ConstructorDeclaration[pmd-java:metric('FOOBAR') > 1]",
-            "class Joo { Joo() {if(true){}} }",
-            e -> assertThat(e.getMessage(), containsString(MetricFunction.badMetricKeyMessage("FOOBAR"))));
+                "//ConstructorDeclaration[pmd-java:metric('FOOBAR') > 1]",
+                "class Joo { Joo() {if(true){}} }",
+                e -> assertThat(e.getMessage(), containsString(MetricFunction.badMetricKeyMessage("FOOBAR"))));
     }
 
 
-    @Test
-    void testIfStmt() {
+    @Test void testIfStmt() {
         Rule rule = makeXpathRuleFromXPath("//IfStatement[pmd-java:metric('NCSS') = 1]");
         String code = "class Hoo { Hoo() {if(true){}} }";
 
@@ -62,8 +57,7 @@ class XPathMetricFunctionTest extends BaseXPathFunctionTest {
     }
 
 
-    @Test
-    void testWrongNodeTypeMeansEmptySequence() {
+    @Test void testWrongNodeTypeMeansEmptySequence() {
         Rule rule = makeXpathRuleFromXPath("//EnumDeclaration[not(pmd-java:metric('NPATH'))]");
         String code = "enum Loo { FOO; }";
 

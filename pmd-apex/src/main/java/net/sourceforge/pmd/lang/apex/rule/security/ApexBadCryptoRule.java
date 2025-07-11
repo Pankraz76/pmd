@@ -38,13 +38,11 @@ public class ApexBadCryptoRule extends AbstractApexRule {
 
     private final Set<String> potentiallyStaticBlob = new HashSet<>();
 
-    @Override
-    protected @NonNull RuleTargetSelector buildTargetSelector() {
+    @Override protected @NonNull RuleTargetSelector buildTargetSelector() {
         return RuleTargetSelector.forTypes(ASTUserClass.class);
     }
 
-    @Override
-    public Object visit(ASTUserClass node, Object data) {
+    @Override public Object visit(ASTUserClass node, Object data) {
         if (Helper.isTestMethodOrClass(node)) {
             return data;
         }
@@ -88,22 +86,22 @@ public class ApexBadCryptoRule extends AbstractApexRule {
         // .encrypt('AES128', key, exampleIv, data);
         int numberOfChildren = methodCall.getNumChildren();
         switch (numberOfChildren) {
-        // matching signature to encrypt(
-        case 5:
-            Object potentialIV = methodCall.getChild(3);
-            reportIfHardCoded(data, potentialIV);
-            Object potentialKey = methodCall.getChild(2);
-            reportIfHardCoded(data, potentialKey);
-            break;
+            // matching signature to encrypt(
+            case 5:
+                Object potentialIV = methodCall.getChild(3);
+                reportIfHardCoded(data, potentialIV);
+                Object potentialKey = methodCall.getChild(2);
+                reportIfHardCoded(data, potentialKey);
+                break;
 
-        // matching signature to encryptWithManagedIV(
-        case 4:
-            Object key = methodCall.getChild(2);
-            reportIfHardCoded(data, key);
-            break;
+            // matching signature to encryptWithManagedIV(
+            case 4:
+                Object key = methodCall.getChild(2);
+                reportIfHardCoded(data, key);
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
 
     }

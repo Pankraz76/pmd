@@ -33,23 +33,19 @@ abstract class AbstractPLSQLNode extends AbstractJjtreeNode<AbstractPLSQLNode, P
 
     protected abstract <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data);
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
+    @Override @SuppressWarnings("unchecked") public final <P, R> R acceptVisitor(AstVisitor<? super P, ? extends R> visitor, P data) {
         if (visitor instanceof PlsqlVisitor) {
             return acceptPlsqlVisitor((PlsqlVisitor<? super P, ? extends R>) visitor, data);
         }
         return visitor.cannotVisit(this, data);
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return PLSQLParserImplTreeConstants.jjtNodeName[id];
     }
 
 
-    @Override
-    public Scope getScope() {
+    @Override public Scope getScope() {
         if (scope == null) {
             return getParent().getScope();
         }

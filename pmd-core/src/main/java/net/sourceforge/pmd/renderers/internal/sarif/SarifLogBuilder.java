@@ -154,11 +154,11 @@ public class SarifLogBuilder {
                 .build();
 
         Region region = Region.builder()
-            .startLine(rv.getBeginLine())
-            .endLine(rv.getEndLine())
-            .startColumn(rv.getBeginColumn())
-            .endColumn(rv.getEndColumn())
-            .build();
+                .startLine(rv.getBeginLine())
+                .endLine(rv.getEndLine())
+                .startColumn(rv.getBeginColumn())
+                .endColumn(rv.getEndColumn())
+                .build();
 
         PhysicalLocation physicalLocation = PhysicalLocation.builder()
                 .artifactLocation(artifactLocation)
@@ -166,20 +166,20 @@ public class SarifLogBuilder {
                 .build();
 
         return Location.builder()
-            .physicalLocation(physicalLocation)
-            .build();
+                .physicalLocation(physicalLocation)
+                .build();
     }
 
     private ReportingDescriptor getReportingDescriptor(RuleViolation rv) {
         return ReportingDescriptor.builder()
-            .id(rv.getRule().getName())
-            .shortDescription(new MultiformatMessage(rv.getDescription()))
-            .fullDescription(new MultiformatMessage(rv.getRule().getDescription()))
-            .helpUri(rv.getRule().getExternalInfoUrl())
-            .help(new MultiformatMessage(rv.getRule().getDescription()))
-            .properties(getRuleProperties(rv))
-            .defaultConfiguration(getDefaultConfigForRuleViolation(rv))
-            .build();
+                .id(rv.getRule().getName())
+                .shortDescription(new MultiformatMessage(rv.getDescription()))
+                .fullDescription(new MultiformatMessage(rv.getRule().getDescription()))
+                .helpUri(rv.getRule().getExternalInfoUrl())
+                .help(new MultiformatMessage(rv.getRule().getDescription()))
+                .properties(getRuleProperties(rv))
+                .defaultConfiguration(getDefaultConfigForRuleViolation(rv))
+                .build();
     }
 
     private ReportingConfiguration getDefaultConfigForRuleViolation(RuleViolation rv) {
@@ -214,16 +214,16 @@ public class SarifLogBuilder {
      */
     private String pmdPriorityToSarifSeverityLevel(RulePriority rulePriority) {
         switch (rulePriority) {
-        case HIGH:
-        case MEDIUM_HIGH:
-            return "error";
-        case MEDIUM:
-            return "warning";
-        case MEDIUM_LOW:
-        case LOW:
-            return "note";
-        default:
-            return "none"; // should not occur
+            case HIGH:
+            case MEDIUM_HIGH:
+                return "error";
+            case MEDIUM:
+                return "warning";
+            case MEDIUM_LOW:
+            case LOW:
+                return "note";
+            default:
+                return "none"; // should not occur
         }
     }
 }

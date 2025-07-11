@@ -22,7 +22,7 @@ public class ClasspathFingerprinter {
             new ZipFileFingerprinter(),
             new RawFileFingerprinter(),
             new NoopFingerprinter() // catch-all fingerprinter, MUST be last
-        ));
+    ));
 
     public long fingerprint(final URL... classpathEntry) {
         final Adler32 adler32 = new Adler32();

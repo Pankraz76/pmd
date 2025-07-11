@@ -27,8 +27,7 @@ class FileCollectorZipTest {
     private static final String ZIP_PATH = "src/test/resources/net/sourceforge/pmd/lang/document/filecollectorziptest/zipWithSources.zip";
     private final Path zipPath = Paths.get(ZIP_PATH);
 
-    @Test
-    void testZipFile() {
+    @Test void testZipFile() {
         PMDConfiguration conf = new PMDConfiguration();
         conf.addInputPath(zipPath);
         // no relativizeRoot paths configured -> we use the relative path
@@ -42,8 +41,7 @@ class FileCollectorZipTest {
         }
     }
 
-    @Test
-    void testZipFileIds() throws IOException {
+    @Test void testZipFileIds() throws IOException {
         PMDConfiguration conf = new PMDConfiguration();
         // no relativizeRoot paths configured -> we use the relative path
         try (PmdAnalysis pmd = PmdAnalysis.create(conf)) {
@@ -51,14 +49,13 @@ class FileCollectorZipTest {
             List<TextFile> files = pmd.files().getCollectedFiles();
             assertThat(files, hasSize(3));
             assertThat(files.get(0).getFileId().getUriString(),
-                       equalTo("jar:" + zipPath.toUri() + "!/otherSrc/somefile.dummy"));
+                    equalTo("jar:" + zipPath.toUri() + "!/otherSrc/somefile.dummy"));
 
         }
     }
 
 
-    @Test
-    void testZipFileRelativizeWith() {
+    @Test void testZipFileRelativizeWith() {
         PMDConfiguration conf = new PMDConfiguration();
         conf.addInputPath(zipPath);
         conf.addRelativizeRoot(Paths.get("src/test/resources"));
@@ -72,8 +69,7 @@ class FileCollectorZipTest {
         }
     }
 
-    @Test
-    void testZipFileRelativizeWithRoot() {
+    @Test void testZipFileRelativizeWithRoot() {
         PMDConfiguration conf = new PMDConfiguration();
         conf.addInputPath(zipPath);
         // this configures "/" as the relativizeRoot -> result are absolute paths

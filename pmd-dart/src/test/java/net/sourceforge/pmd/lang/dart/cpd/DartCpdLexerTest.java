@@ -15,76 +15,62 @@ class DartCpdLexerTest extends CpdTextComparisonTest {
     }
 
 
-    @Test
-    void testComment() {
+    @Test void testComment() {
         doTest("comment");
     }
 
-    @Test
-    void testEscapeSequences() {
+    @Test void testEscapeSequences() {
         doTest("escape_sequences");
     }
 
-    @Test
-    void testEscapedBackslash() {
+    @Test void testEscapedBackslash() {
         doTest("escaped_backslash");
     }
 
-    @Test
-    void testEscapedString() {
+    @Test void testEscapedString() {
         doTest("escaped_string");
     }
 
 
-    @Test
-    void testIncrement() {
+    @Test void testIncrement() {
         doTest("increment");
     }
 
 
-    @Test
-    void testImports() {
+    @Test void testImports() {
         doTest("imports");
     }
 
-    @Test
-    void testStringInterpolation() {
+    @Test void testStringInterpolation() {
         doTest("string_interpolation");
     }
 
-    @Test
-    void testEscapedDollar() {
+    @Test void testEscapedDollar() {
         doTest("escaped_dollar");
     }
 
-    @Test
-    void testRegex() {
+    @Test void testRegex() {
         doTest("regex");
     }
 
 
-    @Test
-    void testRegex2() {
+    @Test void testRegex2() {
         doTest("regex2");
     }
 
-    @Test
-    void testRegex3() {
+    @Test void testRegex3() {
         doTest("regex3");
     }
 
-    @Test
-    void testStringWithBackslashes() {
+    @Test void testStringWithBackslashes() {
         doTest("string_with_backslashes");
     }
 
-    @Test
-    void testMultiline() {
+    @Test void testMultiline() {
         doTest("string_multiline");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 

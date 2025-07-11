@@ -10,8 +10,7 @@ public final class ASTProgramUnit extends AbstractPLSQLNode implements Executabl
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -20,8 +19,7 @@ public final class ASTProgramUnit extends AbstractPLSQLNode implements Executabl
      *
      * @return a String representing the name of the method
      */
-    @Override
-    public String getMethodName() {
+    @Override public String getMethodName() {
         ASTMethodDeclarator md = firstChild(ASTMethodDeclarator.class);
         if (md != null) {
             return md.getImage();
@@ -38,8 +36,7 @@ public final class ASTProgramUnit extends AbstractPLSQLNode implements Executabl
      *
      * @return a String representing the name of the Oracle Object
      */
-    @Override
-    public String getObjectName() {
+    @Override public String getObjectName() {
         // This _IS_ a schema-level Program Unit
         if (null == this.getParent()) {
             return this.getImage();

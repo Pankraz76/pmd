@@ -30,8 +30,7 @@ public interface NameResolver<S> {
      *
      * @param simpleName Simple name
      */
-    @NonNull
-    List<S> resolveHere(String simpleName);
+    @NonNull List<S> resolveHere(String simpleName);
 
 
     /**
@@ -62,8 +61,7 @@ public interface NameResolver<S> {
 
 
     /** Please implement toString to ease debugging. */
-    @Override
-    String toString();
+    @Override String toString();
 
     /**
      * Returns a resolver that concatenates the results of every resolver
@@ -77,8 +75,7 @@ public interface NameResolver<S> {
             return CoreResolvers.emptyResolver();
         }
         return new NameResolver<T>() {
-            @Override
-            public @NonNull List<T> resolveHere(String simpleName) {
+            @Override public @NonNull List<T> resolveHere(String simpleName) {
                 List<T> result = Collections.emptyList();
                 for (NameResolver<? extends T> r : resolvers) {
                     List<? extends T> ts = r.resolveHere(simpleName);
@@ -89,8 +86,7 @@ public interface NameResolver<S> {
                 return result;
             }
 
-            @Override
-            public @Nullable T resolveFirst(String simpleName) {
+            @Override public @Nullable T resolveFirst(String simpleName) {
                 for (NameResolver<? extends T> r : resolvers) {
                     T t = r.resolveFirst(simpleName);
                     if (t != null) {
@@ -100,8 +96,7 @@ public interface NameResolver<S> {
                 return null;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "Composite[" + resolvers + "]";
             }
         };
@@ -117,14 +112,12 @@ public interface NameResolver<S> {
      */
     interface SingleNameResolver<S> extends NameResolver<S> {
 
-        @Override
-        default @NonNull List<S> resolveHere(String simpleName) {
+        @Override default @NonNull List<S> resolveHere(String simpleName) {
             return CollectionUtil.listOfNotNull(resolveFirst(simpleName));
         }
 
 
         // make it abstract
-        @Override
-        @Nullable S resolveFirst(String simpleName);
+        @Override @Nullable S resolveFirst(String simpleName);
     }
 }

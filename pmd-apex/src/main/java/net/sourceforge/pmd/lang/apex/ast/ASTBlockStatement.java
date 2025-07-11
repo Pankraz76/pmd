@@ -16,8 +16,7 @@ public final class ASTBlockStatement extends AbstractApexNode.Single<Node> {
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -25,8 +24,7 @@ public final class ASTBlockStatement extends AbstractApexNode.Single<Node> {
         return curlyBrace;
     }
 
-    @Override
-    protected void calculateTextRegion(TextDocument sourceCode) {
+    @Override protected void calculateTextRegion(TextDocument sourceCode) {
         super.calculateTextRegion(sourceCode);
         if (!hasRealLoc()) {
             return;

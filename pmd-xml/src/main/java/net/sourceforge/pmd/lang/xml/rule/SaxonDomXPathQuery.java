@@ -50,7 +50,7 @@ final class SaxonDomXPathQuery {
     private static final NamePool NAME_POOL = new NamePool();
 
     private static final SimpleDataKey<DocumentWrapper> SAXON_DOM_WRAPPER
-        = DataMap.simpleDataKey("pmd.saxon.dom.wrapper");
+            = DataMap.simpleDataKey("pmd.saxon.dom.wrapper");
 
     /** The XPath expression as a string. */
     private final String xpath;
@@ -62,9 +62,9 @@ final class SaxonDomXPathQuery {
     private final Configuration configuration;
 
     SaxonDomXPathQuery(String xpath,
-                       String defaultNsUri,
-                       List<PropertyDescriptor<?>> properties,
-                       XPathHandler xpathHandler) {
+            String defaultNsUri,
+            List<PropertyDescriptor<?>> properties,
+            XPathHandler xpathHandler) {
         this.xpath = xpath;
         this.xpathHandler = xpathHandler;
         configuration = new Configuration();
@@ -91,12 +91,12 @@ final class SaxonDomXPathQuery {
             xpathEvaluator.setStaticContext(xpathStaticContext);
             XPathExpression expression = xpathEvaluator.createExpression(xpath);
             return new XPathExpressionWithProperties(
-                expression,
-                xpathVariables
+                    expression,
+                    xpathVariables
             );
         } catch (final XPathException e) {
             throw new ContextedRuntimeException(e)
-                .addContextValue("XPath", xpath);
+                    .addContextValue("XPath", xpath);
         }
     }
 
@@ -114,13 +114,12 @@ final class SaxonDomXPathQuery {
 
     private boolean isExcludedProperty(String name) {
         return "xpath".equals(name)
-               || "defaultNsUri".equals(name)
-               || "violationSuppressRegex".equals(name)
-               || "violationSuppressXPath".equals(name);
+                || "defaultNsUri".equals(name)
+                || "violationSuppressRegex".equals(name)
+                || "violationSuppressXPath".equals(name);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return xpath;
     }
 
@@ -142,7 +141,7 @@ final class SaxonDomXPathQuery {
             return result;
         } catch (XPathException e) {
             throw new ContextedRuntimeException(e)
-                .addContextValue("XPath", xpath);
+                    .addContextValue("XPath", xpath);
         }
 
     }
@@ -154,7 +153,7 @@ final class SaxonDomXPathQuery {
         }
         Document domRoot = node.getNode();
         DocumentWrapper wrapper = new DocumentWrapper(
-            domRoot, domRoot.getBaseURI(), configuration
+                domRoot, domRoot.getBaseURI(), configuration
         );
         userMap.set(SAXON_DOM_WRAPPER, wrapper);
         return wrapper;
@@ -186,7 +185,7 @@ final class SaxonDomXPathQuery {
                     dynamicContext.setVariable(variable, saxonValue);
                 } catch (XPathException e) {
                     throw new ContextedRuntimeException(e)
-                        .addContextValue("Variable", variable);
+                            .addContextValue("Variable", variable);
                 }
             }
             return dynamicContext;

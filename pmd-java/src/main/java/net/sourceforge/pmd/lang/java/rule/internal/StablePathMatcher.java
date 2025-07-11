@@ -146,10 +146,9 @@ public final class StablePathMatcher {
             this.isField = isField;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return isField ? "." + name
-                           : "." + name + "()";
+                    : "." + name + "()";
         }
     }
 }

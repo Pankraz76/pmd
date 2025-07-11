@@ -54,8 +54,7 @@ public final class ASTTypeParameter extends AbstractTypedSymbolDeclarator<JTypeP
      * Returns the type bound node of this parameter,
      * or null if it is not bounded.
      */
-    @Nullable
-    public ASTType getTypeBoundNode() {
+    @Nullable public ASTType getTypeBoundNode() {
         return firstChild(ASTType.class);
     }
 
@@ -66,13 +65,11 @@ public final class ASTTypeParameter extends AbstractTypedSymbolDeclarator<JTypeP
         return (TypeParamOwnerNode) getParent().getParent();
     }
 
-    @Override
-    public @NonNull JTypeVar getTypeMirror() {
+    @Override public @NonNull JTypeVar getTypeMirror() {
         return (JTypeVar) super.getTypeMirror();
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

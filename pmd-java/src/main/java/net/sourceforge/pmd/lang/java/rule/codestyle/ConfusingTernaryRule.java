@@ -61,22 +61,20 @@ public class ConfusingTernaryRule extends AbstractJavaRulechainRule {
         definePropertyDescriptor(IGNORE_ELSE_IF);
     }
 
-    @Override
-    public Object visit(ASTIfStatement node, Object data) {
+    @Override public Object visit(ASTIfStatement node, Object data) {
         // look for "if (match) ..; else .."
         if (node.getNumChildren() == 3
-            && isMatch(node.getCondition())) {
+                && isMatch(node.getCondition())) {
             if (!getProperty(IGNORE_ELSE_IF)
-                || !(node.getElseBranch() instanceof ASTIfStatement)
-                && !(node.getParent() instanceof ASTIfStatement)) {
+                    || !(node.getElseBranch() instanceof ASTIfStatement)
+                    && !(node.getParent() instanceof ASTIfStatement)) {
                 asCtx(data).addViolation(node);
             }
         }
         return data;
     }
 
-    @Override
-    public Object visit(ASTConditionalExpression node, Object data) {
+    @Override public Object visit(ASTConditionalExpression node, Object data) {
         // look for "match ? .. : .."
         if (isMatch(node.getCondition())) {
             asCtx(data).addViolation(node);
@@ -92,7 +90,7 @@ public class ConfusingTernaryRule extends AbstractJavaRulechainRule {
     private static boolean isUnaryNot(ASTExpression node) {
         // look for "!x"
         return node instanceof ASTUnaryExpression
-            && ((ASTUnaryExpression) node).getOperator().equals(UnaryOp.NEGATION);
+                && ((ASTUnaryExpression) node).getOperator().equals(UnaryOp.NEGATION);
     }
 
     private static boolean isNotEquals(ASTExpression node) {
@@ -102,8 +100,8 @@ public class ConfusingTernaryRule extends AbstractJavaRulechainRule {
         ASTInfixExpression infix = (ASTInfixExpression) node;
         // look for "x != y"
         return infix.getOperator().equals(BinaryOp.NE)
-            && !(infix.getLeftOperand() instanceof ASTNullLiteral)
-            && !(infix.getRightOperand() instanceof ASTNullLiteral);
+                && !(infix.getLeftOperand() instanceof ASTNullLiteral)
+                && !(infix.getRightOperand() instanceof ASTNullLiteral);
     }
 
     private static boolean isConditionalWithAllMatches(ASTExpression node) {

@@ -13,13 +13,11 @@ public final class ASTFieldDeclaration extends AbstractApexNode.Single<FieldDecl
     }
 
 
-    @Override
-    protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptApexVisitor(ApexVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return getName();
     }
 

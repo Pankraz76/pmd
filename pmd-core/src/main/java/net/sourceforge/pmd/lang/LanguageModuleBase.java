@@ -57,8 +57,7 @@ public abstract class LanguageModuleBase implements Language {
     /**
      * @experimental Since 7.13.0. See <a href="https://github.com/pmd/pmd/pull/5438">[core] Support language dialects #5438</a>.
      */
-    @Experimental
-    protected LanguageModuleBase(DialectLanguageMetadata metadata) {
+    @Experimental protected LanguageModuleBase(DialectLanguageMetadata metadata) {
         this(metadata.metadata, metadata.baseLanguageId);
     }
 
@@ -99,7 +98,7 @@ public abstract class LanguageModuleBase implements Language {
             if (versionId.isDefault) {
                 if (defaultVersion != null) {
                     throw new IllegalStateException(
-                        "Default version already set to " + defaultVersion + ", cannot set it to " + languageVersion);
+                            "Default version already set to " + defaultVersion + ", cannot set it to " + languageVersion);
                 }
                 defaultVersion = languageVersion;
             }
@@ -116,73 +115,59 @@ public abstract class LanguageModuleBase implements Language {
         }
     }
 
-    @Override
-    public @Nullable String getBaseLanguageId() {
+    @Override public @Nullable String getBaseLanguageId() {
         return baseLanguageId;
     }
 
-    @Override
-    public List<LanguageVersion> getVersions() {
+    @Override public List<LanguageVersion> getVersions() {
         return distinctVersions;
     }
 
-    @Override
-    public @NonNull LanguageVersion getDefaultVersion() {
+    @Override public @NonNull LanguageVersion getDefaultVersion() {
         return defaultVersion;
     }
 
-    @Override
-    public LanguageVersion getVersion(String version) {
+    @Override public LanguageVersion getVersion(String version) {
         return byName.get(version);
     }
 
-    @Override
-    public Set<String> getVersionNamesAndAliases() {
+    @Override public Set<String> getVersionNamesAndAliases() {
         return Collections.unmodifiableSet(byName.keySet());
     }
 
-    @Override
-    public Set<String> getDependencies() {
+    @Override public Set<String> getDependencies() {
         return dependencies;
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return meta.name;
     }
 
-    @Override
-    public String getShortName() {
+    @Override public String getShortName() {
         return meta.getShortName();
     }
 
-    @Override
-    public String getId() {
+    @Override public String getId() {
         return meta.id;
     }
 
-    @Override
-    public @NonNull List<String> getExtensions() {
+    @Override public @NonNull List<String> getExtensions() {
         return Collections.unmodifiableList(meta.extensions);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return getId();
     }
 
-    @Override
-    public int compareTo(Language o) {
+    @Override public int compareTo(Language o) {
         return getName().compareTo(o.getName());
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return getId().hashCode();
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    @Override public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -228,7 +213,7 @@ public abstract class LanguageModuleBase implements Language {
         void validate() {
             AssertionUtil.validateState(name != null, "Language " + id + " should have a name");
             AssertionUtil.validateState(
-                extensions != null, "Language " + id + " has not registered any file extensions");
+                    extensions != null, "Language " + id + " has not registered any file extensions");
         }
 
         String getShortName() {
@@ -364,8 +349,8 @@ public abstract class LanguageModuleBase implements Language {
         public LanguageMetadata addAllVersionsOf(Language language) {
             for (LanguageVersion version : language.getVersions()) {
                 versionMetadata.add(new LangVersionMetadata(version.getVersion(),
-                                                            version.getAliases(),
-                                                            version.equals(language.getDefaultVersion())));
+                        version.getAliases(),
+                        version.equals(language.getDefaultVersion())));
             }
             return this;
         }
@@ -377,8 +362,7 @@ public abstract class LanguageModuleBase implements Language {
          * @return A new dialect language metadata model.
          * @experimental Since 7.13.0. See <a href="https://github.com/pmd/pmd/pull/5438">[core] Support language dialects #5438</a>.
          */
-        @Experimental
-        public DialectLanguageMetadata asDialectOf(String baseLanguageId) {
+        @Experimental public DialectLanguageMetadata asDialectOf(String baseLanguageId) {
             checkValidLangId(baseLanguageId);
             dependsOnLanguage(baseLanguageId); // a dialect automatically depends on it's base language at runtime
             return new DialectLanguageMetadata(this, baseLanguageId);
@@ -387,7 +371,7 @@ public abstract class LanguageModuleBase implements Language {
         private static void checkValidLangId(String id) {
             if (!VALID_LANG_ID.matcher(id).matches()) {
                 throw new IllegalArgumentException(
-                    "ID '" + id + "' is not a valid language ID (should match " + VALID_LANG_ID + ").");
+                        "ID '" + id + "' is not a valid language ID (should match " + VALID_LANG_ID + ").");
             }
         }
 

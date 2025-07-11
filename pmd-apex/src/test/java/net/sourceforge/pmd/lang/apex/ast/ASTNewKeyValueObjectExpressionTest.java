@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class ASTNewKeyValueObjectExpressionTest extends ApexParserTestBase {
 
-    @Test
-    void testParameterName() {
+    @Test void testParameterName() {
         ASTUserClassOrInterface<?> node = parse("public class Foo { \n"
                 + "    public void foo(String newName, String tempID) { \n"
                 + "        if (Contact.sObjectType.getDescribe().isCreateable() && Contact.sObjectType.getDescribe().isUpdateable()) {\n"

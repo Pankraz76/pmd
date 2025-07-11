@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.java.BaseParserTest;
 
 class ASTInitializerTest extends BaseParserTest {
 
-    @Test
-    void testDontCrashOnBlockStatement() {
+    @Test void testDontCrashOnBlockStatement() {
         java.parse("public class Foo { { x = 5; } }");
     }
 

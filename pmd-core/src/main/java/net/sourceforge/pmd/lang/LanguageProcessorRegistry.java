@@ -41,7 +41,7 @@ public final class LanguageProcessorRegistry implements AutoCloseable {
 
     private LanguageProcessorRegistry(Set<LanguageProcessor> processors) {
         this.processors = Collections.unmodifiableMap(
-            CollectionUtil.associateBy(processors, LanguageProcessor::getLanguage)
+                CollectionUtil.associateBy(processors, LanguageProcessor::getLanguage)
         );
         this.languages = new LanguageRegistry(this.processors.keySet());
 
@@ -49,7 +49,7 @@ public final class LanguageProcessorRegistry implements AutoCloseable {
             for (String id : language.getDependencies()) {
                 if (languages.getLanguageById(id) == null) {
                     throw new IllegalStateException(
-                        "Language " + language.getId() + " has unsatisfied dependencies: " + id + " is not loaded"
+                            "Language " + language.getId() + " has unsatisfied dependencies: " + id + " is not loaded"
                     );
                 }
             }
@@ -83,8 +83,7 @@ public final class LanguageProcessorRegistry implements AutoCloseable {
      *
      * @throws LanguageTerminationException If closing any of the processors threw something
      */
-    @Override
-    public void close() throws LanguageTerminationException {
+    @Override public void close() throws LanguageTerminationException {
         Exception e = IOUtil.closeAll(processors.values());
         if (e != null) {
             throw new LanguageTerminationException(e);
@@ -115,16 +114,16 @@ public final class LanguageProcessorRegistry implements AutoCloseable {
      *                                  to an incompatible property bundle
      */
     public static LanguageProcessorRegistry create(LanguageRegistry registry,
-                                                   Map<Language, LanguagePropertyBundle> languageProperties,
-                                                   PmdReporter messageReporter) {
+            Map<Language, LanguagePropertyBundle> languageProperties,
+            PmdReporter messageReporter) {
         return create(registry, languageProperties, messageReporter, System.getenv());
     }
 
     // overload for testing to allow mocking the system env vars.
     static LanguageProcessorRegistry create(LanguageRegistry registry,
-                                            Map<Language, LanguagePropertyBundle> languageProperties,
-                                            PmdReporter messageReporter,
-                                            Map<String, String> env) {
+            Map<Language, LanguagePropertyBundle> languageProperties,
+            PmdReporter messageReporter,
+            Map<String, String> env) {
         Set<LanguageProcessor> processors = new HashSet<>();
         for (Language language : registry) {
             if (!(language instanceof PmdCapableLanguage)) {
@@ -151,8 +150,8 @@ public final class LanguageProcessorRegistry implements AutoCloseable {
 
     // TODO this should be reused when implementing the CLI - see https://github.com/pmd/pmd/issues/2947
     public static Map<Language, LanguagePropertyBundle> derivePropertiesFromStrings(
-        Map<Language, Properties> stringProperties,
-        PmdReporter reporter
+            Map<Language, Properties> stringProperties,
+            PmdReporter reporter
     ) {
         Map<Language, LanguagePropertyBundle> typedProperties = new HashMap<>();
         stringProperties.forEach((l, props) -> {
@@ -180,17 +179,17 @@ public final class LanguageProcessorRegistry implements AutoCloseable {
 
 
     private static <T> void trySetPropertyCapture(PropertySource source,
-                                                  PropertyDescriptor<T> propertyDescriptor,
-                                                  String propertyValue,
-                                                  PmdReporter reporter) {
+            PropertyDescriptor<T> propertyDescriptor,
+            String propertyValue,
+            PmdReporter reporter) {
         try {
             T value = propertyDescriptor.serializer().fromString(propertyValue);
             source.setProperty(propertyDescriptor, value);
         } catch (IllegalArgumentException e) {
             reporter.error("Cannot set property {0} to {1}: {2}",
-                           propertyDescriptor.name(),
-                           propertyValue,
-                           e.getMessage());
+                    propertyDescriptor.name(),
+                    propertyValue,
+                    e.getMessage());
         }
     }
 
@@ -205,19 +204,19 @@ public final class LanguageProcessorRegistry implements AutoCloseable {
                     // Env vars are a default, they don't override other ways to set properties.
                     // If the property has already been set, don't set it.
                     LOG.debug(
-                        "Property {} for lang {} is already set, ignoring environment variable {}={}",
-                        propertyDescriptor.name(),
-                        props.getLanguage().getId(),
-                        envVarName,
-                        propertyValue
+                            "Property {} for lang {} is already set, ignoring environment variable {}={}",
+                            propertyDescriptor.name(),
+                            props.getLanguage().getId(),
+                            envVarName,
+                            propertyValue
                     );
                 } else {
                     LOG.debug(
-                        "Property {} for lang {} is not yet set, using environment variable {}={}",
-                        propertyDescriptor.name(),
-                        props.getLanguage().getId(),
-                        envVarName,
-                        propertyValue
+                            "Property {} for lang {} is not yet set, using environment variable {}={}",
+                            propertyDescriptor.name(),
+                            props.getLanguage().getId(),
+                            envVarName,
+                            propertyValue
                     );
                     trySetPropertyCapture(props, propertyDescriptor, propertyValue, reporter);
                 }
@@ -230,15 +229,14 @@ public final class LanguageProcessorRegistry implements AutoCloseable {
      */
     private static String getEnvironmentVariableName(Language lang, PropertyDescriptor<?> propertyDescriptor) {
         return "PMD_" + lang.getId().toUpperCase(Locale.ROOT) + "_"
-            + CaseConvention.CAMEL_CASE.convertTo(SCREAMING_SNAKE_CASE, propertyDescriptor.name());
+                + CaseConvention.CAMEL_CASE.convertTo(SCREAMING_SNAKE_CASE, propertyDescriptor.name());
     }
 
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "LanguageProcessorRegistry("
-            + new LanguageRegistry(processors.keySet()).commaSeparatedList(Language::getId)
-            + ")";
+                + new LanguageRegistry(processors.keySet()).commaSeparatedList(Language::getId)
+                + ")";
     }
 
     /**

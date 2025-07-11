@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class InOutNoCopyTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseInOutNoCopy() {
+    @Test void parseInOutNoCopy() {
         ASTInput input = plsql.parseResource("InOutNoCopy.pls");
         assertNotNull(input);
         List<ASTFormalParameter> params = input.descendants(ASTFormalParameter.class).toList();

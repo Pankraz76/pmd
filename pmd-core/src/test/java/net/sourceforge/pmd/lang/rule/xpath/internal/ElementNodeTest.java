@@ -23,14 +23,12 @@ import net.sf.saxon.type.Type;
 class ElementNodeTest {
 
 
-    @RegisterExtension
-    private final DummyParsingHelper helper = new DummyParsingHelper();
+    @RegisterExtension private final DummyParsingHelper helper = new DummyParsingHelper();
 
-    @Test
-    void testCompareOrder() {
+    @Test void testCompareOrder() {
         DummyRootNode root = helper.parse(
-            "(#foo)"
-                + "(#foo)"
+                "(#foo)"
+                        + "(#foo)"
         );
 
         DummyNode c0 = root.getChild(0);
@@ -64,8 +62,7 @@ class ElementNodeTest {
 
     }
 
-    @Test
-    void verifyTextNodeType() {
+    @Test void verifyTextNodeType() {
         DummyRootNode root = helper.parse("(foo)(#text)");
 
         DummyNode c0 = root.getChild(0);
@@ -90,8 +87,7 @@ class ElementNodeTest {
         assertSame(elementText1, treeInfo.findWrapperFor(c1));
     }
 
-    @Test
-    void verifyCommentNodeType() {
+    @Test void verifyCommentNodeType() {
         DummyRootNode root = helper.parse("(#comment)");
 
         DummyNode c1 = root.getChild(0);

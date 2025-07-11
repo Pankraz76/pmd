@@ -18,33 +18,28 @@ public class ASTSingleDefinitionImportClause extends AbstractModelicaImportClaus
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptModelicaVisitor(ModelicaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
-    @Override
-    public void jjtClose() {
+    @Override public void jjtClose() {
         super.jjtClose();
 
         importWhat = firstChild(ASTName.class);
         importedName = ((ASTSimpleName) importWhat.getChild(importWhat.getNumChildren() - 1)).getName();
     }
 
-    @Override
-    protected ResolutionResult<ModelicaDeclaration> getCacheableImportSources(ResolutionState state, ModelicaScope scope) {
+    @Override protected ResolutionResult<ModelicaDeclaration> getCacheableImportSources(ResolutionState state, ModelicaScope scope) {
         return scope.safeResolveLexically(ModelicaDeclaration.class, state, importWhat.getCompositeName());
     }
 
-    @Override
-    protected void fetchImportedClassesFromSource(ResolutionContext result, ModelicaDeclaration source, String simpleName) {
+    @Override protected void fetchImportedClassesFromSource(ResolutionContext result, ModelicaDeclaration source, String simpleName) {
         if (importedName.equals(simpleName)) {
             result.addCandidate(source);
         }
     }
 
-    @Override
-    public boolean isQualified() {
+    @Override public boolean isQualified() {
         return true;
     }
 }

@@ -49,30 +49,27 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
     protected GenericSigBase(T ctx, String parseLockName) {
         this.ctx = ctx;
         this.lock = new ParseLock(parseLockName) {
-            @Override
-            protected boolean doParse() {
+            @Override protected boolean doParse() {
                 try {
                     GenericSigBase.this.doParse();
                     return true;
                 } catch (RuntimeException e) {
                     throw AssertionUtil.contexted(e)
-                                       .addContextValue("signature", GenericSigBase.this)
-                                       // Here we don't use the toString of the ctx directly because
-                                       // it could be using the signature indirectly, which would fail
-                                       .addContextValue("owner class", ctx.getEnclosingClass())
-                                       .addContextValue("owner name", ctx.getSimpleName())
-                                       .addContextValue("owner package", ctx.getPackageName());
+                            .addContextValue("signature", GenericSigBase.this)
+                            // Here we don't use the toString of the ctx directly because
+                            // it could be using the signature indirectly, which would fail
+                            .addContextValue("owner class", ctx.getEnclosingClass())
+                            .addContextValue("owner name", ctx.getSimpleName())
+                            .addContextValue("owner package", ctx.getPackageName());
                 }
             }
 
 
-            @Override
-            protected boolean postCondition() {
+            @Override protected boolean postCondition() {
                 return GenericSigBase.this.postCondition();
             }
 
-            @Override
-            protected void finishParse(boolean failed) {
+            @Override protected void finishParse(boolean failed) {
                 // Mark the bound as ready to parse, after any type annotations have been collected
                 typeParameters.forEach(tp -> ((TParamStub) tp.getSymbol()).setCanComputeBound());
             }
@@ -130,9 +127,9 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
         private final @Nullable JClassSymbol rawSuper;
 
         LazyClassSignature(ClassStub ctx,
-                           @Nullable String signature, // null if doesn't use generics in header
-                           @Nullable String superInternalName, // null if this is the Object class
-                           String[] interfaces) {
+                @Nullable String signature, // null if doesn't use generics in header
+                @Nullable String superInternalName, // null if this is the Object class
+                String[] interfaces) {
             super(ctx, "LazyClassSignature:" + ctx.getInternalName() + "[" + signature + "]");
             this.signature = signature;
             this.typeParameterCount = GenericTypeParameterCounter.determineTypeParameterCount(this.signature);
@@ -152,21 +149,20 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
 
             // use constants for common values
             switch (observedArity) {
-            case 0: return OBJECT_SIG;
-            case 1: return "<T0" + OBJECT_BOUND + ">" + OBJECT_SIG;
-            case 2: return "<T0" + OBJECT_BOUND + "T1" + OBJECT_BOUND + ">" + OBJECT_SIG;
-            default: return Stream.iterate(0, i -> i + 1)
-                                  .limit(observedArity)
-                                  .map(i -> "T" + i + OBJECT_BOUND)
-                                  .collect(Collectors.joining("", "<", ">" + OBJECT_SIG));
+                case 0: return OBJECT_SIG;
+                case 1: return "<T0" + OBJECT_BOUND + ">" + OBJECT_SIG;
+                case 2: return "<T0" + OBJECT_BOUND + "T1" + OBJECT_BOUND + ">" + OBJECT_SIG;
+                default: return Stream.iterate(0, i -> i + 1)
+                        .limit(observedArity)
+                        .map(i -> "T" + i + OBJECT_BOUND)
+                        .collect(Collectors.joining("", "<", ">" + OBJECT_SIG));
             }
         }
 
-        @Override
-        protected void doParse() {
+        @Override protected void doParse() {
             if (signature == null) {
                 this.superType = rawSuper == null ? null // the Object class
-                                                  : (JClassType) ctx.getTypeSystem().rawType(rawSuper);
+                        : (JClassType) ctx.getTypeSystem().rawType(rawSuper);
                 this.superItfs = CollectionUtil.map(rawItfs, klass -> (JClassType) ctx.getTypeSystem().rawType(klass));
                 setTypeParams(Collections.emptyList());
             } else {
@@ -174,14 +170,12 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
             }
         }
 
-        @Override
-        protected int getTypeParameterCount() {
+        @Override protected int getTypeParameterCount() {
             // note: no ensureParsed() needed, the type parameters are counted eagerly
             return typeParameterCount;
         }
 
-        @Override
-        protected boolean postCondition() {
+        @Override protected boolean postCondition() {
             return superItfs != null && (superType != null || signature == null) && typeParameters != null;
         }
 
@@ -213,8 +207,7 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
             return rawItfs;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return signature;
         }
     }
@@ -249,10 +242,10 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
         //  <E>                   void foo(E e) throws Exception;  // descriptor "(Ljava.lang.Object;)V"   signature "<TE;>(TE;)V"    exceptions: [ "java/lang/Exception" ]
         //                        void foo()    throws Exception;  // descriptor "()V"                     signature null             exceptions: [ "java/lang/Exception" ]
         LazyMethodType(ExecutableStub ctx,
-                       @NonNull String descriptor,
-                       @Nullable String genericSig,
-                       @Nullable String[] exceptions,
-                       boolean skipFirstParam) {
+                @NonNull String descriptor,
+                @Nullable String genericSig,
+                @Nullable String[] exceptions,
+                boolean skipFirstParam) {
             super(ctx, "LazyMethodType:" + (genericSig != null ? genericSig : descriptor));
             this.signature = genericSig != null ? genericSig : descriptor;
             this.typeParameterCount = GenericTypeParameterCounter.determineTypeParameterCount(genericSig);
@@ -261,15 +254,14 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
             this.rawExceptions = exceptions;
         }
 
-        @Override
-        protected void doParse() {
+        @Override protected void doParse() {
             ctx.sigParser().parseMethodType(this, signature);
             if (rawExceptions != null && this.exceptionTypes.isEmpty()) {
                 // the descriptor did not contain exceptions. They're in this string array.
                 this.exceptionTypes = Arrays.stream(rawExceptions)
-                                            .map(ctx.getResolver()::resolveFromInternalNameCannotFail)
-                                            .map(ctx.getTypeSystem()::rawType)
-                                            .collect(CollectionUtil.toUnmodifiableList());
+                        .map(ctx.getResolver()::resolveFromInternalNameCannotFail)
+                        .map(ctx.getTypeSystem()::rawType)
+                        .collect(CollectionUtil.toUnmodifiableList());
             }
             if (ctx instanceof CtorStub) {
                 // Is a constructor, return type of the descriptor is void.
@@ -296,14 +288,12 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
             return receiverAnnotations.decorate(typeMirror);
         }
 
-        @Override
-        protected boolean postCondition() {
+        @Override protected boolean postCondition() {
             return parameterTypes != null && exceptionTypes != null && returnType != null;
         }
 
 
-        @Override
-        protected int getTypeParameterCount() {
+        @Override protected int getTypeParameterCount() {
             // note: no ensureParsed() needed, the type parameters are counted eagerly
             return typeParameterCount;
         }
@@ -311,7 +301,7 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
         void setParameterTypes(List<JTypeMirror> params) {
             Validate.validState(parameterTypes == null);
             parameterTypes = skipFirstParam ? params.subList(1, params.size())
-                                            : params;
+                    : params;
         }
 
         void setExceptionTypes(List<JTypeMirror> exs) {
@@ -339,14 +329,12 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
             return returnType;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return signature;
         }
 
 
-        @Override
-        public void acceptTypeAnnotation(int typeRefInt, @Nullable TypePath path, SymAnnot annot) {
+        @Override public void acceptTypeAnnotation(int typeRefInt, @Nullable TypePath path, SymAnnot annot) {
             // Accumulate type annotations for later
             // They shouldn't be applied right now because the descriptor maybe has not been parsed yet.
             if (typeAnnots == null) {
@@ -362,55 +350,55 @@ abstract class GenericSigBase<T extends JTypeParameterOwnerSymbol & AsmStub> {
          */
         boolean acceptAnnotationAfterParse(TypeReference tyRef, @Nullable TypePath path, SymAnnot annot) {
             switch (tyRef.getSort()) {
-            case TypeReference.METHOD_RETURN: {
-                assert returnType != null : "Return type is not set";
-                returnType = TypeAnnotationHelper.applySinglePath(returnType, path, annot);
-                return false;
-            }
-            case TypeReference.METHOD_FORMAL_PARAMETER: {
-                assert parameterTypes != null : "Parameter types are not set";
-                int idx = tyRef.getFormalParameterIndex();
-                JTypeMirror annotatedFormal = TypeAnnotationHelper.applySinglePath(parameterTypes.get(idx), path, annot);
-                parameterTypes = TypeAnnotationHelper.replaceAtIndex(parameterTypes, idx, annotatedFormal);
-                return false;
-            }
-            case TypeReference.THROWS: {
-                assert exceptionTypes != null : "Exception types are not set";
-                int idx = tyRef.getExceptionIndex();
-                JTypeMirror annotatedFormal = TypeAnnotationHelper.applySinglePath(exceptionTypes.get(idx), path, annot);
-                exceptionTypes = TypeAnnotationHelper.replaceAtIndex(exceptionTypes, idx, annotatedFormal);
-                return false;
-            }
-            case TypeReference.METHOD_TYPE_PARAMETER: {
-                assert typeParameters != null;
-                assert path == null : "unexpected path " + path;
-                int idx = tyRef.getTypeParameterIndex();
-                // Here we add to the symbol, not the type var.
-                // This ensures that all occurrences of the type var
-                // share these annotations (symbol is unique, contrary to jtypevar)
-                ((TParamStub) typeParameters.get(idx).getSymbol()).addAnnotation(annot);
-                return false;
-            }
-            case TypeReference.METHOD_TYPE_PARAMETER_BOUND: {
-                assert typeParameters != null;
-                int tparamIdx = tyRef.getTypeParameterIndex();
-
-                JTypeVar tparam = typeParameters.get(tparamIdx);
-                TParamStub sym = (TParamStub) tparam.getSymbol();
-                assert sym != null;
-                sym.addAnnotationOnBound(tyRef, path, annot);
-                return false;
-            }
-            case TypeReference.METHOD_RECEIVER: {
-                if (receiverAnnotations == null) {
-                    receiverAnnotations = new TypeAnnotationSet();
+                case TypeReference.METHOD_RETURN: {
+                    assert returnType != null : "Return type is not set";
+                    returnType = TypeAnnotationHelper.applySinglePath(returnType, path, annot);
+                    return false;
                 }
-                receiverAnnotations.add(path, annot);
-                return false;
-            }
-            default:
-                throw new IllegalArgumentException(
-                    "Invalid type reference for method or ctor type annotation: " + tyRef.getSort());
+                case TypeReference.METHOD_FORMAL_PARAMETER: {
+                    assert parameterTypes != null : "Parameter types are not set";
+                    int idx = tyRef.getFormalParameterIndex();
+                    JTypeMirror annotatedFormal = TypeAnnotationHelper.applySinglePath(parameterTypes.get(idx), path, annot);
+                    parameterTypes = TypeAnnotationHelper.replaceAtIndex(parameterTypes, idx, annotatedFormal);
+                    return false;
+                }
+                case TypeReference.THROWS: {
+                    assert exceptionTypes != null : "Exception types are not set";
+                    int idx = tyRef.getExceptionIndex();
+                    JTypeMirror annotatedFormal = TypeAnnotationHelper.applySinglePath(exceptionTypes.get(idx), path, annot);
+                    exceptionTypes = TypeAnnotationHelper.replaceAtIndex(exceptionTypes, idx, annotatedFormal);
+                    return false;
+                }
+                case TypeReference.METHOD_TYPE_PARAMETER: {
+                    assert typeParameters != null;
+                    assert path == null : "unexpected path " + path;
+                    int idx = tyRef.getTypeParameterIndex();
+                    // Here we add to the symbol, not the type var.
+                    // This ensures that all occurrences of the type var
+                    // share these annotations (symbol is unique, contrary to jtypevar)
+                    ((TParamStub) typeParameters.get(idx).getSymbol()).addAnnotation(annot);
+                    return false;
+                }
+                case TypeReference.METHOD_TYPE_PARAMETER_BOUND: {
+                    assert typeParameters != null;
+                    int tparamIdx = tyRef.getTypeParameterIndex();
+
+                    JTypeVar tparam = typeParameters.get(tparamIdx);
+                    TParamStub sym = (TParamStub) tparam.getSymbol();
+                    assert sym != null;
+                    sym.addAnnotationOnBound(tyRef, path, annot);
+                    return false;
+                }
+                case TypeReference.METHOD_RECEIVER: {
+                    if (receiverAnnotations == null) {
+                        receiverAnnotations = new TypeAnnotationSet();
+                    }
+                    receiverAnnotations.add(path, annot);
+                    return false;
+                }
+                default:
+                    throw new IllegalArgumentException(
+                            "Invalid type reference for method or ctor type annotation: " + tyRef.getSort());
             }
         }
 

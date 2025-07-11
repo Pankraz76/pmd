@@ -51,18 +51,16 @@ public enum AssignmentOp implements OperatorLike {
 
 
     AssignmentOp(String code,
-                 @Nullable BinaryOp binaryOp) {
+            @Nullable BinaryOp binaryOp) {
         this.code = code;
         this.binaryOp = binaryOp;
     }
 
-    @Override
-    public String getToken() {
+    @Override public String getToken() {
         return code;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return this.code;
     }
 
@@ -81,8 +79,7 @@ public enum AssignmentOp implements OperatorLike {
      * if this is a compound operator, otherwise returns
      * null.
      */
-    @Nullable
-    public BinaryOp getBinaryOp() {
+    @Nullable public BinaryOp getBinaryOp() {
         return binaryOp;
     }
 

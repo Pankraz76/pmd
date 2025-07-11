@@ -39,10 +39,10 @@ public class MethodCallSite extends PolySite<InvocationMirror> {
     private final boolean isSpecificityCheck;
 
     MethodCallSite(InvocationMirror expr,
-                   @Nullable JTypeMirror expectedType,
-                   @Nullable MethodCallSite outerSite,
-                   @NonNull InferenceContext infCtx,
-                   boolean isSpecificityCheck) {
+            @Nullable JTypeMirror expectedType,
+            @Nullable MethodCallSite outerSite,
+            @NonNull InferenceContext infCtx,
+            boolean isSpecificityCheck) {
         super(expr, expectedType);
         this.outerSite = outerSite;
         this.localInferenceContext = infCtx;
@@ -55,11 +55,11 @@ public class MethodCallSite extends PolySite<InvocationMirror> {
 
     MethodCallSite cloneForSpecificityCheck(Infer infer) {
         return new MethodCallSite(
-            getExpr(),
-            getExpectedType(),
-            null,
-            infer.emptyContext(),
-            true
+                getExpr(),
+                getExpectedType(),
+                null,
+                infer.emptyContext(),
+                true
         );
     }
 
@@ -132,13 +132,11 @@ public class MethodCallSite extends PolySite<InvocationMirror> {
      * in invocation contexts, in which the inference context of an argument
      * needs to be propagated to the outer context.
      */
-    @NonNull
-    InferenceContext getOuterCtx() {
+    @NonNull InferenceContext getOuterCtx() {
         return localInferenceContext;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "CallSite:" + getExpr();
     }
 }

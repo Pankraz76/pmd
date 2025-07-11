@@ -16,26 +16,24 @@ import org.junit.jupiter.api.Test;
  */
 class TextPos2dTest {
 
-    @Test
-    void testToString() {
+    @Test void testToString() {
         TextPos2d pos = TextPos2d.pos2d(1, 2);
         assertEquals(
-            "line 1, column 2",
-            pos.toDisplayStringInEnglish()
+                "line 1, column 2",
+                pos.toDisplayStringInEnglish()
         );
         assertEquals(
-            "1:2",
-            pos.toDisplayStringWithColon()
+                "1:2",
+                pos.toDisplayStringWithColon()
         );
         assertEquals(
-            "(line=1, column=2)",
-            pos.toTupleString()
+                "(line=1, column=2)",
+                pos.toTupleString()
         );
         assertThat(pos.toString(), containsString("!debug only!"));
     }
 
-    @Test
-    void testEquals() {
+    @Test void testEquals() {
         TextPos2d pos = TextPos2d.pos2d(1, 1);
         TextPos2d pos2 = TextPos2d.pos2d(1, 2);
         assertNotEquals(pos, pos2);
@@ -43,8 +41,7 @@ class TextPos2dTest {
         assertEquals(pos2, pos2);
     }
 
-    @Test
-    void testCompareTo() {
+    @Test void testCompareTo() {
         TextPos2d pos = TextPos2d.pos2d(1, 1);
         TextPos2d pos2 = TextPos2d.pos2d(1, 2);
         TextPos2d pos3 = TextPos2d.pos2d(2, 1);

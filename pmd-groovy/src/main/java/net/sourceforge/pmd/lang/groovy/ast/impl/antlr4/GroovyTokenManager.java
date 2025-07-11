@@ -35,8 +35,7 @@ public class GroovyTokenManager implements TokenManager<GroovyToken> {
         resetListeners();
     }
 
-    @Override
-    public GroovyToken getNextToken() {
+    @Override public GroovyToken getNextToken() {
         GroovyToken nextToken = getNextTokenFromAnyChannel();
         while (!nextToken.isDefault()) {
             nextToken = getNextTokenFromAnyChannel();
@@ -57,7 +56,7 @@ public class GroovyTokenManager implements TokenManager<GroovyToken> {
         } else {
             previousComment = null;
         }
-        
+
         final GroovyToken currentToken = new GroovyToken(lexer.nextToken(), previousComment, textDoc);
         if (previousToken != null) {
             previousToken.next = currentToken;
@@ -74,13 +73,12 @@ public class GroovyTokenManager implements TokenManager<GroovyToken> {
 
     private final class ErrorHandler implements ANTLRErrorListener<Object> {
 
-        @Override
-        public void syntaxError(final Recognizer recognizer,
-                                final Object offendingSymbol,
-                                final int line,
-                                final int charPositionInLine,
-                                final String msg,
-                                final RecognitionException ex) {
+        @Override public void syntaxError(final Recognizer recognizer,
+                final Object offendingSymbol,
+                final int line,
+                final int charPositionInLine,
+                final String msg,
+                final RecognitionException ex) {
             throw new LexException(line, charPositionInLine, textDoc.getFileId(), msg, ex);
         }
     }

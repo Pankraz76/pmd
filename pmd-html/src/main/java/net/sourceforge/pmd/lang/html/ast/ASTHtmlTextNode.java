@@ -13,8 +13,7 @@ public class ASTHtmlTextNode extends AbstractHtmlNode<TextNode> implements net.s
         super(node);
     }
 
-    @Override
-    protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptHtmlVisitor(HtmlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -22,13 +21,11 @@ public class ASTHtmlTextNode extends AbstractHtmlNode<TextNode> implements net.s
         return node.getWholeText();
     }
 
-    @Override
-    public String getText() {
+    @Override public String getText() {
         return node.text();
     }
 
-    @Override
-    public String getXPathNodeName() {
+    @Override public String getXPathNodeName() {
         return net.sourceforge.pmd.lang.rule.xpath.TextNode.super.getXPathNodeName();
     }
 }

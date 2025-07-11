@@ -46,8 +46,7 @@ public final class ASTSubqueryOperation extends AbstractPLSQLNode {
         this.union = union;
     }
 
-    @Override
-    protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptPlsqlVisitor(PlsqlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 }

@@ -38,22 +38,19 @@ final class InternalInterfaces {
     interface BinaryExpressionLike extends ASTExpression {
 
         /** Returns the left-hand-side operand. */
-        @NonNull
-        default ASTExpression getLeftOperand() {
+        @NonNull default ASTExpression getLeftOperand() {
             return (ASTExpression) getChild(0);
         }
 
 
         /** Returns the right-hand side operand. */
-        @NonNull
-        default ASTExpression getRightOperand() {
+        @NonNull default ASTExpression getRightOperand() {
             return (ASTExpression) getChild(1);
         }
 
 
         /** Returns the operator. */
-        @NonNull
-        OperatorLike getOperator();
+        @NonNull OperatorLike getOperator();
     }
 
     /**
@@ -64,18 +61,14 @@ final class InternalInterfaces {
 
 
         /** Returns the first child of this node, never null. */
-        @Override
-        @NonNull
-        default JavaNode getFirstChild() {
+        @Override @NonNull default JavaNode getFirstChild() {
             assert getNumChildren() > 0;
             return getChild(0);
         }
 
 
         /** Returns the last child of this node, never null. */
-        @Override
-        @NonNull
-        default JavaNode getLastChild() {
+        @Override @NonNull default JavaNode getLastChild() {
             assert getNumChildren() > 0;
             return getChild(getNumChildren() - 1);
         }
@@ -83,9 +76,7 @@ final class InternalInterfaces {
 
     interface AllChildrenAreOfType<T extends JavaNode> extends JavaNode {
 
-        @Override
-        @Nullable
-        default T getFirstChild() {
+        @Override @Nullable default T getFirstChild() {
             if (getNumChildren() == 0) {
                 return null;
             }
@@ -93,9 +84,7 @@ final class InternalInterfaces {
         }
 
 
-        @Override
-        @Nullable
-        default T getLastChild() {
+        @Override @Nullable default T getLastChild() {
             if (getNumChildren() == 0) {
                 return null;
             }
@@ -110,18 +99,14 @@ final class InternalInterfaces {
     interface AtLeastOneChildOfType<T extends JavaNode> extends AllChildrenAreOfType<T> {
 
         /** Returns the first child of this node, never null. */
-        @Override
-        @NonNull
-        default T getFirstChild() {
+        @Override @NonNull default T getFirstChild() {
             assert getNumChildren() > 0 : "No children for node implementing AtLeastOneChild " + this;
             return (T) getChild(0);
         }
 
 
         /** Returns the last child of this node, never null. */
-        @Override
-        @NonNull
-        default T getLastChild() {
+        @Override @NonNull default T getLastChild() {
             assert getNumChildren() > 0 : "No children for node implementing AtLeastOneChild " + this;
             return (T) getChild(getNumChildren() - 1);
         }
@@ -144,8 +129,7 @@ final class InternalInterfaces {
         }
 
 
-        @Override
-        default Iterator<ASTVariableId> iterator() {
+        @Override default Iterator<ASTVariableId> iterator() {
             return getVarIds().iterator();
         }
 

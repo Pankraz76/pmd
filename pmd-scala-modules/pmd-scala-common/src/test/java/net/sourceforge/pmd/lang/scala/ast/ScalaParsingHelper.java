@@ -15,8 +15,7 @@ public final class ScalaParsingHelper extends BaseParsingHelper<ScalaParsingHelp
         super(ScalaLanguageModule.getInstance(), ASTSource.class, params);
     }
 
-    @Override
-    protected ScalaParsingHelper clone(Params params) {
+    @Override protected ScalaParsingHelper clone(Params params) {
         return new ScalaParsingHelper(params);
     }
 

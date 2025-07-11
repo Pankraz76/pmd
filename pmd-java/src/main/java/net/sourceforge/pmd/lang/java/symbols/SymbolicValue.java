@@ -67,8 +67,7 @@ public interface SymbolicValue {
      * must be a {@link SymbolicValue} of the same type. Use {@link #valueEquals(Object)}
      * to compare to a java object.
      */
-    @Override
-    boolean equals(Object o);
+    @Override boolean equals(Object o);
 
     /**
      * Returns a symbolic value for the given java object
@@ -147,8 +146,7 @@ public interface SymbolicValue {
             return getAnnotationSymbol().getSimpleName();
         }
 
-        @Override
-        default boolean valueEquals(Object o) {
+        @Override default boolean valueEquals(Object o) {
             if (!(o instanceof Annotation)) {
                 return false;
             }
@@ -286,7 +284,7 @@ public interface SymbolicValue {
                 Object[] arr = (Object[]) array;
                 if (!isOkComponentType(arr.getClass().getComponentType())) {
                     throw new IllegalArgumentException(
-                        "Unsupported component type" + arr.getClass().getComponentType());
+                            "Unsupported component type" + arr.getClass().getComponentType());
                 }
 
                 List<SymbolicValue> lst = new ArrayList<>(arr.length);
@@ -303,10 +301,10 @@ public interface SymbolicValue {
 
         static boolean isOkComponentType(Class<?> compType) {
             return compType.isPrimitive()
-                || compType == String.class
-                || compType == Class.class
-                || compType.isEnum()
-                || compType.isAnnotation();
+                    || compType == String.class
+                    || compType == Class.class
+                    || compType.isEnum()
+                    || compType.isAnnotation();
         }
 
         public int length() {
@@ -329,8 +327,7 @@ public interface SymbolicValue {
             return false;
         }
 
-        @Override
-        public boolean valueEquals(Object o) {
+        @Override public boolean valueEquals(Object o) {
             if (!o.getClass().isArray() || !isOkComponentType(o.getClass().getComponentType())) {
                 return false;
             }
@@ -354,8 +351,7 @@ public interface SymbolicValue {
 
         }
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             if (this == o) {
                 return true;
             }
@@ -370,8 +366,7 @@ public interface SymbolicValue {
             }
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             if (elements != null) {
                 return elements.hashCode();
             } else {
@@ -380,8 +375,7 @@ public interface SymbolicValue {
             }
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             if (elements != null) {
                 return "[list " + elements + ']';
             } else {
@@ -413,7 +407,7 @@ public interface SymbolicValue {
          */
         public <E extends Enum<E>> @Nullable E toEnum(Class<E> enumClass) {
             return enumClass.getName().equals(enumBinaryName) ? EnumUtils.getEnum(enumClass, enumName)
-                                                              : null;
+                    : null;
         }
 
         /**
@@ -449,18 +443,16 @@ public interface SymbolicValue {
             return fromBinaryName(ts, enumBinaryName, enumConstName);
         }
 
-        @Override
-        public boolean valueEquals(Object o) {
+        @Override public boolean valueEquals(Object o) {
             if (!(o instanceof Enum)) {
                 return false;
             }
             Enum<?> value = (Enum<?>) o;
             return this.enumName.equals(value.name())
-                && enumBinaryName.equals(value.getDeclaringClass().getName());
+                    && enumBinaryName.equals(value.getDeclaringClass().getName());
         }
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             if (this == o) {
                 return true;
             }
@@ -469,16 +461,14 @@ public interface SymbolicValue {
             }
             SymEnum that = (SymEnum) o;
             return Objects.equals(enumBinaryName, that.enumBinaryName)
-                && Objects.equals(enumName, that.enumName);
+                    && Objects.equals(enumName, that.enumName);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return Objects.hash(enumBinaryName, enumName);
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return enumBinaryName + "#" + enumName;
         }
     }
@@ -497,16 +487,14 @@ public interface SymbolicValue {
 
         private static boolean isOkValue(@NonNull Object value) {
             return ClassUtils.isPrimitiveWrapper(value.getClass())
-                || value instanceof String;
+                    || value instanceof String;
         }
 
-        @Override
-        public boolean valueEquals(Object o) {
+        @Override public boolean valueEquals(Object o) {
             return Objects.equals(value, o);
         }
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             if (this == o) {
                 return true;
             }
@@ -517,13 +505,11 @@ public interface SymbolicValue {
             return valueEquals(symValue.value);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return value.hashCode();
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return value.toString();
         }
     }
@@ -545,13 +531,11 @@ public interface SymbolicValue {
             return new SymClass(binaryName);
         }
 
-        @Override
-        public boolean valueEquals(Object o) {
+        @Override public boolean valueEquals(Object o) {
             return o instanceof Class<?> && ((Class<?>) o).getName().equals(binaryName);
         }
 
-        @Override
-        public boolean equals(Object o) {
+        @Override public boolean equals(Object o) {
             if (this == o) {
                 return true;
             }
@@ -562,8 +546,7 @@ public interface SymbolicValue {
             return Objects.equals(binaryName, symClass.binaryName);
         }
 
-        @Override
-        public int hashCode() {
+        @Override public int hashCode() {
             return binaryName.hashCode();
         }
     }

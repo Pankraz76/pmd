@@ -31,13 +31,11 @@ import com.github.stefanbirkner.systemlambda.SystemLambda;
 
 abstract class BaseCliTest {
 
-    @BeforeAll
-    static void disablePicocliAnsi() {
+    @BeforeAll static void disablePicocliAnsi() {
         System.setProperty("picocli.ansi", "false");
     }
 
-    @AfterAll
-    static void resetPicocliAnsi() {
+    @AfterAll static void resetPicocliAnsi() {
         System.clearProperty("picocli.ansi");
     }
 
@@ -63,10 +61,10 @@ abstract class BaseCliTest {
             System.setErr(new PrintStream(err));
             // restoring system properties: --debug might change logging properties
             SystemLambda.restoreSystemProperties(
-                () -> {
-                    int actualExitCode = PmdCli.mainWithoutExit(argList.toArray(new String[0]));
-                    exitCode.set(CliExitCode.fromInt(actualExitCode));
-                }
+                    () -> {
+                        int actualExitCode = PmdCli.mainWithoutExit(argList.toArray(new String[0]));
+                        exitCode.set(CliExitCode.fromInt(actualExitCode));
+                    }
             );
         } finally {
             System.setOut(formerOut);
@@ -74,7 +72,7 @@ abstract class BaseCliTest {
         }
 
         return new CliExecutionResult(
-            out, err, exitCode.get()
+                out, err, exitCode.get()
         ).verify(e -> assertEquals(expectedExitCode, e.exitCode));
     }
 
@@ -85,13 +83,11 @@ abstract class BaseCliTest {
         return new BaseMatcher<String>() {
             final Pattern pattern = Pattern.compile(regex);
 
-            @Override
-            public void describeTo(Description description) {
+            @Override public void describeTo(Description description) {
                 description.appendText("a string containing the pattern '" + this.pattern + "'");
             }
 
-            @Override
-            public boolean matches(Object o) {
+            @Override public boolean matches(Object o) {
                 return o instanceof String && pattern.matcher((String) o).find();
             }
         };
@@ -100,15 +96,13 @@ abstract class BaseCliTest {
     public static Matcher<String> containsStringNTimes(final int times, final String substring) {
         return new BaseMatcher<String>() {
 
-            @Override
-            public void describeTo(Description description) {
+            @Override public void describeTo(Description description) {
                 description.appendText("a string containing " + times + " times the substring '" + substring + "'");
             }
 
-            @Override
-            public boolean matches(Object o) {
+            @Override public boolean matches(Object o) {
                 return o instanceof String
-                    && StringUtils.countMatches((String) o, substring) == times;
+                        && StringUtils.countMatches((String) o, substring) == times;
             }
         };
     }
@@ -121,8 +115,8 @@ abstract class BaseCliTest {
         private final CliExitCode exitCode;
 
         CliExecutionResult(ByteArrayOutputStream out,
-                           ByteArrayOutputStream err,
-                           CliExitCode exitCode) {
+                ByteArrayOutputStream err,
+                CliExitCode exitCode) {
             this.out = out;
             this.err = err;
             this.exitCode = exitCode;

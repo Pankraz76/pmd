@@ -21,105 +21,86 @@ class Java21TreeDumpTest extends BaseJavaTreeDumpTest {
                     .withResourceContext(Java21TreeDumpTest.class, "jdkversiontests/java21/");
     private final JavaParsingHelper java20 = java21.withDefaultVersion("20");
 
-    @Override
-    public BaseParsingHelper<?, ?> getParser() {
+    @Override public BaseParsingHelper<?, ?> getParser() {
         return java21;
     }
 
-    @Test
-    void patternMatchingForSwitch() {
+    @Test void patternMatchingForSwitch() {
         doTest("Jep441_PatternMatchingForSwitch");
     }
 
-    @Test
-    void patternMatchingForSwitchBeforeJava21() {
+    @Test void patternMatchingForSwitchBeforeJava21() {
         ParseException thrown = assertThrows(ParseException.class, () -> java20.parseResource("Jep441_PatternMatchingForSwitch.java"));
         assertThat(thrown.getMessage(), containsString("Patterns in switch statements are a feature of Java 21, you should select your language version accordingly"));
     }
 
-    @Test
-    void dealingWithNull() {
+    @Test void dealingWithNull() {
         doTest("DealingWithNull");
     }
 
-    @Test
-    void dealingWithNullBeforeJava21() {
+    @Test void dealingWithNullBeforeJava21() {
         ParseException thrown = assertThrows(ParseException.class, () -> java20.parseResource("DealingWithNull.java"));
         assertThat(thrown.getMessage(), containsString("Null in switch cases are a feature of Java 21, you should select your language version accordingly"));
     }
 
 
-    @Test
-    void enhancedTypeCheckingSwitch() {
+    @Test void enhancedTypeCheckingSwitch() {
         doTest("EnhancedTypeCheckingSwitch");
     }
 
-    @Test
-    void exhaustiveSwitch() {
+    @Test void exhaustiveSwitch() {
         doTest("ExhaustiveSwitch");
     }
 
-    @Test
-    void guardedPatterns() {
+    @Test void guardedPatterns() {
         doTest("GuardedPatterns");
     }
 
-    @Test
-    void guardedPatternsBeforeJava21() {
+    @Test void guardedPatternsBeforeJava21() {
         ParseException thrown = assertThrows(ParseException.class, () -> java20.parseResource("GuardedPatterns.java"));
         assertThat(thrown.getMessage(), containsString("Patterns in switch statements are a feature of Java 21, you should select your language version accordingly"));
     }
 
-    @Test
-    void patternsInSwitchLabels() {
+    @Test void patternsInSwitchLabels() {
         doTest("PatternsInSwitchLabels");
     }
 
-    @Test
-    void patternsInSwitchLabelsBeforeJava21() {
+    @Test void patternsInSwitchLabelsBeforeJava21() {
         ParseException thrown = assertThrows(ParseException.class, () -> java20.parseResource("PatternsInSwitchLabels.java"));
         assertThat(thrown.getMessage(), containsString("Patterns in switch statements are a feature of Java 21, you should select your language version accordingly"));
     }
 
-    @Test
-    void refiningPatternsInSwitch() {
+    @Test void refiningPatternsInSwitch() {
         doTest("RefiningPatternsInSwitch");
     }
 
-    @Test
-    void scopeOfPatternVariableDeclarations() {
+    @Test void scopeOfPatternVariableDeclarations() {
         doTest("ScopeOfPatternVariableDeclarations");
     }
 
-    @Test
-    void recordPatternsJep() {
+    @Test void recordPatternsJep() {
         doTest("Jep440_RecordPatterns");
     }
 
-    @Test
-    void recordPatternsJepBeforeJava21() {
+    @Test void recordPatternsJepBeforeJava21() {
         ParseException thrown = assertThrows(ParseException.class, () -> java20.parseResource("Jep440_RecordPatterns.java"));
         assertThat(thrown.getMessage(), containsString("Record patterns are a feature of Java 21, you should select your language version accordingly"));
     }
 
-    @Test
-    void recordPatterns() {
+    @Test void recordPatterns() {
         doTest("RecordPatterns");
     }
 
-    @Test
-    void recordPatternsBeforeJava21() {
+    @Test void recordPatternsBeforeJava21() {
         ParseException thrown = assertThrows(ParseException.class, () -> java20.parseResource("RecordPatterns.java"));
         assertThat(thrown.getMessage(), containsString("Record patterns are a feature of Java 21, you should select your language version accordingly"));
     }
 
-    @Test
-    void recordPatternsExhaustiveSwitch() {
+    @Test void recordPatternsExhaustiveSwitch() {
         doTest("RecordPatternsExhaustiveSwitch");
     }
 
-    @Test
-    void canParseAnnotationValueInitializers() {
+    @Test void canParseAnnotationValueInitializers() {
         doTest("AnnotationValueInitializers");
     }
 }

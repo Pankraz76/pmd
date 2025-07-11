@@ -13,8 +13,7 @@ import net.sourceforge.pmd.lang.plsql.AbstractPLSQLParserTst;
 
 class CursorForLoopTest extends AbstractPLSQLParserTst {
 
-    @Test
-    void parseCursorForLoopSimple() {
+    @Test void parseCursorForLoopSimple() {
         ASTInput input = plsql.parseResource("CursorForLoopSimple.pls");
         ASTCursorForLoopStatement forloop = input.descendants(ASTCursorForLoopStatement.class).first();
         assertNotNull(forloop);
@@ -23,8 +22,7 @@ class CursorForLoopTest extends AbstractPLSQLParserTst {
         assertEquals("someone", forindex.getImage());
     }
 
-    @Test
-    void parseCursorForLoopNested() {
+    @Test void parseCursorForLoopNested() {
         ASTInput input = plsql.parseResource("CursorForLoopNested.pls");
         ASTCursorForLoopStatement forloop = input.descendants(ASTCursorForLoopStatement.class).first();
         assertNotNull(forloop);
@@ -41,20 +39,17 @@ class CursorForLoopTest extends AbstractPLSQLParserTst {
         assertEquals("c_pa", forindex3.getImage());
     }
 
-    @Test
-    void parseCursorForLoop1047a() {
+    @Test void parseCursorForLoop1047a() {
         ASTInput input = plsql.parseResource("CursorForLoop1047a.pls");
         assertNotNull(input);
     }
 
-    @Test
-    void parseCursorForLoop1047b() {
+    @Test void parseCursorForLoop1047b() {
         ASTInput input = plsql.parseResource("CursorForLoop1047b.pls");
         assertNotNull(input);
     }
 
-    @Test
-    void parseCursorForLoop681() {
+    @Test void parseCursorForLoop681() {
         ASTInput input = plsql.parseResource("CursorForLoop681.pls");
         assertNotNull(input);
     }

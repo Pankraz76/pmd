@@ -12,8 +12,7 @@ final class NoopListenerInitializer implements ListenerInitializer {
         // singleton
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "Noop";
     }
 }

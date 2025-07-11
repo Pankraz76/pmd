@@ -36,8 +36,7 @@ class HtmlXPathRuleTest {
             + "    </template>\n"
             + "</template>";
 
-    @Test
-    void selectTextNode() {
+    @Test void selectTextNode() {
         // from https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
         // "Don’t add spaces around the property, for example, { data } is not valid HTML."
         String xpath = "//text()[contains(., '{ ')]";
@@ -47,29 +46,25 @@ class HtmlXPathRuleTest {
         assertEquals(3, violations.get(0).getBeginLine());
     }
 
-    @Test
-    void selectTextNodeByNodeNameShouldNotWork() {
+    @Test void selectTextNodeByNodeNameShouldNotWork() {
         String xpath = "//*[local-name() = '#text']";
         List<RuleViolation> violations = runXPath(LIGHTNING_WEB_COMPONENT, xpath);
         assertEquals(0, violations.size());
     }
 
-    @Test
-    void verifyTextNodeName() {
+    @Test void verifyTextNodeName() {
         ASTHtmlDocument document = HtmlParsingHelper.DEFAULT.parse("<p>foobar</p>");
         ASTHtmlTextNode textNode = document.descendants(ASTHtmlTextNode.class).first();
         assertEquals("#text", textNode.getXPathNodeName());
     }
 
-    @Test
-    void verifyCommentNodeName() {
+    @Test void verifyCommentNodeName() {
         ASTHtmlDocument document = HtmlParsingHelper.DEFAULT.parse("<p><!-- a comment --></p>");
         ASTHtmlComment comment = document.descendants(ASTHtmlComment.class).first();
         assertEquals("#comment", comment.getXPathNodeName());
     }
 
-    @Test
-    void selectAttributes() {
+    @Test void selectAttributes() {
         // from https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
         // "Don’t add spaces around the property, for example, { data } is not valid HTML."
         String xpath = "//*[@value = '{']";
@@ -79,8 +74,7 @@ class HtmlXPathRuleTest {
         assertEquals(4, violations.get(0).getBeginLine());
     }
 
-    @Test
-    void selectAttributesMultiple() {
+    @Test void selectAttributesMultiple() {
         // from https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.js_props_getter
         // "Don’t add spaces around the property, for example, { data } is not valid HTML."
         String xpath = "//*[@*[local-name() = ('value', 'onchange')] = '{']";
@@ -91,8 +85,7 @@ class HtmlXPathRuleTest {
         assertEquals(6, violations.get(1).getBeginLine());
     }
 
-    @Test
-    void selectAttributeByName() {
+    @Test void selectAttributeByName() {
         String xpath = "//*[@*[local-name() = 'if:true']]";
 
         List<RuleViolation> violations = runXPath(LIGHTNING_WEB_COMPONENT, xpath);

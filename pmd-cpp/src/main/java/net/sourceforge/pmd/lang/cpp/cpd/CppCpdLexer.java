@@ -55,16 +55,14 @@ public class CppCpdLexer extends JavaccCpdLexer {
         }
     }
 
-    @Override
-    protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
+    @Override protected TokenManager<JavaccToken> makeLexerImpl(TextDocument doc) {
         return CppTokenKinds.newTokenManager(newCharStream(doc));
     }
 
     CharStream newCharStream(TextDocument doc) {
         return CharStream.create(doc, new TokenDocumentBehavior(CppTokenKinds.TOKEN_NAMES) {
 
-            @Override
-            public TextDocument translate(TextDocument text) throws MalformedSourceException {
+            @Override public TextDocument translate(TextDocument text) throws MalformedSourceException {
                 if (skipBlocks) {
                     text = new CppBlockSkipper(text, skipBlocksStart, skipBlocksEnd).translateDocument();
                 }
@@ -73,13 +71,11 @@ public class CppCpdLexer extends JavaccCpdLexer {
         });
     }
 
-    @Override
-    protected TokenManager<JavaccToken> filterTokenStream(final TokenManager<JavaccToken> tokenManager) {
+    @Override protected TokenManager<JavaccToken> filterTokenStream(final TokenManager<JavaccToken> tokenManager) {
         return new CppTokenFilter(tokenManager, ignoreLiteralSequences, ignoreIdentifierAndLiteralSeqences);
     }
 
-    @Override
-    protected void processToken(TokenFactory tokenEntries, JavaccToken currentToken) {
+    @Override protected void processToken(TokenFactory tokenEntries, JavaccToken currentToken) {
         int kind = currentToken.getKind();
         String image = currentToken.getImage();
 
@@ -108,8 +104,7 @@ public class CppCpdLexer extends JavaccCpdLexer {
             this.ignoreLiteralSequences = ignoreLiteralSequences;
         }
 
-        @Override
-        protected void analyzeTokens(final JavaccToken currentToken, final Iterable<JavaccToken> remainingTokens) {
+        @Override protected void analyzeTokens(final JavaccToken currentToken, final Iterable<JavaccToken> remainingTokens) {
             discardCurrent = false;
             skipSequences(currentToken, remainingTokens);
         }
@@ -133,41 +128,41 @@ public class CppCpdLexer extends JavaccCpdLexer {
             int braceCount = 0;
             for (final JavaccToken token : remainingTokens) {
                 switch (token.getKind()) {
-                case CppTokenKinds.BINARY_INT_LITERAL:
-                case CppTokenKinds.DECIMAL_INT_LITERAL:
-                case CppTokenKinds.FLOAT_LITERAL:
-                case CppTokenKinds.HEXADECIMAL_INT_LITERAL:
-                case CppTokenKinds.OCTAL_INT_LITERAL:
-                case CppTokenKinds.ZERO:
-                case CppTokenKinds.STRING:
-                    seenAllowedToken = true;
-                    break; // can be skipped; continue to the next token
-                case CppTokenKinds.ID:
-                    // Ignore identifiers if instructed
-                    if (ignoreIdentifierAndLiteralSeqences) {
+                    case CppTokenKinds.BINARY_INT_LITERAL:
+                    case CppTokenKinds.DECIMAL_INT_LITERAL:
+                    case CppTokenKinds.FLOAT_LITERAL:
+                    case CppTokenKinds.HEXADECIMAL_INT_LITERAL:
+                    case CppTokenKinds.OCTAL_INT_LITERAL:
+                    case CppTokenKinds.ZERO:
+                    case CppTokenKinds.STRING:
                         seenAllowedToken = true;
                         break; // can be skipped; continue to the next token
-                    } else {
-                        // token not expected, other than identifier
+                    case CppTokenKinds.ID:
+                        // Ignore identifiers if instructed
+                        if (ignoreIdentifierAndLiteralSeqences) {
+                            seenAllowedToken = true;
+                            break; // can be skipped; continue to the next token
+                        } else {
+                            // token not expected, other than identifier
+                            return null;
+                        }
+                    case CppTokenKinds.COMMA:
+                        break; // can be skipped; continue to the next token
+                    case CppTokenKinds.LCURLYBRACE:
+                        braceCount++;
+                        break; // curly braces are allowed, as long as they're balanced
+                    case CppTokenKinds.RCURLYBRACE:
+                        braceCount--;
+                        if (braceCount < 0) {
+                            // end of the list; skip all contents
+                            return seenAllowedToken ? token : null;
+                        } else {
+                            // curly braces are not yet balanced; continue to the next token
+                            break;
+                        }
+                    default:
+                        // some other token than the expected ones; this is not a sequence of literals
                         return null;
-                    }
-                case CppTokenKinds.COMMA:
-                    break; // can be skipped; continue to the next token
-                case CppTokenKinds.LCURLYBRACE:
-                    braceCount++;
-                    break; // curly braces are allowed, as long as they're balanced
-                case CppTokenKinds.RCURLYBRACE:
-                    braceCount--;
-                    if (braceCount < 0) {
-                        // end of the list; skip all contents
-                        return seenAllowedToken ? token : null;
-                    } else {
-                        // curly braces are not yet balanced; continue to the next token
-                        break;
-                    }
-                default:
-                    // some other token than the expected ones; this is not a sequence of literals
-                    return null;
                 }
             }
             return null;
@@ -177,8 +172,7 @@ public class CppCpdLexer extends JavaccCpdLexer {
             return discardingTokensUntil != null;
         }
 
-        @Override
-        protected boolean isLanguageSpecificDiscarding() {
+        @Override protected boolean isLanguageSpecificDiscarding() {
             return isDiscardingToken() || discardCurrent;
         }
     }

@@ -74,13 +74,11 @@ public final class JavaResolvers {
         return isAccessibleIn(null, thisPackage, member, false);
     }
 
-    @NonNull
-    static NameResolver<JTypeMirror> moduleImport(Set<String> moduleNames,
-                                                  final SymbolResolver symbolResolver,
-                                                  final String thisPackage) {
+    @NonNull static NameResolver<JTypeMirror> moduleImport(Set<String> moduleNames,
+            final SymbolResolver symbolResolver,
+            final String thisPackage) {
         return new SingleNameResolver<JTypeMirror>() {
-            @Override
-            public @Nullable JTypeMirror resolveFirst(String simpleName) {
+            @Override public @Nullable JTypeMirror resolveFirst(String simpleName) {
                 for (String module : moduleNames) {
                     JModuleSymbol moduleSymbol = symbolResolver.resolveModule(module);
 
@@ -100,21 +98,17 @@ public final class JavaResolvers {
                 return null;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "ModuleImportResolver(" + moduleNames + ")";
             }
         };
     }
 
-    @NonNull
-    static NameResolver<JTypeMirror> importedOnDemand(Set<String> lazyImportedPackagesAndTypes,
-                                                      final SymbolResolver symResolver,
-                                                      final String thisPackage) {
+    @NonNull static NameResolver<JTypeMirror> importedOnDemand(Set<String> lazyImportedPackagesAndTypes,
+            final SymbolResolver symResolver,
+            final String thisPackage) {
         return new SingleNameResolver<JTypeMirror>() {
-            @Nullable
-            @Override
-            public JTypeMirror resolveFirst(String simpleName) {
+            @Nullable @Override public JTypeMirror resolveFirst(String simpleName) {
                 for (String pack : lazyImportedPackagesAndTypes) {
                     // here 'pack' may be a package or a type name, so we must resolve by canonical name
                     String name = prependPackageName(pack, simpleName);
@@ -126,19 +120,15 @@ public final class JavaResolvers {
                 return null;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "ImportOnDemandResolver(" + lazyImportedPackagesAndTypes + ")";
             }
         };
     }
 
-    @NonNull
-    static NameResolver<JTypeMirror> packageResolver(SymbolResolver symResolver, String packageName) {
+    @NonNull static NameResolver<JTypeMirror> packageResolver(SymbolResolver symResolver, String packageName) {
         return new SingleNameResolver<JTypeMirror>() {
-            @Nullable
-            @Override
-            public JTypeMirror resolveFirst(String simpleName) {
+            @Nullable @Override public JTypeMirror resolveFirst(String simpleName) {
                 JClassSymbol sym = symResolver.resolveClassFromBinaryName(prependPackageName(packageName, simpleName));
                 if (sym != null) {
                     return sym.getTypeSystem().typeOf(sym, false);
@@ -146,8 +136,7 @@ public final class JavaResolvers {
                 return null;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "PackageResolver(" + packageName + ")";
             }
         };
@@ -157,12 +146,11 @@ public final class JavaResolvers {
     static NameResolver<JMethodSig> subtypeMethodResolver(JClassType t) {
         JClassSymbol nestRoot = t.getSymbol().getNestRoot();
         return new NameResolver<JMethodSig>() {
-            @Override
-            public @NonNull List<JMethodSig> resolveHere(String simpleName) {
+            @Override public @NonNull List<JMethodSig> resolveHere(String simpleName) {
                 return t.streamMethods(
-                    it -> it.nameEquals(simpleName)
-                        && isAccessibleIn(nestRoot, it, true) // fetch protected methods
-                        && isNotStaticInterfaceMethod(it)
+                        it -> it.nameEquals(simpleName)
+                                && isAccessibleIn(nestRoot, it, true) // fetch protected methods
+                                && isNotStaticInterfaceMethod(it)
                 ).collect(OverloadSet.collectMostSpecific(t)); // remove overridden, hidden methods
             }
 
@@ -170,11 +158,10 @@ public final class JavaResolvers {
             // They must be explicitly qualified or imported.
             private boolean isNotStaticInterfaceMethod(JMethodSymbol it) {
                 return !it.isStatic() || it.getEnclosingClass().equals(t.getSymbol())
-                    || !it.getEnclosingClass().isInterface();
+                        || !it.getEnclosingClass().isInterface();
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "methods of " + t;
             }
         };
@@ -185,25 +172,23 @@ public final class JavaResolvers {
         assert importedSimpleName != null;
         assert accessPackageName != null;
         return new NameResolver<JMethodSig>() {
-            @Override
-            public @NonNull List<JMethodSig> resolveHere(String simpleName) {
+            @Override public @NonNull List<JMethodSig> resolveHere(String simpleName) {
                 if (!simpleName.equals(importedSimpleName)) {
                     return Collections.emptyList();
                 }
                 return container.streamMethods(
-                    it -> Modifier.isStatic(it.getModifiers())
-                        && it.nameEquals(simpleName)
-                        // Technically, importing a static protected method may be valid
-                        // inside some of the classes in the compilation unit. This test
-                        // makes it not in scope in those classes. But it's also visible
-                        // from the subclass as an "inherited" member, so is in scope in
-                        // the relevant contexts.
-                        && canBeImportedIn(accessPackageName, it)
+                        it -> Modifier.isStatic(it.getModifiers())
+                                && it.nameEquals(simpleName)
+                                // Technically, importing a static protected method may be valid
+                                // inside some of the classes in the compilation unit. This test
+                                // makes it not in scope in those classes. But it's also visible
+                                // from the subclass as an "inherited" member, so is in scope in
+                                // the relevant contexts.
+                                && canBeImportedIn(accessPackageName, it)
                 ).collect(OverloadSet.collectMostSpecific(container)); // remove overridden, hidden methods
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "static methods w/ name " + importedSimpleName + " of " + container;
             }
         };
@@ -214,20 +199,18 @@ public final class JavaResolvers {
         return new NameResolver<FieldSig>() {
             List<FieldSig> result;
 
-            @Override
-            public @NonNull List<FieldSig> resolveHere(String simpleName) {
+            @Override public @NonNull List<FieldSig> resolveHere(String simpleName) {
                 if (!simpleName.equals(importedSimpleName)) {
                     return Collections.emptyList();
                 }
                 if (result == null) {
                     result = JavaResolvers.getMemberFieldResolver(containerType, accessPackageName, null, simpleName)
-                                          .resolveHere(simpleName);
+                            .resolveHere(simpleName);
                 }
                 return result;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "static methods w/ name " + importedSimpleName + " of " + containerType;
             }
         };
@@ -238,21 +221,19 @@ public final class JavaResolvers {
         return new NameResolver<JClassType>() {
             List<JClassType> result;
 
-            @Override
-            public @NonNull List<JClassType> resolveHere(String simpleName) {
+            @Override public @NonNull List<JClassType> resolveHere(String simpleName) {
                 if (!simpleName.equals(importedSimpleName)) {
                     return Collections.emptyList();
                 }
 
                 if (result == null) {
                     result = JavaResolvers.getMemberClassResolver(containerType, accessPackageName, null, simpleName)
-                                          .resolveHere(simpleName);
+                            .resolveHere(simpleName);
                 }
                 return result;
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "static classes w/ name " + importedSimpleName + " of " + containerType;
             }
         };
@@ -261,27 +242,25 @@ public final class JavaResolvers {
     static NameResolver<JMethodSig> staticImportOnDemandMethodResolver(JClassType container, @NonNull String accessPackageName) {
         assert accessPackageName != null;
         return new NameResolver<JMethodSig>() {
-            @Override
-            public @NonNull List<JMethodSig> resolveHere(String simpleName) {
+            @Override public @NonNull List<JMethodSig> resolveHere(String simpleName) {
                 return container.streamMethods(
-                    it -> Modifier.isStatic(it.getModifiers())
-                        && it.nameEquals(simpleName)
-                        && canBeImportedIn(accessPackageName, it)
+                        it -> Modifier.isStatic(it.getModifiers())
+                                && it.nameEquals(simpleName)
+                                && canBeImportedIn(accessPackageName, it)
                 ).collect(OverloadSet.collectMostSpecific(container)); // remove overridden, hidden methods
             }
 
-            @Override
-            public String toString() {
+            @Override public String toString() {
                 return "all static methods of " + container;
             }
         };
     }
 
     private static final BinaryOperator<List<JMethodSig>> STATIC_MERGER =
-        (as, bs) -> methodMerger(true, as, bs);
+            (as, bs) -> methodMerger(true, as, bs);
 
     private static final BinaryOperator<List<JMethodSig>> NON_STATIC_MERGER =
-        (as, bs) -> methodMerger(false, as, bs);
+            (as, bs) -> methodMerger(false, as, bs);
 
 
     static BinaryOperator<List<JMethodSig>> methodMerger(boolean inStaticType) {
@@ -311,7 +290,7 @@ public final class JavaResolvers {
             for (JMethodSig m2 : otherResult) {
                 boolean isAlreadyShadowed = isShadowed.get(i);
                 if (!isAlreadyShadowed && TypeOps.areOverrideEquivalent(m1, m2)
-                    || inStaticType && !m2.isStatic()) {
+                        || inStaticType && !m2.isStatic()) {
                     isShadowed.set(i); // we'll remove it later
                 }
                 i++;
@@ -355,32 +334,32 @@ public final class JavaResolvers {
      */
     static Pair<NameResolver<JTypeMirror>, NameResolver<JVariableSig>> inheritedMembersResolvers(JClassType t) {
         Pair<ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder, ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder> builders =
-            hidingWalkResolvers(t, t, t.getSymbol().getPackageName(), true, /* onlyStatic: */false, DIRECT_STRICT_SUPERTYPES);
+                hidingWalkResolvers(t, t, t.getSymbol().getPackageName(), true, /* onlyStatic: */false, DIRECT_STRICT_SUPERTYPES);
         return Pair.of(builders.getLeft().build(), builders.getRight().build());
     }
 
     static Pair<ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder,
-        ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder> importOnDemandMembersResolvers(JClassType t, @NonNull String accessPackageName) {
+            ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder> importOnDemandMembersResolvers(JClassType t, @NonNull String accessPackageName) {
         return hidingWalkResolvers(t, null, accessPackageName, false, /* onlyStatic: */ true, JUST_SELF /* include self members */);
     }
 
     private static Pair<ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder, ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder> hidingWalkResolvers(JClassType t,
-                                                                                                                                                     @Nullable JClassType accessType,
-                                                                                                                                                     @NonNull String accessPackageName,
-                                                                                                                                                     boolean accessIsSubtypeOfOwner,
-                                                                                                                                                     boolean onlyStatic,
-                                                                                                                                                     SuperTypesEnumerator enumerator) {
+            @Nullable JClassType accessType,
+            @NonNull String accessPackageName,
+            boolean accessIsSubtypeOfOwner,
+            boolean onlyStatic,
+            SuperTypesEnumerator enumerator) {
         JClassSymbol nestRoot = accessType == null ? null : accessType.getSymbol().getNestRoot();
 
         ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder fields = SymTableFactory.VARS.new ResolverBuilder();
         ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder types = SymTableFactory.TYPES.new ResolverBuilder();
 
         Predicate<JVariableSig> isFieldAccessible =
-            s -> filterStatic(onlyStatic, s.getSymbol())
-                && isAccessibleIn(nestRoot, accessPackageName, (JFieldSymbol) s.getSymbol(), accessIsSubtypeOfOwner);
+                s -> filterStatic(onlyStatic, s.getSymbol())
+                        && isAccessibleIn(nestRoot, accessPackageName, (JFieldSymbol) s.getSymbol(), accessIsSubtypeOfOwner);
         Predicate<JClassType> isTypeAccessible =
-            s -> filterStatic(onlyStatic, s.getSymbol())
-                && isAccessibleIn(nestRoot, accessPackageName, s.getSymbol(), accessIsSubtypeOfOwner);
+                s -> filterStatic(onlyStatic, s.getSymbol())
+                        && isAccessibleIn(nestRoot, accessPackageName, s.getSymbol(), accessIsSubtypeOfOwner);
 
         for (JClassType next : enumerator.iterable(t)) {
             walkSelf(next, isFieldAccessible, isTypeAccessible, fields, types, HashTreePSet.empty(), HashTreePSet.empty());
@@ -394,13 +373,13 @@ public final class JavaResolvers {
     }
 
     private static void walkSelf(JClassType t,
-                                 Predicate<? super JVariableSig> isFieldAccessible,
-                                 Predicate<? super JClassType> isTypeAccessible,
-                                 ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder fields,
-                                 ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder types,
-                                 // persistent because may change in every path of the recursion
-                                 final PSet<String> hiddenFields,
-                                 final PSet<String> hiddenTypes) {
+            Predicate<? super JVariableSig> isFieldAccessible,
+            Predicate<? super JClassType> isTypeAccessible,
+            ShadowChainBuilder<JVariableSig, ?>.ResolverBuilder fields,
+            ShadowChainBuilder<JTypeMirror, ?>.ResolverBuilder types,
+            // persistent because may change in every path of the recursion
+            final PSet<String> hiddenFields,
+            final PSet<String> hiddenTypes) {
 
         // Note that it is possible that this process recurses several
         // times into the same interface (if it is reachable from several paths)
@@ -419,10 +398,10 @@ public final class JavaResolvers {
     }
 
     private static <S> PSet<String> processDeclarations(
-        ShadowChainBuilder<? super S, ?>.ResolverBuilder builder,
-        PSet<String> hidden,
-        Predicate<? super S> isAccessible,
-        List<? extends S> syms
+            ShadowChainBuilder<? super S, ?>.ResolverBuilder builder,
+            PSet<String> hidden,
+            Predicate<? super S> isAccessible,
+            List<? extends S> syms
     ) {
         for (S inner : syms) {
             String simpleName = builder.getSimpleName(inner);
@@ -448,8 +427,8 @@ public final class JavaResolvers {
      * @param sym      Symbol to test
      */
     public static boolean isAccessibleIn(@NonNull JClassSymbol nestRoot,
-                                         JAccessibleElementSymbol sym,
-                                         boolean isOwnerASupertypeOfContext) {
+            JAccessibleElementSymbol sym,
+            boolean isOwnerASupertypeOfContext) {
         return isAccessibleIn(nestRoot, nestRoot.getPackageName(), sym, isOwnerASupertypeOfContext);
     }
 
@@ -460,26 +439,26 @@ public final class JavaResolvers {
      * albeit a bit low-level (but only needs subtyping to be computed once).
      */
     private static boolean isAccessibleIn(@Nullable JClassSymbol nestRoot,
-                                          @NonNull String packageName,
-                                          JAccessibleElementSymbol sym,
-                                          boolean isOwnerASupertypeOfContext) {
+            @NonNull String packageName,
+            JAccessibleElementSymbol sym,
+            boolean isOwnerASupertypeOfContext) {
         int modifiers = sym.getModifiers() & (Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE);
 
         switch (modifiers) {
-        case Modifier.PUBLIC:
-            return true;
-        case Modifier.PRIVATE:
-            return nestRoot != null && nestRoot.equals(sym.getEnclosingClass().getNestRoot());
-        case Modifier.PROTECTED:
-            if (isOwnerASupertypeOfContext) {
+            case Modifier.PUBLIC:
                 return true;
-            }
+            case Modifier.PRIVATE:
+                return nestRoot != null && nestRoot.equals(sym.getEnclosingClass().getNestRoot());
+            case Modifier.PROTECTED:
+                if (isOwnerASupertypeOfContext) {
+                    return true;
+                }
             // fallthrough
         case 0:
-            return sym.getPackageName().equals(packageName);
-        default:
-            // TODO this is reachable for invalid declarations, like a private field of an interface
-            throw AssertionUtil.shouldNotReachHere("private field of an interface? " + sym + ", modifiers: " + Modifier.toString(sym.getModifiers()));
+                return sym.getPackageName().equals(packageName);
+            default:
+                // TODO this is reachable for invalid declarations, like a private field of an interface
+                throw AssertionUtil.shouldNotReachHere("private field of an interface? " + sym + ", modifiers: " + Modifier.toString(sym.getModifiers()));
         }
     }
 
@@ -503,12 +482,12 @@ public final class JavaResolvers {
     }
 
     private static <S> NameResolver<S> getNamedMemberResolver(JClassType c,
-                                                              @Nullable JClassSymbol access,
-                                                              @NonNull String accessPackageName,
-                                                              BiFunction<? super JClassType, String, ? extends S> getter,
-                                                              String name,
-                                                              Function<? super S, ? extends JAccessibleElementSymbol> symbolGetter,
-                                                              ShadowChainBuilder<? super S, ?> classes) {
+            @Nullable JClassSymbol access,
+            @NonNull String accessPackageName,
+            BiFunction<? super JClassType, String, ? extends S> getter,
+            String name,
+            Function<? super S, ? extends JAccessibleElementSymbol> symbolGetter,
+            ShadowChainBuilder<? super S, ?> classes) {
         S found = getter.apply(c, name);
         if (found != null) {
             // fast path, doesn't need to check accessibility, etc
@@ -521,8 +500,7 @@ public final class JavaResolvers {
             return isAccessibleIn(nestRoot, accessPackageName, sym, isSubtype(access, sym.getEnclosingClass()));
         };
 
-        @SuppressWarnings("unchecked")
-        ShadowChainBuilder<S, ?>.ResolverBuilder builder = (ShadowChainBuilder<S, ?>.ResolverBuilder) classes.new ResolverBuilder();
+        @SuppressWarnings("unchecked") ShadowChainBuilder<S, ?>.ResolverBuilder builder = (ShadowChainBuilder<S, ?>.ResolverBuilder) classes.new ResolverBuilder();
 
         for (JClassType next : DIRECT_STRICT_SUPERTYPES.iterable(c)) {
             walkForSingleName(next, isAccessible, name, getter, builder, HashTreePSet.empty());
@@ -536,11 +514,11 @@ public final class JavaResolvers {
     }
 
     private static <S> void walkForSingleName(JClassType t,
-                                              Predicate<? super S> isAccessible,
-                                              String name,
-                                              BiFunction<? super JClassType, String, ? extends S> getter,
-                                              ShadowChainBuilder<? super S, ?>.ResolverBuilder builder,
-                                              final PSet<String> hidden) {
+            Predicate<? super S> isAccessible,
+            String name,
+            BiFunction<? super JClassType, String, ? extends S> getter,
+            ShadowChainBuilder<? super S, ?>.ResolverBuilder builder,
+            final PSet<String> hidden) {
 
         PSet<String> hiddenInSup = processDeclarations(builder, hidden, isAccessible, listOfNotNull(getter.apply(t, name)));
 

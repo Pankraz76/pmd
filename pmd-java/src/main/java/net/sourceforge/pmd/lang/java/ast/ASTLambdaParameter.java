@@ -19,7 +19,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * </pre>
  */
 public final class ASTLambdaParameter extends AbstractJavaTypeNode
-    implements InternalInterfaces.VariableIdOwner, ModifierOwner {
+        implements InternalInterfaces.VariableIdOwner, ModifierOwner {
 
     ASTLambdaParameter(int id) {
         super(id);
@@ -35,8 +35,7 @@ public final class ASTLambdaParameter extends AbstractJavaTypeNode
         return getTypeNode() == null;
     }
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -50,15 +49,12 @@ public final class ASTLambdaParameter extends AbstractJavaTypeNode
     /**
      * Returns the declarator ID of this formal parameter.
      */
-    @Override
-    @NonNull
-    public ASTVariableId getVarId() {
+    @Override @NonNull public ASTVariableId getVarId() {
         return firstChild(ASTVariableId.class);
     }
 
     /** Returns the type node of this formal parameter. */
-    @Nullable
-    public ASTType getTypeNode() {
+    @Nullable public ASTType getTypeNode() {
         return firstChild(ASTType.class);
     }
 

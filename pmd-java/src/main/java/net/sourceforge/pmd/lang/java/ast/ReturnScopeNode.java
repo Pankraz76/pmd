@@ -26,6 +26,5 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public interface ReturnScopeNode extends JavaNode {
 
-    @Nullable
-    ASTBlock getBody();
+    @Nullable ASTBlock getBody();
 }

@@ -21,8 +21,7 @@ final class AstCtorSym extends AbstractAstExecSymbol<ASTConstructorDeclaration> 
         super(node, factory, owner);
     }
 
-    @Override
-    protected JTypeMirror makeReturnType(Substitution subst) {
+    @Override protected JTypeMirror makeReturnType(Substitution subst) {
         TypeSystem ts = getTypeSystem();
         return ts.declaration(getEnclosingClass()).subst(subst);
     }

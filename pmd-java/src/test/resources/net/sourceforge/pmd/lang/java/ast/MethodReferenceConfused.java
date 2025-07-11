@@ -7,7 +7,7 @@ public class MethodReferenceConfused {
         Object method = null;
         Object someObject = null;
         String result = AccessController.doPrivileged(
-            (PrivilegedAction<String>) ((I) someObject)::method);
+                (PrivilegedAction<String>) ((I) someObject)::method);
     }
 
     interface I {

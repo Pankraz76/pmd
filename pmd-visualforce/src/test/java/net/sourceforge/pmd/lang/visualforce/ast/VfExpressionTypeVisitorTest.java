@@ -52,8 +52,7 @@ class VfExpressionTypeVisitorTest {
     /**
      * Strings that use dot notation(Account.CreatedDate) result in ASTIdentifier nodes
      */
-    @Test
-    void testXpathQueryForCustomFieldIdentifiers() {
+    @Test void testXpathQueryForCustomFieldIdentifiers() {
         Node rootNode = compile("StandardAccount.page");
 
         for (Map.Entry<String, DataType> entry : EXPECTED_CUSTOM_FIELD_DATA_TYPES.entrySet()) {
@@ -74,16 +73,15 @@ class VfExpressionTypeVisitorTest {
      * Strings that use array notation, Account['CreatedDate') don't have a DataType added. This type of notation
      * creates ambiguous situations with Apex methods that return Maps. This may be addressed in a future release.
      */
-    @Test
-    void testXpathQueryForCustomFieldLiteralsHaveNullDataType() {
+    @Test void testXpathQueryForCustomFieldLiteralsHaveNullDataType() {
         Node rootNode = compile("StandardAccount.page");
 
         for (Map.Entry<String, DataType> entry : EXPECTED_CUSTOM_FIELD_DATA_TYPES.entrySet()) {
             List<ASTLiteral> nodes = rootNode.descendants(ASTLiteral.class)
-                                             // Literals are surrounded by apostrophes
-                                             .filterMatching(ASTLiteral::getImage, "'" + entry.getKey() + "'")
-                                             .filterMatching(ASTLiteral::getDataType, null)
-                                             .toList();
+                    // Literals are surrounded by apostrophes
+                    .filterMatching(ASTLiteral::getImage, "'" + entry.getKey() + "'")
+                    .filterMatching(ASTLiteral::getDataType, null)
+                    .toList();
 
             // Each string appears twice, it is set on a "value" attribute and inline
             assertEquals(2, nodes.size(), entry.getKey());
@@ -99,14 +97,13 @@ class VfExpressionTypeVisitorTest {
     /**
      * Nodes where the DataType can't be determined should have a null DataType
      */
-    @Test
-    void testDataTypeForCustomFieldsNotFound() {
+    @Test void testDataTypeForCustomFieldsNotFound() {
         Node rootNode = compile("StandardAccount.page");
 
         checkNodes(rootNode.descendants(ASTIdentifier.class)
-                           .filterMatching(ASTIdentifier::getImage, "NotFoundField__c"));
+                .filterMatching(ASTIdentifier::getImage, "NotFoundField__c"));
         checkNodes(rootNode.descendants(ASTLiteral.class)
-                           .filterMatching(ASTLiteral::getImage, "'NotFoundField__c'"));
+                .filterMatching(ASTLiteral::getImage, "'NotFoundField__c'"));
     }
 
     private void checkNodes(NodeStream<? extends VfTypedNode> nodeStream) {
@@ -121,8 +118,7 @@ class VfExpressionTypeVisitorTest {
     /**
      * Apex properties result in ASTIdentifier nodes
      */
-    @Test
-    void testXpathQueryForProperties() {
+    @Test void testXpathQueryForProperties() {
         Node rootNode = compile("ApexController.page");
 
         for (Map.Entry<String, DataType> entry : EXPECTED_APEX_DATA_TYPES.entrySet()) {
@@ -141,28 +137,26 @@ class VfExpressionTypeVisitorTest {
 
     private List<ASTIdentifier> getIdentifiers(Node rootNode, Entry<String, DataType> entry) {
         return rootNode.descendants(ASTIdentifier.class)
-                       .filterMatching(ASTIdentifier::getImage, entry.getKey())
-                       .filterMatching(ASTIdentifier::getDataType, entry.getValue())
-                       .toList();
+                .filterMatching(ASTIdentifier::getImage, entry.getKey())
+                .filterMatching(ASTIdentifier::getDataType, entry.getValue())
+                .toList();
     }
 
     /**
      * Nodes where the DataType can't be determined should have a null DataType
      */
-    @Test
-    void testDataTypeForApexPropertiesNotFound() {
+    @Test void testDataTypeForApexPropertiesNotFound() {
         Node rootNode = compile("ApexController.page");
 
         // Each string appears twice, it is set on a "value" attribute and inline
         checkNodes(rootNode.descendants(ASTIdentifier.class)
-                           .filterMatching(ASTIdentifier::getImage, "NotFoundProp"));
+                .filterMatching(ASTIdentifier::getImage, "NotFoundProp"));
     }
 
     /**
      * @see <a href="https://github.com/pmd/pmd/issues/5476">[visualforce] NPE when analyzing standard field references in visualforce page #5476</a>
      */
-    @Test
-    void standardFieldsOnlyHaveFullName() {
+    @Test void standardFieldsOnlyHaveFullName() {
         Node rootNode = compile("CasePrintPage.page");
 
         ASTIdentifier description = rootNode.descendants(ASTIdentifier.class)

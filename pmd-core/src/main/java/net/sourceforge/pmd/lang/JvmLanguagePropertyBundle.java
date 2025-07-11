@@ -23,13 +23,13 @@ import net.sourceforge.pmd.properties.PropertyFactory;
 public class JvmLanguagePropertyBundle extends LanguagePropertyBundle {
 
     public static final PropertyDescriptor<String> AUX_CLASSPATH
-        = PropertyFactory.stringProperty("auxClasspath")
-                         .desc("A classpath to use to resolve references to external types in the analysed sources. "
-                                   + "Individual paths are separated by ; on Windows and : on other platforms. "
-                                   + "All classes of the analysed project should be found on this classpath, including "
-                                   + "the compiled classes corresponding to the analyzed sources themselves, and the JDK classes.")
-                         .defaultValue("")
-                         .build();
+            = PropertyFactory.stringProperty("auxClasspath")
+            .desc("A classpath to use to resolve references to external types in the analysed sources. "
+                    + "Individual paths are separated by ; on Windows and : on other platforms. "
+                    + "All classes of the analysed project should be found on this classpath, including "
+                    + "the compiled classes corresponding to the analyzed sources themselves, and the JDK classes.")
+            .defaultValue("")
+            .build();
 
     private ClassLoader classLoader;
 
@@ -38,8 +38,7 @@ public class JvmLanguagePropertyBundle extends LanguagePropertyBundle {
         definePropertyDescriptor(AUX_CLASSPATH);
     }
 
-    @Override
-    public <T> void setProperty(PropertyDescriptor<T> propertyDescriptor, T value) {
+    @Override public <T> void setProperty(PropertyDescriptor<T> propertyDescriptor, T value) {
         super.setProperty(propertyDescriptor, value);
         if (propertyDescriptor == AUX_CLASSPATH) {
             classLoader = null; // reset it.

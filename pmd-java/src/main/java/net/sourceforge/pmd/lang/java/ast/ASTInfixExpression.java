@@ -40,11 +40,9 @@ public final class ASTInfixExpression extends AbstractJavaExpr implements Binary
     }
 
 
-    @Override
-    protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVisitor(JavaVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
-
 
 
     void setOp(BinaryOp op) {
@@ -57,26 +55,22 @@ public final class ASTInfixExpression extends AbstractJavaExpr implements Binary
      * <p>If this is an {@linkplain BinaryOp#INSTANCEOF instanceof expression},
      * then the right operand is a {@linkplain ASTTypeExpression TypeExpression}.
      */
-    @Override
-    public ASTExpression getRightOperand() {
+    @Override public ASTExpression getRightOperand() {
         return BinaryExpressionLike.super.getRightOperand();
     }
 
     /** Returns the operator. */
-    @Override
-    public @NonNull BinaryOp getOperator() {
+    @Override public @NonNull BinaryOp getOperator() {
         return operator;
     }
 
     // intentionally left-out
 
-    @Override
-    public void setImage(String image) {
+    @Override public void setImage(String image) {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return null;
     }
 

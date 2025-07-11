@@ -22,8 +22,7 @@ public class AddEmptyStringRule extends AbstractJavaRulechainRule {
         super(ASTStringLiteral.class);
     }
 
-    @Override
-    public Object visit(ASTStringLiteral node, Object data) {
+    @Override public Object visit(ASTStringLiteral node, Object data) {
         if (!node.isEmpty()) {
             return null;
         }
@@ -42,7 +41,7 @@ public class AddEmptyStringRule extends AbstractJavaRulechainRule {
 
     private void checkExpr(Object data, JavaNode parent) {
         if (JavaAstUtils.isInfixExprWithOperator(parent, BinaryOp.ADD)
-            && parent.ancestors(ASTAnnotation.class).isEmpty()) {
+                && parent.ancestors(ASTAnnotation.class).isEmpty()) {
             asCtx(data).addViolation(parent);
         }
     }

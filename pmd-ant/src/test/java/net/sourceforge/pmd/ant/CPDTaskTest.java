@@ -28,26 +28,22 @@ import net.sourceforge.pmd.internal.util.IOUtil;
  */
 class CPDTaskTest extends AbstractAntTest {
 
-    @BeforeEach
-    void setUp() {
+    @BeforeEach void setUp() {
         configureProject("src/test/resources/net/sourceforge/pmd/ant/xml/cpdtasktest.xml");
     }
 
-    @Test
-    void testBasic() throws IOException {
+    @Test void testBasic() throws IOException {
         executeTarget("testBasic");
         assertReport("target/cpd.ant.tests");
     }
 
-    @Test
-    void failOnErrorDefault() throws IOException {
+    @Test void failOnErrorDefault() throws IOException {
         BuildException buildException = assertThrows(BuildException.class, () -> executeTarget("failOnErrorDefault"));
         assertThat(buildException.getMessage(), containsString("There were 1 recovered errors during analysis."));
         assertReport("target/cpd.ant.tests");
     }
 
-    @Test
-    void failOnErrorIgnore() throws IOException {
+    @Test void failOnErrorIgnore() throws IOException {
         executeTarget("failOnErrorIgnore");
         assertReport("target/cpd.ant.tests");
         assertThat(log.toString(), containsString("There were 1 recovered errors during analysis."));

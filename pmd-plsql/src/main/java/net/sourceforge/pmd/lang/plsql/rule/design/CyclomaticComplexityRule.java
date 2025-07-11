@@ -48,18 +48,18 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
 
     public static final PropertyDescriptor<Integer> REPORT_LEVEL_DESCRIPTOR
             = PropertyFactory.intProperty("reportLevel")
-                             .desc("Cyclomatic Complexity reporting threshold")
-                             .require(positive()).defaultValue(10).build();
+            .desc("Cyclomatic Complexity reporting threshold")
+            .require(positive()).defaultValue(10).build();
 
     public static final PropertyDescriptor<Boolean> SHOW_CLASSES_COMPLEXITY_DESCRIPTOR =
-        PropertyFactory.booleanProperty("showClassesComplexity")
-                       .desc("Add class average violations to the report")
-                       .defaultValue(true).build();
+            PropertyFactory.booleanProperty("showClassesComplexity")
+                    .desc("Add class average violations to the report")
+                    .defaultValue(true).build();
 
     public static final PropertyDescriptor<Boolean> SHOW_METHODS_COMPLEXITY_DESCRIPTOR =
-        PropertyFactory.booleanProperty("showMethodsComplexity")
-                       .desc("Add method average violations to the report")
-                       .defaultValue(true).build();
+            PropertyFactory.booleanProperty("showMethodsComplexity")
+                    .desc("Add method average violations to the report")
+                    .defaultValue(true).build();
 
     private int reportLevel;
     private boolean showClassesComplexity = true;
@@ -91,8 +91,7 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         definePropertyDescriptor(SHOW_METHODS_COMPLEXITY_DESCRIPTOR);
     }
 
-    @Override
-    public Object visit(ASTInput node, Object data) {
+    @Override public Object visit(ASTInput node, Object data) {
         reportLevel = getProperty(REPORT_LEVEL_DESCRIPTOR);
         showClassesComplexity = getProperty(SHOW_CLASSES_COMPLEXITY_DESCRIPTOR);
         showMethodsComplexity = getProperty(SHOW_METHODS_COMPLEXITY_DESCRIPTOR);
@@ -100,8 +99,7 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTElsifClause node, Object data) {
+    @Override public Object visit(ASTElsifClause node, Object data) {
         int boolCompIf = NPathComplexityRule.sumExpressionComplexity(node.firstChild(ASTExpression.class));
         // If statement always has a complexity of at least 1
         boolCompIf++;
@@ -111,8 +109,7 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTIfStatement node, Object data) {
+    @Override public Object visit(ASTIfStatement node, Object data) {
         int boolCompIf = NPathComplexityRule.sumExpressionComplexity(node.firstChild(ASTExpression.class));
         // If statement always has a complexity of at least 1
         boolCompIf++;
@@ -122,15 +119,13 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTExceptionHandler node, Object data) {
+    @Override public Object visit(ASTExceptionHandler node, Object data) {
         entryStack.peek().bumpDecisionPoints();
         super.visit(node, data);
         return data;
     }
 
-    @Override
-    public Object visit(ASTForStatement node, Object data) {
+    @Override public Object visit(ASTForStatement node, Object data) {
         int boolCompFor = NPathComplexityRule
                 .sumExpressionComplexity(node.descendants(ASTExpression.class).first());
         // For statement always has a complexity of at least 1
@@ -141,8 +136,7 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTLoopStatement node, Object data) {
+    @Override public Object visit(ASTLoopStatement node, Object data) {
         int boolCompDo = NPathComplexityRule.sumExpressionComplexity(node.firstChild(ASTExpression.class));
         // Do statement always has a complexity of at least 1
         boolCompDo++;
@@ -152,8 +146,7 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTCaseStatement node, Object data) {
+    @Override public Object visit(ASTCaseStatement node, Object data) {
         Entry entry = entryStack.peek();
 
         int boolCompSwitch = NPathComplexityRule.sumExpressionComplexity(node.firstChild(ASTExpression.class));
@@ -163,8 +156,7 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTCaseWhenClause node, Object data) {
+    @Override public Object visit(ASTCaseWhenClause node, Object data) {
         Entry entry = entryStack.peek();
 
         entry.bumpDecisionPoints();
@@ -172,8 +164,7 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTWhileStatement node, Object data) {
+    @Override public Object visit(ASTWhileStatement node, Object data) {
         int boolCompWhile = NPathComplexityRule.sumExpressionComplexity(node.firstChild(ASTExpression.class));
         // While statement always has a complexity of at least 1
         boolCompWhile++;
@@ -183,25 +174,21 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         return data;
     }
 
-    @Override
-    public Object visit(ASTConditionalOrExpression node, Object data) {
+    @Override public Object visit(ASTConditionalOrExpression node, Object data) {
         return data;
     }
 
-    @Override
-    public Object visit(ASTPackageSpecification node, Object data) {
+    @Override public Object visit(ASTPackageSpecification node, Object data) {
         // Treat Package Specification like an Interface
         return data;
     }
 
-    @Override
-    public Object visit(ASTTypeSpecification node, Object data) {
+    @Override public Object visit(ASTTypeSpecification node, Object data) {
         // Treat Type Specification like an Interface
         return data;
     }
 
-    @Override
-    public Object visit(ASTPackageBody node, Object data) {
+    @Override public Object visit(ASTPackageBody node, Object data) {
 
         entryStack.push(new Entry());
         super.visit(node, data);
@@ -211,14 +198,13 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         if (showClassesComplexity) {
             if (classEntry.getComplexityAverage() >= reportLevel || classEntry.highestDecisionPoints >= reportLevel) {
                 asCtx(data).addViolation(node, "class", node.getImage(),
-                                         classEntry.getComplexityAverage() + " (Highest = " + classEntry.highestDecisionPoints + ')');
+                        classEntry.getComplexityAverage() + " (Highest = " + classEntry.highestDecisionPoints + ')');
             }
         }
         return data;
     }
 
-    @Override
-    public Object visit(ASTTriggerUnit node, Object data) {
+    @Override public Object visit(ASTTriggerUnit node, Object data) {
         entryStack.push(new Entry());
         super.visit(node, data);
         Entry classEntry = entryStack.pop();
@@ -228,7 +214,7 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
         if (showClassesComplexity) {
             if (classEntry.getComplexityAverage() >= reportLevel || classEntry.highestDecisionPoints >= reportLevel) {
                 asCtx(data).addViolation(node, "class", node.getImage(),
-                                         classEntry.getComplexityAverage() + " (Highest = " + classEntry.highestDecisionPoints + ')');
+                        classEntry.getComplexityAverage() + " (Highest = " + classEntry.highestDecisionPoints + ')');
             }
         }
         return data;
@@ -243,9 +229,8 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
             classEntry.highestDecisionPoints = methodDecisionPoints;
         }
     }
-    
-    @Override
-    public Object visit(ASTProgramUnit node, Object data) {
+
+    @Override public Object visit(ASTProgramUnit node, Object data) {
         entryStack.push(new Entry());
         super.visit(node, data);
         Entry methodEntry = entryStack.pop();
@@ -276,15 +261,14 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
             ASTMethodDeclarator methodDeclarator = node.firstChild(ASTMethodDeclarator.class);
             if (methodEntry.decisionPoints >= reportLevel) {
                 asCtx(data).addViolation(node,
-                                         "method", methodDeclarator == null ? "" : methodDeclarator.getImage(),
-                                         String.valueOf(methodEntry.decisionPoints));
+                        "method", methodDeclarator == null ? "" : methodDeclarator.getImage(),
+                        String.valueOf(methodEntry.decisionPoints));
             }
         }
         return data;
     }
 
-    @Override
-    public Object visit(ASTTypeMethod node, Object data) {
+    @Override public Object visit(ASTTypeMethod node, Object data) {
         entryStack.push(new Entry());
         super.visit(node, data);
         Entry methodEntry = entryStack.pop();
@@ -306,15 +290,14 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
             ASTMethodDeclarator methodDeclarator = node.firstChild(ASTMethodDeclarator.class);
             if (methodEntry.decisionPoints >= reportLevel) {
                 asCtx(data).addViolation(node,
-                                         "method", methodDeclarator == null ? "" : methodDeclarator.getImage(),
-                                         String.valueOf(methodEntry.decisionPoints));
+                        "method", methodDeclarator == null ? "" : methodDeclarator.getImage(),
+                        String.valueOf(methodEntry.decisionPoints));
             }
         }
         return data;
     }
 
-    @Override
-    public Object visit(ASTTriggerTimingPointSection node, Object data) {
+    @Override public Object visit(ASTTriggerTimingPointSection node, Object data) {
         entryStack.push(new Entry());
         super.visit(node, data);
         Entry methodEntry = entryStack.pop();
@@ -334,8 +317,8 @@ public class CyclomaticComplexityRule extends AbstractPLSQLRule {
             ASTMethodDeclarator methodDeclarator = node.firstChild(ASTMethodDeclarator.class);
             if (methodEntry.decisionPoints >= reportLevel) {
                 asCtx(data).addViolation(node,
-                                         "method", methodDeclarator == null ? "" : methodDeclarator.getImage(),
-                                         String.valueOf(methodEntry.decisionPoints));
+                        "method", methodDeclarator == null ? "" : methodDeclarator.getImage(),
+                        String.valueOf(methodEntry.decisionPoints));
             }
         }
         return data;

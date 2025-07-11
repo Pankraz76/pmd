@@ -34,13 +34,11 @@ import net.sourceforge.pmd.lang.rule.RuleSet;
 class SidebarGeneratorTest {
     private MockedFileWriter writer = new MockedFileWriter();
 
-    @BeforeEach
-    void setup() {
+    @BeforeEach void setup() {
         writer.reset();
     }
 
-    @Test
-    void testSidebar() throws IOException {
+    @Test void testSidebar() throws IOException {
         Map<Language, List<RuleSet>> rulesets = new TreeMap<>();
         RuleSet ruleSet1 = RuleSet.create("test", "test", "bestpractices.xml", Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
         RuleSet ruleSet2 = RuleSet.create("test2", "test", "codestyle.xml", Collections.emptyList(), Collections.emptyList(), Collections.emptyList());

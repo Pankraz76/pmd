@@ -30,41 +30,34 @@ class TypesTreeDumpTest extends BaseTreeDumpTest {
         super(new JavaTypeAttrPrinter(), ".java");
     }
 
-    @Override
-    public @NonNull BaseParsingHelper<?, ?> getParser() {
+    @Override public @NonNull BaseParsingHelper<?, ?> getParser() {
         return JavaParsingHelper.DEFAULT.withResourceContext(getClass(), "dumptests");
     }
 
-    @Test
-    void testIteratorUtilCopy() {
+    @Test void testIteratorUtilCopy() {
         doTest("IteratorUtilCopy");
     }
 
-    @Test
-    void testSwitchExpressionWithPatterns() {
+    @Test void testSwitchExpressionWithPatterns() {
         doTest("SwitchExpressionWithPatterns");
     }
 
-    @Test
-    void testUnnamedPatterns() {
+    @Test void testUnnamedPatterns() {
         doTest("UnnamedPatterns");
     }
 
-    @Test
-    void testNestedLambdasAndMethodCalls() {
+    @Test void testNestedLambdasAndMethodCalls() {
         doTest("NestedLambdasAndMethodCalls");
     }
 
-    @Test
-    void testUnresolvedThings() {
+    @Test void testUnresolvedThings() {
         doTest("UnresolvedThings");
     }
 
-    @Override
-    protected @NonNull String normalize(@NonNull String str) {
+    @Override protected @NonNull String normalize(@NonNull String str) {
         return super.normalize(str)
-                    // capture IDs are unstable from run to run
-                    .replaceAll("capture#-?\\d+", "capture#...");
+                // capture IDs are unstable from run to run
+                .replaceAll("capture#-?\\d+", "capture#...");
     }
 
     /**
@@ -72,8 +65,7 @@ class TypesTreeDumpTest extends BaseTreeDumpTest {
      */
     private static class JavaTypeAttrPrinter extends RelevantAttributePrinter {
 
-        @Override
-        protected void fillAttributes(@NonNull Node node, @NonNull List<AttributeInfo> result) {
+        @Override protected void fillAttributes(@NonNull Node node, @NonNull List<AttributeInfo> result) {
             if (node instanceof TypeNode) {
                 result.add(new AttributeInfo("TypeMirror", ((TypeNode) node).getTypeMirror().toString()));
             }
@@ -97,8 +89,7 @@ class TypesTreeDumpTest extends BaseTreeDumpTest {
             }
         }
 
-        @Override
-        protected boolean ignoreAttribute(@NonNull Node node, @NonNull Attribute attribute) {
+        @Override protected boolean ignoreAttribute(@NonNull Node node, @NonNull Attribute attribute) {
             return true;
         }
     }

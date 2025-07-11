@@ -145,7 +145,7 @@ final class SourceCodePositioner {
     public int offsetOfEndOfLine(final int line) {
         if (!isValidLine(line)) {
             throw new IndexOutOfBoundsException(
-                line + " is not a valid line number, expected at most " + lineOffsets.length);
+                    line + " is not a valid line number, expected at most " + lineOffsets.length);
         }
 
         return lineOffsets[line];
@@ -235,7 +235,7 @@ final class SourceCodePositioner {
         private void addLineImpl(int offset, boolean isEof) {
             if (offset < 0 || offset < lastLineOffset || offset == lastLineOffset && !isEof) {
                 throw new IllegalArgumentException(
-                    "Invalid offset " + offset + " (last offset " + lastLineOffset + ")"
+                        "Invalid offset " + offset + " (last offset " + lastLineOffset + ")"
                 );
             }
             lastLineOffset = offset;

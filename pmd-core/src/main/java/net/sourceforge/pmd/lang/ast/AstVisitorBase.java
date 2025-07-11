@@ -33,8 +33,7 @@ public abstract class AstVisitorBase<P, R> implements AstVisitor<P, R> {
         return null;
     }
 
-    @Override
-    public R visitNode(Node node, P param) {
+    @Override public R visitNode(Node node, P param) {
         return visitChildren(node, param);
     }
 

@@ -1,4 +1,3 @@
-
 package net.sourceforge.pmd.lang.velocity.ast;
 
 /*
@@ -41,8 +40,7 @@ public final class ASTReference extends AbstractVtlNode {
         super(id);
     }
 
-    @Override
-    protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {
+    @Override protected <P, R> R acceptVtlVisitor(VtlVisitor<? super P, ? extends R> visitor, P data) {
         return visitor.visit(this, data);
     }
 
@@ -82,8 +80,7 @@ public final class ASTReference extends AbstractVtlNode {
      *
      * @return A literal string.
      */
-    @Override
-    public String literal() {
+    @Override public String literal() {
         if (literal != null) {
             return literal;
         }

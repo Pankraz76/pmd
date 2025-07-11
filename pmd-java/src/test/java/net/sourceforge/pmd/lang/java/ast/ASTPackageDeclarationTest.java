@@ -19,35 +19,33 @@ class ASTPackageDeclarationTest extends BaseParserTest {
     /**
      * Regression test for bug https://sourceforge.net/p/pmd/bugs/1006/.
      */
-    @Test
-    void testPackageName() {
+    @Test void testPackageName() {
         ASTCompilationUnit nodes = java.parse(PACKAGE_INFO_ANNOTATED);
 
         assertEquals("net.sourceforge.pmd.foobar", nodes.getPackageDeclaration().getName());
         assertEquals("net.sourceforge.pmd.foobar", nodes.getPackageName());
     }
 
-    @Test
-    void testReportLocation() {
+    @Test void testReportLocation() {
         ASTCompilationUnit nodes = java.parse(
-            "/** a javadoc comment */\n"
-                + "package \n"
-                + "     foo.\n"
-                + "     bar\n"
-                + ";"
+                "/** a javadoc comment */\n"
+                        + "package \n"
+                        + "     foo.\n"
+                        + "     bar\n"
+                        + ";"
         );
         ASTPackageDeclaration packageDecl = nodes.getPackageDeclaration();
         // this is the range of the Name.
         FileLocation loc = packageDecl.getReportLocation();
         assertEquals(
-            TextPos2d.pos2d(3, 6),
-            loc.getStartPos()
+                TextPos2d.pos2d(3, 6),
+                loc.getStartPos()
         );
         assertEquals(
-            TextPos2d.pos2d(4, 9),
-            loc.getEndPos()
+                TextPos2d.pos2d(4, 9),
+                loc.getEndPos()
         );
         assertEquals(packageDecl.getTextRegion(),
-                     nodes.getTextDocument().getEntireRegion());
+                nodes.getTextDocument().getEntireRegion());
     }
 }

@@ -34,15 +34,13 @@ public interface JavaNode extends JjtreeNode<JavaNode> {
     }
 
 
-    @Override
-    @NonNull ASTCompilationUnit getRoot();
+    @Override @NonNull ASTCompilationUnit getRoot();
 
     /**
      * Returns the symbol table for the program point represented by
      * this node.
      */
-    @NonNull
-    JSymbolTable getSymbolTable();
+    @NonNull JSymbolTable getSymbolTable();
 
     /**
      * Returns the type system with which this node was created. This is

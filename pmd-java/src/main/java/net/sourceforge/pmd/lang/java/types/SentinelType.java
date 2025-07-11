@@ -31,43 +31,35 @@ final class SentinelType implements JTypeMirror {
         this.symbol = symbol;
     }
 
-    @Override
-    public JTypeMirror withAnnotations(PSet<SymAnnot> newTypeAnnots) {
+    @Override public JTypeMirror withAnnotations(PSet<SymAnnot> newTypeAnnots) {
         return this;
     }
 
-    @Override
-    public PSet<SymAnnot> getTypeAnnotations() {
+    @Override public PSet<SymAnnot> getTypeAnnotations() {
         return HashTreePSet.empty();
     }
 
-    @Override
-    public @NonNull JTypeDeclSymbol getSymbol() {
+    @Override public @NonNull JTypeDeclSymbol getSymbol() {
         return symbol;
     }
 
-    @Override
-    public JTypeMirror subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
+    @Override public JTypeMirror subst(Function<? super SubstVar, ? extends @NonNull JTypeMirror> subst) {
         return this;
     }
 
-    @Override
-    public TypeSystem getTypeSystem() {
+    @Override public TypeSystem getTypeSystem() {
         return ts;
     }
 
-    @Override
-    public Set<JTypeMirror> getSuperTypeSet() {
+    @Override public Set<JTypeMirror> getSuperTypeSet() {
         return Collections.singleton(this);
     }
 
-    @Override
-    public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
+    @Override public <T, P> T acceptVisitor(JTypeVisitor<T, P> visitor, P p) {
         return visitor.visitSentinel(this, p);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return name;
     }
 }

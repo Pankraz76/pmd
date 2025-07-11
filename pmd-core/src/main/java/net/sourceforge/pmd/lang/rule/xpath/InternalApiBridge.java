@@ -19,7 +19,8 @@ import net.sourceforge.pmd.annotation.InternalApi;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static String replacementIfDeprecated(Attribute attribute) {
         return attribute.replacementIfDeprecated();

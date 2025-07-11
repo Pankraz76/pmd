@@ -17,8 +17,7 @@ public abstract class AbstractPLSQLParserTst extends BaseTreeDumpTest {
         super(new RelevantAttributePrinter(), ".pls");
     }
 
-    @Override
-    public @NonNull BaseParsingHelper<PlsqlParsingHelper, ASTInput> getParser() {
+    @Override public @NonNull BaseParsingHelper<PlsqlParsingHelper, ASTInput> getParser() {
         return plsql;
     }
 

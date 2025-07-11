@@ -24,8 +24,7 @@ public class TSqlLanguageModule extends CpdOnlyLanguageModuleBase {
         return (TSqlLanguageModule) LanguageRegistry.CPD.getLanguageById(ID);
     }
 
-    @Override
-    public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
+    @Override public CpdLexer createCpdLexer(LanguagePropertyBundle bundle) {
         return new TSqlCpdLexer();
     }
 }

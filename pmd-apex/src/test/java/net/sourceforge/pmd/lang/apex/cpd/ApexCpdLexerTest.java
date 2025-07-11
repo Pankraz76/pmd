@@ -15,31 +15,26 @@ class ApexCpdLexerTest extends CpdTextComparisonTest {
         super(ApexLanguageModule.getInstance(), ".cls");
     }
 
-    @Test
-    void testTokenize() {
+    @Test void testTokenize() {
         doTest("Simple");
     }
 
     /**
      * Comments are ignored since using ApexLexer.
      */
-    @Test
-    void testTokenizeWithComments() {
+    @Test void testTokenizeWithComments() {
         doTest("comments");
     }
 
-    @Test
-    void testTabWidth() {
+    @Test void testTabWidth() {
         doTest("tabWidth");
     }
 
-    @Test
-    void lexExceptionExpected() {
+    @Test void lexExceptionExpected() {
         expectLexException("class Foo { String s = \"not a string literal\"; }");
     }
 
-    @Test
-    void caseInsensitiveStringLiterals() {
+    @Test void caseInsensitiveStringLiterals() {
         doTest("StringLiterals5053");
     }
 }

@@ -116,7 +116,7 @@ public class RuleTestDescriptor {
     private void checkListSize(int expectedProblems, List<?> expectedMessages) {
         if (!expectedMessages.isEmpty() && expectedProblems != expectedMessages.size()) {
             throw new IllegalArgumentException(
-                "Expected list of size " + expectedProblems + ", got " + expectedMessages);
+                    "Expected list of size " + expectedProblems + ", got " + expectedMessages);
         }
     }
 

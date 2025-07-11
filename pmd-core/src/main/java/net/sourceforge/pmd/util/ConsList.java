@@ -22,8 +22,7 @@ final class ConsList<T> extends AbstractList<T> {
         this.size = head.size() + tail.size();
     }
 
-    @Override
-    public T get(int index) {
+    @Override public T get(int index) {
         Validate.validIndex(this, index);
         if (index < head.size()) {
             return head.get(index);
@@ -31,13 +30,11 @@ final class ConsList<T> extends AbstractList<T> {
         return tail.get(index - head.size());
     }
 
-    @Override
-    public Iterator<T> iterator() {
+    @Override public Iterator<T> iterator() {
         return IteratorUtil.concat(head.iterator(), tail.iterator());
     }
 
-    @Override
-    public int size() {
+    @Override public int size() {
         return size;
     }
 }

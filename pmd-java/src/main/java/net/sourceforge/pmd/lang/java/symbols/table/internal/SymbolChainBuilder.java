@@ -10,8 +10,7 @@ import net.sourceforge.pmd.lang.java.symbols.table.coreimpl.ShadowChainBuilder;
 
 class SymbolChainBuilder<S extends JElementSymbol> extends ShadowChainBuilder<S, ScopeInfo> {
 
-    @Override
-    public String getSimpleName(S sym) {
+    @Override public String getSimpleName(S sym) {
         return sym.getSimpleName();
     }
 }

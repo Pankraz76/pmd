@@ -46,15 +46,15 @@ public class SaxonExtensionFunctionDefinitionAdapter extends ExtensionFunctionDe
 
     private SequenceType convertToSequenceType(XPathFunctionDefinition.Type type) {
         switch (type) {
-        case SINGLE_STRING: return SequenceType.SINGLE_STRING;
-        case SINGLE_BOOLEAN: return SequenceType.SINGLE_BOOLEAN;
-        case SINGLE_ELEMENT: return SINGLE_ELEMENT_SEQUENCE_TYPE;
-        case SINGLE_INTEGER: return SequenceType.SINGLE_INTEGER;
-        case STRING_SEQUENCE: return SequenceType.STRING_SEQUENCE;
-        case OPTIONAL_STRING: return SequenceType.OPTIONAL_STRING;
-        case OPTIONAL_DECIMAL: return SequenceType.OPTIONAL_DECIMAL;
-        default:
-            throw new UnsupportedOperationException("Type " + type + " is not supported");
+            case SINGLE_STRING: return SequenceType.SINGLE_STRING;
+            case SINGLE_BOOLEAN: return SequenceType.SINGLE_BOOLEAN;
+            case SINGLE_ELEMENT: return SINGLE_ELEMENT_SEQUENCE_TYPE;
+            case SINGLE_INTEGER: return SequenceType.SINGLE_INTEGER;
+            case STRING_SEQUENCE: return SequenceType.STRING_SEQUENCE;
+            case OPTIONAL_STRING: return SequenceType.OPTIONAL_STRING;
+            case OPTIONAL_DECIMAL: return SequenceType.OPTIONAL_DECIMAL;
+            default:
+                throw new UnsupportedOperationException("Type " + type + " is not supported");
         }
     }
 
@@ -66,33 +66,27 @@ public class SaxonExtensionFunctionDefinitionAdapter extends ExtensionFunctionDe
         return result;
     }
 
-    @Override
-    public StructuredQName getFunctionQName() {
+    @Override public StructuredQName getFunctionQName() {
         QName qName = definition.getQName();
         return new StructuredQName(qName.getPrefix(), qName.getNamespaceURI(), qName.getLocalPart());
     }
 
-    @Override
-    public SequenceType[] getArgumentTypes() {
+    @Override public SequenceType[] getArgumentTypes() {
         return convertToSequenceTypes(definition.getArgumentTypes());
     }
 
-    @Override
-    public SequenceType getResultType(SequenceType[] suppliedArgumentTypes) {
+    @Override public SequenceType getResultType(SequenceType[] suppliedArgumentTypes) {
         return convertToSequenceType(definition.getResultType());
     }
 
-    @Override
-    public boolean dependsOnFocus() {
+    @Override public boolean dependsOnFocus() {
         return definition.dependsOnContext();
     }
 
-    @Override
-    public ExtensionFunctionCall makeCallExpression() {
+    @Override public ExtensionFunctionCall makeCallExpression() {
         XPathFunctionDefinition.FunctionCall call = definition.makeCallExpression();
         return new ExtensionFunctionCall() {
-            @Override
-            public Expression rewrite(StaticContext context, Expression[] arguments) throws XPathException {
+            @Override public Expression rewrite(StaticContext context, Expression[] arguments) throws XPathException {
                 Object[] convertedArguments = new Object[definition.getArgumentTypes().length];
                 for (int i = 0; i < convertedArguments.length; i++) {
                     if (arguments[i] instanceof StringLiteral) {
@@ -109,8 +103,7 @@ public class SaxonExtensionFunctionDefinitionAdapter extends ExtensionFunctionDe
                 return null;
             }
 
-            @Override
-            public Sequence call(XPathContext context, Sequence[] arguments) throws XPathException {
+            @Override public Sequence call(XPathContext context, Sequence[] arguments) throws XPathException {
                 Node contextNode = null;
                 if (definition.dependsOnContext()) {
                     contextNode = XPathElementToNodeHelper.itemToNode(context.getContextItem());

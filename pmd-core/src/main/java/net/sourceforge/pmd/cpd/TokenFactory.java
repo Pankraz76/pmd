@@ -59,7 +59,6 @@ public interface TokenFactory extends AutoCloseable {
      * This adds the EOF token, it must be called when
      * {@link CpdLexer#tokenize(TextDocument, TokenFactory)} is done.
      */
-    @Override
-    void close();
+    @Override void close();
 
 }

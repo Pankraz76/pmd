@@ -86,8 +86,7 @@ public final class CollectionUtil {
      */
     public static <K, V, U> Map<K, U> mapView(Map<K, V> map, Function<? super V, ? extends U> valueMapper) {
         return new AbstractMap<K, U>() {
-            @Override
-            public U get(Object key) {
+            @Override public U get(Object key) {
                 V v = map.get(key);
                 if (v == null && !map.containsKey(key)) {
                     return null;
@@ -95,17 +94,14 @@ public final class CollectionUtil {
                 return valueMapper.apply(v);
             }
 
-            @Override
-            public Set<Entry<K, U>> entrySet() {
+            @Override public Set<Entry<K, U>> entrySet() {
                 return new AbstractSet<Entry<K, U>>() {
 
-                    @Override
-                    public Iterator<Entry<K, U>> iterator() {
+                    @Override public Iterator<Entry<K, U>> iterator() {
                         return IteratorUtil.map(map.entrySet().iterator(), entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), valueMapper.apply(entry.getValue())));
                     }
 
-                    @Override
-                    public int size() {
+                    @Override public int size() {
                         return map.size();
                     }
                 };
@@ -122,8 +118,7 @@ public final class CollectionUtil {
      *
      * @return Union of both arguments
      */
-    @SafeVarargs
-    public static <T> Set<T> union(Collection<? extends T> c1, Collection<? extends T> c2, Collection<? extends T>... rest) {
+    @SafeVarargs public static <T> Set<T> union(Collection<? extends T> c1, Collection<? extends T> c2, Collection<? extends T>... rest) {
         Set<T> union = new LinkedHashSet<>(c1);
         union.addAll(c2);
         for (Collection<? extends T> ts : rest) {
@@ -140,8 +135,7 @@ public final class CollectionUtil {
      *
      * @return Intersection of both arguments
      */
-    @SafeVarargs
-    public static <T> Set<T> intersect(Collection<? extends T> c1, Collection<? extends T> c2, Collection<? extends T>... rest) {
+    @SafeVarargs public static <T> Set<T> intersect(Collection<? extends T> c1, Collection<? extends T> c2, Collection<? extends T>... rest) {
         Set<T> union = new LinkedHashSet<>(c1);
         union.retainAll(c2);
         for (Collection<? extends T> ts : rest) {
@@ -160,8 +154,7 @@ public final class CollectionUtil {
      *
      * @return Difference of arguments
      */
-    @SafeVarargs
-    public static <T> Set<T> diff(Collection<? extends T> c1, Collection<? extends T> c2, Collection<? extends T>... rest) {
+    @SafeVarargs public static <T> Set<T> diff(Collection<? extends T> c1, Collection<? extends T> c2, Collection<? extends T>... rest) {
         Set<T> union = new LinkedHashSet<>(c1);
         union.removeAll(c2);
         for (Collection<? extends T> ts : rest) {
@@ -177,8 +170,7 @@ public final class CollectionUtil {
      * @param first First element
      * @param rest  Following elements
      */
-    @SafeVarargs
-    public static <T> Set<T> setOf(T first, T... rest) {
+    @SafeVarargs public static <T> Set<T> setOf(T first, T... rest) {
         return immutableSetOf(first, rest);
     }
 
@@ -188,8 +180,7 @@ public final class CollectionUtil {
      * @param first First element
      * @param rest  Following elements
      */
-    @SafeVarargs
-    public static <T> Set<T> immutableSetOf(T first, T... rest) {
+    @SafeVarargs public static <T> Set<T> immutableSetOf(T first, T... rest) {
         if (rest.length == 0) {
             return Collections.singleton(first);
         }
@@ -205,14 +196,12 @@ public final class CollectionUtil {
      * @param first First element
      * @param rest  Following elements
      */
-    @SafeVarargs
-    public static <T extends Enum<T>> Set<T> immutableEnumSet(T first, T... rest) {
+    @SafeVarargs public static <T extends Enum<T>> Set<T> immutableEnumSet(T first, T... rest) {
         return Collections.unmodifiableSet(EnumSet.of(first, rest));
     }
 
 
-    @SafeVarargs
-    public static <T> List<T> listOf(T first, T... rest) {
+    @SafeVarargs public static <T> List<T> listOf(T first, T... rest) {
         if (rest.length == 0) {
             return ConsPStack.singleton(first);
         }
@@ -301,9 +290,7 @@ public final class CollectionUtil {
      * Returns an unmodifiable set containing the set union of the collection,
      * and the new elements.
      */
-    @SafeVarargs
-    @SuppressWarnings("unchecked")
-    public static <V> Set<V> setUnion(Collection<? extends V> set, V first, V... newElements) {
+    @SafeVarargs @SuppressWarnings("unchecked") public static <V> Set<V> setUnion(Collection<? extends V> set, V first, V... newElements) {
         if (set instanceof PSet) {
             return ((PSet<V>) set).plus(first).plusAll(asList(newElements));
         }
@@ -472,8 +459,8 @@ public final class CollectionUtil {
      * and accumulates it into the collector.
      */
     public static <T, U, A, C> C map(Collector<? super U, A, ? extends C> collector,
-                                     Iterable<? extends T> from,
-                                     Function<? super T, ? extends U> f) {
+            Iterable<? extends T> from,
+            Function<? super T, ? extends U> f) {
         if (from == null) {
             return map(collector, emptyIterator(), f);
         }
@@ -486,8 +473,8 @@ public final class CollectionUtil {
      */
     // one more type param and we can write tupac
     public static <T, U, A, C> C map(Collector<? super U, A, ? extends C> collector,
-                                     Iterator<? extends T> from,
-                                     Function<? super T, ? extends U> f) {
+            Iterator<? extends T> from,
+            Function<? super T, ? extends U> f) {
         A a = collector.supplier().get();
         BiConsumer<A, ? super U> accumulator = collector.accumulator();
         from.forEachRemaining(t -> accumulator.accept(a, f.apply(t)));
@@ -553,13 +540,13 @@ public final class CollectionUtil {
         }
 
         return Collector.of(
-            Holder::new,
-            (h, t) -> h.set = h.set.plus(t),
-            (left, right) -> {
-                left.set = left.set.plusAll(right.set);
-                return left;
-            },
-            a -> a.set
+                Holder::new,
+                (h, t) -> h.set = h.set.plus(t),
+                (left, right) -> {
+                    left.set = left.set.plusAll(right.set);
+                    return left;
+                },
+                a -> a.set
         );
     }
 
@@ -578,13 +565,13 @@ public final class CollectionUtil {
         AssertionUtil.requireNonNegative("n", n);
 
         return list.size() <= n ? emptyList()
-                                : list.subList(n, list.size());
+                : list.subList(n, list.size());
     }
 
     public static <T> List<T> take(List<T> list, int n) {
         AssertionUtil.requireNonNegative("n", n);
         return list.size() <= n ? list
-                                : list.subList(0, n);
+                : list.subList(0, n);
     }
 
 
@@ -661,9 +648,9 @@ public final class CollectionUtil {
      * on a preexisting {@link StringBuilder}. The result value is that StringBuilder.
      */
     public static <T> StringBuilder joinOn(StringBuilder sb,
-                                           Iterable<? extends T> iterable,
-                                           BiConsumer<? super StringBuilder, ? super T> appendItem,
-                                           String delimiter) {
+            Iterable<? extends T> iterable,
+            BiConsumer<? super StringBuilder, ? super T> appendItem,
+            String delimiter) {
         boolean first = true;
         for (T t : iterable) {
             if (first) {
@@ -678,10 +665,10 @@ public final class CollectionUtil {
 
     public static @NonNull StringBuilder joinCharsIntoStringBuilder(List<Chars> lines, String delimiter) {
         return joinOn(
-            new StringBuilder(),
-            lines,
-            (buf, line) -> line.appendChars(buf),
-            delimiter
+                new StringBuilder(),
+                lines,
+                (buf, line) -> line.appendChars(buf),
+                delimiter
         );
     }
 
@@ -714,6 +701,6 @@ public final class CollectionUtil {
             return (List<T>) list;
         }
         return list == null || list.isEmpty() ? emptyList()
-                                              : Collections.unmodifiableList(list);
+                : Collections.unmodifiableList(list);
     }
 }

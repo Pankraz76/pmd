@@ -11,8 +11,7 @@ import picocli.CommandLine.TypeConversionException;
  * Parses a number of threads, either an integer or a float followed by the letter C.
  */
 public class NumThreadsConverter implements ITypeConverter<Integer> {
-    @Override
-    public Integer convert(String s) {
+    @Override public Integer convert(String s) {
         boolean isCoreMultiplied = s.endsWith("C");
         if (isCoreMultiplied) {
             s = s.substring(0, s.length() - 1); // remove the C

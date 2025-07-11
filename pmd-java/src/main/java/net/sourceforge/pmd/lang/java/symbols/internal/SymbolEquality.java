@@ -36,13 +36,11 @@ public final class SymbolEquality {
     }
 
     public static final EqAndHash<JTypeParameterSymbol> TYPE_PARAM = new EqAndHash<JTypeParameterSymbol>() {
-        @Override
-        public int hash(JTypeParameterSymbol t1) {
+        @Override public int hash(JTypeParameterSymbol t1) {
             return 31 * t1.getDeclaringSymbol().hashCode() + t1.getSimpleName().hashCode();
         }
 
-        @Override
-        public boolean equals(JTypeParameterSymbol m1, Object o) {
+        @Override public boolean equals(JTypeParameterSymbol m1, Object o) {
             if (m1 == o) {
                 return true;
             }
@@ -52,18 +50,16 @@ public final class SymbolEquality {
             JTypeParameterSymbol m2 = (JTypeParameterSymbol) o;
 
             return Objects.equals(m1.getSimpleName(), m2.getSimpleName())
-                && m1.getDeclaringSymbol().equals(m2.getDeclaringSymbol());
+                    && m1.getDeclaringSymbol().equals(m2.getDeclaringSymbol());
         }
     };
 
     public static final EqAndHash<JMethodSymbol> METHOD = new EqAndHash<JMethodSymbol>() {
-        @Override
-        public int hash(JMethodSymbol t1) {
+        @Override public int hash(JMethodSymbol t1) {
             return t1.getArity() * t1.getModifiers() + 31 * t1.getSimpleName().hashCode();
         }
 
-        @Override
-        public boolean equals(JMethodSymbol m1, Object o) {
+        @Override public boolean equals(JMethodSymbol m1, Object o) {
             if (m1 == o) {
                 return true;
             }
@@ -78,21 +74,19 @@ public final class SymbolEquality {
 
     private static boolean executableSymsAreEqual(JExecutableSymbol m1, JExecutableSymbol m2) {
         return m1.getModifiers() == m2.getModifiers()
-            && m1.getArity() == m2.getArity()
-            && Objects.equals(m1.getSimpleName(), m2.getSimpleName())
-            && m1.getEnclosingClass().equals(m2.getEnclosingClass())
-            && m1.getFormalParameterTypes(Substitution.erasing(m1.getTypeParameters()))
-                 .equals(m2.getFormalParameterTypes(Substitution.erasing(m2.getTypeParameters())));
+                && m1.getArity() == m2.getArity()
+                && Objects.equals(m1.getSimpleName(), m2.getSimpleName())
+                && m1.getEnclosingClass().equals(m2.getEnclosingClass())
+                && m1.getFormalParameterTypes(Substitution.erasing(m1.getTypeParameters()))
+                .equals(m2.getFormalParameterTypes(Substitution.erasing(m2.getTypeParameters())));
     }
 
     public static final EqAndHash<JConstructorSymbol> CONSTRUCTOR = new EqAndHash<JConstructorSymbol>() {
-        @Override
-        public int hash(JConstructorSymbol t1) {
+        @Override public int hash(JConstructorSymbol t1) {
             return t1.getArity() * t1.getModifiers() + 31 * t1.getSimpleName().hashCode();
         }
 
-        @Override
-        public boolean equals(JConstructorSymbol m1, Object o) {
+        @Override public boolean equals(JConstructorSymbol m1, Object o) {
             if (m1 == o) {
                 return true;
             }
@@ -107,13 +101,11 @@ public final class SymbolEquality {
 
 
     public static final EqAndHash<JClassSymbol> CLASS = new EqAndHash<JClassSymbol>() {
-        @Override
-        public int hash(JClassSymbol t1) {
+        @Override public int hash(JClassSymbol t1) {
             return t1.getBinaryName().hashCode();
         }
 
-        @Override
-        public boolean equals(JClassSymbol m1, Object o) {
+        @Override public boolean equals(JClassSymbol m1, Object o) {
             if (m1 == o) {
                 return true;
             }
@@ -127,31 +119,27 @@ public final class SymbolEquality {
     };
 
     public static final EqAndHash<JFieldSymbol> FIELD = new EqAndHash<JFieldSymbol>() {
-        @Override
-        public int hash(JFieldSymbol t1) {
+        @Override public int hash(JFieldSymbol t1) {
             return 31 * t1.getEnclosingClass().hashCode() + t1.getSimpleName().hashCode();
         }
 
-        @Override
-        public boolean equals(JFieldSymbol f1, Object o) {
+        @Override public boolean equals(JFieldSymbol f1, Object o) {
             if (!(o instanceof JFieldSymbol)) {
                 return false;
             }
             JFieldSymbol f2 = (JFieldSymbol) o;
             return Objects.equals(f1.getSimpleName(), f2.getSimpleName())
-                && f1.getEnclosingClass().equals(f2.getEnclosingClass());
+                    && f1.getEnclosingClass().equals(f2.getEnclosingClass());
 
         }
     };
 
     public static final EqAndHash<SymAnnot> ANNOTATION = new EqAndHash<SymAnnot>() {
-        @Override
-        public int hash(SymAnnot t1) {
+        @Override public int hash(SymAnnot t1) {
             return t1.getBinaryName().hashCode();
         }
 
-        @Override
-        public boolean equals(SymAnnot f1, Object o) {
+        @Override public boolean equals(SymAnnot f1, Object o) {
             if (!(o instanceof SymAnnot)) {
                 return false;
             }
@@ -162,50 +150,44 @@ public final class SymbolEquality {
     };
 
     public static final EqAndHash<JFormalParamSymbol> FORMAL_PARAM = new EqAndHash<JFormalParamSymbol>() {
-        @Override
-        public int hash(JFormalParamSymbol t1) {
+        @Override public int hash(JFormalParamSymbol t1) {
             return 31 * t1.getDeclaringSymbol().hashCode() + t1.getSimpleName().hashCode();
         }
 
-        @Override
-        public boolean equals(JFormalParamSymbol f1, Object o) {
+        @Override public boolean equals(JFormalParamSymbol f1, Object o) {
             if (!(o instanceof JFormalParamSymbol)) {
                 return false;
             }
             JFormalParamSymbol f2 = (JFormalParamSymbol) o;
             return Objects.equals(f1.getSimpleName(), f2.getSimpleName())
-                && f1.getDeclaringSymbol().equals(f2.getDeclaringSymbol());
+                    && f1.getDeclaringSymbol().equals(f2.getDeclaringSymbol());
 
         }
     };
 
 
     public static final EqAndHash<JRecordComponentSymbol> RECORD_COMPONENT = new EqAndHash<JRecordComponentSymbol>() {
-        @Override
-        public int hash(JRecordComponentSymbol t1) {
+        @Override public int hash(JRecordComponentSymbol t1) {
             return 31 * t1.getEnclosingClass().hashCode() + t1.getSimpleName().hashCode();
         }
 
-        @Override
-        public boolean equals(JRecordComponentSymbol f1, Object o) {
+        @Override public boolean equals(JRecordComponentSymbol f1, Object o) {
             if (!(o instanceof JRecordComponentSymbol)) {
                 return false;
             }
             JRecordComponentSymbol f2 = (JRecordComponentSymbol) o;
             return Objects.equals(f1.getSimpleName(), f2.getSimpleName())
-                && f1.getEnclosingClass().equals(f2.getEnclosingClass());
+                    && f1.getEnclosingClass().equals(f2.getEnclosingClass());
 
         }
     };
 
     private static final EqAndHash<Object> IDENTITY = new EqAndHash<Object>() {
-        @Override
-        public int hash(Object t1) {
+        @Override public int hash(Object t1) {
             return System.identityHashCode(t1);
         }
 
-        @Override
-        public boolean equals(Object t1, Object t2) {
+        @Override public boolean equals(Object t1, Object t2) {
             return t1 == t2;
         }
     };
@@ -229,14 +211,12 @@ public final class SymbolEquality {
         } else if (e2 == null) {
             return false;
         }
-        @SuppressWarnings("unchecked")
-        EqAndHash<T> eqAndHash = (EqAndHash<T>) e1.acceptVisitor(EqAndHashVisitor.INSTANCE, null);
+        @SuppressWarnings("unchecked") EqAndHash<T> eqAndHash = (EqAndHash<T>) e1.acceptVisitor(EqAndHashVisitor.INSTANCE, null);
         return eqAndHash.equals(e1, e2);
     }
 
     public static <T extends JElementSymbol> int hash(T e1) {
-        @SuppressWarnings("unchecked")
-        EqAndHash<T> eqAndHash = (EqAndHash<T>) e1.acceptVisitor(EqAndHashVisitor.INSTANCE, null);
+        @SuppressWarnings("unchecked") EqAndHash<T> eqAndHash = (EqAndHash<T>) e1.acceptVisitor(EqAndHashVisitor.INSTANCE, null);
         return eqAndHash.hash(e1);
     }
 
@@ -245,49 +225,40 @@ public final class SymbolEquality {
 
         static final EqAndHashVisitor INSTANCE = new EqAndHashVisitor();
 
-        @Override
-        public EqAndHash<?> visitSymbol(JElementSymbol sym, Void aVoid) {
+        @Override public EqAndHash<?> visitSymbol(JElementSymbol sym, Void aVoid) {
             throw new IllegalStateException("Unknown symbol " + sym.getClass());
         }
 
-        @Override
-        public EqAndHash<?> visitClass(JClassSymbol sym, Void param) {
+        @Override public EqAndHash<?> visitClass(JClassSymbol sym, Void param) {
             return CLASS;
         }
 
-        @Override
-        public EqAndHash<?> visitTypeParam(JTypeParameterSymbol sym, Void param) {
+        @Override public EqAndHash<?> visitTypeParam(JTypeParameterSymbol sym, Void param) {
             return TYPE_PARAM;
         }
 
-        @Override
-        public EqAndHash<?> visitCtor(JConstructorSymbol sym, Void param) {
+        @Override public EqAndHash<?> visitCtor(JConstructorSymbol sym, Void param) {
             return CONSTRUCTOR;
         }
 
-        @Override
-        public EqAndHash<?> visitMethod(JMethodSymbol sym, Void param) {
+        @Override public EqAndHash<?> visitMethod(JMethodSymbol sym, Void param) {
             return METHOD;
         }
 
-        @Override
-        public EqAndHash<?> visitField(JFieldSymbol sym, Void param) {
+        @Override public EqAndHash<?> visitField(JFieldSymbol sym, Void param) {
             return FIELD;
         }
 
-        @Override
-        public EqAndHash<?> visitLocal(JLocalVariableSymbol sym, Void param) {
+        @Override public EqAndHash<?> visitLocal(JLocalVariableSymbol sym, Void param) {
             return IDENTITY;
         }
 
-        @Override
-        public EqAndHash<?> visitFormal(JFormalParamSymbol sym, Void param) {
+        @Override public EqAndHash<?> visitFormal(JFormalParamSymbol sym, Void param) {
             return FORMAL_PARAM;
         }
 
 
-        @Override
-        public EqAndHash<?> visitRecordComponent(JRecordComponentSymbol sym, Void param) {
+        @Override public EqAndHash<?> visitRecordComponent(JRecordComponentSymbol sym, Void param) {
             return RECORD_COMPONENT;
         }
     }

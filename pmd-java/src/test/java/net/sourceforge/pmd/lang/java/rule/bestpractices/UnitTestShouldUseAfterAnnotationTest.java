@@ -13,13 +13,11 @@ class UnitTestShouldUseAfterAnnotationTest extends PmdRuleTst {
     // no additional unit tests
 
     public static class BaseTest {
-        @Before
-        public void setUp() {
+        @Before public void setUp() {
             // A setup code
         }
 
-        @After
-        public void tearDown() {
+        @After public void tearDown() {
             // A tear down code
         }
     }

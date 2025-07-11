@@ -17,8 +17,7 @@ import net.sourceforge.pmd.lang.gherkin.ast.GherkinLexer;
  */
 public class GherkinCpdLexer extends AntlrCpdLexer {
 
-    @Override
-    protected Lexer getLexerForSource(CharStream charStream) {
+    @Override protected Lexer getLexerForSource(CharStream charStream) {
         return new GherkinLexer(charStream);
     }
 }

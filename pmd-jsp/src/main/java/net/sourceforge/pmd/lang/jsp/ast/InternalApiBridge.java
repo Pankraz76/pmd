@@ -20,7 +20,8 @@ import net.sourceforge.pmd.lang.ast.impl.javacc.JavaccTokenDocument;
  */
 @InternalApi
 public final class InternalApiBridge {
-    private InternalApiBridge() {}
+    private InternalApiBridge() {
+    }
 
     public static JavaccTokenDocument.TokenDocumentBehavior getJspTokenBehavior() {
         return JspParser.TOKEN_BEHAVIOR;

@@ -67,20 +67,17 @@ public class NpathBaseVisitor extends JavaVisitorBase<Void, BigInteger> {
     }
 
 
-    @Override
-    public BigInteger visitMethodOrCtor(ASTExecutableDeclaration node, Void data) {
+    @Override public BigInteger visitMethodOrCtor(ASTExecutableDeclaration node, Void data) {
         return multiplyChildrenComplexities(node);
     }
 
 
-    @Override
-    public BigInteger visitJavaNode(JavaNode node, Void data) {
+    @Override public BigInteger visitJavaNode(JavaNode node, Void data) {
         return multiplyChildrenComplexities(node);
     }
 
 
-    @Override
-    public BigInteger visit(ASTIfStatement node, Void data) {
+    @Override public BigInteger visit(ASTIfStatement node, Void data) {
         // (npath of if + npath of else (or 1) + bool_comp of if) * npath of next
 
         int boolCompIf = CycloVisitor.booleanExpressionComplexity(node.getCondition());
@@ -93,8 +90,7 @@ public class NpathBaseVisitor extends JavaVisitorBase<Void, BigInteger> {
     }
 
 
-    @Override
-    public BigInteger visit(ASTWhileStatement node, Void data) {
+    @Override public BigInteger visit(ASTWhileStatement node, Void data) {
         // (npath of while + bool_comp of while + 1) * npath of next
 
         int boolComp = CycloVisitor.booleanExpressionComplexity(node.getCondition());
@@ -103,8 +99,7 @@ public class NpathBaseVisitor extends JavaVisitorBase<Void, BigInteger> {
     }
 
 
-    @Override
-    public BigInteger visit(ASTDoStatement node, Void data) {
+    @Override public BigInteger visit(ASTDoStatement node, Void data) {
         // (npath of do + bool_comp of do + 1) * npath of next
 
         int boolComp = CycloVisitor.booleanExpressionComplexity(node.getCondition());
@@ -113,8 +108,7 @@ public class NpathBaseVisitor extends JavaVisitorBase<Void, BigInteger> {
     }
 
 
-    @Override
-    public BigInteger visit(ASTForStatement node, Void data) {
+    @Override public BigInteger visit(ASTForStatement node, Void data) {
         // (npath of for + bool_comp of for + 1) * npath of next
 
         int boolComp = CycloVisitor.booleanExpressionComplexity(node.getCondition());
@@ -122,8 +116,7 @@ public class NpathBaseVisitor extends JavaVisitorBase<Void, BigInteger> {
         return nPathBody.add(BigInteger.valueOf(boolComp + 1));
     }
 
-    @Override
-    public BigInteger visit(ASTForeachStatement node, Void data) {
+    @Override public BigInteger visit(ASTForeachStatement node, Void data) {
         // (npath of for + 1) * npath of next
 
         BigInteger nPathBody = node.getBody().acceptVisitor(this, data);
@@ -131,8 +124,7 @@ public class NpathBaseVisitor extends JavaVisitorBase<Void, BigInteger> {
     }
 
 
-    @Override
-    public BigInteger visit(ASTReturnStatement node, Void data) {
+    @Override public BigInteger visit(ASTReturnStatement node, Void data) {
         // return statements are valued at 1, or the value of the boolean expression
 
         ASTExpression expr = node.getExpr();
@@ -148,13 +140,11 @@ public class NpathBaseVisitor extends JavaVisitorBase<Void, BigInteger> {
     }
 
 
-    @Override
-    public BigInteger visit(ASTSwitchExpression node, Void data) {
+    @Override public BigInteger visit(ASTSwitchExpression node, Void data) {
         return handleSwitch(node, data);
     }
 
-    @Override
-    public BigInteger visit(ASTSwitchStatement node, Void data) {
+    @Override public BigInteger visit(ASTSwitchStatement node, Void data) {
         return handleSwitch(node, data);
     }
 
@@ -187,16 +177,14 @@ public class NpathBaseVisitor extends JavaVisitorBase<Void, BigInteger> {
         return npath.add(BigInteger.valueOf(boolCompSwitch));
     }
 
-    @Override
-    public BigInteger visit(ASTSwitchLabel node, Void data) {
+    @Override public BigInteger visit(ASTSwitchLabel node, Void data) {
         if (node.isDefault()) {
             return BigInteger.ONE;
         }
         return BigInteger.valueOf(node.children(ASTExpression.class).count());
     }
 
-    @Override
-    public BigInteger visit(ASTConditionalExpression node, Void data) {
+    @Override public BigInteger visit(ASTConditionalExpression node, Void data) {
         // bool comp of guard clause + complexity of last two children (= total - 1)
 
         int boolCompTernary = CycloVisitor.booleanExpressionComplexity(node.getCondition());
@@ -205,8 +193,7 @@ public class NpathBaseVisitor extends JavaVisitorBase<Void, BigInteger> {
     }
 
 
-    @Override
-    public BigInteger visit(ASTTryStatement node, Void data) {
+    @Override public BigInteger visit(ASTTryStatement node, Void data) {
         /*
          * This scenario was not addressed by the original paper. Based on the
          * principles outlined in the paper, as well as the Checkstyle NPath

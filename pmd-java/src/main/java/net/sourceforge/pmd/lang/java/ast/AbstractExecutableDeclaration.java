@@ -11,9 +11,9 @@ import net.sourceforge.pmd.lang.java.types.JMethodSig;
 
 
 abstract class AbstractExecutableDeclaration<T extends JExecutableSymbol>
-    extends AbstractJavaNode
-    implements ASTExecutableDeclaration,
-               LeftRecursiveNode {
+        extends AbstractJavaNode
+        implements ASTExecutableDeclaration,
+        LeftRecursiveNode {
 
     private T symbol;
     private JMethodSig sig;
@@ -28,8 +28,7 @@ abstract class AbstractExecutableDeclaration<T extends JExecutableSymbol>
         setImage(identToken.getImage());
     }
 
-    @Override
-    public String getImage() {
+    @Override public String getImage() {
         return null;
     }
 
@@ -38,14 +37,12 @@ abstract class AbstractExecutableDeclaration<T extends JExecutableSymbol>
         this.symbol = symbol;
     }
 
-    @Override
-    public T getSymbol() {
+    @Override public T getSymbol() {
         AbstractTypedSymbolDeclarator.assertSymbolNotNull(symbol, this);
         return symbol;
     }
 
-    @Override
-    public JMethodSig getGenericSignature() {
+    @Override public JMethodSig getGenericSignature() {
         if (sig == null) {
             sig = getTypeSystem().sigOf(getSymbol());
         }
@@ -53,13 +50,11 @@ abstract class AbstractExecutableDeclaration<T extends JExecutableSymbol>
     }
 
 
-    @Override
-    public FileLocation getReportLocation() {
+    @Override public FileLocation getReportLocation() {
         return identToken.getReportLocation();
     }
 
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return super.getImage();
     }
 }
