@@ -495,11 +495,11 @@
                             <exclusion>**testdata**</exclusion>
                         </exclusions>
                         <activeRecipes>
-                            <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
-                            <recipe>org.openrewrite.java.format.BlankLines</recipe>
+<!--                            <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>-->
+<!--                            <recipe>org.openrewrite.java.format.BlankLines</recipe>-->
                             <recipe>org.openrewrite.staticanalysis.CodeCleanup</recipe>
-                            <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>
-                            <recipe>org.openrewrite.text.EndOfLineAtEndOfFile</recipe>
+<!--                            <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>-->
+<!--                            <recipe>org.openrewrite.text.EndOfLineAtEndOfFile</recipe>-->
                             <!--                            <recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>-->
                             <!--                            <recipe>org.openrewrite.java.migrate.UpgradeToJava21</recipe>-->
                             <!--                            <recipe>org.openrewrite.java.testing.assertj.Assertj</recipe>-->
@@ -510,13 +510,13 @@
                             <!--                            <recipe>org.openrewrite.staticanalysis.CodeCleanup</recipe>-->
                             <!--                            <recipe>org.openrewrite.staticanalysis.CommonStaticAnalysis</recipe>-->
                             <!--                            <recipe>org.openrewrite.staticanalysis.FinalizeLocalVariables</recipe>-->
-                            <!--                            <recipe>org.openrewrite.staticanalysis.MissingOverrideAnnotation</recipe>-->
-                            <!--                            <recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>-->
-                            <!--                            <recipe>org.openrewrite.staticanalysis.RedundantFileCreation</recipe>-->
+<!--                                                        <recipe>org.openrewrite.staticanalysis.MissingOverrideAnnotation</recipe>-->
+<!--                                                        <recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>-->
+<!--                                                        <recipe>org.openrewrite.staticanalysis.RedundantFileCreation</recipe>-->
                             <!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedLocalVariables</recipe>-->
                             <!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateFields</recipe>-->
                             <!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods</recipe>-->
-                            <!--                            <recipe>org.openrewrite.staticanalysis.StringLiteralEquality</recipe>-->
+<!--                                                        <recipe>org.openrewrite.staticanalysis.StringLiteralEquality</recipe>-->
                         </activeRecipes>
                         <failOnDryRunResults>true</failOnDryRunResults>
                         <checkstyleConfigFile>.rewrite/pmd-checkstyle-config.xml</checkstyleConfigFile>
