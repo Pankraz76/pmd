@@ -488,8 +488,6 @@
                         </exclusions>
                         <activeRecipes>
                             <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
-<!--                            <recipe>org.openrewrite.java.testing.assertj.Assertj</recipe>-->
-<!--                            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>-->
                             <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>
                             <recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>
                             <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods</recipe>
@@ -504,8 +502,10 @@
 <!--                            <recipe>org.openrewrite.java.format.WrappingAndBraces</recipe>-->
 <!--                            <recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>-->
 <!--                            <recipe>org.openrewrite.java.migrate.UpgradeToJava21</recipe>-->
+<!--                            <recipe>org.openrewrite.java.testing.assertj.Assertj</recipe>-->
 <!--                            <recipe>org.openrewrite.java.testing.cleanup.AssertTrueNullToAssertNull</recipe>-->
 <!--                            <recipe>org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic</recipe>-->
+<!--                            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>-->
 <!--                            <recipe>org.openrewrite.maven.OrderPomElements</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.CodeCleanup</recipe>-->
 <!--                            <recipe>org.openrewrite.staticanalysis.CommonStaticAnalysis</recipe>-->
