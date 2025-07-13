@@ -104,7 +104,7 @@ public class DummyLanguageModule extends SimpleLanguageModuleBase implements Cpd
         @Override
         public Parser getParser() {
             return task -> {
-                if (PARSER_THROWS.equals(task.getLanguageVersion().getVersion())) {
+                if (task.getLanguageVersion().getVersion().equals(PARSER_THROWS)) {
                     throw new ParseException("ohio");
                 }
                 return readLispNode(task);

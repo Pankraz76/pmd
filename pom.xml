@@ -483,7 +483,7 @@
                     <configuration>
                         <exclusions>
                             <exclusion>**Chars.java</exclusion> <!-- // @SuppressWarnings("PMD.MissingOverride") -->
-                            <exclusion>**Dummy**Rule.java</exclusion>
+                            <exclusion>**Dummy**.java</exclusion>
                             <exclusion>**FooRule.java</exclusion>
                             <exclusion>**jdkversiontests**</exclusion>
                             <exclusion>**missingoverride**</exclusion>
