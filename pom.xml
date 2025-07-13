@@ -498,30 +498,6 @@
                             <recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>
                             <recipe>org.openrewrite.staticanalysis.RedundantFileCreation</recipe>
                             <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods</recipe>
-<!--                            <recipe>org.openrewrite.java.format.AutoFormat</recipe> checkstyle equivalent -->
-<!--                            <recipe>org.openrewrite.java.format.BlankLines</recipe>-->
-<!--                            <recipe>org.openrewrite.java.format.NormalizeFormat</recipe>-->
-<!--                            <recipe>org.openrewrite.java.format.NormalizeLineBreaks</recipe>-->
-<!--                            <recipe>org.openrewrite.java.format.RemoveTrailingWhitespace</recipe>-->
-<!--                            <recipe>org.openrewrite.java.format.Spaces</recipe>-->
-<!--                            <recipe>org.openrewrite.java.format.TabsAndIndents</recipe>-->
-<!--                            <recipe>org.openrewrite.java.format.WrappingAndBraces</recipe>-->
-<!--                            <recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>-->
-<!--                            <recipe>org.openrewrite.java.migrate.UpgradeToJava21</recipe>-->
-<!--                            <recipe>org.openrewrite.java.migrate.UpgradeToJava25</recipe>-->
-<!--                            <recipe>org.openrewrite.java.testing.assertj.Assertj</recipe>-->
-<!--                            <recipe>org.openrewrite.java.testing.cleanup.AssertTrueNullToAssertNull</recipe>-->
-<!--                            <recipe>org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic</recipe>-->
-<!--                            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>-->
-<!--                            <recipe>org.openrewrite.maven.OrderPomElements</recipe>-->
-<!--                            <recipe>org.openrewrite.staticanalysis.CodeCleanup</recipe>-->
-<!--                            <recipe>org.openrewrite.staticanalysis.CommonStaticAnalysis</recipe>-->
-<!--                            <recipe>org.openrewrite.staticanalysis.FinalizeLocalVariables</recipe>-->
-<!--                            <recipe>org.openrewrite.staticanalysis.MissingOverrideAnnotation</recipe>-->
-<!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedLocalVariables</recipe>-->
-<!--                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateFields</recipe>-->
-<!--                            <recipe>org.openrewrite.staticanalysis.StringLiteralEquality</recipe>-->
-<!--                            <recipe>org.openrewrite.text.EndOfLineAtEndOfFile</recipe>-->
                         </activeRecipes>
                         <failOnDryRunResults>true</failOnDryRunResults>
                         <rewriteSkip>${rewrite.skip}</rewriteSkip>
@@ -544,11 +520,6 @@
                             <groupId>org.openrewrite.recipe</groupId>
                             <artifactId>rewrite-testing-frameworks</artifactId>
                             <version>3.12.0</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.openrewrite.recipe</groupId>
-                            <artifactId>rewrite-migrate-java</artifactId>
-                            <version>3.13.0</version>
                         </dependency>
                     </dependencies>
                 </plugin>
