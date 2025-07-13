@@ -10,4 +10,8 @@ package net.sourceforge.pmd.lang.java.rule.bestpractices.missingoverride;
  */
 public class SuperclassWithPrivate {
 
+    private void foo() {
+
+    }
+
 }

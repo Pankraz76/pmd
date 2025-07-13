@@ -20,7 +20,7 @@ public class FooRule extends AbstractJavaRule {
 
     @Override
     public Object visit(ASTClassDeclaration c, Object ctx) {
-        if ("Foo".equalsIgnoreCase(c.getSimpleName())) {
+        if (c.getSimpleName().equalsIgnoreCase("Foo")) {
             asCtx(ctx).addViolation(c);
         }
         return super.visit(c, ctx);
@@ -28,7 +28,7 @@ public class FooRule extends AbstractJavaRule {
 
     @Override
     public Object visit(ASTVariableId c, Object ctx) {
-        if ("Foo".equalsIgnoreCase(c.getName())) {
+        if (c.getName().equalsIgnoreCase("Foo")) {
             asCtx(ctx).addViolation(c);
         }
         return super.visit(c, ctx);

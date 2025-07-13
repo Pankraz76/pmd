@@ -4,7 +4,7 @@
 
 public class SealedInnerClasses {
     sealed class Square implements Squircle {
-        private non-sealed class OtherSquare extends Square {}
+        non-sealed private class OtherSquare extends Square {}
         static non-sealed class StaticClass implements Squircle {}
     }
 
