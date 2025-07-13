@@ -488,8 +488,8 @@
                         </exclusions>
                         <activeRecipes>
                             <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
-                            <recipe>org.openrewrite.java.testing.assertj.Assertj</recipe>
-                            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
+<!--                            <recipe>org.openrewrite.java.testing.assertj.Assertj</recipe>-->
+<!--                            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>-->
                             <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>
                             <recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>
                             <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods</recipe>
