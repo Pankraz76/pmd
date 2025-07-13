@@ -493,11 +493,8 @@
                             <exclusion>**uselessoverridingmethod**</exclusion>
                         </exclusions>
                         <activeRecipes>
-                            <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
                             <recipe>org.openrewrite.staticanalysis.EqualsAvoidsNull</recipe>
                             <recipe>org.openrewrite.staticanalysis.ModifierOrder</recipe>
-                            <recipe>org.openrewrite.staticanalysis.RedundantFileCreation</recipe>
-                            <recipe>org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods</recipe>
                         </activeRecipes>
                         <failOnDryRunResults>true</failOnDryRunResults>
                         <rewriteSkip>${rewrite.skip}</rewriteSkip>
