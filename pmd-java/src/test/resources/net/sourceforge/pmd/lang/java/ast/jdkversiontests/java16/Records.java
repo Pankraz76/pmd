@@ -2,7 +2,6 @@
  * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
  */
 
-import java.io.IOException;
 import java.lang.annotation.Target;
 import java.lang.annotation.ElementType;
 import java.util.Objects;
