@@ -6,9 +6,12 @@ package net.sourceforge.pmd.lang.java.rule.design;
 
 import static net.sourceforge.pmd.lang.java.ast.ModifierOwner.Visibility.V_PRIVATE;
 
+import net.sourceforge.pmd.lang.ast.NodeStream;
+import net.sourceforge.pmd.lang.java.ast.ASTAnnotation;
 import net.sourceforge.pmd.lang.java.ast.ASTAssignableExpr.ASTNamedReferenceExpr;
 import net.sourceforge.pmd.lang.java.ast.ASTClassDeclaration;
 import net.sourceforge.pmd.lang.java.ast.ASTConstructorDeclaration;
+import net.sourceforge.pmd.lang.java.ast.ASTExpression;
 import net.sourceforge.pmd.lang.java.ast.ASTTypeDeclaration;
 import net.sourceforge.pmd.lang.java.ast.JModifier;
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRulechainRule;
@@ -25,7 +28,7 @@ public class ClassWithOnlyPrivateConstructorsShouldBeFinalRule extends AbstractJ
         if (node.isRegularClass()
             && !node.hasModifiers(JModifier.FINAL)
             && !node.isAnnotationPresent("lombok.Value")
-            && !hasPublicLombokConstructors(node)
+            && !node.isAnnotationPresent("lombok.experimental.UtilityClass")
             && hasOnlyPrivateCtors(node)
             && hasNoSubclasses(node)) {
             asCtx(data).addViolation(node);
@@ -33,12 +36,32 @@ public class ClassWithOnlyPrivateConstructorsShouldBeFinalRule extends AbstractJ
         return null;
     }
 
-    private boolean hasPublicLombokConstructors(ASTClassDeclaration node) {
+    /**
+     * Returns the lombok annotations that generate a constructor.
+     * {@code access = AccessLevel.NONE} means that no constructor is generated.
+     */
+    private static NodeStream<ASTAnnotation> getLombokConstructorAnnotations(ASTClassDeclaration node) {
         return node.getDeclaredAnnotations()
                    .filter(it -> TypeTestUtil.isA("lombok.NoArgsConstructor", it)
                        || TypeTestUtil.isA("lombok.RequiredArgsConstructor", it)
                        || TypeTestUtil.isA("lombok.AllArgsConstructor", it))
-                   .any(it -> it.getFlatValue("access").filterIs(ASTNamedReferenceExpr.class).none(ref -> "PRIVATE".equals(ref.getName())));
+                   .filterNot(it -> hasAccessLevel(it, "NONE"));
+    }
+
+    private static boolean isPrivateLombokConstructor(ASTAnnotation annotation) {
+        return hasAccessLevel(annotation, "PRIVATE")
+            // "If set, the generated constructor will be private, and an additional static 'constructor'
+            // is generated with the same argument list that wraps the real constructor."
+            // See javadoc of staticName in lombok.NoArgsConstructor, RequiredArgsConstructor, AllArgsConstructor
+            || annotation.getFlatValue("staticName")
+                         .filterIs(ASTExpression.class)
+                         .any(it -> it.getConstValue() instanceof String && !((String) it.getConstValue()).isEmpty());
+    }
+
+    private static boolean hasAccessLevel(ASTAnnotation annotation, String accessLevel) {
+        return annotation.getFlatValue("access")
+                         .filterIs(ASTNamedReferenceExpr.class)
+                         .any(ref -> accessLevel.equals(ref.getName()));
     }
 
     private boolean hasNoSubclasses(ASTClassDeclaration klass) {
@@ -53,9 +76,13 @@ public class ClassWithOnlyPrivateConstructorsShouldBeFinalRule extends AbstractJ
     }
 
     private boolean hasOnlyPrivateCtors(ASTClassDeclaration node) {
-        return node.getDeclarations(ASTConstructorDeclaration.class).all(it -> it.getVisibility() == V_PRIVATE)
+        NodeStream<ASTConstructorDeclaration> ctors = node.getDeclarations(ASTConstructorDeclaration.class);
+        NodeStream<ASTAnnotation> lombokCtors = getLombokConstructorAnnotations(node);
+        return ctors.all(it -> it.getVisibility() == V_PRIVATE)
+            && lombokCtors.all(ClassWithOnlyPrivateConstructorsShouldBeFinalRule::isPrivateLombokConstructor)
             && (node.getVisibility() == V_PRIVATE // then the default ctor is private
-            || node.getDeclarations(ASTConstructorDeclaration.class).nonEmpty());
+            || ctors.nonEmpty()
+            || lombokCtors.nonEmpty());
     }
 
 }

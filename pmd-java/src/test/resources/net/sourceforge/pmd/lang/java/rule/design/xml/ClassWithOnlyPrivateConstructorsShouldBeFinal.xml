@@ -388,6 +388,261 @@ class OtherClass { private OtherClass(String a) {} } // violation: only private 
     </test-code>
 
     <test-code>
+        <description>#7214 false negative with Lombok @NoArgsConstructor(access = AccessLevel.PRIVATE)</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>5</expected-linenumbers>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class Foo {
+    public static Foo get() { return null; }
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Lombok @AllArgsConstructor(access = AccessLevel.PRIVATE) is the only constructor</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>5</expected-linenumbers>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class Foo {
+    private int value;
+    public static Foo of(int value) { return new Foo(value); }
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Lombok @RequiredArgsConstructor(access = AccessLevel.PRIVATE) is the only constructor</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>5</expected-linenumbers>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public class Foo {
+    private final int value;
+    public static Foo of(int value) { return new Foo(value); }
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Lombok private constructor with statically imported AccessLevel.PRIVATE or fully qualified access level</description>
+        <expected-problems>2</expected-problems>
+        <expected-linenumbers>6,10</expected-linenumbers>
+        <code><![CDATA[
+import static lombok.AccessLevel.PRIVATE;
+
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = PRIVATE)
+public class Foo {
+}
+
+@lombok.NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
+class Bar {
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Lombok @NoArgsConstructor with default (public) access is not private</description>
+        <expected-problems>0</expected-problems>
+        <code><![CDATA[
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class Foo {
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Lombok constructors with package, protected, module or public access are not private</description>
+        <expected-problems>0</expected-problems>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+public class Foo1 { }
+
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+class Foo2 { }
+
+@AllArgsConstructor(access = AccessLevel.MODULE)
+class Foo3 { private int x; }
+
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+class Foo4 { }
+
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+class Foo5 { private Foo5(int x) { } }
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Lombok private constructor mixed with explicit non-private constructor</description>
+        <expected-problems>0</expected-problems>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class Foo {
+    public Foo(String s) { }
+}
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+class Bar {
+    Bar(String s) { }
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Abstract class with Lombok private constructor: subclassed in same compilation unit is ok, otherwise flagged like explicit ctors (#3668)</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>12</expected-linenumbers>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public abstract class Foo {
+    abstract void run();
+
+    static final Foo INSTANCE = new Foo() { void run() { } };
+}
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+abstract class Bar {
+    static void util() { }
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Final class with Lombok private constructor is ok</description>
+        <expected-problems>0</expected-problems>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class Foo {
+    public static Foo get() { return null; }
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Non-Lombok annotation named NoArgsConstructor is ignored</description>
+        <expected-problems>0</expected-problems>
+        <code><![CDATA[
+import com.example.AccessLevel;
+import com.example.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class Foo {
+    public static Foo get() { return null; }
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Lombok staticName makes the generated constructor private regardless of access</description>
+        <expected-problems>3</expected-problems>
+        <expected-linenumbers>6,9,12</expected-linenumbers>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(staticName = "create")
+public class Foo { }
+
+@AllArgsConstructor(staticName = "of", access = AccessLevel.PUBLIC)
+class Bar { private int x; }
+
+@NoArgsConstructor(staticName = Baz.FACTORY)
+class Baz { static final String FACTORY = "create"; }
+
+@NoArgsConstructor(staticName = "")
+class Qux { }
+
+@NoArgsConstructor(staticName = "create")
+class Quux {
+    public Quux(int x) { }
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Lombok @Builder with private all-args constructor, @Data and @UtilityClass</description>
+        <expected-problems>2</expected-problems>
+        <expected-linenumbers>10,19</expected-linenumbers>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
+
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class Foo { // violation, the builder is nested and may use the private ctor
+    private int x;
+}
+
+@Builder
+class Bar { private int x; } // no violation, builder generates a package-private ctor
+
+@Data
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+class Baz { private int x; } // violation, @Data does not generate a ctor if @NoArgsConstructor is present
+
+@Data
+class Qux { private final int x; } // no violation, public required args ctor
+
+@UtilityClass
+class Util { } // no violation, @UtilityClass makes the class final
+
+public class Outer {
+    @UtilityClass
+    private static class InnerUtil { } // no violation, @UtilityClass makes the class final
+}
+]]></code>
+    </test-code>
+
+    <test-code>
+        <description>#7214 Lombok access = AccessLevel.NONE generates no constructor</description>
+        <expected-problems>1</expected-problems>
+        <expected-linenumbers>5</expected-linenumbers>
+        <code><![CDATA[
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.NONE)
+class Foo { private Foo(int x) { } } // violation, only private ctors
+
+@NoArgsConstructor(access = AccessLevel.NONE)
+public class Bar { } // no violation, implicit public default ctor
+]]></code>
+    </test-code>
+
+    <test-code>
         <description>Verify location of violation</description>
         <expected-problems>1</expected-problems>
         <expected-linenumbers>2-2</expected-linenumbers>
